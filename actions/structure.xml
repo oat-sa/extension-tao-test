@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension name="Tests" url="/taoTests/Tests/index">
+	<sections>
+		<section name="tests" url="/taoTests/Tests/index">
+			<trees>
+				<tree name="tests" 
+					dataUrl="/taoTests/Tests/getTests" 
+					editClassUrl=""
+					editInstanceUrl=""
+					addInstanceUrl=""
+					addSubClassUrl=""
+					deleteUrl=""
+					duplicateUrl=""
+					gridUrl=""
+				/>
+			</trees>
+			<actions>
+				<action name="import" url="/taoTests/Tests/import" />
+				<action name="export" url="/taoTests/Tests/export" />
+			</actions>
+		</section>
+	</sections>
+</extension>

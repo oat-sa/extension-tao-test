@@ -3,16 +3,16 @@
 error_reporting(E_ALL);
 
 /**
- * Generis Object Oriented API - taoTests\models\classes\class.TestService.php
+ * Generis Object Oriented API - taoTests/models/classes/class.TestService.php
  *
  * $Id$
  *
  * This file is part of Generis Object Oriented API.
  *
- * Automatically generated on 15.09.2009, 17:23:30 with ArgoUML PHP module 
+ * Automatically generated on 29.10.2009, 10:35:48 with ArgoUML PHP module 
  * (last revised $Date: 2008-04-19 08:22:08 +0200 (Sat, 19 Apr 2008) $)
  *
- * @author Bertrand Chevrier, <taosupport@tudor.lu>
+ * @author Bertrand Chevrier, <chevrier.bertrand@gmail.com>
  * @package taoTests
  * @subpackage models_classes
  */
@@ -25,7 +25,7 @@ if (0 > version_compare(PHP_VERSION, '5')) {
  * The Service class is an abstraction of each service instance. 
  * Used to centralize the behavior related to every servcie instances.
  *
- * @author Bertrand Chevrier, <taosupport@tudor.lu>
+ * @author Bertrand Chevrier, <chevrier.bertrand@gmail.com>
  */
 require_once('tao/models/classes/class.Service.php');
 
@@ -41,7 +41,7 @@ require_once('tao/models/classes/class.Service.php');
  * Short description of class taoTests_models_classes_TestService
  *
  * @access public
- * @author Bertrand Chevrier, <taosupport@tudor.lu>
+ * @author Bertrand Chevrier, <chevrier.bertrand@gmail.com>
  * @package taoTests
  * @subpackage models_classes
  */
@@ -69,28 +69,40 @@ class taoTests_models_classes_TestService
      */
     protected $itemClass = null;
 
+    /**
+     * Short description of attribute testsOntologies
+     *
+     * @access protected
+     * @var array
+     */
+    protected $testsOntologies = array('http://www.tao.lu/Ontologies/TAOTest.rdf');
+
     // --- OPERATIONS ---
 
     /**
      * Short description of method __construct
      *
      * @access public
-     * @author Bertrand Chevrier, <taosupport@tudor.lu>
-     * @return void
+     * @author Bertrand Chevrier, <chevrier.bertrand@gmail.com>
+     * @return core_view_classes_
      */
     public function __construct()
     {
+        $returnValue = null;
+
         // section 10-13-1-45-2836570e:123bd13e69b:-8000:0000000000001888 begin
 		$this->testClass = new core_kernel_classes_Class( TEST_CLASS );
 		$this->itemClass = new core_kernel_classes_Class( ITEM_CLASS );
         // section 10-13-1-45-2836570e:123bd13e69b:-8000:0000000000001888 end
+
+        return $returnValue;
     }
 
     /**
      * Short description of method getTests
      *
      * @access public
-     * @author Bertrand Chevrier, <taosupport@tudor.lu>
+     * @author Bertrand Chevrier, <chevrier.bertrand@gmail.com>
      * @param  array options
      * @return core_kernel_classes_ContainerCollection
      */
@@ -134,7 +146,7 @@ class taoTests_models_classes_TestService
      * Short description of method getTest
      *
      * @access public
-     * @author Bertrand Chevrier, <taosupport@tudor.lu>
+     * @author Bertrand Chevrier, <chevrier.bertrand@gmail.com>
      * @param  string identifier usually the test label or the ressource URI
      * @return core_kernel_classes_Resource
      */
@@ -155,7 +167,7 @@ class taoTests_models_classes_TestService
      * Short description of method bindTestContent
      *
      * @access public
-     * @author Bertrand Chevrier, <taosupport@tudor.lu>
+     * @author Bertrand Chevrier, <chevrier.bertrand@gmail.com>
      * @param  ContainerCollection items
      * @param  Resource test
      * @param  Resource testContent
@@ -175,7 +187,7 @@ class taoTests_models_classes_TestService
      * Short description of method activateTest
      *
      * @access public
-     * @author Bertrand Chevrier, <taosupport@tudor.lu>
+     * @author Bertrand Chevrier, <chevrier.bertrand@gmail.com>
      * @param  Resource test
      * @return boolean
      */
@@ -193,7 +205,7 @@ class taoTests_models_classes_TestService
      * Short description of method deleteTest
      *
      * @access public
-     * @author Bertrand Chevrier, <taosupport@tudor.lu>
+     * @author Bertrand Chevrier, <chevrier.bertrand@gmail.com>
      * @param  Resource test
      * @return boolean
      */
@@ -211,7 +223,7 @@ class taoTests_models_classes_TestService
      * Short description of method getItems
      *
      * @access public
-     * @author Bertrand Chevrier, <taosupport@tudor.lu>
+     * @author Bertrand Chevrier, <chevrier.bertrand@gmail.com>
      * @return core_kernel_classes_ContainerCollection
      */
     public function getItems()
