@@ -75,4 +75,6 @@ spl_autoload_register("tao_autoload");
 spl_autoload_register("Plugin::pluginClassAutoLoad");
 
 set_include_path(get_include_path() . PATH_SEPARATOR . GENERIS_BASE_PATH);
+
+core_control_FrontController::connect(API_LOGIN, API_PASS, API_MODULE);
 ?>

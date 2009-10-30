@@ -3,13 +3,13 @@
 error_reporting(E_ALL);
 
 /**
- * Generis Object Oriented API - taoTests/models/classes/class.TestService.php
+ * Generis Object Oriented API - taoTests/models/classes/class.TestsService.php
  *
  * $Id$
  *
  * This file is part of Generis Object Oriented API.
  *
- * Automatically generated on 29.10.2009, 10:35:48 with ArgoUML PHP module 
+ * Automatically generated on 30.10.2009, 09:53:58 with ArgoUML PHP module 
  * (last revised $Date: 2008-04-19 08:22:08 +0200 (Sat, 19 Apr 2008) $)
  *
  * @author Bertrand Chevrier, <chevrier.bertrand@gmail.com>
@@ -38,14 +38,14 @@ require_once('tao/models/classes/class.Service.php');
 // section 10-13-1-45-792423e0:12398d13f24:-8000:00000000000017DB-constants end
 
 /**
- * Short description of class taoTests_models_classes_TestService
+ * Short description of class taoTests_models_classes_TestsService
  *
  * @access public
  * @author Bertrand Chevrier, <chevrier.bertrand@gmail.com>
  * @package taoTests
  * @subpackage models_classes
  */
-class taoTests_models_classes_TestService
+class taoTests_models_classes_TestsService
     extends tao_models_classes_Service
 {
     // --- ASSOCIATIONS ---
@@ -91,8 +91,11 @@ class taoTests_models_classes_TestService
         $returnValue = null;
 
         // section 10-13-1-45-2836570e:123bd13e69b:-8000:0000000000001888 begin
-		$this->testClass = new core_kernel_classes_Class( TEST_CLASS );
-		$this->itemClass = new core_kernel_classes_Class( ITEM_CLASS );
+		
+		parent::__construct();
+		$this->testClass = new core_kernel_classes_Class(TEST_CLASS);
+		$this->loadOntologies($this->testsOntologies);
+		
         // section 10-13-1-45-2836570e:123bd13e69b:-8000:0000000000001888 end
 
         return $returnValue;
@@ -111,32 +114,6 @@ class taoTests_models_classes_TestService
         $returnValue = null;
 
         // section 10-13-1-45-792423e0:12398d13f24:-8000:000000000000181B begin
-		$instances = $this->testClass->getInstances();
-		if($instances->count() > 0){
-			
-			//paginate options
-			//@todo implements
-			if(count($options) > 0){
-			
-				$sequence = $instances->sequence;
-				
-				if(isset($options['order'])){
-					//order sequence by $options['order']
-				}
-				if(isset($options['start'])){
-					//return sequence from $options['start'] index
-				}
-				if(isset($options['offset'])){
-					//return  $options['offset'] elements of the sequence
-				}
-			
-				$returnValue = new core_kernel_classes_ContainerCollection();
-				$returnValue->sequence = $sequence;
-			}
-			else{
-				$returnValue = $instances;
-			}
-		}
         // section 10-13-1-45-792423e0:12398d13f24:-8000:000000000000181B end
 
         return $returnValue;
@@ -155,9 +132,6 @@ class taoTests_models_classes_TestService
         $returnValue = null;
 
         // section 10-13-1-45-792423e0:12398d13f24:-8000:00000000000017D8 begin
-		
-		$returnValue = $this->getOneInstanceBy( $this->testClass, $identifier);
-		
         // section 10-13-1-45-792423e0:12398d13f24:-8000:00000000000017D8 end
 
         return $returnValue;
@@ -220,22 +194,26 @@ class taoTests_models_classes_TestService
     }
 
     /**
-     * Short description of method getItems
+     * Short description of method getTestClass
      *
      * @access public
      * @author Bertrand Chevrier, <chevrier.bertrand@gmail.com>
-     * @return core_kernel_classes_ContainerCollection
+     * @param  string uri
+     * @return core_kernel_classes_Class
      */
-    public function getItems()
+    public function getTestClass($uri = '')
     {
         $returnValue = null;
 
-        // section 10-13-1-45-2836570e:123bd13e69b:-8000:0000000000001880 begin
-        // section 10-13-1-45-2836570e:123bd13e69b:-8000:0000000000001880 end
+        // section 127-0-1-1-5109b15:124a4877945:-8000:0000000000001AF3 begin
+		
+		$returnValue = $this->testClass;
+		
+        // section 127-0-1-1-5109b15:124a4877945:-8000:0000000000001AF3 end
 
         return $returnValue;
     }
 
-} /* end of class taoTests_models_classes_TestService */
+} /* end of class taoTests_models_classes_TestsService */
 
 ?>
