@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension name="Tests" url="/taoTests/Tests/index" level="1">
 	<sections>
-		<section name="tests" url="/taoTests/Tests/index">
+		<section name="Manage tests" url="/taoTests/Tests/index">
 			<trees>
-				<tree name="tests" 
+				<tree name="Tests library" 
 					dataUrl="/taoTests/Tests/getTests" 
-					editClassUrl=""
-					editInstanceUrl=""
-					addInstanceUrl=""
-					addSubClassUrl=""
-					deleteUrl=""
-					duplicateUrl=""
-					gridUrl=""
+					editClassUrl="/taoTests/Tests/editTestClass"
+					editInstanceUrl="/taoTests/Tests/editTest"
+					addInstanceUrl="/taoTests/Tests/addTest"
+					addSubClassUrl="/taoTests/Tests/addTestClass"
+					deleteUrl="/taoTests/Tests/delete"
+					duplicateUrl="/taoTests/Tests/cloneTest"
 				/>
 			</trees>
 			<actions>
+				<action name="new class" js="subClass" url="/taoTests/Tests/addTestClass" context="class" />
+				<action name="new test" js="instanciate" url="/taoTests/Tests/addTest" context="class" />
+				<action name="delete" js="removeNode" url="/taoTests/Tests/delete" context="resource" />
+				<action name="duplicate" js="cloneNode" url="/taoTests/Tests/cloneTest" context="instance" />
+				<action name="edit test" url="/taoTests/Tests/editTest" context="instance" />
 				<action name="import" url="/taoTests/Tests/import" />
 				<action name="export" url="/taoTests/Tests/export" />
 			</actions>
