@@ -19,8 +19,8 @@
 				<action name="delete" js="removeNode" url="/taoTests/Tests/delete" context="resource" />
 				<action name="duplicate" js="cloneNode" url="/taoTests/Tests/cloneTest" context="instance" />
 				<action name="edit test" url="/taoTests/Tests/editTest" context="instance" />
-				<action name="import" url="/taoTests/Tests/import" />
-				<action name="export" url="/taoTests/Tests/export" />
+				<action name="import" url="/taoTests/Tests/import"  context="class" />
+				<action name="export" url="/taoTests/Tests/export"  context="class" reload="true" />
 			</actions>
 		</section>
 	</sections>
