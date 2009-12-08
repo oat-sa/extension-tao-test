@@ -21,6 +21,19 @@ class Tests extends TaoModule {
 		$this->defaultData();
 	}
 	
+	
+	/**
+	 * Override auth method
+	 * @see TaoModule::_isAllowed
+	 * @return boolean
+	 */	
+	protected function _isAllowed(){
+		$context = Context::getInstance();
+		if($context->getActionName() != 'getTestContent'){
+			return parent::_isAllowed();
+		}
+		return true;
+	}
 /*
  * conveniance methods
  */
@@ -121,6 +134,8 @@ class Tests extends TaoModule {
 			}
 		}
 		
+		$this->setData('uri', tao_helpers_Uri::encode($test->uriResource));
+		$this->setData('classUri', tao_helpers_Uri::encode($clazz->uriResource));
 		$this->setData('formTitle', 'Edit test');
 		$this->setData('myForm', $myForm->render());
 		$this->setView('form.tpl');
@@ -228,6 +243,67 @@ class Tests extends TaoModule {
 				TAO_TEST_CLASS
 			))
 		);
+	}
+	
+	/**
+	 * 
+	 * @return 
+	 */
+	public function authoring(){
+		$this->setData('error', false);
+		try{
+			$test = $this->getCurrentTest();
+			$clazz = $this->getCurrentClass();
+			
+			$this->setData('authoringFile', BASE_URL.'/models/ext/testAuthoring/Testauthoring.php');
+			$this->setData('dataPreview', urlencode(_url('getTestContent', 'Tests', array('uri' => $test->uriResource, 'classUri' => $clazz->uriResource))));
+			$this->setData('instanceUri', tao_helpers_Uri::encode($test->uriResource, false));
+		}
+		catch(Exception $e){
+			$this->setData('error', true);
+		}
+		$this->setView('authoring.tpl');
+	}
+	
+	public function getTestContent(){
+		header("Content-Type: text/xml; charset utf-8");
+		
+		try{
+			$test = $this->getCurrentTest();
+			$testContent = $test->getUniquePropertyValue(new core_kernel_classes_Property(TEST_TESTCONTENT_PROP));
+			
+			if($testContent instanceof core_kernel_classes_Literal){
+				
+				echo (string)$testContent;
+			}
+			else{
+				throw Exception("{$test->uriResource} has no test content.");
+			}
+		}
+		catch(Exception $e){
+			error_log($e->getMessage());
+			//print an empty response
+			echo '<?xml version="1.0" encoding="utf-8" ?>';
+		}
+	}
+	
+	public function saveTestContent(){
+		
+		$message = __('An error occured while saving the test');
+		
+		if(isset($_SESSION['instance']) && isset($_SESSION['xml'])){
+		
+			$test = $this->service->getTest($_SESSION['instance']);
+			if(!is_null($test)){
+				$test = $this->service->bindProperties($test, array(TEST_TESTCONTENT_PROP => $_SESSION['xml']));
+				$this->setSessionAttribute("showNodeUri", tao_helpers_Uri::encode($test->uriResource));
+				$message = __('Test saved successfully');
+			}
+			unset($_SESSION['instance']);
+			unset($_SESSION['xml']);
+		}
+		
+		$this->redirect('/tao/Main/index?extension=taoTests&message='.urlencode($message));
 	}
 	
 	/*

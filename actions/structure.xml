@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension name="Tests" url="/taoTests/Tests/index" level="1">
 	<sections>
-		<section name="Manage tests" url="/taoTests/Tests/index">
+		<section  id="manage_tests" name="Manage tests" url="/taoTests/Tests/index">
 			<trees>
 				<tree name="Tests library" 
 					dataUrl="/taoTests/Tests/getTests" 
@@ -19,9 +19,13 @@
 				<action name="delete" js="removeNode" url="/taoTests/Tests/delete" context="resource" />
 				<action name="duplicate" js="cloneNode" url="/taoTests/Tests/cloneTest" context="instance" />
 				<action name="edit test" url="/taoTests/Tests/editTest" context="instance" />
+				<action name="new property" js="addProperty" url="/taoTests/Tests/addClassProperty" context="class" />
 				<action name="import" url="/taoTests/Tests/import"  context="class" />
 				<action name="export" url="/taoTests/Tests/export"  context="class" reload="true" />
 			</actions>
+		</section>
+		<section id="tests_authoring" name="Test authoring" url="/taoTests/Tests/authoring" >
+			<actions />
 		</section>
 	</sections>
 </extension>
