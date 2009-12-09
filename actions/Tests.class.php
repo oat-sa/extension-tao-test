@@ -138,7 +138,7 @@ class Tests extends TaoModule {
 		$this->setData('classUri', tao_helpers_Uri::encode($clazz->uriResource));
 		$this->setData('formTitle', 'Edit test');
 		$this->setData('myForm', $myForm->render());
-		$this->setView('form.tpl');
+		$this->setView('form_group.tpl');
 	}
 	
 	/**
@@ -309,6 +309,22 @@ class Tests extends TaoModule {
 	/*
 	 * @TODO implement the following actions
 	 */
+	
+	public function getItems(){
+		if(!tao_helpers_Request::isAjax()){
+			throw new Exception("wrong request mode");
+		}
+		
+		echo json_encode($this->service->toTree( $this->service->getTestClass(), true, true, ''));
+	}
+	
+	public function saveItems(){
+		if(!tao_helpers_Request::isAjax()){
+			throw new Exception("wrong request mode");
+		}
+		$saved = false;
+		echo json_encode(array('saved'	=> $saved));
+	}
 	
 	public function getMetaData(){
 		throw new Exception("Not yet implemented");
