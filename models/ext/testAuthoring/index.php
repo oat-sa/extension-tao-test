@@ -1,5 +1,6 @@
 <?php
 if(isset($_POST['testcontent'])){
+	require('../../../../generis/common/inc.extension.php');
 	require('../../../includes/common.php');
 	require_once('TAOTsaveContent.php');
 	
