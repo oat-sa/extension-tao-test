@@ -1,4 +1,10 @@
 <?php
+
+/*
+ * @author CRP Henri Tudor - TAO Team - {@link http://www.tao.lu}
+ * @license GPLv2  http://www.opensource.org/licenses/gpl-2.0.php
+ * 
+ */
 	return array(
 		'name' => 'TAO Tests',
 		'description' => 'TAO Tests extensions http://www.tao.lu',
