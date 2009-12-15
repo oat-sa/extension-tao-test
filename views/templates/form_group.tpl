@@ -10,6 +10,7 @@
 	<div class="ui-widget ui-widget-content ui-state-default ui-corner-bottom" style="text-align:center; padding:4px;">
 		<input id="saver-action-item" type="button" value="<?=__('Save')?>" />
 	</div>
+	
 </div>
 <div class="main-container">
 	<div id="form-title" class="ui-widget-header ui-corner-top ui-state-default">
@@ -21,9 +22,11 @@
 </div>
 <script type="text/javascript">
 $(function(){
-	new GenerisTreeFormClass('#item-tree', "/taoTests/Tests/getItems", {
+	
+	new GenerisTreeFormClass('#item-tree', "/taoTests/Tests/getItems",{
 		actionId: 'item',
-		saveUrl : '/taoTests/Tests/saveItems'
+		saveUrl : '/taoTests/Tests/saveItems',
+		checkedNodes : <?=get_data('relatedItems')?>
 	});
 });
 </script>

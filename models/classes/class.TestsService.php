@@ -9,7 +9,7 @@ error_reporting(E_ALL);
  *
  * This file is part of Generis Object Oriented API.
  *
- * Automatically generated on 20.11.2009, 17:08:29 with ArgoUML PHP module 
+ * Automatically generated on 14.12.2009, 15:59:38 with ArgoUML PHP module 
  * (last revised $Date: 2009-04-11 21:57:46 +0200 (Sat, 11 Apr 2009) $)
  *
  * @author Bertrand Chevrier, <chevrier.bertrand@gmail.com>
@@ -75,7 +75,7 @@ class taoTests_models_classes_TestsService
      * @access protected
      * @var array
      */
-    protected $testsOntologies = array('http://www.tao.lu/Ontologies/TAOTest.rdf');
+    protected $testsOntologies = array('http://www.tao.lu/Ontologies/TAOTest.rdf', 'http://www.tao.lu/Ontologies/TAOItem.rdf');
 
     // --- OPERATIONS ---
 
@@ -98,24 +98,6 @@ class taoTests_models_classes_TestsService
 		$this->loadOntologies($this->testsOntologies);
 		
         // section 10-13-1-45-2836570e:123bd13e69b:-8000:0000000000001888 end
-
-        return $returnValue;
-    }
-
-    /**
-     * Short description of method getTests
-     *
-     * @access public
-     * @author Bertrand Chevrier, <chevrier.bertrand@gmail.com>
-     * @param  array options
-     * @return core_kernel_classes_ContainerCollection
-     */
-    public function getTests($options = array())
-    {
-        $returnValue = null;
-
-        // section 10-13-1-45-792423e0:12398d13f24:-8000:000000000000181B begin
-        // section 10-13-1-45-792423e0:12398d13f24:-8000:000000000000181B end
 
         return $returnValue;
     }
@@ -146,44 +128,6 @@ class taoTests_models_classes_TestsService
         // section 10-13-1-45-792423e0:12398d13f24:-8000:00000000000017D8 end
 
         return $returnValue;
-    }
-
-    /**
-     * Short description of method bindTestContent
-     *
-     * @access public
-     * @author Bertrand Chevrier, <chevrier.bertrand@gmail.com>
-     * @param  ContainerCollection items
-     * @param  Resource test
-     * @param  Resource testContent
-     * @return core_kernel_classes_Resource
-     */
-    public function bindTestContent( core_kernel_classes_ContainerCollection $items,  core_kernel_classes_Resource $test,  core_kernel_classes_Resource $testContent)
-    {
-        $returnValue = null;
-
-        // section 10-13-1-45-792423e0:12398d13f24:-8000:00000000000017DE begin
-        // section 10-13-1-45-792423e0:12398d13f24:-8000:00000000000017DE end
-
-        return $returnValue;
-    }
-
-    /**
-     * Short description of method activateTest
-     *
-     * @access public
-     * @author Bertrand Chevrier, <chevrier.bertrand@gmail.com>
-     * @param  Resource test
-     * @return boolean
-     */
-    public function activateTest( core_kernel_classes_Resource $test)
-    {
-        $returnValue = (bool) false;
-
-        // section 10-13-1-45-792423e0:12398d13f24:-8000:00000000000017E3 begin
-        // section 10-13-1-45-792423e0:12398d13f24:-8000:00000000000017E3 end
-
-        return (bool) $returnValue;
     }
 
     /**
@@ -330,6 +274,66 @@ class taoTests_models_classes_TestsService
 		}
 		
         // section 127-0-1-1--728644f3:12512379b22:-8000:0000000000001C40 end
+
+        return (bool) $returnValue;
+    }
+
+    /**
+     * Short description of method getRelatedItems
+     *
+     * @access public
+     * @author Bertrand Chevrier, <chevrier.bertrand@gmail.com>
+     * @param  Resource test
+     * @return array
+     */
+    public function getRelatedItems( core_kernel_classes_Resource $test)
+    {
+        $returnValue = array();
+
+        // section 127-0-1-1--5f8e44a2:1258d8ab867:-8000:0000000000001D27 begin
+		
+		if(!is_null($test)){
+			$returnValue = $test->getPropertyValues(new core_kernel_classes_Property(TEST_RELATED_ITEMS_PROP));
+		}
+		
+        // section 127-0-1-1--5f8e44a2:1258d8ab867:-8000:0000000000001D27 end
+
+        return (array) $returnValue;
+    }
+
+    /**
+     * Short description of method setRelatedItems
+     *
+     * @access public
+     * @author Bertrand Chevrier, <chevrier.bertrand@gmail.com>
+     * @param  Resource test
+     * @param  array items
+     * @return boolean
+     */
+    public function setRelatedItems( core_kernel_classes_Resource $test, $items = array())
+    {
+        $returnValue = (bool) false;
+
+        // section 127-0-1-1--5f8e44a2:1258d8ab867:-8000:0000000000001D2A begin
+		
+		if(!is_null($test)){
+			
+			$relatedItemProp = new core_kernel_classes_Property(TEST_RELATED_ITEMS_PROP);
+			
+			
+			$test->removePropertyValues($relatedItemProp);
+			$done = 0;
+			foreach($items as $item){
+				if($test->setPropertyValue($relatedItemProp, $item)){
+					$done++;
+				}
+			}
+			if($done == count($items)){
+				$returnValue = true;
+			}
+		}
+		
+        // section 127-0-1-1--5f8e44a2:1258d8ab867:-8000:0000000000001D2A end
 
         return (bool) $returnValue;
     }

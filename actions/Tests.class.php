@@ -36,6 +36,8 @@ class Tests extends TaoModule {
 		}
 		return true;
 	}
+	
+	
 /*
  * conveniance methods
  */
@@ -60,6 +62,7 @@ class Tests extends TaoModule {
 		
 		return $test;
 	}
+	
 	
 /*
  * controller actions
@@ -135,6 +138,10 @@ class Tests extends TaoModule {
 				$this->forward('Tests', 'index');
 			}
 		}
+		
+		$relatedItems = $this->service->getRelatedItems($test);
+		$relatedItems = array_map("tao_helpers_Uri::encode", $relatedItems);
+		$this->setData('relatedItems', json_encode($relatedItems));
 		
 		$this->setData('uri', tao_helpers_Uri::encode($test->uriResource));
 		$this->setData('classUri', tao_helpers_Uri::encode($clazz->uriResource));
@@ -248,8 +255,8 @@ class Tests extends TaoModule {
 	}
 	
 	/**
-	 * 
-	 * @return 
+	 * display the authoring  template (load the tool into an iframe)
+	 * @return void
 	 */
 	public function authoring(){
 		$this->setData('error', false);
@@ -267,6 +274,10 @@ class Tests extends TaoModule {
 		$this->setView('authoring.tpl');
 	}
 	
+	/**
+	 * get the xml content of a test over an http request 
+	 * @return void 
+	 */
 	public function getTestContent(){
 		header("Content-Type: text/xml; charset utf-8");
 		
@@ -289,6 +300,10 @@ class Tests extends TaoModule {
 		}
 	}
 	
+	/**
+	 * save the xml content of a test
+	 * @return void
+	 */
 	public function saveTestContent(){
 		
 		$message = __('An error occured while saving the test');
@@ -308,25 +323,45 @@ class Tests extends TaoModule {
 		$this->redirect('/tao/Main/index?extension=taoTests&message='.urlencode($message));
 	}
 	
-	/*
-	 * @TODO implement the following actions
+	/**
+	 * get the list of items to populate the checkbox tree of related items
+	 * @return void
 	 */
-	
 	public function getItems(){
 		if(!tao_helpers_Request::isAjax()){
 			throw new Exception("wrong request mode");
 		}
 		
-		echo json_encode($this->service->toTree( $this->service->getTestClass(), true, true, ''));
+		echo json_encode($this->service->toTree( new core_kernel_classes_Class(TAO_ITEM_CLASS), true, true, ''));
 	}
 	
+	/**
+	 * save the related items from the checkbox tree
+	 * @return void
+	 */
 	public function saveItems(){
 		if(!tao_helpers_Request::isAjax()){
 			throw new Exception("wrong request mode");
 		}
 		$saved = false;
+		
+		$items = array();
+		foreach($this->getRequestParameters() as $key => $value){
+			if(preg_match("/^instance_/", $key)){
+				array_push($items, tao_helpers_Uri::decode($value));
+			}
+		}
+		$test = $this->getCurrentTest();
+		
+		if($this->service->setRelatedItems($test, $items)){
+			$saved = true;
+		}
 		echo json_encode(array('saved'	=> $saved));
 	}
+	
+	/*
+	 * @TODO implement the following actions
+	 */
 	
 	public function getMetaData(){
 		throw new Exception("Not yet implemented");
