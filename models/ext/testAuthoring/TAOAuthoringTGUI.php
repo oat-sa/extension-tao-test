@@ -24,11 +24,17 @@ class TAOAuthoringTGUI {
 	 * @return thee xml data
 	 */
 	private function loadXml(){
-		$output = '';
 		if(!empty($this->localXmlFile)){
+			session_write_close();
 			$curlHandler = curl_init();
-	        curl_setopt($curlHandler, CURLOPT_URL, $this->localXmlFile);
+			$url = $this->localXmlFile;
+			if(!preg_match("/&$/", $url)){
+				$url .= '&';
+			}
+			$url .= 'session_id=' . session_id();
+			curl_setopt($curlHandler, CURLOPT_URL, $url);
 			curl_setopt($curlHandler, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($curlHandler, CURLOPT_COOKIE, 'PHPSESSID=' . $_COOKIE['PHPSESSID'] . '; path=/'); 
 			$output = curl_exec($curlHandler);
 			curl_close($curlHandler);  
 		}
