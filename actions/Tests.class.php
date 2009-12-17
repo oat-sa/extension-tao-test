@@ -238,21 +238,6 @@ class Tests extends TaoModule {
 		}
 	}
 	
-	/**
-	 * get the list data: all taoObjects children except the TAO_TEST_CLASS
-	 * @return void
-	 */
-	public function getLists(){
-		if(!tao_helpers_Request::isAjax()){
-			throw new Exception("wrong request mode");
-		}
-		
-		return json_encode(
-			$this->getListData(array(
-				TAO_TEST_CLASS
-			))
-		);
-	}
 	
 	/**
 	 * display the authoring  template (load the tool into an iframe)
