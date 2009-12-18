@@ -17,6 +17,9 @@ class TAOAuthoringTGUI {
 	function TAOAuthoringTGUI($localXmlFile, $instance){
 		$this->localXmlFile = $localXmlFile;
 		$this->instance = $instance;
+		
+		$session = core_kernel_classes_Session::singleton();
+		$session->model->loadModel('http://www.tao.lu/Ontologies/TAOItem.rdf');
 	}
 	
 	/**
