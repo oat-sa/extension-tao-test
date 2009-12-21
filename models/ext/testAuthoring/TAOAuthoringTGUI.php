@@ -327,15 +327,32 @@ class TAOAuthoringTGUI {
 		$output.='<html><head>';
 		$output.='<script type="text/javascript">var _editor_url="/generis/core/view/HTMLArea-3.0-rc1/";</script>';
 		$output.='<script type="text/javascript" src="/generis/core/view/HTMLArea-3.0-rc1/htmlarea.js"></script>';
+		$output.='<script type="text/javascript" src="/tao/views/js/jquery-1.3.2.min.js" ></script> ';
 		$output.='<link rel="stylesheet" type="text/css" href="/generis/core/view/HTMLArea-3.0-rc1/htmlarea.css" />';
 		$output.='<link rel="stylesheet" type="text/css" href="/generis/core/view/CSS/generis_default.css" />';
 		$output.='<style type="text/css">
 					input[type=button],input[type=submit]{cursor:pointer; padding:4px; font-weight:bold;} 
 					table.generisTable tr td,table.generisTable tr th, div.Title{color:#000;} </style>';
+		$output.='<script type="text/javascript">';
+		$output.="function preview(uri){";
+		$output.="var data = $('#testForm').serialize();";
+		$output.="data.preview = true;";
+		$output.="$.ajax({
+			url: 'preview.php',
+			type: 'POST',
+			data: data,
+			dataType: 'json',
+			success: function(response){
+				if(response.saved){
+					window.open('/taoTests/Tests/preview?uri='+uri, 'tao', 'width=800,height=600,menubar=no,toolbar=no');
+				}
+			}
+		});";
+		$output.="}";
+		$output.='</script>';
 		$output.='</head><body>';
-		$output.='
-		<FORM enctype="multipart/form-data" action=./index.php name=newressource method=post><input type=hidden name=MAX_FILE_SIZE value=2000000>';
-		
+		$output.='<FORM id="testForm" enctype="multipart/form-data" action=./index.php name=newressource method=post>';
+		$output.='<input type=hidden name=MAX_FILE_SIZE value=2000000>';
 		$output.=TABLEHEADER;
 		$output.='<input type="hidden" name="instance" value="'.$instance.'">';
 		$output.='<input type=hidden name=AuthoringT['.$instance.']['.$property.']>';
@@ -476,7 +493,7 @@ class TAOAuthoringTGUI {
 		$output.="<input type=hidden name=testcontent[property] value=$property>";
 		$output.="<tr><td colspan=4>
 		<input type='submit' name='saveTContent' value='".APPLY."'>
-		<input type='button' onclick='window.href=../GenerisWidgets/testpreview/tao_test.php' value='".PREVIEW."' />
+		<input type='button' onclick='preview(\"".urlencode($instance)."\")' value='".PREVIEW."' />
 		</td></tr>";
 		$output.='</table></td></tr>';
 		$output.=TABLEFOOTER;

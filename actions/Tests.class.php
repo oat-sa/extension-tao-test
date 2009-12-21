@@ -309,6 +309,11 @@ class Tests extends TaoModule {
 		$this->redirect('/tao/Main/index?extension=taoTests&message='.urlencode($message));
 	}
 	
+	public function preview(){
+		$this->setData('uri', $this->getRequestParameter('uri'));
+		$this->setView('preview.tpl');
+	}
+	
 	/**
 	 * get the list of items to populate the checkbox tree of related items
 	 * @return void
