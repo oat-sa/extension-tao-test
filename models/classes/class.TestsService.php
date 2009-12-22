@@ -3,16 +3,9 @@
 error_reporting(E_ALL);
 
 /**
- * Generis Object Oriented API - taoTests/models/classes/class.TestsService.php
+ * Service methods to manage the Tests business models using the RDF API.
  *
- * @license GPLv2  http://www.opensource.org/licenses/gpl-2.0.php
- *
- * This file is part of Generis Object Oriented API.
- *
- * Automatically generated on 14.12.2009, 15:59:38 with ArgoUML PHP module 
- * (last revised $Date: 2009-04-11 21:57:46 +0200 (Sat, 11 Apr 2009) $)
- *
- * @author Bertrand Chevrier, <chevrier.bertrand@gmail.com>
+ * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
  * @package taoTests
  * @subpackage models_classes
  */
@@ -25,7 +18,7 @@ if (0 > version_compare(PHP_VERSION, '5')) {
  * The Service class is an abstraction of each service instance. 
  * Used to centralize the behavior related to every servcie instances.
  *
- * @author Bertrand Chevrier, <chevrier.bertrand@gmail.com>
+ * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
  */
 require_once('tao/models/classes/class.Service.php');
 
@@ -38,10 +31,10 @@ require_once('tao/models/classes/class.Service.php');
 // section 10-13-1-45-792423e0:12398d13f24:-8000:00000000000017DB-constants end
 
 /**
- * Short description of class taoTests_models_classes_TestsService
+ * Service methods to manage the Tests business models using the RDF API.
  *
  * @access public
- * @author Bertrand Chevrier, <chevrier.bertrand@gmail.com>
+ * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
  * @package taoTests
  * @subpackage models_classes
  */
@@ -54,7 +47,7 @@ class taoTests_models_classes_TestsService
     // --- ATTRIBUTES ---
 
     /**
-     * Short description of attribute testClass
+     * The RDFS top level test class
      *
      * @access protected
      * @var Class
@@ -62,7 +55,7 @@ class taoTests_models_classes_TestsService
     protected $testClass = null;
 
     /**
-     * Short description of attribute itemClass
+     * The RDFS top level item class
      *
      * @access protected
      * @var Class
@@ -70,7 +63,7 @@ class taoTests_models_classes_TestsService
     protected $itemClass = null;
 
     /**
-     * Short description of attribute testsOntologies
+     * The ontologies to load
      *
      * @access protected
      * @var array
@@ -83,7 +76,7 @@ class taoTests_models_classes_TestsService
      * Short description of method __construct
      *
      * @access public
-     * @author Bertrand Chevrier, <chevrier.bertrand@gmail.com>
+     * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
      * @return core_view_classes_
      */
     public function __construct()
@@ -106,7 +99,7 @@ class taoTests_models_classes_TestsService
      * Short description of method getTest
      *
      * @access public
-     * @author Bertrand Chevrier, <chevrier.bertrand@gmail.com>
+     * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
      * @param  string identifier usually the test label or the ressource URI
      * @param  string mode
      * @param  Class clazz
@@ -131,10 +124,10 @@ class taoTests_models_classes_TestsService
     }
 
     /**
-     * Short description of method deleteTest
+     * delete a test instance
      *
      * @access public
-     * @author Bertrand Chevrier, <chevrier.bertrand@gmail.com>
+     * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
      * @param  Resource test
      * @return boolean
      */
@@ -154,10 +147,12 @@ class taoTests_models_classes_TestsService
     }
 
     /**
-     * Short description of method getTestClass
+     * get a test subclass by uri. 
+     * If the uri is not set, it returns the test class (the top level class.
+     * If the uri don't reference a test  subclass, it returns null
      *
      * @access public
-     * @author Bertrand Chevrier, <chevrier.bertrand@gmail.com>
+     * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
      * @param  string uri
      * @return core_kernel_classes_Class
      */
@@ -186,7 +181,7 @@ class taoTests_models_classes_TestsService
      * Short description of method createTestClass
      *
      * @access public
-     * @author Bertrand Chevrier, <chevrier.bertrand@gmail.com>
+     * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
      * @param  Class clazz
      * @param  string label
      * @param  array properties
@@ -226,7 +221,7 @@ class taoTests_models_classes_TestsService
      * Short description of method isTestClass
      *
      * @access public
-     * @author Bertrand Chevrier, <chevrier.bertrand@gmail.com>
+     * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
      * @param  Class clazz
      * @return boolean
      */
@@ -254,10 +249,10 @@ class taoTests_models_classes_TestsService
     }
 
     /**
-     * Short description of method deleteTestClass
+     * delete a test class or sublcass
      *
      * @access public
-     * @author Bertrand Chevrier, <chevrier.bertrand@gmail.com>
+     * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
      * @param  Class clazz
      * @return boolean
      */
@@ -279,10 +274,10 @@ class taoTests_models_classes_TestsService
     }
 
     /**
-     * Short description of method getRelatedItems
+     * get the list of items in the test in parameter
      *
      * @access public
-     * @author Bertrand Chevrier, <chevrier.bertrand@gmail.com>
+     * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
      * @param  Resource test
      * @return array
      */
@@ -302,10 +297,10 @@ class taoTests_models_classes_TestsService
     }
 
     /**
-     * Short description of method setRelatedItems
+     * define the list of items composing a test
      *
      * @access public
-     * @author Bertrand Chevrier, <chevrier.bertrand@gmail.com>
+     * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
      * @param  Resource test
      * @param  array items
      * @return boolean
