@@ -36,7 +36,15 @@ class TAOAuthoringTGUI {
 			}
 			$url .= 'session_id=' . session_id();
 			curl_setopt($curlHandler, CURLOPT_URL, $url);
+			
+			//if there is an http auth, it's mandatory to connect with curl
+			if(USE_HTTP_AUTH){
+				curl_setopt($curlHandler, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+            	curl_setopt($curlHandler, CURLOPT_USERPWD, USE_HTTP_USER.":".USE_HTTP_PASS);
+			}
 			curl_setopt($curlHandler, CURLOPT_RETURNTRANSFER, 1);
+			
+			//to keep the session
 			curl_setopt($curlHandler, CURLOPT_COOKIE, 'PHPSESSID=' . $_COOKIE['PHPSESSID'] . '; path=/'); 
 			$output = curl_exec($curlHandler);
 			curl_close($curlHandler);  
