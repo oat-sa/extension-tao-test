@@ -13,7 +13,9 @@ require_once('tao/actions/TaoModule.class.php');
  */
 class Tests extends TaoModule {
 
-
+	/**
+	 * constructor: initialize the service and the default data
+	 */
 	public function __construct(){
 	
 		parent::__construct();
@@ -309,6 +311,10 @@ class Tests extends TaoModule {
 		$this->redirect('/tao/Main/index?extension=taoTests&message='.urlencode($message));
 	}
 	
+	/**
+	 * Test preview 
+	 * @return void
+	 */
 	public function preview(){
 		$this->setData('uri', $this->getRequestParameter('uri'));
 		$this->setView('preview.tpl');
