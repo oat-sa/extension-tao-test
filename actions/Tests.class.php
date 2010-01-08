@@ -249,12 +249,20 @@ class Tests extends TaoModule {
 	public function authoring(){
 		$this->setData('error', false);
 		try{
-			$test = $this->getCurrentTest();
-			$clazz = $this->getCurrentClass();
+			$data = array();
+			$data['test'] = $this->getCurrentTest();
+			$data['clazz'] = $this->getCurrentClass();
 			
-			$this->setData('authoringFile', BASE_URL.'/models/ext/testAuthoring/Testauthoring.php');
-			$this->setData('dataPreview', urlencode(_url('getTestContent', 'Tests', array('uri' => $test->uriResource, 'classUri' => $clazz->uriResource))));
-			$this->setData('instanceUri', tao_helpers_Uri::encode($test->uriResource, false));
+			$myFormContainer = new taoTests_actions_form_TestAuthoring($data);
+			$myForm = $myFormContainer->getForm();
+			
+			if($myForm->isSubmited()){
+				if($myForm->isValid()){
+					$this->setData('message', __('test saved'));
+				}
+			}
+			$this->setData('formTitle', __('Test authoring'));
+			$this->setData('myForm', $myForm->render());
 		}
 		catch(Exception $e){
 			$this->setData('error', true);
@@ -268,24 +276,12 @@ class Tests extends TaoModule {
 	 */
 	public function getTestContent(){
 		header("Content-Type: text/xml; charset utf-8");
-		
 		try{
-			$test = $this->getCurrentTest();
-			$testContent = $test->getUniquePropertyValue(new core_kernel_classes_Property(TEST_TESTCONTENT_PROP));
-			
-			if($testContent instanceof core_kernel_classes_Literal){
-				
-				echo (string)$testContent;
-			}
-			else{
-				throw Exception("{$test->uriResource} has no test content.");
-			}
+			print $this->service->getTestContent($this->getCurrentTest());
+			return;
 		}
-		catch(Exception $e){
-			error_log($e->getMessage());
-			//print an empty response
-			echo '<?xml version="1.0" encoding="utf-8" ?>';
-		}
+		catch(Exception $e){}
+		print '<?xml version="1.0" encoding="utf-8" ?>';
 	}
 	
 	/**
@@ -299,8 +295,7 @@ class Tests extends TaoModule {
 		if(isset($_SESSION['instance']) && isset($_SESSION['xml'])){
 		
 			$test = $this->service->getTest($_SESSION['instance']);
-			if(!is_null($test)){
-				$test = $this->service->bindProperties($test, array(TEST_TESTCONTENT_PROP => $_SESSION['xml']));
+			if($this->service->setTestContent($test, $_SESSION['xml'])){
 				$this->setSessionAttribute("showNodeUri", tao_helpers_Uri::encode($test->uriResource));
 				$message = __('Test saved successfully');
 			}

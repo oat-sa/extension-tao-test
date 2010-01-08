@@ -55,14 +55,6 @@ class taoTests_models_classes_TestsService
     protected $testClass = null;
 
     /**
-     * The RDFS top level item class
-     *
-     * @access protected
-     * @var Class
-     */
-    protected $itemClass = null;
-
-    /**
      * The ontologies to load
      *
      * @access protected
@@ -287,16 +279,62 @@ class taoTests_models_classes_TestsService
      * @access public
      * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
      * @param  Resource test
+     * @param  boolean sequenced
      * @return array
      */
-    public function getRelatedItems( core_kernel_classes_Resource $test)
+    public function getRelatedItems( core_kernel_classes_Resource $test, $sequenced = false)
     {
         $returnValue = array();
 
         // section 127-0-1-1--5f8e44a2:1258d8ab867:-8000:0000000000001D27 begin
 		
 		if(!is_null($test)){
+			
 			$returnValue = $test->getPropertyValues(new core_kernel_classes_Property(TEST_RELATED_ITEMS_PROP));
+			
+			//order the item using the "/tao:TEST/tao:CITEM[Sequence]" attribute in the testcontent xml
+			if($sequenced){
+				try{
+					$content = $this->getTestContent($test);
+					if(!empty($content)){
+						
+						$sequencedItems = array();
+						$unSequencedItems = array();
+						
+						$xml = simplexml_load_string($content, "SimpleXMLElement", LIBXML_NOERROR );
+						if($xml instanceof SimpleXMLElement){
+							$nodes = $xml->xpath('/tao:TEST/tao:CITEM');
+							foreach($nodes as $node){
+								$uri = (string)$node;
+								if(!empty($uri)){
+									if(in_array($uri, $returnValue)){
+										$index = 0;
+										if(isset($node['Sequence'])){
+											$index = (int)$node['Sequence'];
+										}
+										if($index > 0){
+											$sequencedItems[(int)$node['Sequence']] = $uri;
+										}
+										else{
+											$unSequencedItems[] = $uri;
+										}
+									}
+								}
+							}
+							ksort($sequencedItems);
+							
+							//push items without sequence at the end 
+							if(count($unSequencedItems) > 0){
+								foreach($unSequencedItems as $item){
+									$sequencedItems[count($sequencedItems) + 1] = $item;
+								}
+							}
+							$returnValue = $sequencedItems;
+						}
+					}
+				}
+				catch(Exception $e){ }
+			}
 		}
 		
         // section 127-0-1-1--5f8e44a2:1258d8ab867:-8000:0000000000001D27 end
@@ -311,9 +349,10 @@ class taoTests_models_classes_TestsService
      * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
      * @param  Resource test
      * @param  array items
+     * @param  boolean sequenced
      * @return boolean
      */
-    public function setRelatedItems( core_kernel_classes_Resource $test, $items = array())
+    public function setRelatedItems( core_kernel_classes_Resource $test, $items = array(), $sequenced = false)
     {
         $returnValue = (bool) false;
 
@@ -322,7 +361,6 @@ class taoTests_models_classes_TestsService
 		if(!is_null($test)){
 			
 			$relatedItemProp = new core_kernel_classes_Property(TEST_RELATED_ITEMS_PROP);
-			
 			
 			$test->removePropertyValues($relatedItemProp);
 			$done = 0;
@@ -337,6 +375,63 @@ class taoTests_models_classes_TestsService
 		}
 		
         // section 127-0-1-1--5f8e44a2:1258d8ab867:-8000:0000000000001D2A end
+
+        return (bool) $returnValue;
+    }
+
+    /**
+     * Short description of method getTestContent
+     *
+     * @access public
+     * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
+     * @param  Resource test
+     * @return string
+     */
+    public function getTestContent( core_kernel_classes_Resource $test)
+    {
+        $returnValue = (string) '';
+
+        // section 127-0-1-1--645eb059:1260e94e6e6:-8000:0000000000001DEA begin
+		
+		if(!is_null($test)){
+			$testContent = $test->getUniquePropertyValue(new core_kernel_classes_Property(TEST_TESTCONTENT_PROP));
+			if($testContent instanceof core_kernel_classes_Literal){
+				$returnValue = (string)$testContent;
+			}
+		}
+		
+        // section 127-0-1-1--645eb059:1260e94e6e6:-8000:0000000000001DEA end
+
+        return (string) $returnValue;
+    }
+
+    /**
+     * Short description of method setTestContent
+     *
+     * @access public
+     * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
+     * @param  Resource test
+     * @param  string content
+     * @return boolean
+     */
+    public function setTestContent( core_kernel_classes_Resource $test, $content = '')
+    {
+        $returnValue = (bool) false;
+
+        // section 127-0-1-1--645eb059:1260e94e6e6:-8000:0000000000001DED begin
+		
+		if(!is_null($test)){
+			$test = $this->bindProperties($test, array(TEST_TESTCONTENT_PROP => $content));
+			
+			try{
+				if($this->getTestContent($test) == $content){
+					$returnValue = true;
+				}
+			}
+			catch(Exception $e){}
+		}
+		
+        // section 127-0-1-1--645eb059:1260e94e6e6:-8000:0000000000001DED end
 
         return (bool) $returnValue;
     }
