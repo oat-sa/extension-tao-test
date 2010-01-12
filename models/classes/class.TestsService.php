@@ -372,6 +372,42 @@ class taoTests_models_classes_TestsService
 			if($done == count($items)){
 				$returnValue = true;
 			}
+			
+			if($sequenced){
+				try{
+					$content = $this->getTestContent($test);
+					
+					$dom = new DOMDocument();
+					$dom->loadXML($content);
+					$root = $dom->documentElement;
+					
+					foreach($items as $index => $itemUri){
+						$item = new core_kernel_classes_Resource($itemUri);
+						try{
+							
+							$itemModel = $item->getUniquePropertyValue(new core_kernel_classes_Property(TAO_ITEM_MODEL_PROPERTY));
+							if($itemModel instanceof core_kernel_classes_Resource){
+								$runtime = basename($itemModel->getUniquePropertyValue(new core_kernel_classes_Property(TAO_ITEM_MODEL_RUNTIME_PROPERTY)));
+							}
+						}
+						catch(Exception $exp){
+							$runtime = '';
+						}
+						
+						$itemNode = $dom->createElement('tao:CITEM', $item->uriResource);
+						$itemNode->setAttribute('weight', '1');
+						$itemNode->setAttribute('Sequence', $index);
+						$itemNode->setAttribute('itemModel', $runtime);
+						$root->appendChild($itemNode);
+					}
+					
+					$returnValue = $this->setTestContent($test, $dom->saveXML());
+					
+				}
+				catch(DOMException $domExp){
+					$returnValue = false;
+				}
+			}
 		}
 		
         // section 127-0-1-1--5f8e44a2:1258d8ab867:-8000:0000000000001D2A end
@@ -394,9 +430,20 @@ class taoTests_models_classes_TestsService
         // section 127-0-1-1--645eb059:1260e94e6e6:-8000:0000000000001DEA begin
 		
 		if(!is_null($test)){
-			$testContent = $test->getUniquePropertyValue(new core_kernel_classes_Property(TEST_TESTCONTENT_PROP));
-			if($testContent instanceof core_kernel_classes_Literal){
-				$returnValue = (string)$testContent;
+			$testContents = $test->getPropertyValues(new core_kernel_classes_Property(TEST_TESTCONTENT_PROP));
+			
+			if(count($testContents) == 0){	//lazy init
+				$testContent = $this->initTestContent($test);
+				echo $testContent;
+				if($this->setTestContent($test, $testContent)){
+					$returnValue = (string)$testContent;
+				}
+			}
+			else if(count($testContents) == 1){	//get it
+				$returnValue =  $testContents[0];
+			}
+			else{	//remove them 
+				$test->removePropertyValues(new core_kernel_classes_Property(TEST_TESTCONTENT_PROP));
 			}
 		}
 		
@@ -434,6 +481,38 @@ class taoTests_models_classes_TestsService
         // section 127-0-1-1--645eb059:1260e94e6e6:-8000:0000000000001DED end
 
         return (bool) $returnValue;
+    }
+
+    /**
+     * Short description of method initTestContent
+     *
+     * @access public
+     * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
+     * @param  Resource test
+     * @return string
+     */
+    public function initTestContent( core_kernel_classes_Resource $test)
+    {
+        $returnValue = (string) '';
+
+        // section 127-0-1-1--18790a60:12622d03866:-8000:0000000000001DFB begin
+		
+		$dom = new DOMDocument();
+		$dom->load(TEST_CONTENT_REF_FILE);
+		$root = $dom->documentElement;
+		
+		$root->setAttribute('rdf:ID', $test->uriResource);
+		foreach($root->getElementsByTagNameNS('http://www.w3.org/TR/1999/PR-rdf-schema-19990303#','LABEL') as $labelNode){
+			$labelNode->nodeValue = $test->getLabel();
+		}
+		foreach($root->getElementsByTagNameNS('http://www.w3.org/TR/1999/PR-rdf-schema-19990303#', 'COMMENT') as $commentNode){
+			$commentNode->nodeValue = $test->comment;
+		}
+		$returnValue = $dom->saveXML();
+		
+        // section 127-0-1-1--18790a60:12622d03866:-8000:0000000000001DFB end
+
+        return (string) $returnValue;
     }
 
 } /* end of class taoTests_models_classes_TestsService */

@@ -142,9 +142,19 @@ class Tests extends TaoModule {
 			}
 		}
 		
-		$relatedItems = $this->service->getRelatedItems($test);
-		$relatedItems = array_map("tao_helpers_Uri::encode", $relatedItems);
-		$this->setData('relatedItems', json_encode($relatedItems));
+		$relatedItems = $this->service->getRelatedItems($test, true);
+		$this->setData('relatedItems', json_encode(array_map("tao_helpers_Uri::encode", $relatedItems)));
+		
+		$itemSequence = array();
+		foreach($relatedItems as $index => $itemUri){
+			$item = new core_kernel_classes_Resource($itemUri);
+			$itemSequence[$index] = array(
+				'uri' 	=> tao_helpers_Uri::encode($itemUri),
+				'label' => $item->getLabel()
+			);
+		}
+		$this->setData('itemSequence', $itemSequence);
+		
 		
 		$this->setData('uri', tao_helpers_Uri::encode($test->uriResource));
 		$this->setData('classUri', tao_helpers_Uri::encode($clazz->uriResource));
@@ -345,7 +355,7 @@ class Tests extends TaoModule {
 		}
 		$test = $this->getCurrentTest();
 		
-		if($this->service->setRelatedItems($test, $items)){
+		if($this->service->setRelatedItems($test, $items, true)){
 			$saved = true;
 		}
 		echo json_encode(array('saved'	=> $saved));
