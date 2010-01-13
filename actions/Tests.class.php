@@ -350,7 +350,7 @@ class Tests extends TaoModule {
 		$items = array();
 		foreach($this->getRequestParameters() as $key => $value){
 			if(preg_match("/^instance_/", $key)){
-				array_push($items, tao_helpers_Uri::decode($value));
+				$items[str_replace('instance_', '', $key)] = tao_helpers_Uri::decode($value);
 			}
 		}
 		$test = $this->getCurrentTest();

@@ -81,7 +81,96 @@ class taoTests_actions_form_TestAuthoring
     {
         // section 127-0-1-1-1f533553:1260917dc26:-8000:0000000000001DED begin
 		
+		//duration 
+		$durationElt = tao_helpers_form_FormFactory::getElement('duration', 'Textbox');
+		$durationElt->setDescription(__('Maximum time allowed'));
+		$this->form->addElement($durationElt);
 		
+		//password
+		$passElt = tao_helpers_form_FormFactory::getElement('password', 'Hiddenbox');
+		$passElt->setDescription(__('Password'));
+		$this->form->addElement($passElt);
+		
+		//display params
+		$displayElt = tao_helpers_form_FormFactory::getElement('display', 'Checkbox');
+		$displayElt->setDescription(__('Display'));
+		$displayElt->setOptions(array(
+			'showlistbox' => 'Display items list during the test',
+			'showprogessbar' => 'Show a progress bar during the test',
+			'showLabel' => 'Display label',
+			'showComment' => 'Display comments'
+		));
+		$this->form->addElement($displayElt);
+		
+		//sequence mode
+		$sequenceElt = tao_helpers_form_FormFactory::getElement('hassequencemode', 'Combobox');
+		$sequenceElt->setDescription(__('Sequnce mode'));
+		$sequenceElt->setOptions(array(
+			'sequencial'	=> __('Sequencial'),
+			'random'		=> __('Random'),
+			'maxfisher'		=> __('Maxfisher')
+		));
+		$this->form->addElement($sequenceElt);
+		
+		//delay
+		$delayElt = tao_helpers_form_FormFactory::getElement('delay', 'Textbox');
+		$delayElt->setDescription(__('Delay'));
+		$this->form->addElement($delayElt);
+		
+		//scoring method
+		$scoringElt = tao_helpers_form_FormFactory::getElement('hasscoringmethod', 'Combobox');
+		$scoringElt->setDescription(__('Sequence mode'));
+		$scoringElt->setOptions(array(
+			'CLASSICALRATIO'		=> __('Classical ratio'),
+			'MAXIMUMLIKELIHOOD'		=> __('Maximum likelihood'),
+			'MAXIMUMAPOSTERIORI'	=> __('Maximum a posteriori'),
+			'EXPECTEDAPOSTERIORI'	=> __('Expected a posteriori')
+		));
+		$this->form->addElement($scoringElt);
+		
+		//cumul model
+		$cumulElt = tao_helpers_form_FormFactory::getElement('cumulmodel', 'Combobox');
+		$cumulElt->setDescription(__('Sequnce mode'));
+		$cumulElt->setOptions(array(
+			'CLASSICAL'		=> __('Classical'),
+			'LIKELIHOOD'		=> __('Likelihood'),
+			'LOG-LIKELIHOOD'		=> __('Log-likelihood')
+		));
+		$this->form->addElement($cumulElt);
+		
+		//Halt criteria
+		$haltElt = tao_helpers_form_FormFactory::getElement('haltcriteria', 'Combobox');
+		$haltElt->setDescription(__('Halt criteria'));
+		$haltElt->setOptions(array(
+			''		=> '',
+			'DELTASCORE'	=> __('DELTASCORE'),
+			'DELTASE'		=> __('DELTASE')
+		));
+		$this->form->addElement($haltElt);
+		
+		//threshold
+		$thresholdElt = tao_helpers_form_FormFactory::getElement('deltascorethreshold', 'Textbox');
+		$thresholdElt->setDescription(__('Threshold'));
+		$this->form->addElement($thresholdElt);
+		
+		//max
+		$maxElt = tao_helpers_form_FormFactory::getElement('max', 'Textbox');
+		$maxElt->setDescription(__('Max'));
+		$this->form->addElement($maxElt);
+		
+		$this->form->createGroup("parameters", "Test Parameters", array(
+				'duration', 
+				'password', 
+				'display', 
+				'hassequencemode',
+				'delay',
+				'hasscoringmethod',
+				'cumulmodel',
+				'haltcriteria',
+				'deltascorethreshold',
+				'max'
+			)
+		);
 		
         // section 127-0-1-1-1f533553:1260917dc26:-8000:0000000000001DED end
     }

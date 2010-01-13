@@ -381,6 +381,15 @@ class taoTests_models_classes_TestsService
 					$dom->loadXML($content);
 					$root = $dom->documentElement;
 					
+					$oldItemSequence = array();
+					
+					$xpath = new DomXpath($dom);
+					$result = $xpath->query("//tao:CITEM");
+					for($i = 0; $i < $result->length; $i++){
+						$node = $result->item($i);
+						$oldItemSequence[] = $node->parentNode->removeChild($node);
+					}
+					
 					foreach($items as $index => $itemUri){
 						$item = new core_kernel_classes_Resource($itemUri);
 						try{
@@ -392,6 +401,19 @@ class taoTests_models_classes_TestsService
 						}
 						catch(Exception $exp){
 							$runtime = '';
+						}
+						$weight = "1";
+						
+						foreach($oldItemSequence as $oldItem){
+							if($oldItem->nodeValue == $itemUri){
+								if($oldItem->hasAttribute('weight')){
+									$weight = $oldItem->getAttribute('weight');
+								}
+								if($oldItem->hasAttribute('itemModel') && $runtime == ''){
+									$runtime = $oldItem->getAttribute('itemModel');
+								}
+								break;
+							}
 						}
 						
 						$itemNode = $dom->createElement('tao:CITEM', $item->uriResource);
