@@ -22,7 +22,9 @@
 			<ul id="item-sequence" class="sortable-list">
 			<?foreach(get_data('itemSequence') as $index => $item):?>
 				<li class="ui-state-default" id="item_<?=$item['uri']?>" >
-					<span class="ui-icon ui-icon-arrowthick-2-n-s" /><?=$index?>. <?=$item['label']?>
+					<span class='ui-icon ui-icon-arrowthick-2-n-s' />
+					<span class="ui-icon ui-icon-grip-dotted-vertical" />
+					<?=$index?>. <?=$item['label']?>
 				</li>
 			<?endforeach?>
 			</ul>
@@ -44,20 +46,15 @@
 $(function(){
 	
 	var sequence = <?=get_data('relatedItems')?>;
-	
-	var labels = {
-	<?foreach(get_data('itemSequence') as $index => $item):?>
-		"item_<?=$item['uri']?>" : "<?=$item['label']?>",
-	<?endforeach?>
-		'': ''
-	};
+	var labels = <?=get_data('allItems')?>;
 	
 	function buildItemList(id, items, labels){
 		html = '';
 		for (i in items){
 			itemId = items[i];
 			html += "<li class='ui-state-default' id='"+itemId+"' >";
-			html += "<span class='ui-icon ui-icon-arrowthick-2-n-s' />"+i+". "+ labels[itemId];
+			html += "<span class='ui-icon ui-icon-arrowthick-2-n-s' /><span class='ui-icon ui-icon-grip-dotted-vertical' />";
+			html += i+". "+ labels[itemId];
 			html += "</li>";
 		}
 		$("#"+id).html(html);
@@ -95,6 +92,13 @@ $(function(){
 			}
 			buildItemList('item-sequence', newSequence, labels);
 		}
+	});
+	
+	$("#item-sequence li").bind('mousedown', function(){
+		$(this).css('cursor', 'move');
+	});
+	$("#item-sequence li").bind('mouseup',function(){
+		$(this).css('cursor', 'pointer');
 	});
 	
 	$("#saver-action-item-sequence").click(function(){

@@ -25,7 +25,10 @@
 				<action name="export" url="/taoTests/Tests/export"  context="class" reload="true" />
 			</actions>
 		</section>
-		<section id="tests_authoring" name="Test authoring" url="/taoTests/Tests/authoring" >
+		<section id="tests_authoring" name="Parameters" url="/taoTests/Tests/authoring" >
+			<actions />
+		</section>
+		<section id="items_sequence" name="Items Sequence" url="/taoTests/Tests/itemSequence" >
 			<actions />
 		</section>
 	</sections>

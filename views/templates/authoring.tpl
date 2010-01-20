@@ -12,9 +12,11 @@
 		</span>
 	</div>
 <?else:?>
-
+	
 	<div class="main-container">
+		
 		<?include('form.tpl')?>
+		
 	</div>
 	
 <?endif?>

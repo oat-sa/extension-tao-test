@@ -142,6 +142,12 @@ class Tests extends TaoModule {
 			}
 		}
 		
+		$allItems = array();
+		foreach($this->service->getAllItems() as $itemUri => $itemLabel){
+			$allItems['item_'.tao_helpers_Uri::encode($itemUri)] = $itemLabel;
+		}
+		$this->setData('allItems', json_encode($allItems));
+		
 		$relatedItems = $this->service->getRelatedItems($test, true);
 		$this->setData('relatedItems', json_encode(array_map("tao_helpers_Uri::encode", $relatedItems)));
 		
@@ -259,11 +265,12 @@ class Tests extends TaoModule {
 	public function authoring(){
 		$this->setData('error', false);
 		try{
-			$data = array();
-			$data['test'] = $this->getCurrentTest();
-			$data['clazz'] = $this->getCurrentClass();
-			
-			$myFormContainer = new taoTests_actions_form_TestAuthoring($data);
+			$test = $this->getCurrentTest();
+			$clazz =  $this->getCurrentClass();
+			$myFormContainer = new taoTests_actions_form_TestAuthoring(array(
+				'test' 	=> $test,
+				'clazz' => $clazz
+			));
 			$myForm = $myFormContainer->getForm();
 			
 			if($myForm->isSubmited()){
@@ -273,11 +280,110 @@ class Tests extends TaoModule {
 			}
 			$this->setData('formTitle', __('Test authoring'));
 			$this->setData('myForm', $myForm->render());
+			$this->setData('uri', tao_helpers_Uri::encode($test->uriResource));
+			$this->setData('classUri', tao_helpers_Uri::encode($clazz->uriResource));
 		}
 		catch(Exception $e){
 			$this->setData('error', true);
 		}
 		$this->setView('authoring.tpl');
+	}
+	
+	/**
+	 * display the item sequence tempalte and initialize the grid component
+	 * @return void 
+	 */
+	public function itemSequence(){
+		$test = $this->getCurrentTest();
+		$clazz =  $this->getCurrentClass();
+		
+		$this->setData('uri', tao_helpers_Uri::encode($test->uriResource));
+		$this->setData('classUri', tao_helpers_Uri::encode($clazz->uriResource));
+		$this->setView('itemsequence.tpl');
+	}
+	
+	/**
+	 * provide the user list data via json
+	 * @return void
+	 */
+	public function itemSequenceData(){
+		$page = $this->getRequestParameter('page'); 
+		$limit = $this->getRequestParameter('rows'); 
+		$sidx = $this->getRequestParameter('sidx');  
+		$sord = $this->getRequestParameter('sord'); 
+		$start = $limit * $page - $limit; 
+		
+		if(!$sidx) $sidx =1; // connect to the database 
+		
+		$test = $this->getCurrentTest();
+		$items = $this->service->getItemSequence($test, array(
+			'order' 	=> $sidx,
+			'orderDir'	=> $sord,
+			'start'		=> $start,
+			'end'		=> $limit
+		));
+		
+		$count = count($items); 
+		if( $count >0 ) { 
+			$total_pages = ceil($count/$limit); 
+		} 
+		else { 
+			$total_pages = 0; 
+		} 
+		if ($page > $total_pages){
+			$page = $total_pages; 
+		}
+		
+		$response = new stdClass();
+		$response->page = $page; 
+		$response->total = $total_pages; 
+		$response->records = $count; 
+		$index = 0;
+		foreach($items as $i => $item) { 
+			$response->rows[$index]['id']= (string)$item['sequence']; 
+			$response->rows[$index]['cell']= array(
+				(string)$item['sequence'], 
+				tao_helpers_Uri::encode($item['uri']), 
+				$item['label'], 
+				$item['weight'], 
+				$item['difficulty'], 
+				$item['discrimination'],
+				$item['guessing'],
+				$item['model']
+			);
+			$index++;
+		} 
+		echo json_encode($response); 
+	}
+	
+	/**
+	 * save the sequence
+	 * @return void
+	 */
+	public function saveItemSequence(){
+		
+		$response = array('saved' => false);
+		
+		$test = $this->getCurrentTest();
+		$clazz =  $this->getCurrentClass();
+		
+		$sequence = array();
+		foreach($this->getRequestParameters() as $key => $value){
+			if(preg_match("/^item_/", $key)){
+				$key = str_replace("item_", '', $key);
+				$index = substr($key, 0, strpos($key, '_'));
+				$key = substr($key, strpos($key, '_') + 1);
+				if($key == 'uri'){
+					$value = tao_helpers_Uri::decode($value);
+				}
+				$sequence[$index][$key] = $value;
+			}
+		}
+		if($this->service->saveItemSequence($test, $sequence)){
+			$response['saved'] = true;
+		}
+		
+		echo json_encode($response);
 	}
 	
 	/**

@@ -158,17 +158,97 @@ class taoTests_actions_form_TestAuthoring
 		$maxElt->setDescription(__('Max'));
 		$this->form->addElement($maxElt);
 		
-		$this->form->createGroup("parameters", "Test Parameters", array(
+		//deactivate back button
+		$deactElt = tao_helpers_form_FormFactory::getElement('deactivateback', 'Radiobox');
+		$deactElt->setDescription(__('Deactivate back button'));
+		$deactElt->setOptions(array('on' => __('yes'), '' => __('no')));
+		$this->form->addElement($deactElt);
+		
+		//nav top
+		$navTopElt = tao_helpers_form_FormFactory::getElement('navtop', 'Textbox');
+		$navTopElt->setDescription(__('Navigation buttons (top position)'));
+		$this->form->addElement($navTopElt);
+		
+		//nav left
+		$navLeftElt = tao_helpers_form_FormFactory::getElement('navleft', 'Textbox');
+		$navLeftElt->setDescription(__('Navigation buttons (left position)'));
+		$this->form->addElement($navLeftElt);
+		
+		//progress bar top
+		$pbTopElt = tao_helpers_form_FormFactory::getElement('progressbartop', 'Textbox');
+		$pbTopElt->setDescription(__('Progressbar (top position)'));
+		$this->form->addElement($pbTopElt);
+		
+		//progress bar left
+		$pbLeftElt = tao_helpers_form_FormFactory::getElement('progressbarleft', 'Textbox');
+		$pbLeftElt->setDescription(__('Progressbar (left position)'));
+		$this->form->addElement($pbLeftElt);
+		
+		//left button image
+		$btLeftElt = tao_helpers_form_FormFactory::getElement('urlleft', 'Textbox');
+		$btLeftElt ->setDescription(__('Left button image'));
+		$this->form->addElement($btLeftElt );
+		
+		//right button image
+		$pbRightElt = tao_helpers_form_FormFactory::getElement('urlright', 'Textbox');
+		$pbRightElt->setDescription(__('Right button image'));
+		$this->form->addElement($pbRightElt);
+		
+		//QMIN
+		$qminElt = tao_helpers_form_FormFactory::getElement('qmin', 'Textbox');
+		$qminElt->setDescription(__('QMIN'));
+		$this->form->addElement($qminElt);
+		
+		//QMAX
+		$qmaxElt = tao_helpers_form_FormFactory::getElement('qmax', 'Textbox');
+		$qmaxElt->setDescription(__('QMAX'));
+		$this->form->addElement($qmaxElt);
+		
+		//QITER
+		$qiterElt = tao_helpers_form_FormFactory::getElement('qiter', 'Textbox');
+		$qiterElt->setDescription(__('QITER'));
+		$this->form->addElement($qiterElt);
+		
+		//Threshold 1
+		$thresh1Elt = tao_helpers_form_FormFactory::getElement('thresh1', 'Textbox');
+		$thresh1Elt->setDescription(__('Threshold 1'));
+		$this->form->addElement($thresh1Elt);
+		
+		//Threshold 2
+		$thresh2Elt = tao_helpers_form_FormFactory::getElement('thresh2', 'Textbox');
+		$thresh2Elt->setDescription(__('Threshold 2'));
+		$this->form->addElement($thresh2Elt);
+		
+		//Threshold 3
+		$thresh3Elt = tao_helpers_form_FormFactory::getElement('thresh3', 'Textbox');
+		$thresh3Elt->setDescription(__('Threshold 3'));
+		$this->form->addElement($thresh3Elt);
+		
+		
+		$this->form->createGroup("parameters", __("Parameters"), array(
 				'duration', 
 				'password', 
-				'display', 
+				'display',
 				'hassequencemode',
 				'delay',
 				'hasscoringmethod',
 				'cumulmodel',
 				'haltcriteria',
 				'deltascorethreshold',
-				'max'
+				'max',
+				'deactivateback',
+				'navtop',
+				'navleft',
+				'progressbartop',
+				'progressbarleft',
+				'urlleft',
+				'urlright',
+				'qmin',
+				'qmax',
+				'qiter',
+				'thresh1',
+				'thresh2',
+				'thresh3'
 			)
 		);
 		

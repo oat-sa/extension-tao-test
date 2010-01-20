@@ -438,6 +438,29 @@ class taoTests_models_classes_TestsService
     }
 
     /**
+     * Short description of method getAllItems
+     *
+     * @access public
+     * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
+     * @return array
+     */
+    public function getAllItems()
+    {
+        $returnValue = array();
+
+        // section 127-0-1-1-a1589c9:1262c43ae7a:-8000:0000000000001DFE begin
+		
+		$itemClazz = new core_kernel_classes_Class(TAO_ITEM_CLASS);
+		foreach($itemClazz->getInstances(false) as $instance){
+			$returnValue[$instance->uriResource] = $instance->getLabel();
+		}
+		
+        // section 127-0-1-1-a1589c9:1262c43ae7a:-8000:0000000000001DFE end
+
+        return (array) $returnValue;
+    }
+
+    /**
      * Short description of method getTestContent
      *
      * @access public
@@ -456,13 +479,21 @@ class taoTests_models_classes_TestsService
 			
 			if(count($testContents) == 0){	//lazy init
 				$testContent = $this->initTestContent($test);
-				echo $testContent;
 				if($this->setTestContent($test, $testContent)){
 					$returnValue = (string)$testContent;
 				}
 			}
 			else if(count($testContents) == 1){	//get it
-				$returnValue =  $testContents[0];
+				
+				if(strlen(trim($testContents[0])) == 0){
+					$testContent = $this->initTestContent($test);	//lazy init in case of empty prop
+					if($this->setTestContent($test, $testContent)){
+						$returnValue = (string)$testContent;
+					}
+				}
+				else{
+					$returnValue =  $testContents[0];
+				}
 			}
 			else{	//remove them 
 				$test->removePropertyValues(new core_kernel_classes_Property(TEST_TESTCONTENT_PROP));
@@ -535,6 +566,160 @@ class taoTests_models_classes_TestsService
         // section 127-0-1-1--18790a60:12622d03866:-8000:0000000000001DFB end
 
         return (string) $returnValue;
+    }
+
+    /**
+     * Short description of method getItemSequence
+     *
+     * @access public
+     * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
+     * @param  Resource test
+     * @param  array options
+     * @return array
+     */
+    public function getItemSequence( core_kernel_classes_Resource $test, $options = array())
+    {
+        $returnValue = array();
+
+        // section 127-0-1-1-16627393:126328f62c2:-8000:0000000000001E00 begin
+		
+		try{
+			$content = $this->getTestContent($test);
+			
+			$dom = new DOMDocument();
+			$dom->loadXML($content);
+			$root = $dom->documentElement;
+			
+			$xpath = new DomXpath($dom);
+			$result = $xpath->query("//tao:CITEM");
+			
+			$i = 0;
+			$length = $result->length;
+			if(isset($options['start'])){
+				if($options['start'] > 0 && $options['start'] < $length){
+					$i = $options['start'];
+				}
+			}
+			if(isset($options['end'])){
+				if($options['end'] > $i && $options['end'] <= $length){
+					$length = $options['end'];
+				}
+			}
+			while($i < $length){
+				$node = $result->item($i);
+				if($node->hasAttribute('Sequence')){
+					$index = (int)$node->getAttribute('Sequence');
+				}
+				else{
+					$index = count($returnValue);
+				}
+				$itemResource = new core_kernel_classes_Resource($node->nodeValue);
+				$item = array(
+					'sequence'			=>  $index,
+					'label' 			=>  $itemResource->getLabel(),
+					'uri' 				=>  $itemResource->uriResource,
+					'weight'			=> ($node->hasAttribute('weight')) 			? $node->getAttribute('weight') 	: '',
+					'difficulty'		=> ($node->hasAttribute('DIFFICULTY')) 		? $node->getAttribute('DIFFICULTY') : '',
+					'discrimination'	=> ($node->hasAttribute('DISCRIMINATION')) 	? $node->getAttribute('DISCRIMINATION') : '',
+					'guessing'			=> ($node->hasAttribute('GUESSING')) 		? $node->getAttribute('GUESSING') 	: '',
+					'model'				=> ($node->hasAttribute('model')) 			? $node->getAttribute('model') 		: '',
+					'itemModel'			=> ($node->hasAttribute('itemModel')) 		? $node->getAttribute('itemModel') 	: ''
+				);
+				
+				$returnValue[$index] = $item;
+				
+				$i++;
+			}
+			if(isset($options['order'])){
+				$desc = false;
+				if((isset($options['orderDir']))){
+					if(strtolower($options['orderDir']) != 'asc'){
+						$desc = true;
+					}
+				}
+				$returnValue = tao_helpers_Array::sortByField($returnValue, $options['order'], $desc);
+			}
+		}
+		catch(DOMException $domExp){ }
+		
+        // section 127-0-1-1-16627393:126328f62c2:-8000:0000000000001E00 end
+
+        return (array) $returnValue;
+    }
+
+    /**
+     * Short description of method saveItemSequence
+     *
+     * @access public
+     * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
+     * @param  Resource test
+     * @param  array sequence
+     * @return boolean
+     */
+    public function saveItemSequence( core_kernel_classes_Resource $test, $sequence)
+    {
+        $returnValue = (bool) false;
+
+        // section 127-0-1-1-30d8730d:1264b634d6b:-8000:0000000000001E1D begin
+		
+		try{
+			$content = $this->getTestContent($test);
+			
+			$dom = new DOMDocument();
+			$dom->loadXML($content);
+			$root = $dom->documentElement;
+			
+			//remove all tao:CITEM
+			$xpath = new DomXpath($dom);
+			$result = $xpath->query("//tao:CITEM");
+			for($i = 0; $i < $result->length; $i++){
+				$node = $result->item($i);
+				$node->parentNode->removeChild($node);
+			}
+			
+			//create them again
+			foreach($sequence as $index => $itemData){
+				$item = new core_kernel_classes_Resource($itemData['uri']);
+				try{
+					$itemModel = $item->getUniquePropertyValue(new core_kernel_classes_Property(TAO_ITEM_MODEL_PROPERTY));
+					if($itemModel instanceof core_kernel_classes_Resource){
+						$runtime = basename($itemModel->getUniquePropertyValue(new core_kernel_classes_Property(TAO_ITEM_MODEL_RUNTIME_PROPERTY)));
+					}
+				}
+				catch(Exception $exp){
+					$runtime = '';
+				}
+				
+				$itemNode = $dom->createElement('tao:CITEM', $item->uriResource);
+				$itemNode->setAttribute('Sequence', $index);
+				$itemNode->setAttribute('itemModel', $runtime);
+				
+				if(isset($itemData['weight'])){
+					$itemNode->setAttribute('weight', $itemData['weight']);
+				}
+				if(isset($itemData['difficulty'])){
+					$itemNode->setAttribute('DIFFICULTY', $itemData['difficulty']);
+				}
+				if(isset($itemData['discrimination'])){
+					$itemNode->setAttribute('DISCRIMINATION', $itemData['discrimination']);
+				}
+				if(isset($itemData['guessing'])){
+					$itemNode->setAttribute('GUESSING', $itemData['guessing']);
+				}
+				if(isset($itemData['model'])){
+					$itemNode->setAttribute('model', $itemData['model']);
+				}
+				
+				$root->appendChild($itemNode);
+			}
+			$returnValue = $this->setTestContent($test, $dom->saveXML());
+		}
+		catch(DOMException $domExp){ }
+		
+		
+        // section 127-0-1-1-30d8730d:1264b634d6b:-8000:0000000000001E1D end
+
+        return (bool) $returnValue;
     }
 
 } /* end of class taoTests_models_classes_TestsService */
