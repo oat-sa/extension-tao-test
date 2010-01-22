@@ -722,6 +722,606 @@ class taoTests_models_classes_TestsService
         return (bool) $returnValue;
     }
 
+    /**
+     * Short description of method getTestParameters
+     *
+     * @access public
+     * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
+     * @param  Resource test
+     * @return array
+     */
+    public function getTestParameters( core_kernel_classes_Resource $test)
+    {
+        $returnValue = array();
+
+        // section 127-0-1-1-6730a7c:126559edebd:-8000:0000000000001E21 begin
+		
+		try{
+			$content = $this->getTestContent($test);
+			
+			$dom = new DOMDocument();
+			$dom->loadXML($content);
+			$root = $dom->documentElement;
+			
+			
+			$xpath = new DomXpath($dom);
+			
+			//duration
+			$result = $xpath->query("//tao:DURATION");
+			if($result->item(0)){
+				$returnValue['duration'] = $result->item(0)->nodeValue;
+			}
+			
+			//password
+			$result = $xpath->query("//tao:PASSWORD");
+			if($result->item(0)){
+				$returnValue['password'] = $result->item(0)->nodeValue;
+			}
+			
+			//sequence mode and delay
+			$result = $xpath->query("//tao:HASSEQUENCEMODE");
+			if($result->item(0)){
+				$node = $result->item(0);
+				$returnValue['hassequencemode'] = $node->nodeValue;
+				if(empty($returnValue['hassequencemode'])){
+					$returnValue['hassequencemode'] = 'SEQUENCIAL';
+				}
+				if($node->hasAttribute('DELAY')){
+					$returnValue['delay'] = $node->getAttribute('DELAY');
+				}
+			}
+			
+			//scoring method
+			$result = $xpath->query("//tao:HASSCORINGMETHOD");
+			if($result->item(0)){
+				$node = $result->item(0);
+				$returnValue['hasscoringmethod'] = $node->nodeValue;
+				if(empty($returnValue['hasscoringmethod'])){
+					$returnValue['hasscoringmethod'] = 'CLASSICAL RATIO';
+				}
+				if($node->hasAttribute('Qmin')){
+					$returnValue['QMIN'] = $node->getAttribute('Qmin');
+				}
+				if($node->hasAttribute('Qmax')){
+					$returnValue['QMAX'] = $node->getAttribute('Qmax');
+				}
+				if($node->hasAttribute('Qiter')){
+					$returnValue['QITER'] = $node->getAttribute('Qiter');
+				}
+			}
+			
+			//cumul model
+			$result = $xpath->query("//tao:CUMULMODEL");
+			if($result->item(0)){
+				$returnValue['cumulmodel'] = $result->item(0)->nodeValue;
+				if(empty($returnValue['cumulmodel'])){
+					$returnValue['cumulmodel'] = 'CLASSICAL';
+				}
+			}
+			
+			//halt criteria
+			$result = $xpath->query("//tao:HALTCRITERIA");
+			if($result->item(0)){
+				$node = $result->item(0);
+				$returnValue['haltcriteria'] = $node->nodeValue;
+				if($node->hasAttribute('MAX')){
+					$returnValue['max'] = $node->getAttribute('MAX');
+				}
+			}
+			
+			//threshold
+			$result = $xpath->query("//cll:threshold");
+			foreach($result as $i => $node){
+				$returnValue['thresh'.($i+1)] = $node->nodeValue;
+			}
+			
+			//display
+			
+			$returnValue['display'] = array();
+			$result = $xpath->query("//button[@id='prevItem_button']");
+			if($result->item(0)){
+				$node = $result->item(0);
+				if($node->hasAttribute('url')){
+					$returnValue['urlleft'] = $node->getAttribute('url');
+				}
+				if($node->hasAttribute('left')){
+					$returnValue['navleft'] = $node->getAttribute('left');
+				}
+				if($node->hasAttribute('top')){
+					$returnValue['navtop'] = $node->getAttribute('top');
+				}
+			}
+			else{
+				$returnValue['display'][] = 'deactivateback';
+			}
+			$result = $xpath->query("//button[@id='nextItem_button']");
+			if($result->item(0)){
+				$node = $result->item(0);
+				if($node->hasAttribute('url')){
+					$returnValue['urlright'] = $node->getAttribute('url');
+				}
+				if($node->hasAttribute('left')){
+					$returnValue['navleft'] = $node->getAttribute('left');
+				}
+				if($node->hasAttribute('top')){
+					$returnValue['navtop'] = $node->getAttribute('top');
+				}
+			}
+			$result = $xpath->query("//box[@id='itemContainer_box']");
+			if($result->item(0)){
+				$node = $result->item(0);
+				if($node->hasAttribute('left')){
+					$returnValue['itemleft'] = $node->getAttribute('left');
+				}
+				if($node->hasAttribute('top')){
+					$returnValue['itemtop'] = $node->getAttribute('top');
+				}
+			}
+			
+			$result = $xpath->query("//progressmeter");
+			if($result->item(0)){
+				$node = $result->item(0);
+				if($node->hasAttribute('left')){
+					$returnValue['progressbarleft'] = $node->getAttribute('left');
+				}
+				if($node->hasAttribute('top')){
+					$returnValue['progressbartop'] = $node->getAttribute('top');
+				}
+			}
+			
+			
+			$result = $xpath->query("//progressmeter[@id='test_progressmeter']");
+			if($result->item(0)){
+				$returnValue['display'][] = 'showprogessbar';
+			}
+			
+			$result = $xpath->query("//listbox[@id='testItems_listbox']");
+			if($result->item(0)){
+				$returnValue['display'][] = 'showlistbox';
+			}
+			
+			$result = $xpath->query("//label[@id='testLabel_label']");
+			if($result->item(0)){
+				$returnValue['display'][] = 'showLabel';
+			}
+			
+			$result = $xpath->query("//label[@id='testComment_label']");
+			if($result->item(0)){
+				$returnValue['display'][] = 'showComment';
+			}
+		}
+		catch(DOMException $domExp){ }
+		
+		
+		
+        // section 127-0-1-1-6730a7c:126559edebd:-8000:0000000000001E21 end
+
+        return (array) $returnValue;
+    }
+
+    /**
+     * Short description of method saveTestParameters
+     *
+     * @access public
+     * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
+     * @param  Resource test
+     * @param  array parameters
+     * @return boolean
+     */
+    public function saveTestParameters( core_kernel_classes_Resource $test, $parameters = array())
+    {
+        $returnValue = (bool) false;
+
+        // section 127-0-1-1-6730a7c:126559edebd:-8000:0000000000001E24 begin
+		
+		try{
+			$content = $this->getTestContent($test);
+			
+			$dom = new DOMDocument();
+			$dom->loadXML($content);
+			$root = $dom->documentElement;
+			
+			$xpath = new DomXpath($dom);
+			
+			//duration
+			if(isset($parameters['duration'])){
+				$result = $xpath->query("//tao:DURATION");
+				if($result->item(0)){
+					$result->item(0)->nodeValue = $parameters['duration'];
+				}
+				else{
+					$root->appendChild(
+						$dom->createElement('tao:DURATION', $parameters['duration'])
+					);
+				}
+			}
+			
+			//password
+			if(isset($parameters['password'])){
+				$result = $xpath->query("//tao:PASSWORD");
+				if($result->item(0)){
+					$result->item(0)->nodeValue = $parameters['password'];
+				}
+				else{
+					$root->appendChild(
+						$dom->createElement('tao:PASSWORD', $parameters['password'])
+					);
+				}
+			}
+			
+			//sequence mode
+			if(isset($parameters['hassequencemode'])){
+				$result = $xpath->query("//tao:HASSEQUENCEMODE");
+				if($result->item(0)){
+					$node = $result->item(0);
+					$node->nodeValue = $parameters['hassequencemode'];
+				}
+				else{
+					$root->appendChild(
+						$dom->createElement('tao:HASSEQUENCEMODE', $parameters['hassequencemode'])
+					);
+				}
+			}
+			
+			//sequence mode delay
+			if(isset($parameters['delay'])){
+				$result = $xpath->query("//tao:HASSEQUENCEMODE");
+				if(!$result->item(0)){
+					$node = $result->item(0);
+					$node->setAttribute('DELAY', $parameters['delay']);
+				}
+				else{
+					$node = $dom->createElement('tao:HASSEQUENCEMODE', 'SEQUENCIAL');
+					$node->setAttribute('DELAY', $parameters['delay']);
+					$root->appendChild($node);
+				}
+			}
+			
+			//scoring method
+			if(isset($parameters['hasscoringmethod'])){
+				$result = $xpath->query("//tao:HASSCORINGMETHOD");
+				if($result->item(0)){
+					$node = $result->item(0);
+					$node->nodeValue = $parameters['hasscoringmethod'];
+				}
+				else{
+					$root->appendChild(
+						$dom->createElement('tao:HASSCORINGMETHOD', $parameters['hasscoringmethod'])
+					);
+				}
+			}
+			
+			//scoring method Qmin
+			if(isset($parameters['QMIN'])){
+				$result = $xpath->query("//tao:HASSEQUENCEMODE");
+				if(!$result->item(0)){
+					$node = $result->item(0);
+					$node->setAttribute('Qmin', $parameters['QMIN']);
+				}
+				else{
+					$node = $dom->createElement('tao:HASSEQUENCEMODE', 'CLASSICAL RATIO');
+					$node->setAttribute('Qmin', $parameters['QMIN']);
+					$root->appendChild($node);
+				}
+			}
+			
+			//scoring method Qmax
+			if(isset($parameters['QMAX'])){
+				$result = $xpath->query("//tao:HASSEQUENCEMODE");
+				if(!$result->item(0)){
+					$node = $result->item(0);
+					$node->setAttribute('Qmax', $parameters['QMAX']);
+				}
+				else{
+					$node = $dom->createElement('tao:HASSEQUENCEMODE', 'CLASSICAL RATIO');
+					$node->setAttribute('Qmax', $parameters['QMAX']);
+					$root->appendChild($node);
+				}
+			}
+			
+			//scoring method Qiter
+			if(isset($parameters['QITER'])){
+				$result = $xpath->query("//tao:HASSEQUENCEMODE");
+				if(!$result->item(0)){
+					$node = $result->item(0);
+					$node->setAttribute('Qiter', $parameters['QITER']);
+				}
+				else{
+					$node = $dom->createElement('tao:HASSEQUENCEMODE', 'CLASSICAL RATIO');
+					$node->setAttribute('Qiter', $parameters['QITER']);
+					$root->appendChild($node);
+				}
+			}
+			
+			//cumul model
+			if(isset($parameters['cumulmodel'])){
+				$result = $xpath->query("//tao:CUMULMODEL");
+				if($result->item(0)){
+					$node = $result->item(0);
+					$node->nodeValue = $parameters['cumulmodel'];
+				}
+				else{
+					$root->appendChild(
+						$dom->createElement('tao:CUMULMODEL', $parameters['cumulmodel'])
+					);
+				}
+			}
+			
+			//halt criteria
+			if(isset($parameters['haltcriteria'])){
+				$result = $xpath->query("//tao:HALTCRITERIA");
+				if($result->item(0)){
+					$node = $result->item(0);
+					$node->nodeValue = $parameters['haltcriteria'];
+				}
+				else{
+					$root->appendChild(
+						$dom->createElement('tao:HALTCRITERIA', $parameters['haltcriteria'])
+					);
+				}
+			}
+			
+			//scoring method MAX
+			if(isset($parameters['max'])){
+				$result = $xpath->query("//tao:HALTCRITERIA");
+				if(!$result->item(0)){
+					$node = $result->item(0);
+					$node->setAttribute('MAX', $parameters['max']);
+				}
+				else{
+					$node = $dom->createElement('tao:HALTCRITERIA');
+					$node->setAttribute('MAX', $parameters['max']);
+					$root->appendChild($node);
+				}
+			}
+			
+			
+			//threshold1
+			
+			if(isset($parameters['thresh1']) || isset($parameters['thresh2']) || isset($parameters['thresh3'])){
+				$result = $xpath->query("//tao:LAUNCH[@plugin='CLLPlugin']");
+				if(!$result->item(0)){
+					$node = $dom->createElement('tao:LAUNCH');
+					$node->setAttribute('plugin', 'CLLPlugin');
+					
+					$node->appendChild($dom->createElement('cll:threshold'));
+					$node->appendChild($dom->createElement('cll:threshold'));
+					$node->appendChild($dom->createElement('cll:threshold'));
+					
+					$root->appendChild($node);
+				}
+			}
+			
+			if(isset($parameters['thresh1'])){
+				$result = $xpath->query("//cll:threshold");
+				if($result->item(0)){
+					$result->item(0)->nodeValue = $parameters['thresh1'];
+				}
+			}
+			
+			if(isset($parameters['thresh2'])){
+				$result = $xpath->query("//cll:threshold");
+				if($result->item(1)){
+					$result->item(1)->nodeValue = $parameters['thresh2'];
+				}
+			}
+			
+			if(isset($parameters['thresh3'])){
+				$result = $xpath->query("//cll:threshold");
+				if($result->item(2)){
+					$result->item(2)->nodeValue = $parameters['thresh3'];
+				}
+			}
+			
+			$result = $xpath->query("//box[@id='itemContainer_box']");
+			if($result->item(0)){
+				$node = $result->item(0);
+				if(isset($parameters['itemleft'])){
+					$node->setAttribute('left', $parameters['itemleft']);
+				}
+				if(isset($parameters['itemtop'])){
+					$node->setAttribute('top', $parameters['itemtop']);
+				}
+			}
+			else{
+				$result = $xpath->query("//testContainer_box");
+				if($result->item(0)){
+					$parentNode = $result->item(0);
+					$node = $dom->createElement('button');
+					$node->setAttribute('id', 'itemContainer_box');
+					if(isset($parameters['itemleft'])){
+						$node->setAttribute('left', $parameters['itemleft']);
+					}
+					if(isset($parameters['itemtop'])){
+						$node->setAttribute('top', $parameters['itemtop']);
+					}
+					$parentNode->appendChild($node);
+				}
+			}
+			
+			//display
+			if(isset($parameters['display'])){
+				
+				if(in_array($parameters['display'], 'deactivateback')){
+					$result = $xpath->query("//button[@id='prevItem_button']");
+					if($result->item(0)){
+						$node = $result->item(0);
+						$node->parentNode->removeChild($node);
+					}
+				}
+				else{
+					$result = $xpath->query("//button[@id='prevItem_button']");
+					if($result->item(0)){
+						$node = $result->item(0);
+						if(isset($parameters['urlleft'])){
+							$node->setAttribute('url', $parameters['urlleft']);
+						}
+						if(isset($parameters['navleft'])){
+							$node->setAttribute('left', $parameters['navleft']);
+						}
+						if(isset($parameters['navtop'])){
+							$node->setAttribute('top', $parameters['navtop']);
+						}
+					}
+					else{
+						$result = $xpath->query("//box[@id='testContainer_box']");
+						if($result->item(0)){
+							$parentNode = $result->item(0);
+							$node = $dom->createElement('button');
+							$node->setAttribute('id', 'prevItem_button');
+							$node->setAttribute('label', 'Back');
+							$node->setAttribute('image', 'item_previous.jpg'); 
+							$node->setAttribute('disabled', 'true');
+							$node->setAttribute('oncommand', 'tao_test.prevItem');
+							if(isset($parameters['urlleft'])){
+								$node->setAttribute('url', $parameters['urlleft']);
+							}
+							if(isset($parameters['navleft'])){
+								$node->setAttribute('left', $parameters['navleft']);
+							}
+							if(isset($parameters['navtop'])){
+								$node->setAttribute('top', $parameters['navtop']);
+							}
+							$parentNode->appendChild($node);
+						}
+					}
+				}
+				
+				$result = $xpath->query("//button[@id='nextItem_button']");
+				if($result->item(0)){
+					$node = $result->item(0);
+					if(isset($parameters['urlright'])){
+						$node->setAttribute('url', $parameters['urlright']);
+					}
+					if(isset($parameters['navleft'])){
+						$node->setAttribute('left', $parameters['navleft']);
+					}
+					if(isset($parameters['navtop'])){
+						$node->setAttribute('top', $parameters['navtop']);
+					}
+				}
+				else{
+					$result = $xpath->query("//box[@id='testContainer_box']");
+					if($result->item(0)){
+						$parentNode = $result->item(0);
+						$node = $dom->createElement('button');
+						$node->setAttribute('id', 'nextItem_button');
+						$node->setAttribute('label', 'Next');
+						$node->setAttribute('image', 'item_next.jpg'); 
+						$node->setAttribute('disabled', 'true');
+						$node->setAttribute('oncommand', 'tao_test.nextItem');
+						if(isset($parameters['urlright'])){
+							$node->setAttribute('url', $parameters['urlright']);
+						}
+						if(isset($parameters['navleft'])){
+							$node->setAttribute('left', $parameters['navleft']);
+						}
+						if(isset($parameters['navtop'])){
+							$node->setAttribute('top', $parameters['navtop']);
+						}
+						$parentNode->appendChild($node);
+					}
+				}
+				
+				if(!in_array($parameters['display'], 'showprogessbar')){
+					$result = $xpath->query("//progressmeter[@id='test_progressmeter']");
+					if($result->item(0)){
+						$node = $result->item(0);
+						$node->parentNode->removeChild($node);
+					}
+				}
+				else{
+					$result = $xpath->query("//progressmeter[@id='test_progressmeter']");
+					if(!$result->item(0)){
+						$result = $xpath->query("//box[@id='testContainer_box']");
+						if($result->item(0)){
+							$parentNode = $result->item(0);
+							$node = $dom->createElement('progressmeter');
+							$node->setAttribute('id', 'test_progressmeter');
+							$parentNode->appendChild($node);
+						}
+					}
+				}
+				$result = $xpath->query("//progressmeter[@id='test_progressmeter']");
+				if($result->item(0)){
+					$node = $result->item(0);
+					if(isset($parameters['progressbarleft'])){
+						$node->setAttribute('left', $parameters['progressbarleft']);
+					}
+					if(isset($parameters['progressbartop'])){
+						$node->setAttribute('top', $parameters['progressbartop']);
+					}
+				}
+				
+				if(!in_array($parameters['display'], 'showlistbox')){
+					$result = $xpath->query("//listbox[@id='testItems_listbox']");
+					if($result->item(0)){
+						$node = $result->item(0);
+						$node->parentNode->removeChild($node);
+					}
+				}
+				else{
+					$result = $xpath->query("//listbox[@id='testItems_listbox']");
+					if(!$result->item(0)){
+						$result = $xpath->query("//box[@id='testContainer_box']");
+						if($result->item(0)){
+							$parentNode = $result->item(0);
+							$node = $dom->createElement('listbox');
+							$node->setAttribute('id', 'testItems_listbox');
+							$parentNode->appendChild($node);
+						}
+					}
+				}
+				
+				if(!in_array($parameters['display'], 'showLabel')){
+					$result = $xpath->query("//label[@id='testLabel_label']");
+					if($result->item(0)){
+						$node = $result->item(0);
+						$node->parentNode->removeChild($node);
+					}
+				}
+				else{
+					$result = $xpath->query("//listbox[@id='testItems_listbox']");
+					if(!$result->item(0)){
+						$result = $xpath->query("//label[@id='testLabel_label']");
+						if($result->item(0)){
+							$parentNode = $result->item(0);
+							$node = $dom->createElement('label');
+							$node->setAttribute('id', 'testLabel_label');
+							$parentNode->appendChild($node);
+						}
+					}
+				}
+				if(!in_array($parameters['display'], 'showComment')){
+					$result = $xpath->query("//label[@id='testComment_label']");
+					if($result->item(0)){
+						$node = $result->item(0);
+						$node->parentNode->removeChild($node);
+					}
+				}
+				else{
+					$result = $xpath->query("//listbox[@id='testItems_listbox']");
+					if(!$result->item(0)){
+						$result = $xpath->query("//label[@id='testComment_label']");
+						if($result->item(0)){
+							$parentNode = $result->item(0);
+							$node = $dom->createElement('label');
+							$node->setAttribute('id', 'testComment_label');
+							$parentNode->appendChild($node);
+						}
+					}
+				}
+			}
+			
+			$returnValue = $this->setTestContent($test, $dom->saveXML());
+		}
+		catch(DOMException $domExp){ }
+		
+        // section 127-0-1-1-6730a7c:126559edebd:-8000:0000000000001E24 end
+
+        return (bool) $returnValue;
+    }
+
 } /* end of class taoTests_models_classes_TestsService */
 
 ?>

@@ -91,35 +91,29 @@ class taoTests_actions_form_TestAuthoring
 		$passElt->setDescription(__('Password'));
 		$this->form->addElement($passElt);
 		
-		//display params
-		$displayElt = tao_helpers_form_FormFactory::getElement('display', 'Checkbox');
-		$displayElt->setDescription(__('Display'));
-		$displayElt->setOptions(array(
-			'showlistbox' => 'Display items list during the test',
-			'showprogessbar' => 'Show a progress bar during the test',
-			'showLabel' => 'Display label',
-			'showComment' => 'Display comments'
-		));
-		$this->form->addElement($displayElt);
+		$this->form->createGroup("g1", __("g1"), array('duration', 'password'));
 		
 		//sequence mode
 		$sequenceElt = tao_helpers_form_FormFactory::getElement('hassequencemode', 'Combobox');
-		$sequenceElt->setDescription(__('Sequnce mode'));
+		$sequenceElt->setDescription(__('Sequence mode'));
 		$sequenceElt->setOptions(array(
-			'sequencial'	=> __('Sequencial'),
-			'random'		=> __('Random'),
-			'maxfisher'		=> __('Maxfisher')
+			'SEQUENCIAL'	=> __('Sequencial'),
+			'RANDOM'		=> __('Random'),
+			'MAXFISHER'		=> __('Maxfisher')
 		));
 		$this->form->addElement($sequenceElt);
 		
 		//delay
 		$delayElt = tao_helpers_form_FormFactory::getElement('delay', 'Textbox');
 		$delayElt->setDescription(__('Delay'));
+		$delayElt->setAttributes(array('size' => 4));
 		$this->form->addElement($delayElt);
+		
+		$this->form->createGroup("g2", __("g2"), array('hassequencemode', 'delay'));
 		
 		//scoring method
 		$scoringElt = tao_helpers_form_FormFactory::getElement('hasscoringmethod', 'Combobox');
-		$scoringElt->setDescription(__('Sequence mode'));
+		$scoringElt->setDescription(__('Scoring method'));
 		$scoringElt->setOptions(array(
 			'CLASSICALRATIO'		=> __('Classical ratio'),
 			'MAXIMUMLIKELIHOOD'		=> __('Maximum likelihood'),
@@ -128,15 +122,37 @@ class taoTests_actions_form_TestAuthoring
 		));
 		$this->form->addElement($scoringElt);
 		
+		//QMIN
+		$qminElt = tao_helpers_form_FormFactory::getElement('qmin', 'Textbox');
+		$qminElt->setDescription(__('QMIN'));
+		$qminElt->setAttributes(array('size' => 4));
+		$this->form->addElement($qminElt);
+		
+		//QMAX
+		$qmaxElt = tao_helpers_form_FormFactory::getElement('qmax', 'Textbox');
+		$qmaxElt->setDescription(__('QMAX'));
+		$qmaxElt->setAttributes(array('size' => 4));
+		$this->form->addElement($qmaxElt);
+		
+		//QITER
+		$qiterElt = tao_helpers_form_FormFactory::getElement('qiter', 'Textbox');
+		$qiterElt->setDescription(__('QITER'));
+		$qiterElt->setAttributes(array('size' => 4));
+		$this->form->addElement($qiterElt);
+		
+		$this->form->createGroup("g3", __("g3"), array('hasscoringmethod', 'qmin', 'qmax', 'qiter'));
+		
 		//cumul model
 		$cumulElt = tao_helpers_form_FormFactory::getElement('cumulmodel', 'Combobox');
-		$cumulElt->setDescription(__('Sequnce mode'));
+		$cumulElt->setDescription(__('Cumul model'));
 		$cumulElt->setOptions(array(
 			'CLASSICAL'		=> __('Classical'),
 			'LIKELIHOOD'		=> __('Likelihood'),
 			'LOG-LIKELIHOOD'		=> __('Log-likelihood')
 		));
 		$this->form->addElement($cumulElt);
+		
+		$this->form->createGroup("g4", __("g4"), array('cumulmodel'));
 		
 		//Halt criteria
 		$haltElt = tao_helpers_form_FormFactory::getElement('haltcriteria', 'Combobox');
@@ -151,63 +167,17 @@ class taoTests_actions_form_TestAuthoring
 		//threshold
 		$thresholdElt = tao_helpers_form_FormFactory::getElement('deltascorethreshold', 'Textbox');
 		$thresholdElt->setDescription(__('Threshold'));
+		$thresholdElt->setAttributes(array('size' => 4));
 		$this->form->addElement($thresholdElt);
 		
 		//max
 		$maxElt = tao_helpers_form_FormFactory::getElement('max', 'Textbox');
 		$maxElt->setDescription(__('Max'));
+		$thresholdElt->setAttributes(array('size' => 4));
 		$this->form->addElement($maxElt);
 		
-		//deactivate back button
-		$deactElt = tao_helpers_form_FormFactory::getElement('deactivateback', 'Radiobox');
-		$deactElt->setDescription(__('Deactivate back button'));
-		$deactElt->setOptions(array('on' => __('yes'), '' => __('no')));
-		$this->form->addElement($deactElt);
+		$this->form->createGroup("g5", __("g5"), array('haltcriteria', 'deltascorethreshold', 'max'));
 		
-		//nav top
-		$navTopElt = tao_helpers_form_FormFactory::getElement('navtop', 'Textbox');
-		$navTopElt->setDescription(__('Navigation buttons (top position)'));
-		$this->form->addElement($navTopElt);
-		
-		//nav left
-		$navLeftElt = tao_helpers_form_FormFactory::getElement('navleft', 'Textbox');
-		$navLeftElt->setDescription(__('Navigation buttons (left position)'));
-		$this->form->addElement($navLeftElt);
-		
-		//progress bar top
-		$pbTopElt = tao_helpers_form_FormFactory::getElement('progressbartop', 'Textbox');
-		$pbTopElt->setDescription(__('Progressbar (top position)'));
-		$this->form->addElement($pbTopElt);
-		
-		//progress bar left
-		$pbLeftElt = tao_helpers_form_FormFactory::getElement('progressbarleft', 'Textbox');
-		$pbLeftElt->setDescription(__('Progressbar (left position)'));
-		$this->form->addElement($pbLeftElt);
-		
-		//left button image
-		$btLeftElt = tao_helpers_form_FormFactory::getElement('urlleft', 'Textbox');
-		$btLeftElt ->setDescription(__('Left button image'));
-		$this->form->addElement($btLeftElt );
-		
-		//right button image
-		$pbRightElt = tao_helpers_form_FormFactory::getElement('urlright', 'Textbox');
-		$pbRightElt->setDescription(__('Right button image'));
-		$this->form->addElement($pbRightElt);
-		
-		//QMIN
-		$qminElt = tao_helpers_form_FormFactory::getElement('qmin', 'Textbox');
-		$qminElt->setDescription(__('QMIN'));
-		$this->form->addElement($qminElt);
-		
-		//QMAX
-		$qmaxElt = tao_helpers_form_FormFactory::getElement('qmax', 'Textbox');
-		$qmaxElt->setDescription(__('QMAX'));
-		$this->form->addElement($qmaxElt);
-		
-		//QITER
-		$qiterElt = tao_helpers_form_FormFactory::getElement('qiter', 'Textbox');
-		$qiterElt->setDescription(__('QITER'));
-		$this->form->addElement($qiterElt);
 		
 		//Threshold 1
 		$thresh1Elt = tao_helpers_form_FormFactory::getElement('thresh1', 'Textbox');
@@ -224,33 +194,83 @@ class taoTests_actions_form_TestAuthoring
 		$thresh3Elt->setDescription(__('Threshold 3'));
 		$this->form->addElement($thresh3Elt);
 		
+		$this->form->createGroup("g6", __("g6"), array( 'thresh1', 'thresh2','thresh3'));
 		
-		$this->form->createGroup("parameters", __("Parameters"), array(
-				'duration', 
-				'password', 
-				'display',
-				'hassequencemode',
-				'delay',
-				'hasscoringmethod',
-				'cumulmodel',
-				'haltcriteria',
-				'deltascorethreshold',
-				'max',
-				'deactivateback',
-				'navtop',
-				'navleft',
-				'progressbartop',
-				'progressbarleft',
-				'urlleft',
-				'urlright',
-				'qmin',
-				'qmax',
-				'qiter',
-				'thresh1',
-				'thresh2',
-				'thresh3'
-			)
-		);
+		//display params
+		$displayElt = tao_helpers_form_FormFactory::getElement('display', 'Checkbox');
+		$displayElt->setDescription(__('Display'));
+		$displayElt->setOptions(array(
+			'showlistbox' => __('Display items list during the test'),
+			'showprogessbar' => __('Show a progress bar during the test'),
+			'showLabel' => __('Display label'),
+			'showComment' => __('Display comments'),
+			'deactivateback' => __('Deactivate back button')
+		));
+		$this->form->addElement($displayElt);
+		
+		//item top
+		$itemTopElt = tao_helpers_form_FormFactory::getElement('itemtop', 'Textbox');
+		$itemTopElt->setDescription(__('Test content (top position)'));
+		$itemTopElt->setAttributes(array('size' => 4));
+		$this->form->addElement($itemTopElt);
+		
+		//item left
+		$itemLeftElt = tao_helpers_form_FormFactory::getElement('itemleft', 'Textbox');
+		$itemLeftElt->setDescription(__('Test content (left position)'));
+		$itemLeftElt->setAttributes(array('size' => 4));
+		$this->form->addElement($itemLeftElt);
+		
+		//nav top
+		$navTopElt = tao_helpers_form_FormFactory::getElement('navtop', 'Textbox');
+		$navTopElt->setDescription(__('Navigation buttons (top position)'));
+		$navTopElt->setAttributes(array('size' => 4));
+		$this->form->addElement($navTopElt);
+		
+		//nav left
+		$navLeftElt = tao_helpers_form_FormFactory::getElement('navleft', 'Textbox');
+		$navLeftElt->setDescription(__('Navigation buttons (left position)'));
+		$navLeftElt->setAttributes(array('size' => 4));
+		$this->form->addElement($navLeftElt);
+		
+		//progress bar top
+		$pbTopElt = tao_helpers_form_FormFactory::getElement('progressbartop', 'Textbox');
+		$pbTopElt->setDescription(__('Progressbar (top position)'));
+		$pbTopElt->setAttributes(array('size' => 4));
+		$this->form->addElement($pbTopElt);
+		
+		//progress bar left
+		$pbLeftElt = tao_helpers_form_FormFactory::getElement('progressbarleft', 'Textbox');
+		$pbLeftElt->setDescription(__('Progressbar (left position)'));
+		$pbLeftElt->setAttributes(array('size' => 4));
+		$this->form->addElement($pbLeftElt);
+		
+		//left button image
+		$btLeftElt = tao_helpers_form_FormFactory::getElement('urlleft', 'Textbox');
+		$btLeftElt ->setDescription(__('Left button image'));
+		$btLeftElt->setAttributes(array('size' => 30));
+		$this->form->addElement($btLeftElt );
+		
+		//right button image
+		$btRightElt = tao_helpers_form_FormFactory::getElement('urlright', 'Textbox');
+		$btRightElt->setDescription(__('Right button image'));
+		$btRightElt->setAttributes(array('size' => 30));
+		$this->form->addElement($btRightElt);
+		
+		$this->form->createGroup("g7", __("Display"), array('display', 'itemtop', 'itemleft', 'navtop', 'navleft', 'progressbartop', 'progressbarleft', 'urlleft', 'urlright'));
+		
+		
+		if(count($this->data) > 0){
+			foreach($this->form->getElements() as $element){
+				if(isset($this->data[$element->getName()])){
+					if($element instanceof tao_helpers_form_elements_xhtml_Checkbox){
+						$element->setValues($this->data[$element->getName()]);
+					}
+					else{
+						$element->setValue($this->data[$element->getName()]);
+					}
+				}
+			}
+		}
 		
         // section 127-0-1-1-1f533553:1260917dc26:-8000:0000000000001DED end
     }

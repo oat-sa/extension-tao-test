@@ -1,6 +1,5 @@
 <?include('header.tpl')?>
 
-
 <?if(get_data('error')):?>
 	<div class="main-container">
 		<div class="ui-state-error ui-corner-all" style="padding:5px;">
@@ -13,12 +12,9 @@
 	</div>
 <?else:?>
 	
-	<div class="main-container">
+	<div class="main-container" style="display:none;"></div>
+	<?include('form.tpl')?>
 		
-		<?include('form.tpl')?>
-		
-	</div>
-	
 <?endif?>
 
 <?include('footer.tpl')?>

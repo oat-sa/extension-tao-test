@@ -267,18 +267,17 @@ class Tests extends TaoModule {
 		try{
 			$test = $this->getCurrentTest();
 			$clazz =  $this->getCurrentClass();
-			$myFormContainer = new taoTests_actions_form_TestAuthoring(array(
-				'test' 	=> $test,
-				'clazz' => $clazz
-			));
+			$myFormContainer = new taoTests_actions_form_TestAuthoring($this->service->getTestParameters($test));
 			$myForm = $myFormContainer->getForm();
 			
 			if($myForm->isSubmited()){
 				if($myForm->isValid()){
-					$this->setData('message', __('test saved'));
+					if($this->service->getTestParameters($test, $myForm->getValues())){
+						$this->setData('message', __('test saved'));
+					}
 				}
 			}
-			$this->setData('formTitle', __('Test authoring'));
+			$this->setData('formTitle', __('Test parameters'));
 			$this->setData('myForm', $myForm->render());
 			$this->setData('uri', tao_helpers_Uri::encode($test->uriResource));
 			$this->setData('classUri', tao_helpers_Uri::encode($clazz->uriResource));
