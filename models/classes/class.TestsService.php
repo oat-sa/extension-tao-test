@@ -915,6 +915,10 @@ class taoTests_models_classes_TestsService
         // section 127-0-1-1-6730a7c:126559edebd:-8000:0000000000001E24 begin
 		
 		try{
+			print "<pre>";
+			print_r($parameters);
+			print "</pre>";
+			
 			$content = $this->getTestContent($test);
 			
 			$dom = new DOMDocument();
@@ -966,7 +970,7 @@ class taoTests_models_classes_TestsService
 			//sequence mode delay
 			if(isset($parameters['delay'])){
 				$result = $xpath->query("//tao:HASSEQUENCEMODE");
-				if(!$result->item(0)){
+				if($result->item(0)){
 					$node = $result->item(0);
 					$node->setAttribute('DELAY', $parameters['delay']);
 				}
@@ -993,13 +997,13 @@ class taoTests_models_classes_TestsService
 			
 			//scoring method Qmin
 			if(isset($parameters['QMIN'])){
-				$result = $xpath->query("//tao:HASSEQUENCEMODE");
-				if(!$result->item(0)){
+				$result = $xpath->query("//tao:HASSCORINGMETHOD");
+				if($result->item(0)){
 					$node = $result->item(0);
 					$node->setAttribute('Qmin', $parameters['QMIN']);
 				}
 				else{
-					$node = $dom->createElement('tao:HASSEQUENCEMODE', 'CLASSICAL RATIO');
+					$node = $dom->createElement('tao:HASSCORINGMETHOD', 'CLASSICAL RATIO');
 					$node->setAttribute('Qmin', $parameters['QMIN']);
 					$root->appendChild($node);
 				}
@@ -1007,13 +1011,13 @@ class taoTests_models_classes_TestsService
 			
 			//scoring method Qmax
 			if(isset($parameters['QMAX'])){
-				$result = $xpath->query("//tao:HASSEQUENCEMODE");
-				if(!$result->item(0)){
+				$result = $xpath->query("//tao:HASSCORINGMETHOD");
+				if($result->item(0)){
 					$node = $result->item(0);
 					$node->setAttribute('Qmax', $parameters['QMAX']);
 				}
 				else{
-					$node = $dom->createElement('tao:HASSEQUENCEMODE', 'CLASSICAL RATIO');
+					$node = $dom->createElement('tao:HASSCORINGMETHOD', 'CLASSICAL RATIO');
 					$node->setAttribute('Qmax', $parameters['QMAX']);
 					$root->appendChild($node);
 				}
@@ -1021,13 +1025,13 @@ class taoTests_models_classes_TestsService
 			
 			//scoring method Qiter
 			if(isset($parameters['QITER'])){
-				$result = $xpath->query("//tao:HASSEQUENCEMODE");
-				if(!$result->item(0)){
+				$result = $xpath->query("//tao:HASSCORINGMETHOD");
+				if($result->item(0)){
 					$node = $result->item(0);
 					$node->setAttribute('Qiter', $parameters['QITER']);
 				}
 				else{
-					$node = $dom->createElement('tao:HASSEQUENCEMODE', 'CLASSICAL RATIO');
+					$node = $dom->createElement('tao:HASSCORINGMETHOD', 'CLASSICAL RATIO');
 					$node->setAttribute('Qiter', $parameters['QITER']);
 					$root->appendChild($node);
 				}
@@ -1064,7 +1068,7 @@ class taoTests_models_classes_TestsService
 			//scoring method MAX
 			if(isset($parameters['max'])){
 				$result = $xpath->query("//tao:HALTCRITERIA");
-				if(!$result->item(0)){
+				if($result->item(0)){
 					$node = $result->item(0);
 					$node->setAttribute('MAX', $parameters['max']);
 				}
@@ -1142,7 +1146,7 @@ class taoTests_models_classes_TestsService
 			//display
 			if(isset($parameters['display'])){
 				
-				if(in_array($parameters['display'], 'deactivateback')){
+				if(in_array('deactivateback', $parameters['display'])){
 					$result = $xpath->query("//button[@id='prevItem_button']");
 					if($result->item(0)){
 						$node = $result->item(0);
@@ -1223,7 +1227,7 @@ class taoTests_models_classes_TestsService
 					}
 				}
 				
-				if(!in_array($parameters['display'], 'showprogessbar')){
+				if(!in_array('showprogessbar', $parameters['display'])){
 					$result = $xpath->query("//progressmeter[@id='test_progressmeter']");
 					if($result->item(0)){
 						$node = $result->item(0);
@@ -1253,7 +1257,7 @@ class taoTests_models_classes_TestsService
 					}
 				}
 				
-				if(!in_array($parameters['display'], 'showlistbox')){
+				if(!in_array('showlistbox', $parameters['display'])){
 					$result = $xpath->query("//listbox[@id='testItems_listbox']");
 					if($result->item(0)){
 						$node = $result->item(0);
@@ -1273,7 +1277,7 @@ class taoTests_models_classes_TestsService
 					}
 				}
 				
-				if(!in_array($parameters['display'], 'showLabel')){
+				if(!in_array('showLabel', $parameters['display'])){
 					$result = $xpath->query("//label[@id='testLabel_label']");
 					if($result->item(0)){
 						$node = $result->item(0);
@@ -1292,7 +1296,7 @@ class taoTests_models_classes_TestsService
 						}
 					}
 				}
-				if(!in_array($parameters['display'], 'showComment')){
+				if(!in_array('showComment', $parameters['display'])){
 					$result = $xpath->query("//label[@id='testComment_label']");
 					if($result->item(0)){
 						$node = $result->item(0);

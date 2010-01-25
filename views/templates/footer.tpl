@@ -8,6 +8,7 @@ $(function(){
 	
 		updateTabUrl(tabs, 'tests_authoring', "<?=_url('authoring', 'Tests', array('uri' => get_data('uri'), 'classUri' => get_data('classUri') ))?>");
 		updateTabUrl(tabs, 'items_sequence',  "<?=_url('itemSequence', 'Tests', array('uri' => get_data('uri'), 'classUri' => get_data('classUri') ))?>");
+		
 	
 	<?else:?>
 	
@@ -23,8 +24,13 @@ $(function(){
 	
 	<?else:?>
 	
-		initActions();
-	
+		if(ctx_action == 'authoring' || ctx_action == 'itemSequence'){
+			initNavigation();
+		}
+		else{
+			initActions();
+		}
+		
 	<?endif?>
 });
 </script>

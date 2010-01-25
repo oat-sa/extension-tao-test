@@ -81,6 +81,9 @@ class taoTests_actions_form_TestAuthoring
     {
         // section 127-0-1-1-1f533553:1260917dc26:-8000:0000000000001DED begin
 		
+		$this->form->addElement(tao_helpers_form_FormFactory::getElement('uri', 'Hidden'));
+		$this->form->addElement(tao_helpers_form_FormFactory::getElement('classUri', 'Hidden'));
+		
 		//duration 
 		$durationElt = tao_helpers_form_FormFactory::getElement('duration', 'Textbox');
 		$durationElt->setDescription(__('Maximum time allowed'));
@@ -247,13 +250,13 @@ class taoTests_actions_form_TestAuthoring
 		//left button image
 		$btLeftElt = tao_helpers_form_FormFactory::getElement('urlleft', 'Textbox');
 		$btLeftElt ->setDescription(__('Left button image'));
-		$btLeftElt->setAttributes(array('size' => 30));
+		$btLeftElt->setAttributes(array('class' => 'imageable', 'size' => 30));
 		$this->form->addElement($btLeftElt );
 		
 		//right button image
 		$btRightElt = tao_helpers_form_FormFactory::getElement('urlright', 'Textbox');
 		$btRightElt->setDescription(__('Right button image'));
-		$btRightElt->setAttributes(array('size' => 30));
+		$btRightElt->setAttributes(array('class' => 'imageable','size' => 30));
 		$this->form->addElement($btRightElt);
 		
 		$this->form->createGroup("g7", __("Display"), array('display', 'itemtop', 'itemleft', 'navtop', 'navleft', 'progressbartop', 'progressbarleft', 'urlleft', 'urlright'));
