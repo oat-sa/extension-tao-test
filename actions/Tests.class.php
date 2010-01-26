@@ -238,18 +238,8 @@ class Tests extends TaoModule {
 			throw new Exception("wrong request mode");
 		}
 		
-		$test = $this->getCurrentTest();
-		$clazz = $this->getCurrentClass();
-		
-		$clone = $this->service->createInstance($clazz);
+		$clone = $this->service->cloneInstance($this->getCurrentTest(), $this->getCurrentClass());
 		if(!is_null($clone)){
-			
-			foreach($clazz->getProperties() as $property){
-				foreach($test->getPropertyValues($property) as $propertyValue){
-					$clone->setPropertyValue($property, $propertyValue);
-				}
-			}
-			$clone->setLabel($test->getLabel()."'");
 			echo json_encode(array(
 				'label'	=> $clone->getLabel(),
 				'uri' 	=> tao_helpers_Uri::encode($clone->uriResource)

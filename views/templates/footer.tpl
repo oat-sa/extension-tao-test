@@ -6,31 +6,19 @@ $(function(){
 
 	<?if(get_data('uri') && get_data('classUri')):?>
 	
-		updateTabUrl(tabs, 'tests_authoring', "<?=_url('authoring', 'Tests', array('uri' => get_data('uri'), 'classUri' => get_data('classUri') ))?>");
-		updateTabUrl(tabs, 'items_sequence',  "<?=_url('itemSequence', 'Tests', array('uri' => get_data('uri'), 'classUri' => get_data('classUri') ))?>");
-		
-	
+		updateTabUrl(UiBootstrap.tabs, 'tests_authoring', "<?=_url('authoring', 'Tests', array('uri' => get_data('uri'), 'classUri' => get_data('classUri') ))?>");
+		updateTabUrl(UiBootstrap.tabs, 'items_sequence',  "<?=_url('itemSequence', 'Tests', array('uri' => get_data('uri'), 'classUri' => get_data('classUri') ))?>");
+			
 	<?else:?>
 	
-		tabs.tabs('disable', getTabIndexByName('tests_authoring'));
-		tabs.tabs('disable', getTabIndexByName('items_sequence'));
+		UiBootstrap.tabs.tabs('disable', getTabIndexByName('tests_authoring'));
+		UiBootstrap.tabs.tabs('disable', getTabIndexByName('items_sequence'));
 		
 	<?endif?>
 
-
-	<?if(get_data('reload') === true):?>	
-		
-		loadControls();
-	
-	<?else:?>
-	
-		if(ctx_action == 'authoring' || ctx_action == 'itemSequence'){
-			initNavigation();
-		}
-		else{
-			initActions();
-		}
-		
+	<?if(get_data('reload')):?>
+		uiBootstrap.initTrees();
 	<?endif?>
+
 });
 </script>

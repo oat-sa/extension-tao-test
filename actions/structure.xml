@@ -14,13 +14,13 @@
 				/>
 			</trees>
 			<actions>
-				<action name="new class" js="subClass" url="/taoTests/Tests/addTestClass" context="class" />
-				<action name="new test" js="instanciate" url="/taoTests/Tests/addTest" context="class" />
-				<action name="delete" js="removeNode" url="/taoTests/Tests/delete" context="resource" />
-				<action name="duplicate" js="duplicateNode" url="/taoTests/Tests/cloneTest" context="instance" />
+				<action name="new class" js="GenerisAction.subClass" url="/taoTests/Tests/addTestClass" context="class" />
+				<action name="new test" js="GenerisAction.instanciate" url="/taoTests/Tests/addTest" context="class" />
+				<action name="delete" js="GenerisAction.removeNode" url="/taoTests/Tests/delete" context="resource" />
+				<action name="duplicate" js="GenerisAction.duplicateNode" url="/taoTests/Tests/cloneTest" context="instance" />
 				<action name="edit test" url="/taoTests/Tests/editTest" context="instance" />
-				<action name="new property" js="addProperty" url="/taoTests/Tests/addClassProperty" context="class" />
-				<action name="create table" js="resultTable" url="/taoResults/Results/createTable"  context="class" />
+				<action name="new property" js="GenerisAction.addProperty" url="/taoTests/Tests/addClassProperty" context="class" />
+				<action name="create table" js="GenerisAction.resultTable" url="/taoResults/Results/createTable"  context="class" />
 				<action name="import" url="/taoTests/Tests/import"  context="class" />
 				<action name="export" url="/taoTests/Tests/export"  context="class" reload="true" />
 			</actions>
