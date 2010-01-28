@@ -1,0 +1,189 @@
+msgid ""
+msgstr ""
+
+msgid "Test parameters"
+msgstr "Paramètres du test"
+
+msgid "An error occured while saving the test"
+msgstr "Une erreur est survenue durant la sauvegarde du test"
+
+msgid "Test saved successfully"
+msgstr "Le test a été enregistré avec succès"
+
+msgid "Maximum time allowed"
+msgstr "Temps limite"
+
+msgid "Password"
+msgstr "Mot de passe"
+
+msgid "g1"
+msgstr ""
+
+msgid "Sequence mode"
+msgstr ""
+
+msgid "Sequencial"
+msgstr ""
+
+msgid "Random"
+msgstr ""
+
+msgid "Maxfisher"
+msgstr ""
+
+msgid "Delay"
+msgstr ""
+
+msgid "g2"
+msgstr ""
+
+msgid "Scoring method"
+msgstr ""
+
+msgid "Classical ratio"
+msgstr ""
+
+msgid "Maximum likelihood"
+msgstr ""
+
+msgid "Maximum a posteriori"
+msgstr ""
+
+msgid "Expected a posteriori"
+msgstr ""
+
+msgid "QMIN"
+msgstr ""
+
+msgid "QMAX"
+msgstr ""
+
+msgid "QITER"
+msgstr ""
+
+msgid "g3"
+msgstr ""
+
+msgid "Cumul model"
+msgstr ""
+
+msgid "Classical"
+msgstr ""
+
+msgid "Likelihood"
+msgstr ""
+
+msgid "Log-likelihood"
+msgstr ""
+
+msgid "g4"
+msgstr ""
+
+msgid "Halt criteria"
+msgstr ""
+
+msgid "DELTASCORE"
+msgstr ""
+
+msgid "DELTASE"
+msgstr ""
+
+msgid "Threshold"
+msgstr ""
+
+msgid "Max"
+msgstr ""
+
+msgid "g5"
+msgstr ""
+
+msgid "Threshold 1"
+msgstr ""
+
+msgid "Threshold 2"
+msgstr ""
+
+msgid "Threshold 3"
+msgstr ""
+
+msgid "g6"
+msgstr ""
+
+msgid "Display"
+msgstr ""
+
+msgid "Display items list during the test"
+msgstr ""
+
+msgid "Show a progress bar during the test"
+msgstr ""
+
+msgid "Display label"
+msgstr ""
+
+msgid "Display comments"
+msgstr ""
+
+msgid "Deactivate back button"
+msgstr ""
+
+msgid "Test content (top position)"
+msgstr ""
+
+msgid "Test content (left position)"
+msgstr ""
+
+msgid "Navigation buttons (top position)"
+msgstr ""
+
+msgid "Navigation buttons (left position)"
+msgstr ""
+
+msgid "Progressbar (top position)"
+msgstr ""
+
+msgid "Progressbar (left position)"
+msgstr ""
+
+msgid "Left button image"
+msgstr ""
+
+msgid "Right button image"
+msgstr ""
+
+msgid "Please select an test before!"
+msgstr "Veuillez choisir un test!"
+
+msgid "Back"
+msgstr "Retour"
+
+msgid "Select related items"
+msgstr "Sélectionner les items liés au test "
+
+msgid "Save"
+msgstr "Enregistrer"
+
+msgid "Items sequence"
+msgstr "Séquence d'item"
+
+msgid "Sequence saved successfully"
+msgstr "La séquence a été enregistré avec succès"
+
+msgid "Numeric value"
+msgstr "Valeure numérique"
+
+msgid "Test Preview"
+msgstr "Prévisualisation du test"
+
+msgid "compiled"
+msgstr "compilé"
+
+msgid "compiled with warning"
+msgstr "compilé avec avertissement"
+
+msgid "compilation failed"
+msgstr "échec de compilation "
+
+msgid "Compiling test"
+msgstr "Compilation du test en cours"
+
