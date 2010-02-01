@@ -262,19 +262,6 @@ class taoTests_actions_form_TestAuthoring
 		$this->form->createGroup("g7", __("Display"), array('display', 'itemtop', 'itemleft', 'navtop', 'navleft', 'progressbartop', 'progressbarleft', 'urlleft', 'urlright'));
 		
 		
-		if(count($this->data) > 0){
-			foreach($this->form->getElements() as $element){
-				if(isset($this->data[$element->getName()])){
-					if($element instanceof tao_helpers_form_elements_xhtml_Checkbox){
-						$element->setValues($this->data[$element->getName()]);
-					}
-					else{
-						$element->setValue($this->data[$element->getName()]);
-					}
-				}
-			}
-		}
-		
         // section 127-0-1-1-1f533553:1260917dc26:-8000:0000000000001DED end
     }
 
