@@ -66,6 +66,7 @@ class taoTests_actions_form_TestAuthoring
         // section 127-0-1-1-1f533553:1260917dc26:-8000:0000000000001DE9 begin
 		
 		$this->form = tao_helpers_form_FormFactory::getForm('test_authoring');
+		$this->form->setActions(tao_helpers_form_FormFactory::getCommonActions('top'), 'top');
 		
         // section 127-0-1-1-1f533553:1260917dc26:-8000:0000000000001DE9 end
     }
