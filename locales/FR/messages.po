@@ -1,4 +1,4 @@
-msgid ""
+msgid "test saved"
 msgstr ""
 
 msgid "Test parameters"
@@ -158,7 +158,7 @@ msgid "Back"
 msgstr "Retour"
 
 msgid "Select related items"
-msgstr "Sélectionner les items liés au test "
+msgstr "Sélectionner les items liés au test"
 
 msgid "Save"
 msgstr "Enregistrer"
@@ -182,7 +182,7 @@ msgid "compiled with warning"
 msgstr "compilé avec avertissement"
 
 msgid "compilation failed"
-msgstr "échec de compilation "
+msgstr "échec de compilation"
 
 msgid "Compiling test"
 msgstr "Compilation du test en cours"

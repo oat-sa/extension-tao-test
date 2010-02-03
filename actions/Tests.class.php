@@ -133,7 +133,6 @@ class Tests extends TaoModule {
 				$this->setSessionAttribute("showNodeUri", tao_helpers_Uri::encode($test->uriResource));
 				$this->setData('message', 'Test saved');
 				$this->setData('reload', true);
-				$this->forward('Tests', 'index');
 			}
 		}
 		
@@ -195,7 +194,6 @@ class Tests extends TaoModule {
 				}
 				$this->setData('message', 'class saved');
 				$this->setData('reload', true);
-				$this->forward('Tests', 'index');
 			}
 		}
 		$this->setData('formTitle', 'Edit test class');
