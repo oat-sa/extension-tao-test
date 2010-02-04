@@ -24,7 +24,7 @@
 			$("#citem").jqGrid({
 				url:"/taoTests/Tests/itemSequenceData?uri=<?=get_data('uri')?>&classUri=<?=get_data('classUri')?>", 
 				datatype: "json", 
-				colNames:['sequence', 'uri', 'label', 'weight', 'difficulty','discrimination','guessing','model'], 
+				colNames:[__('sequence'), __('uri'), __('label'), __('weight'), __('difficulty'), __('discrimination'), __('guessing'), __('model')], 
 				colModel:[ 
 					{name:'sequence', 	index:'sequence', 	width:100, align:"center", editable: true, editoptions: {size:4}},
 					{name:'uri', 		index:'uri', 		width:0},
@@ -52,7 +52,7 @@
 				sortname: 'sequence', 
 				viewrecords: true, 
 				sortorder: "asc", 
-				caption: "Items"
+				caption: __("Items")
 			});
 			$("#citem").navGrid('#citem-pager', {edit:false, add:false, del:false});
 			$("#citem").hideCol(["uri"]); 
@@ -74,10 +74,10 @@
 					params, 
 					function(response){
 						if(response.saved){
-							createInfoMessage('Sequence saved');
+							createInfoMessage(__('Sequence saved'));
 						}
 						else{
-							createErrorMessage('An error occured while saving the sequence');
+							createErrorMessage(__('An error occured while saving the sequence'));
 						}
 					}
 				);

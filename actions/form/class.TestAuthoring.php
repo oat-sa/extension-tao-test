@@ -150,9 +150,9 @@ class taoTests_actions_form_TestAuthoring
 		$cumulElt = tao_helpers_form_FormFactory::getElement('cumulmodel', 'Combobox');
 		$cumulElt->setDescription(__('Cumul model'));
 		$cumulElt->setOptions(array(
-			'CLASSICAL'		=> __('Classical'),
+			'CLASSICAL'			=> __('Classical'),
 			'LIKELIHOOD'		=> __('Likelihood'),
-			'LOG-LIKELIHOOD'		=> __('Log-likelihood')
+			'LOG-LIKELIHOOD'	=> __('Log-likelihood')
 		));
 		$this->form->addElement($cumulElt);
 		
@@ -204,11 +204,11 @@ class taoTests_actions_form_TestAuthoring
 		$displayElt = tao_helpers_form_FormFactory::getElement('display', 'Checkbox');
 		$displayElt->setDescription(__('Display'));
 		$displayElt->setOptions(array(
-			'showlistbox' => __('Display items list during the test'),
-			'showprogessbar' => __('Show a progress bar during the test'),
-			'showLabel' => __('Display label'),
-			'showComment' => __('Display comments'),
-			'deactivateback' => __('Deactivate back button')
+			'showlistbox' 		=> __('Display items list during the test'),
+			'showprogessbar' 	=> __('Show a progress bar during the test'),
+			'showLabel' 		=> __('Display label'),
+			'showComment' 		=> __('Display comments'),
+			'deactivateback' 	=> __('Deactivate back button')
 		));
 		$this->form->addElement($displayElt);
 		

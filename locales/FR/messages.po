@@ -1,3 +1,15 @@
+msgid "Test saved"
+msgstr ""
+
+msgid "Edit test"
+msgstr ""
+
+msgid "Class saved"
+msgstr ""
+
+msgid "Edit test class"
+msgstr ""
+
 msgid "test saved"
 msgstr ""
 
@@ -151,6 +163,48 @@ msgstr ""
 msgid "Right button image"
 msgstr ""
 
+msgid "Tests"
+msgstr ""
+
+msgid "Manage tests"
+msgstr ""
+
+msgid "Tests library"
+msgstr ""
+
+msgid "new class"
+msgstr ""
+
+msgid "new test"
+msgstr ""
+
+msgid "delete"
+msgstr ""
+
+msgid "duplicate"
+msgstr ""
+
+msgid "edit test"
+msgstr ""
+
+msgid "new property"
+msgstr ""
+
+msgid "create table"
+msgstr ""
+
+msgid "import"
+msgstr ""
+
+msgid "export"
+msgstr ""
+
+msgid "Parameters"
+msgstr ""
+
+msgid "Items Sequence"
+msgstr ""
+
 msgid "Please select an test before!"
 msgstr "Veuillez choisir un test!"
 
@@ -169,8 +223,47 @@ msgstr "Séquence d'item"
 msgid "Sequence saved successfully"
 msgstr "La séquence a été enregistré avec succès"
 
+msgid "The Test module allows to combine a selection of Items to a Test."
+msgstr ""
+
+msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
+msgstr ""
+
+msgid "sequence"
+msgstr ""
+
+msgid "uri"
+msgstr ""
+
+msgid "label"
+msgstr ""
+
+msgid "weight"
+msgstr ""
+
+msgid "difficulty"
+msgstr ""
+
+msgid "discrimination"
+msgstr ""
+
+msgid "guessing"
+msgstr ""
+
+msgid "model"
+msgstr ""
+
 msgid "Numeric value"
 msgstr "Valeure numérique"
+
+msgid "Items"
+msgstr ""
+
+msgid "Sequence saved"
+msgstr ""
+
+msgid "An error occured while saving the sequence"
+msgstr ""
 
 msgid "Test Preview"
 msgstr "Prévisualisation du test"
@@ -186,4 +279,5 @@ msgstr "échec de compilation"
 
 msgid "Compiling test"
 msgstr "Compilation du test en cours"
+
 

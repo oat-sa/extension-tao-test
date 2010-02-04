@@ -131,7 +131,7 @@ class Tests extends TaoModule {
 				$test = $this->service->bindProperties($test, $myForm->getValues());
 				
 				$this->setSessionAttribute("showNodeUri", tao_helpers_Uri::encode($test->uriResource));
-				$this->setData('message', 'Test saved');
+				$this->setData('message', __('Test saved'));
 				$this->setData('reload', true);
 			}
 		}
@@ -158,7 +158,7 @@ class Tests extends TaoModule {
 		
 		$this->setData('uri', tao_helpers_Uri::encode($test->uriResource));
 		$this->setData('classUri', tao_helpers_Uri::encode($clazz->uriResource));
-		$this->setData('formTitle', 'Edit test');
+		$this->setData('formTitle', __('Edit test'));
 		$this->setData('myForm', $myForm->render());
 		$this->setView('form_group.tpl');
 	}
@@ -192,11 +192,11 @@ class Tests extends TaoModule {
 				if($clazz instanceof core_kernel_classes_Resource){
 					$this->setSessionAttribute("showNodeUri", tao_helpers_Uri::encode($clazz->uriResource));
 				}
-				$this->setData('message', 'class saved');
+				$this->setData('message', __('Class saved'));
 				$this->setData('reload', true);
 			}
 		}
-		$this->setData('formTitle', 'Edit test class');
+		$this->setData('formTitle', __('Edit test class'));
 		$this->setData('myForm', $myForm->render());
 		$this->setView('form.tpl');
 	}
