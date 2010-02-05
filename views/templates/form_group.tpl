@@ -1,4 +1,4 @@
-<?include('header.tpl')?>
+<?include(TAO_TPL_PATH . 'header.tpl')?>
 
 <div id="item-container" class="data-container" >
 	<div class="ui-widget ui-state-default ui-widget-header ui-corner-top container-title" >

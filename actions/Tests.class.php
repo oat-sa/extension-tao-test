@@ -48,7 +48,7 @@ class Tests extends TaoModule {
 	 * get the instancee of the current test regarding the 'uri' and 'classUri' request parameters
 	 * @return core_kernel_classes_Resource the test instance
 	 */
-	private function getCurrentTest(){
+	protected function getCurrentInstance(){
 		
 		$uri = tao_helpers_Uri::decode($this->getRequestParameter('uri'));
 		if(is_null($uri) || empty($uri)){
@@ -71,19 +71,6 @@ class Tests extends TaoModule {
  */
 	
 	/**
-	 * main action
-	 * @return void
-	 */
-	public function index(){
-		
-		if($this->getData('reload') == true){
-			unset($_SESSION[SESSION_NAMESPACE]['uri']);
-			unset($_SESSION[SESSION_NAMESPACE]['classUri']);
-		}
-		$this->setView('index.tpl');
-	}
-	
-	/**
 	 * Render json data to populate the tests tree 
 	 * 'modelType' must be in request parameter
 	 * @return void
@@ -100,30 +87,13 @@ class Tests extends TaoModule {
 		echo json_encode( $this->service->toTree( $this->service->getTestClass(), true, true, '', $filter));
 	}
 	
-	/**
-	 * Add an test instance
-	 * @return void
-	 */
-	public function addTest(){
-		if(!tao_helpers_Request::isAjax()){
-			throw new Exception("wrong request mode");
-		}
-		$clazz = $this->getCurrentClass();
-		$test = $this->service->createInstance($clazz);
-		if(!is_null($test) && $test instanceof core_kernel_classes_Resource){
-			echo json_encode(array(
-				'label'	=> $test->getLabel(),
-				'uri' 	=> tao_helpers_Uri::encode($test->uriResource)
-			));
-		}
-	}
 	
 	/**
 	 * edit a test instance
 	 */
 	public function editTest(){
 		$clazz = $this->getCurrentClass();
-		$test = $this->getCurrentTest();
+		$test = $this->getCurrentInstance();
 		$myForm = tao_helpers_form_GenerisFormFactory::instanceEditor($clazz, $test);
 		if($myForm->isSubmited()){
 			if($myForm->isValid()){
@@ -213,7 +183,7 @@ class Tests extends TaoModule {
 		
 		$deleted = false;
 		if($this->getRequestParameter('uri')){
-			$deleted = $this->service->deleteTest($this->getCurrentTest());
+			$deleted = $this->service->deleteTest($this->getCurrentInstance());
 		}
 		else{
 			$deleted = $this->service->deleteTestClass($this->getCurrentClass());
@@ -222,23 +192,6 @@ class Tests extends TaoModule {
 		echo json_encode(array('deleted'	=> $deleted));
 	}
 		
-	/**
-	 * duplicate a test instance by property copy
-	 * @return void
-	 */
-	public function cloneTest(){
-		if(!tao_helpers_Request::isAjax()){
-			throw new Exception("wrong request mode");
-		}
-		
-		$clone = $this->service->cloneInstance($this->getCurrentTest(), $this->getCurrentClass());
-		if(!is_null($clone)){
-			echo json_encode(array(
-				'label'	=> $clone->getLabel(),
-				'uri' 	=> tao_helpers_Uri::encode($clone->uriResource)
-			));
-		}
-	}
 	
 	
 	/**
@@ -248,7 +201,7 @@ class Tests extends TaoModule {
 	public function authoring(){
 		$this->setData('error', false);
 		try{
-			$test = $this->getCurrentTest();
+			$test = $this->getCurrentInstance();
 			$clazz =  $this->getCurrentClass();
 			$data = $this->service->getTestParameters($test);
 			$data['uri'] = tao_helpers_Uri::encode($test->uriResource);
@@ -279,7 +232,7 @@ class Tests extends TaoModule {
 	 * @return void 
 	 */
 	public function itemSequence(){
-		$test = $this->getCurrentTest();
+		$test = $this->getCurrentInstance();
 		$clazz =  $this->getCurrentClass();
 		
 		$this->setData('uri', tao_helpers_Uri::encode($test->uriResource));
@@ -300,7 +253,7 @@ class Tests extends TaoModule {
 		
 		if(!$sidx) $sidx =1; // connect to the database 
 		
-		$test = $this->getCurrentTest();
+		$test = $this->getCurrentInstance();
 		$items = $this->service->getItemSequence($test, array(
 			'order' 	=> $sidx,
 			'orderDir'	=> $sord,
@@ -349,7 +302,7 @@ class Tests extends TaoModule {
 		
 		$response = array('saved' => false);
 		
-		$test = $this->getCurrentTest();
+		$test = $this->getCurrentInstance();
 		$clazz =  $this->getCurrentClass();
 		
 		$sequence = array();
@@ -378,7 +331,7 @@ class Tests extends TaoModule {
 	public function getTestContent(){
 		header("Content-Type: text/xml; charset utf-8");
 		try{
-			print $this->service->getTestContent($this->getCurrentTest());
+			print $this->service->getTestContent($this->getCurrentInstance());
 			return;
 		}
 		catch(Exception $e){}
@@ -444,7 +397,7 @@ class Tests extends TaoModule {
 				$items[str_replace('instance_', '', $key)] = tao_helpers_Uri::decode($value);
 			}
 		}
-		$test = $this->getCurrentTest();
+		$test = $this->getCurrentInstance();
 		
 		if($this->service->setRelatedItems($test, $items, true)){
 			$saved = true;

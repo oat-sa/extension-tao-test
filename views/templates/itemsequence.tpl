@@ -1,4 +1,4 @@
-<?include('header.tpl')?>
+<?include(TAO_TPL_PATH . 'header.tpl')?>
 
 
 <?if(get_data('error')):?>
@@ -86,4 +86,4 @@
 	</script>
 <?endif?>
 
-<?include('footer.tpl')?>
+<?include(TAO_TPL_PATH . 'footer.tpl')?>

@@ -280,4 +280,14 @@ msgstr "échec de compilation"
 msgid "Compiling test"
 msgstr "Compilation du test en cours"
 
+msgid "EN"
+msgstr "English"
 
+msgid "FR"
+msgstr "French"
+
+msgid "DE"
+msgstr "German"
+
+msgid "LU"
+msgstr "Luxemburgish"

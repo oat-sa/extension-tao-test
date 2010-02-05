@@ -7,17 +7,17 @@
 					dataUrl="/taoTests/Tests/getTests" 
 					editClassUrl="/taoTests/Tests/editTestClass"
 					editInstanceUrl="/taoTests/Tests/editTest"
-					addInstanceUrl="/taoTests/Tests/addTest"
+					addInstanceUrl="/taoTests/Tests/addInstance"
 					addSubClassUrl="/taoTests/Tests/addTestClass"
 					deleteUrl="/taoTests/Tests/delete"
-					duplicateUrl="/taoTests/Tests/cloneTest"
+					duplicateUrl="/taoTests/Tests/cloneInstance"
 				/>
 			</trees>
 			<actions>
 				<action name="new class" js="GenerisAction.subClass" url="/taoTests/Tests/addTestClass" context="class" />
-				<action name="new test" js="GenerisAction.instanciate" url="/taoTests/Tests/addTest" context="class" />
+				<action name="new test" js="GenerisAction.instanciate" url="/taoTests/Tests/addInstance" context="class" />
 				<action name="delete" js="GenerisAction.removeNode" url="/taoTests/Tests/delete" context="resource" />
-				<action name="duplicate" js="GenerisAction.duplicateNode" url="/taoTests/Tests/cloneTest" context="instance" />
+				<action name="duplicate" js="GenerisAction.duplicateNode" url="/taoTests/Tests/cloneInstance" context="instance" />
 				<action name="edit test" url="/taoTests/Tests/editTest" context="instance" />
 				<action name="new property" js="GenerisAction.addProperty" url="/taoTests/Tests/addClassProperty" context="class" />
 				<action name="create table" js="GenerisAction.resultTable" url="/taoResults/Results/createTable"  context="class" />
