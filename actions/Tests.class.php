@@ -65,27 +65,18 @@ class Tests extends TaoModule {
 		return $test;
 	}
 	
+	/**
+	 * get the main class
+	 * @return core_kernel_classes_Classes
+	 */
+	protected function getRootClass(){
+		return $this->service->getTestClass();
+	}
+	
 	
 /*
  * controller actions
  */
-	
-	/**
-	 * Render json data to populate the tests tree 
-	 * 'modelType' must be in request parameter
-	 * @return void
-	 */
-	public function getTests(){
-		
-		if(!tao_helpers_Request::isAjax()){
-			throw new Exception("wrong request mode");
-		}
-		$filter = '';
-		if($this->hasRequestParameter('filter')){
-			$filter = $this->getRequestParameter('filter');
-		}
-		echo json_encode( $this->service->toTree( $this->service->getTestClass(), true, true, '', $filter));
-	}
 	
 	
 	/**

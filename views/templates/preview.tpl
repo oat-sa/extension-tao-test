@@ -7,7 +7,7 @@
 		$.ajax({
 			url: '/taoDelivery/delivery/compile',
 			type: 'POST',
-			data: {uri: "<?=get_data('uri')?>"},
+			data: {uri: "<?=tao_helpers_Uri::decode(get_data('uri'))?>"},
 			dataType: 'json',
 			success: function(response){
 				compiled = false;
@@ -24,7 +24,7 @@
                 }
 				
 				if(compiled){
-					window.location = '/taoDelivery/Delivery/preview?uri=<?=urlencode(get_data('uri'))?>';
+					window.location = '/taoDelivery/Delivery/preview?uri=<?=urlencode(tao_helpers_Uri::decode(get_data('uri')))?>';
 				}
 			}
 		});
