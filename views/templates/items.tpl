@@ -1,5 +1,3 @@
-<?include(TAO_TPL_PATH . 'header.tpl')?>
-
 <div id="item-container" class="data-container" >
 	<div class="ui-widget ui-state-default ui-widget-header ui-corner-top container-title" >
 		<?=__('Select related items')?>
@@ -10,7 +8,6 @@
 	<div class="ui-widget ui-widget-content ui-state-default ui-corner-bottom" style="text-align:center; padding:4px;">
 		<input id="saver-action-item" type="button" value="<?=__('Save')?>" />
 	</div>
-	
 </div>
 <div id="item-order-container" class="data-container" >
 	<div class="ui-widget ui-state-default ui-widget-header ui-corner-top container-title" >
@@ -22,8 +19,8 @@
 			<ul id="item-sequence" class="sortable-list">
 			<?foreach(get_data('itemSequence') as $index => $item):?>
 				<li class="ui-state-default" id="item_<?=$item['uri']?>" >
-					<span class='ui-icon ui-icon-arrowthick-2-n-s' />
-					<span class="ui-icon ui-icon-grip-dotted-vertical" />
+					<span class='ui-icon ui-icon-arrowthick-2-n-s' ></span>
+					<span class="ui-icon ui-icon-grip-dotted-vertical" ></span>
 					<?=$index?>. <?=$item['label']?>
 				</li>
 			<?endforeach?>
@@ -34,47 +31,40 @@
 		<input id="saver-action-item-sequence" type="button" value="<?=__('Save')?>" />
 	</div>
 </div>
-<div class="main-container">
-	<div id="form-title" class="ui-widget-header ui-corner-top ui-state-default">
-		<?=get_data('formTitle')?>
-	</div>
-	<div id="form-container" class="ui-widget-content ui-corner-bottom">
-		<?=get_data('myForm')?>
-	</div>
-</div>
 <script type="text/javascript">
-$(function(){
+$(document).ready(function(){
 	
 	var sequence = <?=get_data('relatedItems')?>;
 	var labels = <?=get_data('allItems')?>;
 	
 	function buildItemList(id, items, labels){
 		html = '';
-		for (i in items){
+		for (i in items) {
 			itemId = items[i];
-			html += "<li class='ui-state-default' id='"+itemId+"' >";
+			html += "<li class='ui-state-default' id='" + itemId + "' >";
 			html += "<span class='ui-icon ui-icon-arrowthick-2-n-s' /><span class='ui-icon ui-icon-grip-dotted-vertical' />";
-			html += i+". "+ labels[itemId];
+			html += i + ". " + labels[itemId];
 			html += "</li>";
 		}
-		$("#"+id).html(html);
+		$("#" + id).html(html);
 	}
 	
 	new GenerisTreeFormClass('#item-tree', "/taoTests/Tests/getItems",{
 		actionId: 'item',
 		saveUrl : '/taoTests/Tests/saveItems',
 		saveCallback: function (data){
-			items = {};
-			for(attr in data){
-				if(/^instance_/.test(attr)){
-					items[parseInt(attr.replace('instance_', ''))+1] = 'item_'+ data[attr];
+			if (buildItemList != undefined) {
+				items = {};
+				for(attr in data){
+					if(/^instance_/.test(attr)){
+						items[parseInt(attr.replace('instance_', ''))+1] = 'item_'+ data[attr];
+					}
 				}
+				buildItemList("item-sequence", items, labels);
 			}
-			buildItemList("item-sequence", items, labels);
 		},
 		checkedNodes : sequence
 	});
-	
 	
 	$("#item-sequence").sortable({
 		axis: 'y',
@@ -122,9 +112,7 @@ $(function(){
 				loaded();
 			}
 		});
-		
 	});
+	
 });
 </script>
-
-<?include('footer.tpl');?>

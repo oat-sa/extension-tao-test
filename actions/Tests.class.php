@@ -121,7 +121,7 @@ class Tests extends TaoModule {
 		$this->setData('classUri', tao_helpers_Uri::encode($clazz->uriResource));
 		$this->setData('formTitle', __('Edit test'));
 		$this->setData('myForm', $myForm->render());
-		$this->setView('form_group.tpl');
+		$this->setView('form_test.tpl');
 	}
 	
 	/**
