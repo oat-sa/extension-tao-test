@@ -19,7 +19,10 @@
 	<div id="form-container" class="ui-widget-content ui-corner-bottom">
 		<?=get_data('myForm')?>
 	</div>
-		
+
+	<?if(isset($_GET['uri'])):?>	
+		<script type="text/javascript">$(document).ready(function(){ uiForm.initElements(); });</script>	
+	<?endif?>
 <?endif?>
 
 <?include('footer.tpl')?>

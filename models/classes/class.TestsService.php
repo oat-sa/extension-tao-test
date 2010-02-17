@@ -915,10 +915,6 @@ class taoTests_models_classes_TestsService
         // section 127-0-1-1-6730a7c:126559edebd:-8000:0000000000001E24 begin
 		
 		try{
-			print "<pre>";
-			print_r($parameters);
-			print "</pre>";
-			
 			$content = $this->getTestContent($test);
 			
 			$dom = new DOMDocument();
