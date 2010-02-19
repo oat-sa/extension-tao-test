@@ -31,6 +31,10 @@
 		<input id="saver-action-item-sequence" type="button" value="<?=__('Save')?>" />
 	</div>
 </div>
+<?if(!get_data('myForm')):?>
+	<input type='hidden' name='uri' value="<?=get_data('uri')?>" />
+	<input type='hidden' name='classUri' value="<?=get_data('classUri')?>" />
+<?endif?>
 <script type="text/javascript">
 $(document).ready(function(){
 	
@@ -49,9 +53,14 @@ $(document).ready(function(){
 		$("#" + id).html(html);
 	}
 	
-	new GenerisTreeFormClass('#item-tree', "/taoTests/Tests/getItems",{
+	if(ctx_extension){
+		url = '/' + ctx_extension + '/' + ctx_module + '/';
+	}
+	var getUrl = url + 'getItems';
+	var setUrl = url + 'saveItems';
+	new GenerisTreeFormClass('#item-tree', getUrl,{
 		actionId: 'item',
-		saveUrl : '/taoTests/Tests/saveItems',
+		saveUrl : setUrl,
 		saveCallback: function (data){
 			if (buildItemList != undefined) {
 				items = {};
@@ -99,7 +108,7 @@ $(document).ready(function(){
 		toSend.uri = $("input[name=uri]").val();
 		toSend.classUri = $("input[name=classUri]").val();
 		$.ajax({
-			url: '/taoTests/Tests/saveItems',
+			url: setUrl,
 			type: "POST",
 			data: toSend,
 			dataType: 'json',

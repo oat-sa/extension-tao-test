@@ -34,7 +34,14 @@ class SaSTests extends Tests {
 		parent::setView('sas.tpl', true);
     }
 	
+	/**
+	 * Render the tree and the list to select and order the test related items 
+	 * @return void
+	 */
 	public function selectItems(){
+		
+		$this->setData('uri', $this->getRequestParameter('uri'));
+		$this->setData('classUri', $this->getRequestParameter('classUri'));
 		
 		$test = $this->getCurrentInstance();
 		
