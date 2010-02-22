@@ -172,6 +172,9 @@ msgstr ""
 msgid "Tests library"
 msgstr ""
 
+msgid "search"
+msgstr ""
+
 msgid "new class"
 msgstr ""
 
@@ -190,10 +193,13 @@ msgstr ""
 msgid "new property"
 msgstr ""
 
-msgid "create table"
+msgid "preview"
 msgstr ""
 
-msgid "import"
+msgid "meta data"
+msgstr ""
+
+msgid "create table"
 msgstr ""
 
 msgid "export"
@@ -211,6 +217,12 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
+msgid "The Test module allows to combine a selection of Items to a Test."
+msgstr ""
+
+msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
+msgstr ""
+
 msgid "Select related items"
 msgstr ""
 
@@ -221,12 +233,6 @@ msgid "Items sequence"
 msgstr ""
 
 msgid "Sequence saved successfully"
-msgstr ""
-
-msgid "The Test module allows to combine a selection of Items to a Test."
-msgstr ""
-
-msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
 msgstr ""
 
 msgid "sequence"
@@ -291,3 +297,4 @@ msgstr "German"
 
 msgid "LU"
 msgstr "Luxemburgish"
+
