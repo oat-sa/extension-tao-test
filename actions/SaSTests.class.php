@@ -35,6 +35,19 @@ class SaSTests extends Tests {
     }
 	
 	/**
+     * overrided to prevent exception: 
+     * if no class is selected, the root class is returned 
+     * @see TaoModule::getCurrentClass()
+     * @return core_kernel_class_Class
+     */
+    protected function getCurrentClass() {
+        if($this->hasRequestParameter('classUri')){
+        	return parent::getCurrentClass();
+        }
+		return $this->getRootClass();
+    }
+	
+	/**
 	 * Render the tree and the list to select and order the test related items 
 	 * @return void
 	 */
