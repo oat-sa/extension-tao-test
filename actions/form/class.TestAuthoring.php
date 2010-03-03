@@ -66,7 +66,19 @@ class taoTests_actions_form_TestAuthoring
         // section 127-0-1-1-1f533553:1260917dc26:-8000:0000000000001DE9 begin
 		
 		$this->form = tao_helpers_form_FormFactory::getForm('test_authoring');
-		$this->form->setActions(tao_helpers_form_FormFactory::getCommonActions('top'), 'top');
+		
+		$topActions = tao_helpers_form_FormFactory::getCommonActions('top');
+		$previewElt = tao_helpers_form_FormFactory::getElement('preview', 'Free');
+		$previewElt->setValue(" | <a href='#' class='test-previewer'  ><img src='".BASE_WWW."/img/preview.png'  /> ".__('Preview')."</a>");
+		$topActions[] = $previewElt;
+		$this->form->setActions($topActions, 'top');
+		
+		$bottomActions = tao_helpers_form_FormFactory::getCommonActions('bottom');
+		$previewBtn = tao_helpers_form_FormFactory::getElement('previewBtn', 'Button');
+		$previewBtn->setAttributes(array('class' => 'test-previewer'));
+		$previewBtn->setValue(__('Preview'));
+		$bottomActions[] = $previewBtn;
+		$this->form->setActions($bottomActions, 'bottom');
 		
         // section 127-0-1-1-1f533553:1260917dc26:-8000:0000000000001DE9 end
     }
@@ -88,20 +100,22 @@ class taoTests_actions_form_TestAuthoring
 		//duration 
 		$durationElt = tao_helpers_form_FormFactory::getElement('duration', 'Textbox');
 		$durationElt->setDescription(__('Maximum time allowed'));
+		$durationElt->setAttributes(array('size' => 6));
+		$durationElt->setUnit(__('seconds'));
 		$this->form->addElement($durationElt);
 		
 		//password
 		$passElt = tao_helpers_form_FormFactory::getElement('password', 'Hiddenbox');
-		$passElt->setDescription(__('Password'));
+		$passElt->setDescription(__('Password for administrator'));
 		$this->form->addElement($passElt);
 		
-		$this->form->createGroup("g1", __("g1"), array('duration', 'password'));
+		$this->form->createGroup("g1", __("Test award"), array('duration', 'password'));
 		
 		//sequence mode
 		$sequenceElt = tao_helpers_form_FormFactory::getElement('hassequencemode', 'Combobox');
 		$sequenceElt->setDescription(__('Sequence mode'));
 		$sequenceElt->setOptions(array(
-			'SEQUENCIAL'	=> __('Sequencial'),
+			'SEQUENCIAL'	=> __('Sequential'),
 			'RANDOM'		=> __('Random'),
 			'MAXFISHER'		=> __('Maxfisher')
 		));
@@ -111,9 +125,10 @@ class taoTests_actions_form_TestAuthoring
 		$delayElt = tao_helpers_form_FormFactory::getElement('delay', 'Textbox');
 		$delayElt->setDescription(__('Delay'));
 		$delayElt->setAttributes(array('size' => 4));
+		$delayElt->setUnit(__('items'));
 		$this->form->addElement($delayElt);
 		
-		$this->form->createGroup("g2", __("g2"), array('hassequencemode', 'delay'));
+		$this->form->createGroup("g2", __("Sequence mode"), array('hassequencemode', 'delay'));
 		
 		//scoring method
 		$scoringElt = tao_helpers_form_FormFactory::getElement('hasscoringmethod', 'Combobox');
@@ -144,7 +159,6 @@ class taoTests_actions_form_TestAuthoring
 		$qiterElt->setAttributes(array('size' => 4));
 		$this->form->addElement($qiterElt);
 		
-		$this->form->createGroup("g3", __("g3"), array('hasscoringmethod', 'qmin', 'qmax', 'qiter'));
 		
 		//cumul model
 		$cumulElt = tao_helpers_form_FormFactory::getElement('cumulmodel', 'Combobox');
@@ -156,7 +170,7 @@ class taoTests_actions_form_TestAuthoring
 		));
 		$this->form->addElement($cumulElt);
 		
-		$this->form->createGroup("g4", __("g4"), array('cumulmodel'));
+		$this->form->createGroup("g3", __("Scoring"), array('hasscoringmethod', 'qmin', 'qmax', 'qiter', 'cumulmodel'));
 		
 		//Halt criteria
 		$haltElt = tao_helpers_form_FormFactory::getElement('haltcriteria', 'Combobox');
@@ -180,7 +194,7 @@ class taoTests_actions_form_TestAuthoring
 		$thresholdElt->setAttributes(array('size' => 4));
 		$this->form->addElement($maxElt);
 		
-		$this->form->createGroup("g5", __("g5"), array('haltcriteria', 'deltascorethreshold', 'max'));
+		$this->form->createGroup("g5", __("Halt criteria"), array('haltcriteria', 'deltascorethreshold', 'max'));
 		
 		
 		//Threshold 1
@@ -198,7 +212,7 @@ class taoTests_actions_form_TestAuthoring
 		$thresh3Elt->setDescription(__('Threshold 3'));
 		$this->form->addElement($thresh3Elt);
 		
-		$this->form->createGroup("g6", __("g6"), array( 'thresh1', 'thresh2','thresh3'));
+		$this->form->createGroup("g6", __("Scoring threshold"), array( 'thresh1', 'thresh2','thresh3'));
 		
 		//display params
 		$displayElt = tao_helpers_form_FormFactory::getElement('display', 'Checkbox');
@@ -216,36 +230,42 @@ class taoTests_actions_form_TestAuthoring
 		$itemTopElt = tao_helpers_form_FormFactory::getElement('itemtop', 'Textbox');
 		$itemTopElt->setDescription(__('Test content (top position)'));
 		$itemTopElt->setAttributes(array('size' => 4));
+		$itemTopElt->setUnit(__('px'));
 		$this->form->addElement($itemTopElt);
 		
 		//item left
 		$itemLeftElt = tao_helpers_form_FormFactory::getElement('itemleft', 'Textbox');
 		$itemLeftElt->setDescription(__('Test content (left position)'));
 		$itemLeftElt->setAttributes(array('size' => 4));
+		$itemLeftElt->setUnit(__('px'));
 		$this->form->addElement($itemLeftElt);
 		
 		//nav top
 		$navTopElt = tao_helpers_form_FormFactory::getElement('navtop', 'Textbox');
 		$navTopElt->setDescription(__('Navigation buttons (top position)'));
 		$navTopElt->setAttributes(array('size' => 4));
+		$navTopElt->setUnit(__('px'));
 		$this->form->addElement($navTopElt);
 		
 		//nav left
 		$navLeftElt = tao_helpers_form_FormFactory::getElement('navleft', 'Textbox');
 		$navLeftElt->setDescription(__('Navigation buttons (left position)'));
 		$navLeftElt->setAttributes(array('size' => 4));
+		$navLeftElt->setUnit(__('px'));
 		$this->form->addElement($navLeftElt);
 		
 		//progress bar top
 		$pbTopElt = tao_helpers_form_FormFactory::getElement('progressbartop', 'Textbox');
 		$pbTopElt->setDescription(__('Progressbar (top position)'));
 		$pbTopElt->setAttributes(array('size' => 4));
+		$pbTopElt->setUnit(__('px'));
 		$this->form->addElement($pbTopElt);
 		
 		//progress bar left
 		$pbLeftElt = tao_helpers_form_FormFactory::getElement('progressbarleft', 'Textbox');
 		$pbLeftElt->setDescription(__('Progressbar (left position)'));
 		$pbLeftElt->setAttributes(array('size' => 4));
+		$pbLeftElt->setUnit(__('px'));
 		$this->form->addElement($pbLeftElt);
 		
 		//left button image

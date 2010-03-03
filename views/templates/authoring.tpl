@@ -23,6 +23,14 @@
 	<?if(isset($_GET['uri'])):?>	
 		<script type="text/javascript">$(document).ready(function(){ uiForm.initElements(); });</script>	
 	<?endif?>
+
+	<script type="text/javascript">
+		$('.test-previewer').click(function(){
+			GenerisAction.fullScreen($('#uri').val(), $('classUri').val(), '/taoTests/Tests/preview');
+		});
+	</script>
 <?endif?>
+
+
 
 <?include('footer.tpl')?>

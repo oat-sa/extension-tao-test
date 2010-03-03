@@ -492,11 +492,16 @@ class taoTests_models_classes_TestsService
 					}
 				}
 				else{
-					$returnValue =  $testContents[0];
+					$returnValue = (string)$testContents[0];
 				}
 			}
-			else{	//remove them 
-				$test->removePropertyValues(new core_kernel_classes_Property(TEST_TESTCONTENT_PROP));
+			else if(count($testContents) > 1){	
+				$testContent =  $testContents[0];
+				//if there is more than one test content, it should not happend but to prevent errors:
+				$test->removePropertyValues(new core_kernel_classes_Property(TEST_TESTCONTENT_PROP));	//remove them 
+				if($this->setTestContent($test, $testContent)){
+					$returnValue = (string)$testContent;
+				}
 			}
 		}
 		
