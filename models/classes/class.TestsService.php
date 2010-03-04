@@ -451,7 +451,7 @@ class taoTests_models_classes_TestsService
         // section 127-0-1-1-a1589c9:1262c43ae7a:-8000:0000000000001DFE begin
 		
 		$itemClazz = new core_kernel_classes_Class(TAO_ITEM_CLASS);
-		foreach($itemClazz->getInstances(false) as $instance){
+		foreach($itemClazz->getInstances(true) as $instance){
 			$returnValue[$instance->uriResource] = $instance->getLabel();
 		}
 		
