@@ -1,300 +1,311 @@
-msgid "Test saved"
+msgid ""
 msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Eric J. Francois <eric.francois@uni.lu>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Test saved"
+msgstr "Test gespäichert"
 
 msgid "Edit test"
-msgstr ""
+msgstr "Editéier Test"
 
 msgid "Class saved"
-msgstr ""
+msgstr "Klass gespäichert"
 
 msgid "Edit test class"
-msgstr ""
+msgstr "Test Klass editéieren"
 
 msgid "test saved"
-msgstr ""
+msgstr "Test gespäichert"
 
 msgid "Test parameters"
-msgstr ""
+msgstr "Test Parameter"
 
 msgid "An error occured while saving the test"
-msgstr ""
+msgstr "Beim Späicher vum Test ass e Feeler virkomm"
 
 msgid "Test saved successfully"
-msgstr ""
+msgstr "Test erfollechräich gespäichert"
 
 msgid "Maximum time allowed"
-msgstr ""
+msgstr "Maximum erlaabten Zäit"
 
 msgid "Password"
-msgstr ""
+msgstr "PAsswuert"
 
 msgid "g1"
-msgstr ""
+msgstr "g1"
 
 msgid "Sequence mode"
-msgstr ""
+msgstr "Sequenz Modus"
 
 msgid "Sequencial"
-msgstr ""
+msgstr "Sequenzial"
 
 msgid "Random"
-msgstr ""
+msgstr "Zoufälleg"
 
 msgid "Maxfisher"
-msgstr ""
+msgstr "Maxfisher"
 
 msgid "Delay"
-msgstr ""
+msgstr "Délai"
 
 msgid "g2"
-msgstr ""
+msgstr "g2"
 
 msgid "Scoring method"
-msgstr ""
+msgstr "Bewertungs Method"
 
 msgid "Classical ratio"
-msgstr ""
+msgstr "Klassesch Ratio"
 
 msgid "Maximum likelihood"
-msgstr ""
+msgstr "Maximal Wahrscheinlechkeet"
 
 msgid "Maximum a posteriori"
-msgstr ""
+msgstr "Maximum a posteriori"
 
 msgid "Expected a posteriori"
-msgstr ""
+msgstr "Erwaarten a posteriori"
 
 msgid "QMIN"
-msgstr ""
+msgstr "QMIN"
 
 msgid "QMAX"
-msgstr ""
+msgstr "QMAX"
 
 msgid "QITER"
-msgstr ""
+msgstr "QITER"
 
 msgid "g3"
-msgstr ""
+msgstr "g3"
 
 msgid "Cumul model"
-msgstr ""
+msgstr "Cumul Modell"
 
 msgid "Classical"
-msgstr ""
+msgstr "Klassesch"
 
 msgid "Likelihood"
-msgstr ""
+msgstr "Wahrscheinlechkeet"
 
 msgid "Log-likelihood"
-msgstr ""
+msgstr "Log-Wahrscheinlechkeet"
 
 msgid "g4"
-msgstr ""
+msgstr "g4"
 
 msgid "Halt criteria"
-msgstr ""
+msgstr "Stop Critère"
 
 msgid "DELTASCORE"
-msgstr ""
+msgstr "DELTASCORE"
 
 msgid "DELTASE"
-msgstr ""
+msgstr "DELTASE"
 
 msgid "Threshold"
-msgstr ""
+msgstr "Schwell"
 
 msgid "Max"
-msgstr ""
+msgstr "Max"
 
 msgid "g5"
-msgstr ""
+msgstr "g5"
 
 msgid "Threshold 1"
-msgstr ""
+msgstr "Schwell 1"
 
 msgid "Threshold 2"
-msgstr ""
+msgstr "Schwell 2"
 
 msgid "Threshold 3"
-msgstr ""
+msgstr "Schwell 3"
 
 msgid "g6"
-msgstr ""
+msgstr "g6"
 
 msgid "Display"
-msgstr ""
+msgstr "Uweisen"
 
 msgid "Display items list during the test"
-msgstr ""
+msgstr "Itemlëscht während dem Test uweisen"
 
 msgid "Show a progress bar during the test"
-msgstr ""
+msgstr "Eng Progressbar während dem Test weisen"
 
 msgid "Display label"
-msgstr ""
+msgstr "Etiquette uweisen"
 
 msgid "Display comments"
-msgstr ""
+msgstr "Kommentar uweisen"
 
 msgid "Deactivate back button"
-msgstr ""
+msgstr "\"Zreck-Knäppchen\" ofschalten"
 
 msgid "Test content (top position)"
-msgstr ""
+msgstr "Test Contenu (iewescht Positioun)"
 
 msgid "Test content (left position)"
-msgstr ""
+msgstr "Test Contenu (lenks Positioun)"
 
 msgid "Navigation buttons (top position)"
-msgstr ""
+msgstr "Navigatioun (iewescht Positioun)"
 
 msgid "Navigation buttons (left position)"
-msgstr ""
+msgstr "Navigatioun (lenks Positioun)"
 
 msgid "Progressbar (top position)"
-msgstr ""
+msgstr "Progressbar (iewescht Positioun)"
 
 msgid "Progressbar (left position)"
-msgstr ""
+msgstr "Progressbar (lenks Positioun)"
 
 msgid "Left button image"
-msgstr ""
+msgstr "Bild fir Lenks-Knäppchen"
 
 msgid "Right button image"
-msgstr ""
+msgstr "Bild fir Riets-Knäppchen"
 
 msgid "Tests"
-msgstr ""
+msgstr "Tester"
 
 msgid "Manage tests"
-msgstr ""
+msgstr "Testermanagen"
 
 msgid "Tests library"
-msgstr ""
+msgstr "Test Sammlung"
 
 msgid "search"
-msgstr ""
+msgstr "duerchsichen"
 
 msgid "new class"
-msgstr ""
+msgstr "nei Klass"
 
 msgid "new test"
-msgstr ""
+msgstr "neien Test"
 
 msgid "delete"
-msgstr ""
+msgstr "läschen"
 
 msgid "duplicate"
-msgstr ""
+msgstr "duplizéieren"
 
 msgid "edit test"
-msgstr ""
+msgstr "Test editéieren"
 
 msgid "new property"
-msgstr ""
+msgstr "nei Propriétéit"
 
 msgid "preview"
-msgstr ""
+msgstr "Virschau"
 
 msgid "meta data"
-msgstr ""
+msgstr "Metadaten"
 
 msgid "create table"
-msgstr ""
+msgstr "Tabell erschafen"
 
 msgid "export"
-msgstr ""
+msgstr "exportéieren"
 
 msgid "Parameters"
-msgstr ""
+msgstr "Parameter"
 
 msgid "Items Sequence"
-msgstr ""
+msgstr "Itemsequenz"
 
 msgid "Please select an test before!"
-msgstr ""
+msgstr "Wielt w.e.g als éischt en Test"
 
 msgid "Back"
-msgstr ""
+msgstr "Zréck"
 
 msgid "The Test module allows to combine a selection of Items to a Test."
-msgstr ""
+msgstr "Den Test Modul erlaabt eng Selektioun vun Itemen matt engem Test ze verbannen."
 
 msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
-msgstr ""
+msgstr "Den Test Modus (Sequenzéieren, Bewerten, Sammelen, etc.) an de Layout gin och hei konfiguréiert."
 
 msgid "Select related items"
-msgstr ""
+msgstr "Verwandten Itemen wielen"
 
 msgid "Save"
-msgstr ""
+msgstr "Späicheren"
 
 msgid "Items sequence"
-msgstr ""
+msgstr "Itemsequenz"
 
 msgid "Sequence saved successfully"
-msgstr ""
+msgstr "Sequenz erfollechräich gespäichert"
 
 msgid "sequence"
-msgstr ""
+msgstr "Sequenz"
 
 msgid "uri"
-msgstr ""
+msgstr "uri"
 
 msgid "label"
-msgstr ""
+msgstr "Etiquette"
 
 msgid "weight"
-msgstr ""
+msgstr "Gewiicht"
 
 msgid "difficulty"
-msgstr ""
+msgstr "Schwieregkeet"
 
 msgid "discrimination"
-msgstr ""
+msgstr "Diskriminatioun"
 
 msgid "guessing"
-msgstr ""
+msgstr "roden"
 
 msgid "model"
-msgstr ""
+msgstr "Modell"
 
 msgid "Numeric value"
-msgstr ""
+msgstr "Numeresche Wert"
 
 msgid "Items"
-msgstr ""
+msgstr "Itemen"
 
 msgid "Sequence saved"
-msgstr ""
+msgstr "Sequenz gespäichert"
 
 msgid "An error occured while saving the sequence"
-msgstr ""
+msgstr "Beim Späichere vun der Sequenz ass e Feeler passéiert"
 
 msgid "Test Preview"
-msgstr ""
+msgstr "Test Virschau"
 
 msgid "compiled"
-msgstr ""
+msgstr "compiléiert"
 
 msgid "compiled with warning"
-msgstr ""
+msgstr "matt enger Warnung compiléiert"
 
 msgid "compilation failed"
-msgstr ""
+msgstr "Compilatioun feelgeschloen"
 
 msgid "Compiling test"
-msgstr ""
+msgstr "Test gëtt compiléiert"
 
 msgid "EN"
-msgstr "English"
+msgstr "Englesch"
 
 msgid "FR"
-msgstr "French"
+msgstr "Franséich"
 
 msgid "DE"
-msgstr "German"
+msgstr "Däitsch"
 
 msgid "LU"
-msgstr "Luxemburgish"
+msgstr "Lëtzebuergesch"
 

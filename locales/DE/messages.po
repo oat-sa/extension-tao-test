@@ -1,300 +1,300 @@
-msgid "Test saved"
+msgid "Test gespeichert"
 msgstr ""
 
 msgid "Edit test"
-msgstr ""
+msgstr "Test bearbeiten"
 
 msgid "Class saved"
-msgstr ""
+msgstr "Klasse gespeichert"
 
 msgid "Edit test class"
-msgstr ""
+msgstr "Klasse \"Test\ bearbeiten"
 
 msgid "test saved"
-msgstr ""
+msgstr "Test gespeichert"
 
 msgid "Test parameters"
-msgstr ""
+msgstr "Test-Parameter"
 
 msgid "An error occured while saving the test"
-msgstr ""
+msgstr "Ein Fehler ist während des Speicherns des Tests aufgetreten"
 
 msgid "Test saved successfully"
-msgstr ""
+msgstr "Test erfolgreich gespeichert"
 
 msgid "Maximum time allowed"
-msgstr ""
+msgstr "Maximale Dauer"
 
 msgid "Password"
-msgstr ""
+msgstr "Passwort"
 
 msgid "g1"
-msgstr ""
+msgstr "g1"
 
 msgid "Sequence mode"
-msgstr ""
+msgstr "sequenzierungs-Modus"
 
 msgid "Sequencial"
-msgstr ""
+msgstr "Sequenziell"
 
 msgid "Random"
-msgstr ""
+msgstr "Zufällig"
 
 msgid "Maxfisher"
-msgstr ""
+msgstr "Maxfisher"
 
 msgid "Delay"
-msgstr ""
+msgstr "Verzögerung"
 
 msgid "g2"
-msgstr ""
+msgstr "g2"
 
 msgid "Scoring method"
-msgstr ""
+msgstr "Scoring-Methode"
 
 msgid "Classical ratio"
-msgstr ""
+msgstr "Classical ratio"
 
 msgid "Maximum likelihood"
-msgstr ""
+msgstr "Maximum likelihood"
 
 msgid "Maximum a posteriori"
-msgstr ""
+msgstr "Maximum a posteriori"
 
 msgid "Expected a posteriori"
-msgstr ""
+msgstr "Expected a posteriori"
 
 msgid "QMIN"
-msgstr ""
+msgstr "QMIN"
 
 msgid "QMAX"
-msgstr ""
+msgstr "QMAX"
 
 msgid "QITER"
-msgstr ""
+msgstr "QITER"
 
 msgid "g3"
-msgstr ""
+msgstr "g3"
 
 msgid "Cumul model"
-msgstr ""
+msgstr "Cumul model"
 
 msgid "Classical"
-msgstr ""
+msgstr "Classical"
 
 msgid "Likelihood"
-msgstr ""
+msgstr "Likelihood"
 
 msgid "Log-likelihood"
-msgstr ""
+msgstr "Log-likelihood"
 
 msgid "g4"
-msgstr ""
+msgstr "g4"
 
 msgid "Halt criteria"
-msgstr ""
+msgstr "Halt criteria"
 
 msgid "DELTASCORE"
-msgstr ""
+msgstr "DELTASCORE"
 
 msgid "DELTASE"
-msgstr ""
+msgstr "DELTASE"
 
 msgid "Threshold"
-msgstr ""
+msgstr "Threshold"
 
 msgid "Max"
-msgstr ""
+msgstr "Max"
 
 msgid "g5"
-msgstr ""
+msgstr "g5"
 
 msgid "Threshold 1"
-msgstr ""
+msgstr "Threshold 1"
 
 msgid "Threshold 2"
-msgstr ""
+msgstr "Threshold 2"
 
 msgid "Threshold 3"
-msgstr ""
+msgstr "Threshold 3"
 
 msgid "g6"
-msgstr ""
+msgstr "g6"
 
-msgid "Display"
+msgid "Darstellung"
 msgstr ""
 
 msgid "Display items list during the test"
-msgstr ""
+msgstr "Item-Liste während des Tests anzeigen"
 
 msgid "Show a progress bar during the test"
-msgstr ""
+msgstr "Fortschritt-Balken während des Tests anzeigen"
 
 msgid "Display label"
-msgstr ""
+msgstr "Label anzeigen"
 
 msgid "Display comments"
-msgstr ""
+msgstr "Kommentar anzeigen"
 
 msgid "Deactivate back button"
-msgstr ""
+msgstr "Zurück-Button deaktivieren"
 
 msgid "Test content (top position)"
-msgstr ""
+msgstr "Test-Content (Position oben)"
 
 msgid "Test content (left position)"
-msgstr ""
+msgstr "Test-Content (Position links)"
 
 msgid "Navigation buttons (top position)"
-msgstr ""
+msgstr "Navigations-Buttons (Position Oben)"
 
 msgid "Navigation buttons (left position)"
-msgstr ""
+msgstr "Navigations-Buttons (Position links)"
 
 msgid "Progressbar (top position)"
-msgstr ""
+msgstr "Fortschritt-Balken (Position oben)"
 
 msgid "Progressbar (left position)"
-msgstr ""
+msgstr "Fortschritt-Balken (Position links)"
 
 msgid "Left button image"
-msgstr ""
+msgstr "Grafik für Zurück-Button"
 
 msgid "Right button image"
-msgstr ""
+msgstr "Grafik für Weiter-Button"
 
 msgid "Tests"
-msgstr ""
+msgstr "Tests"
 
 msgid "Manage tests"
-msgstr ""
+msgstr "Tests verwalten"
 
 msgid "Tests library"
-msgstr ""
+msgstr "Tests-Bibliothek"
 
 msgid "search"
-msgstr ""
+msgstr "suchen"
 
 msgid "new class"
-msgstr ""
+msgstr "neue Klasse"
 
 msgid "new test"
-msgstr ""
+msgstr "neuer Test"
 
 msgid "delete"
-msgstr ""
+msgstr "löschen"
 
 msgid "duplicate"
-msgstr ""
+msgstr "duplizieren"
 
 msgid "edit test"
-msgstr ""
+msgstr "Test bearbeiten"
 
 msgid "new property"
-msgstr ""
+msgstr "neue Eigenschaft"
 
 msgid "preview"
-msgstr ""
+msgstr "Vorschau"
 
 msgid "meta data"
-msgstr ""
+msgstr "Meat-Daten"
 
 msgid "create table"
-msgstr ""
+msgstr "Tabelle erstellen"
 
 msgid "export"
-msgstr ""
+msgstr "Export"
 
 msgid "Parameters"
-msgstr ""
+msgstr "Parameter"
 
 msgid "Items Sequence"
-msgstr ""
+msgstr "Item-Reihenfolge"
 
 msgid "Please select an test before!"
-msgstr ""
+msgstr "Bitte markieren Sie einen Test"
 
 msgid "Back"
-msgstr ""
+msgstr "Zurück"
 
 msgid "The Test module allows to combine a selection of Items to a Test."
-msgstr ""
+msgstr "Das Test-Modul erlaubt das Zusammenfassen von Items zu Tests."
 
 msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
-msgstr ""
+msgstr "Test-Modus (Sequenzierung, Scoring, Kumulierung, etc.) und Layout werden ebenfalls hier festgelegt."
 
 msgid "Select related items"
-msgstr ""
+msgstr "Items auswählen"
 
 msgid "Save"
-msgstr ""
+msgstr "Sichern"
 
 msgid "Items sequence"
-msgstr ""
+msgstr "Items-Reihenfolge"
 
 msgid "Sequence saved successfully"
-msgstr ""
+msgstr "Reihenfolge erfolgreich gespeichert"
 
 msgid "sequence"
-msgstr ""
+msgstr "Reihenfolge"
 
 msgid "uri"
-msgstr ""
+msgstr "URI"
 
 msgid "label"
-msgstr ""
+msgstr "Label"
 
 msgid "weight"
-msgstr ""
+msgstr "Gewichtung"
 
 msgid "difficulty"
-msgstr ""
+msgstr "Schwierigkeitsgrad"
 
 msgid "discrimination"
-msgstr ""
+msgstr "Diskrimination"
 
 msgid "guessing"
-msgstr ""
+msgstr "Guessing"
 
 msgid "model"
-msgstr ""
+msgstr "Modell"
 
 msgid "Numeric value"
-msgstr ""
+msgstr "Numerischer Wert"
 
 msgid "Items"
-msgstr ""
+msgstr "Items"
 
 msgid "Sequence saved"
-msgstr ""
+msgstr "Reihenfolge gespeichert"
 
 msgid "An error occured while saving the sequence"
-msgstr ""
+msgstr "Ein Fehler ist während des Speicherns der Reihenfolge aufgetreten"
 
 msgid "Test Preview"
-msgstr ""
+msgstr "Test-Vorschau"
 
 msgid "compiled"
-msgstr ""
+msgstr "kompiliert"
 
 msgid "compiled with warning"
-msgstr ""
+msgstr "kompiliert mit Warnung"
 
 msgid "compilation failed"
-msgstr ""
+msgstr "Kompilierung gescheitert"
 
 msgid "Compiling test"
-msgstr ""
+msgstr "Test wird kompiliert"
 
 msgid "EN"
-msgstr "English"
+msgstr "Englisch"
 
 msgid "FR"
-msgstr "French"
+msgstr "Französisch"
 
 msgid "DE"
-msgstr "German"
+msgstr "Deutsch"
 
 msgid "LU"
-msgstr "Luxemburgish"
+msgstr "Luxemburgisch"
 
