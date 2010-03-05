@@ -1,4 +1,4 @@
-msgid ""
+Ôªømsgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
@@ -10,31 +10,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 msgid "Test saved"
-msgstr "Test gesp‰ichert"
+msgstr "Test gesp√§ichert"
 
 msgid "Edit test"
-msgstr "EditÈier Test"
+msgstr "Edit√©ier Test"
 
 msgid "Class saved"
-msgstr "Klass gesp‰ichert"
+msgstr "Klass gesp√§ichert"
 
 msgid "Edit test class"
-msgstr "Test Klass editÈieren"
+msgstr "Test Klass edit√©ieren"
 
 msgid "test saved"
-msgstr "Test gesp‰ichert"
+msgstr "Test gesp√§ichert"
 
 msgid "Test parameters"
 msgstr "Test Parameter"
 
 msgid "An error occured while saving the test"
-msgstr "Beim Sp‰icher vum Test ass e Feeler virkomm"
+msgstr "Beim Sp√§icher vum Test ass e Feeler virkomm"
 
 msgid "Test saved successfully"
-msgstr "Test erfollechr‰ich gesp‰ichert"
+msgstr "Test erfollechr√§ich gesp√§ichert"
 
 msgid "Maximum time allowed"
-msgstr "Maximum erlaabten Z‰it"
+msgstr "Maximum erlaabten Z√§it"
 
 msgid "Password"
 msgstr "PAsswuert"
@@ -49,13 +49,13 @@ msgid "Sequencial"
 msgstr "Sequenzial"
 
 msgid "Random"
-msgstr "Zouf‰lleg"
+msgstr "Zouf√§lleg"
 
 msgid "Maxfisher"
 msgstr "Maxfisher"
 
 msgid "Delay"
-msgstr "DÈlai"
+msgstr "D√©lai"
 
 msgid "g2"
 msgstr "g2"
@@ -103,7 +103,7 @@ msgid "g4"
 msgstr "g4"
 
 msgid "Halt criteria"
-msgstr "Stop CritËre"
+msgstr "Stop Crit√®re"
 
 msgid "DELTASCORE"
 msgstr "DELTASCORE"
@@ -136,10 +136,10 @@ msgid "Display"
 msgstr "Uweisen"
 
 msgid "Display items list during the test"
-msgstr "ItemlÎscht w‰hrend dem Test uweisen"
+msgstr "Iteml√´scht w√§hrend dem Test uweisen"
 
 msgid "Show a progress bar during the test"
-msgstr "Eng Progressbar w‰hrend dem Test weisen"
+msgstr "Eng Progressbar w√§hrend dem Test weisen"
 
 msgid "Display label"
 msgstr "Etiquette uweisen"
@@ -148,7 +148,7 @@ msgid "Display comments"
 msgstr "Kommentar uweisen"
 
 msgid "Deactivate back button"
-msgstr "\"Zreck-Kn‰ppchen\" ofschalten"
+msgstr "\"Zreck-Kn√§ppchen\" ofschalten"
 
 msgid "Test content (top position)"
 msgstr "Test Contenu (iewescht Positioun)"
@@ -169,10 +169,10 @@ msgid "Progressbar (left position)"
 msgstr "Progressbar (lenks Positioun)"
 
 msgid "Left button image"
-msgstr "Bild fir Lenks-Kn‰ppchen"
+msgstr "Bild fir Lenks-Kn√§ppchen"
 
 msgid "Right button image"
-msgstr "Bild fir Riets-Kn‰ppchen"
+msgstr "Bild fir Riets-Kn√§ppchen"
 
 msgid "Tests"
 msgstr "Tester"
@@ -193,16 +193,16 @@ msgid "new test"
 msgstr "neien Test"
 
 msgid "delete"
-msgstr "l‰schen"
+msgstr "l√§schen"
 
 msgid "duplicate"
-msgstr "duplizÈieren"
+msgstr "dupliz√©ieren"
 
 msgid "edit test"
-msgstr "Test editÈieren"
+msgstr "Test edit√©ieren"
 
 msgid "new property"
-msgstr "nei PropriÈtÈit"
+msgstr "nei Propri√©t√©it"
 
 msgid "preview"
 msgstr "Virschau"
@@ -214,7 +214,7 @@ msgid "create table"
 msgstr "Tabell erschafen"
 
 msgid "export"
-msgstr "exportÈieren"
+msgstr "export√©ieren"
 
 msgid "Parameters"
 msgstr "Parameter"
@@ -223,28 +223,28 @@ msgid "Items Sequence"
 msgstr "Itemsequenz"
 
 msgid "Please select an test before!"
-msgstr "Wielt w.e.g als Èischt en Test"
+msgstr "Wielt w.e.g als √©ischt en Test"
 
 msgid "Back"
-msgstr "ZrÈck"
+msgstr "Zr√©ck"
 
 msgid "The Test module allows to combine a selection of Items to a Test."
 msgstr "Den Test Modul erlaabt eng Selektioun vun Itemen matt engem Test ze verbannen."
 
 msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
-msgstr "Den Test Modus (SequenzÈieren, Bewerten, Sammelen, etc.) an de Layout gin och hei konfigurÈiert."
+msgstr "Den Test Modus (Sequenz√©ieren, Bewerten, Sammelen, etc.) an de Layout gin och hei konfigur√©iert."
 
 msgid "Select related items"
 msgstr "Verwandten Itemen wielen"
 
 msgid "Save"
-msgstr "Sp‰icheren"
+msgstr "Sp√§icheren"
 
 msgid "Items sequence"
 msgstr "Itemsequenz"
 
 msgid "Sequence saved successfully"
-msgstr "Sequenz erfollechr‰ich gesp‰ichert"
+msgstr "Sequenz erfollechr√§ich gesp√§ichert"
 
 msgid "sequence"
 msgstr "Sequenz"
@@ -277,35 +277,35 @@ msgid "Items"
 msgstr "Itemen"
 
 msgid "Sequence saved"
-msgstr "Sequenz gesp‰ichert"
+msgstr "Sequenz gesp√§ichert"
 
 msgid "An error occured while saving the sequence"
-msgstr "Beim Sp‰ichere vun der Sequenz ass e Feeler passÈiert"
+msgstr "Beim Sp√§ichere vun der Sequenz ass e Feeler pass√©iert"
 
 msgid "Test Preview"
 msgstr "Test Virschau"
 
 msgid "compiled"
-msgstr "compilÈiert"
+msgstr "compil√©iert"
 
 msgid "compiled with warning"
-msgstr "matt enger Warnung compilÈiert"
+msgstr "matt enger Warnung compil√©iert"
 
 msgid "compilation failed"
 msgstr "Compilatioun feelgeschloen"
 
 msgid "Compiling test"
-msgstr "Test gÎtt compilÈiert"
+msgstr "Test g√´tt compil√©iert"
 
 msgid "EN"
 msgstr "Englesch"
 
 msgid "FR"
-msgstr "FransÈich"
+msgstr "Frans√©ich"
 
 msgid "DE"
-msgstr "D‰itsch"
+msgstr "D√§itsch"
 
 msgid "LU"
-msgstr "LÎtzebuergesch"
+msgstr "L√´tzebuergesch"
 
