@@ -1,17 +1,17 @@
 msgid "Test saved"
-msgstr ""
+msgstr "Test enregistré"
 
 msgid "Edit test"
-msgstr ""
+msgstr "Editer le test"
 
 msgid "Class saved"
-msgstr ""
+msgstr "Classe enregistrée"
 
 msgid "Edit test class"
-msgstr ""
+msgstr "Editer la classe du test"
 
 msgid "test saved"
-msgstr ""
+msgstr "Test enregistré"
 
 msgid "Test parameters"
 msgstr "Paramètres du test"
@@ -29,31 +29,31 @@ msgid "Password"
 msgstr "Mot de passe"
 
 msgid "g1"
-msgstr ""
+msgstr "g1"
 
 msgid "Sequence mode"
-msgstr ""
+msgstr "mode de séquencement"
 
 msgid "Sequencial"
-msgstr ""
+msgstr "séquentiel"
 
 msgid "Random"
-msgstr ""
+msgstr "Aléatoire"
 
 msgid "Maxfisher"
 msgstr ""
 
 msgid "Delay"
-msgstr ""
+msgstr "Délais"
 
 msgid "g2"
-msgstr ""
+msgstr "g2"
 
 msgid "Scoring method"
-msgstr ""
+msgstr "Méthode de notation"
 
 msgid "Classical ratio"
-msgstr ""
+msgstr "Ratio classique"
 
 msgid "Maximum likelihood"
 msgstr ""
@@ -125,91 +125,91 @@ msgid "Display"
 msgstr ""
 
 msgid "Display items list during the test"
-msgstr ""
+msgstr "Afficher la liste d'items durant le test"
 
 msgid "Show a progress bar during the test"
-msgstr ""
+msgstr "Afficher une barre de progression durant le test "
 
 msgid "Display label"
-msgstr ""
+msgstr "Affihcier le label"
 
 msgid "Display comments"
-msgstr ""
+msgstr "Afficher les commentaires"
 
 msgid "Deactivate back button"
-msgstr ""
+msgstr "Désactiver le bouton retour"
 
 msgid "Test content (top position)"
-msgstr ""
+msgstr "Contenu du test (position haute)"
 
 msgid "Test content (left position)"
-msgstr ""
+msgstr "Contenu du test ( position à gauche)"
 
 msgid "Navigation buttons (top position)"
-msgstr ""
+msgstr "Bouton de navigation, (position haute) "
 
 msgid "Navigation buttons (left position)"
-msgstr ""
+msgstr "Bouton de navigation, (position à gauche)"
 
 msgid "Progressbar (top position)"
-msgstr ""
+msgstr "Barre de progression ( position haute)"
 
 msgid "Progressbar (left position)"
-msgstr ""
+msgstr "Barre de progression ( position à gauche)"
 
 msgid "Left button image"
-msgstr ""
+msgstr " Image du bouton à gauche"
 
 msgid "Right button image"
-msgstr ""
+msgstr "Image du bouton à droite"
 
 msgid "Tests"
-msgstr ""
+msgstr "Les tests"
 
 msgid "Manage tests"
-msgstr ""
+msgstr "Gérer les tests"
 
 msgid "Tests library"
-msgstr ""
+msgstr "Bibliothèques des tests"
 
 msgid "search"
-msgstr ""
+msgstr "Rechercher"
 
 msgid "new class"
-msgstr ""
+msgstr "Nouvelle classe"
 
 msgid "new test"
-msgstr ""
+msgstr "Nouveau test"
 
 msgid "delete"
-msgstr ""
+msgstr "Supprimer"
 
 msgid "duplicate"
-msgstr ""
+msgstr "dupliquer"
 
 msgid "edit test"
-msgstr ""
+msgstr "Editer un test"
 
 msgid "new property"
-msgstr ""
+msgstr "Nouvelle propriété"
 
 msgid "preview"
-msgstr ""
+msgstr "Afficher"
 
 msgid "meta data"
-msgstr ""
+msgstr "métadonnée"
 
 msgid "create table"
-msgstr ""
+msgstr "Créer la table"
 
 msgid "export"
-msgstr ""
+msgstr "exporter"
 
 msgid "Parameters"
-msgstr ""
+msgstr "Paramètres"
 
 msgid "Items Sequence"
-msgstr ""
+msgstr "Séquence d'items"
 
 msgid "Please select an test before!"
 msgstr "Veuillez choisir un test!"
@@ -218,10 +218,10 @@ msgid "Back"
 msgstr "Retour"
 
 msgid "The Test module allows to combine a selection of Items to a Test."
-msgstr ""
+msgstr "le module permet de combiner la sélection d'items à un test"
 
 msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
-msgstr ""
+msgstr "Le mode de test ( séquence, notation, cumul, etx), et les canevas sont aussi configurées ici"
 
 msgid "Select related items"
 msgstr "Sélectionner les items liés au test"
@@ -236,40 +236,40 @@ msgid "Sequence saved successfully"
 msgstr "La séquence a été enregistré avec succès"
 
 msgid "sequence"
-msgstr ""
+msgstr "Séquence"
 
 msgid "uri"
-msgstr ""
+msgstr "uri"
 
 msgid "label"
-msgstr ""
+msgstr "Label"
 
 msgid "weight"
-msgstr ""
+msgstr "Poids"
 
 msgid "difficulty"
-msgstr ""
+msgstr "Difficulté"
 
 msgid "discrimination"
-msgstr ""
+msgstr "Discrimination"
 
 msgid "guessing"
-msgstr ""
+msgstr "Supposition"
 
 msgid "model"
-msgstr ""
+msgstr "Modèle"
 
 msgid "Numeric value"
 msgstr "Valeure numérique"
 
 msgid "Items"
-msgstr ""
+msgstr "Items"
 
 msgid "Sequence saved"
-msgstr ""
+msgstr "Séquneces enregistrée"
 
 msgid "An error occured while saving the sequence"
-msgstr ""
+msgstr "Erreur pendant la sauvegarde de la séquence"
 
 msgid "Test Preview"
 msgstr "Prévisualisation du test"
