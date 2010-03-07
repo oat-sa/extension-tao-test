@@ -1,5 +1,5 @@
-msgid "Test saved"
-msgstr "Test enregistré"
+msgid ""
+msgstr ""
 
 msgid "Edit test"
 msgstr "Editer le test"
@@ -218,10 +218,10 @@ msgid "Back"
 msgstr "Retour"
 
 msgid "The Test module allows to combine a selection of Items to a Test."
-msgstr "le module permet de combiner la sélection d'items à un test"
+msgstr "Le module permet de combiner la sélection d'items à un test."
 
 msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
-msgstr "Le mode de test ( séquence, notation, cumul, etx), et les canevas sont aussi configurées ici"
+msgstr "Le mode de test (séquence, notation, cumul, etc), et les canevas sont aussi configurés ici."
 
 msgid "Select related items"
 msgstr "Sélectionner les items liés au test"
@@ -287,14 +287,14 @@ msgid "Compiling test"
 msgstr "Compilation du test en cours"
 
 msgid "EN"
-msgstr "English"
+msgstr "Anglais"
 
 msgid "FR"
-msgstr "French"
+msgstr "Français"
 
 msgid "DE"
-msgstr "German"
+msgstr "Allemand"
 
 msgid "LU"
-msgstr "Luxemburgish"
+msgstr "Luxembourgeois"
 
