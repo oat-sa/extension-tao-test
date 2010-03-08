@@ -218,7 +218,7 @@ class taoTests_models_classes_TestsService
     }
 
     /**
-     * Short description of method isTestClass
+     * Check if the Class in parameter is a subclass of Test
      *
      * @access public
      * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
@@ -438,7 +438,7 @@ class taoTests_models_classes_TestsService
     }
 
     /**
-     * Short description of method getAllItems
+     * Get all available items
      *
      * @access public
      * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
@@ -461,7 +461,7 @@ class taoTests_models_classes_TestsService
     }
 
     /**
-     * Short description of method getTestContent
+     * get the content of a test
      *
      * @access public
      * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
@@ -511,11 +511,11 @@ class taoTests_models_classes_TestsService
     }
 
     /**
-     * Short description of method setTestContent
+     * set the content of a test
      *
      * @access public
      * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
-     * @param  Resource test
+     * @param  Resource test a valid xml string
      * @param  string content
      * @return boolean
      */
@@ -542,7 +542,7 @@ class taoTests_models_classes_TestsService
     }
 
     /**
-     * Short description of method initTestContent
+     * initialize the default content of a test (copy the content of
      *
      * @access public
      * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
@@ -574,7 +574,7 @@ class taoTests_models_classes_TestsService
     }
 
     /**
-     * Short description of method getItemSequence
+     * get the ordered sequence of items linked to the test in parameter
      *
      * @access public
      * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
@@ -653,7 +653,7 @@ class taoTests_models_classes_TestsService
     }
 
     /**
-     * Short description of method saveItemSequence
+     * save the ordered item sequence of a test
      *
      * @access public
      * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
@@ -728,7 +728,7 @@ class taoTests_models_classes_TestsService
     }
 
     /**
-     * Short description of method getTestParameters
+     * get the list of test parameters
      *
      * @access public
      * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
@@ -905,7 +905,7 @@ class taoTests_models_classes_TestsService
     }
 
     /**
-     * Short description of method saveTestParameters
+     * save the test parameters
      *
      * @access public
      * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
