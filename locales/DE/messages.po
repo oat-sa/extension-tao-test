@@ -17,7 +17,7 @@ msgid "Test parameters"
 msgstr "Test-Parameter"
 
 msgid "An error occured while saving the test"
-msgstr "Ein Fehler ist wÃ¤hrend des Speicherns des Tests aufgetreten"
+msgstr "Ein Fehler ist während des Speicherns des Tests aufgetreten"
 
 msgid "Test saved successfully"
 msgstr "Test erfolgreich gespeichert"
@@ -38,13 +38,13 @@ msgid "Sequencial"
 msgstr "Sequenziell"
 
 msgid "Random"
-msgstr "ZufÃ¤llig"
+msgstr "Zufällig"
 
 msgid "Maxfisher"
 msgstr "Maxfisher"
 
 msgid "Delay"
-msgstr "VerzÃ¶gerung"
+msgstr "Verzögerung"
 
 msgid "g2"
 msgstr "g2"
@@ -125,10 +125,10 @@ msgid "Darstellung"
 msgstr ""
 
 msgid "Display items list during the test"
-msgstr "Item-Liste wÃ¤hrend des Tests anzeigen"
+msgstr "Item-Liste während des Tests anzeigen"
 
 msgid "Show a progress bar during the test"
-msgstr "Fortschrittsbalken wÃ¤hrend des Tests anzeigen"
+msgstr "Fortschrittsbalken während des Tests anzeigen"
 
 msgid "Display label"
 msgstr "Label anzeigen"
@@ -137,7 +137,7 @@ msgid "Display comments"
 msgstr "Kommentar anzeigen"
 
 msgid "Deactivate back button"
-msgstr "ZurÃ¼ck-Button deaktivieren"
+msgstr "Zurück-Button deaktivieren"
 
 msgid "Test content (top position)"
 msgstr "Test-Content (Position oben)"
@@ -158,10 +158,10 @@ msgid "Progressbar (left position)"
 msgstr "Fortschrittsbalken (Position links)"
 
 msgid "Left button image"
-msgstr "Grafik fÃ¼r ZurÃ¼ck-Button"
+msgstr "Grafik für Zurück-Button"
 
 msgid "Right button image"
-msgstr "Grafik fÃ¼r Weiter-Button"
+msgstr "Grafik für Weiter-Button"
 
 msgid "Tests"
 msgstr "Tests"
@@ -182,7 +182,7 @@ msgid "new test"
 msgstr "neuer Test"
 
 msgid "delete"
-msgstr "lÃ¶schen"
+msgstr "löschen"
 
 msgid "duplicate"
 msgstr "duplizieren"
@@ -215,7 +215,7 @@ msgid "Please select an test before!"
 msgstr "Bitte markieren Sie einen Test"
 
 msgid "Back"
-msgstr "ZurÃ¼ck"
+msgstr "Zurück"
 
 msgid "The Test module allows to combine a selection of Items to a Test."
 msgstr "Das Test-Modul erlaubt das Zusammenfassen von Items zu Tests."
@@ -224,7 +224,7 @@ msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also
 msgstr "Test-Modus (Sequenzierung, Scoring, Kumulierung, etc.) und Layout werden ebenfalls hier festgelegt."
 
 msgid "Select related items"
-msgstr "Items auswÃ¤hlen"
+msgstr "Items auswählen"
 
 msgid "Save"
 msgstr "Speichern"
@@ -269,7 +269,7 @@ msgid "Sequence saved"
 msgstr "Reihenfolge gespeichert"
 
 msgid "An error occured while saving the sequence"
-msgstr "Ein Fehler ist wÃ¤hrend des Speicherns der Reihenfolge aufgetreten"
+msgstr "Ein Fehler ist während des Speicherns der Reihenfolge aufgetreten"
 
 msgid "Test Preview"
 msgstr "Test-Vorschau"
@@ -290,7 +290,7 @@ msgid "EN"
 msgstr "Englisch"
 
 msgid "FR"
-msgstr "FranzÃ¶sisch"
+msgstr "Französisch"
 
 msgid "DE"
 msgstr "Deutsch"
