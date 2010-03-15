@@ -526,6 +526,15 @@ class taoTests_models_classes_TestsService
         // section 127-0-1-1--645eb059:1260e94e6e6:-8000:0000000000001DED begin
 		
 		if(!is_null($test)){
+			
+			//initialize the content
+			try{
+				$dom = new DOMDocument();
+				$dom->loadXML($content);
+				$content = $this->initTestContent($test, $dom);
+			}
+			catch(DOMException $domEx){}
+			
 			$test = $this->bindProperties($test, array(TEST_TESTCONTENT_PROP => $content));
 			
 			try{
@@ -547,24 +556,31 @@ class taoTests_models_classes_TestsService
      * @access public
      * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
      * @param  Resource test
+     * @param  DOMDocument dom
      * @return string
      */
-    public function initTestContent( core_kernel_classes_Resource $test)
+    public function initTestContent( core_kernel_classes_Resource $test,  DOMDocument $dom = null)
     {
         $returnValue = (string) '';
 
         // section 127-0-1-1--18790a60:12622d03866:-8000:0000000000001DFB begin
 		
-		$dom = new DOMDocument();
-		$dom->load(TEST_CONTENT_REF_FILE);
+        if(is_null($dom)){
+			$dom = new DOMDocument();
+			$dom->load(TEST_CONTENT_REF_FILE);
+        }
 		$root = $dom->documentElement;
+		
+		$currentLang = strtoupper(core_kernel_classes_Session::singleton()->getLg());
 		
 		$root->setAttribute('rdf:ID', $test->uriResource);
 		foreach($root->getElementsByTagNameNS('http://www.w3.org/TR/1999/PR-rdf-schema-19990303#','LABEL') as $labelNode){
 			$labelNode->nodeValue = $test->getLabel();
+			$labelNode->setAttribute('lang', $currentLang);
 		}
 		foreach($root->getElementsByTagNameNS('http://www.w3.org/TR/1999/PR-rdf-schema-19990303#', 'COMMENT') as $commentNode){
 			$commentNode->nodeValue = $test->comment;
+			$commentNode->setAttribute('lang', $currentLang);
 		}
 		$returnValue = $dom->saveXML();
 		
