@@ -63,13 +63,15 @@ $(document).ready(function(){
 		saveUrl : setUrl,
 		saveCallback: function (data){
 			if (buildItemList != undefined) {
-				items = {};
+				newSequence = {};
+				sequence = {};
 				for(attr in data){
 					if(/^instance_/.test(attr)){
-						items[parseInt(attr.replace('instance_', ''))+1] = 'item_'+ data[attr];
+						newSequence[parseInt(attr.replace('instance_', ''))+1] = 'item_'+ data[attr];
+						sequence[parseInt(attr.replace('instance_', ''))+1] =  data[attr];
 					}
 				}
-				buildItemList("item-sequence", items, labels);
+				buildItemList("item-sequence", newSequence, labels);
 			}
 		},
 		checkedNodes : sequence
