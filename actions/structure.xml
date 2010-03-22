@@ -11,6 +11,7 @@
 					addSubClassUrl="/taoTests/Tests/addTestClass"
 					deleteUrl="/taoTests/Tests/delete"
 					duplicateUrl="/taoTests/Tests/cloneInstance"
+					moveInstanceUrl="/taoTests/Tests/moveInstance"
 				/>
 			</trees>
 			<actions>
