@@ -22,19 +22,25 @@ msgstr ""
 msgid "Test saved successfully"
 msgstr ""
 
+msgid "Preview"
+msgstr ""
+
 msgid "Maximum time allowed"
 msgstr ""
 
-msgid "Password"
+msgid "seconds"
 msgstr ""
 
-msgid "g1"
+msgid "Password for administrator"
+msgstr ""
+
+msgid "Test award"
 msgstr ""
 
 msgid "Sequence mode"
 msgstr ""
 
-msgid "Sequencial"
+msgid "Sequential"
 msgstr ""
 
 msgid "Random"
@@ -46,7 +52,7 @@ msgstr ""
 msgid "Delay"
 msgstr ""
 
-msgid "g2"
+msgid "items"
 msgstr ""
 
 msgid "Scoring method"
@@ -73,9 +79,6 @@ msgstr ""
 msgid "QITER"
 msgstr ""
 
-msgid "g3"
-msgstr ""
-
 msgid "Cumul model"
 msgstr ""
 
@@ -88,7 +91,7 @@ msgstr ""
 msgid "Log-likelihood"
 msgstr ""
 
-msgid "g4"
+msgid "Scoring"
 msgstr ""
 
 msgid "Halt criteria"
@@ -106,9 +109,6 @@ msgstr ""
 msgid "Max"
 msgstr ""
 
-msgid "g5"
-msgstr ""
-
 msgid "Threshold 1"
 msgstr ""
 
@@ -118,7 +118,7 @@ msgstr ""
 msgid "Threshold 3"
 msgstr ""
 
-msgid "g6"
+msgid "Scoring threshold"
 msgstr ""
 
 msgid "Display"
@@ -140,6 +140,9 @@ msgid "Deactivate back button"
 msgstr ""
 
 msgid "Test content (top position)"
+msgstr ""
+
+msgid "px"
 msgstr ""
 
 msgid "Test content (left position)"
@@ -205,7 +208,7 @@ msgstr ""
 msgid "export"
 msgstr ""
 
-msgid "Parameters"
+msgid "Advanced parameters"
 msgstr ""
 
 msgid "Items Sequence"

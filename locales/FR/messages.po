@@ -1,4 +1,4 @@
-msgid ""
+msgid "Test saved"
 msgstr ""
 
 msgid "Edit test"
@@ -22,20 +22,26 @@ msgstr "Une erreur est survenue durant la sauvegarde du test"
 msgid "Test saved successfully"
 msgstr "Le test a été enregistré avec succès"
 
+msgid "Preview"
+msgstr ""
+
 msgid "Maximum time allowed"
 msgstr "Temps limite"
 
-msgid "Password"
-msgstr "Mot de passe"
+msgid "seconds"
+msgstr ""
 
-msgid "g1"
-msgstr "g1"
+msgid "Password for administrator"
+msgstr ""
+
+msgid "Test award"
+msgstr ""
 
 msgid "Sequence mode"
 msgstr "mode de séquencement"
 
-msgid "Sequencial"
-msgstr "séquentiel"
+msgid "Sequential"
+msgstr ""
 
 msgid "Random"
 msgstr "Aléatoire"
@@ -46,8 +52,8 @@ msgstr ""
 msgid "Delay"
 msgstr "Délais"
 
-msgid "g2"
-msgstr "g2"
+msgid "items"
+msgstr ""
 
 msgid "Scoring method"
 msgstr "Méthode de notation"
@@ -73,9 +79,6 @@ msgstr ""
 msgid "QITER"
 msgstr ""
 
-msgid "g3"
-msgstr ""
-
 msgid "Cumul model"
 msgstr ""
 
@@ -88,7 +91,7 @@ msgstr ""
 msgid "Log-likelihood"
 msgstr ""
 
-msgid "g4"
+msgid "Scoring"
 msgstr ""
 
 msgid "Halt criteria"
@@ -106,9 +109,6 @@ msgstr ""
 msgid "Max"
 msgstr ""
 
-msgid "g5"
-msgstr ""
-
 msgid "Threshold 1"
 msgstr ""
 
@@ -118,7 +118,7 @@ msgstr ""
 msgid "Threshold 3"
 msgstr ""
 
-msgid "g6"
+msgid "Scoring threshold"
 msgstr ""
 
 msgid "Display"
@@ -128,7 +128,7 @@ msgid "Display items list during the test"
 msgstr "Afficher la liste d'items durant le test"
 
 msgid "Show a progress bar during the test"
-msgstr "Afficher une barre de progression durant le test "
+msgstr "Afficher une barre de progression durant le test"
 
 msgid "Display label"
 msgstr "Affihcier le label"
@@ -142,11 +142,14 @@ msgstr "Désactiver le bouton retour"
 msgid "Test content (top position)"
 msgstr "Contenu du test (position haute)"
 
+msgid "px"
+msgstr ""
+
 msgid "Test content (left position)"
 msgstr "Contenu du test ( position à gauche)"
 
 msgid "Navigation buttons (top position)"
-msgstr "Bouton de navigation, (position haute) "
+msgstr "Bouton de navigation, (position haute)"
 
 msgid "Navigation buttons (left position)"
 msgstr "Bouton de navigation, (position à gauche)"
@@ -158,7 +161,7 @@ msgid "Progressbar (left position)"
 msgstr "Barre de progression ( position à gauche)"
 
 msgid "Left button image"
-msgstr " Image du bouton à gauche"
+msgstr "Image du bouton à gauche"
 
 msgid "Right button image"
 msgstr "Image du bouton à droite"
@@ -205,8 +208,8 @@ msgstr "Créer la table"
 msgid "export"
 msgstr "exporter"
 
-msgid "Parameters"
-msgstr "Paramètres"
+msgid "Advanced parameters"
+msgstr ""
 
 msgid "Items Sequence"
 msgstr "Séquence d'items"
@@ -285,6 +288,21 @@ msgstr "échec de compilation"
 
 msgid "Compiling test"
 msgstr "Compilation du test en cours"
+
+msgid "Password"
+msgstr "Mot de passe"
+
+msgid "g1"
+msgstr "g1"
+
+msgid "Sequencial"
+msgstr "séquentiel"
+
+msgid "g2"
+msgstr "g2"
+
+msgid "Parameters"
+msgstr "Paramètres"
 
 msgid "EN"
 msgstr "Anglais"

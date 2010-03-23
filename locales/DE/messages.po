@@ -8,7 +8,7 @@ msgid "Class saved"
 msgstr "Klasse gespeichert"
 
 msgid "Edit test class"
-msgstr "Klasse \"Test\" bearbeiten"
+msgstr "Klasse "Test" bearbeiten"
 
 msgid "test saved"
 msgstr "Test gespeichert"
@@ -22,20 +22,26 @@ msgstr "Ein Fehler ist während des Speicherns des Tests aufgetreten"
 msgid "Test saved successfully"
 msgstr "Test erfolgreich gespeichert"
 
+msgid "Preview"
+msgstr ""
+
 msgid "Maximum time allowed"
 msgstr "Maximale Dauer"
 
-msgid "Password"
-msgstr "Passwort"
+msgid "seconds"
+msgstr ""
 
-msgid "g1"
-msgstr "g1"
+msgid "Password for administrator"
+msgstr ""
+
+msgid "Test award"
+msgstr ""
 
 msgid "Sequence mode"
 msgstr "Sequenzierungs-Modus"
 
-msgid "Sequencial"
-msgstr "Sequenziell"
+msgid "Sequential"
+msgstr ""
 
 msgid "Random"
 msgstr "Zufällig"
@@ -46,8 +52,8 @@ msgstr "Maxfisher"
 msgid "Delay"
 msgstr "Verzögerung"
 
-msgid "g2"
-msgstr "g2"
+msgid "items"
+msgstr ""
 
 msgid "Scoring method"
 msgstr "Scoring-Methode"
@@ -73,9 +79,6 @@ msgstr "QMAX"
 msgid "QITER"
 msgstr "QITER"
 
-msgid "g3"
-msgstr "g3"
-
 msgid "Cumul model"
 msgstr "Cumul model"
 
@@ -88,8 +91,8 @@ msgstr "Likelihood"
 msgid "Log-likelihood"
 msgstr "Log-likelihood"
 
-msgid "g4"
-msgstr "g4"
+msgid "Scoring"
+msgstr ""
 
 msgid "Halt criteria"
 msgstr "Halt criteria"
@@ -106,9 +109,6 @@ msgstr "Threshold"
 msgid "Max"
 msgstr "Max"
 
-msgid "g5"
-msgstr "g5"
-
 msgid "Threshold 1"
 msgstr "Threshold 1"
 
@@ -118,10 +118,10 @@ msgstr "Threshold 2"
 msgid "Threshold 3"
 msgstr "Threshold 3"
 
-msgid "g6"
-msgstr "g6"
+msgid "Scoring threshold"
+msgstr ""
 
-msgid "Darstellung"
+msgid "Display"
 msgstr ""
 
 msgid "Display items list during the test"
@@ -141,6 +141,9 @@ msgstr "Zurück-Button deaktivieren"
 
 msgid "Test content (top position)"
 msgstr "Test-Content (Position oben)"
+
+msgid "px"
+msgstr ""
 
 msgid "Test content (left position)"
 msgstr "Test-Content (Position links)"
@@ -205,8 +208,8 @@ msgstr "Tabelle erstellen"
 msgid "export"
 msgstr "Export"
 
-msgid "Parameters"
-msgstr "Parameter"
+msgid "Advanced parameters"
+msgstr ""
 
 msgid "Items Sequence"
 msgstr "Item-Reihenfolge"
@@ -285,6 +288,33 @@ msgstr "Kompilierung gescheitert"
 
 msgid "Compiling test"
 msgstr "Test wird kompiliert"
+
+msgid "Password"
+msgstr "Passwort"
+
+msgid "g1"
+msgstr "g1"
+
+msgid "Sequencial"
+msgstr "Sequenziell"
+
+msgid "g2"
+msgstr "g2"
+
+msgid "g3"
+msgstr "g3"
+
+msgid "g4"
+msgstr "g4"
+
+msgid "g5"
+msgstr "g5"
+
+msgid "g6"
+msgstr "g6"
+
+msgid "Parameters"
+msgstr "Parameter"
 
 msgid "EN"
 msgstr "Englisch"

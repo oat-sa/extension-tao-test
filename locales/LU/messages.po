@@ -1,4 +1,4 @@
-﻿msgid "Test saved"
+msgid "Test saved"
 msgstr "Test gespäichert"
 
 msgid "Edit test"
@@ -22,20 +22,26 @@ msgstr "Beim Späicher vum Test ass e Feeler virkomm"
 msgid "Test saved successfully"
 msgstr "Test erfollechräich gespäichert"
 
+msgid "Preview"
+msgstr ""
+
 msgid "Maximum time allowed"
 msgstr "Maximum erlaabten Zäit"
 
-msgid "Password"
-msgstr "PAsswuert"
+msgid "seconds"
+msgstr ""
 
-msgid "g1"
-msgstr "g1"
+msgid "Password for administrator"
+msgstr ""
+
+msgid "Test award"
+msgstr ""
 
 msgid "Sequence mode"
 msgstr "Sequenz Modus"
 
-msgid "Sequencial"
-msgstr "Sequenzial"
+msgid "Sequential"
+msgstr ""
 
 msgid "Random"
 msgstr "Zoufälleg"
@@ -46,8 +52,8 @@ msgstr "Maxfisher"
 msgid "Delay"
 msgstr "Délai"
 
-msgid "g2"
-msgstr "g2"
+msgid "items"
+msgstr ""
 
 msgid "Scoring method"
 msgstr "Bewertungs Method"
@@ -73,9 +79,6 @@ msgstr "QMAX"
 msgid "QITER"
 msgstr "QITER"
 
-msgid "g3"
-msgstr "g3"
-
 msgid "Cumul model"
 msgstr "Cumul Modell"
 
@@ -88,8 +91,8 @@ msgstr "Wahrscheinlechkeet"
 msgid "Log-likelihood"
 msgstr "Log-Wahrscheinlechkeet"
 
-msgid "g4"
-msgstr "g4"
+msgid "Scoring"
+msgstr ""
 
 msgid "Halt criteria"
 msgstr "Stop Critère"
@@ -106,9 +109,6 @@ msgstr "Schwell"
 msgid "Max"
 msgstr "Max"
 
-msgid "g5"
-msgstr "g5"
-
 msgid "Threshold 1"
 msgstr "Schwell 1"
 
@@ -118,8 +118,8 @@ msgstr "Schwell 2"
 msgid "Threshold 3"
 msgstr "Schwell 3"
 
-msgid "g6"
-msgstr "g6"
+msgid "Scoring threshold"
+msgstr ""
 
 msgid "Display"
 msgstr "Uweisen"
@@ -137,10 +137,13 @@ msgid "Display comments"
 msgstr "Kommentar uweisen"
 
 msgid "Deactivate back button"
-msgstr "\"Zreck-Knäppchen\" ofschalten"
+msgstr ""Zreck-Knäppchen" ofschalten"
 
 msgid "Test content (top position)"
 msgstr "Test Contenu (iewescht Positioun)"
+
+msgid "px"
+msgstr ""
 
 msgid "Test content (left position)"
 msgstr "Test Contenu (lenks Positioun)"
@@ -205,8 +208,8 @@ msgstr "Tabell erschafen"
 msgid "export"
 msgstr "exportéieren"
 
-msgid "Parameters"
-msgstr "Parameter"
+msgid "Advanced parameters"
+msgstr ""
 
 msgid "Items Sequence"
 msgstr "Itemsequenz"
@@ -285,6 +288,33 @@ msgstr "Compilatioun feelgeschloen"
 
 msgid "Compiling test"
 msgstr "Test gëtt compiléiert"
+
+msgid "Password"
+msgstr "PAsswuert"
+
+msgid "g1"
+msgstr "g1"
+
+msgid "Sequencial"
+msgstr "Sequenzial"
+
+msgid "g2"
+msgstr "g2"
+
+msgid "g3"
+msgstr "g3"
+
+msgid "g4"
+msgstr "g4"
+
+msgid "g5"
+msgstr "g5"
+
+msgid "g6"
+msgstr "g6"
+
+msgid "Parameters"
+msgstr "Parameter"
 
 msgid "EN"
 msgstr "Englesch"
