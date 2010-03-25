@@ -1,7 +1,7 @@
 <html>
 <head>
 	<title><?=__('Test Preview')?></title>
-	<script type='text/javascript' src='/tao/views/js/jquery-1.3.2.min.js' ></script> 
+	<script type='text/javascript' src='/tao/views/js/jquery-1.4.2.min.js' ></script> 
 	<script type='text/javascript'>
 	$(function(){
 		$.ajax({
