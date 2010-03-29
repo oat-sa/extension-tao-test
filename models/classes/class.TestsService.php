@@ -79,7 +79,7 @@ class taoTests_models_classes_TestsService
 		
 		parent::__construct();
 		
-		$this->testClass = new core_kernel_classes_Class(TEST_CLASS);
+		$this->testClass = new core_kernel_classes_Class(TAO_TEST_CLASS);
 		$this->loadOntologies($this->testsOntologies);
 		
         // section 10-13-1-45-2836570e:123bd13e69b:-8000:0000000000001888 end
