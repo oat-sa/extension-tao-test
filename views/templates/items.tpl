@@ -35,6 +35,7 @@
 	<input type='hidden' name='uri' value="<?=get_data('uri')?>" />
 	<input type='hidden' name='classUri' value="<?=get_data('classUri')?>" />
 <?endif?>
+
 <script type="text/javascript">
 $(document).ready(function(){
 	
