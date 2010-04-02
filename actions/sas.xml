@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE services SYSTEM "../../tao/doc/sas.dtd">
+<services>
+	<service>
+		<name>Add a test</name>
+		<description>add a new test and redirect to the edit form</description>
+		<location url="/taoTests/SaSTests/sasAddInstance">
+			<param key="classUri" value="^testClassUri" />
+		</location>
+		<return>
+			<param key="testUri" />
+		</return>
+	</service>
+	<service>
+		<name>Edit a test</name>
+		<description>	 - test instance form	</description>
+		<location url="/taoTests/SaSTests/sasEditInstance">
+			<param key="uri" value="^testUri" />
+			<param key="classUri" value="^testClassUri" />
+		</location>
+	</service>
+	<service>
+		<name>Full Edit</name>
+		<description>	 - Test form  - Select test items  - Order test items	</description>
+		<location url="/taoTests/SaSTests/editTest">
+			<param key="uri" value="^testUri" />
+			<param key="classUri" value="^testClassUri" />
+		</location>
+	</service>
+	<service>
+		<name>Edit tests classes</name>
+		<description>	 - Class editor	</description>
+		<location url="/taoTests/SaSTests/editTestClass">
+			<param key="classUri" value="^testClassUri" />
+		</location>
+	</service>
+	<service>
+		<name>Items Sequence Authoring</name>
+		<description>	 - related items editable grid 	</description>
+		<location url="/taoTests/SaSTests/itemSequence">
+			<param key="uri" value="^testUri" />
+			<param key="classUri" value="^testClassUri" />
+		</location>
+	</service>
+	<service>
+		<name>Test Authoring</name>
+		<description>	 - test parameters form 	</description>
+		<location url="/taoTests/SaSTests/authoring">
+			<param key="uri" value="^testUri" />
+			<param key="classUri" value="^testClassUri" />
+		</location>
+	</service>
+	<service>
+		<name>Test Preview</name>
+		<description>	 - test preview	</description>
+		<location url="/taoTests/SaSTests/preview">
+			<param key="uri" value="^testUri" />
+		</location>
+	</service>
+	<service>
+		<name>Translate</name>
+		<description>	 - Translate instance editor	</description>
+		<location url="/taoTests/SaSTests/translateInstance">
+			<param key="uri" value="^testUri" />
+			<param key="classUri" value="^testClassUri" />
+			<param key="target_lang" value="^testTargetLang" />
+		</location>	
+	</service>
+	<service>
+		<name>Select related items</name>
+		<description>	 - tree form to select group related items  - sortable list to order sequence	</description>
+		<location url="/taoTests/SaSTests/selectItems">
+			<param key="uri" value="^testUri" />
+			<param key="classUri" value="^testClassUri" />
+		</location>
+		<return>
+			<param key="itemUris" />
+		</return>
+	</service>
+	<service>
+		<name>Search</name>
+		<description>	 - Search instance form 	</description>
+		<location url="/taoTests/SaSTests/search" />
+		<return>
+			<param key="testUris" />
+		</return>
+	</service>	
+	<service>
+		<name>Delete a test</name>
+		<description>	 - Delete an instance	</description>
+		<location url="/taoTests/SaSTests/sasDeleteInstance">
+			<param key="uri" value="^testUri" />
+			<param key="classUri" value="^testClassUri" />
+		</location>
+	</service>
+</services>
