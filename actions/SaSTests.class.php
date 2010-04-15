@@ -20,15 +20,6 @@ class SaSTests extends Tests {
 		parent::__construct();
     }
     
- 	/**
-     * Give the auth to the workflow engine
-     * @return boolean
-     */
-    protected function _isAllowed(){
-    	return isset($_SESSION['taoqual.authenticated']);
-    }
-    	
-	
 	/**
      * @see TaoModule::setView()
      */
