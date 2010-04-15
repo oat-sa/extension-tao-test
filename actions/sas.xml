@@ -2,8 +2,8 @@
 <!DOCTYPE services SYSTEM "../../tao/doc/sas.dtd">
 <services>
 	<service>
-		<name>Add a test</name>
-		<description>add a new test and redirect to the edit form</description>
+		<name>Test add</name>
+		<description>Add a new test and redirect to the edit form</description>
 		<location url="/taoTests/SaSTests/sasAddInstance">
 			<param key="classUri" value="^testClassUri" />
 		</location>
@@ -12,54 +12,54 @@
 		</return>
 	</service>
 	<service>
-		<name>Edit a test</name>
-		<description>	 - test instance form	</description>
+		<name>Test editor</name>
+		<description>Edit subject properties</description>
 		<location url="/taoTests/SaSTests/sasEditInstance">
 			<param key="uri" value="^testUri" />
 			<param key="classUri" value="^testClassUri" />
 		</location>
 	</service>
 	<service>
-		<name>Full Edit</name>
-		<description>	 - Test form  - Select test items  - Order test items	</description>
+		<name>Test full editor</name>
+		<description>Full edit form: edit test properties, select and sort test's items</description>
 		<location url="/taoTests/SaSTests/editTest">
 			<param key="uri" value="^testUri" />
 			<param key="classUri" value="^testClassUri" />
 		</location>
 	</service>
 	<service>
-		<name>Edit tests classes</name>
-		<description>	 - Class editor	</description>
+		<name>Test class editor</name>
+		<description>Edit a Test (sub)class: add/edit/delete class properties</description>
 		<location url="/taoTests/SaSTests/editTestClass">
 			<param key="classUri" value="^testClassUri" />
 		</location>
 	</service>
 	<service>
-		<name>Items Sequence Authoring</name>
-		<description>	 - related items editable grid 	</description>
+		<name>Test's items authoring</name>
+		<description>Edit the test related items properties</description>
 		<location url="/taoTests/SaSTests/itemSequence">
 			<param key="uri" value="^testUri" />
 			<param key="classUri" value="^testClassUri" />
 		</location>
 	</service>
 	<service>
-		<name>Test Authoring</name>
-		<description>	 - test parameters form 	</description>
+		<name>Test parameters</name>
+		<description>Edit the test parameters</description>
 		<location url="/taoTests/SaSTests/authoring">
 			<param key="uri" value="^testUri" />
 			<param key="classUri" value="^testClassUri" />
 		</location>
 	</service>
 	<service>
-		<name>Test Preview</name>
-		<description>	 - test preview	</description>
+		<name>Test preview</name>
+		<description>Compile and preview the test</description>
 		<location url="/taoTests/SaSTests/preview">
 			<param key="uri" value="^testUri" />
 		</location>
 	</service>
 	<service>
-		<name>Translate</name>
-		<description>	 - Translate instance editor	</description>
+		<name>Test translation</name>
+		<description>Translate the value of the test properties</description>
 		<location url="/taoTests/SaSTests/translateInstance">
 			<param key="uri" value="^testUri" />
 			<param key="classUri" value="^testClassUri" />
@@ -67,8 +67,8 @@
 		</location>	
 	</service>
 	<service>
-		<name>Select related items</name>
-		<description>	 - tree form to select group related items  - sortable list to order sequence	</description>
+		<name>Test related items</name>
+		<description>Select and sort the test related items</description>
 		<location url="/taoTests/SaSTests/selectItems">
 			<param key="uri" value="^testUri" />
 			<param key="classUri" value="^testClassUri" />
@@ -78,16 +78,16 @@
 		</return>
 	</service>
 	<service>
-		<name>Search</name>
-		<description>	 - Search instance form 	</description>
+		<name>Tests searching</name>
+		<description>Search test instances</description>
 		<location url="/taoTests/SaSTests/search" />
 		<return>
 			<param key="testUris" />
 		</return>
 	</service>	
 	<service>
-		<name>Delete a test</name>
-		<description>	 - Delete an instance	</description>
+		<name>Test removing</name>
+		<description>Delete a test instance</description>
 		<location url="/taoTests/SaSTests/sasDeleteInstance">
 			<param key="uri" value="^testUri" />
 			<param key="classUri" value="^testClassUri" />
