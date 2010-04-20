@@ -2,6 +2,27 @@
 <!DOCTYPE services SYSTEM "../../tao/doc/sas.dtd">
 <services>
 	<service>
+		<name>Test class selection</name>
+		<description>Select a test (sub)class</description>
+		<location url="/taoTests/SaSTests/sasSelect">
+			<param key="selectInstance" value="false" />
+		</location>
+		<return>
+			<param key="testClassUri" />
+		</return>
+	</service>
+	<service>
+		<name>Test selection</name>
+		<description>Select a test</description>
+		<location url="/taoTests/SaSTests/sasSelect">
+			<param key="selectInstance" value="true" />
+		</location>
+		<return>
+			<param key="testClassUri" />
+			<param key="testUri" />
+		</return>
+	</service>
+	<service>
 		<name>Test add</name>
 		<description>Add a new test and redirect to the edit form</description>
 		<location url="/taoTests/SaSTests/sasAddInstance">
