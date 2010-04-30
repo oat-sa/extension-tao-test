@@ -1,11 +1,11 @@
 <html>
 <head>
 	<title><?=__('Test Preview')?></title>
-	<script type='text/javascript' src='/tao/views/js/jquery-1.4.2.min.js' ></script> 
+	<script type='text/javascript' src='<?=BASE_WWW?>js/jquery-1.4.2.min.js' ></script> 
 	<script type='text/javascript'>
 	$(function(){
 		$.ajax({
-			url: '/taoDelivery/delivery/compile',
+			url: "<?=_url('compile', 'Delivery', 'taoDelivery')?>",
 			type: 'POST',
 			data: {uri: "<?=tao_helpers_Uri::decode(get_data('uri'))?>"},
 			dataType: 'json',
@@ -24,7 +24,7 @@
                 }
 				
 				if(compiled){
-					window.location = '/taoDelivery/Delivery/preview?uri=<?=urlencode(tao_helpers_Uri::decode(get_data('uri')))?>';
+					window.location = "<?=_url('preview', 'Delivery', 'taoDelivery', array('uri' => urlencode(tao_helpers_Uri::decode(get_data('uri')))))?>";
 				}
 			}
 		});

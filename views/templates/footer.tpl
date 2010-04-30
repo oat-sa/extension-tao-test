@@ -6,8 +6,8 @@ $(function(){
 
 	<?if(get_data('uri') && get_data('classUri')):?>
 	
-		updateTabUrl(UiBootstrap.tabs, 'tests_authoring', "<?=_url('authoring', 'Tests', array('uri' => get_data('uri'), 'classUri' => get_data('classUri') ))?>");
-		updateTabUrl(UiBootstrap.tabs, 'items_sequence',  "<?=_url('itemSequence', 'Tests', array('uri' => get_data('uri'), 'classUri' => get_data('classUri') ))?>");
+		updateTabUrl(UiBootstrap.tabs, 'tests_authoring', "<?=_url('authoring', 'Tests', 'taoTests', array('uri' => get_data('uri'), 'classUri' => get_data('classUri') ))?>");
+		updateTabUrl(UiBootstrap.tabs, 'items_sequence',  "<?=_url('itemSequence', 'Tests', 'taoTests', array('uri' => get_data('uri'), 'classUri' => get_data('classUri') ))?>");
 			
 	<?else:?>
 	

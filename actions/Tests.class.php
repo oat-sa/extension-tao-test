@@ -348,7 +348,7 @@ class Tests extends TaoModule {
 			unset($_SESSION['xml']);
 		}
 		
-		$this->redirect('/tao/Main/index?extension=taoTests&message='.urlencode($message));
+		$this->redirect(_url('index', 'Main', 'tao', array('extension' => 'taoTests', 'message' => urlencode($message))));
 	}
 	
 	/**

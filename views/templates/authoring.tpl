@@ -26,7 +26,7 @@
 
 	<script type="text/javascript">
 		$('.test-previewer').click(function(){
-			GenerisAction.fullScreen($('#uri').val(), $('classUri').val(), '/taoTests/Tests/preview');
+			GenerisAction.fullScreen($('#uri').val(), $('classUri').val(), "<?=_url('preview', 'Tests', 'taoTests')?>");
 		});
 	</script>
 <?endif?>
