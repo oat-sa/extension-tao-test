@@ -55,7 +55,7 @@ $(document).ready(function(){
 	}
 	
 	if(ctx_extension){
-		url = '/' + ctx_extension + '/' + ctx_module + '/';
+		url = root_url + '/' + ctx_extension + '/' + ctx_module + '/';
 	}
 	var getUrl = url + 'getItems';
 	var setUrl = url + 'saveItems';

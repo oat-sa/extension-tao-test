@@ -66,8 +66,8 @@ class SaSTests extends Tests {
 		}
 		$this->setData('allItems', json_encode($allItems));
 		
-		$relatedItems = $this->service->getRelatedItems($test, true);
-		$this->setData('relatedItems', json_encode(array_map("tao_helpers_Uri::encode", $relatedItems)));
+		$relatedItems = tao_helpers_Uri::encodeArray($this->service->getRelatedItems($test, true), tao_helpers_Uri::ENCODE_ARRAY_VALUES);
+		$this->setData('relatedItems', json_encode($relatedItems));
 		
 		$itemSequence = array();
 		foreach($relatedItems as $index => $itemUri){
