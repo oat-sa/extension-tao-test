@@ -16,6 +16,9 @@
 				'sql' => dirname(__FILE__). '/model/ontology/TAOTest.sql',
 				'php' => dirname(__FILE__). '/install/install.php'
 			),
+			'model' => array('http://www.tao.lu/Ontologies/TAOTest.rdf', 
+							'http://www.tao.lu/Ontologies/TAOItem.rdf'
+			),
 		
 
 			'classLoaderPackages' => array( 
