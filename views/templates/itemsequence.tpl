@@ -4,7 +4,7 @@
 <?if(get_data('error')):?>
 	<div class="main-container">
 		<div class="ui-state-error ui-corner-all" style="padding:5px;">
-			<?=__('Please select an test before!')?>
+			<?=__('Please select a test before!')?>
 		</div>
 		<br />
 		<span class="ui-widget ui-state-default ui-corner-all" style="padding:5px;">
