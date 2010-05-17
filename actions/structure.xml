@@ -34,7 +34,7 @@
 		
 		<section id="tests_authoring" name="Advanced parameters" url="/taoTests/Tests/authoring" />
 		
-		<section id="items_sequence" name="Items Sequence" url="/taoTests/Tests/itemSequence" />
+		<section id="items_sequence" name="Advanced sequence" url="/taoTests/Tests/itemSequence" />
 	
 	</sections>
 </extension>
