@@ -54,14 +54,6 @@ class taoTests_models_classes_TestsService
      */
     protected $testClass = null;
 
-    /**
-     * The ontologies to load
-     *
-     * @access protected
-     * @var array
-     */
-    protected $testsOntologies = array('http://www.tao.lu/Ontologies/TAOTest.rdf', 'http://www.tao.lu/Ontologies/TAOItem.rdf');
-
     // --- OPERATIONS ---
 
     /**
@@ -80,7 +72,6 @@ class taoTests_models_classes_TestsService
 		parent::__construct();
 		
 		$this->testClass = new core_kernel_classes_Class(TAO_TEST_CLASS);
-		$this->loadOntologies($this->testsOntologies);
 		
         // section 10-13-1-45-2836570e:123bd13e69b:-8000:0000000000001888 end
 
@@ -556,10 +547,10 @@ class taoTests_models_classes_TestsService
      * @access public
      * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
      * @param  Resource test
-     * @param  DOMDocument dom
+     * @param  DomDocument dom
      * @return string
      */
-    public function initTestContent( core_kernel_classes_Resource $test,  DOMDocument $dom = null)
+    public function initTestContent( core_kernel_classes_Resource $test,  DomDocument $dom = null)
     {
         $returnValue = (string) '';
 
