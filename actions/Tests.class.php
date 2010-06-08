@@ -368,8 +368,15 @@ class Tests extends TaoModule {
 		if(!tao_helpers_Request::isAjax()){
 			throw new Exception("wrong request mode");
 		}
-		
-		echo json_encode($this->service->toTree( new core_kernel_classes_Class(TAO_ITEM_CLASS), true, true, ''));
+		$options = array('chunk' => false);
+		if($this->hasRequestParameter('classUri')) {
+			$clazz = $this->getCurrentClass();
+			$options['chunk'] = true;
+		}
+		else{
+			$clazz = new core_kernel_classes_Class(TAO_ITEM_CLASS);
+		}
+		echo json_encode($this->service->toTree($clazz, $options));
 	}
 	
 	/**
