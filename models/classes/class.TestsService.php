@@ -281,7 +281,7 @@ class taoTests_models_classes_TestsService
 		
 		if(!is_null($test)){
 			
-			$returnValue = $test->getPropertyValues(new core_kernel_classes_Property(TEST_RELATED_ITEMS_PROP));
+			$items = $test->getPropertyValues(new core_kernel_classes_Property(TEST_RELATED_ITEMS_PROP));
 			
 			//order the item using the "/tao:TEST/tao:CITEM[Sequence]" attribute in the testcontent xml
 			if($sequenced){
@@ -298,7 +298,7 @@ class taoTests_models_classes_TestsService
 							foreach($nodes as $node){
 								$uri = (string)$node;
 								if(!empty($uri)){
-									if(in_array($uri, $returnValue)){
+									if(in_array($uri, $items)){
 										$index = 0;
 										if(isset($node['Sequence'])){
 											$index = (int)$node['Sequence'];
@@ -320,11 +320,26 @@ class taoTests_models_classes_TestsService
 									$sequencedItems[count($sequencedItems) + 1] = $item;
 								}
 							}
-							$returnValue = $sequencedItems;
+							$items = $sequencedItems;
 						}
 					}
 				}
 				catch(Exception $e){ }
+			}
+			
+			if(count($items) > 0){
+				$itemClass = new core_kernel_classes_Class(TAO_ITEM_CLASS);
+				$itemSubClasses = array();
+				foreach($itemClass->getSubClasses(true) as $itemSubClass){
+					$itemSubClasses[] = $itemSubClass->uriResource;
+				}
+				foreach($items as $itemUri){
+					$clazz = $this->getClass(new core_kernel_classes_Resource($itemUri));
+					if(in_array($clazz->uriResource, $itemSubClasses)){
+						$returnValue[] = $clazz->uriResource;
+					}
+					$returnValue[] = $itemUri;
+				}
 			}
 		}
 		
