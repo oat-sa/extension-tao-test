@@ -107,12 +107,16 @@ class Tests extends TaoModule {
 		$this->setData('relatedItems', json_encode(array_map("tao_helpers_Uri::encode", $relatedItems)));
 		
 		$itemSequence = array();
-		foreach($relatedItems as $index => $itemUri){
+		$i = 1;
+		foreach($relatedItems as $itemUri){
 			$item = new core_kernel_classes_Resource($itemUri);
-			$itemSequence[$index] = array(
-				'uri' 	=> tao_helpers_Uri::encode($itemUri),
-				'label' => $item->getLabel()
-			);
+			if(!$item->isClass()){
+				$itemSequence[$i] = array(
+					'uri' 	=> tao_helpers_Uri::encode($itemUri),
+					'label' => $item->getLabel()
+				);
+				$i++;
+			}
 		}
 		$this->setData('itemSequence', $itemSequence);
 		
