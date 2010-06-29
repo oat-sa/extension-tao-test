@@ -137,7 +137,7 @@ msgid "Display comments"
 msgstr "Kommentar uweisen"
 
 msgid "Deactivate back button"
-msgstr ""Zreck-Knäppchen" ofschalten"
+msgstr ""
 
 msgid "Test content (top position)"
 msgstr "Test Contenu (iewescht Positioun)"
@@ -190,14 +190,14 @@ msgstr "läschen"
 msgid "duplicate"
 msgstr "duplizéieren"
 
-msgid "edit test"
-msgstr "Test editéieren"
-
-msgid "new property"
-msgstr "nei Propriétéit"
+msgid "move"
+msgstr ""
 
 msgid "preview"
 msgstr "Virschau"
+
+msgid "lists"
+msgstr ""
 
 msgid "meta data"
 msgstr "Metadaten"
@@ -205,14 +205,17 @@ msgstr "Metadaten"
 msgid "create table"
 msgstr "Tabell erschafen"
 
-msgid "export"
-msgstr "exportéieren"
+msgid "rdf"
+msgstr ""
+
+msgid "import"
+msgstr ""
 
 msgid "Advanced parameters"
 msgstr ""
 
-msgid "Items Sequence"
-msgstr "Itemsequenz"
+msgid "Advanced sequence"
+msgstr ""
 
 msgid "Please select an test before!"
 msgstr "Wielt w.e.g als éischt en Test"
@@ -235,8 +238,14 @@ msgstr "Späicheren"
 msgid "Items sequence"
 msgstr "Itemsequenz"
 
+msgid "Drag and drop the items to order them"
+msgstr ""
+
 msgid "Sequence saved successfully"
 msgstr "Sequenz erfollechräich gespäichert"
+
+msgid "Please select a test before!"
+msgstr ""
 
 msgid "sequence"
 msgstr "Sequenz"
@@ -288,6 +297,18 @@ msgstr "Compilatioun feelgeschloen"
 
 msgid "Compiling test"
 msgstr "Test gëtt compiléiert"
+
+msgid "edit test"
+msgstr "Test editéieren"
+
+msgid "new property"
+msgstr "nei Propriétéit"
+
+msgid "export"
+msgstr "exportéieren"
+
+msgid "Items Sequence"
+msgstr "Itemsequenz"
 
 msgid "Password"
 msgstr "PAsswuert"

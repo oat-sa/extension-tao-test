@@ -190,13 +190,13 @@ msgstr ""
 msgid "duplicate"
 msgstr ""
 
-msgid "edit test"
-msgstr ""
-
-msgid "new property"
+msgid "move"
 msgstr ""
 
 msgid "preview"
+msgstr ""
+
+msgid "lists"
 msgstr ""
 
 msgid "meta data"
@@ -205,13 +205,16 @@ msgstr ""
 msgid "create table"
 msgstr ""
 
-msgid "export"
+msgid "rdf"
+msgstr ""
+
+msgid "import"
 msgstr ""
 
 msgid "Advanced parameters"
 msgstr ""
 
-msgid "Items Sequence"
+msgid "Advanced sequence"
 msgstr ""
 
 msgid "Please select an test before!"
@@ -235,7 +238,13 @@ msgstr ""
 msgid "Items sequence"
 msgstr ""
 
+msgid "Drag and drop the items to order them"
+msgstr ""
+
 msgid "Sequence saved successfully"
+msgstr ""
+
+msgid "Please select a test before!"
 msgstr ""
 
 msgid "sequence"
@@ -287,6 +296,18 @@ msgid "compilation failed"
 msgstr ""
 
 msgid "Compiling test"
+msgstr ""
+
+msgid "edit test"
+msgstr ""
+
+msgid "new property"
+msgstr ""
+
+msgid "export"
+msgstr ""
+
+msgid "Items Sequence"
 msgstr ""
 
 msgid "EN"

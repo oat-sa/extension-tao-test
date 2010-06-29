@@ -8,7 +8,7 @@ msgid "Class saved"
 msgstr "Klasse gespeichert"
 
 msgid "Edit test class"
-msgstr "Klasse \"Test\" bearbeiten"
+msgstr "Klasse "Test" bearbeiten"
 
 msgid "test saved"
 msgstr "Test gespeichert"
@@ -190,14 +190,14 @@ msgstr "löschen"
 msgid "duplicate"
 msgstr "duplizieren"
 
-msgid "edit test"
-msgstr "Test bearbeiten"
-
-msgid "new property"
-msgstr "neue Eigenschaft"
+msgid "move"
+msgstr ""
 
 msgid "preview"
 msgstr "Vorschau"
+
+msgid "lists"
+msgstr ""
 
 msgid "meta data"
 msgstr "Meat-Daten"
@@ -205,14 +205,17 @@ msgstr "Meat-Daten"
 msgid "create table"
 msgstr "Tabelle erstellen"
 
-msgid "export"
-msgstr "Export"
+msgid "rdf"
+msgstr ""
+
+msgid "import"
+msgstr ""
 
 msgid "Advanced parameters"
 msgstr ""
 
-msgid "Items Sequence"
-msgstr "Item-Reihenfolge"
+msgid "Advanced sequence"
+msgstr ""
 
 msgid "Please select an test before!"
 msgstr "Bitte markieren Sie einen Test"
@@ -235,8 +238,14 @@ msgstr "Speichern"
 msgid "Items sequence"
 msgstr "Items-Reihenfolge"
 
+msgid "Drag and drop the items to order them"
+msgstr ""
+
 msgid "Sequence saved successfully"
 msgstr "Reihenfolge erfolgreich gespeichert"
+
+msgid "Please select a test before!"
+msgstr ""
 
 msgid "sequence"
 msgstr "Reihenfolge"
@@ -288,6 +297,18 @@ msgstr "Kompilierung gescheitert"
 
 msgid "Compiling test"
 msgstr "Test wird kompiliert"
+
+msgid "edit test"
+msgstr "Test bearbeiten"
+
+msgid "new property"
+msgstr "neue Eigenschaft"
+
+msgid "export"
+msgstr "Export"
+
+msgid "Items Sequence"
+msgstr "Item-Reihenfolge"
 
 msgid "Password"
 msgstr "Passwort"

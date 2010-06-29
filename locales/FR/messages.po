@@ -23,13 +23,13 @@ msgid "Test saved successfully"
 msgstr "Le test a été enregistré avec succès"
 
 msgid "Preview"
-msgstr ""
+msgstr "Prévisualisation"
 
 msgid "Maximum time allowed"
 msgstr "Temps limite"
 
 msgid "seconds"
-msgstr ""
+msgstr "secondes"
 
 msgid "Password for administrator"
 msgstr ""
@@ -190,14 +190,14 @@ msgstr "Supprimer"
 msgid "duplicate"
 msgstr "dupliquer"
 
-msgid "edit test"
-msgstr "Editer un test"
-
-msgid "new property"
-msgstr "Nouvelle propriété"
+msgid "move"
+msgstr "déplacer"
 
 msgid "preview"
 msgstr "Afficher"
+
+msgid "lists"
+msgstr "listes"
 
 msgid "meta data"
 msgstr "métadonnée"
@@ -205,14 +205,17 @@ msgstr "métadonnée"
 msgid "create table"
 msgstr "Créer la table"
 
-msgid "export"
-msgstr "exporter"
+msgid "rdf"
+msgstr "rdf"
+
+msgid "import"
+msgstr "importer"
 
 msgid "Advanced parameters"
-msgstr ""
+msgstr "Paramètres avancés"
 
-msgid "Items Sequence"
-msgstr "Séquence d'items"
+msgid "Advanced sequence"
+msgstr ""
 
 msgid "Please select an test before!"
 msgstr "Veuillez choisir un test!"
@@ -235,8 +238,14 @@ msgstr "Enregistrer"
 msgid "Items sequence"
 msgstr "Séquence d'item"
 
+msgid "Drag and drop the items to order them"
+msgstr "Glisser/déposer les items pour les ordonner"
+
 msgid "Sequence saved successfully"
 msgstr "La séquence a été enregistré avec succès"
+
+msgid "Please select a test before!"
+msgstr "Veulliez d'abord choisir un test"
 
 msgid "sequence"
 msgstr "Séquence"
@@ -288,6 +297,21 @@ msgstr "échec de compilation"
 
 msgid "Compiling test"
 msgstr "Compilation du test en cours"
+
+msgid ""
+msgstr ""
+
+msgid "edit test"
+msgstr "Editer un test"
+
+msgid "new property"
+msgstr "Nouvelle propriété"
+
+msgid "export"
+msgstr "exporter"
+
+msgid "Items Sequence"
+msgstr "Séquence d'items"
 
 msgid "Password"
 msgstr "Mot de passe"
