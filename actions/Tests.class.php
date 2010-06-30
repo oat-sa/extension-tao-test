@@ -81,6 +81,7 @@ class Tests extends TaoModule {
 	
 	/**
 	 * edit a test instance
+	 * @return void
 	 */
 	public function editTest(){
 		$clazz = $this->getCurrentClass();
