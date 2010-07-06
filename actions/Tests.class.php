@@ -86,7 +86,10 @@ class Tests extends TaoModule {
 	public function editTest(){
 		$clazz = $this->getCurrentClass();
 		$test = $this->getCurrentInstance();
-		$myForm = tao_helpers_form_GenerisFormFactory::instanceEditor($clazz, $test);
+		
+		$formContainer = new tao_actions_form_Instance($clazz, $test);
+		$myForm = $formContainer->getForm();
+		
 		if($myForm->isSubmited()){
 			if($myForm->isValid()){
 				
