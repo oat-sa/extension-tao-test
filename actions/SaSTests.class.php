@@ -16,7 +16,6 @@ class SaSTests extends Tests {
      */
     public function __construct() {
         $this->setSessionAttribute('currentExtension', 'taoTests');
-		tao_helpers_form_GenerisFormFactory::setMode(tao_helpers_form_GenerisFormFactory::MODE_STANDALONE);
 		parent::__construct();
     }
     
