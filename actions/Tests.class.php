@@ -95,11 +95,12 @@ class Tests extends TaoModule {
 				
 				$test = $this->service->bindProperties($test, $myForm->getValues());
 				
-				$this->setSessionAttribute("showNodeUri", tao_helpers_Uri::encode($test->uriResource));
 				$this->setData('message', __('Test saved'));
 				$this->setData('reload', true);
 			}
 		}
+		
+		$this->setSessionAttribute("showNodeUri", tao_helpers_Uri::encode($test->uriResource));
 		
 		$allItems = array();
 		foreach($this->service->getAllItems() as $itemUri => $itemLabel){
