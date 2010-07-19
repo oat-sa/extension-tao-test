@@ -15,6 +15,7 @@ class SaSTests extends Tests {
      * @see Tests::__construct()
      */
     public function __construct() {
+    	tao_helpers_Context::load('STANDALONE_MODE');
         $this->setSessionAttribute('currentExtension', 'taoTests');
 		parent::__construct();
     }
