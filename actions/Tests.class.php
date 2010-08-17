@@ -390,6 +390,13 @@ class Tests extends TaoModule {
 		else{
 			$clazz = new core_kernel_classes_Class(TAO_ITEM_CLASS);
 		}
+		if($this->hasRequestParameter('selected')){
+			$selected = $this->getRequestParameter('selected');
+			if(!is_array($selected)){
+				$selected = array($selected);
+			}
+			$options['browse'] = $selected;
+		}
 		echo json_encode($this->service->toTree($clazz, $options));
 	}
 	
