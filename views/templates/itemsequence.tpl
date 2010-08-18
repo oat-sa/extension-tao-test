@@ -22,7 +22,7 @@
 		
 			var lastRow = null;
 			$("#citem").jqGrid({
-				url: "<?_url('itemSequenceData', 'Tests', 'taoTests', array('uri' => get_data('uri'), 'classUri' => get_data('classUri')) )?>", 
+				url: "<?=_url('itemSequenceData', 'Tests', 'taoTests', array('uri' => get_data('uri'), 'classUri' => get_data('classUri')) )?>", 
 				datatype: "json", 
 				colNames:[__('sequence'), __('uri'), __('label'), __('weight'), __('difficulty'), __('discrimination'), __('guessing'), __('model')], 
 				colModel:[ 
