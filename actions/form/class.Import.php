@@ -9,10 +9,10 @@ error_reporting(E_ALL);
  *
  * This file is part of TAO.
  *
- * Automatically generated on 15.10.2010, 16:27:33 with ArgoUML PHP module 
- * (last revised $Date: 2010-01-12 20:14:42 +0100 (Tue, 12 Jan 2010) $)
+ * Automatically generated on 18.10.2010, 11:10:25 with ArgoUML PHP module 
+ * (last revised $Date: 2008-04-19 08:22:08 +0200 (Sat, 19 Apr 2008) $)
  *
- * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
+ * @author Cedric Alfonsi, <cedric.alfonsi@tudor.lu>
  * @package taoTests
  * @subpackage actions_form
  */
@@ -22,16 +22,9 @@ if (0 > version_compare(PHP_VERSION, '5')) {
 }
 
 /**
- * include
- *
- * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
- */
-require_once('class..php');
-
-/**
  * This container initialize the import form.
  *
- * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
+ * @author Cedric Alfonsi, <cedric.alfonsi@tudor.lu>
  */
 require_once('tao/actions/form/class.Import.php');
 
@@ -47,14 +40,12 @@ require_once('tao/actions/form/class.Import.php');
  * Short description of class taoTests_actions_form_Import
  *
  * @access public
- * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
+ * @author Cedric Alfonsi, <cedric.alfonsi@tudor.lu>
  * @package taoTests
  * @subpackage actions_form
  */
 class taoTests_actions_form_Import
-    /* multiple generalisations not supported by PHP: */
-    /* extends ,
-            tao_actions_form_Import */
+    extends tao_actions_form_Import
 {
     // --- ASSOCIATIONS ---
 
@@ -75,7 +66,7 @@ class taoTests_actions_form_Import
      * Short description of method initQTIElements
      *
      * @access public
-     * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
+     * @author Cedric Alfonsi, <cedric.alfonsi@tudor.lu>
      * @return mixed
      */
     public function initQTIElements()
