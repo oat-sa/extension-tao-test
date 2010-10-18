@@ -87,6 +87,41 @@ class taoTests_models_classes_QTI_Parser
         $returnValue = array();
 
         // section 127-0-1-1-4e1fc318:12bbead867c:-8000:00000000000026AA begin
+        
+    if(!$this->valid){
+        	libxml_use_internal_errors(true);	//retrieve errors if no validation has been done previously
+        }
+        
+        //load it using the SimpleXml library
+        $xml = false;
+    	switch($this->sourceType){
+    		case self::SOURCE_FILE:
+    			$xml = simplexml_load_file($this->source);
+    			break;
+    		case self::SOURCE_URL:
+    			$xmlContent = tao_helpers_Request::load($this->source, true);
+    			$xml = simplexml_load_string($xmlContent);
+    			break;
+    		case self::SOURCE_STRING:
+    			$xml = simplexml_load_string($this->source);
+    			break;
+    	}
+    	
+    	if($xml !== false){
+    		
+    		//get the QTI Item's resources from the imsmanifest.xml
+    		$returnValue = taoTests_models_classes_QTI_ParserFactory::getResourcesFromManifest($xml);
+    		
+    		if(!$this->valid){
+    			$this->valid = true;
+    			libxml_clear_errors();
+    		}
+    	}
+    	else if(!$this->valid){
+    		$this->addErrors(libxml_get_errors());
+    		libxml_clear_errors();
+    	}
+        
         // section 127-0-1-1-4e1fc318:12bbead867c:-8000:00000000000026AA end
 
         return (array) $returnValue;

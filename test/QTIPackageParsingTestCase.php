@@ -28,17 +28,17 @@ class QTIPackageParsingTestCase extends UnitTestCase {
 		
 		taoItems_models_classes_QTI_Data::setPersistance(false);
 		
-//		//check if wrong files are not validated correctly
-//		foreach(glob(dirname(__FILE__).'/samples/wrong/*.*') as $file){
-//			
-//			$qtiParser = new taoItems_models_classes_QTI_Parser($file);
-//			
-//			$qtiParser->validate();
-//			
-//			$this->assertFalse($qtiParser->isValid());
-//			$this->assertTrue(count($qtiParser->getErrors()) > 0);
-//			$this->assertTrue(strlen($qtiParser->displayErrors()) > 0);
-//		}
+		//check if wrong files are not validated correctly
+		foreach(glob(dirname(__FILE__).'/samples/wrong/*.*') as $file){
+			
+			$qtiParser = new taoItems_models_classes_QTI_Parser($file);
+			
+			$qtiParser->validate();
+			
+			$this->assertFalse($qtiParser->isValid());
+			$this->assertTrue(count($qtiParser->getErrors()) > 0);
+			$this->assertTrue(strlen($qtiParser->displayErrors()) > 0);
+		}
 		
 		//check if samples are loaded 
 		foreach(glob(dirname(__FILE__).'/samples/*.xml') as $file){

@@ -27,7 +27,7 @@ class TestImport extends Import {
 			//get the item parent class
 			$clazz = new core_kernel_classes_Class(tao_helpers_Uri::decode($this->getSessionAttribute('classUri')));
 			
-			
+			/// HERE ///
 		}
 	}
 }
