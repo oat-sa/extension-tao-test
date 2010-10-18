@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.imsglobal.org/xsd/imscp_v1p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:imscp_v1p1="http://www.imsglobal.org/xsd/imscp_v1p1" xmlns:imsmd="http://www.imsglobal.org/xsd/imsmd_v1p2">
+  <xs:import namespace="http://www.imsglobal.org/xsd/imsmd_v1p2" schemaLocation="./imsmd_v1p2.xsd"/>
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="./xml.xsd"/>
+  <xs:element name="manifest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="imscp_v1p1:metadata"/>
+        <xs:element ref="imscp_v1p1:organizations"/>
+        <xs:element ref="imscp_v1p1:resources"/>
+      </xs:sequence>
+      <xs:attribute name="identifier"  type="xs:NCName"/>
+      <xs:attribute name="version" />
+     <!-- <xs:attribute ref="xs:schemaLocation" use="required"/> --> 
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="organizations">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="imscp_v1p1:organization"/>
+      </xs:sequence>
+      <xs:attribute name="default" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="organization">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="imscp_v1p1:title"/>
+        <xs:element ref="imscp_v1p1:item"/>
+        <xs:element ref="imscp_v1p1:metadata"/>
+      </xs:sequence>
+      <xs:attribute name="identifier" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="resources">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="imscp_v1p1:resource"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="resource">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="imscp_v1p1:metadata"/>
+        <xs:element maxOccurs="unbounded" ref="imscp_v1p1:file"/>
+      </xs:sequence>
+      <xs:attribute name="href" use="required"/>
+      <xs:attribute name="identifier" use="required" type="xs:NCName"/>
+      <xs:attribute name="type" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="file">
+    <xs:complexType>
+      <xs:attribute name="href" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="metadata">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:sequence minOccurs="0">
+          <xs:element ref="imscp_v1p1:schema"/>
+          <xs:element ref="imscp_v1p1:schemaversion"/>
+        </xs:sequence>
+        <xs:element ref="imsmd:lom"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="schema" type="xs:string"/>
+  <xs:element name="schemaversion" type="xs:decimal"/>
+  <xs:element name="title" type="xs:string"/>
+  <xs:element name="item">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="imscp_v1p1:item"/>
+        <xs:element ref="imscp_v1p1:title"/>
+      </xs:choice>
+      <xs:attribute name="identifier" use="required" type="xs:NCName"/>
+      <xs:attribute name="identifierref" type="xs:NCName"/>
+      <xs:attribute name="isvisible" use="required" type="xs:integer"/>
+      <xs:attribute name="parameters"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

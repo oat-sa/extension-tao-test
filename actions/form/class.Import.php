@@ -72,6 +72,32 @@ class taoTests_actions_form_Import
     public function initQTIElements()
     {
         // section 127-0-1-1--67198282:12bb0429ae8:-8000:0000000000002688 begin
+        
+    	$descElt = tao_helpers_form_FormFactory::getElement('qti_desc', 'Label');
+		$descElt->setValue(__('A QTI-Package is a Zip archive containing a imsmanifest.xml file and the QTI resources to import'));
+		$this->form->addElement($descElt);
+    	
+    	//create file upload form box
+		$fileElt = tao_helpers_form_FormFactory::getElement('source', 'AsyncFile');
+		$fileElt->setDescription(__("Add the source file"));
+    	if(isset($_POST['import_sent_qti'])){
+			$fileElt->addValidator(tao_helpers_form_FormFactory::getValidator('NotEmpty'));
+		}
+		else{
+			$fileElt->addValidator(tao_helpers_form_FormFactory::getValidator('NotEmpty', array('message' => '')));
+		}
+		$fileElt->addValidators(array(
+			tao_helpers_form_FormFactory::getValidator('FileMimeType', array('mimetype' => array('application/zip', 'application/x-zip', 'application/x-zip-compressed', 'application/octet-stream'), 'extension' => array('zip'))),
+			tao_helpers_form_FormFactory::getValidator('FileSize', array('max' => 3000000))
+		));
+    	
+		$this->form->addElement($fileElt);
+		$this->form->createGroup('file', __('Upload a QTI Package File'), array('qti_desc', 'source'));
+		
+		$qtiSentElt = tao_helpers_form_FormFactory::getElement('import_sent_qti', 'Hidden');
+		$qtiSentElt->setValue(1);
+		$this->form->addElement($qtiSentElt);
+    	
         // section 127-0-1-1--67198282:12bb0429ae8:-8000:0000000000002688 end
     }
 

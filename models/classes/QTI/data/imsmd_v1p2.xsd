@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.imsglobal.org/xsd/imsmd_v1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:imscp_v1p1="http://www.imsglobal.org/xsd/imscp_v1p1" xmlns:imsmd="http://www.imsglobal.org/xsd/imsmd_v1p2">
+  <xs:import namespace="http://www.imsglobal.org/xsd/imscp_v1p1" schemaLocation="./imscp_v1p1.xsd"/>
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="./xml.xsd"/>
+  <xs:element name="lom">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="imsmd:general"/>
+        <xs:element ref="imsmd:lifecycle"/>
+        <xs:element ref="imsmd:technical"/>
+        <xs:element ref="imsmd:educational"/>
+        <xs:element ref="imsmd:rights"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="general">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="imsmd:identifier"/>
+        <xs:element ref="imsmd:title"/>
+        <xs:element maxOccurs="unbounded" ref="imsmd:language"/>
+        <xs:element ref="imsmd:description"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="imsmd:keyword"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="identifier" type="xs:NCName"/>
+  <xs:element name="title">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="imsmd:langstring"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="language" type="xs:NCName"/>
+  <xs:element name="keyword">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="imsmd:langstring"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="lifecycle">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="imsmd:version"/>
+        <xs:element ref="imsmd:status"/>
+        <xs:element maxOccurs="unbounded" ref="imsmd:contribute"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="version">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="imsmd:langstring"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="status">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="imsmd:source"/>
+        <xs:element ref="imsmd:value"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="contribute">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="imsmd:role"/>
+        <xs:element ref="imsmd:centity"/>
+        <xs:element minOccurs="0" ref="imsmd:date"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="role">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="imsmd:source"/>
+        <xs:element ref="imsmd:value"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="centity">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="imsmd:vcard"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="vcard" type="xs:string"/>
+  <xs:element name="date">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="imsmd:datetime"/>
+        <xs:element minOccurs="0" ref="imsmd:description"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="datetime" type="xs:NMTOKEN"/>
+  <xs:element name="technical">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="imsmd:format"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="format" type="xs:string"/>
+  <xs:element name="educational">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="imsmd:learningresourcetype"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="learningresourcetype">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="imsmd:source"/>
+        <xs:element ref="imsmd:value"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="rights">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="imsmd:cost"/>
+        <xs:element ref="imsmd:copyrightandotherrestrictions"/>
+        <xs:element ref="imsmd:description"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="cost">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="imsmd:source"/>
+        <xs:element ref="imsmd:value"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="copyrightandotherrestrictions">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="imsmd:source"/>
+        <xs:element ref="imsmd:value"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="langstring">
+    <xs:complexType mixed="true">
+      <xs:attribute ref="xml:lang"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="description">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="imsmd:langstring"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="source">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="imsmd:langstring"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="value">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="imsmd:langstring"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
