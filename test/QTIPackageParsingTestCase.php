@@ -26,12 +26,11 @@ class QTIPackageParsingTestCase extends UnitTestCase {
 	 */
 	public function testFileParsing(){
 		
-		taoItems_models_classes_QTI_Data::setPersistance(false);
 		
-		//check if wrong files are not validated correctly
-		foreach(glob(dirname(__FILE__).'/samples/wrong/*.*') as $file){
+		//check if wrong packages are not validated correctly
+		foreach(glob(dirname(__FILE__).'/samples/wrong/*.zip') as $file){
 			
-			$qtiParser = new taoItems_models_classes_QTI_Parser($file);
+			$qtiParser = new taoTests_models_classes_QTI_PackageParser($file);
 			
 			$qtiParser->validate();
 			
@@ -40,10 +39,10 @@ class QTIPackageParsingTestCase extends UnitTestCase {
 			$this->assertTrue(strlen($qtiParser->displayErrors()) > 0);
 		}
 		
-		//check if samples are loaded 
-		foreach(glob(dirname(__FILE__).'/samples/*.xml') as $file){
+		//check if package samples are valid
+		foreach(glob(dirname(__FILE__).'/samples/*.zip') as $file){
 			
-			$qtiParser = new taoTests_models_classes_QTI_Parser($file);
+			$qtiParser = new taoTests_models_classes_QTI_PackageParser($file);
 			$qtiParser->validate();
 			
 			if(!$qtiParser->isValid())
@@ -51,7 +50,32 @@ class QTIPackageParsingTestCase extends UnitTestCase {
 			
 			$this->assertTrue($qtiParser->isValid());
 		}
+		
+		
+		//check if wrong manifest files are not validated correctly
+		foreach(glob(dirname(__FILE__).'/samples/wrong/*.xml') as $file){
+			
+			$qtiParser = new taoTests_models_classes_QTI_ManifestParser($file);
+			
+			$qtiParser->validate();
+			
+			$this->assertFalse($qtiParser->isValid());
+			$this->assertTrue(count($qtiParser->getErrors()) > 0);
+			$this->assertTrue(strlen($qtiParser->displayErrors()) > 0);
+		}
+		
+		//check if manifest samples are valid
+		foreach(glob(dirname(__FILE__).'/samples/*.xml') as $file){
+			
+			$qtiParser = new taoTests_models_classes_QTI_ManifestParser($file);
+			$qtiParser->validate();
+			
+			if(!$qtiParser->isValid())
+				echo $qtiParser->displayErrors();
+			
+			$this->assertTrue($qtiParser->isValid());
+		}
+		
 	}
-	
 }
 ?>
