@@ -82,7 +82,7 @@ class taoTests_models_classes_QTI_PackageParser
 			    		throw new Exception("Unable to read file {$this->source}.");
 			    	}
 			   		if(!preg_match("/\.zip$/", basename($this->source))){
-			    		throw new Exception("Wrong file extension in {$this->source}, xml extension is expected");
+			    		throw new Exception("Wrong file extension in {$this->source}, zip extension is expected");
 			    	}
 			   		if(!tao_helpers_File::securityCheck($this->source)){
 			    		throw new Exception("{$this->source} seems to contain some security issues");
@@ -120,9 +120,11 @@ class taoTests_models_classes_QTI_PackageParser
 					
 					$this->valid = true;
 				}
+				$zip->close();
 			}
 			catch(Exception $e){
 				$this->addError($e);
+				$zip->close();
 			}
         }
     	$returnValue = $this->valid;
@@ -145,8 +147,25 @@ class taoTests_models_classes_QTI_PackageParser
 
         // section 127-0-1-1--7d08e5c6:12bc3850b26:-8000:00000000000026AB begin
         
+        if(!is_file($this->source)){	//ultimate verification
+        	throw new Exception("Wrong source mode");
+        }
         
+        $sourceFile = basename($this->source);
+        $folder = dirname($this->source) . '/' . substr($sourceFile, 0, strrpos($sourceFile, '.'));
         
+        if(!is_dir($folder)){
+        	mkdir($folder);
+        }
+        
+	    $zip = new ZipArchive();
+		if ($zip->open($this->source) === true) {
+		    if($zip->extractTo($folder)){
+		    	$returnValue = $folder;
+		    }
+		    $zip->close();
+		} 
+		
         // section 127-0-1-1--7d08e5c6:12bc3850b26:-8000:00000000000026AB end
 
         return (string) $returnValue;

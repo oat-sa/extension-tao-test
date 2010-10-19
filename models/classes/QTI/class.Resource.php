@@ -88,7 +88,35 @@ class taoTests_models_classes_QTI_Resource
     public function __construct($id, $type, $file)
     {
         // section 127-0-1-1--24e482dc:12bc4041ca7:-8000:00000000000026D8 begin
+        
+    	if(!self::isAllowed($type)){
+    		throw new Exception("Only the resources of the following type are supported : " . implode(',', self::$allowedTypes));
+    	}
+    	$this->identifier = $id;
+    	$this->itemFile = $file;
+    	
         // section 127-0-1-1--24e482dc:12bc4041ca7:-8000:00000000000026D8 end
+    }
+
+    /**
+     * Short description of method isAllowed
+     *
+     * @access public
+     * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
+     * @param  string type
+     * @return boolean
+     */
+    public static function isAllowed($type)
+    {
+        $returnValue = (bool) false;
+
+        // section 127-0-1-1--7b184bc:12bc4c3c18d:-8000:00000000000026D1 begin
+        
+        $returnValue = (!empty($type) && in_array($type, self::$allowedTypes));
+        
+        // section 127-0-1-1--7b184bc:12bc4c3c18d:-8000:00000000000026D1 end
+
+        return (bool) $returnValue;
     }
 
     /**
@@ -103,6 +131,9 @@ class taoTests_models_classes_QTI_Resource
         $returnValue = (string) '';
 
         // section 127-0-1-1--24e482dc:12bc4041ca7:-8000:00000000000026DD begin
+        
+        $returnValue = $this->itemFile;
+        
         // section 127-0-1-1--24e482dc:12bc4041ca7:-8000:00000000000026DD end
 
         return (string) $returnValue;
@@ -119,6 +150,9 @@ class taoTests_models_classes_QTI_Resource
     public function addAuxiliaryFile($file)
     {
         // section 127-0-1-1--24e482dc:12bc4041ca7:-8000:00000000000026DF begin
+        
+    	$this->auxiliaryFiles[] = $file;
+    	
         // section 127-0-1-1--24e482dc:12bc4041ca7:-8000:00000000000026DF end
     }
 
@@ -134,26 +168,31 @@ class taoTests_models_classes_QTI_Resource
         $returnValue = array();
 
         // section 127-0-1-1--24e482dc:12bc4041ca7:-8000:00000000000026E2 begin
+        
+        $returnValue = $this->auxiliaryFiles;
+        
         // section 127-0-1-1--24e482dc:12bc4041ca7:-8000:00000000000026E2 end
 
         return (array) $returnValue;
     }
 
     /**
-     * Short description of method deploy
+     * Short description of method setAuxiliaryFiles
      *
      * @access public
      * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
-     * @return boolean
+     * @param  array files
+     * @return mixed
      */
-    public function deploy()
+    public function setAuxiliaryFiles($files)
     {
-        $returnValue = (bool) false;
-
-        // section 127-0-1-1--24e482dc:12bc4041ca7:-8000:00000000000026E4 begin
-        // section 127-0-1-1--24e482dc:12bc4041ca7:-8000:00000000000026E4 end
-
-        return (bool) $returnValue;
+        // section 127-0-1-1--4fa404a7:12bc4fc4a20:-8000:00000000000026D4 begin
+        
+    	if(is_array($files)){
+    		$this->auxiliaryFiles = $files;
+    	}
+    	
+        // section 127-0-1-1--4fa404a7:12bc4fc4a20:-8000:00000000000026D4 end
     }
 
 } /* end of class taoTests_models_classes_QTI_Resource */

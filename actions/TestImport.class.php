@@ -27,7 +27,37 @@ class TestImport extends Import {
 			//get the item parent class
 			$clazz = new core_kernel_classes_Class(tao_helpers_Uri::decode($this->getSessionAttribute('classUri')));
 			
-			/// HERE ///
+			$uploadedFile = $formValues['source']['uploaded_file'];
+			
+			//load and validate the package
+			$qtiPackageParser = new taoTests_models_classes_QTI_PackageParser($uploadedFile);
+			$qtiPackageParser->validate();
+
+			if(!$qtiPackageParser->isValid()){
+				$this->setData('importErrorTitle', __('Validation of the imported file has failed'));
+				$this->setData('importErrors', $qtiPackageParser->getErrors());
+			}
+			else{
+				
+				//extract the package
+				$folder = $qtiPackageParser->extract();
+				if(is_dir($folder)){
+					
+					//load and validate the manifest
+					$qtiManifestParser = new taoTests_models_classes_QTI_ManifestParser($folder .'/imsmanifest.xml');
+					$qtiManifestParser->validate();
+					
+					if(!$qtiManifestParser->isValid()){
+						$this->setData('importErrorTitle', __('Validation of the imported file has failed'));
+						$this->setData('importErrors', $qtiManifestParser->getErrors());
+					}
+					else{
+						
+						$resources = $qtiManifestParser->load();
+						var_dump($resources);
+					}
+				}
+			}
 		}
 	}
 }

@@ -55,6 +55,44 @@ class taoTests_models_classes_QTI_ParserFactory
         $returnValue = array();
 
         // section 127-0-1-1--24e482dc:12bc4041ca7:-8000:00000000000026E8 begin
+        
+        //check of the root tag
+    	if($source->getName() != 'manifest'){
+	       	throw new Exception("incorrect manifest root tag");
+	    }
+	    
+	    $resourceNodes = $source->xpath("//*[name(.)='resource']");
+	    foreach($resourceNodes as $resourceNode){
+	    	$type = (string)$resourceNode['type'];
+	    	if(taoTests_models_classes_QTI_Resource::isAllowed($type)){
+	    		
+	    		$id = (string)$resourceNode['identifier'];
+	    		(isset($resourceNode['href'])) ? $href = (string)$resourceNode['href'] : $href = '';
+	    		
+	    		$auxFiles = array();
+	    		$xmlFiles = array();
+	    		foreach($resourceNode->file as $fileNode){
+	    			$fileHref = (string)$fileNode['href'];
+	    			if(preg_match("/\.xml$/", $fileHref)){
+		    			if(empty($href)){
+		    				$xmlFiles[] = $fileHref;
+		    			}
+	    			}
+	    			else{
+	    				$auxFiles[] = $fileHref;
+	    			}
+	    		}
+	    		
+	    		if(count($xmlFiles) == 1 && empty($href)){
+	    			$href = $xmlFiles[0];
+	    		}
+	    		$resource = new taoTests_models_classes_QTI_Resource($id, $type, $href);
+	    		$resource->setAuxiliaryFiles($auxFiles);
+	    		
+	    		$returnValue[] = $resource;
+	    	}
+	    }
+        
         // section 127-0-1-1--24e482dc:12bc4041ca7:-8000:00000000000026E8 end
 
         return (array) $returnValue;
