@@ -3,13 +3,13 @@
 error_reporting(E_ALL);
 
 /**
- * TAO - taoTests/models/classes/QTI/class.Parser.php
+ * TAO - taoTests/models/classes/QTI/class.ManifestParser.php
  *
  * $Id$
  *
  * This file is part of TAO.
  *
- * Automatically generated on 18.10.2010, 11:58:49 with ArgoUML PHP module 
+ * Automatically generated on 19.10.2010, 10:11:45 with ArgoUML PHP module 
  * (last revised $Date: 2010-01-12 20:14:42 +0100 (Tue, 12 Jan 2010) $)
  *
  * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
@@ -38,14 +38,14 @@ require_once('tao/models/classes/class.Parser.php');
 // section 127-0-1-1-4e1fc318:12bbead867c:-8000:00000000000026A7-constants end
 
 /**
- * Short description of class taoTests_models_classes_QTI_Parser
+ * Short description of class taoTests_models_classes_QTI_ManifestParser
  *
  * @access public
  * @author Bertrand Chevrier, <bertrand.chevrier@tudor.lu>
  * @package taoTests
  * @subpackage models_classes_QTI
  */
-class taoTests_models_classes_QTI_Parser
+class taoTests_models_classes_QTI_ManifestParser
     extends tao_models_classes_Parser
 {
     // --- ASSOCIATIONS ---
@@ -88,11 +88,7 @@ class taoTests_models_classes_QTI_Parser
 
         // section 127-0-1-1-4e1fc318:12bbead867c:-8000:00000000000026AA begin
         
-    if(!$this->valid){
-        	libxml_use_internal_errors(true);	//retrieve errors if no validation has been done previously
-        }
-        
-        //load it using the SimpleXml library
+     	//load it using the SimpleXml library
         $xml = false;
     	switch($this->sourceType){
     		case self::SOURCE_FILE:
@@ -127,6 +123,6 @@ class taoTests_models_classes_QTI_Parser
         return (array) $returnValue;
     }
 
-} /* end of class taoTests_models_classes_QTI_Parser */
+} /* end of class taoTests_models_classes_QTI_ManifestParser */
 
 ?>
