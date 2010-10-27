@@ -13,7 +13,8 @@ $todefine = array(
 	'TEST_TESTCONTENT_PROP' 			=> 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestContent',
 	'TAO_ITEM_MODEL_PROPERTY' 			=> 'http://www.tao.lu/Ontologies/TAOItem.rdf#ItemModel', 
 	'TAO_ITEM_MODEL_RUNTIME_PROPERTY' 	=> 'http://www.tao.lu/Ontologies/TAOItem.rdf#SWFFile',
-	'TEST_CONTENT_REF_FILE'				=> BASE_PATH.'/data/test_content_ref.xml'
+	'TEST_CONTENT_REF_FILE'				=> BASE_PATH.'/data/test_content_ref.xml',
+	'TEST_TESTPROCESS'				=> 'http://www.tao.lu/Ontologies/TAOItem.rdf#TestProcess'
 );
 foreach($todefine as $constName => $constValue){
 	if(!defined($constName)){
