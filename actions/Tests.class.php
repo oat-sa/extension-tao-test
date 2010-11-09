@@ -83,7 +83,7 @@ class Tests extends TaoModule {
 	 * edit a test instance
 	 * @return void
 	 */
-	public function editTest(){
+	public function editTest0(){
 		$clazz = $this->getCurrentClass();
 		$test = $this->getCurrentInstance();
 		
@@ -129,6 +129,81 @@ class Tests extends TaoModule {
 		$this->setData('uri', tao_helpers_Uri::encode($test->uriResource));
 		$this->setData('classUri', tao_helpers_Uri::encode($clazz->uriResource));
 		$this->setData('formTitle', __('Edit test'));
+		$this->setData('myForm', $myForm->render());
+		$this->setView('form_test.tpl');
+	}
+	
+	public function editTest(){
+		$clazz = $this->getCurrentClass();
+		$test = $this->getCurrentInstance();
+		
+		$formContainer = new tao_actions_form_Instance($clazz, $test);
+		$myForm = $formContainer->getForm();
+		if($myForm->isSubmited()){
+			if($myForm->isValid()){
+				$propertyValues = $myForm->getValues();
+				
+				//check if the authoring mode has changed: if advanced->simple, modify the related process to make it compatible
+				if(array_key_exists(TAO_TEST_AUTHORINGMODE_PROP, $propertyValues)){
+					if($propertyValues[TAO_TEST_AUTHORINGMODE_PROP] == TAO_TEST_SIMPLEMODE){
+						if($test->getUniquePropertyValue(new core_kernel_classes_Property(TAO_TEST_AUTHORINGMODE_PROP))->uriResource == TAO_TEST_ADVANCEDMODE){
+							//get all tests from the process, then save them:
+							$this->service->linearizeTestProcess($test);
+						}
+					}
+				}
+				
+				//then save the property values as usual
+				$test = $this->service->bindProperties($test, $propertyValues);
+				
+				//edit process label:
+				$this->service->updateProcessLabel($test);
+				
+				$this->setData('message', __('Test saved'));
+				$this->setData('reload', true);
+			}
+		}
+		$this->setSessionAttribute("showNodeUri", tao_helpers_Uri::encode($test->uriResource));
+		
+		//test authoring mode:
+		$this->setData('authoringMode', 'simple');
+		$authoringMode = $test->getUniquePropertyValue(new core_kernel_classes_Property(TAO_TEST_AUTHORINGMODE_PROP));
+		$myForm->removeElement(tao_helpers_Uri::encode(TAO_TEST_AUTHORINGMODE_PROP));
+		
+		if($authoringMode->uriResource == TAO_TEST_ADVANCEDMODE){
+			$this->setData('authoringMode', 'advanced');
+		}else{
+			//remove the authoring button
+			$myForm->removeElement(tao_helpers_Uri::encode(TAO_TEST_TESTCONTENT));
+			
+			//the default option is the simple mode:
+			$allTests = array();
+			foreach($this->service->getAllTests() as $testUri => $testLabel){
+				$allTests['test_'.tao_helpers_Uri::encode($testUri)] = $testLabel;
+			}
+			$this->setData('allTests', json_encode($allTests));
+			
+			$relatedItems = array();
+			$itemSequence = array();
+			$i = 1;
+			foreach($this->service->getTestItems($test) as $item){
+				$relatedItems[] = tao_helpers_Uri::encode($item->uriResource);
+				if(!$item->isClass()){
+					$itemSequence[$i] = array(
+						'uri' 	=> tao_helpers_Uri::encode($item->uriResource),
+						'label' => $item->getLabel()
+					);
+					$i++;
+				}
+			}
+			$this->setData('itemSequence', $itemSequence);
+			
+			$this->setData('relatedItems', json_encode($relatedItems));
+		}
+		
+		$this->setData('uri', tao_helpers_Uri::encode($test->uriResource));
+		$this->setData('classUri', tao_helpers_Uri::encode($clazz->uriResource));
+		$this->setData('formTitle', __('Test properties'));
 		$this->setData('myForm', $myForm->render());
 		$this->setView('form_test.tpl');
 	}
@@ -413,12 +488,10 @@ class Tests extends TaoModule {
 		$items = array();
 		foreach($this->getRequestParameters() as $key => $value){
 			if(preg_match("/^instance_/", $key)){
-				$items[str_replace('instance_', '', $key)] = tao_helpers_Uri::decode($value);
+				array_push($items, new core_kernel_classes_Resource(tao_helpers_Uri::decode($value)));
 			}
 		}
-		$test = $this->getCurrentInstance();
-		
-		if($this->service->setRelatedItems($test, $items, true)){
+		if($this->service->setTestItems($this->getCurrentInstance(), $items)){
 			$saved = true;
 		}
 		echo json_encode(array('saved'	=> $saved));

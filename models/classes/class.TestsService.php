@@ -1391,7 +1391,7 @@ class taoTests_models_classes_TestsService
 		if(is_null($var_subjectUri) || is_null($var_delivery)){
 			throw new Exception('one of the required process variables is missing: "subjectUri" and/or "delivery"');
 		}else{
-			//create formal param associated to the 3 required proc var:
+			//create formal param associated to the 3 required service parameter:
 			$subjectUriParam = $authoringService->getFormalParameter('subject');//it is alright if the default value (i.e. proc var has been changed)
 			if(is_null($subjectUriParam)){
 				$subjectUriParam = $authoringService->createFormalParameter('subject', 'processvariable', $var_subjectUri->uriResource, 'subject uri (do not delete)');
@@ -1603,6 +1603,54 @@ class taoTests_models_classes_TestsService
 		}
 		
 		
+		return $returnValue;
+	}
+	
+	public function linearizeTestProcess(core_kernel_classes_Resource $test){
+		$returnValue = false;
+		
+		//get list of all items in the test, without order:
+		$items = array();
+		$authoringService = tao_models_classes_ServiceFactory::get('taoTests_models_classes_TestAuthoringService');
+		
+		//get the associated process:
+		$process = $test->getUniquePropertyValue(new core_kernel_classes_Property(TEST_TESTCONTENT_PROP));
+		
+		//get list of all activities:
+		$activities = $authoringService->getActivitiesByProcess($process);
+		
+		foreach($activities as $activity){
+			
+			//get the FIRST interactive service
+			$iService = $activity->getOnePropertyValue(new core_kernel_classes_Property(PROPERTY_ACTIVITIES_INTERACTIVESERVICES));
+			if(!is_null($iService)){
+				
+				//TODO: get the actual parameter, the formal param of which is the itemUriParam
+				$itemUriFormalParam = null;
+				foreach($iService->getPropertyValuesCollection(new core_kernel_classes_Property(PROPERTY_CALLOFSERVICES_ACTUALPARAMETERIN)) as $actualParam){
+					$formalParam = $actualParam->getUniquePropertyValue(new core_kernel_classes_Property(PROPERTY_ACTUALPARAMETER_FORMALPARAMETER));
+					if($formalParam->uriResource == $itemUriFormalParam->uriResource){
+						$item = $actualParam->getUniquePropertyValue(new core_kernel_classes_Property(PROPERTY_ACTUALPARAMETER_CONSTANTVALUE));
+						if(!is_null($item)){
+							$items[$item->uriResource] = $item;
+						}
+						
+						break;
+					}
+				}
+				
+				//get the item uri:
+				// $itemUri = '';//the constant value defined in the actual param: $actualParameter
+				// $items[$itemUri] = new core_kernel_classes_Resource($itemUri);
+			}
+		}
+		//the functuon setTestItems require an array with numerical key 
+		$numericalKeyTestArray = array();
+		foreach($items as $item){
+			$numericalKeyTestArray[] = $item;
+		}
+		
+		$returnValue = $this->setTestItems($item, $numericalKeyTestArray);
 		return $returnValue;
 	}
 } /* end of class taoTests_models_classes_TestsService */
