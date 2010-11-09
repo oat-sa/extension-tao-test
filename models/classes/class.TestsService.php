@@ -587,7 +587,7 @@ class taoTests_models_classes_TestsService
 				$labelNode->setAttribute('lang', $currentLang);
 			}
 			foreach($root->getElementsByTagNameNS('http://www.w3.org/TR/1999/PR-rdf-schema-19990303#', 'COMMENT') as $commentNode){
-				$commentNode->nodeValue = $test->comment;
+				$commentNode->nodeValue = $test->getComment();
 				$commentNode->setAttribute('lang', $currentLang);
 			}
 			$returnValue = $dom->saveXML();
