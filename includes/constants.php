@@ -16,7 +16,6 @@ $todefine = array(
 	'TAO_ITEM_MODEL_PROPERTY' 			=> 'http://www.tao.lu/Ontologies/TAOItem.rdf#ItemModel', 
 	'TAO_ITEM_MODEL_RUNTIME_PROPERTY' 	=> 'http://www.tao.lu/Ontologies/TAOItem.rdf#SWFFile',
 	'TEST_CONTENT_REF_FILE'				=> BASE_PATH.'/data/test_content_ref.xml',
-	'TEST_TESTPROCESS'				=> 'http://www.tao.lu/Ontologies/TAOItem.rdf#TestProcess',
 	'TAO_TEST_AUTHORINGMODE_PROP' => 'http://www.tao.lu/Ontologies/TAOTest.rdf#AuthoringMode',
 	'TAO_TEST_SIMPLEMODE' => 'http://www.tao.lu/Ontologies/TAOTest.rdf#i1268049036038811802',
 	'TAO_TEST_ADVANCEDMODE' => 'http://www.tao.lu/Ontologies/TAOTest.rdf#i1268049036038811803'

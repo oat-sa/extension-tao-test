@@ -173,20 +173,22 @@ class Tests extends TaoModule {
 		if($authoringMode->uriResource == TAO_TEST_ADVANCEDMODE){
 			$this->setData('authoringMode', 'advanced');
 		}else{
+			
 			//remove the authoring button
 			$myForm->removeElement(tao_helpers_Uri::encode(TAO_TEST_TESTCONTENT));
 			
 			//the default option is the simple mode:
-			$allTests = array();
-			foreach($this->service->getAllTests() as $testUri => $testLabel){
-				$allTests['test_'.tao_helpers_Uri::encode($testUri)] = $testLabel;
+			$allItems = array();
+			foreach($this->service->getAllItems() as $itemUri => $itemLabel){
+				$allItems['item_'.tao_helpers_Uri::encode($itemUri)] = $itemLabel;
 			}
-			$this->setData('allTests', json_encode($allTests));
+			$this->setData('allItems', json_encode($allItems));
 			
 			$relatedItems = array();
 			$itemSequence = array();
 			$i = 1;
 			foreach($this->service->getTestItems($test) as $item){
+				
 				$relatedItems[] = tao_helpers_Uri::encode($item->uriResource);
 				if(!$item->isClass()){
 					$itemSequence[$i] = array(
@@ -196,8 +198,8 @@ class Tests extends TaoModule {
 					$i++;
 				}
 			}
-			$this->setData('itemSequence', $itemSequence);
 			
+			$this->setData('itemSequence', $itemSequence);
 			$this->setData('relatedItems', json_encode($relatedItems));
 		}
 		
@@ -275,39 +277,29 @@ class Tests extends TaoModule {
 	
 	
 	/**
-	 * display the authoring  template (load the tool into an iframe)
+	 * display the authoring  template
 	 * @return void
 	 */
 	public function authoring(){
+		throw new Exception("test authoring is not available yet");
+		
 		$this->setData('error', false);
 		try{
-			$test = $this->getCurrentInstance();
-			$clazz =  $this->getCurrentClass();
-			$data = $this->service->getTestParameters($test);
-			$data['uri'] = tao_helpers_Uri::encode($test->uriResource);
-			$data['classUri'] = tao_helpers_Uri::encode($clazz->uriResource);
-			$myFormContainer = new taoTests_actions_form_TestAuthoring($data);
-			$myForm = $myFormContainer->getForm();
 			
-			if($myForm->isSubmited()){
-				if($myForm->isValid()){
-					if($this->service->saveTestParameters($test, $myForm->getValues())){
-						$this->setData('message', __('test saved'));
-					}
-				}
-			}
-			$this->setData('formTitle', __('Test parameters'));
-			$this->setData('myForm', $myForm->render());
-			$this->setData('uri', tao_helpers_Uri::encode($test->uriResource));
-			$this->setData('classUri', tao_helpers_Uri::encode($clazz->uriResource));
+			//get process instance to be authored
+			 $test = $this->getCurrentInstance();
+			 $processDefinition = $test->getUniquePropertyValue(new core_kernel_classes_Property(TEST_TESTCONTENT_PROP));
+			$this->setData('processUri', tao_helpers_Uri::encode($processDefinition->uriResource));
 		}
 		catch(Exception $e){
 			$this->setData('error', true);
+			$this->setData('errorMessage', $e);
 		}
-		$this->setView('authoring.tpl');
+		$this->setView('authoring/process_authoring_tool.tpl');
 	}
 	
 	/**
+		deprecated
 	 * display the item sequence tempalte and initialize the grid component
 	 * @return void 
 	 */
@@ -405,6 +397,7 @@ class Tests extends TaoModule {
 	}
 	
 	/**
+	 should be useless now
 	 * get the xml content of a test over an http request 
 	 * @return void 
 	 */
@@ -419,6 +412,7 @@ class Tests extends TaoModule {
 	}
 	
 	/**
+		deprecated?
 	 * save the xml content of a test
 	 * @return void
 	 */
@@ -445,6 +439,8 @@ class Tests extends TaoModule {
 	 * @return void
 	 */
 	public function preview(){
+		//logout from TAO, login to the wf user "previewer" and open the process window, with the back button to TAO:
+		throw new Exception("the preview for a test is no longer available");
 		$this->setData('uri', $this->getRequestParameter('uri'));
 		$this->setView('preview.tpl');
 	}

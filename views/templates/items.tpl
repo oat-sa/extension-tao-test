@@ -87,6 +87,7 @@ $(document).ready(function(){
 		tolerance: 'pointer',
 		update: function(event, ui){
 			listItems = $(this).sortable('toArray');
+			
 			newSequence = {};
 			sequence = {};
 			for (i = 0; i < listItems.length; i++){

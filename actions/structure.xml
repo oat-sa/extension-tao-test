@@ -31,9 +31,7 @@
 			</actions>
 		</section>
 		
-		<section id="tests_authoring" name="Advanced parameters" url="/taoTests/Tests/authoring" />
-		
-		<section id="items_sequence" name="Advanced sequence" url="/taoTests/Tests/itemSequence" />
+		<section id="tests_authoring" name="Advanced Authoring Tool" url="/taoTests/Tests/authoring" />
 	
 	</sections>
 </extension>

@@ -113,7 +113,59 @@ class taoTests_models_classes_TestsService
 
         return $returnValue;
     }
+	
+	/**
+     * create a delivery instance, and at the same time the process instance associated to it
+     *
+     * @access public
+     * @author CRP Henri Tudor - TAO Team - {@link http://www.tao.lu}
+     * @param  core_kernel_classes_Class clazz
+	 * @param  string label
+     * @return core_kernel_classes_Resource
+     */
+	public function createInstance(core_kernel_classes_Class $clazz, $label = ''){
+		$test = parent::createInstance($clazz, $label);
+		
+		//create a process instance at the same time:
+		$processInstance = parent::createInstance(new core_kernel_classes_Class(CLASS_PROCESS),'process generated with testsService');
+		
+		//set ACL right to delivery process initialization:
+		$processInstance->editPropertyValues(new core_kernel_classes_Property(PROPERTY_PROCESS_INIT_ACL_MODE), INSTANCE_ACL_ROLE);
+		$processInstance->editPropertyValues(new core_kernel_classes_Property(PROPERTY_PROCESS_INIT_RESTRICTED_ROLE), CLASS_ROLE_SUBJECT);
+			
+		$test->setPropertyValue(new core_kernel_classes_Property(TEST_TESTCONTENT_PROP), $processInstance->uriResource);
+		$this->updateProcessLabel($test);
+		
+		//set the the default authoring mode to the 'simple mode':
+		$test->setPropertyValue(new core_kernel_classes_Property(TAO_TEST_AUTHORINGMODE_PROP), TAO_TEST_SIMPLEMODE);
+		
+		return $test;		
+	}
+	
+	/**
+     * Make sure that the test and the associated process have the same label
+     *
+     * @access public
+     * @author CRP Henri Tudor - TAO Team - {@link http://www.tao.lu}
+     * @param  core_kernel_classes_Resource delivery
+     * @return void
+     */
+	public function updateProcessLabel(core_kernel_classes_Resource $test){
+		$process = $test->getUniquePropertyValue(new core_kernel_classes_Property(TEST_TESTCONTENT_PROP));
+		$process->setLabel("Process ".$test->getLabel());
+	}
+	
+	public function cloneInstance( core_kernel_classes_Resource $instance,  core_kernel_classes_Class $clazz = null)
+    {
+        $returnValue = null;
+        
+   		$returnValue = parent::cloneInstance($instance, $clazz);
+		//clone process or not?
+		
 
+        return $returnValue;
+    }
+	
     /**
      * delete a test instance
      *
@@ -129,8 +181,14 @@ class taoTests_models_classes_TestsService
         // section 10-13-1-45-792423e0:12398d13f24:-8000:00000000000017E6 begin
 		
 		if(!is_null($test)){
+			//delete the associated process: 
+			$process = $test->getUniquePropertyValue(new core_kernel_classes_Property(TEST_TESTCONTENT_PROP));
+			$processAuthoringService = tao_models_classes_ServiceFactory::get('taoTests_models_classes_TestAuthoringService');
+			$processAuthoringService->deleteProcess($process);
+			
 			$returnValue = $test->delete();
 		}
+		
 		
         // section 10-13-1-45-792423e0:12398d13f24:-8000:00000000000017E6 end
 
@@ -1364,48 +1422,34 @@ class taoTests_models_classes_TestsService
 		
 		$returnValue = false;
 		
-		$authoringService = tao_models_classes_ServiceFactory::get('taoTest_models_classes_TestAuthoringService');
+		$authoringService = tao_models_classes_ServiceFactory::get('taoTests_models_classes_TestAuthoringService');
 		
 		// get the current process:
-		$process = $test->getUniquePropertyValue(new core_kernel_classes_Property(TEST_TESTPROCESS));
-		
-		//set the required process variables subjectUri and wsdlContract
-		$var_subjectUri = $authoringService->getProcessVariable("subjectUri");
-		if(is_null($var_subjectUri)){
-			$var_subjectUri = $authoringService->createProcessVariable("subject Uri", "subjectUri");
-		}
-		
-		//add test variable (a constant value), so the result can get the delivery-test-item triple
-		$var_test = $authoringService->getProcessVariable("test");
-		if(is_null($var_test)){
-			$var_test = $authoringService->createProcessVariable("test", "test");
-		}//not required to have a test process variable, since it should be set as a constant upon creation
+		$process = $test->getUniquePropertyValue(new core_kernel_classes_Property(TEST_TESTCONTENT_PROP));
 		
 		$var_delivery = $authoringService->getProcessVariable("delivery");
 		if(is_null($var_delivery)){
 			$var_delivery = $authoringService->createProcessVariable("delivery", "delivery");
 		}
 		
+		if(is_null($var_delivery)){
+			throw new Exception('the required process variable "delivery" is missing: ');
+		}
 		
+		//create formal param associated to the 3 required service parameter:
+		$itemUriParam = $authoringService->getFormalParameter('itemUri');//it is alright if the default value (i.e. proc var has been changed)
+		if(is_null($itemUriParam)){
+			$itemUriParam = $authoringService->createFormalParameter('itemUri', 'constant', '', 'item uri (exe)');
+		}
 		
-		if(is_null($var_subjectUri) || is_null($var_delivery)){
-			throw new Exception('one of the required process variables is missing: "subjectUri" and/or "delivery"');
-		}else{
-			//create formal param associated to the 3 required service parameter:
-			$subjectUriParam = $authoringService->getFormalParameter('subject');//it is alright if the default value (i.e. proc var has been changed)
-			if(is_null($subjectUriParam)){
-				$subjectUriParam = $authoringService->createFormalParameter('subject', 'processvariable', $var_subjectUri->uriResource, 'subject uri (do not delete)');
-			}
-			
-			$deliveryParam = $authoringService->getFormalParameter('delivery');
-			if(is_null($deliveryParam)){
-				$deliveryParam = $authoringService->createFormalParameter('delivery', 'processvariable', $var_delivery->uriResource, 'delivery uri (do not delete)');
-			}
-			
-			$testParam = $authoringService->getFormalParameter('test');
-			if(is_null($testParam)){
-				$testParam = $authoringService->createFormalParameter('test', 'constant', '', 'test uri(do not delete)');
-			}
+		$testUriParam = $authoringService->getFormalParameter('testUri');
+		if(is_null($testUriParam)){
+			$testUriParam = $authoringService->createFormalParameter('testUri', 'constant', '', 'test uri(exe)');
+		}
+		
+		$deliveryUriParam = $authoringService->getFormalParameter('deliveryUri');
+		if(is_null($deliveryUriParam)){
+			$deliveryUriParam = $authoringService->createFormalParameter('deliveryUri', 'processvariable', $var_delivery->uriResource, 'delivery uri (exe)');
 		}
 		
 		//delete all related activities:
@@ -1440,36 +1484,19 @@ class taoTests_models_classes_TestsService
 			$activity->editPropertyValues(new core_kernel_classes_Property(PROPERTY_ACTIVITIES_ACL_MODE), INSTANCE_ACL_ROLE);//should be eventually INSTANCE_ACL_ROLE_RESTRICTED_USER_INHERITED
 			$activity->editPropertyValues(new core_kernel_classes_Property(PROPERTY_ACTIVITIES_RESTRICTED_ROLE), CLASS_ROLE_SUBJECT);
 			
-			//get the service definition with the wanted test uri (if doesn't exist, create one)
-			// $testId = tao_helpers_Uri::getUniqueId($test->uriResource);
-			// $testUrl = BASE_URL."/compiled/{$testId}/theTest.php?subject=^subjectUri&subjectLabel=^subjectLabel&wsdl=^wsdlContract";
 			
-			$itemUrl = tao_helpers_Uri::getUniqueId($item->uriResource);
-			
-			$serviceDefinition = null;
-			$serviceDefinitionCollection = core_kernel_impl_ApiModelOO::singleton()->getSubject(PROPERTY_SUPPORTSERVICES_URL,$itemUrl);
-			if(!$serviceDefinitionCollection->isEmpty()){
-				if($serviceDefinitionCollection->get(0) instanceof core_kernel_classes_Resource){
-					$serviceDefinition = $serviceDefinitionCollection->get(0);
-				}
-			}
+			//get the item runner service definition, if does not exist, create one:
+			$serviceDefinition = $authoringService->getItemRunnerServiceDefinition();
 			if(is_null($serviceDefinition)){
-				//if no corresponding service def found, create a service definition:
-				$serviceDefinitionClass = new core_kernel_classes_Class(CLASS_SUPPORTSERVICES);
-				$serviceDefinition = $serviceDefinitionClass->createInstance($item->getLabel(), 'created by test service');
-				
-				//set service definition (the test) and parameters:
-				$serviceDefinition->setPropertyValue(new core_kernel_classes_Property(PROPERTY_SUPPORTSERVICES_URL), $itemUrl);
-				$serviceDefinition->setPropertyValue(new core_kernel_classes_Property(PROPERTY_SERVICESDEFINITION_FORMALPARAMIN), $subjectUriParam->uriResource);
-				$serviceDefinition->setPropertyValue(new core_kernel_classes_Property(PROPERTY_SERVICESDEFINITION_FORMALPARAMIN), $testParam->uriResource);
-				$serviceDefinition->setPropertyValue(new core_kernel_classes_Property(PROPERTY_SERVICESDEFINITION_FORMALPARAMIN), $deliveryParam->uriResource);
+				throw new Exception('the required item runner service does not exist');
 			}
+			
 			//create a call of service and associate the service definition to it:
 			$interactiveService = $authoringService->createInteractiveService($activity);
 			$interactiveService->setPropertyValue(new core_kernel_classes_Property(PROPERTY_CALLOFSERVICES_SERVICEDEFINITION), $serviceDefinition->uriResource);
-			$authoringService->setActualParameter($interactiveService, $subjectUriParam, $var_subjectUri->uriResource, PROPERTY_CALLOFSERVICES_ACTUALPARAMIN, PROPERTY_ACTUALPARAM_PROCESSVARIABLE);
-			$authoringService->setActualParameter($interactiveService, $testParam, $test->uriResource, PROPERTY_CALLOFSERVICES_ACTUALPARAMIN);//constant: we know it!
-			$authoringService->setActualParameter($interactiveService, $deliveryParam, $var_delivery->uriResource, PROPERTY_CALLOFSERVICES_ACTUALPARAMIN, PROPERTY_ACTUALPARAM_PROCESSVARIABLE);
+			$authoringService->setActualParameter($interactiveService, $itemUriParam, $item->uriResource, PROPERTY_CALLOFSERVICES_ACTUALPARAMIN);//constant: we know it!
+			$authoringService->setActualParameter($interactiveService, $testUriParam, $test->uriResource, PROPERTY_CALLOFSERVICES_ACTUALPARAMIN);//constant: we know it!
+			$authoringService->setActualParameter($interactiveService, $deliveryUriParam, $var_delivery->uriResource, PROPERTY_CALLOFSERVICES_ACTUALPARAMIN, PROPERTY_ACTUALPARAM_PROCESSVARIABLE);//don't know yet so process var!
 			
 			if($totalNumber == 1){
 				if(!is_null($interactiveService) && $interactiveService instanceof core_kernel_classes_Resource){
@@ -1503,7 +1530,7 @@ class taoTests_models_classes_TestsService
 	}
 	
 	/**
-     * Get an ordered array of items that make up a sequential process
+     * Get an ordered array of items that make up a sequential test process
      *
      * @access public
      * @author CRP Henri Tudor - TAO Team - {@link http://www.tao.lu}
@@ -1512,11 +1539,14 @@ class taoTests_models_classes_TestsService
      */
 	public function getTestItems(core_kernel_classes_Resource $test){
 		
-		$items = array();
-		$authoringService = tao_models_classes_ServiceFactory::get('taoTest_models_classes_TestAuthoringService');
+		$returnValue = array();
 		
-		//get the associated process:
-		$process = $test->getUniquePropertyValue(new core_kernel_classes_Property(TEST_TESTPROCESS));
+		$items = array();
+		// $authoringService = tao_models_classes_ServiceFactory::get('taoTests_models_classes_TestAuthoringService');
+		$authoringService = new taoTests_models_classes_TestAuthoringService();
+		
+		//get the associated process, set in the test content property
+		$process = $test->getUniquePropertyValue(new core_kernel_classes_Property(TEST_TESTCONTENT_PROP));
 		
 		//get list of all activities:
 		$activities = $authoringService->getActivitiesByProcess($process);
@@ -1538,34 +1568,20 @@ class taoTests_models_classes_TestsService
 		if(is_null($currentActivity)){
 			return $items;
 		}
-		
+		// var_dump($activities, $currentActivity->getLabel());
 		//start the loop:
 		for($i=0;$i<$totalNumber;$i++){
-			//get the FIRST interactive service
-			$iService = $currentActivity->getOnePropertyValue(new core_kernel_classes_Property(PROPERTY_ACTIVITIES_INTERACTIVESERVICES));
-			if(is_null($iService)){
-				throw new Exception('the current activity has no interactive service');
+			$item = $authoringService->getItemByActivity($currentActivity);
+			if(!is_null($item)){
+				$items[$i] = $item;
 			}
-			//get the service definition
-			$serviceDefinition = $iService->getUniquePropertyValue(new core_kernel_classes_Property(PROPERTY_CALLOFSERVICES_SERVICEDEFINITION));
-			
-			//get the url
-			$serviceUrl = $serviceDefinition->getUniquePropertyValue(new core_kernel_classes_Property(PROPERTY_SUPPORTSERVICES_URL));
-
-			//regenerated the item uri from $serviceUrl
-			$itemUri = '';
-			// $itemUri = taoDelivery_helpers_Compilator::getTestUri($serviceUrl);
-			
-			//set the item in the table:
-			$items[$i] = new core_kernel_classes_Resource($itemUri);
-			
 			
 			//get its connector (check the type is "sequential) if ok, get the next activity
 			$connectorCollection = core_kernel_impl_ApiModelOO::getSubject(PROPERTY_CONNECTORS_PRECACTIVITIES, $currentActivity->uriResource);
 			$nextActivity = null;
 			foreach($connectorCollection->getIterator() as $connector){
 				$connectorType = $connector->getUniquePropertyValue(new core_kernel_classes_Property(PROPERTY_CONNECTORS_TYPE));
-				if($connectorType->uriResource = INSTANCE_TYPEOFCONNECTORS_SEQUENCE){
+				if($connectorType->uriResource == INSTANCE_TYPEOFCONNECTORS_SEQUENCE){
 					$nextActivity = $connector->getUniquePropertyValue(new core_kernel_classes_Property(PROPERTY_CONNECTORS_NEXTACTIVITIES));
 					break;
 				}
@@ -1580,8 +1596,6 @@ class taoTests_models_classes_TestsService
 				}	
 			}
 		}
-		
-		$returnValue = array();
 		
 		if(count($items) > 0){
 			
@@ -1601,7 +1615,6 @@ class taoTests_models_classes_TestsService
 				$returnValue[] = $item;
 			}
 		}
-		
 		
 		return $returnValue;
 	}
