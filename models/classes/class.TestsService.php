@@ -337,70 +337,26 @@ class taoTests_models_classes_TestsService
 
         // section 127-0-1-1--5f8e44a2:1258d8ab867:-8000:0000000000001D27 begin
 		
-		if(!is_null($test)){
-			
-			$items = $test->getPropertyValues(new core_kernel_classes_Property(TEST_RELATED_ITEMS_PROP));
-			
-			//order the item using the "/tao:TEST/tao:CITEM[Sequence]" attribute in the testcontent xml
-			if($sequenced){
-				try{
-					$content = $this->getTestContent($test);
-					if(!empty($content)){
-						
-						$sequencedItems = array();
-						$unSequencedItems = array();
-						
-						$xml = simplexml_load_string($content, "SimpleXMLElement", LIBXML_NOERROR );
-						if($xml instanceof SimpleXMLElement){
-							$nodes = $xml->xpath('/tao:TEST/tao:CITEM');
-							foreach($nodes as $node){
-								$uri = (string)$node;
-								if(!empty($uri)){
-									if(in_array($uri, $items)){
-										$index = 0;
-										if(isset($node['Sequence'])){
-											$index = (int)$node['Sequence'];
-										}
-										if($index > 0){
-											$sequencedItems[(int)$node['Sequence']] = $uri;
-										}
-										else{
-											$unSequencedItems[] = $uri;
-										}
-									}
-								}
-							}
-							ksort($sequencedItems);
-							
-							//push items without sequence at the end 
-							if(count($unSequencedItems) > 0){
-								foreach($unSequencedItems as $item){
-									$sequencedItems[count($sequencedItems) + 1] = $item;
-								}
-							}
-							$items = $sequencedItems;
+    	if(!is_null($test)){
+		
+			try{
+			 	$authoringService = tao_models_classes_ServiceFactory::get('taoTests_models_classes_TestAuthoringService');
+			 	$process = $test->getUniquePropertyValue(
+					new core_kernel_classes_Property(TEST_TESTCONTENT_PROP)
+				);
+				if(!is_null($process)){
+					$activities = $authoringService->getActivitiesByProcess($process);
+				
+					foreach($activities as $activity){
+						$item = $authoringService->getItemByActivity($activity);
+						if(!is_null($item) && $item instanceof core_kernel_classes_Resource){
+							$returnValue[$item->uriResource] = $item;
 						}
 					}
 				}
-				catch(Exception $e){ }
 			}
-			
-			if(count($items) > 0){
-				
-				ksort($items);
-				$itemClass = new core_kernel_classes_Class(TAO_ITEM_CLASS);
-				$itemSubClasses = array();
-				foreach($itemClass->getSubClasses(true) as $itemSubClass){
-					$itemSubClasses[] = $itemSubClass->uriResource;
-				}
-				foreach($items as $itemUri){
-					$clazz = $this->getClass(new core_kernel_classes_Resource($itemUri));
-					if(in_array($clazz->uriResource, $itemSubClasses)){
-						$returnValue[] = $clazz->uriResource;
-					}
-					$returnValue[] = $itemUri;
-				}
-			}
+			catch(Exception $e){}
+		
 		}
 		
         // section 127-0-1-1--5f8e44a2:1258d8ab867:-8000:0000000000001D27 end
