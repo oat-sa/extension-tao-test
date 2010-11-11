@@ -1486,9 +1486,18 @@ class taoTests_models_classes_TestsService
 			
 			
 			//get the item runner service definition, if does not exist, create one:
-			$serviceDefinition = $authoringService->getItemRunnerServiceDefinition();
+			$itemRunnerServiceUrl = $authoringService->getItemRunnerUrl();
+			$serviceDefinition = wfEngine_helpers_ProcessUtil::getServiceDefinition($itemRunnerServiceUrl);
 			if(is_null($serviceDefinition)){
-				throw new Exception('the required item runner service does not exist');
+				//if no corresponding service def found, create a service definition:
+				$serviceDefinitionClass = new core_kernel_classes_Class(CLASS_SUPPORTSERVICES);
+				$serviceDefinition = $serviceDefinitionClass->createInstance($item->getLabel(), 'created by test service');
+				
+				//set service definition (the test) and parameters:
+				$serviceDefinition->setPropertyValue(new core_kernel_classes_Property(PROPERTY_SUPPORTSERVICES_URL), $itemRunnerServiceUrl);
+				$serviceDefinition->setPropertyValue(new core_kernel_classes_Property(PROPERTY_SERVICESDEFINITION_FORMALPARAMIN), $itemUriParam->uriResource);
+				$serviceDefinition->setPropertyValue(new core_kernel_classes_Property(PROPERTY_SERVICESDEFINITION_FORMALPARAMIN), $testUriParam->uriResource);
+				$serviceDefinition->setPropertyValue(new core_kernel_classes_Property(PROPERTY_SERVICESDEFINITION_FORMALPARAMIN), $deliveryUriParam->uriResource);
 			}
 			
 			//create a call of service and associate the service definition to it:

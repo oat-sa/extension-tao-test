@@ -30,7 +30,8 @@ class taoTests_models_classes_TestAuthoringService
     extends wfEngine_models_classes_ProcessAuthoringService
 {
    
-
+	protected $itemRunnerUrl = '';
+	
 	/**
      * The method __construct intiates the DeliveryService class and loads the required ontologies from the other extensions 
      *
@@ -41,10 +42,12 @@ class taoTests_models_classes_TestAuthoringService
     public function __construct()
     {
 		parent::__construct();
-		
+		$this->itemRunnerUrl = '/taoDelivery/ItemDelivery/runner?itemUri=^itemUri&testUri=^testUri&deliveryUri=^deliveryUri&';
     }
 		
-	
+	public function getItemRunnerUrl(){
+		return $this->itemRunnerUrl;
+	}
 	/**
      * Used in delivery compilation: get the test included in an activity
 	 * if found, it returns the delivery resource and null otherwise
@@ -66,26 +69,24 @@ class taoTests_models_classes_TestAuthoringService
 					$serviceDefinition = $iService->getUniquePropertyValue(new core_kernel_classes_Property(PROPERTY_CALLOFSERVICES_SERVICEDEFINITION));
 					
 					//if service definition has the url of the service item runner
-					$itemRunnerServiceDefinition = $this->getItemRunnerServiceDefinition();
+					$itemRunnerServiceDefinition = wfEngine_helpers_ProcessUtil::getServiceDefinition($this->itemRunnerUrl);
 					
-					if(is_null($itemRunnerServiceDefinition)){
-						throw new Exception('the item runner service definition does not exist');
-					}
+					if(!is_null($itemRunnerServiceDefinition)){
+						if($serviceDefinition->uriResource == $itemRunnerServiceDefinition->uriResource){
 					
-					if($serviceDefinition->uriResource == $itemRunnerServiceDefinition->uriResource){
-					
-						foreach($iService->getPropertyValuesCollection(new core_kernel_classes_Property(PROPERTY_CALLOFSERVICES_ACTUALPARAMIN))->getIterator() as $actualParam){
-							
-							$formalParam = $actualParam->getUniquePropertyValue(new core_kernel_classes_Property(PROPERTY_ACTUALPARAM_FORMALPARAMETER));
-							if($formalParam->getUniquePropertyValue(new core_kernel_classes_Property(PROPERTY_FORMALPARAMETER_NAME)) == 'itemUri'){
-								$item = $actualParam->getOnePropertyValue(new core_kernel_classes_Property(PROPERTY_ACTUALPARAM_CONSTANTVALUE));
-								if(!is_null($item)){
-									$returnValue = $item;
-									break(2);
+							foreach($iService->getPropertyValuesCollection(new core_kernel_classes_Property(PROPERTY_CALLOFSERVICES_ACTUALPARAMIN))->getIterator() as $actualParam){
+								
+								$formalParam = $actualParam->getUniquePropertyValue(new core_kernel_classes_Property(PROPERTY_ACTUALPARAM_FORMALPARAMETER));
+								if($formalParam->getUniquePropertyValue(new core_kernel_classes_Property(PROPERTY_FORMALPARAMETER_NAME)) == 'itemUri'){
+									$item = $actualParam->getOnePropertyValue(new core_kernel_classes_Property(PROPERTY_ACTUALPARAM_CONSTANTVALUE));
+									if(!is_null($item)){
+										$returnValue = $item;
+										break(2);
+									}
 								}
 							}
+							
 						}
-						
 					}
 						
 				}
@@ -117,35 +118,6 @@ class taoTests_models_classes_TestAuthoringService
 		return $test;
 	}
 	
-	public function getItemRunnerServiceDefinition(){
-		
-		$serviceDefinition = null;
-		
-		//get the item runner service definition, if does not exist, create one:
-		$itemRunnerServiceUrl = '/taoDelivery/ItemDelivery/runner?itemUri=^itemUri&testUri=^testUri&deliveryUri=^deliveryUri&';
-		
-		$serviceDefinitionCollection = core_kernel_impl_ApiModelOO::singleton()->getSubject(PROPERTY_SUPPORTSERVICES_URL, $itemRunnerServiceUrl);
-		if(!$serviceDefinitionCollection->isEmpty()){
-			if($serviceDefinitionCollection->get(0) instanceof core_kernel_classes_Resource){
-				$serviceDefinition = $serviceDefinitionCollection->get(0);
-			}
-		}
-		if(is_null($serviceDefinition)){
-			//if no corresponding service def found, create a service definition:
-			$serviceDefinitionClass = new core_kernel_classes_Class(CLASS_SUPPORTSERVICES);
-			$serviceDefinition = $serviceDefinitionClass->createInstance($item->getLabel(), 'created by test service');
-			
-			//set service definition (the test) and parameters:
-			$serviceDefinition->setPropertyValue(new core_kernel_classes_Property(PROPERTY_SUPPORTSERVICES_URL), $itemRunnerServiceUrl);
-			$serviceDefinition->setPropertyValue(new core_kernel_classes_Property(PROPERTY_SERVICESDEFINITION_FORMALPARAMIN), $itemUriParam->uriResource);
-			$serviceDefinition->setPropertyValue(new core_kernel_classes_Property(PROPERTY_SERVICESDEFINITION_FORMALPARAMIN), $testUriParam->uriResource);
-			$serviceDefinition->setPropertyValue(new core_kernel_classes_Property(PROPERTY_SERVICESDEFINITION_FORMALPARAMIN), $deliveryUriParam->uriResource);
-		}
-		
-		return $serviceDefinition;
-	}
-	
-
 } /* end of class taoTests_models_classes_TestAuthoringService */
 
 ?>
