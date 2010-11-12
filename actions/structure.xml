@@ -22,7 +22,7 @@
 				<action name="delete" js="GenerisAction.removeNode" url="/taoTests/Tests/delete" context="resource" />
 				<action name="duplicate" js="GenerisAction.duplicateNode" url="/taoTests/Tests/cloneInstance" context="instance" />
 				<action name="move" js="GenerisAction.moveNode" url="" context="instance" />
-				<action name="preview" js="GenerisAction.fullScreen" url="/taoTests/Tests/preview" context="instance" />
+				<!--<action name="preview" js="GenerisAction.fullScreen" url="/taoTests/Tests/preview" context="instance" />-->
 				<action name="lists"  url="/tao/Lists/index"  context="*" />
 				<action name="meta data" js="GenerisAction.loadMetaData" url="/taoTests/Tests/getMetaData"  context="instance" />
 				<action name="create table" url="/taoResults/Results/createTable"  context="class" />

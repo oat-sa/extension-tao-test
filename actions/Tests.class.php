@@ -83,56 +83,6 @@ class Tests extends TaoModule {
 	 * edit a test instance
 	 * @return void
 	 */
-	public function editTest0(){
-		$clazz = $this->getCurrentClass();
-		$test = $this->getCurrentInstance();
-		
-		$formContainer = new tao_actions_form_Instance($clazz, $test);
-		$myForm = $formContainer->getForm();
-		
-		if($myForm->isSubmited()){
-			if($myForm->isValid()){
-				
-				$test = $this->service->bindProperties($test, $myForm->getValues());
-				
-				$this->setData('message', __('Test saved'));
-				$this->setData('reload', true);
-			}
-		}
-		
-		$this->setSessionAttribute("showNodeUri", tao_helpers_Uri::encode($test->uriResource));
-		
-		$allItems = array();
-		foreach($this->service->getAllItems() as $itemUri => $itemLabel){
-			$allItems['item_'.tao_helpers_Uri::encode($itemUri)] = $itemLabel;
-		}
-		$this->setData('allItems', json_encode($allItems));
-		
-		$relatedItems = $this->service->getRelatedItems($test, true);
-		$this->setData('relatedItems', json_encode(array_map("tao_helpers_Uri::encode", $relatedItems)));
-		
-		$itemSequence = array();
-		$i = 1;
-		foreach($relatedItems as $itemUri){
-			$item = new core_kernel_classes_Resource($itemUri);
-			if(!$item->isClass()){
-				$itemSequence[$i] = array(
-					'uri' 	=> tao_helpers_Uri::encode($itemUri),
-					'label' => $item->getLabel()
-				);
-				$i++;
-			}
-		}
-		$this->setData('itemSequence', $itemSequence);
-		
-		
-		$this->setData('uri', tao_helpers_Uri::encode($test->uriResource));
-		$this->setData('classUri', tao_helpers_Uri::encode($clazz->uriResource));
-		$this->setData('formTitle', __('Edit test'));
-		$this->setData('myForm', $myForm->render());
-		$this->setView('form_test.tpl');
-	}
-	
 	public function editTest(){
 		$clazz = $this->getCurrentClass();
 		$test = $this->getCurrentInstance();
@@ -173,9 +123,8 @@ class Tests extends TaoModule {
 		if($authoringMode->uriResource == TAO_TEST_ADVANCEDMODE){
 			$this->setData('authoringMode', 'advanced');
 		}else{
-			
 			//remove the authoring button
-			$myForm->removeElement(tao_helpers_Uri::encode(TAO_TEST_TESTCONTENT));
+			$myForm->removeElement(tao_helpers_Uri::encode(TEST_TESTCONTENT_PROP));
 			
 			//the default option is the simple mode:
 			$allItems = array();
