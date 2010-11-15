@@ -1,0 +1,22 @@
+div.data-container{
+	width:48%;
+}
+
+#test-left-container{
+	float:left;
+	position:absolute;
+	width:46%;
+}
+
+#test-main-container{
+	margin-left:46%;
+}
+
+#test-main-container.main-container-alone{
+	margin-left:0px;
+}
+
+#item-container {
+	margin-right:6px;
+	margin-bottom:6px;
+}

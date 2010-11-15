@@ -230,8 +230,6 @@ class Tests extends TaoModule {
 	 * @return void
 	 */
 	public function authoring(){
-		throw new Exception("test authoring is not available yet");
-		
 		$this->setData('error', false);
 		try{
 			
@@ -441,6 +439,33 @@ class Tests extends TaoModule {
 		}
 		echo json_encode(array('saved'	=> $saved));
 	}
+	
+	public function advancedMode(){
+		$this->setAuthoringMode('advanced');
+	}
+	
+	public function simpleMode(){
+		$this->setAuthoringMode('simple');
+	}
+	
+	private function setAuthoringMode($mode){
+		$mode = strtolower($mode);
+		if($mode != 'simple' && $mode != 'advanced'){
+			throw new Exception('invalid mode');
+		}
 		
+		$test = $this->getCurrentInstance();
+		$clazz = $this->getCurrentClass();
+		
+		$this->service->setAuthoringMode($test, $mode);
+		
+		$param = array(
+			'uri' => tao_helpers_Uri::encode($test->uriResource),
+			'classUri' => tao_helpers_Uri::encode($clazz->uriResource)
+		);
+		
+		//reload the form, thus let the advanced authoring tab be available
+		$this->redirect(tao_helpers_Uri::url('editTest', 'Tests', null, $param));
+	}
 }
 ?>

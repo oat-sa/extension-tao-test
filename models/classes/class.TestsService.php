@@ -1585,6 +1585,7 @@ class taoTests_models_classes_TestsService
 	}
 	
 	public function linearizeTestProcess(core_kernel_classes_Resource $test){
+	
 		$returnValue = false;
 		
 		//get list of all items in the test, without order:
@@ -1598,38 +1599,37 @@ class taoTests_models_classes_TestsService
 		$activities = $authoringService->getActivitiesByProcess($process);
 		
 		foreach($activities as $activity){
-			
-			//get the FIRST interactive service
-			$iService = $activity->getOnePropertyValue(new core_kernel_classes_Property(PROPERTY_ACTIVITIES_INTERACTIVESERVICES));
-			if(!is_null($iService)){
-				
-				//TODO: get the actual parameter, the formal param of which is the itemUriParam
-				$itemUriFormalParam = null;
-				foreach($iService->getPropertyValuesCollection(new core_kernel_classes_Property(PROPERTY_CALLOFSERVICES_ACTUALPARAMETERIN)) as $actualParam){
-					$formalParam = $actualParam->getUniquePropertyValue(new core_kernel_classes_Property(PROPERTY_ACTUALPARAMETER_FORMALPARAMETER));
-					if($formalParam->uriResource == $itemUriFormalParam->uriResource){
-						$item = $actualParam->getUniquePropertyValue(new core_kernel_classes_Property(PROPERTY_ACTUALPARAMETER_CONSTANTVALUE));
-						if(!is_null($item)){
-							$items[$item->uriResource] = $item;
-						}
-						
-						break;
-					}
-				}
-				
-				//get the item uri:
-				// $itemUri = '';//the constant value defined in the actual param: $actualParameter
-				// $items[$itemUri] = new core_kernel_classes_Resource($itemUri);
+			$item = $authoringService->getItemByActivity($activity);
+			if(!is_null($item)){
+				$items[] = $item;
 			}
 		}
-		//the functuon setTestItems require an array with numerical key 
-		$numericalKeyTestArray = array();
-		foreach($items as $item){
-			$numericalKeyTestArray[] = $item;
+		
+		$returnValue = $this->setTestItems($test, $items);
+		
+		return $returnValue;
+	}
+	
+	public function setAuthoringMode(core_kernel_classes_Resource $test, $mode){
+	
+		$property = new core_kernel_classes_Property(TAO_TEST_AUTHORINGMODE_PROP);
+		switch(strtolower($mode)){
+			case 'simple':{
+				$test->editPropertyValues($property, TAO_TEST_SIMPLEMODE);
+				//linearization required:
+				$this->linearizeTestProcess($test);
+				break;
+			}
+			case 'advanced':{
+				$test->editPropertyValues($property, TAO_TEST_ADVANCEDMODE);
+				break;
+			}
+			default:{
+				return false;
+			}
 		}
 		
-		$returnValue = $this->setTestItems($item, $numericalKeyTestArray);
-		return $returnValue;
+		
 	}
 } /* end of class taoTests_models_classes_TestsService */
 

@@ -48,6 +48,7 @@ class taoTests_models_classes_TestAuthoringService
 	public function getItemRunnerUrl(){
 		return $this->itemRunnerUrl;
 	}
+	
 	/**
      * Used in delivery compilation: get the test included in an activity
 	 * if found, it returns the delivery resource and null otherwise
