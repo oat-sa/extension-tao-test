@@ -75,7 +75,7 @@ class TestsTestCase extends UnitTestCase {
 		$this->assertEqual($subTestInstanceLabel2, $subTestInstance->getLabel());
 		
 		
-		//delete group instance
+		//delete test instance
 		$this->assertTrue($testInstance->delete());
 		
 		//delete subclass and check if the instance is deleted
@@ -86,5 +86,7 @@ class TestsTestCase extends UnitTestCase {
 		
 		$this->assertTrue($subTestClass->delete());
 	}
+	
+	
 }
 ?>

@@ -367,8 +367,44 @@ class taoTests_models_classes_TestsService
         $returnValue = null;
 
         // section 10-13-1-39-7cf56b28:12c53e4afe8:-8000:0000000000002BF1 begin
-		$returnValue = parent::cloneInstance($instance, $clazz);
-		//clone process or not?
+		
+		//call the parent create instance to prevent useless process test to be created:
+		$clone = parent::createInstance($clazz, $instance->getLabel()." bis");
+		
+		if(!is_null($clone)){
+			$noCloningProperties = array(
+				TEST_TESTCONTENT_PROP,
+				RDF_TYPE
+			);
+		
+			foreach($clazz->getProperties(true) as $property){
+			
+				if(!in_array($property->uriResource, $noCloningProperties)){
+					//allow clone of every property value but the deliverycontent, which is a process:
+					foreach($instance->getPropertyValues($property) as $propertyValue){
+						$clone->setPropertyValue($property, $propertyValue);
+					}
+				}
+				
+			}
+			
+			//clone the process:
+			$propInstanceContent = new core_kernel_classes_Property(TEST_TESTCONTENT_PROP);
+			try{
+				$process = $instance->getUniquePropertyValue($propInstanceContent);
+			}catch(Exception $e){}
+			if(!is_null($process)){
+				$processCloner = new wfEngine_models_classes_ProcessCloner();
+				$processClone = $processCloner->cloneProcess($process);
+				$clone->editPropertyValues($propInstanceContent, $processClone->uriResource);
+			}else{
+				throw new Exception("the test process cannot be found");
+			}
+			
+			$this->updateProcessLabel($clone);
+			$returnValue = $clone;
+		}
+				
         // section 10-13-1-39-7cf56b28:12c53e4afe8:-8000:0000000000002BF1 end
 
         return $returnValue;
