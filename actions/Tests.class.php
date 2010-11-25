@@ -21,7 +21,7 @@ class Tests extends TaoModule {
 		parent::__construct();
 	
 		//the service is initialized by default
-		$this->service = tao_models_classes_ServiceFactory::get('Tests');
+		$this->service = tao_models_classes_ServiceFactory::get('taoTests_models_classes_TestsService');
 		$this->defaultData();
 	}
 	
