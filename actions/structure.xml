@@ -26,7 +26,7 @@
 				<action name="lists"  url="/tao/Lists/index"  context="*" />
 				<action name="meta data" js="GenerisAction.loadMetaData" url="/taoTests/Tests/getMetaData"  context="instance" />
 				<action name="create table" url="/taoResults/Results/createTable"  context="class" />
-				<action name="rdf" url="/tao/Export/index"  context="*" /> 
+				<action name="export" url="/tao/Export/index"  context="*" /> 
 				<action name="import" url="/taoTests/TestImport/index"  context="class" />
 				<action name="advanced mode" url="/taoTests/Tests/advancedMode" context="instance" />
 				<action name="simple mode" url="/taoTests/Tests/simpleMode" context="instance" />
