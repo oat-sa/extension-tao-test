@@ -250,9 +250,6 @@ msgstr "uri"
 msgid "weight"
 msgstr "Poids"
 
-msgid ""
-msgstr ""
-
 msgid "Advanced Authoring Tool"
 msgstr ""
 
