@@ -3,14 +3,18 @@
 error_reporting(E_ALL);
 
 /**
- * Generis Object Oriented API -
+ * TAO - taoTests\models\classes\class.TestAuthoringService.php
  *
+ * $Id$
  *
+ * This file is part of TAO.
  *
- * @author CRP Henri Tudor - TAO Team - {@link http://www.tao.lu}
- * @package taoDelivery
+ * Automatically generated on 03.01.2011, 15:50:15 with ArgoUML PHP module 
+ * (last revised $Date: 2008-04-19 08:22:08 +0200 (Sat, 19 Apr 2008) $)
+ *
+ * @author Somsack SIPASSEUTH, <s.sipasseuth@gmail.com>
+ * @package taoTests
  * @subpackage models_classes
- * @license GPLv2  http://www.opensource.org/licenses/gpl-2.0.php
  */
 
 if (0 > version_compare(PHP_VERSION, '5')) {
@@ -18,49 +22,59 @@ if (0 > version_compare(PHP_VERSION, '5')) {
 }
 
 /**
- * The taoTests_models_classes_TestAuthoringService class provides methods to connect to several ontologies and interact with them.
+ * include wfEngine_models_classes_ProcessAuthoringService
+ *
+ * @author Somsack SIPASSEUTH, <s.sipasseuth@gmail.com>
+ */
+require_once('wfEngine/models/classes/class.ProcessAuthoringService.php');
+
+/* user defined includes */
+// section 10-13-1-39--56440278:12d4c05ae3c:-8000:0000000000002E3C-includes begin
+// section 10-13-1-39--56440278:12d4c05ae3c:-8000:0000000000002E3C-includes end
+
+/* user defined constants */
+// section 10-13-1-39--56440278:12d4c05ae3c:-8000:0000000000002E3C-constants begin
+// section 10-13-1-39--56440278:12d4c05ae3c:-8000:0000000000002E3C-constants end
+
+/**
+ * Short description of class taoTests_models_classes_TestAuthoringService
  *
  * @access public
- * @author CRP Henri Tudor - TAO Team - {@link http://www.tao.lu}
- * @package taoDelivery
+ * @author Somsack SIPASSEUTH, <s.sipasseuth@gmail.com>
+ * @package taoTests
  * @subpackage models_classes
- * @license GPLv2  http://www.opensource.org/licenses/gpl-2.0.php
  */
 class taoTests_models_classes_TestAuthoringService
     extends wfEngine_models_classes_ProcessAuthoringService
 {
-   
-	protected $itemRunnerUrl = '';
-	
-	/**
-     * The method __construct intiates the DeliveryService class and loads the required ontologies from the other extensions 
+    // --- ASSOCIATIONS ---
+
+
+    // --- ATTRIBUTES ---
+
+    /**
+     * the url of the TAO item runner service
+     *
+     * @access protected
+     * @var string
+     */
+    protected $itemRunnerUrl = '';
+
+    // --- OPERATIONS ---
+
+    /**
+     * Short description of method getItemByActivity
      *
      * @access public
-     * @author CRP Henri Tudor - TAO Team - {@link http://www.tao.lu}
-     * @return mixed
-     */	
-    public function __construct()
+     * @author Somsack SIPASSEUTH, <s.sipasseuth@gmail.com>
+     * @param  Resource activity
+     * @return core_kernel_classes_Resource
+     */
+    public function getItemByActivity( core_kernel_classes_Resource $activity)
     {
-		parent::__construct();
-		$this->itemRunnerUrl = '/taoDelivery/ItemDelivery/runner?itemUri=^itemUri&testUri=^testUri&deliveryUri=^deliveryUri&';
-    }
-		
-	public function getItemRunnerUrl(){
-		return $this->itemRunnerUrl;
-	}
-	
-	/**
-     * Used in delivery compilation: get the test included in an activity
-	 * if found, it returns the delivery resource and null otherwise
-     *
-     * @access public
-     * @author CRP Henri Tudor - TAO Team - {@link http://www.tao.lu}
-	 * @param core_kernel_classes_Resource activity
-     * @return core_kernel_classes_Resource or null
-     */	
-	public function getItemByActivity(core_kernel_classes_Resource $activity){
-		$returnValue = null;
-		
+        $returnValue = null;
+
+        // section 10-13-1-39--56440278:12d4c05ae3c:-8000:0000000000002E43 begin
 		if(!empty($activity)){
 			
 			//check all interactive services:
@@ -95,30 +109,65 @@ class taoTests_models_classes_TestAuthoringService
 			}
 			
 		}
-		
-		return $returnValue;
-	}
-	
-	/**
-     * Get the delivery associated to a process
+        // section 10-13-1-39--56440278:12d4c05ae3c:-8000:0000000000002E43 end
+
+        return $returnValue;
+    }
+
+    /**
+     * Short description of method getItemRunnerUrl
      *
      * @access public
-     * @author CRP Henri Tudor - TAO Team - {@link http://www.tao.lu}
-	 * @param core_kernel_classes_Resource process
-     * @return core_kernel_classes_Resource or null
-     */	
-	public function getTestFromProcess(core_kernel_classes_Resource $process){
-		
-		$test = null;
-		
+     * @author Somsack SIPASSEUTH, <s.sipasseuth@gmail.com>
+     * @return string
+     */
+    public function getItemRunnerUrl()
+    {
+        $returnValue = (string) '';
+
+        // section 10-13-1-39--56440278:12d4c05ae3c:-8000:0000000000002E46 begin
+		$returnValue = $this->itemRunnerUrl;
+        // section 10-13-1-39--56440278:12d4c05ae3c:-8000:0000000000002E46 end
+
+        return (string) $returnValue;
+    }
+
+    /**
+     * Short description of method getTestFromProcess
+     *
+     * @access public
+     * @author Somsack SIPASSEUTH, <s.sipasseuth@gmail.com>
+     * @param  Resource process
+     * @return core_kernel_classes_Resource
+     */
+    public function getTestFromProcess( core_kernel_classes_Resource $process)
+    {
+        $returnValue = null;
+
+        // section 10-13-1-39--56440278:12d4c05ae3c:-8000:0000000000002E48 begin
 		$testCollection = core_kernel_impl_ApiModelOO::singleton()->getSubject(TEST_TESTCONTENT_PROP,  $process->uriResource);
 		if(!$testCollection->isEmpty()){
-			$test = $testCollection->get(0);
+			$returnValue = $testCollection->get(0);
 		}
-		
-		return $test;
-	}
-	
+        // section 10-13-1-39--56440278:12d4c05ae3c:-8000:0000000000002E48 end
+
+        return $returnValue;
+    }
+
+    /**
+     * Short description of method __construct
+     *
+     * @access public
+     * @author Somsack SIPASSEUTH, <s.sipasseuth@gmail.com>
+     */
+    public function __construct()
+    {
+        // section 10-13-1-39--56440278:12d4c05ae3c:-8000:0000000000004FA9 begin
+		parent::__construct();
+		$this->itemRunnerUrl = '/taoDelivery/ItemDelivery/runner?itemUri=^itemUri&testUri=^testUri&deliveryUri=^deliveryUri&';
+        // section 10-13-1-39--56440278:12d4c05ae3c:-8000:0000000000004FA9 end
+    }
+
 } /* end of class taoTests_models_classes_TestAuthoringService */
 
 ?>

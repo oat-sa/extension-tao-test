@@ -497,8 +497,8 @@ class taoTests_models_classes_TestsService
 
         // section 10-13-1-39-7cf56b28:12c53e4afe8:-8000:0000000000002C05 begin
 		$items = array();
-		// $authoringService = tao_models_classes_ServiceFactory::get('taoTests_models_classes_TestAuthoringService');
-		$authoringService = new taoTests_models_classes_TestAuthoringService();
+		$authoringService = tao_models_classes_ServiceFactory::get('taoTests_models_classes_TestAuthoringService');
+		// $authoringService = new taoTests_models_classes_TestAuthoringService();
 		
 		//get the associated process, set in the test content property
 		$process = $test->getUniquePropertyValue(new core_kernel_classes_Property(TEST_TESTCONTENT_PROP));
