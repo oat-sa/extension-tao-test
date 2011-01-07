@@ -43,6 +43,8 @@ function setAuthoringModeButtons(){
 		<?else:?>
 			$advContainer.show();
 		<?endif;?>
+	<?else:?>
+			$advContainer.show();
 	<?endif;?>
 }
 </script>
