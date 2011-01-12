@@ -7,7 +7,7 @@
  * @subpackage actions
  * @license GPLv2  http://www.opensource.org/licenses/gpl-2.0.php
  */
-class SaSTests extends Tests {
+class taoTests_actions_SaSTests extends taoTests_actions_Tests {
 
     
     
