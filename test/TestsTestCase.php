@@ -1,6 +1,6 @@
 <?php
 require_once dirname(__FILE__) . '/../../tao/test/TestRunner.php';
-require_once dirname(__FILE__) . '/../includes/constants.php';
+require_once dirname(__FILE__) . '/../includes/common.php';
 
 /**
  *
@@ -66,7 +66,7 @@ class TestsTestCase extends UnitTestCase {
 		$subTestInstance = $this->testsService->createInstance($subTestClass);
 		$this->assertTrue(defined('RDFS_LABEL'));
 		$subTestInstance->removePropertyValues(new core_kernel_classes_Property(RDFS_LABEL));
-		$subTestInstance->setPropertyValue(new core_kernel_classes_Property(RDFS_LABEL), $subTestInstanceLabel);
+		$subTestInstance->setLabel($subTestInstanceLabel);
 		$this->assertIsA($subTestInstance, 'core_kernel_classes_Resource');
 		$this->assertEqual($subTestInstanceLabel, $subTestInstance->getLabel());
 		
