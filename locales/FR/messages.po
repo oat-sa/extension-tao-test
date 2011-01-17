@@ -251,101 +251,26 @@ msgid "weight"
 msgstr "Poids"
 
 msgid "Advanced Authoring Tool"
-msgstr ""
-
-msgid "Advanced sequence"
-msgstr ""
-
-msgid "Classical"
-msgstr ""
-
-msgid "Cumul model"
-msgstr ""
-
-msgid "DELTASCORE"
-msgstr ""
-
-msgid "DELTASE"
-msgstr ""
+msgstr "Editeur avancé"
 
 msgid "Display"
-msgstr ""
-
-msgid "Expected a posteriori"
-msgstr ""
-
-msgid "Halt criteria"
-msgstr ""
-
-msgid "Likelihood"
-msgstr ""
-
-msgid "Log-likelihood"
-msgstr ""
-
-msgid "Max"
-msgstr ""
-
-msgid "Maxfisher"
-msgstr ""
-
-msgid "Maximum a posteriori"
-msgstr ""
-
-msgid "Maximum likelihood"
-msgstr ""
-
-msgid "Password for administrator"
-msgstr ""
-
-msgid "QITER"
-msgstr ""
-
-msgid "QMAX"
-msgstr ""
-
-msgid "QMIN"
-msgstr ""
-
-msgid "Scoring"
-msgstr ""
-
-msgid "Scoring threshold"
-msgstr ""
-
-msgid "Sequential"
-msgstr ""
-
-msgid "Test award"
-msgstr ""
+msgstr "Afficher"
 
 msgid "Test properties"
-msgstr ""
+msgstr "Propriétés du test"
 
 msgid "Test saved"
-msgstr ""
-
-msgid "Threshold"
-msgstr ""
-
-msgid "Threshold 1"
-msgstr ""
-
-msgid "Threshold 2"
-msgstr ""
-
-msgid "Threshold 3"
-msgstr ""
+msgstr "Test sauvegardé"
 
 msgid "advanced mode"
-msgstr ""
+msgstr "mode anvancé"
 
 msgid "items"
-msgstr ""
+msgstr "items"
 
 msgid "px"
-msgstr ""
+msgstr "px"
 
 msgid "simple mode"
-msgstr ""
+msgstr "mode simple"
 
