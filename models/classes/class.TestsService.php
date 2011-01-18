@@ -594,30 +594,15 @@ class taoTests_models_classes_TestsService
 		// get the current process:
 		$process = $test->getUniquePropertyValue(new core_kernel_classes_Property(TEST_TESTCONTENT_PROP));
 		
-		$var_delivery = $authoringService->getProcessVariable("delivery");
-		if(is_null($var_delivery)){
-			$var_delivery = $authoringService->createProcessVariable("delivery", "delivery");
+		$var_delivery = new core_kernel_classes_Resource(INSTANCE_PROCESSVARIABLE_DELIVERY);
+		if(!wfEngine_helpers_ProcessUtil::checkType($var_delivery, new core_kernel_classes_Class(CLASS_PROCESSVARIABLES))){
+			throw new Exception('the required process variable "delivery" is missing, reinstalling tao is required');
 		}
 		
-		if(is_null($var_delivery)){
-			throw new Exception('the required process variable "delivery" is missing: ');
-		}
-		
-		//create formal param associated to the 3 required service parameter:
-		$itemUriParam = $authoringService->getFormalParameter('itemUri');//it is alright if the default value (i.e. proc var has been changed)
-		if(is_null($itemUriParam)){
-			$itemUriParam = $authoringService->createFormalParameter('itemUri', 'constant', '', 'item uri (exe)');
-		}
-		
-		$testUriParam = $authoringService->getFormalParameter('testUri');
-		if(is_null($testUriParam)){
-			$testUriParam = $authoringService->createFormalParameter('testUri', 'constant', '', 'test uri(exe)');
-		}
-		
-		$deliveryUriParam = $authoringService->getFormalParameter('deliveryUri');
-		if(is_null($deliveryUriParam)){
-			$deliveryUriParam = $authoringService->createFormalParameter('deliveryUri', 'processvariable', $var_delivery->uriResource, 'delivery uri (exe)');
-		}
+		//get formal param associated to the 3 required service input parameters:
+		$itemUriParam = new core_kernel_classes_Resource(INSTANCE_FORMALPARAM_ITEMURI);
+		$testUriParam = new core_kernel_classes_Resource(INSTANCE_FORMALPARAM_TESTURI);
+		$deliveryUriParam = new core_kernel_classes_Resource(INSTANCE_FORMALPARAM_DELIVERYURI);
 		
 		//delete all related activities:
 		$activities = $authoringService->getActivitiesByProcess($process);
@@ -652,24 +637,15 @@ class taoTests_models_classes_TestsService
 			$activity->editPropertyValues(new core_kernel_classes_Property(PROPERTY_ACTIVITIES_RESTRICTED_ROLE), CLASS_ROLE_SUBJECT);
 			
 			
-			//get the item runner service definition, if does not exist, create one:
-			$itemRunnerServiceUrl = $authoringService->getItemRunnerUrl();
-			$serviceDefinition = wfEngine_helpers_ProcessUtil::getServiceDefinition($itemRunnerServiceUrl);
-			if(is_null($serviceDefinition)){
-				//if no corresponding service def found, create a service definition:
-				$serviceDefinitionClass = new core_kernel_classes_Class(CLASS_SUPPORTSERVICES);
-				$serviceDefinition = $serviceDefinitionClass->createInstance($item->getLabel(), 'created by test service');
-				
-				//set service definition (the test) and parameters:
-				$serviceDefinition->setPropertyValue(new core_kernel_classes_Property(PROPERTY_SUPPORTSERVICES_URL), $itemRunnerServiceUrl);
-				$serviceDefinition->setPropertyValue(new core_kernel_classes_Property(PROPERTY_SERVICESDEFINITION_FORMALPARAMIN), $itemUriParam->uriResource);
-				$serviceDefinition->setPropertyValue(new core_kernel_classes_Property(PROPERTY_SERVICESDEFINITION_FORMALPARAMIN), $testUriParam->uriResource);
-				$serviceDefinition->setPropertyValue(new core_kernel_classes_Property(PROPERTY_SERVICESDEFINITION_FORMALPARAMIN), $deliveryUriParam->uriResource);
+			//get the item runner service definition: must exists!
+			$itemRunnerServiceDefinition = new core_kernel_classes_Resource(INSTANCE_SERVICEDEFINITION_ITEMRUNNER);
+			if(!wfEngine_helpers_ProcessUtil::checkType($itemRunnerServiceDefinition, new core_kernel_classes_Class(CLASS_SUPPORTSERVICES))){
+				throw new Exception('required  service definition item runner does not exists, reinstall tao is required');
 			}
 			
 			//create a call of service and associate the service definition to it:
 			$interactiveService = $authoringService->createInteractiveService($activity);
-			$interactiveService->setPropertyValue(new core_kernel_classes_Property(PROPERTY_CALLOFSERVICES_SERVICEDEFINITION), $serviceDefinition->uriResource);
+			$interactiveService->setPropertyValue(new core_kernel_classes_Property(PROPERTY_CALLOFSERVICES_SERVICEDEFINITION), $itemRunnerServiceDefinition->uriResource);
 			$authoringService->setActualParameter($interactiveService, $itemUriParam, $item->uriResource, PROPERTY_CALLOFSERVICES_ACTUALPARAMIN);//constant: we know it!
 			$authoringService->setActualParameter($interactiveService, $testUriParam, $test->uriResource, PROPERTY_CALLOFSERVICES_ACTUALPARAMIN);//constant: we know it!
 			$authoringService->setActualParameter($interactiveService, $deliveryUriParam, $var_delivery->uriResource, PROPERTY_CALLOFSERVICES_ACTUALPARAMIN, PROPERTY_ACTUALPARAM_PROCESSVARIABLE);//don't know yet so process var!
