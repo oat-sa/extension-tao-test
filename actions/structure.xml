@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE extension SYSTEM "../../tao/doc/structure.dtd">
 <extension name="Tests" url="/taoTests/Tests/index" level="1">
+	<description>Combine a selection of items into tests.</description>
 	<sections>
 		<section  id="manage_tests" name="Manage tests" url="/taoTests/Tests/index">
 			<trees>
