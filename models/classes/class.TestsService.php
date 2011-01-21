@@ -647,6 +647,7 @@ class taoTests_models_classes_TestsService
 			//create a call of service and associate the service definition to it:
 			$interactiveService = $authoringService->createInteractiveService($activity);
 			$interactiveService->setPropertyValue(new core_kernel_classes_Property(PROPERTY_CALLOFSERVICES_SERVICEDEFINITION), $itemRunnerServiceDefinition->uriResource);
+			
 			$authoringService->setActualParameter($interactiveService, $itemUriParam, $item->uriResource, PROPERTY_CALLOFSERVICES_ACTUALPARAMETERIN);//constant: we know it!
 			$authoringService->setActualParameter($interactiveService, $testUriParam, $test->uriResource, PROPERTY_CALLOFSERVICES_ACTUALPARAMETERIN);//constant: we know it!
 			$authoringService->setActualParameter($interactiveService, $deliveryUriParam, $var_delivery->uriResource, PROPERTY_CALLOFSERVICES_ACTUALPARAMETERIN, PROPERTY_ACTUALPARAMETER_PROCESSVARIABLE);//don't know yet so process var!
