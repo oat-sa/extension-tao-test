@@ -386,7 +386,6 @@ class taoTests_models_classes_TestsService
 						$clone->setPropertyValue($property, $propertyValue);
 					}
 				}
-				
 			}
 			
 			//clone the process:
@@ -433,7 +432,7 @@ class taoTests_models_classes_TestsService
 		//set ACL right to delivery process initialization:
 		$processInstance->editPropertyValues(new core_kernel_classes_Property(PROPERTY_PROCESS_INIT_ACL_MODE), INSTANCE_ACL_ROLE);
 		$processInstance->editPropertyValues(new core_kernel_classes_Property(PROPERTY_PROCESS_INIT_RESTRICTED_ROLE), CLASS_ROLE_SUBJECT);
-			
+		
 		$test->setPropertyValue(new core_kernel_classes_Property(TEST_TESTCONTENT_PROP), $processInstance->uriResource);
 		$this->updateProcessLabel($test);
 		
