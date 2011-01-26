@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xml:base="http://www.tao.lu/Ontologies/TAOTest.rdf#" xmlns:ns9="http://www.tao.lu/Ontologies/TAOTest.rdf#">
+  <rdf:Description rdf:about="active">
+    <rdfs:isDefinedBy xml:lang="EN"/>
+    <rdfs:label xml:lang="EN"><![CDATA[Active]]></rdfs:label>
+    <rdfs:seeAlso xml:lang="EN"/>
+    <rdfs:comment xml:lang="EN"><![CDATA[active / inactive state]]></rdfs:comment>
+    <rdfs:domain rdf:resource="Test"/>
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:range rdf:resource="http://www.tao.lu/Ontologies/generis.rdf#Boolean"/>
+    <rdf:value xml:lang="EN"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="Test">
+    <rdfs:label xml:lang="EN"><![CDATA[Test]]></rdfs:label>
+    <rdfs:comment xml:lang="EN"><![CDATA[Test]]></rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://www.tao.lu/Ontologies/TAO.rdf#TAOObject"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="TestContent">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="EN"><![CDATA[Test Content]]></rdfs:label>
+    <rdfs:comment xml:lang="EN"><![CDATA[TestContent]]></rdfs:comment>
+    <rdfs:domain rdf:resource="Test"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="AuthoringMode">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="EN"><![CDATA[Authoring Mode]]></rdfs:label>
+    <rdfs:comment xml:lang="EN"><![CDATA[AuthoringMode]]></rdfs:comment>
+    <rdfs:domain rdf:resource="Test"/>
+    <rdfs:range rdf:resource="TestAuthoringModes"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="TestAuthoringModes">
+    <rdfs:label xml:lang="EN"><![CDATA[Test Authoring Modes]]></rdfs:label>
+    <rdfs:comment xml:lang="EN"><![CDATA[TestAuthoringModes]]></rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://www.tao.lu/Ontologies/TAO.rdf#TAOObject"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="AuthoringModeSimple">
+    <rdf:type xml:lang="EN" rdf:resource="TestAuthoringModes"/>
+    <rdfs:label><![CDATA[simple]]></rdfs:label>
+    <rdfs:comment><![CDATA[simple test authoring mode]]></rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="AuthoringModeAdvanced">
+    <rdf:type xml:lang="EN" rdf:resource="TestAuthoringModes"/>
+    <rdfs:label><![CDATA[advanced]]></rdfs:label>
+    <rdfs:comment><![CDATA[advanced test authoring mode]]></rdfs:comment>
+  </rdf:Description>
+</rdf:RDF>
