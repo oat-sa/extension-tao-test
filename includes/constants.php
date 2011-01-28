@@ -5,11 +5,6 @@
  * @license GPLv2  http://www.opensource.org/licenses/gpl-2.0.php
  *
  */
-//include constants for the wfEngine:
-include_once ROOT_PATH . '/wfEngine/includes/constants.php';
-
-include_once ROOT_PATH . '/tao/includes/constants.php';
-
 $todefine = array(
 	'TEST_TESTCONTENT_PROP'	=> 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestContent',
 	
@@ -25,10 +20,4 @@ $todefine = array(
 	'INSTANCE_PROCESSVARIABLE_DELIVERY' => 'http://www.tao.lu/Ontologies/TAODelivery.rdf#ProcessVarDelivery',
 	'INSTANCE_SERVICEDEFINITION_ITEMRUNNER' => 'http://www.tao.lu/Ontologies/TAODelivery.rdf#ServiceItemRunner'
 );
-foreach($todefine as $constName => $constValue){
-	if(!defined($constName)){
-		define($constName, $constValue);
-	}
-}
-unset($todefine);
 ?>
