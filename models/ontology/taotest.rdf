@@ -1,9 +1,11 @@
 <?xml version="1.0"?>
-<rdf:RDF 
+<rdf:RDF
 	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
 	xml:base="http://www.tao.lu/Ontologies/TAOTest.rdf#"
 	xmlns:test="http://www.tao.lu/Ontologies/TAOTest.rdf#"
+	xmlns:widget="http://www.tao.lu/datatypes/WidgetDefinitions.rdf#"
+	xmlns:generis="http://www.tao.lu/Ontologies/generis.rdf#"
 >
   <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#active">
     <rdfs:isDefinedBy xml:lang="EN"/>
@@ -11,6 +13,7 @@
     <rdfs:seeAlso xml:lang="EN"/>
     <rdfs:comment xml:lang="EN"><![CDATA[active / inactive state]]></rdfs:comment>
     <rdfs:domain rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#Test"/>
+    <widget:widget rdf:resource="http://www.tao.lu/datatypes/WidgetDefinitions.rdf#RadioBox"/>
     <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
     <rdfs:range rdf:resource="http://www.tao.lu/Ontologies/generis.rdf#Boolean"/>
     <rdf:value xml:lang="EN"/>
@@ -26,6 +29,8 @@
     <rdfs:comment xml:lang="EN"><![CDATA[TestContent]]></rdfs:comment>
     <rdfs:domain rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#Test"/>
     <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+    <widget:widget rdf:resource="http://www.tao.lu/datatypes/WidgetDefinitions.rdf#Authoring"/>
+    <generis:is_language_dependent rdf:resource="http://www.tao.lu/Ontologies/generis.rdf#True"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#AuthoringMode">
     <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
@@ -33,6 +38,7 @@
     <rdfs:comment xml:lang="EN"><![CDATA[AuthoringMode]]></rdfs:comment>
     <rdfs:domain rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#Test"/>
     <rdfs:range rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#TestAuthoringModes"/>
+    <widget:widget rdf:resource="http://www.tao.lu/datatypes/WidgetDefinitions.rdf#RadioBox"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#TestAuthoringModes">
     <rdfs:label xml:lang="EN"><![CDATA[Test Authoring Modes]]></rdfs:label>
