@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE services SYSTEM "../../tao/doc/sas.dtd">
+<!DOCTYPE services SYSTEM "../../../tao/doc/sas.dtd">
 <services>
 	<description>Tests services</description>
 	<service>
@@ -54,29 +54,6 @@
 		<description>Edit a Test (sub)class: add/edit/delete class properties</description>
 		<location url="/taoTests/SaSTests/editTestClass">
 			<param key="classUri" value="^testClassUri" />
-		</location>
-	</service>
-	<service>
-		<name>Test's items authoring</name>
-		<description>Edit the test related items properties</description>
-		<location url="/taoTests/SaSTests/itemSequence">
-			<param key="uri" value="^testUri" />
-			<param key="classUri" value="^testClassUri" />
-		</location>
-	</service>
-	<service>
-		<name>Test parameters</name>
-		<description>Edit the test parameters</description>
-		<location url="/taoTests/SaSTests/authoring">
-			<param key="uri" value="^testUri" />
-			<param key="classUri" value="^testClassUri" />
-		</location>
-	</service>
-	<service>
-		<name>Test preview</name>
-		<description>Compile and preview the test</description>
-		<location url="/taoTests/SaSTests/preview">
-			<param key="uri" value="^testUri" />
 		</location>
 	</service>
 	<service>
