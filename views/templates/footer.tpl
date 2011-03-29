@@ -34,9 +34,6 @@ function setAuthoringModeButtons(){
 			$('#action_simple_mode').click(function(e){
 				e.preventDefault();
 				if(!confirm('Are you sure to switch back to the simple mode? \n The delivery process will be linearized.')){
-					// console.log('getting simple');
-					// $(this).find('a').click();
-					
 					return false;
 				}
 			});
