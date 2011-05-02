@@ -109,6 +109,7 @@ class taoTests_models_classes_TestAuthoringService
 			}
 			
 		}
+		
         // section 10-13-1-39--56440278:12d4c05ae3c:-8000:0000000000002E43 end
 
         return $returnValue;
