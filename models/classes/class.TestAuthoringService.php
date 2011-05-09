@@ -146,9 +146,10 @@ class taoTests_models_classes_TestAuthoringService
         $returnValue = null;
 
         // section 10-13-1-39--56440278:12d4c05ae3c:-8000:0000000000002E48 begin
-		$testCollection = core_kernel_impl_ApiModelOO::singleton()->getSubject(TEST_TESTCONTENT_PROP,  $process->uriResource);
-		if(!$testCollection->isEmpty()){
-			$returnValue = $testCollection->get(0);
+		$testClass = new core_kernel_classes_Class(TAO_TEST_CLASS);
+		$tests = $testClass->searchInstances(array(TEST_TESTCONTENT_PROP => $process->uriResource), array('like'=>false));
+		if(!empty($tests)){
+			$returnValue = $tests[0];
 		}
         // section 10-13-1-39--56440278:12d4c05ae3c:-8000:0000000000002E48 end
 
