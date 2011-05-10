@@ -524,7 +524,7 @@ class taoTests_models_classes_TestsService
 		if(is_null($currentActivity)){
 			return $items;
 		}
-		// var_dump($activities, $currentActivity->getLabel());
+		
 		//start the loop:
 		for($i=0;$i<$totalNumber;$i++){
 			$item = $authoringService->getItemByActivity($currentActivity);
