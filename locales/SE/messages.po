@@ -1,0 +1,336 @@
+msgid "DE"
+msgstr "German"
+
+msgid "EN"
+msgstr "English"
+
+msgid "FR"
+msgstr "French"
+
+msgid "LU"
+msgstr "Luxemburgish"
+
+msgid "Advanced Authoring Tool"
+msgstr "Avancerat skapandeverktyg"
+
+msgid "Advanced parameters"
+msgstr "Avancerade parametrar"
+
+msgid "Advanced sequence"
+msgstr "Avancerad ordningsföljd"
+
+msgid "An error occured while saving the sequence"
+msgstr "Ett fel uppstod när ordningsföljden skulle sparas"
+
+msgid "An error occured while saving the test"
+msgstr "Ett fel uppstod när testet skulle sparas"
+
+msgid "Back"
+msgstr "Bakåt"
+
+msgid "Class saved"
+msgstr "Klass sparad"
+
+msgid "Classical"
+msgstr "Klassisk"
+
+msgid "Classical ratio"
+msgstr "Klassisk proportion"
+
+msgid "Compiling test"
+msgstr "Samanställer test"
+
+msgid "Cumul model"
+msgstr "Samlad modell"
+
+msgid "DELTASCORE"
+msgstr "DELTAPOÄNG"
+
+msgid "DELTASE"
+msgstr "DELTASE"
+
+msgid "Deactivate back button"
+msgstr "Gör bakåtknappen verkningslös"
+
+msgid "Delay"
+msgstr "Fördröj"
+
+msgid "Display"
+msgstr "Visa"
+
+msgid "Display comments"
+msgstr "Visa kommentarer"
+
+msgid "Display items list during the test"
+msgstr "Visa lista av frågor under testet"
+
+msgid "Display label"
+msgstr "Visa etikett"
+
+msgid "Drag and drop the items to order them"
+msgstr "Dra och släpp frågorna för ordna dem"
+
+msgid "Edit test"
+msgstr "Redigera test"
+
+msgid "Edit test class"
+msgstr "Redigera testklass"
+
+msgid "Expected a posteriori"
+msgstr "Förväntade ett senare"
+
+msgid "Halt criteria"
+msgstr "Uppehållskännetecken"
+
+msgid "Items"
+msgstr "Frågor"
+
+msgid "Items Sequence"
+msgstr "Frågeordningsföljd"
+
+msgid "Items sequence"
+msgstr "Frågeordningsföljd"
+
+msgid "Left button image"
+msgstr "Vänster knapps bild"
+
+msgid "Likelihood"
+msgstr "Sannolikhet"
+
+msgid "Log-likelihood"
+msgstr "Loggsannolikhet"
+
+msgid "Manage tests"
+msgstr "Hantera tester"
+
+msgid "Max"
+msgstr "Max"
+
+msgid "Maxfisher"
+msgstr "Maxfisher"
+
+msgid "Maximalt a posteriori"
+msgstr "Maximum ett senare"
+
+msgid "Maximum likelihood"
+msgstr "Maximal sannolikhet"
+
+msgid "Maximum time allowed"
+msgstr "Maximal tillåten tid"
+
+msgid "Navigation buttons (left position)"
+msgstr "Navigationsknappar (vänsterläge)"
+
+msgid "Navigation buttons (top position)"
+msgstr "Navigationsknappar (ovanläge)"
+
+msgid "Numeric value"
+msgstr "Numeriskt värde"
+
+msgid "Password for administrator"
+msgstr "Lösenord för administratör"
+
+msgid "Please select a test before!"
+msgstr "Var vänlig välj ett tidigare test!"
+
+msgid "Please select an test before!"
+msgstr "Var vänlig välj ett tidigare test!"
+
+msgid "Preview"
+msgstr "Förhandsvisning"
+
+msgid "Progressbar (left position)"
+msgstr "Framstegribba (vänsterläge)"
+
+msgid "Progressbar (top position)"
+msgstr "Framstegsribba (ovanläge)"
+
+msgid "QITER"
+msgstr "QITER"
+
+msgid "QMAX"
+msgstr "QMAX"
+
+msgid "QMIN"
+msgstr "QMIN"
+
+msgid "Random"
+msgstr "Slumpmässig"
+
+msgid "Right button image"
+msgstr "Höger knapps bild"
+
+msgid "Save"
+msgstr "Spara"
+
+msgid "Scoring"
+msgstr "Poängräkning"
+
+msgid "Scoring method"
+msgstr "Poängräkningsmetod"
+
+msgid "Scoring threshold"
+msgstr "Poängräkningströskel"
+
+msgid "Select related items"
+msgstr "Välj besläktade moment"
+
+msgid "Sequence mode"
+msgstr "Ordningsföljdsmetod"
+
+msgid "Sequence saved"
+msgstr "Ordningsföljd sparad"
+
+msgid "Sequence saved successfully"
+msgstr "Ordningsföljd framgångsrikt sparad"
+
+msgid "Sequential"
+msgstr "Följande"
+
+msgid "Show a progress bar during the test"
+msgstr "Visa en framgångsribba under testet"
+
+msgid "Test Preview"
+msgstr "Förhandsvisning av testet"
+
+msgid "Test award"
+msgstr "Testutslag"
+
+msgid "Test content (left position)"
+msgstr "Testinnehåll (vänterläge)"
+
+msgid "Test content (top position)"
+msgstr "Testinnehåll (ovanläge)"
+
+msgid "Test parameters"
+msgstr "Testparametrar"
+
+msgid "Test properties"
+msgstr "Testegenskaper"
+
+msgid "Test saved"
+msgstr "Test sparat"
+
+msgid "Test saved successfully"
+msgstr "Test framgångsrikt sparat"
+
+msgid "Tests"
+msgstr "Tester"
+
+msgid "Tests library"
+msgstr "Testarkiv"
+
+msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
+msgstr "Testmetoden (ordningsföljd, poängräkning, ihopsamling etc.) och layouten byggs även upp här."
+
+msgid "The Test module allows to combine a selection of Items to a Test."
+msgstr "Testmodulen låter dig kombinera ett urval av frågor till ett test"
+
+msgid "Threshold"
+msgstr "Tröskel"
+
+msgid "Threshold 1"
+msgstr "Tröskel 1"
+
+msgid "Threshold 2"
+msgstr "Tröskel 2"
+
+msgid "Threshold 3"
+msgstr "Tröskel 3"
+
+msgid "advanced mode"
+msgstr "avancerad metod"
+
+msgid "compilation failed"
+msgstr "sammanställning misslyckades"
+
+msgid "compiled"
+msgstr "sammanställd"
+
+msgid "compiled with warning"
+msgstr "sammanställd med varning"
+
+msgid "create table"
+msgstr "skapa tabell"
+
+msgid "delete"
+msgstr "ta bort"
+
+msgid "difficulty"
+msgstr "svårighet"
+
+msgid "discrimination"
+msgstr "urskillning"
+
+msgid "duplicate"
+msgstr "dublett"
+
+msgid "edit test"
+msgstr "redigera test"
+
+msgid "export"
+msgstr "exportera"
+
+msgid "guessing"
+msgstr "gissning"
+
+msgid "import"
+msgstr "importera"
+
+msgid "items"
+msgstr "frågor"
+
+msgid "label"
+msgstr "etikett"
+
+msgid "lists"
+msgstr "listor"
+
+msgid "meta data"
+msgstr "metadata"
+
+msgid "model"
+msgstr "modell"
+
+msgid "move"
+msgstr "flytta"
+
+msgid "new class"
+msgstr "ny klass"
+
+msgid "new property"
+msgstr "ny egenskap"
+
+msgid "new test"
+msgstr "nytt test"
+
+msgid "preview"
+msgstr "förhandsvisning"
+
+msgid "px"
+msgstr "px"
+
+msgid "rdf"
+msgstr "rdf"
+
+msgid "search"
+msgstr "sök"
+
+msgid "seconds"
+msgstr "sekunder"
+
+msgid "sequence"
+msgstr "ordningsföljd"
+
+msgid "simple mode"
+msgstr "enkel metod"
+
+msgid "test saved"
+msgstr "test sparat"
+
+msgid "uri"
+msgstr "uri"
+
+msgid "weight"
+msgstr "vikt"
+
