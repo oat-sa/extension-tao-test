@@ -1,0 +1,84 @@
+msgid "Advanced Authoring Tool"
+msgstr ""
+
+msgid "Class saved"
+msgstr ""
+
+msgid "Drag and drop the items to order them"
+msgstr ""
+
+msgid "Edit test class"
+msgstr ""
+
+msgid "Items sequence"
+msgstr ""
+
+msgid "Manage tests"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "Select related items"
+msgstr ""
+
+msgid "Sequence saved successfully"
+msgstr ""
+
+msgid "Test properties"
+msgstr ""
+
+msgid "Test saved"
+msgstr ""
+
+msgid "Tests"
+msgstr ""
+
+msgid "Tests library"
+msgstr ""
+
+msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
+msgstr ""
+
+msgid "The Test module allows to combine a selection of Items to a Test."
+msgstr ""
+
+msgid "advanced mode"
+msgstr ""
+
+msgid "create table"
+msgstr ""
+
+msgid "delete"
+msgstr ""
+
+msgid "duplicate"
+msgstr ""
+
+msgid "export"
+msgstr ""
+
+msgid "import"
+msgstr ""
+
+msgid "lists"
+msgstr ""
+
+msgid "meta data"
+msgstr ""
+
+msgid "move"
+msgstr ""
+
+msgid "new class"
+msgstr ""
+
+msgid "new test"
+msgstr ""
+
+msgid "search"
+msgstr ""
+
+msgid "simple mode"
+msgstr ""
+
