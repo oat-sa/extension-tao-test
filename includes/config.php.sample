@@ -35,6 +35,7 @@ define('BASE_WWW', BASE_URL . '/' . DIR_VIEWS);
 #PROCESS BASE WWW the web path of the process authoring tool
 define('PROCESS_TPL_PATH', ROOT_PATH . '/wfEngine/views/templates/authoring/');
 define('PROCESS_BASE_WWW', ROOT_URL. '/wfEngine/views/');
+define('PROCESS_BASE_PATH', ROOT_PATH. '/wfEngine');
 define('PROCESS_SCRIPT_URL', PROCESS_BASE_WWW  . 'js/authoring/');
 
 #TAO extension Paths
