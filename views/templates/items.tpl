@@ -62,8 +62,9 @@ $(document).ready(function(){
 	var getUrl = url + 'getItems';
 	var setUrl = url + 'saveItems';
 	new GenerisTreeFormClass('#item-tree', getUrl,{
-		actionId: 'item',
-		saveUrl : setUrl,
+		actionId: 	'item',
+		saveUrl: 	setUrl,
+		paginate:	5,
 		saveCallback: function (data){
 			if (buildItemList != undefined) {
 				newSequence = {};
