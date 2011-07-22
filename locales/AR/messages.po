@@ -1,0 +1,276 @@
+msgid "Advanced parameters"
+msgstr "اعدادات متقدمة"
+
+msgid "An error occured while saving the sequence"
+msgstr "حدث خطأ أثناء حفظ التسلسل"
+
+msgid "An error occured while saving the test"
+msgstr "حدث خطأ أثناء حفظ اختبار"
+
+msgid "Back"
+msgstr "رجوع"
+
+msgid "Class saved"
+msgstr "صنف محفوظ"
+
+msgid "Classical ratio"
+msgstr "نسبة الكلاسيكية"
+
+msgid "Compiling test"
+msgstr "جاري ترجمة الاختبار"
+
+msgid "DE"
+msgstr "الالمانية"
+
+msgid "Deactivate back button"
+msgstr "تعطيل الزر رجوع"
+
+msgid "Delay"
+msgstr "المهلة"
+
+msgid "Display comments"
+msgstr "عرض التعليقات"
+
+msgid "Display items list during the test"
+msgstr "عرض عناصر القائمة أثناء الاختبار"
+
+msgid "Display label"
+msgstr "عرض التسمية"
+
+msgid "Drag and drop the items to order them"
+msgstr "سحب وإسقاط البنود لترتيبها"
+
+msgid "EN"
+msgstr "الانجليزية"
+
+msgid "Edit test"
+msgstr "تحرير الاختبار"
+
+msgid "Edit test class"
+msgstr "تحرير الصنف اختبار"
+
+msgid "FR"
+msgstr "الفرنسية"
+
+msgid "Items"
+msgstr "الاسئلة"
+
+msgid "Items Sequence"
+msgstr "تسلسل الاسئلة"
+
+msgid "Items sequence"
+msgstr "تسلسل الاسئلة"
+
+msgid "LU"
+msgstr "اللكسمبورجية"
+
+msgid "Left button image"
+msgstr "صورة الزر اليسار"
+
+msgid "Manage tests"
+msgstr "ادارة الاختبارات"
+
+msgid "Maximum time allowed"
+msgstr "الوقت الاقصى المسموح به"
+
+msgid "Navigation buttons (left position)"
+msgstr "(ازرار التصفح(موضع اليسار"
+
+msgid "Navigation buttons (top position)"
+msgstr "(زر التصفح(في الاعلى"
+
+msgid "Numeric value"
+msgstr "قيمة رقمية"
+
+msgid "Parameters"
+msgstr "الاعدادات"
+
+msgid "Password"
+msgstr "كلمة المرور "
+
+msgid "Please select a test before!"
+msgstr "يرجى تحديد الاختبار من قبل"
+
+msgid "Please select an test before!"
+msgstr "!يرجى تحديد اختبار"
+
+msgid "Preview"
+msgstr "معاينة"
+
+msgid "Progressbar (left position)"
+msgstr "Barre de progression ( position à gauche)"
+
+msgid "Progressbar (top position)"
+msgstr "Barre de progression ( position haute)"
+
+msgid "Random"
+msgstr "عشوائي"
+
+msgid "Right button image"
+msgstr "صورة زر اليمين"
+
+msgid "Save"
+msgstr "حفظ"
+
+msgid "Scoring method"
+msgstr "طريقة التنقيط"
+
+msgid "Select related items"
+msgstr "حدد الاسئلة ذات الصلة بالاختبار"
+
+msgid "Sequence mode"
+msgstr "طريقة التسلسل"
+
+msgid "Sequence saved"
+msgstr "تم حفظ التسلسل"
+
+msgid "Sequence saved successfully"
+msgstr "تم حفظ التسلسل بنجاح"
+
+msgid "Sequencial"
+msgstr "تسلسلي"
+
+msgid "Show a progress bar during the test"
+msgstr "Afficher une barre de progression durant le test"
+
+msgid "Test Preview"
+msgstr "معاينة الاختبار"
+
+msgid "Test content (left position)"
+msgstr "(محتوى الاختبار(على اليسار"
+
+msgid "Test content (top position)"
+msgstr "(محتوى الاختبار(في الاعلى"
+
+msgid "Test parameters"
+msgstr "اعدادات الاختبار"
+
+msgid "Test saved successfully"
+msgstr "تم حفظ الاختبار بنجاح"
+
+msgid "Tests"
+msgstr "الاختبارات"
+
+msgid "Tests library"
+msgstr "مكتبة الاختبارات"
+
+msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
+msgstr "Le mode de test (séquence, notation, cumul, etc.), et les canevas sont aussi configurés ici."
+
+msgid "The Test module allows to combine a selection of Items to a Test."
+msgstr "وحدة الاختبار تسمح بربط الاسئلةالمحددة بالاختبار"
+
+msgid "compilation failed"
+msgstr "فشل الترجمة"
+
+msgid "compiled"
+msgstr "تم ترجمته"
+
+msgid "compiled with warning"
+msgstr "ترجم مع التنبيه"
+
+msgid "create table"
+msgstr "انشاء جدول"
+
+msgid "delete"
+msgstr "حذف"
+
+msgid "difficulty"
+msgstr "الصعوبة"
+
+msgid "discrimination"
+msgstr "تمييز"
+
+msgid "duplicate"
+msgstr "تكرار"
+
+msgid "edit test"
+msgstr "تحرير الاختبار"
+
+msgid "export"
+msgstr "تصدير"
+
+msgid "g1"
+msgstr "g1"
+
+msgid "g2"
+msgstr "g2"
+
+msgid "guessing"
+msgstr "افتراض"
+
+msgid "import"
+msgstr "استيراد"
+
+msgid "label"
+msgstr "تسمية"
+
+msgid "lists"
+msgstr "القوائم"
+
+msgid "meta data"
+msgstr "بيانات التعريف"
+
+msgid "model"
+msgstr "نموذج"
+
+msgid "move"
+msgstr "حرك"
+
+msgid "new class"
+msgstr "Nouvelle classe"
+
+msgid "new property"
+msgstr "خاصية جديدة"
+
+msgid "new test"
+msgstr "اختبار جديد"
+
+msgid "preview"
+msgstr "معاينة"
+
+msgid "rdf"
+msgstr "rdf"
+
+msgid "search"
+msgstr "بحث"
+
+msgid "seconds"
+msgstr "ثواني"
+
+msgid "sequence"
+msgstr "تسلسل"
+
+msgid "test saved"
+msgstr "حفظ الاختبار"
+
+msgid "uri"
+msgstr "uri"
+
+msgid "weight"
+msgstr "الوزن"
+
+msgid "Advanced Authoring Tool"
+msgstr "محرر متقدم"
+
+msgid "Display"
+msgstr "عرض"
+
+msgid "Test properties"
+msgstr "خصائص الاختبار"
+
+msgid "Test saved"
+msgstr "حفظ الاختبار"
+
+msgid "advanced mode"
+msgstr "طريقة متقدمة"
+
+msgid "items"
+msgstr "الاسئلة"
+
+msgid "px"
+msgstr "px"
+
+msgid "simple mode"
+msgstr "طريقة بسيطة"
+
