@@ -145,7 +145,7 @@ class taoTests_actions_Tests extends tao_actions_TaoModule {
 					$i++;
 				}
 			}
-			
+                        
 			$this->setData('itemSequence', $itemSequence);
 			$this->setData('relatedItems', json_encode($relatedItems));
 		}
