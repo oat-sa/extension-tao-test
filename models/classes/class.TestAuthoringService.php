@@ -147,7 +147,7 @@ class taoTests_models_classes_TestAuthoringService
 
         // section 10-13-1-39--56440278:12d4c05ae3c:-8000:0000000000002E48 begin
 		$testClass = new core_kernel_classes_Class(TAO_TEST_CLASS);
-		$tests = $testClass->searchInstances(array(TEST_TESTCONTENT_PROP => $process->uriResource), array('like'=>false, 'recursive' => true));
+		$tests = $testClass->searchInstances(array(TEST_TESTCONTENT_PROP => $process->uriResource), array('like'=>false, 'recursive' => 1000));
 		if(!empty($tests)){
 			$returnValue = $tests[0];
 		}
