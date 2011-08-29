@@ -598,7 +598,7 @@ class taoTests_models_classes_TestsService
 		
 		$var_delivery = new core_kernel_classes_Resource(INSTANCE_PROCESSVARIABLE_DELIVERY);
 		
-		if(!wfEngine_helpers_ProcessUtil::checkType($var_delivery, new core_kernel_classes_Class(CLASS_PROCESSVARIABLES))){
+		if(!$var_delivery->hasType(new core_kernel_classes_Class(CLASS_PROCESSVARIABLES))){
 			throw new Exception('the required process variable "delivery" is missing, reinstalling tao is required');
 		}
 		
@@ -642,7 +642,7 @@ class taoTests_models_classes_TestsService
 			
 			//get the item runner service definition: must exists!
 			$itemRunnerServiceDefinition = new core_kernel_classes_Resource(INSTANCE_SERVICEDEFINITION_ITEMRUNNER);
-			if(!wfEngine_helpers_ProcessUtil::checkType($itemRunnerServiceDefinition, new core_kernel_classes_Class(CLASS_SUPPORTSERVICES))){
+			if(!$itemRunnerServiceDefinition->hasType(new core_kernel_classes_Class(CLASS_SUPPORTSERVICES))){
 				throw new Exception('required  service definition item runner does not exists, reinstall tao is required');
 			}
 			
