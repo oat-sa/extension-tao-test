@@ -14,7 +14,8 @@ class taoTests_actions_Tests extends tao_actions_TaoModule {
 	/**
 	 * constructor: initialize the service and the default data
 	 */
-	public function __construct(){
+	public function __construct()
+	{
 	
 		parent::__construct();
 	
@@ -29,7 +30,8 @@ class taoTests_actions_Tests extends tao_actions_TaoModule {
 	 * @see TaoModule::_isAllowed
 	 * @return boolean
 	 */	
-	protected function _isAllowed(){
+	protected function _isAllowed()
+	{
 		$context = Context::getInstance();
 		if($context->getActionName() != 'getTestContent'){
 			return parent::_isAllowed();
@@ -46,7 +48,8 @@ class taoTests_actions_Tests extends tao_actions_TaoModule {
 	 * get the instancee of the current test regarding the 'uri' and 'classUri' request parameters
 	 * @return core_kernel_classes_Resource the test instance
 	 */
-	protected function getCurrentInstance(){
+	protected function getCurrentInstance()
+	{
 		
 		$uri = tao_helpers_Uri::decode($this->getRequestParameter('uri'));
 		if(is_null($uri) || empty($uri)){
@@ -67,7 +70,8 @@ class taoTests_actions_Tests extends tao_actions_TaoModule {
 	 * get the main class
 	 * @return core_kernel_classes_Classes
 	 */
-	protected function getRootClass(){
+	protected function getRootClass()
+	{
 		return $this->service->getTestClass();
 	}
 	
@@ -81,7 +85,8 @@ class taoTests_actions_Tests extends tao_actions_TaoModule {
 	 * edit a test instance
 	 * @return void
 	 */
-	public function editTest(){
+	public function editTest()
+	{
 		$clazz = $this->getCurrentClass();
 		$test = $this->getCurrentInstance();
 		
@@ -161,7 +166,8 @@ class taoTests_actions_Tests extends tao_actions_TaoModule {
 	 * add a test (subclass Test)
 	 * @return void
 	 */
-	public function addTestClass(){
+	public function addTestClass()
+	{
 		if(!tao_helpers_Request::isAjax()){
 			throw new Exception("wrong request mode");
 		}
@@ -178,7 +184,8 @@ class taoTests_actions_Tests extends tao_actions_TaoModule {
 	 * Edit a test model (edit a class)
 	 * @return void
 	 */
-	public function editTestClass(){
+	public function editTestClass()
+	{
 		$clazz = $this->getCurrentClass();
 		
 		if($this->hasRequestParameter('property_mode')){
@@ -205,7 +212,8 @@ class taoTests_actions_Tests extends tao_actions_TaoModule {
 	 * called via ajax
 	 * @return void
 	 */
-	public function delete(){
+	public function delete()
+	{
 		if(!tao_helpers_Request::isAjax()){
 			throw new Exception("wrong request mode");
 		}
@@ -227,7 +235,8 @@ class taoTests_actions_Tests extends tao_actions_TaoModule {
 	 * display the authoring  template
 	 * @return void
 	 */
-	public function authoring(){
+	public function authoring()
+	{
 		$this->setData('error', false);
 		try{
 			
@@ -247,7 +256,8 @@ class taoTests_actions_Tests extends tao_actions_TaoModule {
 	 * get the list of items to populate the checkbox tree of related items
 	 * @return void
 	 */
-	public function getItems(){
+	public function getItems()
+	{
 		if(!tao_helpers_Request::isAjax()){
 			throw new Exception("wrong request mode");
 		}
@@ -282,7 +292,8 @@ class taoTests_actions_Tests extends tao_actions_TaoModule {
 	 * save the related items from the checkbox tree
 	 * @return void
 	 */
-	public function saveItems(){
+	public function saveItems()
+	{
 		if(!tao_helpers_Request::isAjax()){
 			throw new Exception("wrong request mode");
 		}
@@ -300,15 +311,18 @@ class taoTests_actions_Tests extends tao_actions_TaoModule {
 		echo json_encode(array('saved'	=> $saved));
 	}
 	
-	public function advancedMode(){
+	public function advancedMode()
+	{
 		$this->setAuthoringMode('advanced');
 	}
 	
-	public function simpleMode(){
+	public function simpleMode()
+	{
 		$this->setAuthoringMode('simple');
 	}
 	
-	private function setAuthoringMode($mode){
+	private function setAuthoringMode($mode)
+	{
 		$mode = strtolower($mode);
 		if($mode != 'simple' && $mode != 'advanced'){
 			throw new Exception('invalid mode');
