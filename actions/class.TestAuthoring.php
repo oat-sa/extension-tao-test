@@ -15,7 +15,7 @@ class taoTests_actions_TestAuthoring extends wfEngine_actions_ProcessAuthoring {
 		parent::__construct();
 		
 		//the service is initialized by default
-		$this->service = tao_models_classes_ServiceFactory::get('taoTests_models_classes_TestAuthoringService');
+		$this->service = taoTests_models_classes_TestAuthoringService::singleton();
 		$this->defaultData();
 	}
 }	
