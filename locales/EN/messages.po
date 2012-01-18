@@ -1,217 +1,86 @@
-msgid "DE"
-msgstr "German"
-
-msgid "EN"
-msgstr "English"
-
-msgid "FR"
-msgstr "French"
-
-msgid "LU"
-msgstr "Luxemburgish"
+msgid ""
+msgstr ""
+"Project-Id-Version: TAO v2.2-alpha\n"
+"PO-Revision-Date: 2012-01-18T15:51:48\n"
+"Last-Translator: TAO Translation Team <translation@tao.lu>\n"
+"MIME-Version: 1.0\n"
+"Language: EN\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 msgid "Advanced Authoring Tool"
 msgstr ""
 
-msgid "Advanced parameters"
-msgstr ""
-
-msgid "Advanced sequence"
-msgstr ""
-
-msgid "An error occured while saving the sequence"
-msgstr ""
-
-msgid "An error occured while saving the test"
-msgstr ""
-
-msgid "Back"
+msgid "advanced mode"
 msgstr ""
 
 msgid "Class saved"
 msgstr ""
 
-msgid "Classical"
+msgid "Combine a selection of items into tests."
 msgstr ""
 
-msgid "Classical ratio"
+msgid "create table"
 msgstr ""
 
-msgid "Compiling test"
-msgstr ""
-
-msgid "Cumul model"
-msgstr ""
-
-msgid "DELTASCORE"
-msgstr ""
-
-msgid "DELTASE"
-msgstr ""
-
-msgid "Deactivate back button"
-msgstr ""
-
-msgid "Delay"
-msgstr ""
-
-msgid "Display"
-msgstr ""
-
-msgid "Display comments"
-msgstr ""
-
-msgid "Display items list during the test"
-msgstr ""
-
-msgid "Display label"
+msgid "delete"
 msgstr ""
 
 msgid "Drag and drop the items to order them"
 msgstr ""
 
-msgid "Edit test"
+msgid "duplicate"
 msgstr ""
 
 msgid "Edit test class"
 msgstr ""
 
-msgid "Expected a posteriori"
+msgid "export"
 msgstr ""
 
-msgid "Halt criteria"
-msgstr ""
-
-msgid "Items"
-msgstr ""
-
-msgid "Items Sequence"
+msgid "import"
 msgstr ""
 
 msgid "Items sequence"
 msgstr ""
 
-msgid "Left button image"
-msgstr ""
-
-msgid "Likelihood"
-msgstr ""
-
-msgid "Log-likelihood"
+msgid "lists"
 msgstr ""
 
 msgid "Manage tests"
 msgstr ""
 
-msgid "Max"
+msgid "meta data"
 msgstr ""
 
-msgid "Maxfisher"
+msgid "move"
 msgstr ""
 
-msgid "Maximum a posteriori"
+msgid "new class"
 msgstr ""
 
-msgid "Maximum likelihood"
-msgstr ""
-
-msgid "Maximum time allowed"
-msgstr ""
-
-msgid "Navigation buttons (left position)"
-msgstr ""
-
-msgid "Navigation buttons (top position)"
-msgstr ""
-
-msgid "Numeric value"
-msgstr ""
-
-msgid "Password for administrator"
-msgstr ""
-
-msgid "Please select a test before!"
-msgstr ""
-
-msgid "Please select an test before!"
-msgstr ""
-
-msgid "Preview"
-msgstr ""
-
-msgid "Progressbar (left position)"
-msgstr ""
-
-msgid "Progressbar (top position)"
-msgstr ""
-
-msgid "QITER"
-msgstr ""
-
-msgid "QMAX"
-msgstr ""
-
-msgid "QMIN"
-msgstr ""
-
-msgid "Random"
-msgstr ""
-
-msgid "Right button image"
+msgid "new test"
 msgstr ""
 
 msgid "Save"
 msgstr ""
 
-msgid "Scoring"
-msgstr ""
-
-msgid "Scoring method"
-msgstr ""
-
-msgid "Scoring threshold"
+msgid "search"
 msgstr ""
 
 msgid "Select related items"
 msgstr ""
 
-msgid "Sequence mode"
-msgstr ""
-
-msgid "Sequence saved"
-msgstr ""
-
 msgid "Sequence saved successfully"
 msgstr ""
 
-msgid "Sequential"
-msgstr ""
-
-msgid "Show a progress bar during the test"
-msgstr ""
-
-msgid "Test Preview"
-msgstr ""
-
-msgid "Test award"
-msgstr ""
-
-msgid "Test content (left position)"
-msgstr ""
-
-msgid "Test content (top position)"
-msgstr ""
-
-msgid "Test parameters"
+msgid "simple mode"
 msgstr ""
 
 msgid "Test properties"
 msgstr ""
 
 msgid "Test saved"
-msgstr ""
-
-msgid "Test saved successfully"
 msgstr ""
 
 msgid "Tests"
@@ -224,113 +93,5 @@ msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also
 msgstr ""
 
 msgid "The Test module allows to combine a selection of Items to a Test."
-msgstr ""
-
-msgid "Threshold"
-msgstr ""
-
-msgid "Threshold 1"
-msgstr ""
-
-msgid "Threshold 2"
-msgstr ""
-
-msgid "Threshold 3"
-msgstr ""
-
-msgid "advanced mode"
-msgstr ""
-
-msgid "compilation failed"
-msgstr ""
-
-msgid "compiled"
-msgstr ""
-
-msgid "compiled with warning"
-msgstr ""
-
-msgid "create table"
-msgstr ""
-
-msgid "delete"
-msgstr ""
-
-msgid "difficulty"
-msgstr ""
-
-msgid "discrimination"
-msgstr ""
-
-msgid "duplicate"
-msgstr ""
-
-msgid "edit test"
-msgstr ""
-
-msgid "export"
-msgstr ""
-
-msgid "guessing"
-msgstr ""
-
-msgid "import"
-msgstr ""
-
-msgid "items"
-msgstr ""
-
-msgid "label"
-msgstr ""
-
-msgid "lists"
-msgstr ""
-
-msgid "meta data"
-msgstr ""
-
-msgid "model"
-msgstr ""
-
-msgid "move"
-msgstr ""
-
-msgid "new class"
-msgstr ""
-
-msgid "new property"
-msgstr ""
-
-msgid "new test"
-msgstr ""
-
-msgid "preview"
-msgstr ""
-
-msgid "px"
-msgstr ""
-
-msgid "rdf"
-msgstr ""
-
-msgid "search"
-msgstr ""
-
-msgid "seconds"
-msgstr ""
-
-msgid "sequence"
-msgstr ""
-
-msgid "simple mode"
-msgstr ""
-
-msgid "test saved"
-msgstr ""
-
-msgid "uri"
-msgstr ""
-
-msgid "weight"
 msgstr ""
 

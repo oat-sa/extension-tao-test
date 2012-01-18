@@ -1,188 +1,87 @@
-msgid "An error occured while saving the sequence"
-msgstr "Beim Späichere vun der Sequenz ass e Feeler passéiert"
+msgid ""
+msgstr ""
+"Project-Id-Version: TAO v2.2-alpha\n"
+"PO-Revision-Date: 2012-01-18T15:51:49\n"
+"Last-Translator: TAO Translation Team <translation@tao.lu>\n"
+"MIME-Version: 1.0\n"
+"Language: LU\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
 
-msgid "An error occured while saving the test"
-msgstr "Beim Späicher vum Test ass e Feeler virkomm"
+msgid "Advanced Authoring Tool"
+msgstr ""
 
-msgid "Back"
-msgstr "Zréck"
+msgid "advanced mode"
+msgstr ""
 
 msgid "Class saved"
 msgstr "Klass gespäichert"
 
-msgid "Classical"
-msgstr "Klassesch"
+msgid "Combine a selection of items into tests."
+msgstr ""
 
-msgid "Classical ratio"
-msgstr "Klassesch Ratio"
+msgid "create table"
+msgstr "Tabell erschafen"
 
-msgid "Compiling test"
-msgstr "Test gëtt compiléiert"
+msgid "delete"
+msgstr "läschen"
 
-msgid "Cumul model"
-msgstr "Cumul Modell"
+msgid "Drag and drop the items to order them"
+msgstr ""
 
-msgid "DE"
-msgstr "Däitsch"
-
-msgid "DELTASCORE"
-msgstr "DELTASCORE"
-
-msgid "DELTASE"
-msgstr "DELTASE"
-
-msgid "Delay"
-msgstr "Délai"
-
-msgid "Display"
-msgstr "Uweisen"
-
-msgid "Display comments"
-msgstr "Kommentar uweisen"
-
-msgid "Display items list during the test"
-msgstr "Itemlëscht während dem Test uweisen"
-
-msgid "Display label"
-msgstr "Etiquette uweisen"
-
-msgid "EN"
-msgstr "Englesch"
-
-msgid "Edit test"
-msgstr "Editéier Test"
+msgid "duplicate"
+msgstr "duplizéieren"
 
 msgid "Edit test class"
 msgstr "Test Klass editéieren"
 
-msgid "Expected a posteriori"
-msgstr "Erwaarten a posteriori"
+msgid "export"
+msgstr "exportéieren"
 
-msgid "FR"
-msgstr "Franséich"
-
-msgid "Halt criteria"
-msgstr "Stop Critère"
-
-msgid "Items"
-msgstr "Itemen"
-
-msgid "Items Sequence"
-msgstr "Itemsequenz"
+msgid "import"
+msgstr ""
 
 msgid "Items sequence"
 msgstr "Itemsequenz"
 
-msgid "LU"
-msgstr "Lëtzebuergesch"
-
-msgid "Left button image"
-msgstr "Bild fir Lenks-Knäppchen"
-
-msgid "Likelihood"
-msgstr "Wahrscheinlechkeet"
-
-msgid "Log-likelihood"
-msgstr "Log-Wahrscheinlechkeet"
+msgid "lists"
+msgstr ""
 
 msgid "Manage tests"
 msgstr "Testermanagen"
 
-msgid "Max"
-msgstr "Max"
+msgid "meta data"
+msgstr "Metadaten"
 
-msgid "Maxfisher"
-msgstr "Maxfisher"
+msgid "move"
+msgstr ""
 
-msgid "Maximum a posteriori"
-msgstr "Maximum a posteriori"
+msgid "new class"
+msgstr "nei Klass"
 
-msgid "Maximum likelihood"
-msgstr "Maximal Wahrscheinlechkeet"
-
-msgid "Maximum time allowed"
-msgstr "Maximum erlaabten Zäit"
-
-msgid "Navigation buttons (left position)"
-msgstr "Navigatioun (lenks Positioun)"
-
-msgid "Navigation buttons (top position)"
-msgstr "Navigatioun (iewescht Positioun)"
-
-msgid "Numeric value"
-msgstr "Numeresche Wert"
-
-msgid "Parameters"
-msgstr "Parameter"
-
-msgid "Password"
-msgstr "PAsswuert"
-
-msgid "Please select an test before!"
-msgstr "Wielt w.e.g als éischt en Test"
-
-msgid "Progressbar (left position)"
-msgstr "Progressbar (lenks Positioun)"
-
-msgid "Progressbar (top position)"
-msgstr "Progressbar (iewescht Positioun)"
-
-msgid "QITER"
-msgstr "QITER"
-
-msgid "QMAX"
-msgstr "QMAX"
-
-msgid "QMIN"
-msgstr "QMIN"
-
-msgid "Random"
-msgstr "Zoufälleg"
-
-msgid "Right button image"
-msgstr "Bild fir Riets-Knäppchen"
+msgid "new test"
+msgstr "neien Test"
 
 msgid "Save"
 msgstr "Späicheren"
 
-msgid "Scoring method"
-msgstr "Bewertungs Method"
+msgid "search"
+msgstr "duerchsichen"
 
 msgid "Select related items"
 msgstr "Verwandten Itemen wielen"
 
-msgid "Sequence mode"
-msgstr "Sequenz Modus"
-
-msgid "Sequence saved"
-msgstr "Sequenz gespäichert"
-
 msgid "Sequence saved successfully"
 msgstr "Sequenz erfollechräich gespäichert"
 
-msgid "Sequencial"
-msgstr "Sequenzial"
+msgid "simple mode"
+msgstr ""
 
-msgid "Show a progress bar during the test"
-msgstr "Eng Progressbar während dem Test weisen"
-
-msgid "Test Preview"
-msgstr "Test Virschau"
-
-msgid "Test content (left position)"
-msgstr "Test Contenu (lenks Positioun)"
-
-msgid "Test content (top position)"
-msgstr "Test Contenu (iewescht Positioun)"
-
-msgid "Test parameters"
-msgstr "Test Parameter"
+msgid "Test properties"
+msgstr ""
 
 msgid "Test saved"
 msgstr "Test gespäichert"
-
-msgid "Test saved successfully"
-msgstr "Test erfollechräich gespäichert"
 
 msgid "Tests"
 msgstr "Tester"
@@ -195,169 +94,4 @@ msgstr "Den Test Modus (Sequenzéieren, Bewerten, Sammelen, etc.) an de Layout g
 
 msgid "The Test module allows to combine a selection of Items to a Test."
 msgstr "Den Test Modul erlaabt eng Selektioun vun Itemen matt engem Test ze verbannen."
-
-msgid "Threshold"
-msgstr "Schwell"
-
-msgid "Threshold 1"
-msgstr "Schwell 1"
-
-msgid "Threshold 2"
-msgstr "Schwell 2"
-
-msgid "Threshold 3"
-msgstr "Schwell 3"
-
-msgid "compilation failed"
-msgstr "Compilatioun feelgeschloen"
-
-msgid "compiled"
-msgstr "compiléiert"
-
-msgid "compiled with warning"
-msgstr "matt enger Warnung compiléiert"
-
-msgid "create table"
-msgstr "Tabell erschafen"
-
-msgid "delete"
-msgstr "läschen"
-
-msgid "difficulty"
-msgstr "Schwieregkeet"
-
-msgid "discrimination"
-msgstr "Diskriminatioun"
-
-msgid "duplicate"
-msgstr "duplizéieren"
-
-msgid "edit test"
-msgstr "Test editéieren"
-
-msgid "export"
-msgstr "exportéieren"
-
-msgid "g1"
-msgstr "g1"
-
-msgid "g2"
-msgstr "g2"
-
-msgid "g3"
-msgstr "g3"
-
-msgid "g4"
-msgstr "g4"
-
-msgid "g5"
-msgstr "g5"
-
-msgid "g6"
-msgstr "g6"
-
-msgid "guessing"
-msgstr "roden"
-
-msgid "label"
-msgstr "Etiquette"
-
-msgid "meta data"
-msgstr "Metadaten"
-
-msgid "model"
-msgstr "Modell"
-
-msgid "new class"
-msgstr "nei Klass"
-
-msgid "new property"
-msgstr "nei Propriétéit"
-
-msgid "new test"
-msgstr "neien Test"
-
-msgid "preview"
-msgstr "Virschau"
-
-msgid "search"
-msgstr "duerchsichen"
-
-msgid "sequence"
-msgstr "Sequenz"
-
-msgid "test saved"
-msgstr "Test gespäichert"
-
-msgid "uri"
-msgstr "uri"
-
-msgid "weight"
-msgstr "Gewiicht"
-
-msgid "Advanced Authoring Tool"
-msgstr ""
-
-msgid "Advanced parameters"
-msgstr ""
-
-msgid "Advanced sequence"
-msgstr ""
-
-msgid "Deactivate back button"
-msgstr ""
-
-msgid "Drag and drop the items to order them"
-msgstr ""
-
-msgid "Password for administrator"
-msgstr ""
-
-msgid "Please select a test before!"
-msgstr ""
-
-msgid "Preview"
-msgstr ""
-
-msgid "Scoring"
-msgstr ""
-
-msgid "Scoring threshold"
-msgstr ""
-
-msgid "Sequential"
-msgstr ""
-
-msgid "Test award"
-msgstr ""
-
-msgid "Test properties"
-msgstr ""
-
-msgid "advanced mode"
-msgstr ""
-
-msgid "import"
-msgstr ""
-
-msgid "items"
-msgstr ""
-
-msgid "lists"
-msgstr ""
-
-msgid "move"
-msgstr ""
-
-msgid "px"
-msgstr ""
-
-msgid "rdf"
-msgstr ""
-
-msgid "seconds"
-msgstr ""
-
-msgid "simple mode"
-msgstr ""
 
