@@ -599,7 +599,7 @@ class taoTests_models_classes_TestsService
 		$var_delivery = new core_kernel_classes_Resource(INSTANCE_PROCESSVARIABLE_DELIVERY);
 		
 		if(!$var_delivery->hasType(new core_kernel_classes_Class(CLASS_PROCESSVARIABLES))){
-			throw new Exception('the required process variable "delivery" is missing, reinstalling tao is required');
+			throw new Exception('The required process variable "delivery" is missing. Reinstall TAO is required.');
 		}
 		
 		//get formal param associated to the 3 required service input parameters:
@@ -614,6 +614,13 @@ class taoTests_models_classes_TestsService
 				return $returnValue;
 			}
 		}
+        
+        if (count($items) == 0){
+            // This means that we do not set any items to the test.
+            // It might happen when we simply want to unbind all items
+            // from a test.
+            return true;
+        }
 		
 		//create the list of activities and interactive services and items plus their appropriate property values:
 		$totalNumber = count($items);//0...n
@@ -621,7 +628,7 @@ class taoTests_models_classes_TestsService
 		for($i=0;$i<$totalNumber;$i++){
 			$item = $items[$i];
 			if(!($item instanceof core_kernel_classes_Resource)){
-				throw new Exception("the array element n$i is not a Resource");
+				throw new Exception("the array element n${i} is not a Resource");
 			}
 			
 			//create an activity
