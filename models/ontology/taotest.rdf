@@ -15,7 +15,7 @@
     <rdfs:comment xml:lang="EN"><![CDATA[active / inactive state]]></rdfs:comment>
     <rdfs:domain rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#Test"/>
     <widget:widget rdf:resource="http://www.tao.lu/datatypes/WidgetDefinitions.rdf#RadioBox"/>
-    <rdf:type rdf:resource="http://www.tao.lu/Ontologies/TAO.rdf#TAOProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
     <rdfs:range rdf:resource="http://www.tao.lu/Ontologies/generis.rdf#Boolean"/>
     <tao:TAOGUIOrder><![CDATA[10]]></tao:TAOGUIOrder>
     <rdf:value xml:lang="EN"/>
@@ -26,7 +26,7 @@
     <rdfs:subClassOf rdf:resource="http://www.tao.lu/Ontologies/TAO.rdf#TAOObject"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#TestContent">
-    <rdf:type rdf:resource="http://www.tao.lu/Ontologies/TAO.rdf#TAOProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
     <rdfs:label xml:lang="EN"><![CDATA[Test Content]]></rdfs:label>
     <rdfs:comment xml:lang="EN"><![CDATA[TestContent]]></rdfs:comment>
     <rdfs:domain rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#Test"/>
@@ -35,7 +35,7 @@
     <tao:TAOGUIOrder><![CDATA[20]]></tao:TAOGUIOrder>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#AuthoringMode">
-    <rdf:type rdf:resource="http://www.tao.lu/Ontologies/TAO.rdf#TAOProperty"/>
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
     <rdfs:label xml:lang="EN"><![CDATA[Authoring Mode]]></rdfs:label>
     <rdfs:comment xml:lang="EN"><![CDATA[AuthoringMode]]></rdfs:comment>
     <rdfs:domain rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#Test"/>
