@@ -34,7 +34,7 @@ class taoTests_actions_SaSTests extends taoTests_actions_Tests {
 			$this->setData('includedView', $identifier);
 		}
 		else{
-			$this->setData('includedView', BASE_PATH . '/' . DIR_VIEWS . $GLOBALS['dir_theme'] . $identifier);
+			$this->setData('includedView', DIR_VIEWS . $GLOBALS['dir_theme'] . $identifier);
 		}
 		return parent::setView('sas.tpl', true);
     }
