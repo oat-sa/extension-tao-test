@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    @sourceLanguage EN
+    @targetLanguage EN
+-->
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xml:base="http://www.tao.lu/Ontologies/TAOTest.rdf">
+  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#active">
+    <!--
+    @sourceLanguage EN
+    @targetLanguage EN
+    @source Active
+    @subject http://www.tao.lu/Ontologies/TAOTest.rdf#active
+    @predicate http://www.w3.org/2000/01/rdf-schema#label
+    -->
+    <rdfs:label xml:lang="EN"><![CDATA[Active]]></rdfs:label>
+    <!--
+    @sourceLanguage EN
+    @targetLanguage EN
+    @source active / inactive state
+    @subject http://www.tao.lu/Ontologies/TAOTest.rdf#active
+    @predicate http://www.w3.org/2000/01/rdf-schema#comment
+    -->
+    <rdfs:comment xml:lang="EN"><![CDATA[active / inactive state]]></rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#Test">
+    <!--
+    @sourceLanguage EN
+    @targetLanguage EN
+    @source Test
+    @subject http://www.tao.lu/Ontologies/TAOTest.rdf#Test
+    @predicate http://www.w3.org/2000/01/rdf-schema#label
+    -->
+    <rdfs:label xml:lang="EN"><![CDATA[Test]]></rdfs:label>
+    <!--
+    @sourceLanguage EN
+    @targetLanguage EN
+    @source Test
+    @subject http://www.tao.lu/Ontologies/TAOTest.rdf#Test
+    @predicate http://www.w3.org/2000/01/rdf-schema#comment
+    -->
+    <rdfs:comment xml:lang="EN"><![CDATA[Test]]></rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#TestContent">
+    <!--
+    @sourceLanguage EN
+    @targetLanguage EN
+    @source Test Content
+    @subject http://www.tao.lu/Ontologies/TAOTest.rdf#TestContent
+    @predicate http://www.w3.org/2000/01/rdf-schema#label
+    -->
+    <rdfs:label xml:lang="EN"><![CDATA[Test Content]]></rdfs:label>
+    <!--
+    @sourceLanguage EN
+    @targetLanguage EN
+    @source TestContent
+    @subject http://www.tao.lu/Ontologies/TAOTest.rdf#TestContent
+    @predicate http://www.w3.org/2000/01/rdf-schema#comment
+    -->
+    <rdfs:comment xml:lang="EN"><![CDATA[TestContent]]></rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#AuthoringMode">
+    <!--
+    @sourceLanguage EN
+    @targetLanguage EN
+    @source Authoring Mode
+    @subject http://www.tao.lu/Ontologies/TAOTest.rdf#AuthoringMode
+    @predicate http://www.w3.org/2000/01/rdf-schema#label
+    -->
+    <rdfs:label xml:lang="EN"><![CDATA[Authoring Mode]]></rdfs:label>
+    <!--
+    @sourceLanguage EN
+    @targetLanguage EN
+    @source AuthoringMode
+    @subject http://www.tao.lu/Ontologies/TAOTest.rdf#AuthoringMode
+    @predicate http://www.w3.org/2000/01/rdf-schema#comment
+    -->
+    <rdfs:comment xml:lang="EN"><![CDATA[AuthoringMode]]></rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#TestAuthoringModes">
+    <!--
+    @sourceLanguage EN
+    @targetLanguage EN
+    @source Test Authoring Modes
+    @subject http://www.tao.lu/Ontologies/TAOTest.rdf#TestAuthoringModes
+    @predicate http://www.w3.org/2000/01/rdf-schema#label
+    -->
+    <rdfs:label xml:lang="EN"><![CDATA[Test Authoring Modes]]></rdfs:label>
+    <!--
+    @sourceLanguage EN
+    @targetLanguage EN
+    @source TestAuthoringModes
+    @subject http://www.tao.lu/Ontologies/TAOTest.rdf#TestAuthoringModes
+    @predicate http://www.w3.org/2000/01/rdf-schema#comment
+    -->
+    <rdfs:comment xml:lang="EN"><![CDATA[TestAuthoringModes]]></rdfs:comment>
+  </rdf:Description>
+</rdf:RDF>
