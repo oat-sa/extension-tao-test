@@ -12,7 +12,7 @@
 	<rdf:Description rdf:about="http://www.tao.lu/Ontologies/taoFuncACL.rdf#m_taoTests_SaSTests">
     <rdf:type rdf:resource="http://www.tao.lu/Ontologies/taoFuncACL.rdf#Module"/>
     <rdfs:label xml:lang="EN"><![CDATA[Module SaSTests]]></rdfs:label>
-		<rdfs:comment xml:lang="EN"><![CDATA[module SaSTests]]></rdfs:comment>
+		<rdfs:comment xml:lang="EN"><![CDATA[Module SaSTests]]></rdfs:comment>
 		<funcacl:moduleIdentifier xml:lang="EN"><![CDATA[SaSTests]]></funcacl:moduleIdentifier>
 		<funcacl:moduleExtension xml:lang="EN"><![CDATA[taoTests]]></funcacl:moduleExtension>
   </rdf:Description>
@@ -32,12 +32,17 @@
 		<funcacl:actionMemberOf rdf:resource="http://www.tao.lu/Ontologies/taoFuncACL.rdf#m_taoTests_SaSTests" />
   </rdf:Description>
 
+	<rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAO.rdf#TaoManagerRole">
+		<funcacl:grantAccessModule rdf:resource="http://www.tao.lu/Ontologies/taoFuncACL.rdf#m_taoTests_SaSTests" />
+	</rdf:Description>
+
+
 
 
 	<rdf:Description rdf:about="http://www.tao.lu/Ontologies/taoFuncACL.rdf#m_taoTests_Tests">
     <rdf:type rdf:resource="http://www.tao.lu/Ontologies/taoFuncACL.rdf#Module"/>
     <rdfs:label xml:lang="EN"><![CDATA[Module Tests]]></rdfs:label>
-		<rdfs:comment xml:lang="EN"><![CDATA[module Tests]]></rdfs:comment>
+		<rdfs:comment xml:lang="EN"><![CDATA[Module Tests]]></rdfs:comment>
 		<funcacl:moduleIdentifier xml:lang="EN"><![CDATA[Tests]]></funcacl:moduleIdentifier>
 		<funcacl:moduleExtension xml:lang="EN"><![CDATA[taoTests]]></funcacl:moduleExtension>
   </rdf:Description>
@@ -105,5 +110,10 @@
 		<funcacl:actionIdentifier xml:lang="EN"><![CDATA[simpleMode]]></funcacl:actionIdentifier>
 		<funcacl:actionMemberOf rdf:resource="http://www.tao.lu/Ontologies/taoFuncACL.rdf#m_taoTests_Tests" />
   </rdf:Description>
+
+	<rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAO.rdf#TaoManagerRole">
+		<funcacl:grantAccessModule rdf:resource="http://www.tao.lu/Ontologies/taoFuncACL.rdf#m_taoTests_Tests" />
+	</rdf:Description>
+
 
 </rdf:RDF>
