@@ -16,7 +16,7 @@
     <!--
     @sourceLanguage EN
     @targetLanguage LU
-    @source active / inactive state
+    @source Active / Inactive state
     @subject http://www.tao.lu/Ontologies/TAOTest.rdf#active
     @predicate http://www.w3.org/2000/01/rdf-schema#comment
     -->
@@ -52,7 +52,7 @@
     <!--
     @sourceLanguage EN
     @targetLanguage LU
-    @source TestContent
+    @source Test Content
     @subject http://www.tao.lu/Ontologies/TAOTest.rdf#TestContent
     @predicate http://www.w3.org/2000/01/rdf-schema#comment
     -->
@@ -70,7 +70,7 @@
     <!--
     @sourceLanguage EN
     @targetLanguage LU
-    @source AuthoringMode
+    @source Authoring Mode
     @subject http://www.tao.lu/Ontologies/TAOTest.rdf#AuthoringMode
     @predicate http://www.w3.org/2000/01/rdf-schema#comment
     -->
@@ -88,10 +88,46 @@
     <!--
     @sourceLanguage EN
     @targetLanguage LU
-    @source TestAuthoringModes
+    @source Test Authoring Modes
     @subject http://www.tao.lu/Ontologies/TAOTest.rdf#TestAuthoringModes
     @predicate http://www.w3.org/2000/01/rdf-schema#comment
     -->
     <rdfs:comment xml:lang="LU"><![CDATA[TestAuthoringModes]]></rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#AuthoringModeSimple">
+    <!--
+    @sourceLanguage EN
+    @targetLanguage LU
+    @source simple
+    @subject http://www.tao.lu/Ontologies/TAOTest.rdf#AuthoringModeSimple
+    @predicate http://www.w3.org/2000/01/rdf-schema#label
+    -->
+    <rdfs:label xml:lang="LU"><![CDATA[simple]]></rdfs:label>
+    <!--
+    @sourceLanguage EN
+    @targetLanguage LU
+    @source simple test authoring mode
+    @subject http://www.tao.lu/Ontologies/TAOTest.rdf#AuthoringModeSimple
+    @predicate http://www.w3.org/2000/01/rdf-schema#comment
+    -->
+    <rdfs:comment xml:lang="LU"><![CDATA[simple test authoring mode]]></rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#AuthoringModeAdvanced">
+    <!--
+    @sourceLanguage EN
+    @targetLanguage LU
+    @source Advanced
+    @subject http://www.tao.lu/Ontologies/TAOTest.rdf#AuthoringModeAdvanced
+    @predicate http://www.w3.org/2000/01/rdf-schema#label
+    -->
+    <rdfs:label xml:lang="LU"><![CDATA[Advanced]]></rdfs:label>
+    <!--
+    @sourceLanguage EN
+    @targetLanguage LU
+    @source Advanced test authoring mode
+    @subject http://www.tao.lu/Ontologies/TAOTest.rdf#AuthoringModeAdvanced
+    @predicate http://www.w3.org/2000/01/rdf-schema#comment
+    -->
+    <rdfs:comment xml:lang="LU"><![CDATA[Advanced test authoring mode]]></rdfs:comment>
   </rdf:Description>
 </rdf:RDF>
