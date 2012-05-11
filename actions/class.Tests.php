@@ -302,7 +302,28 @@ class taoTests_actions_Tests extends tao_actions_TaoModule {
 		$items = array();
 		foreach($this->getRequestParameters() as $key => $value){
 			if(preg_match("/^instance_/", $key)){
-				array_push($items, new core_kernel_classes_Resource(tao_helpers_Uri::decode($value)));
+				$item = new core_kernel_classes_Resource(tao_helpers_Uri::decode($value));
+				if ($item->isInstanceOf(new core_kernel_classes_Class(TAO_ITEM_CLASS))) {
+					$itemModel = $item->getOnePropertyValue(new core_kernel_classes_Property(TAO_ITEM_MODEL_PROPERTY));
+					$supported = false;
+					if (!is_null($itemModel)) {
+						foreach ($itemModel->getPropertyValues(new core_kernel_classes_Property(TAO_ITEM_MODELTARGET_PROPERTY)) as $target) {
+							if ($target->getUri() == TAO_ITEM_ONLINE_TARGET) {
+								$supported = true;
+								break;
+							}
+						}
+					}
+					if ($supported) {
+						array_push($items, $item);
+					} else {
+						throw new common_Exception('Tried to add non online item');
+					}
+				} else {
+					// work around for bug in treeview form
+					// @todo remove once treeview is rewritten
+					common_Logger::w('Tried to add non Item to test');
+				}
 			}
 		}
 		if($this->service->setTestItems($this->getCurrentInstance(), $items)){
