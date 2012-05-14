@@ -307,8 +307,8 @@ class taoTests_actions_Tests extends tao_actions_TaoModule {
 					$itemModel = $item->getOnePropertyValue(new core_kernel_classes_Property(TAO_ITEM_MODEL_PROPERTY));
 					$supported = false;
 					if (!is_null($itemModel)) {
-						foreach ($itemModel->getPropertyValues(new core_kernel_classes_Property(TAO_ITEM_MODELTARGET_PROPERTY)) as $target) {
-							if ($target->getUri() == TAO_ITEM_ONLINE_TARGET) {
+						foreach ($itemModel->getPropertyValues(new core_kernel_classes_Property(TAO_ITEM_MODELTARGET_PROPERTY)) as $targeturi) {
+							if ($targeturi == TAO_ITEM_ONLINE_TARGET) {
 								$supported = true;
 								break;
 							}
