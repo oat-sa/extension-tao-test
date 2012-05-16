@@ -317,7 +317,7 @@ class taoTests_actions_Tests extends tao_actions_TaoModule {
 					if ($supported) {
 						array_push($items, $item);
 					} else {
-						throw new common_Exception('Tried to add non online item');
+						throw new common_Exception($item->getLabel().' cannot be added to a test');
 					}
 				} else {
 					// work around for bug in treeview form
