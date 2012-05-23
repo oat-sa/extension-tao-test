@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE extension SYSTEM "../../tao/doc/structures.dtd">
+<structures>
+	<structure id="tests" name="Tests" url="/taoTests/Tests/index" level="1" visible="true">
+		<description>Combine a selection of items into tests.</description>
+		<sections>
+			<section  id="manage_tests" name="Manage tests" url="/taoTests/Tests/index">
+				<trees>
+					<tree name="Tests library" 
+						dataUrl="/taoTests/Tests/getOntologyData" 
+						editClassUrl="/taoTests/Tests/editTestClass"
+						editInstanceUrl="/taoTests/Tests/editTest"
+						addInstanceUrl="/taoTests/Tests/addInstance"
+						addSubClassUrl="/taoTests/Tests/addTestClass"
+						deleteUrl="/taoTests/Tests/delete"
+						duplicateUrl="/taoTests/Tests/cloneInstance"
+						moveInstanceUrl="/taoTests/Tests/moveInstance"
+					/>
+				</trees>
+				<actions>
+					<action name="search" url="/taoTests/Tests/search" context="*" />
+					<action name="new class" js="GenerisAction.subClass" url="/taoTests/Tests/addTestClass" context="class" />
+					<action name="new test" js="GenerisAction.instanciate" url="/taoTests/Tests/addInstance" context="class" />
+					<action name="delete" js="GenerisAction.removeNode" url="/taoTests/Tests/delete" context="resource" />
+					<action name="duplicate" js="GenerisAction.duplicateNode" url="/taoTests/Tests/cloneInstance" context="instance" />
+					<action name="move" js="GenerisAction.moveNode" url="" context="instance" />
+					<!--<action name="preview" js="GenerisAction.fullScreen" url="/taoTests/Tests/preview" context="instance" />-->
+					<action name="lists"  url="/tao/Lists/index"  context="*" />
+					<action name="meta data" js="GenerisAction.loadMetaData" url="/taoTests/Tests/getMetaData"  context="instance" />
+					<action name="create table" url="/taoResults/Results/createTable"  context="class" />
+					<action name="export" url="/tao/Export/index"  context="*" /> 
+					<action name="import" url="/tao/Import/index"  context="class" />
+					<action name="advanced mode" url="/taoTests/Tests/advancedMode" context="instance" />
+					<action name="simple mode" url="/taoTests/Tests/simpleMode" context="instance" />
+				</actions>
+			</section>
+			
+			<section id="tests_authoring" name="Advanced Authoring Tool" url="/taoTests/Tests/authoring" />
+		
+		</sections>
+	</structure>
+</structures>
