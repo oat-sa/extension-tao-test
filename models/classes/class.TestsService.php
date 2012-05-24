@@ -441,6 +441,9 @@ class taoTests_models_classes_TestsService
 		//set the the default authoring mode to the 'simple mode':
 		$test->setPropertyValue(new core_kernel_classes_Property(TAO_TEST_AUTHORINGMODE_PROP), TAO_TEST_SIMPLEMODE);
 		
+		//set the the default state to 'activ':
+		$test->setPropertyValue(new core_kernel_classes_Property(TEST_ACTIVE_PROP), GENERIS_TRUE);
+		
 		$returnValue = $test;		
         // section 10-13-1-39-7cf56b28:12c53e4afe8:-8000:0000000000002BFA end
 
