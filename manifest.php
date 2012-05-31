@@ -10,6 +10,7 @@ return array(
 	'additional' => array(
 		'version' => '2.0',
 		'author' => 'CRP Henri Tudor',
+		'extends' => 'tao',
 		'dependances' => array('wfEngine', 'taoItems'),
 		'models' => array('http://www.tao.lu/Ontologies/TAOTest.rdf',
 			'http://www.tao.lu/Ontologies/taoFuncACL.rdf'),
