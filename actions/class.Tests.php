@@ -24,22 +24,6 @@ class taoTests_actions_Tests extends tao_actions_TaoModule {
 		$this->defaultData();
 	}
 	
-	
-	/**
-	 * Override auth method
-	 * @see TaoModule::_isAllowed
-	 * @return boolean
-	 */	
-	protected function _isAllowed()
-	{
-		$context = Context::getInstance();
-		if($context->getActionName() != 'getTestContent'){
-			return parent::_isAllowed();
-		}
-		return true;
-	}
-	
-	
 /*
  * conveniance methods
  */
