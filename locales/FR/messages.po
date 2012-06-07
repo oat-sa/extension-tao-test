@@ -12,7 +12,7 @@ msgid "Advanced Authoring Tool"
 msgstr "Editeur avancé"
 
 msgid "advanced mode"
-msgstr "mode anvancé"
+msgstr "mode avancé"
 
 msgid "Class saved"
 msgstr "Classe enregistrée"
