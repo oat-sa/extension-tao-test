@@ -1,8 +1,9 @@
 <div id="item-container" class="data-container" >
 	<div class="ui-widget ui-state-default ui-widget-header ui-corner-top container-title" >
-		<?=__('Select related items')?>
+		<?=__('Available Items')?>
 	</div>
 	<div class="ui-widget ui-widget-content container-content">
+		<span class="elt-info"><?=__('Select the items composing the test.')?></span>
 		<div id="item-tree"></div>
 		<div class="breaker"></div>
 	</div>
