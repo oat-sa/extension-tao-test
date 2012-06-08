@@ -1,22 +1,27 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO v2.2-beta\n"
-"PO-Revision-Date: 2012-05-24T16:17:26\n"
+"Project-Id-Version: TAO v2.2-beta2\n"
+"PO-Revision-Date: 2012-06-08T13:42:17\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: FR\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#, tao-public
 msgid "Advanced Authoring Tool"
 msgstr "Editeur avancé"
 
 msgid "advanced mode"
 msgstr "mode avancé"
 
+msgid "Available Items"
+msgstr ""
+
 msgid "Class saved"
 msgstr "Classe enregistrée"
 
+#, tao-public
 msgid "Combine a selection of items into tests."
 msgstr "Combiner une sélection d'items en tests"
 
@@ -47,6 +52,7 @@ msgstr "Séquence d'item"
 msgid "lists"
 msgstr "listes"
 
+#, tao-public
 msgid "Manage tests"
 msgstr "Gérer les tests"
 
@@ -68,8 +74,8 @@ msgstr "Enregistrer"
 msgid "search"
 msgstr "Rechercher"
 
-msgid "Select related items"
-msgstr "Sélectionner les items liés au test"
+msgid "Select the items composing the test."
+msgstr ""
 
 msgid "Sequence saved successfully"
 msgstr "La séquence a été enregistré avec succès"
@@ -83,6 +89,7 @@ msgstr "Propriétés du test"
 msgid "Test saved"
 msgstr "Test sauvegardé"
 
+#, tao-public
 msgid "Tests"
 msgstr "Les tests"
 
