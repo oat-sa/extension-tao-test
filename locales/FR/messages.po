@@ -16,7 +16,7 @@ msgid "advanced mode"
 msgstr "mode avancé"
 
 msgid "Available Items"
-msgstr ""
+msgstr "Items disponibles"
 
 msgid "Class saved"
 msgstr "Classe enregistrée"
@@ -75,7 +75,7 @@ msgid "search"
 msgstr "Rechercher"
 
 msgid "Select the items composing the test."
-msgstr ""
+msgstr "Sélectionnez les items composant le test."
 
 msgid "Sequence saved successfully"
 msgstr "La séquence a été enregistré avec succès"
