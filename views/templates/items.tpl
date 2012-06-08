@@ -16,7 +16,9 @@
 	</div>
 	<div class="ui-widget ui-widget-content container-content">
 		<div id="item-list">
+<?php if (count(get_data('itemSequence'))): ?>
 			<span class="elt-info"><?=__('Drag and drop the items to order them')?></span>
+<?php endif; ?>
 			<ul id="item-sequence" class="sortable-list">
 			<?foreach(get_data('itemSequence') as $index => $item):?>
 				<li class="ui-state-default" id="item_<?=$item['uri']?>" >
