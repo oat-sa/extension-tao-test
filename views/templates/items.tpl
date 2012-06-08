@@ -16,7 +16,7 @@
 	</div>
 	<div class="ui-widget ui-widget-content container-content">
 		<div id="item-list">
-			<br />
+			<span class="elt-info"><?=__('Drag and drop the items to order them')?></span>
 			<ul id="item-sequence" class="sortable-list">
 			<?foreach(get_data('itemSequence') as $index => $item):?>
 				<li class="ui-state-default" id="item_<?=$item['uri']?>" >
@@ -26,7 +26,6 @@
 				</li>
 			<?endforeach?>
 			</ul>
-			<span class="elt-info"><?=__('Drag and drop the items to order them')?></span>
 		</div>
 	</div>
 	<div class="ui-widget ui-widget-content ui-state-default ui-corner-bottom" style="text-align:center; padding:4px;">
@@ -40,10 +39,10 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-	
+
 	var sequence = <?=get_data('relatedItems')?>;
 	var labels = <?=get_data('allItems')?>;
-	
+
 	function buildItemList(id, items, labels){
 		html = '';
 		for (i in items) {
@@ -55,7 +54,7 @@ $(document).ready(function(){
 		}
 		$("#" + id).html(html);
 	}
-	
+
 	if(ctx_extension){
 		url = root_url + '/' + ctx_extension + '/' + ctx_module + '/';
 	}
@@ -80,7 +79,7 @@ $(document).ready(function(){
 		},
 		checkedNodes : sequence
 	});
-	
+
 	$("#item-sequence").sortable({
 		axis: 'y',
 		opacity: 0.6,
@@ -88,7 +87,7 @@ $(document).ready(function(){
 		tolerance: 'pointer',
 		update: function(event, ui){
 			listItems = $(this).sortable('toArray');
-			
+
 			newSequence = {};
 			sequence = {};
 			for (i = 0; i < listItems.length; i++){
@@ -99,14 +98,14 @@ $(document).ready(function(){
 			buildItemList('item-sequence', newSequence, labels);
 		}
 	});
-	
+
 	$("#item-sequence li").bind('mousedown', function(){
 		$(this).css('cursor', 'move');
 	});
 	$("#item-sequence li").bind('mouseup',function(){
 		$(this).css('cursor', 'pointer');
 	});
-	
+
 	$("#saver-action-item-sequence").click(function(){
 		toSend = {};
 		for(index in sequence){
@@ -129,6 +128,6 @@ $(document).ready(function(){
 			}
 		});
 	});
-	
+
 });
 </script>
