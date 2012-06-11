@@ -395,7 +395,7 @@ class taoTests_models_classes_TestsService
 			if(preg_match("/bis/", $label)) {
 				$cloneNumber = (int)preg_replace("/^(.?)*bis/", "", $label);
 				$cloneNumber++;
-				$cloneLabel = preg_replace("/bis(.?)*$/", "", $label)." bis $cloneNumber" ;
+				$cloneLabel = preg_replace("/bis(.?)*$/", "", $label)."bis $cloneNumber" ;
 			}
 			$clone->setLabel($cloneLabel);
 
