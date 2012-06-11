@@ -77,6 +77,7 @@ $(document).ready(function(){
 				}
 				buildItemList("item-sequence", newSequence, labels);
 				if ($('#item-sequence li').length) $('#item-sequence').prev('.elt-info').show();
+				else $('#item-sequence').prev('.elt-info').hide();
 			}
 		},
 		checkedNodes : sequence
