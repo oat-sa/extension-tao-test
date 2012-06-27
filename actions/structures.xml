@@ -6,7 +6,8 @@
 		<sections>
 			<section  id="manage_tests" name="Manage tests" url="/taoTests/Tests/index">
 				<trees>
-					<tree name="Tests library" 
+					<tree name="Tests library"
+						className="Test" 
 						dataUrl="/taoTests/Tests/getOntologyData" 
 						editClassUrl="/taoTests/Tests/editTestClass"
 						editInstanceUrl="/taoTests/Tests/editTest"
