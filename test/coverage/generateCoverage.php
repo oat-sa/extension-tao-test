@@ -21,7 +21,7 @@ define("PHPCOVERAGE_HOME", INCLUDES_PATH. "/spikephpcoverage/src");
 require_once  PHPCOVERAGE_HOME. "/CoverageRecorder.php";
 require_once PHPCOVERAGE_HOME . "/reporter/HtmlCoverageReporter.php";
 //run the unit test suite
-$includePaths = array(ROOT_PATH."taoTests/actions", ROOT_PATH.'taoTests/models',ROOT_PATH.'taoTests/helpers');
+$includePaths = array(ROOT_PATH.'taoTests/models',ROOT_PATH.'taoTests/helpers');
 $excludePaths = array();
 $covReporter = new HtmlCoverageReporter("Code Coverage Report taoTests", "", PHPCOVERAGE_REPORTS."/taoTests");
 $cov = new CoverageRecorder($includePaths, $excludePaths, $covReporter);
