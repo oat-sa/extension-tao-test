@@ -40,7 +40,6 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-
 	var sequence = <?=get_data('relatedItems')?>;
 	var labels = <?=get_data('allItems')?>;
 
@@ -56,31 +55,32 @@ $(document).ready(function(){
 		$("#" + id).html(html);
 	}
 
-	if(ctx_extension){
+	if (ctx_extension) {
 		url = root_url + '/' + ctx_extension + '/' + ctx_module + '/';
 	}
-	var getUrl = url + 'getItems';
-	var setUrl = url + 'saveItems';
-	new GenerisTreeFormClass('#item-tree', getUrl,{
-		actionId: 	'item',
-		saveUrl: 	setUrl,
-		paginate:	10,
-		saveCallback: function (data){
-			if (buildItemList != undefined) {
-				newSequence = {};
-				sequence = {};
-				for(attr in data){
-					if(/^instance_/.test(attr)){
-						newSequence[parseInt(attr.replace('instance_', ''))+1] = 'item_'+ data[attr];
-						sequence[parseInt(attr.replace('instance_', ''))+1] =  data[attr];
+
+	require(['require', 'jquery', 'generis.tree.select'], function(req, $, GenerisTreeSelectClass) {
+		new GenerisTreeSelectClass('#item-tree', url + 'getItems',{
+			actionId: 'item',
+			saveUrl: url + 'saveItems',
+			paginate:	10,
+			saveCallback: function (data){
+				if (buildItemList != undefined) {
+					newSequence = {};
+					sequence = {};
+					for(attr in data){
+						if(/^instance_/.test(attr)){
+							newSequence[parseInt(attr.replace('instance_', ''))+1] = 'item_'+ data[attr];
+							sequence[parseInt(attr.replace('instance_', ''))+1] =  data[attr];
+						}
 					}
+					buildItemList("item-sequence", newSequence, labels);
+					if ($('#item-sequence li').length) $('#item-sequence').prev('.elt-info').show();
+					else $('#item-sequence').prev('.elt-info').hide();
 				}
-				buildItemList("item-sequence", newSequence, labels);
-				if ($('#item-sequence li').length) $('#item-sequence').prev('.elt-info').show();
-				else $('#item-sequence').prev('.elt-info').hide();
-			}
-		},
-		checkedNodes : sequence
+			},
+			checkedNodes : sequence
+		});
 	});
 
 	$("#item-sequence").sortable({
@@ -117,17 +117,17 @@ $(document).ready(function(){
 		toSend.uri = $("input[name=uri]").val();
 		toSend.classUri = $("input[name=classUri]").val();
 		$.ajax({
-			url: setUrl,
+			url: url + 'saveItems',
 			type: "POST",
 			data: toSend,
 			dataType: 'json',
 			success: function(response){
 				if (response.saved) {
-					createInfoMessage("<?=__('Sequence saved successfully')?>");
+					helpers.createInfoMessage("<?=__('Sequence saved successfully')?>");
 				}
 			},
 			complete: function(){
-				loaded();
+				helpers.loaded();
 			}
 		});
 	});

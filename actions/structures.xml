@@ -7,8 +7,8 @@
 			<section  id="manage_tests" name="Manage tests" url="/taoTests/Tests/index">
 				<trees>
 					<tree name="Tests library"
-						className="Test" 
-						dataUrl="/taoTests/Tests/getOntologyData" 
+						className="Test"
+						dataUrl="/taoTests/Tests/getOntologyData"
 						editClassUrl="/taoTests/Tests/editTestClass"
 						editInstanceUrl="/taoTests/Tests/editTest"
 						addInstanceUrl="/taoTests/Tests/addInstance"
@@ -20,24 +20,24 @@
 				</trees>
 				<actions>
 					<action name="search" url="/taoTests/Tests/search" context="*" />
-					<action name="new class" js="GenerisAction.subClass" url="/taoTests/Tests/addTestClass" context="class" />
-					<action name="new test" js="GenerisAction.instanciate" url="/taoTests/Tests/addInstance" context="class" />
-					<action name="delete" js="GenerisAction.removeNode" url="/taoTests/Tests/delete" context="resource" />
-					<action name="duplicate" js="GenerisAction.duplicateNode" url="/taoTests/Tests/cloneInstance" context="instance" />
-					<action name="move" js="GenerisAction.moveNode" url="" context="instance" />
-					<!--<action name="preview" js="GenerisAction.fullScreen" url="/taoTests/Tests/preview" context="instance" />-->
+					<action name="new class" js="generisActions.subClass" url="/taoTests/Tests/addTestClass" context="class" />
+					<action name="new test" js="generisActions.instanciate" url="/taoTests/Tests/addInstance" context="class" />
+					<action name="delete" js="generisActions.removeNode" url="/taoTests/Tests/delete" context="resource" />
+					<action name="duplicate" js="generisActions.duplicateNode" url="/taoTests/Tests/cloneInstance" context="instance" />
+					<action name="move" js="generisActions.moveNode" url="" context="instance" />
+					<!--<action name="preview" js="generisActions.fullScreen" url="/taoTests/Tests/preview" context="instance" />-->
 					<action name="lists"  url="/tao/Lists/index"  context="*" />
-					<action name="meta data" js="GenerisAction.loadMetaData" url="/taoTests/Tests/getMetaData"  context="instance" />
+					<action name="meta data" js="generisActions.loadMetaData" url="/taoTests/Tests/getMetaData"  context="instance" />
 					<action name="create table" url="/taoResults/Results/createTable"  context="class" />
-					<action name="export" url="/tao/Export/index"  context="*" /> 
+					<action name="export" url="/tao/Export/index"  context="*" />
 					<action name="import" url="/tao/Import/index"  context="class" />
 					<action name="advanced mode" url="/taoTests/Tests/advancedMode" context="instance" />
 					<action name="simple mode" url="/taoTests/Tests/simpleMode" context="instance" />
 				</actions>
 			</section>
-			
+
 			<section id="tests_authoring" name="Advanced Authoring Tool" url="/taoTests/Tests/authoring" />
-		
+
 		</sections>
 	</structure>
 </structures>
