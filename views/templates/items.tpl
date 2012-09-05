@@ -39,10 +39,10 @@
 <?endif?>
 
 <script type="text/javascript">
-$(document).ready(function(){
-	var sequence = <?=get_data('relatedItems')?>;
-	var labels = <?=get_data('allItems')?>;
+var sequence = <?=get_data('relatedItems')?>;
+var labels = <?=get_data('allItems')?>;
 
+$(function(){
 	function buildItemList(id, items, labels){
 		html = '';
 		for (i in items) {
@@ -67,9 +67,9 @@ $(document).ready(function(){
 			saveCallback: function (data){
 				if (buildItemList != undefined) {
 					newSequence = {};
-					sequence = {};
+					sequence = [];
 					for(attr in data){
-						if(/^instance_/.test(attr)){
+						if(/^instance_/.test(attr) && $.inArray(data[attr], sequence) == -1 && attr != undefined) {
 							newSequence[parseInt(attr.replace('instance_', ''))+1] = 'item_'+ data[attr];
 							sequence[parseInt(attr.replace('instance_', ''))+1] =  data[attr];
 						}
@@ -92,7 +92,7 @@ $(document).ready(function(){
 			listItems = $(this).sortable('toArray');
 
 			newSequence = {};
-			sequence = {};
+			sequence = [];
 			for (i = 0; i < listItems.length; i++){
 				index = i+1;
 				newSequence[index] = listItems[i];
@@ -102,10 +102,10 @@ $(document).ready(function(){
 		}
 	});
 
-	$("#item-sequence li").bind('mousedown', function(){
+	$("#item-sequence li").on('mousedown', function(){
 		$(this).css('cursor', 'move');
 	});
-	$("#item-sequence li").bind('mouseup',function(){
+	$("#item-sequence li").on('mouseup',function(){
 		$(this).css('cursor', 'pointer');
 	});
 
@@ -131,6 +131,5 @@ $(document).ready(function(){
 			}
 		});
 	});
-
 });
 </script>
