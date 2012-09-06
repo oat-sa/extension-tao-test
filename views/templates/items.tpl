@@ -55,11 +55,11 @@ $(function(){
 		$("#" + id).html(html);
 	}
 
-	if (ctx_extension) {
-		url = root_url + '/' + ctx_extension + '/' + ctx_module + '/';
-	}
-
 	require(['require', 'jquery', 'generis.tree.select'], function(req, $, GenerisTreeSelectClass) {
+		if (ctx_extension) {
+			url = root_url + '/' + ctx_extension + '/' + ctx_module + '/';
+		}
+
 		new GenerisTreeSelectClass('#item-tree', url + 'getItems',{
 			actionId: 'item',
 			saveUrl: url + 'saveItems',
@@ -100,35 +100,35 @@ $(function(){
 			}
 			buildItemList('item-sequence', newSequence, labels);
 		}
-	});
 
-	$("#item-sequence li").on('mousedown', function(){
-		$(this).css('cursor', 'move');
-	});
-	$("#item-sequence li").on('mouseup',function(){
-		$(this).css('cursor', 'pointer');
-	});
+		$("#item-sequence li").on('mousedown', function(){
+			$(this).css('cursor', 'move');
+		});
+		$("#item-sequence li").on('mouseup',function(){
+			$(this).css('cursor', 'pointer');
+		});
 
-	$("#saver-action-item-sequence").click(function(){
-		toSend = {};
-		for(index in sequence){
-			toSend['instance_'+index] = sequence[index];
-		}
-		toSend.uri = $("input[name=uri]").val();
-		toSend.classUri = $("input[name=classUri]").val();
-		$.ajax({
-			url: url + 'saveItems',
-			type: "POST",
-			data: toSend,
-			dataType: 'json',
-			success: function(response){
-				if (response.saved) {
-					helpers.createInfoMessage("<?=__('Sequence saved successfully')?>");
-				}
-			},
-			complete: function(){
-				helpers.loaded();
+		$("#saver-action-item-sequence").click(function(){
+			toSend = {};
+			for(index in sequence){
+				toSend['instance_'+index] = sequence[index];
 			}
+			toSend.uri = $("input[name=uri]").val();
+			toSend.classUri = $("input[name=classUri]").val();
+			$.ajax({
+				url: url + 'saveItems',
+				type: "POST",
+				data: toSend,
+				dataType: 'json',
+				success: function(response){
+					if (response.saved) {
+						helpers.createInfoMessage("<?=__('Sequence saved successfully')?>");
+					}
+				},
+				complete: function(){
+					helpers.loaded();
+				}
+			});
 		});
 	});
 });
