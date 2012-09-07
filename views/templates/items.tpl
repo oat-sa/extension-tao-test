@@ -42,69 +42,70 @@
 var sequence = <?=get_data('relatedItems')?>;
 var labels = <?=get_data('allItems')?>;
 
-$(function(){
-	function buildItemList(id, items, labels){
-		html = '';
-		for (i in items) {
-			itemId = items[i];
-			html += "<li class='ui-state-default' id='" + itemId + "' >";
-			html += "<span class='ui-icon ui-icon-arrowthick-2-n-s' /><span class='ui-icon ui-icon-grip-dotted-vertical' />";
-			html += i + ". " + labels[itemId];
-			html += "</li>";
-		}
-		$("#" + id).html(html);
-	}
-
-	require(['require', 'jquery', 'generis.tree.select'], function(req, $, GenerisTreeSelectClass) {
-		if (ctx_extension) {
-			url = root_url + '/' + ctx_extension + '/' + ctx_module + '/';
-		}
-
-		new GenerisTreeSelectClass('#item-tree', url + 'getItems',{
-			actionId: 'item',
-			saveUrl: url + 'saveItems',
-			paginate:	10,
-			saveCallback: function (data){
-				if (buildItemList != undefined) {
-					newSequence = {};
-					sequence = [];
-					for(attr in data){
-						if(/^instance_/.test(attr) && $.inArray(data[attr], sequence) == -1 && attr != undefined) {
-							newSequence[parseInt(attr.replace('instance_', ''))+1] = 'item_'+ data[attr];
-							sequence[parseInt(attr.replace('instance_', ''))+1] =  data[attr];
-						}
-					}
-					buildItemList("item-sequence", newSequence, labels);
-					if ($('#item-sequence li').length) $('#item-sequence').prev('.elt-info').show();
-					else $('#item-sequence').prev('.elt-info').hide();
-				}
-			},
-			checkedNodes : sequence
-		});
-	});
-
-	$("#item-sequence").sortable({
-		axis: 'y',
-		opacity: 0.6,
-		placeholder: 'ui-state-error',
-		tolerance: 'pointer',
-		update: function(event, ui){
-			listItems = $(this).sortable('toArray');
-
-			newSequence = {};
-			sequence = [];
-			for (i = 0; i < listItems.length; i++){
-				index = i+1;
-				newSequence[index] = listItems[i];
-				sequence[index] = listItems[i].replace('item_', '');
+	$(function(){
+		function buildItemList(id, items, labels){
+			html = '';
+			for (i in items) {
+				itemId = items[i];
+				html += "<li class='ui-state-default' id='" + itemId + "' >";
+				html += "<span class='ui-icon ui-icon-arrowthick-2-n-s' /><span class='ui-icon ui-icon-grip-dotted-vertical' />";
+				html += i + ". " + labels[itemId];
+				html += "</li>";
 			}
-			buildItemList('item-sequence', newSequence, labels);
+			$("#" + id).html(html);
 		}
+
+		require(['require', 'jquery', 'generis.tree.select'], function(req, $, GenerisTreeSelectClass) {
+			if (ctx_extension) {
+				url = root_url + '/' + ctx_extension + '/' + ctx_module + '/';
+			}
+
+			new GenerisTreeSelectClass('#item-tree', url + 'getItems',{
+				actionId: 'item',
+				saveUrl: url + 'saveItems',
+				paginate:	10,
+				saveCallback: function (data){
+					if (buildItemList != undefined) {
+						newSequence = {};
+						sequence = [];
+						for (attr in data) {
+							if (/^instance_/.test(attr) && $.inArray(data[attr], sequence) == -1 && attr != undefined) {
+								newSequence[parseInt(attr.replace('instance_', ''))+1] = 'item_'+ data[attr];
+								sequence[parseInt(attr.replace('instance_', ''))+1] =  data[attr];
+							}
+						}
+						buildItemList("item-sequence", newSequence, labels);
+						if ($('#item-sequence li').length) $('#item-sequence').prev('.elt-info').show();
+						else $('#item-sequence').prev('.elt-info').hide();
+					}
+				},
+				checkedNodes : sequence
+			});
+		});
+
+		$("#item-sequence").sortable({
+			axis: 'y',
+			opacity: 0.6,
+			placeholder: 'ui-state-error',
+			tolerance: 'pointer',
+			update: function(event, ui){
+				listItems = $(this).sortable('toArray');
+
+				newSequence = {};
+				sequence = [];
+				for (i = 0; i < listItems.length; i++) {
+					index = i+1;
+					newSequence[index] = listItems[i];
+					sequence[index] = listItems[i].replace('item_', '');
+				}
+				buildItemList('item-sequence', newSequence, labels);
+			}
+		});
 
 		$("#item-sequence li").on('mousedown', function(){
 			$(this).css('cursor', 'move');
 		});
-		$("#item-sequence li").on('mouseup',function(){
+		$("#item-sequence li").on('mouseup', function(){
 			$(this).css('cursor', 'pointer');
 		});
 
@@ -131,5 +132,4 @@ $(function(){
 			});
 		});
 	});
-});
 </script>
