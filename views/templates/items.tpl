@@ -79,7 +79,13 @@ var labels = <?=get_data('allItems')?>;
 						else $('#item-sequence').prev('.elt-info').hide();
 					}
 				},
-				checkedNodes : sequence
+				checkedNodes : sequence,
+				callback: {
+					checkPaginate: function(NODE, TREE_OBJ) {
+						//Check the unchecked that must be checked... olè!
+						this.check(sequence);
+					}
+				}
 			});
 		});
 
