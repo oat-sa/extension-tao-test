@@ -12,7 +12,7 @@ return array(
 	'description' => 'TAO Tests extension',
 	'version' => '2.3',
 	'author' => 'CRP Henri Tudor',
-	'dependances' => array('wfEngine', 'taoItems'),
+	'dependencies' => array('wfEngine', 'taoItems'),
 	'models' => array('http://www.tao.lu/Ontologies/TAOTest.rdf',
 		'http://www.tao.lu/Ontologies/taoFuncACL.rdf'),
 	'install' => array(
