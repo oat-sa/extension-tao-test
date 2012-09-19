@@ -43,7 +43,7 @@ return array(
 		'DEFAULT_ACTION_NAME'	=> 'index',
 	
 		#BASE PATH: the root path in the file system (usually the document root)
-		'BASE_PATH'				=> $extpath . 'taoTests',
+		'BASE_PATH'				=> $extpath,
 	
 		#BASE URL (usually the domain root)
 		'BASE_URL'				=> ROOT_URL . '/taoTests',
