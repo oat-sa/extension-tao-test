@@ -29,28 +29,6 @@ class taoTests_actions_Tests extends tao_actions_TaoModule {
  */
 
 	/**
-	 * get the instancee of the current test regarding the 'uri' and 'classUri' request parameters
-	 * @return core_kernel_classes_Resource the test instance
-	 */
-	protected function getCurrentInstance()
-	{
-
-		$uri = tao_helpers_Uri::decode($this->getRequestParameter('uri'));
-		if(is_null($uri) || empty($uri)){
-			throw new Exception("No valid uri found");
-		}
-
-		$clazz = $this->getCurrentClass();
-
-		$test = $this->service->getTest($uri, 'uri', $clazz);
-		if(is_null($test)){
-			throw new Exception("No test found for the uri {$uri}");
-		}
-
-		return $test;
-	}
-
-	/**
 	 * get the main class
 	 * @return core_kernel_classes_Classes
 	 */

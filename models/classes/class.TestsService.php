@@ -5,7 +5,7 @@ error_reporting(E_ALL);
 /**
  * Service methods to manage the Tests business models using the RDF API.
  *
- * @author Somsack SIPASSEUTH, <s.sipasseuth@gmail.com>
+ * @author Joel Bout, <joel.bout@tudor.lu>
  * @package taoTests
  * @subpackage models_classes
  */
@@ -15,10 +15,10 @@ if (0 > version_compare(PHP_VERSION, '5')) {
 }
 
 /**
- * The Service class is an abstraction of each service instance.
+ * The Service class is an abstraction of each service instance. 
  * Used to centralize the behavior related to every servcie instances.
  *
- * @author Somsack SIPASSEUTH, <s.sipasseuth@gmail.com>
+ * @author Joel Bout, <joel.bout@tudor.lu>
  */
 require_once('tao/models/classes/class.GenerisService.php');
 
@@ -34,7 +34,7 @@ require_once('tao/models/classes/class.GenerisService.php');
  * Service methods to manage the Tests business models using the RDF API.
  *
  * @access public
- * @author Somsack SIPASSEUTH, <s.sipasseuth@gmail.com>
+ * @author Joel Bout, <joel.bout@tudor.lu>
  * @package taoTests
  * @subpackage models_classes
  */
@@ -60,7 +60,7 @@ class taoTests_models_classes_TestsService
      * Short description of method __construct
      *
      * @access public
-     * @author Somsack SIPASSEUTH, <s.sipasseuth@gmail.com>
+     * @author Joel Bout, <joel.bout@tudor.lu>
      * @return core_view_classes_
      */
     public function __construct()
@@ -79,48 +79,10 @@ class taoTests_models_classes_TestsService
     }
 
     /**
-     * Short description of method getTest
-     *
-     * @access public
-     * @author Somsack SIPASSEUTH, <s.sipasseuth@gmail.com>
-     * @param  string identifier usually the test label or the ressource URI
-     * @param  string mode
-     * @param  Class clazz
-     * @return core_kernel_classes_Resource
-     */
-    public function getTest($identifier, $mode = 'uri',  core_kernel_classes_Class $clazz = null)
-    {
-        $returnValue = null;
-
-        // section 10-13-1-45-792423e0:12398d13f24:-8000:00000000000017D8 begin
-
-		if(is_null($clazz) && $mode == 'uri'){
-			try{
-				$resource = new core_kernel_classes_Resource($identifier);
-				foreach($resource->getType() as $type){
-					$clazz = $type;
-					break;
-				}
-			}
-			catch(Exception $e){}
-		}
-		if(is_null($clazz)){
-			$clazz = $this->testClass;
-		}
-		if($this->isTestClass($clazz)){
-			$returnValue = $this->getOneInstanceBy( $clazz, $identifier, $mode);
-		}
-
-        // section 10-13-1-45-792423e0:12398d13f24:-8000:00000000000017D8 end
-
-        return $returnValue;
-    }
-
-    /**
      * delete a test instance
      *
      * @access public
-     * @author Somsack SIPASSEUTH, <s.sipasseuth@gmail.com>
+     * @author Joel Bout, <joel.bout@tudor.lu>
      * @param  Resource test
      * @return boolean
      */
@@ -146,12 +108,12 @@ class taoTests_models_classes_TestsService
     }
 
     /**
-     * get a test subclass by uri.
+     * get a test subclass by uri. 
      * If the uri is not set, it returns the test class (the top level class.
      * If the uri don't reference a test  subclass, it returns null
      *
      * @access public
-     * @author Somsack SIPASSEUTH, <s.sipasseuth@gmail.com>
+     * @author Joel Bout, <joel.bout@tudor.lu>
      * @param  string uri
      * @return core_kernel_classes_Class
      */
@@ -180,7 +142,7 @@ class taoTests_models_classes_TestsService
      * Short description of method createTestClass
      *
      * @access public
-     * @author Somsack SIPASSEUTH, <s.sipasseuth@gmail.com>
+     * @author Joel Bout, <joel.bout@tudor.lu>
      * @param  Class clazz
      * @param  string label
      * @param  array properties
@@ -220,7 +182,7 @@ class taoTests_models_classes_TestsService
      * Check if the Class in parameter is a subclass of Test
      *
      * @access public
-     * @author Somsack SIPASSEUTH, <s.sipasseuth@gmail.com>
+     * @author Joel Bout, <joel.bout@tudor.lu>
      * @param  Class clazz
      * @return boolean
      */
@@ -251,7 +213,7 @@ class taoTests_models_classes_TestsService
      * delete a test class or sublcass
      *
      * @access public
-     * @author Somsack SIPASSEUTH, <s.sipasseuth@gmail.com>
+     * @author Joel Bout, <joel.bout@tudor.lu>
      * @param  Class clazz
      * @return boolean
      */
@@ -276,7 +238,7 @@ class taoTests_models_classes_TestsService
      * get the list of items in the test in parameter
      *
      * @access public
-     * @author Somsack SIPASSEUTH, <s.sipasseuth@gmail.com>
+     * @author Joel Bout, <joel.bout@tudor.lu>
      * @param  Resource test
      * @param  boolean sequenced
      * @return array
@@ -317,7 +279,7 @@ class taoTests_models_classes_TestsService
      * Get all available items
      *
      * @access public
-     * @author Somsack SIPASSEUTH, <s.sipasseuth@gmail.com>
+     * @author Joel Bout, <joel.bout@tudor.lu>
      * @return array
      */
     public function getAllItems()
@@ -340,7 +302,7 @@ class taoTests_models_classes_TestsService
      * Short description of method updateProcessLabel
      *
      * @access public
-     * @author Somsack SIPASSEUTH, <s.sipasseuth@gmail.com>
+     * @author Joel Bout, <joel.bout@tudor.lu>
      * @param  Resource test
      * @return boolean
      */
@@ -360,7 +322,7 @@ class taoTests_models_classes_TestsService
      * Short description of method cloneInstance
      *
      * @access public
-     * @author Somsack SIPASSEUTH, <s.sipasseuth@gmail.com>
+     * @author Joel Bout, <joel.bout@tudor.lu>
      * @param  Resource instance
      * @param  Class clazz
      * @return core_kernel_classes_Resource
@@ -425,7 +387,7 @@ class taoTests_models_classes_TestsService
      * Short description of method createInstance
      *
      * @access public
-     * @author Somsack SIPASSEUTH, <s.sipasseuth@gmail.com>
+     * @author Joel Bout, <joel.bout@tudor.lu>
      * @param  Class clazz
      * @param  string label
      * @return core_kernel_classes_Resource
@@ -463,7 +425,7 @@ class taoTests_models_classes_TestsService
      * Short description of method linearizeTestProcess
      *
      * @access public
-     * @author Somsack SIPASSEUTH, <s.sipasseuth@gmail.com>
+     * @author Joel Bout, <joel.bout@tudor.lu>
      * @param  Resource test
      * @return boolean
      */
@@ -500,7 +462,7 @@ class taoTests_models_classes_TestsService
      * Short description of method getTestItems
      *
      * @access public
-     * @author Somsack SIPASSEUTH, <s.sipasseuth@gmail.com>
+     * @author Joel Bout, <joel.bout@tudor.lu>
      * @param  Resource test
      * @return array
      */
@@ -593,7 +555,7 @@ class taoTests_models_classes_TestsService
      * Short description of method setTestItems
      *
      * @access public
-     * @author Somsack SIPASSEUTH, <s.sipasseuth@gmail.com>
+     * @author Joel Bout, <joel.bout@tudor.lu>
      * @param  Resource test
      * @param  array items
      * @return boolean
@@ -709,7 +671,7 @@ class taoTests_models_classes_TestsService
      * Short description of method setAuthoringMode
      *
      * @access public
-     * @author Somsack SIPASSEUTH, <s.sipasseuth@gmail.com>
+     * @author Joel Bout, <joel.bout@tudor.lu>
      * @param  Resource test
      * @param  string mode
      * @return boolean
@@ -744,7 +706,7 @@ class taoTests_models_classes_TestsService
      * Short description of method isTestActive
      *
      * @access public
-     * @author Somsack SIPASSEUTH, <s.sipasseuth@gmail.com>
+     * @author Joel Bout, <joel.bout@tudor.lu>
      * @param  Resource test
      * @return boolean
      */
