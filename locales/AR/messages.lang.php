@@ -36,11 +36,11 @@ $GLOBALS['__l10n']["CSV Options"]="CSV خيارات";
 $GLOBALS['__l10n']["Current (the current extension, the local data and their dependancies)"]="(الحالي(الملحق الحالي,البيانات المحلية وتوابعها";
 $GLOBALS['__l10n']["Current language"]="اللغة الحالية";
 $GLOBALS['__l10n']["Data imported successfully"]="البيانات التي تم استيرادها بنجاح";
-$GLOBALS['__l10n']["Data language"]="لغة البيانات";
 $GLOBALS['__l10n']["Data Language"]="لغة البيانات";
+$GLOBALS['__l10n']["Data language"]="لغة البيانات";
 $GLOBALS['__l10n']["Date"]="التاريخ";
-$GLOBALS['__l10n']["Delete"]="حذف";
 $GLOBALS['__l10n']["delete"]="حذف";
+$GLOBALS['__l10n']["Delete"]="حذف";
 $GLOBALS['__l10n']["Delete property"]="حذف الخاصية";
 $GLOBALS['__l10n']["Delete user"]="حذف المستخدم";
 $GLOBALS['__l10n']["Deliveries"]="Deliveries";
@@ -89,7 +89,6 @@ $GLOBALS['__l10n']["Items"]="الاسئلة";
 $GLOBALS['__l10n']["Items sequence"]="تسلسل الاسئلة";
 $GLOBALS['__l10n']["Javascript is required to run this software. Please activate it in your browser."]=".مطلوب جافا سكريبت لتشغيل هذا البرنامج ، يرجى تفعيلها في المتصفح";
 $GLOBALS['__l10n']["Label"]="تسمية";
-$GLOBALS['__l10n']["Label already used"]="تسمية قيد الاستعمال";
 $GLOBALS['__l10n']["Language"]="اللغة";
 $GLOBALS['__l10n']["List"]="قائمة";
 $GLOBALS['__l10n']["list deleted"]="حذف القائمة";
@@ -97,8 +96,8 @@ $GLOBALS['__l10n']["List Options"]="خيارات القائمة";
 $GLOBALS['__l10n']["list saved"]="تم حفظ القائمة";
 $GLOBALS['__l10n']["list the users"]="lister les utilisateurs";
 $GLOBALS['__l10n']["List values"]="قيم القائمة";
-$GLOBALS['__l10n']["Lists"]="القوائم";
 $GLOBALS['__l10n']["lists"]="القوائم";
+$GLOBALS['__l10n']["Lists"]="القوائم";
 $GLOBALS['__l10n']["Local Data (the local namespace containing only the data inserted by the users)"]="(البيانات المحلية (مساحة الاسم المحلي الذي يحتوي فقط على البيانات المدرجة من قبل المستخدمين";
 $GLOBALS['__l10n']["Login"]="الدخول";
 $GLOBALS['__l10n']["Login *"]="*تسجيل الدخول";
@@ -112,7 +111,6 @@ $GLOBALS['__l10n']["Manage groups"]="إدارة المجموعات";
 $GLOBALS['__l10n']["Manage items"]="ادارة الاسئلة";
 $GLOBALS['__l10n']["Manage processes"]="إدارة العمليات";
 $GLOBALS['__l10n']["Manage result servers"]="ادارة خوادم النتائج";
-$GLOBALS['__l10n']["Manage results"]="ادارة النتائج";
 $GLOBALS['__l10n']["Manage roles"]="إدارة الأدوار";
 $GLOBALS['__l10n']["Manage test takers"]="إدارة المتقدمين للاختبار";
 $GLOBALS['__l10n']["Manage tests"]="ادارة الاختبارات";
@@ -176,8 +174,8 @@ $GLOBALS['__l10n']["Selection saved successfully"]="تم حفظ التحديد �
 $GLOBALS['__l10n']["Sequence saved successfully"]="تم حفظ التسلسل بنجاح";
 $GLOBALS['__l10n']["Settings"]="الإعدادات";
 $GLOBALS['__l10n']["settings updated"]="تحديث الاعدادات";
-$GLOBALS['__l10n']["simple mode"]="طريقة بسيطة";
 $GLOBALS['__l10n']["Simple Mode"]="الطريقة البسيطة";
+$GLOBALS['__l10n']["simple mode"]="طريقة بسيطة";
 $GLOBALS['__l10n']["Start upload"]="بدء التحميل";
 $GLOBALS['__l10n']["Supported export formats"]="صيغ الاستيراد المعتمدة";
 $GLOBALS['__l10n']["Supported formats to import"]="صيغ التصدير المعتمدة";
