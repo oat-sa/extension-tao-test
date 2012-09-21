@@ -79,10 +79,8 @@ class TestsTestCase extends UnitTestCase {
 		$this->assertTrue($testInstance->delete());
 		
 		//delete subclass and check if the instance is deleted
-		$subTestInstanceUri = $subTestInstance->uriResource;
-		$this->assertNotNull($this->testsService->getTest($subTestInstanceUri));
 		$this->assertTrue($subTestInstance->delete());
-		$this->assertNull($this->testsService->getTest($subTestInstanceUri));
+		$this->assertFalse($subTestInstance->exists());
 		
 		$this->assertTrue($subTestClass->delete());
 	}
