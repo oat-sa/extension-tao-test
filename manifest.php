@@ -46,7 +46,7 @@ return array(
 		'BASE_PATH'				=> $extpath,
 	
 		#BASE URL (usually the domain root)
-		'BASE_URL'				=> ROOT_URL	.'taoTests',
+		'BASE_URL'				=> ROOT_URL	.'taoTests/',
 	
 		#BASE WWW the web resources path
 		'BASE_WWW'				=> ROOT_URL	.'taoTests/views/',
