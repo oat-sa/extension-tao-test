@@ -21,8 +21,8 @@ $(function(){
 });
 
 function setAuthoringModeButtons(){
-	$advContainer = $('#action_advanced_mode').parent();
-	$simpleContainer = $('#action_simple_mode').parent();
+	$advContainer = $('#action_advanced_mode');
+	$simpleContainer = $('#action_simple_mode');
 	$advContainer.hide();
 	$simpleContainer.hide();
 	<?if(get_data('uri') && get_data('classUri')):?>
