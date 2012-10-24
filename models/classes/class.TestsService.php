@@ -507,16 +507,15 @@ class taoTests_models_classes_TestsService
 			}
 
 			//get its connector (check the type is "sequential) if ok, get the next activity
-			$connectorClass = new core_kernel_classes_Class(CLASS_CONNECTORS);
-			$connectors = $connectorClass->searchInstances(array(PROPERTY_CONNECTORS_PREVIOUSACTIVITIES =>$currentActivity->uriResource), array('like'=>false));
+			$connector = $currentActivity->getOnePropertyValue(new core_kernel_classes_Property(PROPERTY_STEP_NEXT));
 			$nextActivity = null;
-			foreach($connectors as $connector){
+			if (!is_null($connector)) {
 				$connectorType = $connector->getUniquePropertyValue(new core_kernel_classes_Property(PROPERTY_CONNECTORS_TYPE));
-				if($connectorType->uriResource == INSTANCE_TYPEOFCONNECTORS_SEQUENCE){
-					$nextActivity = $connector->getUniquePropertyValue(new core_kernel_classes_Property(PROPERTY_CONNECTORS_NEXTACTIVITIES));
-					break;
+				if($connectorType->getUri() == INSTANCE_TYPEOFCONNECTORS_SEQUENCE){
+					$nextActivity = $connector->getUniquePropertyValue(new core_kernel_classes_Property(PROPERTY_STEP_NEXT));
 				}
 			}
+			
 			if(!is_null($nextActivity)){
 				$currentActivity = $nextActivity;
 			}else{
@@ -651,13 +650,13 @@ class taoTests_models_classes_TestsService
 				$connector->setPropertyValue(new core_kernel_classes_Property(PROPERTY_CONNECTORS_TYPE), INSTANCE_TYPEOFCONNECTORS_SEQUENCE);
 
 				if(!is_null($previousConnector)){
-					$previousConnector->setPropertyValue(new core_kernel_classes_Property(PROPERTY_CONNECTORS_NEXTACTIVITIES), $activity->uriResource);
+					$previousConnector->setPropertyValue(new core_kernel_classes_Property(PROPERTY_STEP_NEXT), $activity->uriResource);
 				}
 				$previousConnector = $connector;//set the current connector as "the previous one" for the next loop
 			}
 			else{
 				//if it is the last test of the array, no need to add a connector: just connect the previous connector to the last activity
-				$previousConnector->setPropertyValue(new core_kernel_classes_Property(PROPERTY_CONNECTORS_NEXTACTIVITIES), $activity->uriResource);
+				$previousConnector->setPropertyValue(new core_kernel_classes_Property(PROPERTY_STEP_NEXT), $activity->uriResource);
 				//every action is performed:
 				$returnValue = true;
 			}
