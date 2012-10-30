@@ -3,16 +3,16 @@
 error_reporting(E_ALL);
 
 /**
- * TAO - taoTests\models\classes\class.TestAuthoringService.php
+ * TAO - taoTests/models/classes/class.TestAuthoringService.php
  *
  * $Id$
  *
  * This file is part of TAO.
  *
- * Automatically generated on 03.01.2011, 15:50:15 with ArgoUML PHP module 
- * (last revised $Date: 2008-04-19 08:22:08 +0200 (Sat, 19 Apr 2008) $)
+ * Automatically generated on 26.10.2012, 11:23:06 with ArgoUML PHP module 
+ * (last revised $Date: 2010-01-12 20:14:42 +0100 (Tue, 12 Jan 2010) $)
  *
- * @author Somsack SIPASSEUTH, <s.sipasseuth@gmail.com>
+ * @author Joel Bout, <joel.bout@tudor.lu>
  * @package taoTests
  * @subpackage models_classes
  */
@@ -22,11 +22,11 @@ if (0 > version_compare(PHP_VERSION, '5')) {
 }
 
 /**
- * include wfEngine_models_classes_ProcessAuthoringService
+ * include wfAuthoring_models_classes_ProcessService
  *
- * @author Somsack SIPASSEUTH, <s.sipasseuth@gmail.com>
+ * @author Joel Bout, <joel.bout@tudor.lu>
  */
-require_once('wfEngine/models/classes/class.ProcessAuthoringService.php');
+require_once('wfAuthoring/models/classes/class.ProcessService.php');
 
 /* user defined includes */
 // section 10-13-1-39--56440278:12d4c05ae3c:-8000:0000000000002E3C-includes begin
@@ -40,12 +40,12 @@ require_once('wfEngine/models/classes/class.ProcessAuthoringService.php');
  * Short description of class taoTests_models_classes_TestAuthoringService
  *
  * @access public
- * @author Somsack SIPASSEUTH, <s.sipasseuth@gmail.com>
+ * @author Joel Bout, <joel.bout@tudor.lu>
  * @package taoTests
  * @subpackage models_classes
  */
 class taoTests_models_classes_TestAuthoringService
-    extends wfEngine_models_classes_ProcessAuthoringService
+    extends wfAuthoring_models_classes_ProcessService
 {
     // --- ASSOCIATIONS ---
 
@@ -66,7 +66,7 @@ class taoTests_models_classes_TestAuthoringService
      * Short description of method getItemByActivity
      *
      * @access public
-     * @author Somsack SIPASSEUTH, <s.sipasseuth@gmail.com>
+     * @author Joel Bout, <joel.bout@tudor.lu>
      * @param  Resource activity
      * @return core_kernel_classes_Resource
      */
@@ -119,7 +119,7 @@ class taoTests_models_classes_TestAuthoringService
      * Short description of method getItemRunnerUrl
      *
      * @access public
-     * @author Somsack SIPASSEUTH, <s.sipasseuth@gmail.com>
+     * @author Joel Bout, <joel.bout@tudor.lu>
      * @return string
      */
     public function getItemRunnerUrl()
@@ -137,7 +137,7 @@ class taoTests_models_classes_TestAuthoringService
      * Short description of method getTestFromProcess
      *
      * @access public
-     * @author Somsack SIPASSEUTH, <s.sipasseuth@gmail.com>
+     * @author Joel Bout, <joel.bout@tudor.lu>
      * @param  Resource process
      * @return core_kernel_classes_Resource
      */
@@ -160,7 +160,7 @@ class taoTests_models_classes_TestAuthoringService
      * Short description of method __construct
      *
      * @access public
-     * @author Somsack SIPASSEUTH, <s.sipasseuth@gmail.com>
+     * @author Joel Bout, <joel.bout@tudor.lu>
      */
     public function __construct()
     {

@@ -12,7 +12,7 @@ return array(
 	'description' => 'TAO Tests extension',
 	'version' => '2.4',
 	'author' => 'CRP Henri Tudor',
-	'dependencies' => array('wfEngine', 'taoItems'),
+	'dependencies' => array('wfAuthoring', 'taoItems'),
 	'models' => array('http://www.tao.lu/Ontologies/TAOTest.rdf',
 		'http://www.tao.lu/Ontologies/taoFuncACL.rdf'),
 	'install' => array(
@@ -58,7 +58,7 @@ return array(
 	
 		#PROCESS BASE WWW the web path of the process authoring tool
 		'PROCESS_BASE_WWW'		=> ROOT_URL	.'wfEngine/views/',
-		'PROCESS_SCRIPT_URL'	=> ROOT_URL	.'wfEngine/views/js/authoring/',
+		'WFAUTHORING_SCRIPTS_URL'	=> ROOT_URL	.'wfAuthoring/views/js/authoring/',
 		'PROCESS_BASE_PATH'		=> ROOT_PATH.'wfEngine'.DIRECTORY_SEPARATOR,
 		'PROCESS_TPL_PATH'		=> ROOT_PATH.'wfEngine'.DIRECTORY_SEPARATOR
 									.'views'.DIRECTORY_SEPARATOR

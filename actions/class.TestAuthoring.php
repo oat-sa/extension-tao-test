@@ -8,7 +8,7 @@
  * @license GPLv2  http://www.opensource.org/licenses/gpl-2.0.php
  */
  
-class taoTests_actions_TestAuthoring extends wfEngine_actions_ProcessAuthoring {
+class taoTests_actions_TestAuthoring extends wfAuthoring_actions_ProcessAuthoring {
 	
 	public function __construct(){
 		
