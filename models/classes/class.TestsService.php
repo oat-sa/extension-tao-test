@@ -404,10 +404,8 @@ class taoTests_models_classes_TestsService
 
 		//set ACL right to delivery process initialization:
 		$extensionsManager = common_ext_ExtensionsManager::singleton();
-		$taoExtension = $extensionsManager->getExtensionById('tao');
-		$deliveryRoleConstant = $taoExtension->getConstant('INSTANCE_ROLE_DELIVERY');
 		$processInstance->editPropertyValues(new core_kernel_classes_Property(PROPERTY_PROCESS_INIT_ACL_MODE), INSTANCE_ACL_ROLE);
-		$processInstance->editPropertyValues(new core_kernel_classes_Property(PROPERTY_PROCESS_INIT_RESTRICTED_ROLE), $deliveryRoleConstant);
+		$processInstance->editPropertyValues(new core_kernel_classes_Property(PROPERTY_PROCESS_INIT_RESTRICTED_ROLE), INSTANCE_ROLE_DELIVERY);
 
 		$test->setPropertyValue(new core_kernel_classes_Property(TEST_TESTCONTENT_PROP), $processInstance->uriResource);
 		$this->updateProcessLabel($test);
@@ -620,9 +618,8 @@ class taoTests_models_classes_TestsService
 
 			//set ACL mode to role user restricted with role=subject
 			$extManager = common_ext_ExtensionsManager::singleton();
-			$taoExt = $extManager->getExtensionById('tao');
 			$activity->editPropertyValues(new core_kernel_classes_Property(PROPERTY_ACTIVITIES_ACL_MODE),  INSTANCE_ACL_ROLE_RESTRICTED_USER_DELIVERY);
-			$activity->editPropertyValues(new core_kernel_classes_Property(PROPERTY_ACTIVITIES_RESTRICTED_ROLE), $taoExt->getConstant('INSTANCE_ROLE_DELIVERY'));
+			$activity->editPropertyValues(new core_kernel_classes_Property(PROPERTY_ACTIVITIES_RESTRICTED_ROLE), INSTANCE_ROLE_DELIVERY);
 
 
 			//get the item runner service definition: must exists!
