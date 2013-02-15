@@ -1,4 +1,3 @@
-<?include(TAO_TPL_PATH . 'messages.tpl')?>
 <link rel="stylesheet" type="text/css" href="<?=BASE_WWW?>css/form_test.css" />
 
 <div id="test-left-container">
