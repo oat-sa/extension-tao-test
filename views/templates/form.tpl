@@ -1,3 +1,4 @@
+<? include(TAO_TPL_PATH . 'form_context.tpl') ?>
 <div id="form-title" class="ui-widget-header ui-corner-top ui-state-default">
 	<?=get_data('formTitle')?>
 </div>
@@ -5,4 +6,4 @@
 	<?=get_data('myForm')?>
 </div>
 
-<?include('footer.tpl');?>
+<? include('footer.tpl') ?>

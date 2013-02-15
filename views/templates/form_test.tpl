@@ -1,3 +1,4 @@
+<? include(TAO_TPL_PATH . 'form_context.tpl') ?>
 <link rel="stylesheet" type="text/css" href="<?=BASE_WWW?>css/form_test.css" />
 
 <div id="test-left-container">
@@ -16,4 +17,4 @@
 	</div>
 </div>
 
-<?include('footer.tpl');?>
+<? include('footer.tpl') ?>

@@ -56,8 +56,8 @@ var labels = <?=get_data('allItems')?>;
 		}
 
 		require(['require', 'jquery', 'generis.tree.select'], function(req, $, GenerisTreeSelectClass) {
-			if (ctx_extension) {
-				url = root_url + ctx_extension + '/' + ctx_module + '/';
+			if (typeof ctx_form_extension != 'undefined') {
+				url = root_url + ctx_form_extension + '/' + ctx_form_module + '/';
 			}
 
 			new GenerisTreeSelectClass('#item-tree', url + 'getItems',{
