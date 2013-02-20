@@ -23,6 +23,7 @@ return array(
 			array('type' => 'CheckFileSystemComponent', 'value' => array('id' => 'fs_taoTests_includes', 'location' => 'taoTests/includes', 'rights' => 'r'))
 		)
 	),
+	'managementRole' => 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole',
 	'classLoaderPackages' => array(
 		dirname(__FILE__).'/actions/',
 		dirname(__FILE__).'/helpers/'
