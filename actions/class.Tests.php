@@ -69,7 +69,8 @@ class taoTests_actions_Tests extends tao_actions_TaoModule {
 				}
 
 				//then save the property values as usual
-				$test = $this->service->bindProperties($test, $propertyValues);
+				$binder = new tao_models_classes_dataBinding_GenerisFormDataBinder($test);
+				$test = $binder->bind($propertyValues);
 
 				//edit process label:
 				$this->service->updateProcessLabel($test);
