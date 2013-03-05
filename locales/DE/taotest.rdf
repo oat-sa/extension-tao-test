@@ -3,7 +3,7 @@
     @sourceLanguage EN
     @targetLanguage DE
 -->
-<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xml:base="http://www.tao.lu/Ontologies/TAOTest.rdf">
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xml:base="http://www.tao.lu/Ontologies/TAOTest.rdf#">
   <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#active">
     <!--
     @sourceLanguage EN
@@ -129,5 +129,23 @@
     @predicate http://www.w3.org/2000/01/rdf-schema#comment
     -->
     <rdfs:comment xml:lang="DE"><![CDATA[Advanced test authoring mode]]></rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole">
+    <!--
+    @sourceLanguage EN
+    @targetLanguage DE
+    @source Tests Manager
+    @subject http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole
+    @predicate http://www.w3.org/2000/01/rdf-schema#label
+    -->
+    <rdfs:label xml:lang="DE"><![CDATA[Tests Manager]]></rdfs:label>
+    <!--
+    @sourceLanguage EN
+    @targetLanguage DE
+    @source The Tests Manager Role
+    @subject http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole
+    @predicate http://www.w3.org/2000/01/rdf-schema#comment
+    -->
+    <rdfs:comment xml:lang="DE"><![CDATA[The Tests Manager Role]]></rdfs:comment>
   </rdf:Description>
 </rdf:RDF>
