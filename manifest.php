@@ -63,8 +63,9 @@ return array(
 		#PROCESS BASE WWW the web path of the process authoring tool
 		'PROCESS_BASE_WWW'		=> ROOT_URL	.'wfEngine/views/',
 		'WFAUTHORING_SCRIPTS_URL'	=> ROOT_URL	.'wfAuthoring/views/js/authoring/',
-		'PROCESS_BASE_PATH'		=> ROOT_PATH.'wfEngine'.DIRECTORY_SEPARATOR,
-		'PROCESS_TPL_PATH'		=> ROOT_PATH.'wfEngine'.DIRECTORY_SEPARATOR
+		'WFAUTHORING_CSS_URL'	=> ROOT_URL. 'wfAuthoring/views/css/',
+		'PROCESS_BASE_PATH'		=> ROOT_PATH.'wfAuthoring'.DIRECTORY_SEPARATOR,
+		'PROCESS_TPL_PATH'		=> ROOT_PATH.'wfAuthoring'.DIRECTORY_SEPARATOR
 									.'views'.DIRECTORY_SEPARATOR
 									.'templates'.DIRECTORY_SEPARATOR
 									.'authoring'.DIRECTORY_SEPARATOR,
