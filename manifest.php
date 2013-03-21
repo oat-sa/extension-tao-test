@@ -46,6 +46,9 @@ return array(
 		)
 	),
 	'managementRole' => 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole',
+	'optimizableClasses' => array(
+		'http://www.tao.lu/Ontologies/TAOTest.rdf#Test'		
+	),
 	'constants' => array(
 		# actions directory
 		"DIR_ACTIONS"			=> $extpath."actions".DIRECTORY_SEPARATOR,
