@@ -545,7 +545,7 @@ class taoTests_models_classes_TestsService
 				if($i == $totalNumber-1){
 					//it is normal, since it is the last activity and item
 				}else{
-					throw new Exception('the next activity of the connector is not found');
+					throw new common_Exception('the next activity of the connector is not found');
 				}
 			}
 		}
@@ -607,33 +607,22 @@ class taoTests_models_classes_TestsService
 		$activities = $authoringService->getActivitiesByProcess($process);
 		foreach($activities as $activity){
 			if(!$authoringService->deleteActivity($activity)){
-				return $returnValue;
+				throw new common_exception_Error('Unable to delete Activity '.$activity->getUri());
 			}
 		}
 
-        if (count($items) == 0){
-            // This means that we do not set any items to the test.
-            // It might happen when we simply want to unbind all items
-            // from a test.
-            return true;
-        }
-
 		//create the list of activities and interactive services and items plus their appropriate property values:
-		$totalNumber = count($items);//0...n
-		$previousConnector = null;
-		for($i=0;$i<$totalNumber;$i++){
-			$item = $items[$i];
+		$previousActivity = null;
+		$connectorService = wfAuthoring_models_classes_ConnectorService::singleton();
+		
+		foreach ($items as $item) {
 			if(!($item instanceof core_kernel_classes_Resource)){
-				throw new Exception("the array element n${i} is not a Resource");
+				throw new common_Exception("An item provided to ".__FUNCTION__." is not a resource but ".gettype($item));
 			}
 
 			//create an activity
 			$activity = null;
 			$activity = $authoringService->createActivity($process, "item: {$item->getLabel()}");
-			if($i==0){
-				//set the property value as initial
-				$activity->editPropertyValues(new core_kernel_classes_Property(PROPERTY_ACTIVITIES_ISINITIAL), GENERIS_TRUE);
-			}
 
 			//set property value visible to true
 			$activity->editPropertyValues(new core_kernel_classes_Property(PROPERTY_ACTIVITIES_ISHIDDEN), GENERIS_FALSE);
@@ -658,34 +647,16 @@ class taoTests_models_classes_TestsService
 			$authoringService->setActualParameter($interactiveService, $testUriParam, $test->uriResource, PROPERTY_CALLOFSERVICES_ACTUALPARAMETERIN);//constant: we know it!
 			$authoringService->setActualParameter($interactiveService, $deliveryUriParam, $var_delivery->uriResource, PROPERTY_CALLOFSERVICES_ACTUALPARAMETERIN, PROPERTY_ACTUALPARAMETER_PROCESSVARIABLE);//don't know yet so process var!
 
-			if($totalNumber == 1){
-				if(!is_null($interactiveService) && $interactiveService instanceof core_kernel_classes_Resource){
-					return true;
-				}
+			if(!is_null($previousActivity)) {
+				$connectorService->createSequential($previousActivity, $activity);
+			} else {
+				//set the property value as initial
+				$activity->editPropertyValues(new core_kernel_classes_Property(PROPERTY_ACTIVITIES_ISINITIAL), GENERIS_TRUE);
 			}
-			if($i<$totalNumber-1){
-				//get the connector created as the same time as the activity and set the type to "sequential" and the next activity as the selected service definition:
-				$connector = $authoringService->createConnector($activity);
-				if(!($connector instanceof core_kernel_classes_Resource) || is_null($connector)){
-					throw new Exception("the created connector is not a resource");
-					return $returnValue;
-				}
-
-				$connector->setPropertyValue(new core_kernel_classes_Property(PROPERTY_CONNECTORS_TYPE), INSTANCE_TYPEOFCONNECTORS_SEQUENCE);
-
-				if(!is_null($previousConnector)){
-					$previousConnector->setPropertyValue(new core_kernel_classes_Property(PROPERTY_STEP_NEXT), $activity->uriResource);
-				}
-				$previousConnector = $connector;//set the current connector as "the previous one" for the next loop
-			}
-			else{
-				//if it is the last test of the array, no need to add a connector: just connect the previous connector to the last activity
-				$previousConnector->setPropertyValue(new core_kernel_classes_Property(PROPERTY_STEP_NEXT), $activity->uriResource);
-				//every action is performed:
-				$returnValue = true;
-			}
+			$previousActivity = $activity;
 		}
-        // section 10-13-1-39-7cf56b28:12c53e4afe8:-8000:0000000000002C08 end
+		$returnValue = true;
+		// section 10-13-1-39-7cf56b28:12c53e4afe8:-8000:0000000000002C08 end
 
         return (bool) $returnValue;
     }
