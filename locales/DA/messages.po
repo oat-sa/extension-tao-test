@@ -1,104 +1,107 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: TAO v2.4-alpha1\n"
-"PO-Revision-Date: 2013-02-15T19:18:22\n"
-"Last-Translator: TAO Translation Team <translation@tao.lu>\n"
+"PO-Revision-Date: 2013-03-29 11:15+0200\n"
+"Last-Translator: Anders <aos@vucnordjylland.dk>\n"
+"Language: da\n"
 "MIME-Version: 1.0\n"
-"Language: DA\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Pootle 2.1.6\n"
 
 #, tao-public
 msgid "Advanced Authoring Tool"
-msgstr ""
+msgstr "Avanceret forfatter værktøj"
 
 msgid "advanced mode"
-msgstr ""
+msgstr "avanceret tilstand"
 
 msgid "Available Items"
-msgstr ""
+msgstr "Tilgængelige Items"
 
 msgid "Class saved"
-msgstr ""
+msgstr "Klasse gemt"
 
 #, tao-public
 msgid "Combine a selection of items into tests."
-msgstr ""
+msgstr "Kombinerer et udvalg af items til tests."
 
 msgid "create table"
-msgstr ""
+msgstr "opret tabel"
 
 msgid "delete"
-msgstr ""
+msgstr "slet"
 
 msgid "Drag and drop the items to order them"
-msgstr ""
+msgstr "Drag and drop item for at ordne dem"
 
 msgid "duplicate"
-msgstr ""
+msgstr "kopier"
 
 msgid "Edit test class"
-msgstr ""
+msgstr "Rediger test klasse"
 
 msgid "export"
-msgstr ""
+msgstr "eksport"
 
 msgid "import"
-msgstr ""
+msgstr "importere"
 
 msgid "Items sequence"
-msgstr ""
+msgstr "Item rækkefølge"
 
 msgid "lists"
-msgstr ""
+msgstr "liste"
 
 #, tao-public
 msgid "Manage tests"
-msgstr ""
+msgstr "Administrer test"
 
 msgid "meta data"
-msgstr ""
+msgstr "metadata"
 
 msgid "move"
-msgstr ""
+msgstr "flyt"
 
 msgid "new class"
-msgstr ""
+msgstr "ny klasse"
 
 msgid "new test"
-msgstr ""
+msgstr "ny test"
 
 msgid "Save"
-msgstr ""
+msgstr "Gem"
 
 msgid "search"
-msgstr ""
+msgstr "søg"
 
 msgid "Select the items composing the test."
-msgstr ""
+msgstr "Vælg de items der skal bruges i testen."
 
 msgid "Sequence saved successfully"
-msgstr ""
+msgstr "Rækkefølge gemt"
 
 msgid "simple mode"
-msgstr ""
+msgstr "enkel tilstand"
 
 msgid "Test properties"
-msgstr ""
+msgstr "Test egenskaber"
 
 msgid "Test saved"
-msgstr ""
+msgstr "Test gemt"
 
 #, tao-public
 msgid "Tests"
-msgstr ""
+msgstr "Tests"
 
 msgid "Tests library"
-msgstr ""
+msgstr "Test arkiv"
 
 msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
 msgstr ""
+"Test tilstand (rækkefølge, pointgivning, opsamling etc.) og layout bliver "
+"også konfigureret her."
 
 msgid "The Test module allows to combine a selection of Items to a Test."
-msgstr ""
-
+msgstr "I Test modulet kan du kombinere et udvalg af items til en test."
