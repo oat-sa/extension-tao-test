@@ -130,4 +130,22 @@
     -->
     <rdfs:comment xml:lang="DA"><![CDATA[Advanced test authoring mode]]></rdfs:comment>
   </rdf:Description>
+  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole">
+    <!--
+    @sourceLanguage EN
+    @targetLanguage DA
+    @source Tests Manager
+    @subject http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole
+    @predicate http://www.w3.org/2000/01/rdf-schema#label
+    -->
+    <rdfs:label xml:lang="DA"><![CDATA[Tests Manager]]></rdfs:label>
+    <!--
+    @sourceLanguage EN
+    @targetLanguage DA
+    @source The Tests Manager Role
+    @subject http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole
+    @predicate http://www.w3.org/2000/01/rdf-schema#comment
+    -->
+    <rdfs:comment xml:lang="DA"><![CDATA[The Tests Manager Role]]></rdfs:comment>
+  </rdf:Description>
 </rdf:RDF>

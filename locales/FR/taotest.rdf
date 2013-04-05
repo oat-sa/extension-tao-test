@@ -12,7 +12,7 @@
     @subject http://www.tao.lu/Ontologies/TAOTest.rdf#active
     @predicate http://www.w3.org/2000/01/rdf-schema#label
     -->
-    <rdfs:label xml:lang="FR"><![CDATA[Actif]]></rdfs:label>
+    <rdfs:label xml:lang="FR"><![CDATA[Active]]></rdfs:label>
     <!--
     @sourceLanguage EN
     @targetLanguage FR
@@ -20,7 +20,7 @@
     @subject http://www.tao.lu/Ontologies/TAOTest.rdf#active
     @predicate http://www.w3.org/2000/01/rdf-schema#comment
     -->
-    <rdfs:comment xml:lang="FR"><![CDATA[Etat actif/inactif du test]]></rdfs:comment>
+    <rdfs:comment xml:lang="FR"><![CDATA[Active / Inactive state]]></rdfs:comment>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#Test">
     <!--
@@ -48,7 +48,7 @@
     @subject http://www.tao.lu/Ontologies/TAOTest.rdf#TestContent
     @predicate http://www.w3.org/2000/01/rdf-schema#label
     -->
-    <rdfs:label xml:lang="FR"><![CDATA[Contenu du Test]]></rdfs:label>
+    <rdfs:label xml:lang="FR"><![CDATA[Test Content]]></rdfs:label>
     <!--
     @sourceLanguage EN
     @targetLanguage FR
@@ -56,7 +56,7 @@
     @subject http://www.tao.lu/Ontologies/TAOTest.rdf#TestContent
     @predicate http://www.w3.org/2000/01/rdf-schema#comment
     -->
-    <rdfs:comment xml:lang="FR"><![CDATA[Contenu du Test]]></rdfs:comment>
+    <rdfs:comment xml:lang="FR"><![CDATA[Test Content]]></rdfs:comment>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#AuthoringMode">
     <!--
@@ -66,7 +66,7 @@
     @subject http://www.tao.lu/Ontologies/TAOTest.rdf#AuthoringMode
     @predicate http://www.w3.org/2000/01/rdf-schema#label
     -->
-    <rdfs:label xml:lang="FR"><![CDATA[Mode d'Edition]]></rdfs:label>
+    <rdfs:label xml:lang="FR"><![CDATA[Authoring Mode]]></rdfs:label>
     <!--
     @sourceLanguage EN
     @targetLanguage FR
@@ -74,7 +74,7 @@
     @subject http://www.tao.lu/Ontologies/TAOTest.rdf#AuthoringMode
     @predicate http://www.w3.org/2000/01/rdf-schema#comment
     -->
-    <rdfs:comment xml:lang="FR"><![CDATA[Mode d'Edition]]></rdfs:comment>
+    <rdfs:comment xml:lang="FR"><![CDATA[Authoring Mode]]></rdfs:comment>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#TestAuthoringModes">
     <!--
@@ -84,7 +84,7 @@
     @subject http://www.tao.lu/Ontologies/TAOTest.rdf#TestAuthoringModes
     @predicate http://www.w3.org/2000/01/rdf-schema#label
     -->
-    <rdfs:label xml:lang="FR"><![CDATA[Modes d'Edition des Tests]]></rdfs:label>
+    <rdfs:label xml:lang="FR"><![CDATA[Test Authoring Modes]]></rdfs:label>
     <!--
     @sourceLanguage EN
     @targetLanguage FR
@@ -92,7 +92,7 @@
     @subject http://www.tao.lu/Ontologies/TAOTest.rdf#TestAuthoringModes
     @predicate http://www.w3.org/2000/01/rdf-schema#comment
     -->
-    <rdfs:comment xml:lang="FR"><![CDATA[Modes d'Edition des Tests]]></rdfs:comment>
+    <rdfs:comment xml:lang="FR"><![CDATA[Test Authoring Modes]]></rdfs:comment>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#AuthoringModeSimple">
     <!--
