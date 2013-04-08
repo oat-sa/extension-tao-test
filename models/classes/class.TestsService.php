@@ -550,24 +550,7 @@ class taoTests_models_classes_TestsService
 			}
 		}
 
-		if(count($items) > 0){
-
-			ksort($items);
-
-			$itemClass = new core_kernel_classes_Class(TAO_ITEM_CLASS);
-			$itemSubClasses = array();
-			foreach($itemClass->getSubClasses(true) as $itemSubClass){
-				$itemSubClasses[] = $itemSubClass->uriResource;
-			}
-
-			foreach($items as $item){
-				$clazz = $this->getClass($item);
-				if(in_array($clazz->uriResource, $itemSubClasses)){
-					$returnValue[] = $clazz;
-				}
-				$returnValue[] = $item;
-			}
-		}
+		$returnValue = $items;
         // section 10-13-1-39-7cf56b28:12c53e4afe8:-8000:0000000000002C05 end
 
         return (array) $returnValue;

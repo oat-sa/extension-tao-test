@@ -113,35 +113,36 @@ class taoTests_actions_Tests extends tao_actions_TaoModule {
 		}else{
 			//remove the authoring button
 			$myForm->removeElement(tao_helpers_Uri::encode(TEST_TESTCONTENT_PROP));
+			
+			$itemSequence = array();
+			$itemUris = array();
+			$i = 1;
+			foreach($this->service->getTestItems($test) as $item){
+				$itemUris[] = $item->getUri();
+				$itemSequence[$i] = array(
+					'uri' 	=> tao_helpers_Uri::encode($item->getUri()),
+					'label' => $item->getLabel()
+				);
+				$i++;
+			}
 
-			//the default option is the simple mode:
+			// data for item sequence
 			$allItems = array();
 			foreach($this->service->getAllItems() as $itemUri => $itemLabel){
 				$allItems['item_'.tao_helpers_Uri::encode($itemUri)] = $itemLabel;
 			}
 			$this->setData('allItems', json_encode($allItems));
-
-			$relatedItems = array();
-			$itemSequence = array();
-			$i = 1;
-			foreach($this->service->getTestItems($test) as $item){
-
-				$relatedItems[] = tao_helpers_Uri::encode($item->uriResource);
-				if(!$item->isClass()){
-					$itemSequence[$i] = array(
-						'uri' 	=> tao_helpers_Uri::encode($item->uriResource),
-						'label' => $item->getLabel()
-					);
-					$i++;
-				}
-			}
-
 			$this->setData('itemSequence', $itemSequence);
-			$this->setData('relatedItems', json_encode($relatedItems));
+			
+			// data for generis tree form
+			$this->setData('relatedItems', json_encode(tao_helpers_Uri::encodeArray($itemUris)));
+			$openNodes = tao_models_classes_GenerisTreeFactory::getNodesToOpen($itemUris, new core_kernel_classes_Class(TAO_ITEM_CLASS));
+			$this->setData('itemRootNode', TAO_ITEM_CLASS);
+			$this->setData('itemOpenNodes', $openNodes);
 		}
 
-		$this->setData('uri', tao_helpers_Uri::encode($test->uriResource));
-		$this->setData('classUri', tao_helpers_Uri::encode($clazz->uriResource));
+		$this->setData('uri', tao_helpers_Uri::encode($test->getUri()));
+		$this->setData('classUri', tao_helpers_Uri::encode($clazz->getUri()));
 		$this->setData('formTitle', __('Test properties'));
 		$this->setData('myForm', $myForm->render());
 		$this->setView('form_test.tpl');

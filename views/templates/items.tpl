@@ -60,7 +60,7 @@ var labels = <?=get_data('allItems')?>;
 				url = root_url + ctx_form_extension + '/' + ctx_form_module + '/';
 			}
 
-			new GenerisTreeSelectClass('#item-tree', url + 'getItems',{
+			new GenerisTreeSelectClass('#item-tree', root_url + 'tao/GenerisTree/getData',{
 				actionId: 'item',
 				saveUrl: url + 'saveItems',
 				paginate:	10,
@@ -80,6 +80,10 @@ var labels = <?=get_data('allItems')?>;
 					}
 				},
 				checkedNodes : sequence,
+				serverParameters: {
+					openNodes: <?=json_encode(get_data('itemOpenNodes'))?>,
+					rootNode: <?=json_encode(get_data('itemRootNode'))?>
+				},
 				callback: {
 					checkPaginate: function(NODE, TREE_OBJ) {
 						//Check the unchecked that must be checked... olè!
