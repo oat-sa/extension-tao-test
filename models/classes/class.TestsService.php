@@ -181,20 +181,11 @@ class taoTests_models_classes_TestsService
 		}
 
 		if($this->isTestClass($clazz)){
-
-			$testClass = $this->createSubClass($clazz, $label);
-
-			foreach($properties as $propertyName => $propertyValue){
-				$myProperty = $subjectClass->createProperty(
-					$propertyName,
-					$propertyName . ' ' . $label .' test property created from ' . get_class($this) . ' the '. date('Y-m-d h:i:s')
-				);
-
-				//@todo implement check if there is a widget key and/or a range key
-			}
-			$returnValue = $testClass;
+            return $this->createSubClass($clazz, $label);
 		}
-
+        else{
+            throw new common_exception_InconsistentData($clazz . ' should be a Class Test ');
+        }
         // section 127-0-1-1--728644f3:12512379b22:-8000:0000000000001C2B end
 
         return $returnValue;
