@@ -65,7 +65,7 @@ class TestsTestCase extends UnitTestCase {
 		
 		//check parent class
 		$this->assertTrue(defined('TAO_TEST_CLASS'));
-		$testClass = $this->testsService->getTestClass();
+		$testClass = $this->testsService->getRootclass();
 		$this->assertIsA($testClass, 'core_kernel_classes_Class');
 		$this->assertEqual(TAO_TEST_CLASS, $testClass->uriResource);
 		

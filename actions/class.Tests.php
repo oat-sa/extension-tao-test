@@ -31,8 +31,12 @@
  * @license GPLv2  http://www.opensource.org/licenses/gpl-2.0.php
  *
  */
-class taoTests_actions_Tests extends tao_actions_TaoModule {
+class taoTests_actions_Tests extends tao_actions_SaSModule {
 
+	protected function getClassService() {
+		return taoTests_models_classes_TestsService::singleton();
+	}
+	
 	/**
 	 * constructor: initialize the service and the default data
 	 */
@@ -56,7 +60,7 @@ class taoTests_actions_Tests extends tao_actions_TaoModule {
 	 */
 	protected function getRootClass()
 	{
-		return $this->service->getTestClass();
+		return $this->service->getRootclass();
 	}
 
 
@@ -178,7 +182,7 @@ class taoTests_actions_Tests extends tao_actions_TaoModule {
 			$this->setSessionAttribute('property_mode', $this->getRequestParameter('property_mode'));
 		}
 
-		$myForm = $this->editClass($clazz, $this->service->getTestClass());
+		$myForm = $this->editClass($clazz, $this->service->getRootclass());
 		if($myForm->isSubmited()){
 			if($myForm->isValid()){
 				if($clazz instanceof core_kernel_classes_Resource){

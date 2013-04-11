@@ -31,48 +31,9 @@
  */
 class taoTests_actions_SaSTests extends taoTests_actions_Tests {
 
-    
-    
-    /**
-     * @see Tests::__construct()
-     */
-    public function __construct() {
-    	tao_helpers_Context::load('STANDALONE_MODE');
-		parent::__construct();
-    }
-    
-	/**
-	 * @see TaoModule::setView()
-	 * @param string $identifier the view name
-	 * @param boolean $useMetaExtensionView use a view from the parent extention
-	 * @return mixed 
-	 */
-    public function setView($identifier, $useMetaExtensionView = false) {
-		if(tao_helpers_Request::isAjax()){
-			return parent::setView($identifier, $useMetaExtensionView);
-		}
-    	if($useMetaExtensionView){
-			$this->setData('includedView', $identifier);
-		}
-		else{
-			$this->setData('includedView', DIR_VIEWS . 'templates/' . $identifier);
-		}
-		return parent::setView('sas.tpl', true);
-    }
-	
-	/**
-     * overrided to prevent exception: 
-     * if no class is selected, the root class is returned 
-     * @see TaoModule::getCurrentClass()
-     * @return core_kernel_class_Class
-     */
-    protected function getCurrentClass() {
-        if($this->hasRequestParameter('classUri')){
-        	return parent::getCurrentClass();
-        }
-		return $this->getRootClass();
-    }
-	
+	protected function getClassService() {
+		return taoTests_models_classes_TestsService::singleton();
+	}
 	/**
 	 * Render the tree and the list to select and order the test related items 
 	 * @return void
