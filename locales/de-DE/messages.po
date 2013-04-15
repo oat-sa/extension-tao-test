@@ -96,6 +96,6 @@ msgstr "Tests-Bibliothek"
 msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
 msgstr "Test-Modus (Sequenzierung, Scoring, Kumulierung, etc.) und Layout werden ebenfalls hier festgelegt."
 
-msgid "The Test module allows to combine a selection of Items to a Test."
+msgid "The Tests module allows to combine a selection of Items to a Test."
 msgstr "Das Test-Modul erlaubt das Zusammenfassen von Items zu Tests."
 

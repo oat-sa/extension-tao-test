@@ -96,6 +96,6 @@ msgstr "Testarkiv"
 msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
 msgstr "Testmetoden (ordningsföljd, poängräkning, ihopsamling etc.) och layouten byggs även upp här."
 
-msgid "The Test module allows to combine a selection of Items to a Test."
+msgid "The Tests module allows to combine a selection of Items to a Test."
 msgstr "Testmodulen låter dig kombinera ett urval av frågor till ett test"
 

@@ -96,6 +96,6 @@ msgstr "Test Sammlung"
 msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
 msgstr "Den Test Modus (Sequenzéieren, Bewerten, Sammelen, etc.) an de Layout gin och hei konfiguréiert."
 
-msgid "The Test module allows to combine a selection of Items to a Test."
+msgid "The Tests module allows to combine a selection of Items to a Test."
 msgstr "Den Test Modul erlaabt eng Selektioun vun Itemen matt engem Test ze verbannen."
 
