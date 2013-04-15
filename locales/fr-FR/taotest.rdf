@@ -12,7 +12,7 @@
     @subject http://www.tao.lu/Ontologies/TAOTest.rdf#active
     @predicate http://www.w3.org/2000/01/rdf-schema#label
     -->
-    <rdfs:label xml:lang="fr-FR"><![CDATA[Active]]></rdfs:label>
+    <rdfs:label xml:lang="fr-FR"><![CDATA[Actif]]></rdfs:label>
     <!--
     @sourceLanguage en-US
     @targetLanguage fr-FR
@@ -20,7 +20,7 @@
     @subject http://www.tao.lu/Ontologies/TAOTest.rdf#active
     @predicate http://www.w3.org/2000/01/rdf-schema#comment
     -->
-    <rdfs:comment xml:lang="fr-FR"><![CDATA[Active / Inactive state]]></rdfs:comment>
+    <rdfs:comment xml:lang="fr-FR"><![CDATA[Etat actif/inactif]]></rdfs:comment>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#Test">
     <!--
@@ -48,7 +48,7 @@
     @subject http://www.tao.lu/Ontologies/TAOTest.rdf#TestContent
     @predicate http://www.w3.org/2000/01/rdf-schema#label
     -->
-    <rdfs:label xml:lang="fr-FR"><![CDATA[Test Content]]></rdfs:label>
+    <rdfs:label xml:lang="fr-FR"><![CDATA[Contenu du test]]></rdfs:label>
     <!--
     @sourceLanguage en-US
     @targetLanguage fr-FR
@@ -66,7 +66,7 @@
     @subject http://www.tao.lu/Ontologies/TAOTest.rdf#AuthoringMode
     @predicate http://www.w3.org/2000/01/rdf-schema#label
     -->
-    <rdfs:label xml:lang="fr-FR"><![CDATA[Authoring Mode]]></rdfs:label>
+    <rdfs:label xml:lang="fr-FR"><![CDATA[Mode d'édition]]></rdfs:label>
     <!--
     @sourceLanguage en-US
     @targetLanguage fr-FR
@@ -74,7 +74,7 @@
     @subject http://www.tao.lu/Ontologies/TAOTest.rdf#AuthoringMode
     @predicate http://www.w3.org/2000/01/rdf-schema#comment
     -->
-    <rdfs:comment xml:lang="fr-FR"><![CDATA[Authoring Mode]]></rdfs:comment>
+    <rdfs:comment xml:lang="fr-FR"><![CDATA[Mode d'édition]]></rdfs:comment>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#TestAuthoringModes">
     <!--
@@ -84,7 +84,7 @@
     @subject http://www.tao.lu/Ontologies/TAOTest.rdf#TestAuthoringModes
     @predicate http://www.w3.org/2000/01/rdf-schema#label
     -->
-    <rdfs:label xml:lang="fr-FR"><![CDATA[Test Authoring Modes]]></rdfs:label>
+    <rdfs:label xml:lang="fr-FR"><![CDATA[Modes d'édition des tests]]></rdfs:label>
     <!--
     @sourceLanguage en-US
     @targetLanguage fr-FR
@@ -92,7 +92,7 @@
     @subject http://www.tao.lu/Ontologies/TAOTest.rdf#TestAuthoringModes
     @predicate http://www.w3.org/2000/01/rdf-schema#comment
     -->
-    <rdfs:comment xml:lang="fr-FR"><![CDATA[Test Authoring Modes]]></rdfs:comment>
+    <rdfs:comment xml:lang="fr-FR"><![CDATA[Mode d'édition des tests]]></rdfs:comment>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#AuthoringModeSimple">
     <!--
@@ -110,7 +110,7 @@
     @subject http://www.tao.lu/Ontologies/TAOTest.rdf#AuthoringModeSimple
     @predicate http://www.w3.org/2000/01/rdf-schema#comment
     -->
-    <rdfs:comment xml:lang="fr-FR"><![CDATA[simple test authoring mode]]></rdfs:comment>
+    <rdfs:comment xml:lang="fr-FR"><![CDATA[mode d'édition simple]]></rdfs:comment>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#AuthoringModeAdvanced">
     <!--
@@ -120,7 +120,7 @@
     @subject http://www.tao.lu/Ontologies/TAOTest.rdf#AuthoringModeAdvanced
     @predicate http://www.w3.org/2000/01/rdf-schema#label
     -->
-    <rdfs:label xml:lang="fr-FR"><![CDATA[Advanced]]></rdfs:label>
+    <rdfs:label xml:lang="fr-FR"><![CDATA[Avancé]]></rdfs:label>
     <!--
     @sourceLanguage en-US
     @targetLanguage fr-FR
@@ -128,7 +128,7 @@
     @subject http://www.tao.lu/Ontologies/TAOTest.rdf#AuthoringModeAdvanced
     @predicate http://www.w3.org/2000/01/rdf-schema#comment
     -->
-    <rdfs:comment xml:lang="fr-FR"><![CDATA[Advanced test authoring mode]]></rdfs:comment>
+    <rdfs:comment xml:lang="fr-FR"><![CDATA[Mode d'édition des tests avancé]]></rdfs:comment>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole">
     <!--
@@ -138,7 +138,7 @@
     @subject http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole
     @predicate http://www.w3.org/2000/01/rdf-schema#label
     -->
-    <rdfs:label xml:lang="fr-FR"><![CDATA[Tests Manager]]></rdfs:label>
+    <rdfs:label xml:lang="fr-FR"><![CDATA[Gestionnaire Tests]]></rdfs:label>
     <!--
     @sourceLanguage en-US
     @targetLanguage fr-FR
@@ -146,6 +146,6 @@
     @subject http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole
     @predicate http://www.w3.org/2000/01/rdf-schema#comment
     -->
-    <rdfs:comment xml:lang="fr-FR"><![CDATA[The Tests Manager Role]]></rdfs:comment>
+    <rdfs:comment xml:lang="fr-FR"><![CDATA[Le rôle Gestionnaire Tests]]></rdfs:comment>
   </rdf:Description>
 </rdf:RDF>
