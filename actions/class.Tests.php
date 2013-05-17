@@ -111,38 +111,11 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 		$this->setData('authoringMode', 'simple');
 		$authoringMode = $test->getUniquePropertyValue(new core_kernel_classes_Property(TAO_TEST_AUTHORINGMODE_PROP));
 		$myForm->removeElement(tao_helpers_Uri::encode(TAO_TEST_AUTHORINGMODE_PROP));
-
-		if($authoringMode->uriResource == TAO_TEST_ADVANCEDMODE){
-			$this->setData('authoringMode', 'advanced');
-		}else{
-			//remove the authoring button
-			$myForm->removeElement(tao_helpers_Uri::encode(TEST_TESTCONTENT_PROP));
-			
-			$itemSequence = array();
-			$itemUris = array();
-			$i = 1;
-			foreach($this->service->getTestItems($test) as $item){
-				$itemUris[] = $item->getUri();
-				$itemSequence[$i] = array(
-					'uri' 	=> tao_helpers_Uri::encode($item->getUri()),
-					'label' => $item->getLabel()
-				);
-				$i++;
-			}
-
-			// data for item sequence
-			$allItems = array();
-			foreach($this->service->getAllItems() as $itemUri => $itemLabel){
-				$allItems['item_'.tao_helpers_Uri::encode($itemUri)] = $itemLabel;
-			}
-			$this->setData('allItems', json_encode($allItems));
-			$this->setData('itemSequence', $itemSequence);
-			
-			// data for generis tree form
-			$this->setData('relatedItems', json_encode(tao_helpers_Uri::encodeArray($itemUris)));
-			$openNodes = tao_models_classes_GenerisTreeFactory::getNodesToOpen($itemUris, new core_kernel_classes_Class(TAO_ITEM_CLASS));
-			$this->setData('itemRootNode', TAO_ITEM_CLASS);
-			$this->setData('itemOpenNodes', $openNodes);
+		$myForm->removeElement(tao_helpers_Uri::encode(TEST_TESTCONTENT_PROP));
+		
+		$modelImpl = $this->service->getTestModelImplementation($test);
+		if (!empty($modelImpl)) {
+			$this->setData('authoring', $modelImpl->getAuthoring($test));
 		}
 
 		$this->setData('uri', tao_helpers_Uri::encode($test->getUri()));

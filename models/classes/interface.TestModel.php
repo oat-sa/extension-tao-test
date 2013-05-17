@@ -14,24 +14,42 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
- * Copyright (c) 2002-2008 (original work) Public Research Centre Henri Tudor & University of Luxembourg (under the project TAO & TAO2);
- *               2008-2010 (update and modification) Deutsche Institut für Internationale Pädagogische Forschung (under the project TAO-TRANSFER);
+ * Copyright (c) 2008-2010 (original work) Deutsche Institut für Internationale Pädagogische Forschung (under the project TAO-TRANSFER);
  *               2009-2012 (update and modification) Public Research Centre Henri Tudor (under the project TAO-SUSTAIN & TAO-DEV);
  * 
  */
-?>
-<?php
-/**
- * Subjects Controller provide actions performed from url resolution
- * 
- * @author Bertrand Chevrier, <taosupport@tudor.lu>
- * @package taoTests
- * @subpackage actions
- * @license GPLv2  http://www.opensource.org/licenses/gpl-2.0.php
- * 
- */
 
-class taoTests_actions_Main extends tao_actions_Main {
-	
+
+/**
+ * Interface to implement by test models
+ *
+ * @access public
+ * @author Joel Bout, <joel@taotesting.com>
+ * @package taoItems
+ * @subpackage models_classes
+ */
+interface taoTests_models_classes_TestModel
+{
+
+    /**
+     * constructor called
+     *
+     * @access public
+     * @author Joel Bout, <joel@taotesting.com>
+     * @return mixed
+     */
+    public function __construct();
+
+    /**
+     * renders the test authoring
+     *
+     * @access public
+     * @author Joel Bout, <joel@taotesting.com>
+     * @param  Resource test
+     * @return string
+     */
+    public function getAuthoring( core_kernel_classes_Resource $test);
+
 }
+
 ?>

@@ -642,7 +642,33 @@ class taoTests_models_classes_TestsService
 
         return (bool) $returnValue;
     }
+    
+    public function getTestModel(core_kernel_classes_Resource $test) {
+		return $test->getOnePropertyValue(new core_kernel_classes_Property(PROPERTY_TEST_TESTMODEL));
+    }
 
+    /**
+     * Returns the implementation of an items test model
+     * 
+     * @param core_kernel_classes_Resource $test
+     * @return taoTests_models_classes_TestModel
+     */
+    public function getTestModelImplementation(core_kernel_classes_Resource $test) {
+    	$returnValue = null;
+		$model = $this->getTestModel($test);
+		if (!empty($model)) {
+			$classname = (string)$model->getOnePropertyValue(new core_kernel_classes_Property(PROPERTY_TESTMODEL_IMPLEMENTATION));
+			if (!empty($classname)) {
+				if (class_exists($classname) && in_array('taoTests_models_classes_TestModel', class_implements($classname))) {
+					$returnValue = new $classname();
+				} else {
+					throw new common_exception_Error('Test model service '.$classname.' not found, or not compatible for test model '.$model->getLabel());
+				}
+			}
+		}
+		return $returnValue;
+    }
+    
 } /* end of class taoTests_models_classes_TestsService */
 
 ?>

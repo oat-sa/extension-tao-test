@@ -31,31 +31,41 @@
     <widget:widget rdf:resource="http://www.tao.lu/datatypes/WidgetDefinitions.rdf#Authoring"/>
     <tao:TAOGUIOrder><![CDATA[20]]></tao:TAOGUIOrder>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#AuthoringMode">
+  
+  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#TestModel">
+    <rdfs:label xml:lang="en-US"><![CDATA[Test Model]]></rdfs:label>
+    <rdfs:comment xml:lang="en-US"><![CDATA[Test Model]]></rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://www.tao.lu/Ontologies/TAO.rdf#TAOObject"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#TestTestModel">
     <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
-    <rdfs:label xml:lang="en-US"><![CDATA[Authoring Mode]]></rdfs:label>
-    <rdfs:comment xml:lang="en-US"><![CDATA[Authoring Mode]]></rdfs:comment>
+    <rdfs:label xml:lang="en-US"><![CDATA[Test Model]]></rdfs:label>
+    <rdfs:comment xml:lang="en-US"><![CDATA[Test Model]]></rdfs:comment>
     <rdfs:domain rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#Test"/>
-    <rdfs:range rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#TestAuthoringModes"/>
+    <rdfs:range rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#TestModel"/>
     <widget:widget rdf:resource="http://www.tao.lu/datatypes/WidgetDefinitions.rdf#RadioBox"/>
     <tao:TAOGUIOrder><![CDATA[30]]></tao:TAOGUIOrder>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#TestAuthoringModes">
-    <rdfs:label xml:lang="en-US"><![CDATA[Test Authoring Modes]]></rdfs:label>
-    <rdfs:comment xml:lang="en-US"><![CDATA[Test Authoring Modes]]></rdfs:comment>
-    <rdfs:subClassOf rdf:resource="http://www.tao.lu/Ontologies/TAO.rdf#TAOObject"/>
+    <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#TestModelImplementation">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en-US"><![CDATA[Testmodel service]]></rdfs:label>
+    <rdfs:comment xml:lang="en-US"><![CDATA[Service of the test model]]></rdfs:comment>
+    <rdfs:domain rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#Test"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#AuthoringModeSimple">
-    <rdf:type rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#TestAuthoringModes"/>
+  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#SimpleTestModel">
+    <rdf:type rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#TestModel"/>
     <rdfs:label xml:lang="en-US"><![CDATA[simple]]></rdfs:label>
-    <rdfs:comment xml:lang="en-US"><![CDATA[simple test authoring mode]]></rdfs:comment>
+    <rdfs:comment xml:lang="en-US"><![CDATA[simple test model]]></rdfs:comment>
+    <test:TestModelImplementation><![CDATA[taoTests_models_classes_simple_TestModel]]></test:TestModelImplementation>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#AuthoringModeAdvanced">
-    <rdf:type rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#TestAuthoringModes"/>
-    <rdfs:label xml:lang="en-US"><![CDATA[Advanced]]></rdfs:label>
-    <rdfs:comment xml:lang="en-US"><![CDATA[Advanced test authoring mode]]></rdfs:comment>
+  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#WfTestModel">
+    <rdf:type rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#TestModel"/>
+    <rdfs:label xml:lang="en-US"><![CDATA[workflow]]></rdfs:label>
+    <rdfs:comment xml:lang="en-US"><![CDATA[advanced worklow test model]]></rdfs:comment>
+    <test:TestModelImplementation><![CDATA[taoTests_models_classes_wfEngine_TestModel]]></test:TestModelImplementation>
   </rdf:Description>
-  
+
   <!-- Management Role -->
   <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole">
   	<rdf:type rdf:resource="http://www.tao.lu/Ontologies/TAO.rdf#ManagementRole"/>

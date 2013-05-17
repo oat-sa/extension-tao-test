@@ -30,13 +30,8 @@
 					<action name="meta data" js="generisActions.loadMetaData" url="/tao/MetaData/getMetaData"  context="instance" />
 					<action name="export" url="/tao/Export/index"  context="*" />
 					<action name="import" url="/tao/Import/index"  context="class" />
-					<action name="advanced mode" url="/taoTests/Tests/advancedMode" context="instance" />
-					<action name="simple mode" url="/taoTests/Tests/simpleMode" context="instance" />
 				</actions>
 			</section>
-
-			<section id="tests_authoring" name="Advanced Authoring Tool" url="/taoTests/Tests/authoring" />
-
 		</sections>
 	</structure>
 </structures>
