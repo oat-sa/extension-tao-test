@@ -43,6 +43,11 @@ class taoTests_models_classes_simple_TestModel
     public function __construct() {
     }
     
+    public function onTestModelSet( core_kernel_classes_Resource $test) {
+    	taoTests_models_classes_TestsService::singleton()->linearizeTestProcess($test);
+    }
+    
+    
     /**
      * (non-PHPdoc)
      * @see taoTests_models_classes_TestModel::getAuthoring()

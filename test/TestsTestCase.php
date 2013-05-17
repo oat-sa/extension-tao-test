@@ -67,7 +67,7 @@ class TestsTestCase extends UnitTestCase {
 		$this->assertTrue(defined('TAO_TEST_CLASS'));
 		$testClass = $this->testsService->getRootclass();
 		$this->assertIsA($testClass, 'core_kernel_classes_Class');
-		$this->assertEqual(TAO_TEST_CLASS, $testClass->uriResource);
+		$this->assertEqual(TAO_TEST_CLASS, $testClass->getUri());
 		
 		//create a subclass
 		$subTestClassLabel = 'subTest class';

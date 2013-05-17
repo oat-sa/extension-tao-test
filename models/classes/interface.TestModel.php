@@ -41,6 +41,14 @@ interface taoTests_models_classes_TestModel
     public function __construct();
 
     /**
+     * Called when the test is set to this TestModel
+     * can be used to setup the data structure
+     * 
+     * @param Resource $test
+     */
+    public function onTestModelSet( core_kernel_classes_Resource $test);
+    
+    /**
      * renders the test authoring
      *
      * @access public

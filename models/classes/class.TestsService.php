@@ -154,12 +154,12 @@ class taoTests_models_classes_TestsService
 
         // section 127-0-1-1--728644f3:12512379b22:-8000:0000000000001C3C begin
 
-		if($clazz->uriResource == $this->testClass->uriResource){
+		if($clazz->getUri() == $this->testClass->getUri()){
 			$returnValue = true;
 		}
 		else{
 			foreach($this->testClass->getSubClasses(true) as $subclass){
-				if($clazz->uriResource == $subclass->uriResource){
+				if($clazz->getUri() == $subclass->getUri()){
 					$returnValue = true;
 					break;
 				}
@@ -186,7 +186,7 @@ class taoTests_models_classes_TestsService
         // section 127-0-1-1--728644f3:12512379b22:-8000:0000000000001C40 begin
 
 		if(!is_null($clazz)){
-			if($this->isTestClass($clazz) && $clazz->uriResource != $this->testClass->uriResource){
+			if($this->isTestClass($clazz) && $clazz->getUri() != $this->testClass->getUri()){
 				$returnValue = $clazz->delete();
 			}
 		}
@@ -223,7 +223,7 @@ class taoTests_models_classes_TestsService
 					foreach($activities as $activity){
 						$item = $authoringService->getItemByActivity($activity);
 						if(!is_null($item) && $item instanceof core_kernel_classes_Resource){
-							$returnValue[$item->uriResource] = $item;
+							$returnValue[$item->getUri()] = $item;
 						}
 					}
 				}
@@ -252,7 +252,7 @@ class taoTests_models_classes_TestsService
 
 		$itemClazz = new core_kernel_classes_Class(TAO_ITEM_CLASS);
 		foreach($itemClazz->getInstances(true) as $instance){
-			$returnValue[$instance->uriResource] = $instance->getLabel();
+			$returnValue[$instance->getUri()] = $instance->getLabel();
 		}
 
         // section 127-0-1-1-a1589c9:1262c43ae7a:-8000:0000000000001DFE end
@@ -308,7 +308,7 @@ class taoTests_models_classes_TestsService
 
 			foreach($clazz->getProperties(true) as $property){
 
-				if(!in_array($property->uriResource, $noCloningProperties)){
+				if(!in_array($property->getUri(), $noCloningProperties)){
 					//allow clone of every property value but the deliverycontent, which is a process:
 					foreach($instance->getPropertyValues($property) as $propertyValue){
 						$clone->setPropertyValue($property, $propertyValue);
@@ -331,7 +331,7 @@ class taoTests_models_classes_TestsService
 			if(!is_null($process)){
 				$processCloner = new wfAuthoring_models_classes_ProcessCloner();
 				$processClone = $processCloner->cloneProcess($process);
-				$clone->editPropertyValues($propInstanceContent, $processClone->uriResource);
+				$clone->editPropertyValues($propInstanceContent, $processClone->getUri());
 			}else{
 				throw new Exception("the test process cannot be found");
 			}
@@ -369,11 +369,8 @@ class taoTests_models_classes_TestsService
 		$processInstance->editPropertyValues(new core_kernel_classes_Property(PROPERTY_PROCESS_INIT_ACL_MODE), INSTANCE_ACL_ROLE);
 		$processInstance->editPropertyValues(new core_kernel_classes_Property(PROPERTY_PROCESS_INIT_RESTRICTED_ROLE), INSTANCE_ROLE_DELIVERY);
 
-		$test->setPropertyValue(new core_kernel_classes_Property(TEST_TESTCONTENT_PROP), $processInstance->uriResource);
+		$test->setPropertyValue(new core_kernel_classes_Property(TEST_TESTCONTENT_PROP), $processInstance->getUri());
 		$this->updateProcessLabel($test);
-
-		//set the the default authoring mode to the 'simple mode':
-		$test->setPropertyValue(new core_kernel_classes_Property(TAO_TEST_AUTHORINGMODE_PROP), TAO_TEST_SIMPLEMODE);
 
 		//set the the default state to 'activ':
 		$test->setPropertyValue(new core_kernel_classes_Property(TEST_ACTIVE_PROP), GENERIS_TRUE);
@@ -451,7 +448,7 @@ class taoTests_models_classes_TestsService
 
 			$isIntial = $activity->getOnePropertyValue(new core_kernel_classes_Property(PROPERTY_ACTIVITIES_ISINITIAL));
 			if(!is_null($isIntial) && $isIntial instanceof core_kernel_classes_Resource){
-				if($isIntial->uriResource == GENERIS_TRUE){
+				if($isIntial->getUri() == GENERIS_TRUE){
 					$currentActivity = $activity;
 					break;
 				}
@@ -564,11 +561,11 @@ class taoTests_models_classes_TestsService
 
 			//create a call of service and associate the service definition to it:
 			$interactiveService = $authoringService->createInteractiveService($activity);
-			$interactiveService->setPropertyValue(new core_kernel_classes_Property(PROPERTY_CALLOFSERVICES_SERVICEDEFINITION), $itemRunnerServiceDefinition->uriResource);
+			$interactiveService->setPropertyValue(new core_kernel_classes_Property(PROPERTY_CALLOFSERVICES_SERVICEDEFINITION), $itemRunnerServiceDefinition->getUri());
 
-			$authoringService->setActualParameter($interactiveService, $itemUriParam, $item->uriResource, PROPERTY_CALLOFSERVICES_ACTUALPARAMETERIN);//constant: we know it!
-			$authoringService->setActualParameter($interactiveService, $testUriParam, $test->uriResource, PROPERTY_CALLOFSERVICES_ACTUALPARAMETERIN);//constant: we know it!
-			$authoringService->setActualParameter($interactiveService, $deliveryUriParam, $var_delivery->uriResource, PROPERTY_CALLOFSERVICES_ACTUALPARAMETERIN, PROPERTY_ACTUALPARAMETER_PROCESSVARIABLE);//don't know yet so process var!
+			$authoringService->setActualParameter($interactiveService, $itemUriParam, $item->getUri(), PROPERTY_CALLOFSERVICES_ACTUALPARAMETERIN);//constant: we know it!
+			$authoringService->setActualParameter($interactiveService, $testUriParam, $test->getUri(), PROPERTY_CALLOFSERVICES_ACTUALPARAMETERIN);//constant: we know it!
+			$authoringService->setActualParameter($interactiveService, $deliveryUriParam, $var_delivery->getUri(), PROPERTY_CALLOFSERVICES_ACTUALPARAMETERIN, PROPERTY_ACTUALPARAMETER_PROCESSVARIABLE);//don't know yet so process var!
 
 			if(!is_null($previousActivity)) {
 				$connectorService->createSequential($previousActivity, $activity);
@@ -580,41 +577,6 @@ class taoTests_models_classes_TestsService
 		}
 		$returnValue = true;
 		// section 10-13-1-39-7cf56b28:12c53e4afe8:-8000:0000000000002C08 end
-
-        return (bool) $returnValue;
-    }
-
-    /**
-     * Short description of method setAuthoringMode
-     *
-     * @access public
-     * @author Joel Bout, <joel.bout@tudor.lu>
-     * @param  Resource test
-     * @param  string mode
-     * @return boolean
-     */
-    public function setAuthoringMode( core_kernel_classes_Resource $test, $mode = '')
-    {
-        $returnValue = (bool) false;
-
-        // section 10-13-1-39-7cf56b28:12c53e4afe8:-8000:0000000000002C0C begin
-		$property = new core_kernel_classes_Property(TAO_TEST_AUTHORINGMODE_PROP);
-		switch(strtolower($mode)){
-			case 'simple':{
-				$test->editPropertyValues($property, TAO_TEST_SIMPLEMODE);
-				//linearization required:
-				$returnValue = $this->linearizeTestProcess($test);
-				break;
-			}
-			case 'advanced':{
-				$returnValue = $test->editPropertyValues($property, TAO_TEST_ADVANCEDMODE);
-				break;
-			}
-			default:{
-				$returnValue = false;
-			}
-		}
-        // section 10-13-1-39-7cf56b28:12c53e4afe8:-8000:0000000000002C0C end
 
         return (bool) $returnValue;
     }
@@ -634,7 +596,7 @@ class taoTests_models_classes_TestsService
         // section 10-11-2-16--f6d941a:12d7a53887b:-8000:0000000000002F4A begin
 		$active = $test->getOnePropertyValue(new core_kernel_classes_Property(TEST_ACTIVE_PROP));
 		if(is_null($active)){
-			if ($active->uriResource == GENERIS_TRUE){
+			if ($active->getUri() == GENERIS_TRUE){
 				$returnValue = true;
 			}
 		}
@@ -653,16 +615,15 @@ class taoTests_models_classes_TestsService
      * @param core_kernel_classes_Resource $test
      * @return taoTests_models_classes_TestModel
      */
-    public function getTestModelImplementation(core_kernel_classes_Resource $test) {
+    public function getTestModelImplementation(core_kernel_classes_Resource $testModel) {
     	$returnValue = null;
-		$model = $this->getTestModel($test);
-		if (!empty($model)) {
-			$classname = (string)$model->getOnePropertyValue(new core_kernel_classes_Property(PROPERTY_TESTMODEL_IMPLEMENTATION));
+		if (!empty($testModel)) {
+			$classname = (string)$testModel->getOnePropertyValue(new core_kernel_classes_Property(PROPERTY_TESTMODEL_IMPLEMENTATION));
 			if (!empty($classname)) {
 				if (class_exists($classname) && in_array('taoTests_models_classes_TestModel', class_implements($classname))) {
 					$returnValue = new $classname();
 				} else {
-					throw new common_exception_Error('Test model service '.$classname.' not found, or not compatible for test model '.$model->getLabel());
+					throw new common_exception_Error('Test model service '.$classname.' not found, or not compatible for test model '.$testModel->getLabel());
 				}
 			}
 		}

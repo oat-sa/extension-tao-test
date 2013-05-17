@@ -77,6 +77,9 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 	{
 		$clazz = $this->getCurrentClass();
 		$test = $this->getCurrentInstance();
+		$testModel = $this->service->getTestModel($test);
+		// workaround because of bug:
+		$testModel = $testModel == '' ? null : $testModel;
 
 		$formContainer = new tao_actions_form_Instance($clazz, $test);
 		$myForm = $formContainer->getForm();
@@ -85,12 +88,15 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 				$propertyValues = $myForm->getValues();
 
 				//check if the authoring mode has changed: if advanced->simple, modify the related process to make it compatible
-				if(array_key_exists(TAO_TEST_AUTHORINGMODE_PROP, $propertyValues)){
-					if($propertyValues[TAO_TEST_AUTHORINGMODE_PROP] == TAO_TEST_SIMPLEMODE){
-						if($test->getUniquePropertyValue(new core_kernel_classes_Property(TAO_TEST_AUTHORINGMODE_PROP))->uriResource == TAO_TEST_ADVANCEDMODE){
-							//get all tests from the process, then save them:
-							$this->service->linearizeTestProcess($test);
+				if(array_key_exists(PROPERTY_TEST_TESTMODEL, $propertyValues)){
+					$newModel = new core_kernel_classes_Resource($propertyValues[PROPERTY_TEST_TESTMODEL]);
+					// did the model change?
+					if (is_null($testModel) || !$newModel->equals($testModel)) {
+						$newImplementation = $this->service->getTestModelImplementation($newModel);
+						if (!empty($newImplementation)) {
+							$newImplementation->onTestModelSet($test);
 						}
+						$testModel = $newModel;
 					}
 				}
 
@@ -105,15 +111,13 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 				$this->setData('reload', true);
 			}
 		}
-		$this->setSessionAttribute("showNodeUri", tao_helpers_Uri::encode($test->uriResource));
+		$this->setSessionAttribute("showNodeUri", tao_helpers_Uri::encode($test->getUri()));
 
-		//test authoring mode:
-		$this->setData('authoringMode', 'simple');
-		$authoringMode = $test->getUniquePropertyValue(new core_kernel_classes_Property(TAO_TEST_AUTHORINGMODE_PROP));
-		$myForm->removeElement(tao_helpers_Uri::encode(TAO_TEST_AUTHORINGMODE_PROP));
 		$myForm->removeElement(tao_helpers_Uri::encode(TEST_TESTCONTENT_PROP));
 		
-		$modelImpl = $this->service->getTestModelImplementation($test);
+		if (!empty($testModel)) {
+			$modelImpl = $this->service->getTestModelImplementation($testModel);
+		}
 		if (!empty($modelImpl)) {
 			$this->setData('authoring', $modelImpl->getAuthoring($test));
 		}
@@ -138,7 +142,7 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 		if(!is_null($clazz) && $clazz instanceof core_kernel_classes_Class){
 			echo json_encode(array(
 				'label'	=> $clazz->getLabel(),
-				'uri' 	=> tao_helpers_Uri::encode($clazz->uriResource)
+				'uri' 	=> tao_helpers_Uri::encode($clazz->getUri())
 			));
 		}
 	}
@@ -159,7 +163,7 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 		if($myForm->isSubmited()){
 			if($myForm->isValid()){
 				if($clazz instanceof core_kernel_classes_Resource){
-					$this->setSessionAttribute("showNodeUri", tao_helpers_Uri::encode($clazz->uriResource));
+					$this->setSessionAttribute("showNodeUri", tao_helpers_Uri::encode($clazz->getUri()));
 				}
 				$this->setData('message', __('Class saved'));
 				$this->setData('reload', true);
@@ -206,7 +210,7 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 			//get process instance to be authored
 			 $test = $this->getCurrentInstance();
 			 $processDefinition = $test->getUniquePropertyValue(new core_kernel_classes_Property(TEST_TESTCONTENT_PROP));
-			$this->setData('processUri', tao_helpers_Uri::encode($processDefinition->uriResource));
+			$this->setData('processUri', tao_helpers_Uri::encode($processDefinition->getUri()));
 		}
 		catch(Exception $e){
 			$this->setData('error', true);
@@ -294,35 +298,5 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 		echo json_encode(array('saved'	=> $saved));
 	}
 
-	public function advancedMode()
-	{
-		$this->setAuthoringMode('advanced');
-	}
-
-	public function simpleMode()
-	{
-		$this->setAuthoringMode('simple');
-	}
-
-	private function setAuthoringMode($mode)
-	{
-		$mode = strtolower($mode);
-		if($mode != 'simple' && $mode != 'advanced'){
-			throw new Exception('invalid mode');
-		}
-
-		$test = $this->getCurrentInstance();
-		$clazz = $this->getCurrentClass();
-
-		$this->service->setAuthoringMode($test, $mode);
-
-		$param = array(
-			'uri' => tao_helpers_Uri::encode($test->uriResource),
-			'classUri' => tao_helpers_Uri::encode($clazz->uriResource)
-		);
-
-		//reload the form, thus let the advanced authoring tab be available
-		$this->redirect(tao_helpers_Uri::url('editTest', 'Tests', null, $param));
-	}
 }
 ?>
