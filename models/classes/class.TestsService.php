@@ -567,12 +567,13 @@ class taoTests_models_classes_TestsService
 		$current = $this->getTestModel($test);
 		// did the model change?
 		if (is_null($current) || !$current->equals($testModel)) {
-			$former = $this->getTestModelImplementation($current);
-			if (!empty($former)) {
-				$items = $former->getItems($test);
-				$former->deleteContent($test);
-			} else {
-				$items = array();
+			$items = array();
+			if (!is_null($current)) {
+				$former = $this->getTestModelImplementation($current);
+				if (!empty($former)) {
+					$items = $former->getItems($test);
+					$former->deleteContent($test);
+				}	
 			}
 			$test->editPropertyValues(new core_kernel_classes_Property(PROPERTY_TEST_TESTMODEL), $testModel);
 			$newImpl = $this->getTestModelImplementation($testModel);
