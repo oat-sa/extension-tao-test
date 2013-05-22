@@ -28,25 +28,9 @@
  * @subpackage models_classes_wfEngine
  */
 class taoTests_models_classes_simple_TestModel
-	implements taoTests_models_classes_TestModel
+	extends taoTests_models_classes_wfEngine_TestModel
+	// implements taoTests_models_classes_TestModel
 {
-    // --- ASSOCIATIONS ---
-
-
-    // --- ATTRIBUTES ---
-
-    // --- OPERATIONS ---
-    /**
-     * default constructor to ensure the implementation
-     * can be instanciated
-     */
-    public function __construct() {
-    }
-    
-    public function onTestModelSet( core_kernel_classes_Resource $test) {
-    	taoTests_models_classes_TestsService::singleton()->linearizeTestProcess($test);
-    }
-    
     
     /**
      * (non-PHPdoc)
@@ -88,7 +72,7 @@ class taoTests_models_classes_simple_TestModel
 		$widget->setData('itemOpenNodes', $openNodes);
     	return $widget->render();
     }
-    
+
 }
 
 ?>

@@ -43,7 +43,54 @@ class taoTests_models_classes_wfEngine_TestModel
     public function __construct() {
     }
     
-    public function onTestModelSet( core_kernel_classes_Resource $test) {
+    /**
+     * (non-PHPdoc)
+     * @see taoTests_models_classes_TestModel::onTestModelSet()
+     */
+    public function prepareContent( core_kernel_classes_Resource $test, $items = array()) {
+    	$processInstance = wfEngine_models_classes_ProcessDefinitionService::singleton()->createInstance(new core_kernel_classes_Class(CLASS_PROCESS),'process generated with testsService');
+
+		//set ACL right to delivery process initialization:
+		$processInstance->editPropertyValues(new core_kernel_classes_Property(PROPERTY_PROCESS_INIT_ACL_MODE), INSTANCE_ACL_ROLE);
+		$processInstance->editPropertyValues(new core_kernel_classes_Property(PROPERTY_PROCESS_INIT_RESTRICTED_ROLE), INSTANCE_ROLE_DELIVERY);
+
+		$test->setPropertyValue(new core_kernel_classes_Property(TEST_TESTCONTENT_PROP), $processInstance->getUri());
+		$processInstance->setLabel("Process ".$test->getLabel());
+		taoTests_models_classes_TestsService::singleton()->setTestItems($test, $items);
+    }
+    
+    /**
+     * (non-PHPdoc)
+     * @see taoTests_models_classes_TestModel::onTestModelSet()
+     */
+    public function deleteContent( core_kernel_classes_Resource $test) {
+    	$content = $test->getOnePropertyValue(new core_kernel_classes_Property(TEST_TESTCONTENT_PROP));
+    	if (!is_null($content)) {
+	    	$content->delete();
+	    	$test->removePropertyValue(new core_kernel_classes_Property(TEST_TESTCONTENT_PROP), $content);
+    	}
+    }
+    
+    public function getItems( core_kernel_classes_Resource $test) {
+		$items = array();
+		$authoringService = taoTests_models_classes_TestAuthoringService::singleton();
+
+		//get the associated process:
+		$process = $test->getOnePropertyValue(new core_kernel_classes_Property(TEST_TESTCONTENT_PROP));
+
+		if (!is_null($process)) {
+			//get list of all activities:
+			$activities = $authoringService->getActivitiesByProcess($process);
+	
+			foreach($activities as $activity){
+				$item = $authoringService->getItemByActivity($activity);
+				if(!is_null($item)){
+					$items[] = $item;
+				}
+			}
+		}
+
+    	return $items;
     }
     
     /**
@@ -58,6 +105,11 @@ class taoTests_models_classes_wfEngine_TestModel
 		$widget->setData('label', __('Authoring %s', $test->getLabel()));
     	return $widget->render();
     }
+    
+	public function onChangeTestLabel( core_kernel_classes_Resource $test) {
+		$process = $test->getUniquePropertyValue(new core_kernel_classes_Property(TEST_TESTCONTENT_PROP));
+		$process->setLabel("Process ".$test->getLabel());
+	}
     
 }
 

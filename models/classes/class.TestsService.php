@@ -261,20 +261,25 @@ class taoTests_models_classes_TestsService
     }
 
     /**
-     * Short description of method updateProcessLabel
+     * Called whenever the label of the Test changes
      *
      * @access public
      * @author Joel Bout, <joel.bout@tudor.lu>
      * @param  Resource test
      * @return boolean
      */
-    public function updateProcessLabel( core_kernel_classes_Resource $test = null)
+    public function onChangeTestLabel( core_kernel_classes_Resource $test = null)
     {
         $returnValue = (bool) false;
 
         // section 10-13-1-39-7cf56b28:12c53e4afe8:-8000:0000000000002BEA begin
-		$process = $test->getUniquePropertyValue(new core_kernel_classes_Property(TEST_TESTCONTENT_PROP));
-		$returnValue = $process->setLabel("Process ".$test->getLabel());
+        $testModel = $this->getTestModel($test);
+        if (!is_null($testModel)) {
+        	$impl = $this->getTestModelImplementation($testModel);
+        	if (!is_null($impl)) {
+        		$impl->onChangeTestLabel($test);
+        	}
+        }
         // section 10-13-1-39-7cf56b28:12c53e4afe8:-8000:0000000000002BEA end
 
         return (bool) $returnValue;
@@ -336,7 +341,7 @@ class taoTests_models_classes_TestsService
 				throw new Exception("the test process cannot be found");
 			}
 
-			$this->updateProcessLabel($clone);
+			$this->onChangeTestLabel($clone);
 			$returnValue = $clone;
 		}
 
@@ -360,18 +365,8 @@ class taoTests_models_classes_TestsService
 
         // section 10-13-1-39-7cf56b28:12c53e4afe8:-8000:0000000000002BFA begin
 		$test = parent::createInstance($clazz, $label);
-
-		//create a process instance at the same time:
-		$processInstance = parent::createInstance(new core_kernel_classes_Class(CLASS_PROCESS),'process generated with testsService');
-
-		//set ACL right to delivery process initialization:
-		$extensionsManager = common_ext_ExtensionsManager::singleton();
-		$processInstance->editPropertyValues(new core_kernel_classes_Property(PROPERTY_PROCESS_INIT_ACL_MODE), INSTANCE_ACL_ROLE);
-		$processInstance->editPropertyValues(new core_kernel_classes_Property(PROPERTY_PROCESS_INIT_RESTRICTED_ROLE), INSTANCE_ROLE_DELIVERY);
-
-		$test->setPropertyValue(new core_kernel_classes_Property(TEST_TESTCONTENT_PROP), $processInstance->getUri());
-		$this->updateProcessLabel($test);
-
+		$this->setTestModel($test, new core_kernel_classes_Resource(INSTANCE_TESTMODEL_SIMPLE));
+		
 		//set the the default state to 'activ':
 		$test->setPropertyValue(new core_kernel_classes_Property(TEST_ACTIVE_PROP), GENERIS_TRUE);
 
@@ -379,43 +374,6 @@ class taoTests_models_classes_TestsService
         // section 10-13-1-39-7cf56b28:12c53e4afe8:-8000:0000000000002BFA end
 
         return $returnValue;
-    }
-
-    /**
-     * Short description of method linearizeTestProcess
-     *
-     * @access public
-     * @author Joel Bout, <joel.bout@tudor.lu>
-     * @param  Resource test
-     * @return boolean
-     */
-    public function linearizeTestProcess( core_kernel_classes_Resource $test)
-    {
-        $returnValue = (bool) false;
-
-        // section 10-13-1-39-7cf56b28:12c53e4afe8:-8000:0000000000002C01 begin
-
-		//get list of all items in the test, without order:
-		$items = array();
-		$authoringService = taoTests_models_classes_TestAuthoringService::singleton();
-
-		//get the associated process:
-		$process = $test->getUniquePropertyValue(new core_kernel_classes_Property(TEST_TESTCONTENT_PROP));
-
-		//get list of all activities:
-		$activities = $authoringService->getActivitiesByProcess($process);
-
-		foreach($activities as $activity){
-			$item = $authoringService->getItemByActivity($activity);
-			if(!is_null($item)){
-				$items[] = $item;
-			}
-		}
-
-		$returnValue = $this->setTestItems($test, $items);
-        // section 10-13-1-39-7cf56b28:12c53e4afe8:-8000:0000000000002C01 end
-
-        return (bool) $returnValue;
     }
 
     /**
@@ -603,6 +561,25 @@ class taoTests_models_classes_TestsService
         // section 10-11-2-16--f6d941a:12d7a53887b:-8000:0000000000002F4A end
 
         return (bool) $returnValue;
+    }
+    
+    public function setTestModel(core_kernel_classes_Resource $test, core_kernel_classes_Resource $testModel) {
+		$current = $this->getTestModel($test);
+		// did the model change?
+		if (is_null($current) || !$current->equals($testModel)) {
+			$former = $this->getTestModelImplementation($current);
+			if (!empty($former)) {
+				$items = $former->getItems($test);
+				$former->deleteContent($test);
+			} else {
+				$items = array();
+			}
+			$test->editPropertyValues(new core_kernel_classes_Property(PROPERTY_TEST_TESTMODEL), $testModel);
+			$newImpl = $this->getTestModelImplementation($testModel);
+			if (!empty($newImpl)) {
+				$newImpl->prepareContent($test, $items);
+			}
+		}
     }
     
     public function getTestModel(core_kernel_classes_Resource $test) {

@@ -54,7 +54,7 @@ var labels = <?=get_data('allItems')?>;
 
 		require(['require', 'jquery', 'generis.tree.select'], function(req, $, GenerisTreeSelectClass) {
 			if (typeof ctx_form_extension != 'undefined') {
-				url = root_url + ctx_form_extension + '/' + ctx_form_module + '/';
+				url = root_url + ctx_form_extension + '/SimpleTest/';
 			}
 
 			new GenerisTreeSelectClass('#item-tree', root_url + 'tao/GenerisTree/getData',{

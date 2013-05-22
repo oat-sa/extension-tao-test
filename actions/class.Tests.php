@@ -87,17 +87,13 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 			if($myForm->isValid()){
 				$propertyValues = $myForm->getValues();
 
-				//check if the authoring mode has changed: if advanced->simple, modify the related process to make it compatible
+				// don't hande the testmodel via bindProperties
 				if(array_key_exists(PROPERTY_TEST_TESTMODEL, $propertyValues)){
-					$newModel = new core_kernel_classes_Resource($propertyValues[PROPERTY_TEST_TESTMODEL]);
-					// did the model change?
-					if (is_null($testModel) || !$newModel->equals($testModel)) {
-						$newImplementation = $this->service->getTestModelImplementation($newModel);
-						if (!empty($newImplementation)) {
-							$newImplementation->onTestModelSet($test);
-						}
-						$testModel = $newModel;
-					}
+					$testModel = new core_kernel_classes_Resource($propertyValues[PROPERTY_TEST_TESTMODEL]);
+					$this->service->setTestModel($test, $testModel);
+					unset($propertyValues[PROPERTY_TEST_TESTMODEL]);
+				} else {
+					common_Logger::w('No testmodel on test form', 'taoTests');
 				}
 
 				//then save the property values as usual
@@ -105,7 +101,7 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 				$test = $binder->bind($propertyValues);
 
 				//edit process label:
-				$this->service->updateProcessLabel($test);
+				$this->service->onChangeTestLabel($test);
 
 				$this->setData('message', __('Test saved'));
 				$this->setData('reload', true);
@@ -113,13 +109,14 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 		}
 		$this->setSessionAttribute("showNodeUri", tao_helpers_Uri::encode($test->getUri()));
 
-		$myForm->removeElement(tao_helpers_Uri::encode(TEST_TESTCONTENT_PROP));
-		
+//		$myForm->removeElement(tao_helpers_Uri::encode(TEST_TESTCONTENT_PROP));
+
+		// render authoring
 		if (!empty($testModel)) {
 			$modelImpl = $this->service->getTestModelImplementation($testModel);
-		}
-		if (!empty($modelImpl)) {
-			$this->setData('authoring', $modelImpl->getAuthoring($test));
+			if (!empty($modelImpl)) {
+				$this->setData('authoring', $modelImpl->getAuthoring($test));
+			}
 		}
 
 		$this->setData('uri', tao_helpers_Uri::encode($test->getUri()));
@@ -252,50 +249,6 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 			$options['subclasses'] = $this->getRequestParameter('subclasses');
 		}
 		echo json_encode($this->service->toTree($clazz, $options));
-	}
-
-	/**
-	 * save the related items from the checkbox tree
-	 * @return void
-	 */
-	public function saveItems()
-	{
-		if(!tao_helpers_Request::isAjax()){
-			throw new Exception("wrong request mode");
-		}
-		$saved = false;
-
-		$items = array();
-		foreach($this->getRequestParameters() as $key => $value){
-			if(preg_match("/^instance_/", $key)){
-				$item = new core_kernel_classes_Resource(tao_helpers_Uri::decode($value));
-				if ($item->isInstanceOf(new core_kernel_classes_Class(TAO_ITEM_CLASS))) {
-					$itemModel = $item->getOnePropertyValue(new core_kernel_classes_Property(TAO_ITEM_MODEL_PROPERTY));
-					$supported = false;
-					if (!is_null($itemModel)) {
-						foreach ($itemModel->getPropertyValues(new core_kernel_classes_Property(TAO_ITEM_MODELTARGET_PROPERTY)) as $targeturi) {
-							if ($targeturi == TAO_ITEM_ONLINE_TARGET) {
-								$supported = true;
-								break;
-							}
-						}
-					}
-					if ($supported) {
-						array_push($items, $item);
-					} else {
-						throw new common_Exception($item->getLabel().' cannot be added to a test');
-					}
-				} else {
-					// work around for bug in treeview form
-					// @todo remove once treeview is rewritten
-					common_Logger::w('Tried to add non Item to test');
-				}
-			}
-		}
-		if($this->service->setTestItems($this->getCurrentInstance(), $items)){
-			$saved = true;
-		}
-		echo json_encode(array('saved'	=> $saved));
 	}
 
 }

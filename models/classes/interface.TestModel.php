@@ -41,12 +41,33 @@ interface taoTests_models_classes_TestModel
     public function __construct();
 
     /**
-     * Called when the test is set to this TestModel
-     * can be used to setup the data structure
+     * Called when the label of a test changes
      * 
      * @param Resource $test
      */
-    public function onTestModelSet( core_kernel_classes_Resource $test);
+    public function onChangeTestLabel( core_kernel_classes_Resource $test);
+    
+    /**
+     * Prepare the content of the test
+     * 
+     * @param Resource $test
+     */
+    public function prepareContent( core_kernel_classes_Resource $test);
+    
+    /**
+     * Delete the content of the test
+     * 
+     * @param Resource $test
+     */
+    public function deleteContent( core_kernel_classes_Resource $test);
+    
+    /**
+     * Returns all the items potenially used within the test
+     * 
+     * @param Resource $test
+     * @return array an array of item resources
+     */
+    public function getItems( core_kernel_classes_Resource $test);
     
     /**
      * renders the test authoring
