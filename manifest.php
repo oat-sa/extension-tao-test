@@ -43,7 +43,7 @@ return array(
 				dirname(__FILE__). '/models/ontology/taotest.rdf'
 		),
 		'checks' => array(
-			array('type' => 'CheckFileSystemComponent', 'value' => array('id' => 'fs_taoTests_includes', 'location' => 'taoTests/includes', 'rights' => 'r'))
+			array('type' => 'CheckFileSystemComponent', 'value' => array('id' => 'fs_taoTests_includes', 'location' => 'taoTests/includes', 'rights' => 'rw'))
 		)
 	),
 	'managementRole' => 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole',
