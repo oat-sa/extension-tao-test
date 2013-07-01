@@ -84,9 +84,11 @@ class taoTests_models_classes_TestsService
 
 		if(!is_null($test)){
 			//delete the associated process:
-			$process = $test->getUniquePropertyValue(new core_kernel_classes_Property(TEST_TESTCONTENT_PROP));
-			$processAuthoringService = taoTests_models_classes_TestAuthoringService::singleton();
-			$processAuthoringService->deleteProcess($process);
+			$model = $this->getTestModel($test);
+			if (!is_null($model)) {
+				$impl = $this->getTestModelImplementation($model);
+				$impl->deleteContent($test);
+			}
 
 			$returnValue = $test->delete();
 		}
