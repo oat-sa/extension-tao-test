@@ -47,9 +47,9 @@
   </rdf:Description>
     <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#TestModelImplementation">
     <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
-    <rdfs:label xml:lang="en-US"><![CDATA[Testmodel service]]></rdfs:label>
-    <rdfs:comment xml:lang="en-US"><![CDATA[Service of the test model]]></rdfs:comment>
-    <rdfs:domain rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#Test"/>
+    <rdfs:label xml:lang="en-US"><![CDATA[Testmodel implementation]]></rdfs:label>
+    <rdfs:comment xml:lang="en-US"><![CDATA[Implementation of the test model]]></rdfs:comment>
+    <rdfs:domain rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#TestModel"/>
     <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#SimpleTestModel">
