@@ -106,6 +106,10 @@ class taoTests_models_classes_wfEngine_TestModel
     	return $widget->render();
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see taoTests_models_classes_TestModel::onChangeTestLabel()
+     */
 	public function onChangeTestLabel( core_kernel_classes_Resource $test) {
 		$process = $test->getUniquePropertyValue(new core_kernel_classes_Property(TEST_TESTCONTENT_PROP));
 		$process->setLabel("Process ".$test->getLabel());

@@ -565,6 +565,13 @@ class taoTests_models_classes_TestsService
         return (bool) $returnValue;
     }
     
+    /**
+     * Changes the model of the test, while trying
+     * to carry over the items of the test
+     * 
+     * @param core_kernel_classes_Resource $test
+     * @param core_kernel_classes_Resource $testModel
+     */
     public function setTestModel(core_kernel_classes_Resource $test, core_kernel_classes_Resource $testModel) {
 		$current = $this->getTestModel($test);
 		// did the model change?

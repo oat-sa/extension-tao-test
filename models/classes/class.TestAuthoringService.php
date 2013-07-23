@@ -188,7 +188,8 @@ class taoTests_models_classes_TestAuthoringService
     {
         // section 10-13-1-39--56440278:12d4c05ae3c:-8000:0000000000004FA9 begin
 		parent::__construct();
-		$this->itemRunnerUrl = '/taoDelivery/ItemDelivery/runner?itemUri=^itemUri&testUri=^testUri&deliveryUri=^deliveryUri&';
+		$service = new core_kernel_classes_Resource(INSTANCE_SERVICEDEFINITION_ITEMRUNNER);
+		$this->itemRunnerUrl = (string)$service->getUniquePropertyValue(new core_kernel_classes_Property(PROPERTY_SUPPORTSERVICES_URL));
         // section 10-13-1-39--56440278:12d4c05ae3c:-8000:0000000000004FA9 end
     }
 
