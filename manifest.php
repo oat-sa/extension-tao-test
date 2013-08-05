@@ -34,7 +34,7 @@ return array(
 	'description' => 'TAO Tests extension',
 	'version' => '2.4',
 	'author' => 'Open Assessment Technologies, CRP Henri Tudor',
-	'dependencies' => array('wfAuthoring', 'taoItems'),
+	'dependencies' => array('taoItems'),
 	'models' => array(
 		'http://www.tao.lu/Ontologies/TAOTest.rdf',
 	),
@@ -76,16 +76,7 @@ return array(
 		'TAOBASE_WWW'			=> ROOT_URL	.'tao/views/',
 		'TAOVIEW_PATH'			=> $taopath.'views'.DIRECTORY_SEPARATOR,
 		'TAO_TPL_PATH'			=> $taopath.'views'.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR,
-	
-		#PROCESS BASE WWW the web path of the process authoring tool
-		'PROCESS_BASE_WWW'		=> ROOT_URL	.'wfEngine/views/',
-		'WFAUTHORING_SCRIPTS_URL'	=> ROOT_URL	.'wfAuthoring/views/js/authoring/',
-		'WFAUTHORING_CSS_URL'	=> ROOT_URL. 'wfAuthoring/views/css/',
-		'PROCESS_BASE_PATH'		=> ROOT_PATH.'wfAuthoring'.DIRECTORY_SEPARATOR,
-		'PROCESS_TPL_PATH'		=> ROOT_PATH.'wfAuthoring'.DIRECTORY_SEPARATOR
-									.'views'.DIRECTORY_SEPARATOR
-									.'templates'.DIRECTORY_SEPARATOR
-									.'authoring'.DIRECTORY_SEPARATOR,
+
 	)
 );
 ?>

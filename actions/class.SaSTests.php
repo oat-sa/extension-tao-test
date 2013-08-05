@@ -51,7 +51,7 @@ class taoTests_actions_SaSTests extends taoTests_actions_Tests {
 		}
 		$this->setData('allItems', json_encode($allItems));
 		
-		$relatedItems = tao_helpers_Uri::encodeArray($this->service->getRelatedItems($test, true), tao_helpers_Uri::ENCODE_ARRAY_VALUES);
+		$relatedItems = tao_helpers_Uri::encodeArray($this->service->getTestItems($test, true), tao_helpers_Uri::ENCODE_ARRAY_VALUES);
 		$this->setData('relatedItems', json_encode($relatedItems));
 		
 		$itemSequence = array();

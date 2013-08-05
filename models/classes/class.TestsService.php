@@ -53,17 +53,15 @@ class taoTests_models_classes_TestsService
      * @author Joel Bout, <joel.bout@tudor.lu>
      * @return core_view_classes_
      */
-    public function __construct()
+    protected function __construct()
     {
         $returnValue = null;
 
-        // section 10-13-1-45-2836570e:123bd13e69b:-8000:0000000000001888 begin
 
 		parent::__construct();
 
 		$this->testClass = new core_kernel_classes_Class(TAO_TEST_CLASS);
 
-        // section 10-13-1-45-2836570e:123bd13e69b:-8000:0000000000001888 end
 
         return $returnValue;
     }
@@ -80,7 +78,6 @@ class taoTests_models_classes_TestsService
     {
         $returnValue = (bool) false;
 
-        // section 10-13-1-45-792423e0:12398d13f24:-8000:00000000000017E6 begin
 
 		if(!is_null($test)){
 			//delete the associated process:
@@ -94,7 +91,6 @@ class taoTests_models_classes_TestsService
 		}
 
 
-        // section 10-13-1-45-792423e0:12398d13f24:-8000:00000000000017E6 end
 
         return (bool) $returnValue;
     }
@@ -125,7 +121,6 @@ class taoTests_models_classes_TestsService
     {
         $returnValue = null;
 
-        // section 127-0-1-1--728644f3:12512379b22:-8000:0000000000001C2B begin
 
 		if(is_null($clazz)){
 			$clazz = $this->testClass;
@@ -137,7 +132,6 @@ class taoTests_models_classes_TestsService
         else{
             throw new common_exception_InconsistentData($clazz . ' should be a Class Test ');
         }
-        // section 127-0-1-1--728644f3:12512379b22:-8000:0000000000001C2B end
 
         return $returnValue;
     }
@@ -154,7 +148,6 @@ class taoTests_models_classes_TestsService
     {
         $returnValue = (bool) false;
 
-        // section 127-0-1-1--728644f3:12512379b22:-8000:0000000000001C3C begin
 
 		if($clazz->getUri() == $this->testClass->getUri()){
 			$returnValue = true;
@@ -168,7 +161,6 @@ class taoTests_models_classes_TestsService
 			}
 		}
 
-        // section 127-0-1-1--728644f3:12512379b22:-8000:0000000000001C3C end
 
         return (bool) $returnValue;
     }
@@ -185,7 +177,6 @@ class taoTests_models_classes_TestsService
     {
         $returnValue = (bool) false;
 
-        // section 127-0-1-1--728644f3:12512379b22:-8000:0000000000001C40 begin
 
 		if(!is_null($clazz)){
 			if($this->isTestClass($clazz) && $clazz->getUri() != $this->testClass->getUri()){
@@ -193,50 +184,8 @@ class taoTests_models_classes_TestsService
 			}
 		}
 
-        // section 127-0-1-1--728644f3:12512379b22:-8000:0000000000001C40 end
 
         return (bool) $returnValue;
-    }
-
-    /**
-     * get the list of items in the test in parameter
-     *
-     * @access public
-     * @author Joel Bout, <joel.bout@tudor.lu>
-     * @param  Resource test
-     * @param  boolean sequenced
-     * @return array
-     */
-    public function getRelatedItems( core_kernel_classes_Resource $test, $sequenced = false)
-    {
-        $returnValue = array();
-
-        // section 127-0-1-1--5f8e44a2:1258d8ab867:-8000:0000000000001D27 begin
-		if(!is_null($test)){
-
-			try{
-			 	$authoringService = taoTests_models_classes_TestAuthoringService::singleton();
-			 	$process = $test->getUniquePropertyValue(
-					new core_kernel_classes_Property(TEST_TESTCONTENT_PROP)
-				);
-				if(!is_null($process)){
-					$activities = $authoringService->getActivitiesByProcess($process);
-
-					foreach($activities as $activity){
-						$item = $authoringService->getItemByActivity($activity);
-						if(!is_null($item) && $item instanceof core_kernel_classes_Resource){
-							$returnValue[$item->getUri()] = $item;
-						}
-					}
-				}
-
-			}
-			catch(Exception $e){}
-
-		}
-        // section 127-0-1-1--5f8e44a2:1258d8ab867:-8000:0000000000001D27 end
-
-        return (array) $returnValue;
     }
 
     /**
@@ -250,14 +199,12 @@ class taoTests_models_classes_TestsService
     {
         $returnValue = array();
 
-        // section 127-0-1-1-a1589c9:1262c43ae7a:-8000:0000000000001DFE begin
 
 		$itemClazz = new core_kernel_classes_Class(TAO_ITEM_CLASS);
 		foreach($itemClazz->getInstances(true) as $instance){
 			$returnValue[$instance->getUri()] = $instance->getLabel();
 		}
 
-        // section 127-0-1-1-a1589c9:1262c43ae7a:-8000:0000000000001DFE end
 
         return (array) $returnValue;
     }
@@ -274,15 +221,11 @@ class taoTests_models_classes_TestsService
     {
         $returnValue = (bool) false;
 
-        // section 10-13-1-39-7cf56b28:12c53e4afe8:-8000:0000000000002BEA begin
         $testModel = $this->getTestModel($test);
         if (!is_null($testModel)) {
         	$impl = $this->getTestModelImplementation($testModel);
-        	if (!is_null($impl)) {
-        		$impl->onChangeTestLabel($test);
-        	}
+       		$impl->onChangeTestLabel($test);
         }
-        // section 10-13-1-39-7cf56b28:12c53e4afe8:-8000:0000000000002BEA end
 
         return (bool) $returnValue;
     }
@@ -300,7 +243,6 @@ class taoTests_models_classes_TestsService
     {
         $returnValue = null;
 
-        // section 10-13-1-39-7cf56b28:12c53e4afe8:-8000:0000000000002BF1 begin
 
 		//call the parent create instance to prevent useless process test to be created:
 		$label = $instance->getLabel();
@@ -329,25 +271,14 @@ class taoTests_models_classes_TestsService
 				$cloneLabel = preg_replace("/bis(.?)*$/", "", $label)."bis $cloneNumber" ;
 			}
 			$clone->setLabel($cloneLabel);
-
-			//clone the process:
-			$propInstanceContent = new core_kernel_classes_Property(TEST_TESTCONTENT_PROP);
-			try{
-				$process = $instance->getUniquePropertyValue($propInstanceContent);
-			}catch(Exception $e){}
-			if(!is_null($process)){
-				$processCloner = new wfAuthoring_models_classes_ProcessCloner();
-				$processClone = $processCloner->cloneProcess($process);
-				$clone->editPropertyValues($propInstanceContent, $processClone->getUri());
-			}else{
-				throw new Exception("the test process cannot be found");
-			}
-
+			
+			$impl = $this->getTestModelImplementation($this->getTestModel($test));
+			$impl->cloneContent($instance, $clone);
+			
 			$this->onChangeTestLabel($clone);
 			$returnValue = $clone;
 		}
 
-        // section 10-13-1-39-7cf56b28:12c53e4afe8:-8000:0000000000002BF1 end
 
         return $returnValue;
     }
@@ -365,15 +296,17 @@ class taoTests_models_classes_TestsService
     {
         $returnValue = null;
 
-        // section 10-13-1-39-7cf56b28:12c53e4afe8:-8000:0000000000002BFA begin
 		$test = parent::createInstance($clazz, $label);
-		$this->setTestModel($test, new core_kernel_classes_Resource(INSTANCE_TESTMODEL_SIMPLE));
+		$testModelClass = new core_kernel_classes_Class(CLASS_TESTMODEL);
+		$models = $testModelClass->getInstances();
+		if (count($models) > 0) {
+			$this->setTestModel($test, current($models));
+		}
 		
 		//set the the default state to 'activ':
 		$test->setPropertyValue(new core_kernel_classes_Property(TEST_ACTIVE_PROP), GENERIS_TRUE);
-
+		
 		$returnValue = $test;
-        // section 10-13-1-39-7cf56b28:12c53e4afe8:-8000:0000000000002BFA end
 
         return $returnValue;
     }
@@ -388,157 +321,13 @@ class taoTests_models_classes_TestsService
      */
     public function getTestItems( core_kernel_classes_Resource $test)
     {
-        $returnValue = array();
-
-        // section 10-13-1-39-7cf56b28:12c53e4afe8:-8000:0000000000002C05 begin
-		$items = array();
-		$authoringService = taoTests_models_classes_TestAuthoringService::singleton();
-		// $authoringService = new taoTests_models_classes_TestAuthoringService();
-
-		//get the associated process, set in the test content property
-		$process = $test->getUniquePropertyValue(new core_kernel_classes_Property(TEST_TESTCONTENT_PROP));
-
-		//get list of all activities:
-		$activities = $authoringService->getActivitiesByProcess($process);
-		$totalNumber = count($activities);
-
-		//find the first one: property isinitial == true (must be only one, if not error) and set as the currentActivity:
-		$currentActivity = null;
-		foreach($activities as $activity){
-
-			$isIntial = $activity->getOnePropertyValue(new core_kernel_classes_Property(PROPERTY_ACTIVITIES_ISINITIAL));
-			if(!is_null($isIntial) && $isIntial instanceof core_kernel_classes_Resource){
-				if($isIntial->getUri() == GENERIS_TRUE){
-					$currentActivity = $activity;
-					break;
-				}
-			}
-		}
-
-		if(is_null($currentActivity)){
-			return $items;
-		}
-
-		//start the loop:
-		for($i=0;$i<$totalNumber;$i++){
-			$item = $authoringService->getItemByActivity($currentActivity);
-			if(!is_null($item)){
-				$items[$i] = $item;
-			}
-
-			//get its connector (check the type is "sequential) if ok, get the next activity
-			$connector = $currentActivity->getOnePropertyValue(new core_kernel_classes_Property(PROPERTY_STEP_NEXT));
-			$nextActivity = null;
-			if (!is_null($connector)) {
-				$connectorType = $connector->getUniquePropertyValue(new core_kernel_classes_Property(PROPERTY_CONNECTORS_TYPE));
-				if($connectorType->getUri() == INSTANCE_TYPEOFCONNECTORS_SEQUENCE){
-					$nextActivity = $connector->getUniquePropertyValue(new core_kernel_classes_Property(PROPERTY_STEP_NEXT));
-				}
-			}
-			
-			if(!is_null($nextActivity)){
-				$currentActivity = $nextActivity;
-			}else{
-				if($i == $totalNumber-1){
-					//it is normal, since it is the last activity and item
-				}else{
-					throw new common_Exception('the next activity of the connector is not found');
-				}
-			}
-		}
-
-		$returnValue = $items;
-        // section 10-13-1-39-7cf56b28:12c53e4afe8:-8000:0000000000002C05 end
+    	$returnValue = array();
+    	$model = $this->getTestModel($test);
+    	if (!is_null($model)) {
+    		$returnValue = $this->getTestModelImplementation($model)->getItems($test);
+    	}
 
         return (array) $returnValue;
-    }
-
-    /**
-     * Short description of method setTestItems
-     *
-     * @access public
-     * @author Joel Bout, <joel.bout@tudor.lu>
-     * @param  Resource test
-     * @param  array items
-     * @return boolean
-     */
-    public function setTestItems( core_kernel_classes_Resource $test, $items)
-    {
-        $returnValue = (bool) false;
-
-        // section 10-13-1-39-7cf56b28:12c53e4afe8:-8000:0000000000002C08 begin
-		$authoringService = taoTests_models_classes_TestAuthoringService::singleton();
-
-		// get the current process:
-		$process = $test->getUniquePropertyValue(new core_kernel_classes_Property(TEST_TESTCONTENT_PROP));
-
-		$var_delivery = new core_kernel_classes_Resource(INSTANCE_PROCESSVARIABLE_DELIVERY);
-
-		if(!$var_delivery->hasType(new core_kernel_classes_Class(CLASS_PROCESSVARIABLES))){
-			throw new Exception('The required process variable "delivery" is missing. Reinstall TAO is required.');
-		}
-
-		//get formal param associated to the 3 required service input parameters:
-		$itemUriParam = new core_kernel_classes_Resource(INSTANCE_FORMALPARAM_ITEMURI);
-		$testUriParam = new core_kernel_classes_Resource(INSTANCE_FORMALPARAM_TESTURI);
-		$deliveryUriParam = new core_kernel_classes_Resource(INSTANCE_FORMALPARAM_DELIVERYURI);
-
-		//delete all related activities:
-		$activities = $authoringService->getActivitiesByProcess($process);
-		foreach($activities as $activity){
-			if(!$authoringService->deleteActivity($activity)){
-				throw new common_exception_Error('Unable to delete Activity '.$activity->getUri());
-			}
-		}
-
-		//create the list of activities and interactive services and items plus their appropriate property values:
-		$previousActivity = null;
-		$connectorService = wfAuthoring_models_classes_ConnectorService::singleton();
-		
-		foreach ($items as $item) {
-			if(!($item instanceof core_kernel_classes_Resource)){
-				throw new common_Exception("An item provided to ".__FUNCTION__." is not a resource but ".gettype($item));
-			}
-
-			//create an activity
-			$activity = null;
-			$activity = $authoringService->createActivity($process, "item: {$item->getLabel()}");
-
-			//set property value visible to true
-			$activity->editPropertyValues(new core_kernel_classes_Property(PROPERTY_ACTIVITIES_ISHIDDEN), GENERIS_FALSE);
-
-			//set ACL mode to role user restricted with role=subject
-			$extManager = common_ext_ExtensionsManager::singleton();
-			$activity->editPropertyValues(new core_kernel_classes_Property(PROPERTY_ACTIVITIES_ACL_MODE),  INSTANCE_ACL_ROLE_RESTRICTED_USER_DELIVERY);
-			$activity->editPropertyValues(new core_kernel_classes_Property(PROPERTY_ACTIVITIES_RESTRICTED_ROLE), INSTANCE_ROLE_DELIVERY);
-
-
-			//get the item runner service definition: must exists!
-			$itemRunnerServiceDefinition = new core_kernel_classes_Resource(INSTANCE_SERVICEDEFINITION_ITEMRUNNER);
-			if(!$itemRunnerServiceDefinition->hasType(new core_kernel_classes_Class(CLASS_SUPPORTSERVICES))){
-				throw new Exception('required  service definition item runner does not exists, reinstall tao is required');
-			}
-
-			//create a call of service and associate the service definition to it:
-			$interactiveService = $authoringService->createInteractiveService($activity);
-			$interactiveService->setPropertyValue(new core_kernel_classes_Property(PROPERTY_CALLOFSERVICES_SERVICEDEFINITION), $itemRunnerServiceDefinition->getUri());
-
-			$authoringService->setActualParameter($interactiveService, $itemUriParam, $item->getUri(), PROPERTY_CALLOFSERVICES_ACTUALPARAMETERIN);//constant: we know it!
-			$authoringService->setActualParameter($interactiveService, $testUriParam, $test->getUri(), PROPERTY_CALLOFSERVICES_ACTUALPARAMETERIN);//constant: we know it!
-			$authoringService->setActualParameter($interactiveService, $deliveryUriParam, $var_delivery->getUri(), PROPERTY_CALLOFSERVICES_ACTUALPARAMETERIN, PROPERTY_ACTUALPARAMETER_PROCESSVARIABLE);//don't know yet so process var!
-
-			if(!is_null($previousActivity)) {
-				$connectorService->createSequential($previousActivity, $activity);
-			} else {
-				//set the property value as initial
-				$activity->editPropertyValues(new core_kernel_classes_Property(PROPERTY_ACTIVITIES_ISINITIAL), GENERIS_TRUE);
-			}
-			$previousActivity = $activity;
-		}
-		$returnValue = true;
-		// section 10-13-1-39-7cf56b28:12c53e4afe8:-8000:0000000000002C08 end
-
-        return (bool) $returnValue;
     }
 
     /**
@@ -553,14 +342,12 @@ class taoTests_models_classes_TestsService
     {
         $returnValue = (bool) false;
 
-        // section 10-11-2-16--f6d941a:12d7a53887b:-8000:0000000000002F4A begin
 		$active = $test->getOnePropertyValue(new core_kernel_classes_Property(TEST_ACTIVE_PROP));
 		if(is_null($active)){
 			if ($active->getUri() == GENERIS_TRUE){
 				$returnValue = true;
 			}
 		}
-        // section 10-11-2-16--f6d941a:12d7a53887b:-8000:0000000000002F4A end
 
         return (bool) $returnValue;
     }
@@ -603,20 +390,18 @@ class taoTests_models_classes_TestsService
      * @return taoTests_models_classes_TestModel
      */
     public function getTestModelImplementation(core_kernel_classes_Resource $testModel) {
-    	$returnValue = null;
-		if (!empty($testModel)) {
-			$classname = (string)$testModel->getOnePropertyValue(new core_kernel_classes_Property(PROPERTY_TESTMODEL_IMPLEMENTATION));
-			if (!empty($classname)) {
-				if (class_exists($classname) && in_array('taoTests_models_classes_TestModel', class_implements($classname))) {
-					$returnValue = new $classname();
-				} else {
-					throw new common_exception_Error('Test model service '.$classname.' not found, or not compatible for test model '.$testModel->getLabel());
-				}
-			}
+		if (empty($testModel)) {
+			throw new common_exception_NoImplementation(__FUNCTION__.' called on a NULL testModel');
 		}
-		return $returnValue;
+		$classname = (string)$testModel->getOnePropertyValue(new core_kernel_classes_Property(PROPERTY_TESTMODEL_IMPLEMENTATION));
+		if (empty($classname)) {
+			throw new common_exception_NoImplementation('No implementation found for testmodel '.$testModel->getUri());
+		}
+		if (!class_exists($classname) || !in_array('taoTests_models_classes_TestModel', class_implements($classname))) {
+			throw new common_exception_Error('Test model service '.$classname.' not found, or not compatible for test model '.$testModel->getUri());
+			
+		}
+		return new $classname();
     }
     
-} /* end of class taoTests_models_classes_TestsService */
-
-?>
+}

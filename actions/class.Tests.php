@@ -89,9 +89,12 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 
 				// don't hande the testmodel via bindProperties
 				if(array_key_exists(PROPERTY_TEST_TESTMODEL, $propertyValues)){
-					$testModel = new core_kernel_classes_Resource($propertyValues[PROPERTY_TEST_TESTMODEL]);
-					$this->service->setTestModel($test, $testModel);
+					$modelUri = $propertyValues[PROPERTY_TEST_TESTMODEL];
 					unset($propertyValues[PROPERTY_TEST_TESTMODEL]);
+					if (!empty($modelUri)) {
+						$testModel = new core_kernel_classes_Resource($modelUri);
+						$this->service->setTestModel($test, $testModel);
+					}
 				} else {
 					common_Logger::w('No testmodel on test form', 'taoTests');
 				}

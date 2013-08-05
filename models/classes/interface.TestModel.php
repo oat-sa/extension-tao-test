@@ -79,6 +79,16 @@ interface taoTests_models_classes_TestModel
      */
     public function getAuthoring( core_kernel_classes_Resource $test);
 
+    /**
+     * Clones the content of one test to another test,
+     * assumes that other test has already been cleaned (using deleteContent())
+     * 
+     * @access public
+     * @author Joel Bout, <joel@taotesting.com>
+     * @param core_kernel_classes_Resource $source
+     * @param core_kernel_classes_Resource $destination
+     */
+    public function cloneContent( core_kernel_classes_Resource $source, core_kernel_classes_Resource $destination);
 }
 
 ?>
