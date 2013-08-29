@@ -45,7 +45,9 @@ class taoTests_models_classes_CrudTestsService
     }
     
     public function delete( $resource){
-	return parent::delete($resource);
+        taoTests_models_classes_TestsService::singleton()->deleteTest(new core_kernel_classes_Resource($resource));
+	//parent::delete($resource)
+        return true;
     }
      public function deleteAll(){
 	return parent::deleteAll();
