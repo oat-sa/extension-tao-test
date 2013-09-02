@@ -89,6 +89,14 @@ interface taoTests_models_classes_TestModel
      * @param core_kernel_classes_Resource $destination
      */
     public function cloneContent( core_kernel_classes_Resource $source, core_kernel_classes_Resource $destination);
+    
+    /**
+     * Compiles a test and returns a runable service call
+     * This should include the compilation of the items as well
+     * 
+     * @param core_kernel_classes_Resource $test
+     * @param core_kernel_file_File $destinationDirectory
+     * @return tao_models_classes_service_ServiceCall
+     */
+    public function compile( core_kernel_classes_Resource $test,core_kernel_file_File $destinationDirectory);
 }
-
-?>

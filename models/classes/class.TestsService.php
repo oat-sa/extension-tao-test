@@ -379,6 +379,27 @@ class taoTests_models_classes_TestsService
 		}
     }
     
+    /**
+     * 
+     * @param core_kernel_classes_Resource $test
+     * @param core_kernel_file_File $destinationDirectory
+     * @throws common_exception_Error
+     * @return tao_models_classes_service_ServiceCall
+     */
+    public function compileTest(core_kernel_classes_Resource $test, core_kernel_file_File $destinationDirectory) {
+        $testModel = $this->getTestModel($test);
+        if (is_null($testModel)) {
+            throw new common_exception_Error('undefined testmodel for test '.$test->getUri());
+        }
+        $impl = $this->getTestModelImplementation($testModel);
+        return $impl->compile($test, $destinationDirectory);
+    }
+    
+    /**
+     * Returns the model of the current test
+     * @param core_kernel_classes_Resource $test
+     * @return core_kernel_classes_Container
+     */
     public function getTestModel(core_kernel_classes_Resource $test) {
 		return $test->getOnePropertyValue(new core_kernel_classes_Property(PROPERTY_TEST_TESTMODEL));
     }
