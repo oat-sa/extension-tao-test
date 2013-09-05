@@ -32,7 +32,6 @@ $todefine = array(
 	
 	'TEST_ACTIVE_PROP' 	=> 'http://www.tao.lu/Ontologies/TAOTest.rdf#active',
 	
-	'INSTANCE_FORMALPARAM_ITEMURI' => 'http://www.tao.lu/Ontologies/TAODelivery.rdf#FormalParamItemUri',
 	'INSTANCE_FORMALPARAM_TESTURI' => 'http://www.tao.lu/Ontologies/TAODelivery.rdf#FormalParamTestUri',
 	'INSTANCE_FORMALPARAM_DELIVERYURI' => 'http://www.tao.lu/Ontologies/TAODelivery.rdf#FormalParamDeliveryUri',
 	'INSTANCE_PROCESSVARIABLE_DELIVERY' => 'http://www.tao.lu/Ontologies/TAODelivery.rdf#ProcessVarDelivery',
