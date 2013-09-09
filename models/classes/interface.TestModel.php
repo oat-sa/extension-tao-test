@@ -96,7 +96,8 @@ interface taoTests_models_classes_TestModel
      * 
      * @param core_kernel_classes_Resource $test
      * @param core_kernel_file_File $destinationDirectory
+     * @param core_kernel_classes_Resource $resultServer
      * @return tao_models_classes_service_ServiceCall
      */
-    public function compile( core_kernel_classes_Resource $test,core_kernel_file_File $destinationDirectory);
+    public function compile( core_kernel_classes_Resource $test,core_kernel_file_File $destinationDirectory, core_kernel_classes_Resource $resultServer);
 }
