@@ -33,12 +33,11 @@ foreach($tests as $testCase){
 
 //add the reporter regarding the context
 if(PHP_SAPI == 'cli'){
-	$reporter = new XmlTimeReporter();
+	$reporter = new TextReporter();
 }
 else{
 	$reporter = new HtmlReporter();
 }
-define("PHPCOVERAGE_HOME", INCLUDES_PATH. "/spikephpcoverage/src");
 require_once  PHPCOVERAGE_HOME. "/CoverageRecorder.php";
 require_once PHPCOVERAGE_HOME . "/reporter/HtmlCoverageReporter.php";
 //run the unit test suite
