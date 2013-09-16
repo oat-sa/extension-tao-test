@@ -378,30 +378,13 @@ class taoTests_models_classes_TestsService
 			}
 		}
     }
-    
+
     public function getCompiler(core_kernel_classes_Resource $test) {
         $testModel = $this->getTestModel($test);
         if (is_null($testModel)) {
             throw new common_exception_Error('undefined testmodel for test '.$test->getUri());
         }
         return $this->getTestModelImplementation($testModel)->getCompiler($test);
-    }
-    
-    /**
-     * 
-     * @param core_kernel_classes_Resource $test
-     * @param core_kernel_file_File $destinationDirectory
-     * @param core_kernel_classes_Resource $resultServer
-     * @throws common_exception_Error
-     * @return tao_models_classes_service_ServiceCall
-     */
-    public function compileTest(core_kernel_classes_Resource $test, core_kernel_file_File $destinationDirectory, core_kernel_classes_Resource $resultServer) {
-        $testModel = $this->getTestModel($test);
-        if (is_null($testModel)) {
-            throw new common_exception_Error('undefined testmodel for test '.$test->getUri());
-        }
-        $impl = $this->getTestModelImplementation($testModel);
-        return $impl->compile($test, $destinationDirectory, $resultServer);
     }
     
     /**
