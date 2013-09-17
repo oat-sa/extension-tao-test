@@ -272,7 +272,7 @@ class taoTests_models_classes_TestsService
 			}
 			$clone->setLabel($cloneLabel);
 			
-			$impl = $this->getTestModelImplementation($this->getTestModel($test));
+			$impl = $this->getTestModelImplementation($this->getTestModel($instance));
 			$impl->cloneContent($instance, $clone);
 			
 			$this->onChangeTestLabel($clone);
