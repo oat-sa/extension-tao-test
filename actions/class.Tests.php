@@ -220,7 +220,7 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 	}
 
 	/**
-	 * get the list of items to populate the checkbox tree of related items
+	 * Get the list of items to populate the checkbox tree of related items
 	 * @return void
 	 */
 	public function getItems()
@@ -250,6 +250,11 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 		}
 		if ($this->hasRequestParameter('subclasses')) {
 			$options['subclasses'] = $this->getRequestParameter('subclasses');
+		}
+                if ($this->hasRequestParameter('itemModel')) {
+			$options['propertyFilter'] = array(
+                            TAO_ITEM_MODEL_PROPERTY => tao_helpers_Uri::decode($this->getRequestParameter('itemModel'))
+                        );
 		}
 		echo json_encode($this->service->toTree($clazz, $options));
 	}
