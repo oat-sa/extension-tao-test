@@ -55,7 +55,7 @@ class taoTests_models_classes_CrudTestsService
     /**
      * @param array parameters an array of property uri and values
      */
-    public function create(array $propertiesValues){
+    public function createFromArray(array $propertiesValues){
 	
 		if (!isset($propertiesValues[RDFS_LABEL])) {
 			$propertiesValues[RDFS_LABEL] = "";
