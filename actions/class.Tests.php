@@ -235,12 +235,12 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 		} else {
 			$clazz = new core_kernel_classes_Class(TAO_ITEM_CLASS);
 		}
-		if ($this->hasRequestParameter('selected')) {
-			$selected = $this->getRequestParameter('selected');
-			if (!is_array($selected)) {
-				$selected = array($selected);
+		if ($this->hasRequestParameter('openNodes')) {
+			$openNodes = $this->getRequestParameter('openNodes');
+			if (!is_array($openNodes)) {
+				$openNodes = array($openNodes);
 			}
-			$options['browse'] = $selected;
+			$options['browse'] = $openNodes;
 		}
 		if ($this->hasRequestParameter('offset')) {
 			$options['offset'] = $this->getRequestParameter('offset');
