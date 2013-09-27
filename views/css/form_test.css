@@ -25,3 +25,25 @@ div.data-container{
 	float:left;
 	width:50%;
 }
+.contentList{
+    padding: 0px;
+}
+
+.contentButton{
+    background: #E6E6E6;
+    border: 1px solid #D3D3D3;
+    color: #555555;
+    font-weight: normal;
+    list-style-type: none;
+    margin: 5px;
+    padding: 6px;
+    cursor: pointer;
+}
+
+.contentButton:hover{
+    background: #D0D0D0;
+}
+
+.emptyContentFooter{
+    height: 23px;
+}
