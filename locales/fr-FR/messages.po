@@ -23,47 +23,47 @@ msgstr "Classe enregistrée"
 
 #, tao-public
 msgid "Combine a selection of items into tests."
-msgstr "Combiner une sélection d'items en tests"
+msgstr "Combiner une sélection d'items en tests."
 
 msgid "delete"
 msgstr "Supprimer"
 
 msgid "Drag and drop the items to order them"
-msgstr "Glisser/déposer les items pour les ordonner"
+msgstr "Glissez/déposez les items pour les ordonner."
 
 msgid "duplicate"
-msgstr "dupliquer"
+msgstr "Dupliquer"
 
 msgid "Edit test class"
-msgstr "Editer la classe du test"
+msgstr "Modifier la classe du test"
 
 msgid "export"
-msgstr "exporter"
+msgstr "Exporter"
 
 msgid "import"
-msgstr "importer"
+msgstr "Importer"
 
 msgid "Items sequence"
-msgstr "Séquence d'item"
+msgstr "Séquence des items"
 
 msgid "lists"
-msgstr "listes"
+msgstr "Listes"
 
 #, tao-public
 msgid "Manage tests"
-msgstr "Gérer les tests"
+msgstr "Gestion des tests"
 
 msgid "meta data"
-msgstr "métadonnée"
+msgstr "Méta-\ndonnées"
 
 msgid "move"
-msgstr "déplacer"
+msgstr "Déplacer"
 
 msgid "new class"
-msgstr "Nouvelle classe"
+msgstr "Créer classe"
 
 msgid "new test"
-msgstr "Nouveau test"
+msgstr "Créer test"
 
 msgid "Save"
 msgstr "Enregistrer"
@@ -72,10 +72,10 @@ msgid "search"
 msgstr "Rechercher"
 
 msgid "Select the items composing the test."
-msgstr "Sélectionnez les items composant le test."
+msgstr "Sélectionnez les items qui composent le test."
 
 msgid "Sequence saved successfully"
-msgstr "La séquence a été enregistrée avec succès"
+msgstr "La séquence a été enregistrée avec succès."
 
 msgid "simple mode"
 msgstr "mode simple"
@@ -91,10 +91,20 @@ msgid "Tests"
 msgstr "Tests"
 
 msgid "Tests library"
-msgstr "Bibliothèque de tests"
+msgstr "Tests"
 
 msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
 msgstr "Le mode de test (séquence, notation, cumul, etc.) et les canevas sont également configurés ici."
 
 msgid "The Tests module allows to combine a selection of Items to a Test."
-msgstr "Le module Tests permet de combiner la sélection d'items à un test."
+msgstr "Le module <i>Tests</i> permet de combiner la sélection d'items à un test."
+
+msgid "Logged in as:"
+msgstr "Connecté en tant que : "
+
+msgid "Settings"
+msgstr "Réglages"
+
+msgid "User Management"
+msgstr "Gestion des utilisateurs"
+
