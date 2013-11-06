@@ -50,9 +50,10 @@ interface taoTests_models_classes_TestModel
     /**
      * Prepare the content of the test
      * 
-     * @param Resource $test
+     * @param core_kernel_classes_Resource $test
+     * @param array $items
      */
-    public function prepareContent( core_kernel_classes_Resource $test);
+    public function prepareContent( core_kernel_classes_Resource $test, $items = array());
     
     /**
      * Delete the content of the test
