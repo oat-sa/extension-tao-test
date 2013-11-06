@@ -48,7 +48,8 @@ interface taoTests_models_classes_TestModel
     public function onChangeTestLabel( core_kernel_classes_Resource $test);
     
     /**
-     * Prepare the content of the test
+     * Prepare the content of the test,
+     * using the provided items if possible
      * 
      * @param core_kernel_classes_Resource $test
      * @param array $items
