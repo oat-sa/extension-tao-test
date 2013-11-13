@@ -1,97 +1,101 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: TAO v2.5-alpha\n"
-"PO-Revision-Date: 2013-06-18T15:46:19\n"
-"Last-Translator: TAO Translation Team <translation@tao.lu>\n"
+"PO-Revision-Date: 2013-11-12 09:38-0000\n"
+"Last-Translator: Paulo Amorim <paulo@amorims.com>\n"
 "MIME-Version: 1.0\n"
 "Language: pt-PT\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: \n"
+"Language-Team: \n"
+"X-Generator: Poedit 1.5.7\n"
 
 msgid "Authoring"
-msgstr ""
+msgstr "Autoria"
 
 msgid "Available Items"
-msgstr ""
+msgstr "Items disponíveis"
 
 msgid "Class saved"
-msgstr ""
+msgstr "Disciplina guardada"
 
-#, tao-public
 msgid "Combine a selection of items into tests."
-msgstr ""
+msgstr "Combine uma selecção de itens para testes."
 
 msgid "delete"
-msgstr ""
+msgstr "eliminar"
 
 msgid "Drag and drop the items to order them"
-msgstr ""
+msgstr "Arraste e solte os itens para ordena-los"
 
 msgid "duplicate"
-msgstr ""
+msgstr "duplicado"
 
 msgid "Edit test class"
-msgstr ""
+msgstr "Editar teste de disciplina"
 
 msgid "Edit workflow"
-msgstr ""
+msgstr "Editar fluxo de trabalho"
 
 msgid "export"
-msgstr ""
+msgstr "exportar"
 
 msgid "import"
-msgstr ""
+msgstr "importar"
 
 msgid "Items sequence"
-msgstr ""
+msgstr "Sequência de items"
 
 msgid "lists"
-msgstr ""
+msgstr "listas"
 
-#, tao-public
 msgid "Manage tests"
-msgstr ""
+msgstr "Gerir testes"
 
 msgid "meta data"
-msgstr ""
+msgstr "meta dados"
 
 msgid "move"
-msgstr ""
+msgstr "mover"
 
 msgid "new class"
-msgstr ""
+msgstr "nova disciplina"
 
 msgid "new test"
-msgstr ""
+msgstr "novo teste"
 
 msgid "Save"
-msgstr ""
+msgstr "Guardar"
 
 msgid "search"
-msgstr ""
+msgstr "procurar"
 
 msgid "Select the items composing the test."
-msgstr ""
+msgstr "Seleccione os items que compõem o teste"
 
 msgid "Sequence saved successfully"
-msgstr ""
+msgstr "Sequência guardada com sucesso"
 
 msgid "Test properties"
-msgstr ""
+msgstr "Propriedades do teste"
 
 msgid "Test saved"
-msgstr ""
+msgstr "teste guardado"
 
-#, tao-public
 msgid "Tests"
-msgstr ""
+msgstr "Testes"
 
 msgid "Tests library"
-msgstr ""
+msgstr "Biblioteca de testes"
 
-msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
+msgid ""
+"The Test mode (sequencing, scoring, cumulating, etc.) and layout are also "
+"configured here."
 msgstr ""
+"O modo de teste (sequência, pontuação, acumulado, etc) e modelo também são "
+"configurados aqui."
 
 msgid "The Tests module allows to combine a selection of Items to a Test."
 msgstr ""
-
+"O Modulo de testes permite que combine uma selecção de items para um teste."
