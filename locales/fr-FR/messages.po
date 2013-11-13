@@ -108,3 +108,5 @@ msgstr "Réglages"
 msgid "User Management"
 msgstr "Gestion des utilisateurs"
 
+msgid "Beta version"
+msgstr "Version bêta"
