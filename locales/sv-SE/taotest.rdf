@@ -1,30 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-    @sourceLanguage en-US
+    @sourceLanguage EN
     @targetLanguage sv-SE
 -->
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xml:base="http://www.tao.lu/Ontologies/TAOTest.rdf#">
-  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#active">
-    <!--
-    @sourceLanguage en-US
-    @targetLanguage sv-SE
-    @source Active
-    @subject http://www.tao.lu/Ontologies/TAOTest.rdf#active
-    @predicate http://www.w3.org/2000/01/rdf-schema#label
-    -->
-    <rdfs:label xml:lang="sv-SE"><![CDATA[Active]]></rdfs:label>
-    <!--
-    @sourceLanguage en-US
-    @targetLanguage sv-SE
-    @source Active / Inactive state
-    @subject http://www.tao.lu/Ontologies/TAOTest.rdf#active
-    @predicate http://www.w3.org/2000/01/rdf-schema#comment
-    -->
-    <rdfs:comment xml:lang="sv-SE"><![CDATA[Active / Inactive state]]></rdfs:comment>
-  </rdf:Description>
   <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#Test">
     <!--
-    @sourceLanguage en-US
+    @sourceLanguage EN
     @targetLanguage sv-SE
     @source Test
     @subject http://www.tao.lu/Ontologies/TAOTest.rdf#Test
@@ -32,7 +14,7 @@
     -->
     <rdfs:label xml:lang="sv-SE"><![CDATA[Test]]></rdfs:label>
     <!--
-    @sourceLanguage en-US
+    @sourceLanguage EN
     @targetLanguage sv-SE
     @source Test
     @subject http://www.tao.lu/Ontologies/TAOTest.rdf#Test
@@ -42,7 +24,7 @@
   </rdf:Description>
   <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#TestContent">
     <!--
-    @sourceLanguage en-US
+    @sourceLanguage EN
     @targetLanguage sv-SE
     @source Test Content
     @subject http://www.tao.lu/Ontologies/TAOTest.rdf#TestContent
@@ -50,7 +32,7 @@
     -->
     <rdfs:label xml:lang="sv-SE"><![CDATA[Test Content]]></rdfs:label>
     <!--
-    @sourceLanguage en-US
+    @sourceLanguage EN
     @targetLanguage sv-SE
     @source Test Content
     @subject http://www.tao.lu/Ontologies/TAOTest.rdf#TestContent
@@ -58,81 +40,63 @@
     -->
     <rdfs:comment xml:lang="sv-SE"><![CDATA[Test Content]]></rdfs:comment>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#AuthoringMode">
+  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#TestModel">
     <!--
-    @sourceLanguage en-US
+    @sourceLanguage EN
     @targetLanguage sv-SE
-    @source Authoring Mode
-    @subject http://www.tao.lu/Ontologies/TAOTest.rdf#AuthoringMode
+    @source Test Model
+    @subject http://www.tao.lu/Ontologies/TAOTest.rdf#TestModel
     @predicate http://www.w3.org/2000/01/rdf-schema#label
     -->
-    <rdfs:label xml:lang="sv-SE"><![CDATA[Authoring Mode]]></rdfs:label>
+    <rdfs:label xml:lang="sv-SE"><![CDATA[Test Model]]></rdfs:label>
     <!--
-    @sourceLanguage en-US
+    @sourceLanguage EN
     @targetLanguage sv-SE
-    @source Authoring Mode
-    @subject http://www.tao.lu/Ontologies/TAOTest.rdf#AuthoringMode
+    @source Test Model
+    @subject http://www.tao.lu/Ontologies/TAOTest.rdf#TestModel
     @predicate http://www.w3.org/2000/01/rdf-schema#comment
     -->
-    <rdfs:comment xml:lang="sv-SE"><![CDATA[Authoring Mode]]></rdfs:comment>
+    <rdfs:comment xml:lang="sv-SE"><![CDATA[Test Model]]></rdfs:comment>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#TestAuthoringModes">
+  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#TestTestModel">
     <!--
-    @sourceLanguage en-US
+    @sourceLanguage EN
     @targetLanguage sv-SE
-    @source Test Authoring Modes
-    @subject http://www.tao.lu/Ontologies/TAOTest.rdf#TestAuthoringModes
+    @source Test Model
+    @subject http://www.tao.lu/Ontologies/TAOTest.rdf#TestTestModel
     @predicate http://www.w3.org/2000/01/rdf-schema#label
     -->
-    <rdfs:label xml:lang="sv-SE"><![CDATA[Test Authoring Modes]]></rdfs:label>
+    <rdfs:label xml:lang="sv-SE"><![CDATA[Test Model]]></rdfs:label>
     <!--
-    @sourceLanguage en-US
+    @sourceLanguage EN
     @targetLanguage sv-SE
-    @source Test Authoring Modes
-    @subject http://www.tao.lu/Ontologies/TAOTest.rdf#TestAuthoringModes
+    @source Test Model
+    @subject http://www.tao.lu/Ontologies/TAOTest.rdf#TestTestModel
     @predicate http://www.w3.org/2000/01/rdf-schema#comment
     -->
-    <rdfs:comment xml:lang="sv-SE"><![CDATA[Test Authoring Modes]]></rdfs:comment>
+    <rdfs:comment xml:lang="sv-SE"><![CDATA[Test Model]]></rdfs:comment>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#AuthoringModeSimple">
+  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#TestModelImplementation">
     <!--
-    @sourceLanguage en-US
+    @sourceLanguage EN
     @targetLanguage sv-SE
-    @source simple
-    @subject http://www.tao.lu/Ontologies/TAOTest.rdf#AuthoringModeSimple
+    @source Testmodel implementation
+    @subject http://www.tao.lu/Ontologies/TAOTest.rdf#TestModelImplementation
     @predicate http://www.w3.org/2000/01/rdf-schema#label
     -->
-    <rdfs:label xml:lang="sv-SE"><![CDATA[simple]]></rdfs:label>
+    <rdfs:label xml:lang="sv-SE"><![CDATA[Testmodel implementation]]></rdfs:label>
     <!--
-    @sourceLanguage en-US
+    @sourceLanguage EN
     @targetLanguage sv-SE
-    @source simple test authoring mode
-    @subject http://www.tao.lu/Ontologies/TAOTest.rdf#AuthoringModeSimple
+    @source Implementation of the test model
+    @subject http://www.tao.lu/Ontologies/TAOTest.rdf#TestModelImplementation
     @predicate http://www.w3.org/2000/01/rdf-schema#comment
     -->
-    <rdfs:comment xml:lang="sv-SE"><![CDATA[simple test authoring mode]]></rdfs:comment>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#AuthoringModeAdvanced">
-    <!--
-    @sourceLanguage en-US
-    @targetLanguage sv-SE
-    @source Advanced
-    @subject http://www.tao.lu/Ontologies/TAOTest.rdf#AuthoringModeAdvanced
-    @predicate http://www.w3.org/2000/01/rdf-schema#label
-    -->
-    <rdfs:label xml:lang="sv-SE"><![CDATA[Advanced]]></rdfs:label>
-    <!--
-    @sourceLanguage en-US
-    @targetLanguage sv-SE
-    @source Advanced test authoring mode
-    @subject http://www.tao.lu/Ontologies/TAOTest.rdf#AuthoringModeAdvanced
-    @predicate http://www.w3.org/2000/01/rdf-schema#comment
-    -->
-    <rdfs:comment xml:lang="sv-SE"><![CDATA[Advanced test authoring mode]]></rdfs:comment>
+    <rdfs:comment xml:lang="sv-SE"><![CDATA[Implementation of the test model]]></rdfs:comment>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole">
     <!--
-    @sourceLanguage en-US
+    @sourceLanguage EN
     @targetLanguage sv-SE
     @source Tests Manager
     @subject http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole
@@ -140,7 +104,7 @@
     -->
     <rdfs:label xml:lang="sv-SE"><![CDATA[Tests Manager]]></rdfs:label>
     <!--
-    @sourceLanguage en-US
+    @sourceLanguage EN
     @targetLanguage sv-SE
     @source The Tests Manager Role
     @subject http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole

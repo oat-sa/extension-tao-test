@@ -47,6 +47,9 @@ return array(
 		)
 	),
 	'managementRole' => 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole',
+    'acl' => array(
+        array('grant', 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole', array('ext'=>'taoTests')),
+    ),
 	'optimizableClasses' => array(
 		'http://www.tao.lu/Ontologies/TAOTest.rdf#Test'		
 	),

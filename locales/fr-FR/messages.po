@@ -1,22 +1,12 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO v2.4-beta3\n"
-"PO-Revision-Date: 2013-09-06 08:29+0000\n"
+"Project-Id-Version: TAO v2.6-alpha\n"
+"PO-Revision-Date: 2013-11-20T14:44:14\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: fr-FR\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#, tao-public
-msgid "Advanced Authoring Tool"
-msgstr "Editeur avancé"
-
-msgid "advanced mode"
-msgstr "mode avancé"
-
-msgid "Available Items"
-msgstr "Items disponibles"
 
 msgid "Class saved"
 msgstr "Classe enregistrée"
@@ -27,9 +17,6 @@ msgstr "Combiner une sélection d'items en tests."
 
 msgid "delete"
 msgstr "Supprimer"
-
-msgid "Drag and drop the items to order them"
-msgstr "Glissez/déposez les items pour les ordonner."
 
 msgid "duplicate"
 msgstr "Dupliquer"
@@ -43,9 +30,6 @@ msgstr "Exporter"
 msgid "import"
 msgstr "Importer"
 
-msgid "Items sequence"
-msgstr "Séquence des items"
-
 msgid "lists"
 msgstr "Listes"
 
@@ -54,7 +38,8 @@ msgid "Manage tests"
 msgstr "Gestion des tests"
 
 msgid "meta data"
-msgstr "Méta-\ndonnées"
+msgstr "Méta-\n"
+"données"
 
 msgid "move"
 msgstr "Déplacer"
@@ -65,20 +50,8 @@ msgstr "Créer classe"
 msgid "new test"
 msgstr "Créer test"
 
-msgid "Save"
-msgstr "Enregistrer"
-
 msgid "search"
 msgstr "Rechercher"
-
-msgid "Select the items composing the test."
-msgstr "Sélectionnez les items qui composent le test."
-
-msgid "Sequence saved successfully"
-msgstr "La séquence a été enregistrée avec succès."
-
-msgid "simple mode"
-msgstr "mode simple"
 
 msgid "Test properties"
 msgstr "Propriétés du test"
@@ -99,14 +72,3 @@ msgstr "Le mode de test (séquence, notation, cumul, etc.) et les canevas sont �
 msgid "The Tests module allows to combine a selection of Items to a Test."
 msgstr "Le module <i>Tests</i> permet de combiner la sélection d'items à un test."
 
-msgid "Logged in as:"
-msgstr "Connecté en tant que : "
-
-msgid "Settings"
-msgstr "Réglages"
-
-msgid "User Management"
-msgstr "Gestion des utilisateurs"
-
-msgid "Beta version"
-msgstr "Version bêta"
