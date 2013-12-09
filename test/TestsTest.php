@@ -20,7 +20,7 @@
  */
 ?>
 <?php
-require_once dirname(__FILE__) . '/../../tao/test/TaoTestRunner.php';
+require_once dirname(__FILE__) . '/../../tao/test/TaoPhpUnitTestRunner.php';
 include_once dirname(__FILE__) . '/../includes/raw_start.php';
 
 /**
@@ -29,7 +29,7 @@ include_once dirname(__FILE__) . '/../includes/raw_start.php';
  * @package taoTests
  * @subpackage test
  */
-class TestsTestCase extends UnitTestCase {
+class TestsTestCase extends TaoPhpUnitTestRunner {
 	
 	/**
 	 * 
@@ -41,7 +41,8 @@ class TestsTestCase extends UnitTestCase {
 	 * tests initialization
 	 */
 	public function setUp(){		
-		TaoTestRunner::initTest();
+		TaoPhpUnitTestRunner::initTest();
+		$this->testsService = taoTests_models_classes_TestsService::singleton();
 	}
 	
 	/**
@@ -51,11 +52,10 @@ class TestsTestCase extends UnitTestCase {
 	 */
 	public function testService(){
 		
-		$testsService = taoTests_models_classes_TestsService::singleton();
-		$this->assertIsA($testsService, 'tao_models_classes_Service');
-		$this->assertIsA($testsService, 'taoTests_models_classes_TestsService');
+		$this->assertIsA($this->testsService , 'tao_models_classes_Service');
+		$this->assertIsA($this->testsService , 'taoTests_models_classes_TestsService');
 		
-		$this->testsService = $testsService;
+
 	}
 	
 	/**
@@ -67,20 +67,20 @@ class TestsTestCase extends UnitTestCase {
 		$this->assertTrue(defined('TAO_TEST_CLASS'));
 		$testClass = $this->testsService->getRootclass();
 		$this->assertIsA($testClass, 'core_kernel_classes_Class');
-		$this->assertEqual(TAO_TEST_CLASS, $testClass->getUri());
+		$this->assertEquals(TAO_TEST_CLASS, $testClass->getUri());
 		
 		//create a subclass
 		$subTestClassLabel = 'subTest class';
 		$subTestClass = $this->testsService->createSubClass($testClass, $subTestClassLabel);
 		$this->assertIsA($subTestClass, 'core_kernel_classes_Class');
-		$this->assertEqual($subTestClassLabel, $subTestClass->getLabel());
+		$this->assertEquals($subTestClassLabel, $subTestClass->getLabel());
 		$this->assertTrue($this->testsService->isTestClass($subTestClass));
 		
 		//create instance of Test
 		$testInstanceLabel = 'test instance';
 		$testInstance = $this->testsService->createInstance($testClass, $testInstanceLabel);
 		$this->assertIsA($testInstance, 'core_kernel_classes_Resource');
-		$this->assertEqual($testInstanceLabel, $testInstance->getLabel());
+		$this->assertEquals($testInstanceLabel, $testInstance->getLabel());
 		
 		//create instance of subTest
 		$subTestInstanceLabel = 'subTest instance';
@@ -89,11 +89,11 @@ class TestsTestCase extends UnitTestCase {
 		$subTestInstance->removePropertyValues(new core_kernel_classes_Property(RDFS_LABEL));
 		$subTestInstance->setLabel($subTestInstanceLabel);
 		$this->assertIsA($subTestInstance, 'core_kernel_classes_Resource');
-		$this->assertEqual($subTestInstanceLabel, $subTestInstance->getLabel());
+		$this->assertEquals($subTestInstanceLabel, $subTestInstance->getLabel());
 		
 		$subTestInstanceLabel2 = 'my sub test instance';
 		$subTestInstance->setLabel($subTestInstanceLabel2);
-		$this->assertEqual($subTestInstanceLabel2, $subTestInstance->getLabel());
+		$this->assertEquals($subTestInstanceLabel2, $subTestInstance->getLabel());
 		
 		
 		//delete test instance
