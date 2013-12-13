@@ -93,11 +93,9 @@ interface taoTests_models_classes_TestModel
     public function cloneContent( core_kernel_classes_Resource $source, core_kernel_classes_Resource $destination);
     
     /**
-     * Returns the compiler of the test
-     * This should include the compilation of the items as well
+     * Returns the compiler class of the test
      * 
-     * @param core_kernel_classes_Resource $test
-     * @return tao_models_classes_Compiler
+     * @return string
      */
-    public function getCompiler( core_kernel_classes_Resource $test);
+    public function getCompilerClass();
 }

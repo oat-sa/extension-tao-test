@@ -379,12 +379,12 @@ class taoTests_models_classes_TestsService
 		}
     }
 
-    public function getCompiler(core_kernel_classes_Resource $test) {
+    public function getCompilerClass(core_kernel_classes_Resource $test) {
         $testModel = $this->getTestModel($test);
         if (is_null($testModel)) {
             throw new common_exception_Error('undefined testmodel for test '.$test->getUri());
         }
-        return $this->getTestModelImplementation($testModel)->getCompiler($test);
+        return $this->getTestModelImplementation($testModel)->getCompilerClass();
     }
     
     /**
