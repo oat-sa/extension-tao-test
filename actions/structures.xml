@@ -20,14 +20,13 @@
 				</trees>
 				<actions>
 					<action name="search" url="/taoTests/Tests/search" context="*" />
-					<action name="new class" js="generisActions.subClass" url="/taoTests/Tests/addTestClass" context="class" />
-					<action name="new test" js="generisActions.instanciate" url="/taoTests/Tests/addInstance" context="class" />
-					<action name="delete" js="generisActions.removeNode" url="/taoTests/Tests/delete" context="resource" />
-					<action name="duplicate" js="generisActions.duplicateNode" url="/taoTests/Tests/cloneInstance" context="instance" />
-					<action name="move" js="generisActions.moveNode" url="" context="instance" />
-					<!--<action name="preview" js="generisActions.fullScreen" url="/taoTests/Tests/preview" context="instance" />-->
+					<action name="new class" js="subClass" url="/taoTests/Tests/addTestClass" context="class" />
+					<action name="new test" js="instanciate" url="/taoTests/Tests/addInstance" context="class" />
+					<action name="delete" js="removeNode" url="/taoTests/Tests/delete" context="resource" />
+					<action name="duplicate" js="duplicateNode" url="/taoTests/Tests/cloneInstance" context="instance" />
+					<action name="move" js="moveNode" url="" context="instance" />
 					<action name="lists"  url="/tao/Lists/index"  context="*" />
-					<action name="meta data" js="generisActions.loadMetaData" url="/tao/MetaData/getMetaData"  context="resource" />
+					<action name="meta data" js="loadMetaData" url="/tao/MetaData/getMetaData"  context="resource" />
 					<action name="export" url="/tao/Export/index"  context="*" />
 					<action name="import" url="/tao/Import/index"  context="class" />
 				</actions>

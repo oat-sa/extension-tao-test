@@ -5,4 +5,4 @@
 <div id="form-container" class="ui-widget-content ui-corner-bottom">
 	<?=get_data('myForm')?>
 </div>
-<? include('footer.tpl') ?>
+<? include(TAO_TPL_PATH . 'footer.tpl') ?>
