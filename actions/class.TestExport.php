@@ -29,9 +29,9 @@
  * @subpackage action
  *
  */
-class taoItems_actions_TestExport extends tao_actions_Export {
+class taoTests_actions_TestExport extends tao_actions_Export {
 
-	public function getAvailableExportHandlers() {
+	protected function getAvailableExportHandlers() {
 		$returnValue = parent::getAvailableExportHandlers();
 		
 		$resources = $this->getResourcesToExport();

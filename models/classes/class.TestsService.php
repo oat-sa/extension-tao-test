@@ -121,7 +121,6 @@ class taoTests_models_classes_TestsService
     {
         $returnValue = null;
 
-
 		if(is_null($clazz)){
 			$clazz = $this->testClass;
 		}
