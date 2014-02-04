@@ -388,6 +388,7 @@ class taoTests_models_classes_TestsService
     
     /**
      * Returns the model of the current test
+     * 
      * @param core_kernel_classes_Resource $test
      * @return core_kernel_classes_Container
      */
@@ -414,6 +415,30 @@ class taoTests_models_classes_TestsService
 			
 		}
 		return new $classname();
+    }
+    
+    /**
+     * Get the core_kernel_file_File object corresponding to the content of $test.
+     * 
+     * @param core_kernel_classes_Resource $test A resource corresponding to a TAO Test in the Knowledge Base.
+     * @throws common_exception_Error If an error occurs while retrieving the test content.
+     * @return core_kernel_file_File
+     */
+    public function getTestContent(core_kernel_classes_Resource $test) {
+        $testContentProperty = new core_kernel_classes_Property(TEST_TESTCONTENT_PROP);
+        try {
+            return new core_kernel_file_File($test->getUniquePropertyValue($testContentProperty)->getUri());
+        }
+        catch (common_Exception $e) {
+            $uri = $test->getUri();
+            $msg = "Multiple contents found for test '${uri}'.";
+            throw new common_exception_Error($msg);
+        }
+        catch (common_exception_EmptyProperty $e) {
+            $uri = $test->getUri();
+            $msg = "Test '${uri}' has no content.";
+            throw new common_exception_Error($msg);
+        }
     }
     
 }
