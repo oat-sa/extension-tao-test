@@ -28,7 +28,7 @@
  */
 abstract class taoTests_models_classes_TestCompiler extends tao_models_classes_Compiler
 {
-    protected function getSubCompilerClass($resource) {
+    protected function getSubCompilerClass(core_kernel_classes_Resource $resource) {
         return taoItems_models_classes_ItemsService::singleton()->getCompilerClass($resource);
     }
 }
