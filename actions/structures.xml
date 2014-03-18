@@ -12,7 +12,7 @@
 						editClassUrl="/taoTests/Tests/editTestClass"
 						editInstanceUrl="/taoTests/Tests/editTest"
 						addInstanceUrl="/taoTests/Tests/addInstance"
-						addSubClassUrl="/taoTests/Tests/addTestClass"
+						addSubClassUrl="/taoTests/Tests/addSubClass"
 						deleteUrl="/taoTests/Tests/delete"
 						duplicateUrl="/taoTests/Tests/cloneInstance"
 						moveInstanceUrl="/taoTests/Tests/moveInstance"
@@ -20,7 +20,7 @@
 				</trees>
 				<actions>
 					<action name="search" url="/taoTests/Tests/search" context="*" />
-					<action name="new class" js="subClass" url="/taoTests/Tests/addTestClass" context="class" />
+					<action name="new class" js="subClass" url="/taoTests/Tests/addSubClass" context="class" />
 					<action name="new test" js="instanciate" url="/taoTests/Tests/addInstance" context="class" />
 					<action name="delete" js="removeNode" url="/taoTests/Tests/delete" context="resource" />
 					<action name="duplicate" js="duplicateNode" url="/taoTests/Tests/cloneInstance" context="instance" />

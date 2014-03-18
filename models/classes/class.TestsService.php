@@ -108,34 +108,6 @@ class taoTests_models_classes_TestsService
     }
 
     /**
-     * Short description of method createTestClass
-     *
-     * @access public
-     * @author Joel Bout, <joel.bout@tudor.lu>
-     * @param  Class clazz
-     * @param  string label
-     * @param  array properties
-     * @return core_kernel_classes_Class
-     */
-    public function createTestClass( core_kernel_classes_Class $clazz = null, $label = '', $properties = array())
-    {
-        $returnValue = null;
-
-		if(is_null($clazz)){
-			$clazz = $this->testClass;
-		}
-
-		if($this->isTestClass($clazz)){
-            return $this->createSubClass($clazz, $label);
-		}
-        else{
-            throw new common_exception_InconsistentData($clazz . ' should be a Class Test ');
-        }
-
-        return $returnValue;
-    }
-
-    /**
      * Check if the Class in parameter is a subclass of Test
      *
      * @access public
