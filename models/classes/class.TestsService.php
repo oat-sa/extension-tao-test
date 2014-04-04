@@ -26,7 +26,7 @@
  * @access public
  * @author Joel Bout, <joel.bout@tudor.lu>
  * @package taoTests
- * @subpackage models_classes
+ 
  */
 class taoTests_models_classes_TestsService
     extends tao_models_classes_ClassService

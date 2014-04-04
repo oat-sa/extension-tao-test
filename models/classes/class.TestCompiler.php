@@ -24,7 +24,7 @@
  * @access public
  * @author Joel Bout, <joel@taotesting.com>
  * @package taoTests
- * @subpackage models_classes
+ 
  */
 abstract class taoTests_models_classes_TestCompiler extends tao_models_classes_Compiler
 {
