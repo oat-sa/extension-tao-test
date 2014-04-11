@@ -1,4 +1,8 @@
-<? include(TAO_TPL_PATH . 'form_context.tpl') ?>
+<?php
+use oat\tao\helpers\Template;
+
+Template::inc('form_context.tpl', 'tao');
+?>
 <link rel="stylesheet" type="text/css" href="<?=BASE_WWW?>css/form_test.css" />
 <?if(has_data('authoring')):?>
 <div id="test-left-container">
@@ -14,4 +18,6 @@
 		<?=get_data('myForm')?>
 	</div>
 </div>
-<? include(TAO_TPL_PATH . 'footer.tpl') ?>
+<?php 
+Template::inc('footer.tpl', 'tao');
+?>
