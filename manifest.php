@@ -31,11 +31,14 @@ $taopath = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'tao'.DIRECTORY_SEPARA
 
 return array(
 	'name' => 'taoTests',
-	'description' => 'TAO Tests extension',
+    'label' => 'Test core extension',
+	'description' => 'TAO Tests extension contains the abstraction of the test-runners, but requires an implementation in order to be able to run tests',
     'license' => 'GPL-2.0',
-    'version' => '2.4',
+    'version' => '2.6',
 	'author' => 'Open Assessment Technologies, CRP Henri Tudor',
-	'dependencies' => array('taoItems'),
+	'requires' => array(
+	    'taoItems' => '2.6'
+    ),
 	'models' => array(
 		'http://www.tao.lu/Ontologies/TAOTest.rdf',
 	),
