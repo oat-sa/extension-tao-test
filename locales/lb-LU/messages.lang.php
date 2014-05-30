@@ -1,7 +1,6 @@
 <?php
 $GLOBALS['__l10n']["Add / Edit lists"]="Lëschten dobeisetzen / editéiren";
 $GLOBALS['__l10n']["Add property"]="Proprietéit dobeisetzen";
-$GLOBALS['__l10n']["Add the source file"]="Quellfichier unhaenken";
 $GLOBALS['__l10n']["An error occured during user deletion"]="Während dem Läschen vum User gouf et e Fehler";
 $GLOBALS['__l10n']["Class"]="Klass";
 $GLOBALS['__l10n']["Class saved"]="Klass gespäichert";
@@ -39,8 +38,8 @@ $GLOBALS['__l10n']["Manage groups"]="Gruppen verwalten";
 $GLOBALS['__l10n']["Manage items"]="Itemen verwalten";
 $GLOBALS['__l10n']["Manage test takers"]="Testpersounen verwalten";
 $GLOBALS['__l10n']["Manage tests"]="Testermanagen";
-$GLOBALS['__l10n']["meta data"]="Metadaten";
 $GLOBALS['__l10n']["Meta Data"]="Logout";
+$GLOBALS['__l10n']["meta data"]="Metadaten";
 $GLOBALS['__l10n']["My settings"]="Meng Astellungen";
 $GLOBALS['__l10n']["new class"]="nei Klass";
 $GLOBALS['__l10n']["New password"]="Neit Passwuert";
@@ -63,8 +62,8 @@ $GLOBALS['__l10n']["Resource saved"]="Ressource gespaichert";
 $GLOBALS['__l10n']["Results"]="Resultater";
 $GLOBALS['__l10n']["Right click the tree to manage your lists"]="Macht een Rietsklick op den Baam fier aer Lëschten ze verwalten";
 $GLOBALS['__l10n']["Save"]="Späicheren";
-$GLOBALS['__l10n']["search"]="duerchsichen";
 $GLOBALS['__l10n']["Search"]="Sichen";
+$GLOBALS['__l10n']["search"]="duerchsichen";
 $GLOBALS['__l10n']["Search results"]="An den Resultater sichen";
 $GLOBALS['__l10n']["select"]="auswielen";
 $GLOBALS['__l10n']["Select a language"]="Sprooch auswielen";
@@ -84,13 +83,11 @@ $GLOBALS['__l10n']["Translate to"]="Iwersetzen no";
 $GLOBALS['__l10n']["Translation parameters"]="Iwersetzungsparameter";
 $GLOBALS['__l10n']["Translation saved"]="Iwersetzung gespaichert";
 $GLOBALS['__l10n']["Type"]="Typ";
-$GLOBALS['__l10n']["Upload CSV File"]="CSF Fichier eroplueden";
 $GLOBALS['__l10n']["Use the * character to replace any string"]="Benotzt den * fir eng Zeecheketten ze ersetzen";
 $GLOBALS['__l10n']["User"]="User";
 $GLOBALS['__l10n']["User added"]="User dobeigesaat";
 $GLOBALS['__l10n']["User deleted successfully"]="User erfollegraich geläscht";
 $GLOBALS['__l10n']["User saved"]="User gespaichert";
-$GLOBALS['__l10n']["Users"]="Useren";
 $GLOBALS['__l10n']["You cannot modify this property"]="Dir kënnt des Proprietéit net änneren";
 
 ?>

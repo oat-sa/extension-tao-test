@@ -1,7 +1,6 @@
 <?php
 $GLOBALS['__l10n']["Add / Edit lists"]="Listen hinzufügen/bearbeiten";
 $GLOBALS['__l10n']["Add property"]="Eigenschaft hinzufügen";
-$GLOBALS['__l10n']["Add the source file"]="Quelldatei hinzufügen";
 $GLOBALS['__l10n']["An error occured during user deletion"]="Ein Fehler ist während dem Löschvorgang aufgetreten";
 $GLOBALS['__l10n']["Class"]="Klasse";
 $GLOBALS['__l10n']["Class saved"]="Klasse gespeichert";
@@ -40,8 +39,8 @@ $GLOBALS['__l10n']["Manage groups"]="Gruppen verwalten";
 $GLOBALS['__l10n']["Manage items"]="Items verwalten";
 $GLOBALS['__l10n']["Manage test takers"]="Testpersonen verwalten";
 $GLOBALS['__l10n']["Manage tests"]="Tests verwalten";
-$GLOBALS['__l10n']["meta data"]="Meat-Daten";
 $GLOBALS['__l10n']["Meta Data"]="Meta-Daten";
+$GLOBALS['__l10n']["meta data"]="Meat-Daten";
 $GLOBALS['__l10n']["My settings"]="Meine Einstellungen";
 $GLOBALS['__l10n']["new class"]="neue Klasse";
 $GLOBALS['__l10n']["New password"]="Neues Passwort";
@@ -64,8 +63,8 @@ $GLOBALS['__l10n']["Resource saved"]="Ressource gespeichert";
 $GLOBALS['__l10n']["Results"]="Ergebnisse";
 $GLOBALS['__l10n']["Right click the tree to manage your lists"]="Zur Verwaltung der Listen klicken Sie bitte mit der rechten Maustaste auf den Baum";
 $GLOBALS['__l10n']["Save"]="Speichern";
-$GLOBALS['__l10n']["search"]="suchen";
 $GLOBALS['__l10n']["Search"]="Suchen";
+$GLOBALS['__l10n']["search"]="suchen";
 $GLOBALS['__l10n']["Search results"]="Ergebnisse suchen";
 $GLOBALS['__l10n']["select"]="Auswählen";
 $GLOBALS['__l10n']["Select a language"]="Sprache auswählen";
@@ -85,13 +84,11 @@ $GLOBALS['__l10n']["Translate to"]="Übersetzen auf";
 $GLOBALS['__l10n']["Translation parameters"]="Übersetzungsparameter";
 $GLOBALS['__l10n']["Translation saved"]="Übersetzung gespeichert";
 $GLOBALS['__l10n']["Type"]="Typ";
-$GLOBALS['__l10n']["Upload CSV File"]="CSV-Datei uploaden";
 $GLOBALS['__l10n']["Use the * character to replace any string"]="Benutzen Sie bitten das Zeichen * zur Ersetzung eienr Zeichenfolge";
 $GLOBALS['__l10n']["User"]="Benutzer";
 $GLOBALS['__l10n']["User added"]="Benutzer hinzugefügt";
 $GLOBALS['__l10n']["User deleted successfully"]="Benutzer erfolgreich gelöscht";
 $GLOBALS['__l10n']["User saved"]="Benutzer gespeichert";
-$GLOBALS['__l10n']["Users"]="Benutzer";
 $GLOBALS['__l10n']["You cannot modify this property"]="Sie können diese Eigenschaft nicht ändern";
 
 ?>
