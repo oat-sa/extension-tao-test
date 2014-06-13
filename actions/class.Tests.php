@@ -200,56 +200,5 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 		}
 		$this->setView('authoring/process_authoring_tool.tpl');
 	}
-        
-        /**
-         * Build the options array regarding the HTTP request's query params
-         * @return array of tree options
-         */
-        protected function getItemsTreeOptions() {
-            $options = array('chunk' => false);
-            if ($this->hasRequestParameter('classUri')) {
-                $options['chunk'] = true;
-            }     
-            if ($this->hasRequestParameter('openNodes')) {
-                $openNodes = $this->getRequestParameter('openNodes');
-                if (!is_array($openNodes)) {
-                        $openNodes = array($openNodes);
-                }
-                $options['browse'] = $openNodes;
-            }
-            if ($this->hasRequestParameter('offset')) {
-                $options['offset'] = $this->getRequestParameter('offset');
-            }
-            if ($this->hasRequestParameter('limit')) {
-                $options['limit'] = $this->getRequestParameter('limit');
-            }
-            if ($this->hasRequestParameter('subclasses')) {
-                $options['subclasses'] = $this->getRequestParameter('subclasses');
-            }
-            if ($this->hasRequestParameter('itemModel')) {
-                $options['propertyFilter'] = array(
-                    TAO_ITEM_MODEL_PROPERTY => tao_helpers_Uri::decode($this->getRequestParameter('itemModel'))
-                );
-            }
-            return $options;
-        }
-
-        /**
-	 * Get the list of items to populate the checkbox tree of related items
-	 * @return void
-	 */
-	public function getItems() {
-		if (!tao_helpers_Request::isAjax()) {
-			throw new Exception("wrong request mode");
-		}
-		if ($this->hasRequestParameter('classUri')) {
-                    $clazz = $this->getCurrentClass();
-                } else {
-                    $clazz = new core_kernel_classes_Class(TAO_ITEM_CLASS);
-                }
-                $options = $this->getItemsTreeOptions();
-		echo json_encode($this->service->toTree($clazz, $options));
-	}
-
 }
 ?>
