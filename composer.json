@@ -41,7 +41,7 @@
 		"role": "Developer"
 	}
     ],
-    "description" : "TAO's extension to manage test",
+    "description" : "extension to manage tests",
     "support": {
 	"forum": "http://forum.taotesting.com",
 	"issues": "http://forge.taotesting.com"
