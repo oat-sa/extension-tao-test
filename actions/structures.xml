@@ -1,36 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE extension SYSTEM "../../tao/doc/structures.dtd">
 <structures>
-	<structure id="tests" name="Tests" level="1" visible="true">
-		<description>Combine a selection of items into tests.</description>
-		<sections>
-			<section  id="manage_tests" name="Manage tests" url="/taoTests/Tests/index">
-				<trees>
-					<tree name="Tests library"
-						className="Test"
-						dataUrl="/taoTests/Tests/getOntologyData"
-						editClassUrl="/taoTests/Tests/editTestClass"
-						editInstanceUrl="/taoTests/Tests/editTest"
-						addInstanceUrl="/taoTests/Tests/addInstance"
-						addSubClassUrl="/taoTests/Tests/addSubClass"
-						deleteUrl="/taoTests/Tests/delete"
-						duplicateUrl="/taoTests/Tests/cloneInstance"
-						moveInstanceUrl="/taoTests/Tests/moveInstance"
-					/>
-				</trees>
-				<actions>
-					<action name="search" url="/taoTests/Tests/search" context="*" />
-					<action name="new class" js="subClass" url="/taoTests/Tests/addSubClass" context="class" />
-					<action name="new test" js="instanciate" url="/taoTests/Tests/addInstance" context="class" />
-					<action name="delete" js="removeNode" url="/taoTests/Tests/delete" context="resource" />
-					<action name="duplicate" js="duplicateNode" url="/taoTests/Tests/cloneInstance" context="instance" />
-					<action name="move" js="moveNode" url="" context="instance" />
-					<action name="lists"  url="/tao/Lists/index"  context="*" />
-					<action name="meta data" js="loadMetaData" url="/tao/MetaData/getMetaData"  context="resource" />
-					<action name="export" url="/taoTests/TestExport/index"  context="resource" />
-					<action name="import" url="/taoTests/TestImport/index"  context="class" />
-				</actions>
-			</section>
-		</sections>
-	</structure>
+    <structure id="tests" name="Tests" level="1" visible="true">
+        <description>Combine a selection of items into tests.</description>
+        <icon id="icon-test" src=""/>
+        <sections>
+            <section id="manage_tests" name="Manage tests" url="/taoTests/Tests/index">
+                <trees>
+                    <tree name="Tests library"
+                          className="Test"
+                          dataUrl="/taoTests/Tests/getOntologyData"
+                          editClassUrl="/taoTests/Tests/editTestClass"
+                          editInstanceUrl="/taoTests/Tests/editTest"
+                          addInstanceUrl="/taoTests/Tests/addInstance"
+                          addSubClassUrl="/taoTests/Tests/addSubClass"
+                          deleteUrl="/taoTests/Tests/delete"
+                          duplicateUrl="/taoTests/Tests/cloneInstance"
+                          moveInstanceUrl="/taoTests/Tests/moveInstance"
+                            />
+                </trees>
+                <actions>
+                    <action name="Search" url="/taoTests/Tests/search" context="*" group="filter">
+                        <icon id="icon-find" src=""/>
+                    </action>
+                    <action name="New class" js="subClass" url="/taoTests/Tests/addSubClass" context="class" group="content">
+                        <icon id="icon-folder-open"/>
+                    </action>
+                    <action name="New test" js="instanciate" url="/taoTests/Tests/addInstance" context="class" group="content">
+                        <icon id="icon-test"/>
+                    </action>
+                    <action name="Delete" js="removeNode" url="/taoTests/Tests/delete" context="resource" group="tree">
+                        <icon id="icon-eraser"/>
+                    </action>
+                    <action name="Duplicate" js="duplicateNode" url="/taoTests/Tests/cloneInstance" context="instance" group="tree">
+                        <icon id="icon-copy"/>
+                    </action>
+                    <action name="Move" js="moveNode" url="" context="instance" group="tree">
+                        <icon id="icon-move-item"/>
+                    </action>
+                    <action name="Lists" url="/tao/Lists/index" context="*" group="tree">
+                        <icon id="icon-ul"/>
+                    </action>
+                    <action name="Metadata" js="loadMetaData" url="/tao/MetaData/getMetaData" context="resource" group="tree">
+                        <icon id="icon-meta-data"/>
+                    </action>
+                    <action name="Export" url="/taoTests/TestExport/index" context="resource" group="content">
+                        <icon id="icon-export"/>
+                    </action>
+                    <action name="Import" url="/taoTests/TestImport/index" context="class" group="content">
+                        <icon id="icon-import"/>
+                    </action>
+                </actions>
+            </section>
+        </sections>
+    </structure>
 </structures>
