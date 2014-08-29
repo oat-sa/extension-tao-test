@@ -30,7 +30,7 @@
                         <icon id="icon-test"/>
                     </action>
                     <action name="Delete" js="removeNode" url="/taoTests/Tests/delete" context="resource" group="tree">
-                        <icon id="icon-eraser"/>
+                        <icon id="icon-bin"/>
                     </action>
                     <action name="Duplicate" js="duplicateNode" url="/taoTests/Tests/cloneInstance" context="instance" group="tree">
                         <icon id="icon-copy"/>
