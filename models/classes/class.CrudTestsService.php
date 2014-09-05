@@ -37,21 +37,14 @@ class taoTests_models_classes_CrudTestsService
     public function getRootClass(){
 		return $this->testClass;
 	}
-    public function get($uri){
-	return parent::get($uri);
-    }
-    public function getAll(){
-	return parent::getAll();
-    }
+
     
     public function delete( $resource){
         taoTests_models_classes_TestsService::singleton()->deleteTest(new core_kernel_classes_Resource($resource));
 	//parent::delete($resource)
         return true;
     }
-     public function deleteAll(){
-	return parent::deleteAll();
-    }
+
     /**
      * @param array parameters an array of property uri and values
      */
@@ -69,10 +62,7 @@ class taoTests_models_classes_CrudTestsService
 		return $resource;
     }
 
-	public function update($uri,array $propertiesValues){
-		parent::update($uri, $propertiesValues);
-		//throw new common_exception_NotImplemented();
-	}
+
     
 } /* end of class taoGroups_models_classes_GroupsService */
 
