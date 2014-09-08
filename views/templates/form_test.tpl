@@ -3,7 +3,7 @@ use oat\tao\helpers\Template;
 
 Template::inc('form_context.tpl', 'tao');
 ?>
-<link rel="stylesheet" type="text/css" href="<?=BASE_WWW?>css/form_test.css" />
+<link rel="stylesheet" type="text/css" href="<?=Template::css('form_test.css')?>" />
 <?if(has_data('authoring')):?>
 <div id="test-left-container">
 	<?= get_data('authoring')?>
