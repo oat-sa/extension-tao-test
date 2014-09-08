@@ -50,6 +50,7 @@ return array(
 	'managementRole' => 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole',
     'acl' => array(
         array('grant', 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole', array('ext'=>'taoTests')),
+        array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#AnonymousRole',array('ext'=>'taoTests','mod' => 'RestTests')),
     ),
 	'optimizableClasses' => array(
 		'http://www.tao.lu/Ontologies/TAOTest.rdf#Test'		
