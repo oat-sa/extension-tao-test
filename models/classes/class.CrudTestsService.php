@@ -31,7 +31,7 @@ class taoTests_models_classes_CrudTestsService
     extends tao_models_classes_CrudService
 {
 
-	/* (non-PHPdoc)
+	/** (non-PHPdoc)
 	 * @see tao_models_classes_CrudService::getClassService()
 	 */
 	protected function getClassService() {
@@ -63,7 +63,6 @@ class taoTests_models_classes_CrudTestsService
 		$resource =  parent::create($label, $type, $propertiesValues);
 		return $resource;
     }
-
 
     
 } 
