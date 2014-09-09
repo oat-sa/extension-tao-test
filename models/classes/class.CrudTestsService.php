@@ -48,7 +48,10 @@ class taoTests_models_classes_CrudTestsService
     }
 
     /**
-     * @param array parameters an array of property uri and values
+     * 
+     * @author Patrick Plichart, patrick@taotesting.com
+     * @param array $propertiesValues
+     * @return core_kernel_classes_Resource
      */
     public function createFromArray(array $propertiesValues){
 	
