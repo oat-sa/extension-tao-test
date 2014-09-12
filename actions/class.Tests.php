@@ -160,8 +160,9 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 	 * delete a test or a test class
 	 * called via ajax
 	 * @return void
-	 */
-	public function delete()
+     * @throws Exception
+     */
+    public function delete()
 	{
 		if(!tao_helpers_Request::isAjax()){
 			throw new Exception("wrong request mode");
