@@ -20,7 +20,18 @@
                             />
                 </trees>
                 <actions>
-                    <action name="Find" url="/taoTests/Tests/search" context="*" group="search" binding="launchFinder">
+                	
+                	  <action name="Edit class" url="/taoTests/Tests/editTestClass" group="content" context="class">
+                        <icon id="icon-edit"/>
+                    </action>
+                    <action name="Edit test"  url="/taoTests/Tests/editTest" group="content" context="instance">
+                        <icon id="icon-edit"/>
+                    </action>
+                    
+                    <action name="Filter" context="*" group="search" binding="launchFinder">
+                        <icon id="icon-filter"/>
+                    </action> 
+                    <action name="Search" url="/taoTests/Tests/search" context="*" group="search" binding="launchFinder">
                         <icon id="icon-find"/>
                     </action> 
                     <action name="New class" js="subClass" url="/taoTests/Tests/addSubClass" context="class" group="content">
@@ -40,9 +51,6 @@
                     </action>
                     <action name="Lists" url="/tao/Lists/index" context="*" group="tree">
                         <icon id="icon-ul"/>
-                    </action>
-                    <action name="Metadata" url="/tao/MetaData/getMetaData" context="resource" group="tree" binding="loadMetaData">
-                        <icon id="icon-meta-data"/>
                     </action>
                     <action name="Export" url="/taoTests/TestExport/index" context="resource" group="content">
                         <icon id="icon-export"/>
