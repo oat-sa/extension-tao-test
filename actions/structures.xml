@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE extension SYSTEM "../../tao/doc/structures.dtd">
+<!DOCTYPE structures SYSTEM "../../tao/doc/structures.dtd">
 <structures>
-    <structure id="tests" name="Tests" level="1" visible="true">
+    <structure id="tests" name="Tests" level="1" group="main">
         <description>Combine a selection of items into tests.</description>
         <icon id="icon-test" src=""/>
         <sections>
