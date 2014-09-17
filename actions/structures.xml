@@ -10,20 +10,18 @@
                     <tree name="Tests library"
                           className="Test"
                           dataUrl="/taoTests/Tests/getOntologyData"
-                          editClassUrl="/taoTests/Tests/editTestClass"
-                          editInstanceUrl="/taoTests/Tests/editTest"
-                          addInstanceUrl="/taoTests/Tests/addInstance"
-                          addSubClassUrl="/taoTests/Tests/addSubClass"
-                          deleteUrl="/taoTests/Tests/delete"
-                          duplicateUrl="/taoTests/Tests/cloneInstance"
-                          moveInstanceUrl="/taoTests/Tests/moveInstance"
+                            selectClass="Edit class"
+                            selectInstance="Edit test"
+                            moveInstance="Move"
+                            delete="Delete" 
                             />
                 </trees>
                 <actions>
                 	
-                	  <action name="Edit class" url="/taoTests/Tests/editTestClass" group="content" context="class">
+                	<action name="Edit class" url="/taoTests/Tests/editTestClass" group="content" context="class">
                         <icon id="icon-edit"/>
                     </action>
+
                     <action name="Edit test"  url="/taoTests/Tests/editTest" group="content" context="instance">
                         <icon id="icon-edit"/>
                     </action>
