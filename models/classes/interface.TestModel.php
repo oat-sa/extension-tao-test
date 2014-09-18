@@ -73,13 +73,20 @@ interface taoTests_models_classes_TestModel
     
     /**
      * renders the test authoring
-     *
+     * @deprecated in favor of {@link self::getAuthoringUrl()}
      * @access public
      * @author Joel Bout, <joel@taotesting.com>
      * @param  Resource test
      * @return string
      */
     public function getAuthoring( core_kernel_classes_Resource $test);
+
+    /**
+     * renders the test authoring
+     * @param core_kernel_classes_Resource $test the test instance
+     * @return string the authoring url
+     */
+    public function getAuthoringUrl( core_kernel_classes_Resource $test);
 
     /**
      * Clones the content of one test to another test,

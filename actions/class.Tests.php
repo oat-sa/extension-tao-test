@@ -112,15 +112,7 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 		}
 		$this->setSessionAttribute("showNodeUri", tao_helpers_Uri::encode($test->getUri()));
 
-//		$myForm->removeElement(tao_helpers_Uri::encode(TEST_TESTCONTENT_PROP));
-
-		// render authoring
-		if (!empty($testModel)) {
-			$modelImpl = $this->service->getTestModelImplementation($testModel);
-			if (!empty($modelImpl)) {
-				$this->setData('authoring', $modelImpl->getAuthoring($test));
-			}
-		}
+		$myForm->removeElement(tao_helpers_Uri::encode(TEST_TESTCONTENT_PROP));
 
 		$this->setData('uri', tao_helpers_Uri::encode($test->getUri()));
 		$this->setData('classUri', tao_helpers_Uri::encode($clazz->getUri()));
@@ -182,24 +174,21 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 
 
 	/**
-	 * display the authoring  template
-	 * @return void
+	 * Redirect the test's authoring
 	 */
 	public function authoring()
 	{
-		$this->setData('error', false);
-		try{
+        $test = $this->getCurrentInstance();
 
-			//get process instance to be authored
-			 $test = $this->getCurrentInstance();
-			 $processDefinition = $test->getUniquePropertyValue(new core_kernel_classes_Property(TEST_TESTCONTENT_PROP));
-			$this->setData('processUri', tao_helpers_Uri::encode($processDefinition->getUri()));
-		}
-		catch(Exception $e){
-			$this->setData('error', true);
-			$this->setData('errorMessage', $e);
-		}
-		$this->setView('authoring/process_authoring_tool.tpl');
+        $testModel = $this->service->getTestModel($test);
+        if(!is_null($testModel)){
+            $testModelImpl = $this->service->getTestModelImplementation($testModel);
+            $authoringUrl = $testModelImpl->getAuthoringUrl($test);
+            if(!empty($authoringUrl)){
+                $this->redirect($authoringUrl);
+            }
+        }
+        throw new common_exception_NoImplementation();
 	}
 }
 ?>
