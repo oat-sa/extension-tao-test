@@ -1,7 +1,8 @@
 <?php
-require_once dirname(__FILE__) . '/../../tao/test/RestTestCase.php';
 
-class RestTestsTest extends RestTestCase 
+use oat\tao\test\RestTestCase;
+
+class RestTestsTest extends RestTestCase
 {
     public function serviceProvider(){
         return array(
@@ -9,5 +10,3 @@ class RestTestsTest extends RestTestCase
         );
     }
 }
-
-?>
