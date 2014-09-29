@@ -1,5 +1,5 @@
 <?php
-/*  
+/**  
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; under version 2
@@ -18,10 +18,15 @@
  *               2009-2012 (update and modification) Public Research Centre Henri Tudor (under the project TAO-SUSTAIN & TAO-DEV);
  * 
  */
-?>
-<?php
-// require_once dirname(__FILE__) . '/../../tao/test/TaoPhpUnitTestRunner.php';
-// include_once dirname(__FILE__) . '/../includes/raw_start.php';
+namespace oat\taoTestTaker\test;
+
+use oat\tao\test\TaoPhpUnitTestRunner;
+use \tao_models_classes_Service;
+use \taoTests_models_classes_TestsService;
+use \core_kernel_classes_Class;
+use \core_kernel_classes_Resource;
+use \core_kernel_classes_Property;
+
 
 /**
  *
@@ -40,7 +45,7 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
 	 */
 	public function setUp(){		
 		TaoPhpUnitTestRunner::initTest();
-		$this->testsService = taoTests_models_classes_TestsService::singleton();
+		$this->testsService = \taoTests_models_classes_TestsService::singleton();
 	}
 
 	/**
