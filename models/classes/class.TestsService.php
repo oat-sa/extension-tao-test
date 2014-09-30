@@ -196,6 +196,8 @@ class taoTests_models_classes_TestsService
         if (!is_null($testModel)) {
         	$impl = $this->getTestModelImplementation($testModel);
        		$impl->onChangeTestLabel($test);
+
+            $returnValue = true;
         }
 
         return (bool) $returnValue;
@@ -314,7 +316,7 @@ class taoTests_models_classes_TestsService
         $returnValue = (bool) false;
 
 		$active = $test->getOnePropertyValue(new core_kernel_classes_Property(TEST_ACTIVE_PROP));
-		if(is_null($active)){
+		if (!is_null($active)){
 			if ($active->getUri() == GENERIS_TRUE){
 				$returnValue = true;
 			}
