@@ -16,7 +16,8 @@
  * 
  * Copyright (c) 2008-2010 (original work) Deutsche Institut für Internationale Pädagogische Forschung (under the project TAO-TRANSFER);
  *               2009-2012 (update and modification) Public Research Centre Henri Tudor (under the project TAO-SUSTAIN & TAO-DEV);
- * 
+ *               2014 (update and modification) Open Assessment Technologies SA
+ *               
  */
 namespace oat\taoTestTaker\test;
 
@@ -32,20 +33,25 @@ use \core_kernel_classes_Property;
  *
  * @author Bertrand Chevrier, <taosupport@tudor.lu>
  * @package taoTests
+ 
  */
 class TestsTestCase extends TaoPhpUnitTestRunner {
 
 	/**
+	 * 
 	 * @var taoTests_models_classes_TestsService
 	 */
 	protected $testsService = null;
 
+	
+	
 	/**
 	 * tests initialization
 	 */
-	public function setUp(){		
-		TaoPhpUnitTestRunner::initTest();
-		$this->testsService = \taoTests_models_classes_TestsService::singleton();
+	public function setUp(){
+	     
+		TaoPhpUnitTestRunner::initTest();		
+		$this->testsService = taoTests_models_classes_TestsService::singleton();
 	}
 
 	/**
@@ -54,6 +60,7 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
 	 * @see taoTests_models_classes_TestsService::__construct
 	 */
 	public function testService(){
+		
 		$this->assertIsA($this->testsService , 'tao_models_classes_Service');
 		$this->assertIsA($this->testsService , 'taoTests_models_classes_TestsService');
 	}
@@ -70,22 +77,57 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
         return $tests;
     }
 
+
     /**
-     * @depends testTests
-     * @param $test
-     * @return void
+     * 
+     * @author Lionel Lecaque, lionel@taotesting.com
+     * @return array
      */
-    public function testSetTestModel($test) {
-        $this->assertTrue(defined('CLASS_TESTMODEL'));
-
-		$testModelClass = new core_kernel_classes_Class(CLASS_TESTMODEL);
-		$models = $testModelClass->getInstances();
-
-        $this->assertNotEmpty($models);
-
-        $this->testsService->setTestModel($test, current($models));
+    public function modelsProvider(){
+        \common_ext_ExtensionsManager::singleton()->getExtensionById('taoTests');
+        $testModelClass = new core_kernel_classes_Class(CLASS_TESTMODEL);
+        $models = $testModelClass->getInstances();
+        
+        return array(
+            array($models)
+        );
+        
     }
 
+    
+    /**
+     * 
+     * @dataProvider modelsProvider
+     * @param $models
+     * @return void
+     */
+    public function testSetTestModel($models) {
+        $test = $this->testsService->getRootclass();
+        foreach ($models as $uri => $model){
+            $this->testsService->setTestModel($test, $model);        
+            $this->assertEquals($this->testsService->getTestModel($test)->getUri(),$uri);
+        }
+    }
+    
+    
+    /**
+     *
+     * @dataProvider modelsProvider
+     * @param $models
+     * @return void
+     */
+    public function testGetCompilerClass($models) {
+        $test = $this->testsService->getRootclass();
+        foreach ($models as $uri => $model){
+            $this->testsService->setTestModel($test, $model);
+            $compilerName = $this->testsService->getCompilerClass($test);
+            $compilerClass = new \ReflectionClass($compilerName);
+            $this->assertTrue($compilerClass->isSubclassOf('taoTests_models_classes_TestCompiler'));
+        }
+    }
+
+    
+    
     /**
      * @depends testTests
      * @param $test
@@ -117,7 +159,7 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
 		$this->assertIsA($subTest, 'core_kernel_classes_Class');
 		$this->assertEquals($subTestClassLabel, $subTest->getLabel());
 		$this->assertTrue($this->testsService->isTestClass($subTest));
-
+		$this->assertTrue($this->testsService->isTestClass($tests));
         return $subTest;
     }
 
@@ -282,3 +324,4 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
     }
 
 }
+?>

@@ -36,4 +36,3 @@ class RestTestsTest extends RestTestCase
     }
 }
 
-?>
