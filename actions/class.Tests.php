@@ -185,7 +185,7 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
             $testModelImpl = $this->service->getTestModelImplementation($testModel);
             $authoringUrl = $testModelImpl->getAuthoringUrl($test);
             if(!empty($authoringUrl)){
-                $this->redirect($authoringUrl);
+                return $this->forwardUrl($authoringUrl);
             }
         }
         throw new common_exception_NoImplementation();
