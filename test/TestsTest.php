@@ -1,5 +1,5 @@
 <?php
-/*  
+/**  
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; under version 2
@@ -16,10 +16,18 @@
  * 
  * Copyright (c) 2008-2010 (original work) Deutsche Institut für Internationale Pädagogische Forschung (under the project TAO-TRANSFER);
  *               2009-2012 (update and modification) Public Research Centre Henri Tudor (under the project TAO-SUSTAIN & TAO-DEV);
- * 
+ *               2014 (update and modification) Open Assessment Technologies SA
+ *               
  */
+namespace oat\taoTestTaker\test;
+
 use oat\tao\test\TaoPhpUnitTestRunner;
-include_once dirname(__FILE__) . '/../includes/raw_start.php';
+use \tao_models_classes_Service;
+use \taoTests_models_classes_TestsService;
+use \core_kernel_classes_Class;
+use \core_kernel_classes_Resource;
+use \core_kernel_classes_Property;
+
 
 /**
  *
@@ -28,21 +36,24 @@ include_once dirname(__FILE__) . '/../includes/raw_start.php';
  
  */
 class TestsTestCase extends TaoPhpUnitTestRunner {
-	
+
 	/**
 	 * 
 	 * @var taoTests_models_classes_TestsService
 	 */
 	protected $testsService = null;
+
+	
 	
 	/**
 	 * tests initialization
 	 */
-	public function setUp(){		
-		TaoPhpUnitTestRunner::initTest();
+	public function setUp(){
+	     
+		TaoPhpUnitTestRunner::initTest();		
 		$this->testsService = taoTests_models_classes_TestsService::singleton();
 	}
-	
+
 	/**
 	 * Test the user service implementation
 	 * @see tao_models_classes_ServiceFactory::get
@@ -52,57 +63,265 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
 		
 		$this->assertIsA($this->testsService , 'tao_models_classes_Service');
 		$this->assertIsA($this->testsService , 'taoTests_models_classes_TestsService');
-		
-
 	}
-	
-	/**
-	 * Usual CRUD (Create Read Update Delete) on the test class  
-	 */
-	public function testCrud(){
-		
-		//check parent class
-		$this->assertTrue(defined('TAO_TEST_CLASS'));
-		$testClass = $this->testsService->getRootclass();
-		$this->assertIsA($testClass, 'core_kernel_classes_Class');
-		$this->assertEquals(TAO_TEST_CLASS, $testClass->getUri());
-		
-		//create a subclass
+
+    /**
+     * @return \core_kernel_classes_Class|null
+     */
+    public function testTests() {
+        $this->assertTrue(defined('TAO_TEST_CLASS'));
+        $tests = $this->testsService->getRootclass();
+        $this->assertIsA($tests, 'core_kernel_classes_Class');
+        $this->assertEquals(TAO_TEST_CLASS, $tests->getUri());
+
+        return $tests;
+    }
+
+
+    /**
+     * 
+     * @author Lionel Lecaque, lionel@taotesting.com
+     * @return array
+     */
+    public function modelsProvider(){
+        \common_ext_ExtensionsManager::singleton()->getExtensionById('taoTests');
+        $testModelClass = new core_kernel_classes_Class(CLASS_TESTMODEL);
+        $models = $testModelClass->getInstances();
+        
+        return array(
+            array($models)
+        );
+        
+    }
+
+    
+    /**
+     * 
+     * @dataProvider modelsProvider
+     * @param $models
+     * @return void
+     */
+    public function testSetTestModel($models) {
+        $test = $this->testsService->getRootclass();
+        foreach ($models as $uri => $model){
+            $this->testsService->setTestModel($test, $model);        
+            $this->assertEquals($this->testsService->getTestModel($test)->getUri(),$uri);
+        }
+    }
+    
+    
+    /**
+     *
+     * @dataProvider modelsProvider
+     * @param $models
+     * @return void
+     */
+    public function testGetCompilerClass($models) {
+        $test = $this->testsService->getRootclass();
+        foreach ($models as $uri => $model){
+            $this->testsService->setTestModel($test, $model);
+            $compilerName = $this->testsService->getCompilerClass($test);
+            $compilerClass = new \ReflectionClass($compilerName);
+            $this->assertTrue($compilerClass->isSubclassOf('taoTests_models_classes_TestCompiler'));
+        }
+    }
+
+    
+    
+    /**
+     * @depends testTests
+     * @param $test
+     * @return void
+     */
+    public function testGetTestItems($test) {
+        $result = $this->testsService->getTestItems($test);
+		$this->assertInternalType('array', $result);
+    }
+
+    /**
+     * @depends testTests
+     * @param $test
+     * @return void
+     */
+    public function testOnChangeTestLabel($test) {
+        $result = $this->testsService->onChangeTestLabel($test);
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @depends testTests
+     * @param $tests
+     * @return \core_kernel_classes_Class
+     */
+    public function testSubTest($tests) {
 		$subTestClassLabel = 'subTest class';
-		$subTestClass = $this->testsService->createSubClass($testClass, $subTestClassLabel);
-		$this->assertIsA($subTestClass, 'core_kernel_classes_Class');
-		$this->assertEquals($subTestClassLabel, $subTestClass->getLabel());
-		$this->assertTrue($this->testsService->isTestClass($subTestClass));
-		
-		//create instance of Test
+		$subTest = $this->testsService->createSubClass($tests, $subTestClassLabel);
+		$this->assertIsA($subTest, 'core_kernel_classes_Class');
+		$this->assertEquals($subTestClassLabel, $subTest->getLabel());
+		$this->assertTrue($this->testsService->isTestClass($subTest));
+		$this->assertTrue($this->testsService->isTestClass($tests));
+        return $subTest;
+    }
+
+    /**
+     * @depends testTests
+     * @param $tests
+     * @return \core_kernel_classes_Resource
+     */
+    public function testTestInstance($tests) {
 		$testInstanceLabel = 'test instance';
-		$testInstance = $this->testsService->createInstance($testClass, $testInstanceLabel);
+		$testInstance = $this->testsService->createInstance($tests, $testInstanceLabel);
 		$this->assertIsA($testInstance, 'core_kernel_classes_Resource');
 		$this->assertEquals($testInstanceLabel, $testInstance->getLabel());
-		
-		//create instance of subTest
+
+        return $testInstance;
+    }
+
+	/**
+	 * Test the cloning
+     * @depends testSubTest
+     * @param $testClass
+	 * @return \core_kernel_classes_Class
+	 */
+    public function testCloneClass($testClass) {
+        $clone = $this->testsService->cloneClazz($testClass, $this->testsService->getRootclass());
+		$this->assertNotNull($clone);
+
+        return $clone;
+    }
+
+	/**
+	 * Test the deletion
+     * @depends testCloneClass
+     * @param $testClass
+	 * @return void
+	 */
+    public function testDeleteTestClass($testClass) {
+        $deleted = $this->testsService->deleteTestClass($testClass);
+		$this->assertTrue($deleted);
+    }
+
+	/**
+	 * Test getAllItems
+	 * @return void
+	 */
+    public function testGetAllItems() {
+        $allItems = $this->testsService->getAllItems();
+		$this->assertInternalType('array', $allItems);
+    }
+
+	/**
+	 * Test cloneInstance
+     * @depends testTestInstance
+     * @param $testInstance
+	 * @return \core_kernel_classes_Resource
+	 */
+    public function testCloneInstance($testInstance) {
+		$clone = $this->testsService->cloneInstance($testInstance, $this->testsService->getRootclass());
+		$this->assertNotNull($clone);
+
+        return $clone;
+    }
+
+    /**
+     * @depends testCloneInstance
+     * @param $test
+     * @return void
+     */
+    public function testSetActive($test) {
+		$result = $test->setPropertyValue(new core_kernel_classes_Property(TEST_ACTIVE_PROP), GENERIS_TRUE);
+		$this->assertTrue($result);
+    }
+
+    /**
+     * @depends testCloneInstance
+     * @param $test
+     * @return void
+     */
+    public function testIsTestActive($test) {
+        $isActive = $this->testsService->isTestActive($test);
+		$this->assertTrue($isActive);
+    }
+
+    /**
+     * @depends testCloneInstance
+     * @param $test
+     * @return \core_kernel_file_File
+     */
+    public function testGetTestContent($test) {
+        $result = $this->testsService->getTestContent($test);
+		$this->assertInstanceOf('core_kernel_file_File', $result);
+    }
+
+    /**
+     * @depends testSubTest
+     * @param $subTest
+     * @return \core_kernel_classes_Resource
+     */
+    public function testSubTestInstance($subTest) {
 		$subTestInstanceLabel = 'subTest instance';
-		$subTestInstance = $this->testsService->createInstance($subTestClass);
+		$subTestInstance = $this->testsService->createInstance($subTest);
 		$this->assertTrue(defined('RDFS_LABEL'));
 		$subTestInstance->removePropertyValues(new core_kernel_classes_Property(RDFS_LABEL));
 		$subTestInstance->setLabel($subTestInstanceLabel);
 		$this->assertIsA($subTestInstance, 'core_kernel_classes_Resource');
 		$this->assertEquals($subTestInstanceLabel, $subTestInstance->getLabel());
-		
-		$subTestInstanceLabel2 = 'my sub test instance';
-		$subTestInstance->setLabel($subTestInstanceLabel2);
-		$this->assertEquals($subTestInstanceLabel2, $subTestInstance->getLabel());
-		
-		
-		//delete test instance
+
+        return $subTestInstance;
+    }
+
+    /**
+     * @depends testSubTestInstance
+     * @param $subTestInstance
+     */
+    public function testSubTestInstanceChangeLabel($subTestInstance) {
+		$subTestInstanceLabel = 'my sub test instance';
+		$subTestInstance->setLabel($subTestInstanceLabel);
+		$this->assertEquals($subTestInstanceLabel, $subTestInstance->getLabel());
+    }
+
+    /**
+     * @depends testTestInstance
+     * @param $testInstance
+     */
+    public function testDeleteTestInstance($testInstance) {
 		$this->assertTrue($testInstance->delete());
-		
-		//delete subclass and check if the instance is deleted
+    }
+
+    /**
+     * @depends testSubTestInstance
+     * @param $subTestInstance
+     */
+    public function testDeleteSubTestInstance($subTestInstance) {
 		$this->assertTrue($subTestInstance->delete());
+    }
+
+    /**
+     * @depends testSubTestInstance
+     * @param $subTestInstance
+     */
+    public function testVerifySubTestInstanceDeletion($subTestInstance) {
 		$this->assertFalse($subTestInstance->exists());
-		
-		$this->assertTrue($subTestClass->delete());
-	}
-	
-	
+    }
+
+    /**
+     * @depends testSubTest
+     * @param $subTest
+     */
+    public function testDeleteSubTest($subTest) {
+		$this->assertTrue($subTest->delete());
+    }
+
+	/**
+	 * Test the deletion
+     * @depends testTests
+     * @param $tests
+	 * @return void
+	 */
+    public function testDeleteTest($tests) {
+		$testInstance = $this->testsService->createInstance($tests);
+		$this->assertTrue($this->testsService->deleteTest($testInstance));
+    }
+
 }
+?>
