@@ -1,73 +1,84 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO v2.6-RC03\n"
-"PO-Revision-Date: 2014-06-20T16:26:29\n"
+"Project-Id-Version: TAO v2.7\n"
+"PO-Revision-Date: 2014-10-14T10:43:04\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: lb-LU\n"
+"sourceLanguage: en-US\n"
+"targetLanguage: lb-LU\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Basepath: ../../\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-SearchPath-0: .\n"
+
+msgid "Authoring"
+msgstr ""
 
 msgid "Class saved"
-msgstr "Klass gespäichert"
+msgstr ""
 
 #, tao-public
 msgid "Combine a selection of items into tests."
 msgstr ""
 
-msgid "delete"
-msgstr "läschen"
-
-msgid "duplicate"
-msgstr "duplizéieren"
-
-msgid "Edit test class"
-msgstr "Test Klass editéieren"
-
-msgid "export"
-msgstr "exportéieren"
-
-msgid "import"
+msgid "Delete"
 msgstr ""
 
-msgid "lists"
+msgid "Duplicate"
+msgstr ""
+
+msgid "Edit test class"
+msgstr ""
+
+msgid "Export"
+msgstr ""
+
+msgid "Filter"
+msgstr ""
+
+msgid "Import"
+msgstr ""
+
+msgid "Lists"
 msgstr ""
 
 #, tao-public
 msgid "Manage tests"
-msgstr "Testermanagen"
-
-msgid "meta data"
-msgstr "Metadaten"
-
-msgid "move"
 msgstr ""
 
-msgid "new class"
-msgstr "nei Klass"
+msgid "Move"
+msgstr ""
 
-msgid "new test"
-msgstr "neien Test"
+msgid "New class"
+msgstr ""
 
-msgid "search"
-msgstr "duerchsichen"
+msgid "New test"
+msgstr ""
+
+msgid "Properties"
+msgstr ""
+
+msgid "Search"
+msgstr ""
 
 msgid "Test properties"
 msgstr ""
 
 msgid "Test saved"
-msgstr "Test gespäichert"
+msgstr ""
 
 #, tao-public
 msgid "Tests"
-msgstr "Tester"
+msgstr ""
 
 msgid "Tests library"
-msgstr "Test Sammlung"
+msgstr ""
 
 msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
-msgstr "Den Test Modus (Sequenzéieren, Bewerten, Sammelen, etc.) an de Layout gin och hei konfiguréiert."
+msgstr ""
 
 msgid "The Tests module allows to combine a selection of Items to a Test."
-msgstr "Den Test Modul erlaabt eng Selektioun vun Itemen matt engem Test ze verbannen."
+msgstr ""
 

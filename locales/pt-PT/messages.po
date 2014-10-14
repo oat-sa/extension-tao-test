@@ -1,73 +1,84 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO v2.6-RC03\n"
-"PO-Revision-Date: 2014-06-20T16:26:29\n"
+"Project-Id-Version: TAO v2.7\n"
+"PO-Revision-Date: 2014-10-14T10:43:04\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: pt-PT\n"
+"sourceLanguage: en-US\n"
+"targetLanguage: pt-PT\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Basepath: ../../\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-SearchPath-0: .\n"
+
+msgid "Authoring"
+msgstr ""
 
 msgid "Class saved"
-msgstr "Disciplina guardada"
+msgstr ""
 
 #, tao-public
 msgid "Combine a selection of items into tests."
-msgstr "Combine uma selecção de itens para testes."
+msgstr ""
 
-msgid "delete"
-msgstr "eliminar"
+msgid "Delete"
+msgstr ""
 
-msgid "duplicate"
-msgstr "duplicado"
+msgid "Duplicate"
+msgstr ""
 
 msgid "Edit test class"
-msgstr "Editar teste de disciplina"
+msgstr ""
 
-msgid "export"
-msgstr "exportar"
+msgid "Export"
+msgstr ""
 
-msgid "import"
-msgstr "importar"
+msgid "Filter"
+msgstr ""
 
-msgid "lists"
-msgstr "listas"
+msgid "Import"
+msgstr ""
+
+msgid "Lists"
+msgstr ""
 
 #, tao-public
 msgid "Manage tests"
-msgstr "Gerir testes"
+msgstr ""
 
-msgid "meta data"
-msgstr "meta dados"
+msgid "Move"
+msgstr ""
 
-msgid "move"
-msgstr "mover"
+msgid "New class"
+msgstr ""
 
-msgid "new class"
-msgstr "nova disciplina"
+msgid "New test"
+msgstr ""
 
-msgid "new test"
-msgstr "novo teste"
+msgid "Properties"
+msgstr ""
 
-msgid "search"
-msgstr "procurar"
+msgid "Search"
+msgstr ""
 
 msgid "Test properties"
-msgstr "Propriedades do teste"
+msgstr ""
 
 msgid "Test saved"
-msgstr "teste guardado"
+msgstr ""
 
 #, tao-public
 msgid "Tests"
-msgstr "Testes"
+msgstr ""
 
 msgid "Tests library"
-msgstr "Biblioteca de testes"
+msgstr ""
 
 msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
-msgstr "O modo de teste (sequência, pontuação, acumulado, etc) e modelo também são configurados aqui."
+msgstr ""
 
 msgid "The Tests module allows to combine a selection of Items to a Test."
-msgstr "O Modulo de testes permite que combine uma selecção de items para um teste."
+msgstr ""
 

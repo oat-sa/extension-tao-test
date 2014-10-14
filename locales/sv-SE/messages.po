@@ -1,73 +1,84 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO v2.6-RC03\n"
-"PO-Revision-Date: 2014-06-20T16:26:29\n"
+"Project-Id-Version: TAO v2.7\n"
+"PO-Revision-Date: 2014-10-14T10:43:04\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: sv-SE\n"
+"sourceLanguage: en-US\n"
+"targetLanguage: sv-SE\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Basepath: ../../\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-SearchPath-0: .\n"
+
+msgid "Authoring"
+msgstr ""
 
 msgid "Class saved"
-msgstr "Klass sparad"
+msgstr ""
 
 #, tao-public
 msgid "Combine a selection of items into tests."
 msgstr ""
 
-msgid "delete"
-msgstr "ta bort"
+msgid "Delete"
+msgstr ""
 
-msgid "duplicate"
-msgstr "dublett"
+msgid "Duplicate"
+msgstr ""
 
 msgid "Edit test class"
-msgstr "Redigera testklass"
+msgstr ""
 
-msgid "export"
-msgstr "exportera"
+msgid "Export"
+msgstr ""
 
-msgid "import"
-msgstr "importera"
+msgid "Filter"
+msgstr ""
 
-msgid "lists"
-msgstr "listor"
+msgid "Import"
+msgstr ""
+
+msgid "Lists"
+msgstr ""
 
 #, tao-public
 msgid "Manage tests"
-msgstr "Hantera tester"
+msgstr ""
 
-msgid "meta data"
-msgstr "metadata"
+msgid "Move"
+msgstr ""
 
-msgid "move"
-msgstr "flytta"
+msgid "New class"
+msgstr ""
 
-msgid "new class"
-msgstr "ny klass"
+msgid "New test"
+msgstr ""
 
-msgid "new test"
-msgstr "nytt test"
+msgid "Properties"
+msgstr ""
 
-msgid "search"
-msgstr "sök"
+msgid "Search"
+msgstr ""
 
 msgid "Test properties"
-msgstr "Testegenskaper"
+msgstr ""
 
 msgid "Test saved"
-msgstr "Test sparat"
+msgstr ""
 
 #, tao-public
 msgid "Tests"
-msgstr "Tester"
+msgstr ""
 
 msgid "Tests library"
-msgstr "Testarkiv"
+msgstr ""
 
 msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
-msgstr "Testmetoden (ordningsföljd, poängräkning, ihopsamling etc.) och layouten byggs även upp här."
+msgstr ""
 
 msgid "The Tests module allows to combine a selection of Items to a Test."
-msgstr "Testmodulen låter dig kombinera ett urval av frågor till ett test"
+msgstr ""
 
