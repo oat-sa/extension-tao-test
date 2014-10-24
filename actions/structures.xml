@@ -45,7 +45,7 @@
                     <action id="test-duplicate" name="Duplicate" js="duplicateNode" url="/taoTests/Tests/cloneInstance" context="instance" group="tree">
                         <icon id="icon-copy"/>
                     </action>
-                    <action id="test-move" name="Move" url="" context="instance" group="none" binding="moveNode">
+                    <action id="test-move" name="Move" url="/taoTests/Tests/moveInstance" context="instance" group="none" binding="moveNode">
                         <icon id="icon-move-item"/>
                     </action>
                     <action id="test-lists" name="Lists" url="/tao/Lists/index" context="*" group="tree">
