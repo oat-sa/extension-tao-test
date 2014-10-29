@@ -19,8 +19,6 @@
  *               2009-2012 (update and modification) Public Research Centre Henri Tudor (under the project TAO-SUSTAIN & TAO-DEV);
  * 
  */
-?>
-<?php
 
 /**
  * Tests Controller provide actions performed from url resolution
@@ -178,7 +176,7 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 	 */
 	public function authoring()
 	{
-        $test = $this->getCurrentInstance();
+        $test = new core_kernel_classes_Resource($this->getRequestParameter('id'));
 
         $testModel = $this->service->getTestModel($test);
         if(!is_null($testModel)){
@@ -191,4 +189,3 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
         throw new common_exception_NoImplementation();
 	}
 }
-?>
