@@ -69,7 +69,7 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 
 	/**
 	 * edit a test instance
-	 * @return void
+	 * @requiresRight id READ
 	 */
 	public function editTest()
 	{
