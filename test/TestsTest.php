@@ -217,8 +217,9 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
 	 * @return \core_kernel_classes_Resource
 	 */
     public function testCloneInstance($testInstance) {
-		$clone = $this->testsService->cloneInstance($testInstance, $this->testsService->getRootclass());
-		$this->assertNotNull($clone);
+		$clone = $testInstance->duplicate();
+        $this->assertInstanceOf('\core_kernel_classes_Resource', $clone);
+        $this->assertTrue($clone->exists());
 
         return $clone;
     }
@@ -251,6 +252,16 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
     public function testGetTestContent($test) {
         $result = $this->testsService->getTestContent($test);
 		$this->assertInstanceOf('core_kernel_file_File', $result);
+    }
+
+    /**
+     * @depends testCloneInstance
+     * @param $test
+     * @return void
+     */
+    public function testDeleteClone($test) {
+        $test->delete();
+        $this->assertFalse($test->exists());
     }
 
     /**
