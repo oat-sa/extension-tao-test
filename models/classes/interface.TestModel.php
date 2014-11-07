@@ -72,17 +72,8 @@ interface taoTests_models_classes_TestModel
     public function getItems( core_kernel_classes_Resource $test);
     
     /**
-     * renders the test authoring
-     * @deprecated in favor of {@link self::getAuthoringUrl()}
-     * @access public
-     * @author Joel Bout, <joel@taotesting.com>
-     * @param  Resource test
-     * @return string
-     */
-    public function getAuthoring( core_kernel_classes_Resource $test);
-
-    /**
-     * renders the test authoring
+     * returns the test authoring url
+     * 
      * @param core_kernel_classes_Resource $test the test instance
      * @return string the authoring url
      */
