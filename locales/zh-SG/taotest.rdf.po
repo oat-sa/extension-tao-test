@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO v3.0\n"
-"PO-Revision-Date: 2014-10-21T07:53:23\n"
+"Project-Id-Version: TAO 3.0\n"
+"PO-Revision-Date: 2014-11-20T13:56:02\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: zh-SG\n"
@@ -47,13 +47,23 @@ msgstr "Testmodel implementation"
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestModelImplementation
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
-msgid "Testmodel implementation"
-msgstr "Implementation of the test model"
+msgid "Implementation of the test model"
+msgstr ""
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "Tests Manager"
 msgstr "Tests Manager"
+
+# http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "The Tests Manager Role"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAOTest.rdf#TestModelImplementation
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "Testmodel implementation"
+msgstr "Implementation of the test model"
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
