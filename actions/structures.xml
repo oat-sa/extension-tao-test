@@ -13,12 +13,13 @@
                           selectClass="test-class-properties"
                           selectInstance="test-properties"
                           moveInstance="test-move"
-                          delete="test-delete" 
+                          delete="test-delete"
+                          rootNode="http://www.tao.lu/Ontologies/TAOTest.rdf#Test"
                         />
                 </trees>
                 <actions>
                 	
-                	<action id="test-class-properties" name="Properties" url="/taoTests/Tests/editTestClass" group="content" context="class">
+                	<action id="test-class-properties" name="Properties" url="/taoTests/Tests/editClass" group="content" context="class">
                         <icon id="icon-edit"/>
                     </action>
                     <action id="test-properties"  name="Properties"  url="/taoTests/Tests/editTest" group="content" context="instance">

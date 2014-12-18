@@ -120,33 +120,6 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 	}
 
 	/**
-	 * Edit a test model (edit a class)
-	 * @return void
-	 */
-	public function editTestClass()
-	{
-		$clazz = $this->getCurrentClass();
-
-		if($this->hasRequestParameter('property_mode')){
-			$this->setSessionAttribute('property_mode', $this->getRequestParameter('property_mode'));
-		}
-
-		$myForm = $this->editClass($clazz, $this->service->getRootclass());
-		if($myForm->isSubmited()){
-			if($myForm->isValid()){
-				if($clazz instanceof core_kernel_classes_Resource){
-					$this->setData("selectNode", tao_helpers_Uri::encode($clazz->getUri()));
-				}
-				$this->setData('message', __('Class saved'));
-				$this->setData('reload', true);
-			}
-		}
-		$this->setData('formTitle', __('Edit test class'));
-		$this->setData('myForm', $myForm->render());
-		$this->setView('form.tpl');
-	}
-
-	/**
 	 * delete a test or a test class
 	 * called via ajax
 	 * @return void
