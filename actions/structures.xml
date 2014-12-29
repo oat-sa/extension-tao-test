@@ -19,7 +19,7 @@
                 </trees>
                 <actions>
                 	
-                	<action id="test-class-properties" name="Properties" url="/taoTests/Tests/editClass" group="content" context="class">
+                	<action id="test-class-properties" name="Properties" url="/taoTests/Tests/editClassProperties" group="content" context="class">
                         <icon id="icon-edit"/>
                     </action>
                     <action id="test-properties"  name="Properties"  url="/taoTests/Tests/editTest" group="content" context="instance">
