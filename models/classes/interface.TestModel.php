@@ -52,7 +52,7 @@ interface taoTests_models_classes_TestModel
      * using the provided items if possible
      * 
      * @param core_kernel_classes_Resource $test
-     * @param array $items
+     * @param array $items an array of item resources
      */
     public function prepareContent( core_kernel_classes_Resource $test, $items = array());
     
