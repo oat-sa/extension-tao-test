@@ -27,6 +27,7 @@ use \taoTests_models_classes_TestsService;
 use \core_kernel_classes_Class;
 use \core_kernel_classes_Resource;
 use \core_kernel_classes_Property;
+use Prophecy\Prophet;
 
 
 /**
@@ -244,13 +245,87 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
     }
 
     /**
-     * @depends testCloneInstance
      * @param $test
      * @return \core_kernel_file_File
      */
-    public function testGetTestContent($test) {
+    public function testGetTestContent() {
+       
+        $testContentProperty = new core_kernel_classes_Property(TEST_TESTCONTENT_PROP);
+
+        $prophet = new Prophet();
+        $testProphecy = $prophet->prophesize('core_kernel_classes_Resource');
+        $testContentProphcy = $prophet->prophesize('core_kernel_classes_Resource');
+        $testContentProphcy->getUri()->willReturn('#fakeUri');
+        $testContent = $testContentProphcy->reveal();
+        
+        $testProphecy->getUniquePropertyValue($testContentProperty)->willReturn($testContent);
+        
+        $test = $testProphecy->reveal();
+        
         $result = $this->testsService->getTestContent($test);
+        
 		$this->assertInstanceOf('core_kernel_file_File', $result);
+		$this->assertEquals('#fakeUri', $result->getUri());
+		
+		$testProphecy = $prophet->prophesize('core_kernel_classes_Resource');
+		$testProphecy->getUniquePropertyValue($testContentProperty)->willReturn(null);
+		$testProphecy->getUri()->willReturn('#fakeUri');
+		$test = $testProphecy->reveal();
+		$result = $this->testsService->getTestContent($test);
+		$this->assertNull($result);
+	
+		
+    }
+    /**
+     * 
+     * @author Lionel Lecaque, lionel@taotesting.com
+     */
+    public function testGetTestContentEmtpty() 
+    {
+        $testContentProperty = new core_kernel_classes_Property(TEST_TESTCONTENT_PROP);
+        
+        $prophet = new Prophet();
+        $testProphecy = $prophet->prophesize('core_kernel_classes_Resource');
+        $testProphecy
+        ->getUniquePropertyValue($testContentProperty)
+        ->willThrow('\core_kernel_classes_EmptyProperty');
+        $testProphecy->getUri()->willReturn('#fakeUri');
+        $test = $testProphecy->reveal();
+        
+        try {
+            $result = $this->testsService->getTestContent($test);
+        }
+        catch(\Exception $e){
+            $this->assertInstanceOf('common_exception_Error', $e);
+            $this->assertEquals("Test '#fakeUri' has no content.", $e->getMessage());
+        }
+        
+    }
+    
+    /**
+     *
+     * @author Lionel Lecaque, lionel@taotesting.com
+     */
+    public function testGetTestContentNoContent()
+    {
+        $testContentProperty = new core_kernel_classes_Property(TEST_TESTCONTENT_PROP);
+    
+        $prophet = new Prophet();
+        $testProphecy = $prophet->prophesize('core_kernel_classes_Resource');
+        $testProphecy
+        ->getUniquePropertyValue($testContentProperty)
+        ->willThrow('\common_Exception');
+        $testProphecy->getUri()->willReturn('#fakeUri');
+        $test = $testProphecy->reveal();
+    
+        try {
+            $result = $this->testsService->getTestContent($test);
+        }
+        catch(\Exception $e){
+            $this->assertInstanceOf('common_exception_Error', $e);
+            $this->assertEquals("Multiple contents found for test '#fakeUri'.", $e->getMessage());
+        }
+    
     }
 
     /**
