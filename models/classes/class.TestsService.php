@@ -257,6 +257,20 @@ class taoTests_models_classes_TestsService
     }
 
     /**
+     * 
+     * @author Lionel Lecaque, lionel@taotesting.com
+     * @param core_kernel_classes_Resource $test
+     */
+    protected function setDefaultModel($test)
+    {
+        $testModelClass = new core_kernel_classes_Class(CLASS_TESTMODEL);
+        $models = $testModelClass->getInstances();
+        if (count($models) > 0) {
+            $this->setTestModel($test, current($models));
+        }
+    }
+    
+    /**
      * Short description of method createInstance
      *
      * @access public
@@ -270,11 +284,7 @@ class taoTests_models_classes_TestsService
         $returnValue = null;
 
 		$test = parent::createInstance($clazz, $label);
-		$testModelClass = new core_kernel_classes_Class(CLASS_TESTMODEL);
-		$models = $testModelClass->getInstances();
-		if (count($models) > 0) {
-			$this->setTestModel($test, current($models));
-		}
+        $this->setDefaultModel($test);
 		
 		//set the the default state to 'activ':
 		$test->setPropertyValue(new core_kernel_classes_Property(TEST_ACTIVE_PROP), GENERIS_TRUE);
