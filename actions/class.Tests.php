@@ -154,10 +154,10 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
         $this->setView('view_test.tpl');
     }
         
-	/**
-	 * delete a test or a test class
-	 * called via ajax
-	 * @return void
+    /**
+     * delete a test or a test class
+     * called via ajax
+     * @return void
      * @throws Exception
      */
     public function delete()
