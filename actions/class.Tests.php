@@ -74,8 +74,8 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
      * or table with list of test properties {@see self::viewTest()}
      * depending on user rights. 
      * If the user does not have WIRTE and READ access then PermissionException will be thrown.
-     * 
      * @throws PermissionException
+     * @requiresRight id READ
      */
     public function getTest()
     {
@@ -181,6 +181,7 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 
 	/**
 	 * Redirect the test's authoring
+         * @requiresRight id READ
 	 */
 	public function authoring()
 	{
