@@ -11,19 +11,24 @@
                           className="Test"
                           dataUrl="/taoTests/Tests/getOntologyData"
                           selectClass="test-class-properties"
-                          selectInstance="test-properties"
+                          editInstance="test-edit"
+                          viewInstance="test-view"
                           moveInstance="test-move"
-                          delete="test-delete"
                           rootNode="http://www.tao.lu/Ontologies/TAOTest.rdf#Test"
-                        />
+                    />
                 </trees>
                 <actions>
-                	
-                	<action id="test-class-properties" name="Properties" url="/taoTests/Tests/editClassProperties" group="content" context="class">
+                    <action id="test-class-properties" name="Properties" url="/taoTests/Tests/editClassProperties" group="content" context="class">
                         <icon id="icon-edit"/>
                     </action>
-                    <action id="test-properties"  name="Properties"  url="/taoTests/Tests/editTest" group="content" context="instance">
+                    <action id="test-properties" name="Properties" url="/taoTests/Tests/getTest" group="content" context="instance">
                         <icon id="icon-edit"/>
+                    </action>
+                    <action id="test-edit" name="Edit" url="/taoTests/Tests/editTest" group="none" context="instance">
+                        <icon id="icon-edit"/>
+                    </action>
+                    <action id="test-view" name="View" url="/taoTests/Tests/viewTest" group="none" context="instance">
+                        <icon id="icon-preview"/>
                     </action>
                     <action id="test-authoring" name="Authoring" url="/taoTests/Tests/authoring" group="content" context="instance" binding="launchEditor">
                         <icon id="icon-edit"/>

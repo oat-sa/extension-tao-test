@@ -20,6 +20,9 @@
  * 
  */
 
+use oat\tao\model\accessControl\AclProxy;
+use oat\tao\model\accessControl\data\PermissionException;
+
 /**
  * Tests Controller provide actions performed from url resolution
  *
@@ -66,63 +69,95 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
  * controller actions
  */
 
+    /**
+     * Action renders form for editing test {@see self::editTest()} 
+     * or table with list of test properties {@see self::viewTest()}
+     * depending on user rights. 
+     * If the user does not have WIRTE and READ access then PermissionException will be thrown.
+     * 
+     * @throws PermissionException
+     */
+    public function getTest()
+    {
+        $test = $this->getCurrentInstance();
+        $user = common_Session_SessionManager::getSession()->getUser();
+        $testId = $test->getUri();
+        
+        if (AclProxy::hasAccess($user, __CLASS__, 'editTest', array('id'=>$testId))) {
+            $this->editTest();
+        } elseif (AclProxy::hasAccess($user, __CLASS__, 'viewTest', array('id'=>$testId)))  {
+            $this->viewTest();
+        } else {
+            throw new PermissionException($user->getIdentifier(), 'getTest', __CLASS__, 'taoTest');
+        }
+    }
+        
+    /**
+     * Action renders form for editing test.
+     * @requiresRight id WRITE
+     */
+    public function editTest()
+    {
+        $clazz = $this->getCurrentClass();
+        $test = $this->getCurrentInstance();
+        $testModel = $this->service->getTestModel($test) ?: null;
+        
+        $formContainer = new tao_actions_form_Instance($clazz, $test);
+        $myForm = $formContainer->getForm();
+        if ($myForm->isSubmited() && $myForm->isValid()) {
+            $propertyValues = $myForm->getValues();
 
-	/**
-	 * edit a test instance
-	 * @requiresRight id READ
-	 */
-	public function editTest()
-	{
-		$clazz = $this->getCurrentClass();
-		$test = $this->getCurrentInstance();
-		$testModel = $this->service->getTestModel($test);
-		// workaround because of bug:
-		$testModel = $testModel == '' ? null : $testModel;
+            // don't hande the testmodel via bindProperties
+            if (array_key_exists(PROPERTY_TEST_TESTMODEL, $propertyValues)) {
+                $modelUri = $propertyValues[PROPERTY_TEST_TESTMODEL];
+                unset($propertyValues[PROPERTY_TEST_TESTMODEL]);
+                if (!empty($modelUri)) {
+                    $testModel = new core_kernel_classes_Resource($modelUri);
+                    $this->service->setTestModel($test, $testModel);
+                }
+            } else {
+                common_Logger::w('No testmodel on test form', 'taoTests');
+            }
 
-		$formContainer = new tao_actions_form_Instance($clazz, $test);
-		$myForm = $formContainer->getForm();
-		if($myForm->isSubmited()){
-			if($myForm->isValid()){
-				$propertyValues = $myForm->getValues();
+            //then save the property values as usual
+            $binder = new tao_models_classes_dataBinding_GenerisFormDataBinder($test);
+            $test = $binder->bind($propertyValues);
 
-				// don't hande the testmodel via bindProperties
-				if(array_key_exists(PROPERTY_TEST_TESTMODEL, $propertyValues)){
-					$modelUri = $propertyValues[PROPERTY_TEST_TESTMODEL];
-					unset($propertyValues[PROPERTY_TEST_TESTMODEL]);
-					if (!empty($modelUri)) {
-						$testModel = new core_kernel_classes_Resource($modelUri);
-						$this->service->setTestModel($test, $testModel);
-					}
-				} else {
-					common_Logger::w('No testmodel on test form', 'taoTests');
-				}
+            //edit process label:
+            $this->service->onChangeTestLabel($test);
 
-				//then save the property values as usual
-				$binder = new tao_models_classes_dataBinding_GenerisFormDataBinder($test);
-				$test = $binder->bind($propertyValues);
+            $this->setData("selectNode", tao_helpers_Uri::encode($test->getUri()));
+            $this->setData('message', __('Test saved'));
+            $this->setData('reload', true);
+        }
 
-				//edit process label:
-				$this->service->onChangeTestLabel($test);
+        $myForm->removeElement(tao_helpers_Uri::encode(TEST_TESTCONTENT_PROP));
 
-		        $this->setData("selectNode", tao_helpers_Uri::encode($test->getUri()));
-				$this->setData('message', __('Test saved'));
-				$this->setData('reload', true);
-			}
-		}
-
-		$myForm->removeElement(tao_helpers_Uri::encode(TEST_TESTCONTENT_PROP));
-
-		$this->setData('uri', tao_helpers_Uri::encode($test->getUri()));
-		$this->setData('classUri', tao_helpers_Uri::encode($clazz->getUri()));
-		$this->setData('formTitle', __('Test properties'));
-		$this->setData('myForm', $myForm->render());
-		$this->setView('form_test.tpl');
-	}
-
-	/**
-	 * delete a test or a test class
-	 * called via ajax
-	 * @return void
+        $this->setData('uri', tao_helpers_Uri::encode($test->getUri()));
+        $this->setData('classUri', tao_helpers_Uri::encode($clazz->getUri()));
+        $this->setData('formTitle', __('Test properties'));
+        $this->setData('myForm', $myForm->render());
+        $this->setView('form_test.tpl');
+    }
+    
+    
+    /**
+     * Action renders table with list of test properties.
+     * @requiresRight id READ
+     */    
+    public function viewTest()
+    {
+        $test = $this->getCurrentInstance();
+        
+        $this->setData('label', $test->getLabel());
+        $this->setData('model', $this->service->getTestModel($test)->getLabel());
+        $this->setView('view_test.tpl');
+    }
+        
+    /**
+     * delete a test or a test class
+     * called via ajax
+     * @return void
      * @throws Exception
 	 * @requiresRight id WRITE 
      */
