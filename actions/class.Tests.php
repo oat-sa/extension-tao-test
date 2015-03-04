@@ -124,6 +124,7 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 	 * called via ajax
 	 * @return void
      * @throws Exception
+	 * @requiresRight id WRITE 
      */
     public function delete()
 	{
@@ -146,6 +147,7 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 
 	/**
 	 * Redirect the test's authoring
+	 * @requiresRight id WRITE
 	 */
 	public function authoring()
 	{
