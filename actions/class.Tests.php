@@ -153,6 +153,16 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
         $this->setData('model', $this->service->getTestModel($test)->getLabel());
         $this->setView('view_test.tpl');
     }
+    
+    /**
+     * Move an instance from a class to another
+     * @return void
+     * @requiresRight uri READ
+     */
+    public function moveInstance()
+    {
+        parent::moveInstance();
+    }
         
     /**
      * delete a test or a test class
