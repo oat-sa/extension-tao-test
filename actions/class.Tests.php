@@ -163,4 +163,26 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
         }
         throw new common_exception_NoImplementation();
 	}
+	
+	/**
+	 * overwrite the parent moveInstance to add the requiresRight only in Tests
+	 * @see tao_actions_TaoModule::moveInstance()
+	 * @requiresRight uri WRITE
+	 * @requiresRight destinationClassUri WRITE
+	 */
+	public function moveInstance()
+	{
+	    parent::moveInstance();
+	}
+	
+	/**
+	 * overwrite the parent cloneInstance to add the requiresRight only in Tests
+	 * @see tao_actions_TaoModule::cloneInstance()
+	 * @requiresRight id READ
+	 * @requiresRight classUri WRITE
+	 */
+	public function cloneInstance()
+	{
+	    return parent::cloneInstance();
+	}
 }

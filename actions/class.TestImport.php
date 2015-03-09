@@ -30,6 +30,17 @@
  */
 class taoTests_actions_TestImport extends tao_actions_Import {
 	
+    /**
+     * overwrite the parent index to add the requiresRight for Tests
+     *
+     * @requiresRight id WRITE
+     * @see tao_actions_Import::index()
+     */
+    public function index()
+    {
+        parent::index();
+    }
+    
 	protected function getAvailableImportHandlers() {
 		$returnValue = parent::getAvailableImportHandlers();
 
