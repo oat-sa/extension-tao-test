@@ -31,6 +31,17 @@
  */
 class taoTests_actions_TestExport extends tao_actions_Export {
 
+    /**
+     * overwrite the parent index to add the requiresRight for Tests
+     *
+     * @requiresRight id READ
+     * @see tao_actions_Export::index()
+     */
+    public function index()
+    {
+        parent::index();
+    }
+    
 	protected function getAvailableExportHandlers() {
 		$returnValue = parent::getAvailableExportHandlers();
 		
