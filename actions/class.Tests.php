@@ -76,12 +76,15 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 	{
     	$test = new core_kernel_classes_Resource($this->getRequestParameter('id'));
 	    if (!$this->isLocked($test)) {
-    	         
+
+	        // my lock
+	        $lock = LockManager::getImplementation()->getLockData($test);
+	        if (!is_null($lock) && $lock->getOwnerId() == common_session_SessionManager::getSession()->getUser()->getIdentifier()) {
+	            $this->setData('lockDate', $lock->getCreationTime());
+	            $this->setData('id', $lock->getResource()->getUri());
+	        }
+	        
     		$clazz = $this->getCurrentClass();
-    		$testModel = $this->service->getTestModel($test);
-    		// workaround because of bug:
-    		$testModel = $testModel == '' ? null : $testModel;
-    
     		$formContainer = new tao_actions_form_Instance($clazz, $test);
     		$myForm = $formContainer->getForm();
     		if($myForm->isSubmited()){
