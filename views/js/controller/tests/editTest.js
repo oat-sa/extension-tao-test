@@ -6,8 +6,9 @@ define(['module', 'jquery','helpers','ui/lock', 'ui/feedback', 'i18n'],
             start : function(options){
                 var config = module.config();
         
-                if(config.msg !== false){
-                    var lk = lock($('#lock-box')).hasLock(config.msg,
+            	var $lockDiv = $('#lock-box');
+                if($lockDiv.length == 1){
+                    var lk = lock($lockDiv).hasLock($lockDiv.data('msg'),
                         {
                             released : function() {
                             	feedback().success(__('The test has been released'));
@@ -17,7 +18,7 @@ define(['module', 'jquery','helpers','ui/lock', 'ui/feedback', 'i18n'],
                             	feedback().error(__('The test could not be released'));
                             },
                             url: helpers._url('release','Lock','tao'),
-                            uri: config.uri
+                            uri: $lockDiv.data('id')
                         });
                 }
             }
