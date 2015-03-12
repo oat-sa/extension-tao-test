@@ -1,0 +1,78 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TAO 3.0-RC04\n"
+"PO-Revision-Date: 2015-03-12T08:30:54\n"
+"Last-Translator: TAO Translation Team <translation@tao.lu>\n"
+"MIME-Version: 1.0\n"
+"Language: zh-TW\n"
+"sourceLanguage: en-US\n"
+"targetLanguage: zh-TW\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Basepath: ../../\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-SearchPath-0: .\n"
+
+msgid "Authoring"
+msgstr ""
+
+#, tao-public
+msgid "Combine a selection of items into tests."
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+msgid "Duplicate"
+msgstr ""
+
+msgid "Export"
+msgstr ""
+
+msgid "Filter"
+msgstr ""
+
+msgid "Import"
+msgstr ""
+
+msgid "Lists"
+msgstr ""
+
+#, tao-public
+msgid "Manage tests"
+msgstr ""
+
+msgid "Move"
+msgstr ""
+
+msgid "New class"
+msgstr ""
+
+msgid "New test"
+msgstr ""
+
+msgid "Properties"
+msgstr ""
+
+msgid "Search"
+msgstr ""
+
+msgid "Test properties"
+msgstr ""
+
+msgid "Test saved"
+msgstr ""
+
+#, tao-public
+msgid "Tests"
+msgstr ""
+
+msgid "Tests library"
+msgstr ""
+
+msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
+msgstr ""
+
+msgid "The Tests module allows to combine a selection of Items to a Test."
+msgstr ""
+
