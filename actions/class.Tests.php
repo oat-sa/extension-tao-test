@@ -1,5 +1,4 @@
 <?php
-use oat\tao\model\lock\LockManager;
 /*  
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -20,6 +19,7 @@ use oat\tao\model\lock\LockManager;
  *               2009-2012 (update and modification) Public Research Centre Henri Tudor (under the project TAO-SUSTAIN & TAO-DEV);
  * 
  */
+use oat\tao\model\lock\LockManager;
 
 /**
  * Tests Controller provide actions performed from url resolution
@@ -48,20 +48,6 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 		$this->service = taoTests_models_classes_TestsService::singleton();
 		$this->defaultData();
 	}
-
-/*
- * conveniance methods
- */
-
-	/**
-	 * get the main class
-	 * @return core_kernel_classes_Classes
-	 */
-	protected function getRootClass()
-	{
-		return $this->service->getRootclass();
-	}
-
 
 /*
  * controller actions
@@ -144,7 +130,7 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 			$deleted = $this->service->deleteTest($this->getCurrentInstance());
 		}
 		else{
-			$deleted = $this->service->deleteTestClass($this->getCurrentClass());
+			return $this->forward('deleteClass', null, null, (array('id' => $this->getRequestParameter('id'))));
 		}
 
 		echo json_encode(array('deleted'	=> $deleted));

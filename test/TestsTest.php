@@ -198,7 +198,7 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
 	 * @return void
 	 */
     public function testDeleteTestClass($testClass) {
-        $deleted = $this->testsService->deleteTestClass($testClass);
+        $deleted = $this->testsService->deleteClass($testClass);
 		$this->assertTrue($deleted);
     }
 
