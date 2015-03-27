@@ -19,6 +19,7 @@
  *               2009-2012 (update and modification) Public Research Centre Henri Tudor (under the project TAO-SUSTAIN & TAO-DEV);
  * 
  */
+use oat\tao\model\lock\LockManager;
 
 /**
  * Tests Controller provide actions performed from url resolution
@@ -49,20 +50,6 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 	}
 
 /*
- * conveniance methods
- */
-
-	/**
-	 * get the main class
-	 * @return core_kernel_classes_Classes
-	 */
-	protected function getRootClass()
-	{
-		return $this->service->getRootclass();
-	}
-
-
-/*
  * controller actions
  */
 
@@ -73,50 +60,56 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 	 */
 	public function editTest()
 	{
-		$clazz = $this->getCurrentClass();
-		$test = $this->getCurrentInstance();
-		$testModel = $this->service->getTestModel($test);
-		// workaround because of bug:
-		$testModel = $testModel == '' ? null : $testModel;
+    	$test = new core_kernel_classes_Resource($this->getRequestParameter('id'));
+	    if (!$this->isLocked($test)) {
 
-		$formContainer = new tao_actions_form_Instance($clazz, $test);
-		$myForm = $formContainer->getForm();
-		if($myForm->isSubmited()){
-			if($myForm->isValid()){
-				$propertyValues = $myForm->getValues();
-
-				// don't hande the testmodel via bindProperties
-				if(array_key_exists(PROPERTY_TEST_TESTMODEL, $propertyValues)){
-					$modelUri = $propertyValues[PROPERTY_TEST_TESTMODEL];
-					unset($propertyValues[PROPERTY_TEST_TESTMODEL]);
-					if (!empty($modelUri)) {
-						$testModel = new core_kernel_classes_Resource($modelUri);
-						$this->service->setTestModel($test, $testModel);
-					}
-				} else {
-					common_Logger::w('No testmodel on test form', 'taoTests');
-				}
-
-				//then save the property values as usual
-				$binder = new tao_models_classes_dataBinding_GenerisFormDataBinder($test);
-				$test = $binder->bind($propertyValues);
-
-				//edit process label:
-				$this->service->onChangeTestLabel($test);
-
-		        $this->setData("selectNode", tao_helpers_Uri::encode($test->getUri()));
-				$this->setData('message', __('Test saved'));
-				$this->setData('reload', true);
-			}
-		}
-
-		$myForm->removeElement(tao_helpers_Uri::encode(TEST_TESTCONTENT_PROP));
-
-		$this->setData('uri', tao_helpers_Uri::encode($test->getUri()));
-		$this->setData('classUri', tao_helpers_Uri::encode($clazz->getUri()));
-		$this->setData('formTitle', __('Test properties'));
-		$this->setData('myForm', $myForm->render());
-		$this->setView('form_test.tpl');
+	        // my lock
+	        $lock = LockManager::getImplementation()->getLockData($test);
+	        if (!is_null($lock) && $lock->getOwnerId() == common_session_SessionManager::getSession()->getUser()->getIdentifier()) {
+	            $this->setData('lockDate', $lock->getCreationTime());
+	            $this->setData('id', $lock->getResource()->getUri());
+	        }
+	        
+    		$clazz = $this->getCurrentClass();
+    		$formContainer = new tao_actions_form_Instance($clazz, $test);
+    		$myForm = $formContainer->getForm();
+    		if($myForm->isSubmited()){
+    			if($myForm->isValid()){
+    				$propertyValues = $myForm->getValues();
+    
+    				// don't hande the testmodel via bindProperties
+    				if(array_key_exists(PROPERTY_TEST_TESTMODEL, $propertyValues)){
+    					$modelUri = $propertyValues[PROPERTY_TEST_TESTMODEL];
+    					unset($propertyValues[PROPERTY_TEST_TESTMODEL]);
+    					if (!empty($modelUri)) {
+    						$testModel = new core_kernel_classes_Resource($modelUri);
+    						$this->service->setTestModel($test, $testModel);
+    					}
+    				} else {
+    					common_Logger::w('No testmodel on test form', 'taoTests');
+    				}
+    
+    				//then save the property values as usual
+    				$binder = new tao_models_classes_dataBinding_GenerisFormDataBinder($test);
+    				$test = $binder->bind($propertyValues);
+    
+    				//edit process label:
+    				$this->service->onChangeTestLabel($test);
+    
+    		        $this->setData("selectNode", tao_helpers_Uri::encode($test->getUri()));
+    				$this->setData('message', __('Test saved'));
+    				$this->setData('reload', true);
+    			}
+    		}
+    
+    		$myForm->removeElement(tao_helpers_Uri::encode(TEST_TESTCONTENT_PROP));
+    
+    		$this->setData('uri', tao_helpers_Uri::encode($test->getUri()));
+    		$this->setData('classUri', tao_helpers_Uri::encode($clazz->getUri()));
+    		$this->setData('formTitle', __('Test properties'));
+    		$this->setData('myForm', $myForm->render());
+    		$this->setView('Tests/editTest.tpl');
+	    }
 	}
 
 	/**
@@ -124,6 +117,7 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 	 * called via ajax
 	 * @return void
      * @throws Exception
+	 * @requiresRight id WRITE 
      */
     public function delete()
 	{
@@ -136,7 +130,7 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 			$deleted = $this->service->deleteTest($this->getCurrentInstance());
 		}
 		else{
-			$deleted = $this->service->deleteTestClass($this->getCurrentClass());
+			return $this->forward('deleteClass', null, null, (array('id' => $this->getRequestParameter('id'))));
 		}
 
 		echo json_encode(array('deleted'	=> $deleted));
@@ -146,19 +140,45 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 
 	/**
 	 * Redirect the test's authoring
+	 * @requiresRight id WRITE
 	 */
 	public function authoring()
 	{
         $test = new core_kernel_classes_Resource($this->getRequestParameter('id'));
-
-        $testModel = $this->service->getTestModel($test);
-        if(!is_null($testModel)){
-            $testModelImpl = $this->service->getTestModelImplementation($testModel);
-            $authoringUrl = $testModelImpl->getAuthoringUrl($test);
-            if(!empty($authoringUrl)){
-                return $this->forwardUrl($authoringUrl);
+        if (!$this->isLocked($test)) {
+            $testModel = $this->service->getTestModel($test);
+            if(!is_null($testModel)){
+                $testModelImpl = $this->service->getTestModelImplementation($testModel);
+                $authoringUrl = $testModelImpl->getAuthoringUrl($test);
+                if(!empty($authoringUrl)){
+                    $userId = common_session_SessionManager::getSession()->getUser()->getIdentifier();
+                    LockManager::getImplementation()->setLock($test, $userId);
+                    return $this->forwardUrl($authoringUrl);
+                }
             }
+            throw new common_exception_NoImplementation();
         }
-        throw new common_exception_NoImplementation();
+	}
+	
+	/**
+	 * overwrite the parent moveInstance to add the requiresRight only in Tests
+	 * @see tao_actions_TaoModule::moveInstance()
+	 * @requiresRight uri WRITE
+	 * @requiresRight destinationClassUri WRITE
+	 */
+	public function moveInstance()
+	{
+	    parent::moveInstance();
+	}
+	
+	/**
+	 * overwrite the parent cloneInstance to add the requiresRight only in Tests
+	 * @see tao_actions_TaoModule::cloneInstance()
+	 * @requiresRight id READ
+	 * @requiresRight classUri WRITE
+	 */
+	public function cloneInstance()
+	{
+	    return parent::cloneInstance();
 	}
 }

@@ -170,7 +170,7 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
      * @return \core_kernel_classes_Resource
      */
     public function testTestInstance($tests) {
-		$testInstanceLabel = 'test instance';
+		$testInstanceLabel = 'test instance bis';
 		$testInstance = $this->testsService->createInstance($tests, $testInstanceLabel);
 		$this->assertIsA($testInstance, 'core_kernel_classes_Resource');
 		$this->assertEquals($testInstanceLabel, $testInstance->getLabel());
@@ -198,7 +198,7 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
 	 * @return void
 	 */
     public function testDeleteTestClass($testClass) {
-        $deleted = $this->testsService->deleteTestClass($testClass);
+        $deleted = $this->testsService->deleteClass($testClass);
 		$this->assertTrue($deleted);
     }
 
