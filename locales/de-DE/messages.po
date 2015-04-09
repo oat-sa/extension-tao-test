@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.0-RC04\n"
-"PO-Revision-Date: 2015-03-06T15:38:46\n"
+"Project-Id-Version: TAO 3.0-RC05\n"
+"PO-Revision-Date: 2015-04-09T09:12:50\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: de-DE\n"
@@ -13,6 +13,7 @@ msgstr ""
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
 
+#, tao-public
 msgid "Authoring"
 msgstr ""
 
@@ -20,21 +21,27 @@ msgstr ""
 msgid "Combine a selection of items into tests."
 msgstr ""
 
+#, tao-public
 msgid "Delete"
 msgstr "Löschen"
 
+#, tao-public
 msgid "Duplicate"
 msgstr "Duplizieren"
 
+#, tao-public
 msgid "Export"
 msgstr "Export"
 
+#, tao-public
 msgid "Filter"
 msgstr ""
 
+#, tao-public
 msgid "Import"
 msgstr "Import"
 
+#, tao-public
 msgid "Lists"
 msgstr ""
 
@@ -42,18 +49,23 @@ msgstr ""
 msgid "Manage tests"
 msgstr "Tests verwalten"
 
+#, tao-public
 msgid "Move"
 msgstr ""
 
+#, tao-public
 msgid "New class"
 msgstr "Neue Klasse"
 
+#, tao-public
 msgid "New test"
 msgstr "Neuer Test"
 
+#, tao-public
 msgid "Properties"
 msgstr ""
 
+#, tao-public
 msgid "Search"
 msgstr "Suchen"
 
@@ -67,6 +79,7 @@ msgstr "Test gespeichert"
 msgid "Tests"
 msgstr "Tests"
 
+#, tao-public
 msgid "Tests library"
 msgstr "Tests-Bibliothek"
 
@@ -75,4 +88,7 @@ msgstr "Test-Modus (Sequenzierung, Scoring, Kumulierung, etc.) und Layout werden
 
 msgid "The Tests module allows to combine a selection of Items to a Test."
 msgstr "Das Test-Modul erlaubt das Zusammenfassen von Items zu Tests."
+
+msgid "You checked out this test %2s ago', tao_helpers_Date::displayInterval(get_data('lockDate"
+msgstr ""
 
