@@ -37,26 +37,26 @@
                     <action id="test-class-new" name="New class" js="subClass" url="/taoTests/Tests/addSubClass" context="resource" group="tree">
                         <icon id="icon-folder-open"/>
                     </action>
-                    <action id="test-new" name="New test" url="/taoTests/Tests/addInstance" context="resource" group="tree" binding="instanciate">
-                        <icon id="icon-test"/>
-                    </action>
                     <action id="test-delete" name="Delete" url="/taoTests/Tests/delete" context="resource" group="tree" binding="removeNode">
                         <icon id="icon-bin"/>
                     </action>
                     <action id="test-move" name="Move" url="/taoTests/Tests/moveInstance" context="instance" group="none" binding="moveNode">
                         <icon id="icon-move-item"/>
                     </action>
-                    <action id="test-lists" name="Lists" url="/tao/Lists/index" context="*" group="tree">
-                        <icon id="icon-ul"/>
+                    <action id="test-import" name="Import" url="/taoTests/TestImport/index" context="resource" group="tree" binding="loadClass">
+                        <icon id="icon-import"/>
                     </action>
                     <action id="test-export" name="Export" url="/taoTests/TestExport/index" context="resource" group="tree">
                         <icon id="icon-export"/>
                     </action>
-                    <action id="test-import" name="Import" url="/taoTests/TestImport/index" context="resource" group="tree" binding="loadClass">
-                        <icon id="icon-import"/>
+                    <action id="test-lists" name="Lists" url="/tao/Lists/index" context="*" group="tree">
+                        <icon id="icon-ul"/>
                     </action>
                     <action id="test-duplicate" name="Duplicate" js="duplicateNode" url="/taoTests/Tests/cloneInstance" context="instance" group="tree">
                         <icon id="icon-copy"/>
+                    </action>
+                    <action id="test-new" name="New test" url="/taoTests/Tests/addInstance" context="resource" group="tree" binding="instanciate">
+                        <icon id="icon-test"/>
                     </action>
                 </actions>
             </section>
