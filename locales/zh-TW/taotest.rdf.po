@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: TAO 3.0-RC04\n"
-"PO-Revision-Date: 2015-03-12T08:30:54\n"
+"PO-Revision-Date: 2015-04-13T08:28:48\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: zh-TW\n"
@@ -33,7 +33,7 @@ msgstr ""
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestTestModel
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "Test Model"
-msgstr ""
+msgstr "測試模型"
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestTestModel
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"

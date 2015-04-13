@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: TAO 3.0-RC04\n"
-"PO-Revision-Date: 2015-03-06T15:38:46\n"
+"PO-Revision-Date: 2015-04-13T08:28:47\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: da-DK\n"
@@ -75,4 +75,7 @@ msgstr "Test tilstand (rækkefølge, pointgivning, opsamling etc.) og layout bli
 
 msgid "The Tests module allows to combine a selection of Items to a Test."
 msgstr "I Test modulet kan du kombinere et udvalg af items til en test."
+
+msgid "You checked out this test %2s ago', tao_helpers_Date::displayInterval(get_data('lockDate"
+msgstr ""
 
