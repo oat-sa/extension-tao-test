@@ -174,7 +174,7 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 	/**
 	 * overwrite the parent cloneInstance to add the requiresRight only in Tests
 	 * @see tao_actions_TaoModule::cloneInstance()
-	 * @requiresRight id READ
+	 * @requiresRight uri READ
 	 * @requiresRight classUri WRITE
 	 */
 	public function cloneInstance()
