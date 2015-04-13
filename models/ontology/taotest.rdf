@@ -66,6 +66,7 @@
   <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOItem.rdf#TestAuthor">
   	<rdf:type rdf:resource="http://www.tao.lu/Ontologies/generis.rdf#UserRole"/>
   	<generis:includesRole rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole"/>
+  	<generis:includesRole rdf:resource="http://www.tao.lu/Ontologies/TAO.rdf#PropertyManagerRole"/>
   	<rdfs:label xml:lang="en-US"><![CDATA[Test Author]]></rdfs:label>
     <rdfs:comment xml:lang="en-US"><![CDATA[The Test Author Role]]></rdfs:comment>
   </rdf:Description>
