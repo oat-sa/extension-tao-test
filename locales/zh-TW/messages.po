@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.0-RC05\n"
-"PO-Revision-Date: 2015-04-09T09:12:50\n"
+"Project-Id-Version: TAO 3.0-RC04\n"
+"PO-Revision-Date: 2015-04-13T08:28:48\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: zh-TW\n"
@@ -13,7 +13,6 @@ msgstr ""
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#, tao-public
 msgid "Authoring"
 msgstr ""
 
@@ -21,27 +20,21 @@ msgstr ""
 msgid "Combine a selection of items into tests."
 msgstr ""
 
-#, tao-public
 msgid "Delete"
 msgstr ""
 
-#, tao-public
 msgid "Duplicate"
 msgstr ""
 
-#, tao-public
 msgid "Export"
 msgstr ""
 
-#, tao-public
 msgid "Filter"
 msgstr ""
 
-#, tao-public
 msgid "Import"
 msgstr ""
 
-#, tao-public
 msgid "Lists"
 msgstr ""
 
@@ -49,23 +42,18 @@ msgstr ""
 msgid "Manage tests"
 msgstr ""
 
-#, tao-public
 msgid "Move"
-msgstr ""
+msgstr "移動"
 
-#, tao-public
 msgid "New class"
-msgstr ""
+msgstr "新類別"
 
-#, tao-public
 msgid "New test"
-msgstr ""
+msgstr "新測試(_N)"
 
-#, tao-public
 msgid "Properties"
 msgstr ""
 
-#, tao-public
 msgid "Search"
 msgstr ""
 
@@ -77,9 +65,8 @@ msgstr ""
 
 #, tao-public
 msgid "Tests"
-msgstr ""
+msgstr "測試"
 
-#, tao-public
 msgid "Tests library"
 msgstr ""
 
