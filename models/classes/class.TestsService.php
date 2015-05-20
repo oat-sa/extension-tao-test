@@ -306,7 +306,7 @@ class taoTests_models_classes_TestsService
     {
     	$returnValue = array();
     	$model = $this->getTestModel($test);
-    	if (!is_null($model)) {
+    	if (!is_null($model) && $model instanceof core_kernel_classes_Resource) {
     		$returnValue = $this->getTestModelImplementation($model)->getItems($test);
     	}
 
