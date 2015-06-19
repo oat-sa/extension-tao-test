@@ -55,7 +55,6 @@ $GLOBALS['__l10n']["Test saved"]="Test gespäichert";
 $GLOBALS['__l10n']["Test takers library"]="Testpersounen Sammlung";
 $GLOBALS['__l10n']["Tests"]="Tester";
 $GLOBALS['__l10n']["Tests library"]="Test Sammlung";
-$GLOBALS['__l10n']["The format of this field is not valid."]="Den Format vun desem Datenfeld as nit valid.";
 $GLOBALS['__l10n']["The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."]="Den Test Modus (Sequenzéieren, Bewerten, Sammelen, etc.) an de Layout gin och hei konfiguréiert.";
 $GLOBALS['__l10n']["The Tests module allows to combine a selection of Items to a Test."]="Den Test Modul erlaabt eng Selektioun vun Itemen matt engem Test ze verbannen.";
 $GLOBALS['__l10n']["The uploaded file is too large"]="De ropgeluedene Fichier as ze grouss";

@@ -306,7 +306,7 @@ class taoTests_models_classes_TestsService
     {
     	$returnValue = array();
     	$model = $this->getTestModel($test);
-    	if (!is_null($model)) {
+    	if (!is_null($model) && $model instanceof core_kernel_classes_Resource) {
     		$returnValue = $this->getTestModelImplementation($model)->getItems($test);
     	}
 
@@ -377,7 +377,8 @@ class taoTests_models_classes_TestsService
      * @return core_kernel_classes_Container
      */
     public function getTestModel(core_kernel_classes_Resource $test) {
-		return $test->getOnePropertyValue(new core_kernel_classes_Property(PROPERTY_TEST_TESTMODEL));
+		$testModel = $test->getOnePropertyValue(new core_kernel_classes_Property(PROPERTY_TEST_TESTMODEL));
+		return $testModel instanceof core_kernel_classes_Resource ? $testModel : null;
     }
 
     /**
