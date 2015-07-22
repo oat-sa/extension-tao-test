@@ -49,9 +49,6 @@
                     <action id="test-export" name="Export" url="/taoTests/TestExport/index" context="resource" group="tree">
                         <icon id="icon-export"/>
                     </action>
-                    <action id="test-lists" name="Lists" url="/tao/Lists/index" context="*" group="tree">
-                        <icon id="icon-ul"/>
-                    </action>
                     <action id="test-duplicate" name="Duplicate" js="duplicateNode" url="/taoTests/Tests/cloneInstance" context="instance" group="tree">
                         <icon id="icon-copy"/>
                     </action>
