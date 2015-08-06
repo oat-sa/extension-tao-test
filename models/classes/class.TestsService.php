@@ -281,17 +281,10 @@ class taoTests_models_classes_TestsService
      */
     public function createInstance( core_kernel_classes_Class $clazz, $label = '')
     {
-        $returnValue = null;
-
 		$test = parent::createInstance($clazz, $label);
         $this->setDefaultModel($test);
 		
-		//set the the default state to 'activ':
-		$test->setPropertyValue(new core_kernel_classes_Property(TEST_ACTIVE_PROP), GENERIS_TRUE);
-		
-		$returnValue = $test;
-
-        return $returnValue;
+        return $test;
     }
 
     /**
@@ -311,28 +304,6 @@ class taoTests_models_classes_TestsService
     	}
 
         return (array) $returnValue;
-    }
-
-    /**
-     * Short description of method isTestActive
-     *
-     * @access public
-     * @author Joel Bout, <joel.bout@tudor.lu>
-     * @param  Resource test
-     * @return boolean
-     */
-    public function isTestActive( core_kernel_classes_Resource $test)
-    {
-        $returnValue = (bool) false;
-
-		$active = $test->getOnePropertyValue(new core_kernel_classes_Property(TEST_ACTIVE_PROP));
-		if (!is_null($active)){
-			if ($active->getUri() == GENERIS_TRUE){
-				$returnValue = true;
-			}
-		}
-
-        return (bool) $returnValue;
     }
     
     /**
