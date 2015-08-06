@@ -37,6 +37,16 @@ class Updater extends \common_ext_ExtensionUpdater
 			$currentVersion = '2.7';
 		}
 
+		// remove active prop
+		if ($currentVersion == '2.7') {
+		    $deprecatedProperty = new \core_kernel_classes_Property('http://www.tao.lu/Ontologies/TAOTest.rdf#active');
+		    $iterator = new \core_kernel_classes_ResourceIterator(array(\taoTests_models_classes_TestsService::singleton()->getRootClass()));
+		    foreach ($iterator as $resource) {
+		        $resource->removePropertyValues($deprecatedProperty);
+		    }
+		    $currentVersion = '2.7.1';
+		}
+		
 		return $currentVersion;
 	}
 }

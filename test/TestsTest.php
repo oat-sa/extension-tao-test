@@ -225,26 +225,6 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
     }
 
     /**
-     * @depends testCloneInstance
-     * @param $test
-     * @return void
-     */
-    public function testSetActive($test) {
-		$result = $test->setPropertyValue(new core_kernel_classes_Property(TEST_ACTIVE_PROP), GENERIS_TRUE);
-		$this->assertTrue($result);
-    }
-
-    /**
-     * @depends testCloneInstance
-     * @param $test
-     * @return void
-     */
-    public function testIsTestActive($test) {
-        $isActive = $this->testsService->isTestActive($test);
-		$this->assertTrue($isActive);
-    }
-
-    /**
      * @param $test
      * @return \core_kernel_file_File
      */
