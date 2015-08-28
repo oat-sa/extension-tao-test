@@ -130,13 +130,11 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 
 			$instance = $this->getCurrentInstance();
 
-			$userService = tao_models_classes_UserService::singleton();
-			$user = $userService->getCurrentUser();
-
 			$lockManager = LockManager::getImplementation();
+			$userId = common_session_SessionManager::getSession()->getUser()->getIdentifier();
 
 			if ($lockManager->isLocked($instance)) {
-				$lockManager->releaseLock($instance, $user->getUri());
+				$lockManager->releaseLock($instance, $userId);
 			}
 
 			$deleted = $this->service->deleteTest($instance);
