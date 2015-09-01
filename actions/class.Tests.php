@@ -121,19 +121,28 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
      */
     public function delete()
 	{
-		if(!tao_helpers_Request::isAjax()){
+		if (!tao_helpers_Request::isAjax()) {
 			throw new Exception("wrong request mode");
 		}
 
 		$deleted = false;
-		if($this->getRequestParameter('uri')){
-			$deleted = $this->service->deleteTest($this->getCurrentInstance());
-		}
-		else{
+		if ($this->getRequestParameter('uri')) {
+
+			$instance = $this->getCurrentInstance();
+
+			$lockManager = LockManager::getImplementation();
+			$userId = common_session_SessionManager::getSession()->getUser()->getIdentifier();
+
+			if ($lockManager->isLocked($instance)) {
+				$lockManager->releaseLock($instance, $userId);
+			}
+
+			$deleted = $this->service->deleteTest($instance);
+		} else {
 			return $this->forward('deleteClass', null, null, (array('id' => $this->getRequestParameter('id'))));
 		}
 
-		echo json_encode(array('deleted'	=> $deleted));
+		echo json_encode(array('deleted' => $deleted));
 	}
 
 
