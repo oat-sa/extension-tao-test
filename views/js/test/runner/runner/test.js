@@ -22,13 +22,22 @@ define([
     'jquery',
     'lodash',
     'taoTests/runner/runner'
-], function($, _, runner) {
+], function ($, _, runner){
     'use strict';
+    
+    var provider = {
+        init : function init(arg1, arg2){
+            console.log('init', arg1, arg2);
+        }
+    };
+    
+    QUnit.module('runner', {
+        setup : function(){
+            runner.registerProvider('unitTest', provider);
+        }
+    });
 
-    QUnit.module('runner');
-
-
-    QUnit.test('module', 5, function(assert) {
+    QUnit.test('module', 5, function (assert){
         assert.equal(typeof runner, 'function', "The runner module exposes a function");
         assert.equal(typeof runner(), 'object', "The runner factory produces an object");
         assert.notStrictEqual(runner(), runner(), "The runner factory provides a different object on each call");
@@ -38,32 +47,37 @@ define([
 
 
     var testReviewApi = [
-        { name : 'init', title : 'init' },
-        { name : 'ready', title : 'ready' },
-        { name : 'load', title : 'load' },
-        { name : 'terminate', title : 'terminate' },
-        { name : 'endAttempt', title : 'endAttempt' },
-        { name : 'next', title : 'next' },
-        { name : 'previous', title : 'previous' },
-        { name : 'exit', title : 'exit' },
-        { name : 'skip', title : 'skip' },
-        { name : 'jump', title : 'jump' },
-        { name : 'registerAction', title : 'registerAction' },
-        { name : 'execute', title : 'execute' },
-        { name : 'request', title : 'request' },
-        { name : 'beforeRequest', title : 'beforeRequest' },
-        { name : 'processRequest', title : 'processRequest' },
-        { name : 'afterRequest', title : 'afterRequest' },
-        { name : 'is', title : 'is' },
-        { name : 'trigger', title : 'trigger' },
-        { name : 'on', title : 'on' }
+        {name : 'init', title : 'init'},
+        {name : 'ready', title : 'ready'},
+        {name : 'load', title : 'load'},
+        {name : 'terminate', title : 'terminate'},
+        {name : 'endAttempt', title : 'endAttempt'},
+        {name : 'next', title : 'next'},
+        {name : 'previous', title : 'previous'},
+        {name : 'exit', title : 'exit'},
+        {name : 'skip', title : 'skip'},
+        {name : 'jump', title : 'jump'},
+        {name : 'registerAction', title : 'registerAction'},
+        {name : 'execute', title : 'execute'},
+        {name : 'request', title : 'request'},
+        {name : 'beforeRequest', title : 'beforeRequest'},
+        {name : 'processRequest', title : 'processRequest'},
+        {name : 'afterRequest', title : 'afterRequest'},
+        {name : 'is', title : 'is'},
+        {name : 'trigger', title : 'trigger'},
+        {name : 'on', title : 'on'}
     ];
 
     QUnit
         .cases(testReviewApi)
-        .test('instance API ', function(data, assert) {
+        .test('instance API', function (data, assert){
             var instance = runner();
             assert.equal(typeof instance[data.name], 'function', 'The runner instance exposes a "' + data.title + '" function');
         });
-        
+
+    QUnit.test('init', 0, function (data, assert){
+        var instance = runner();
+        instance.init();
+    });
+
 });

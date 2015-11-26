@@ -35,10 +35,17 @@ define([
      */
     var _defaults = {};
 
-
-    function testRunnerFactory(providerName, data, options){
+    function testRunnerFactory(providerName, options){
         
         var provider = testRunnerFactory.getProvider(providerName);
+        
+        function delegate(fnName, args){
+            if(provider){
+                if(_.isFunction(provider[fnName])){
+                    provider[fnName].apply(runner, _.isArray(args) ? args: []);
+                }
+            }
+        }
         
         /**
          * Defines the QTI test runner
@@ -61,7 +68,8 @@ define([
                         // todo: load plugins, then fire the init event
                     });
                 }
-
+                
+                delegate('init', [true, false]);
                 this.trigger('init', this);
                 return this;
             },
