@@ -28,10 +28,12 @@ define([
     QUnit.module('runner');
 
 
-    QUnit.test('module', 3, function(assert) {
+    QUnit.test('module', 5, function(assert) {
         assert.equal(typeof runner, 'function', "The runner module exposes a function");
         assert.equal(typeof runner(), 'object', "The runner factory produces an object");
         assert.notStrictEqual(runner(), runner(), "The runner factory provides a different object on each call");
+        assert.equal(typeof runner.registerProvider, 'function', "The runner module exposes a function registerProvider()");
+        assert.equal(typeof runner.getProvider, 'function', "The runner module exposes a function getProvider()");
     });
 
 
@@ -54,8 +56,7 @@ define([
         { name : 'afterRequest', title : 'afterRequest' },
         { name : 'is', title : 'is' },
         { name : 'trigger', title : 'trigger' },
-        { name : 'on', title : 'on' },
-        { name : 'off', title : 'off' }
+        { name : 'on', title : 'on' }
     ];
 
     QUnit
@@ -64,5 +65,5 @@ define([
             var instance = runner();
             assert.equal(typeof instance[data.name], 'function', 'The runner instance exposes a "' + data.title + '" function');
         });
-
+        
 });

@@ -23,8 +23,9 @@ define([
     'lodash',
     'i18n',
     'core/eventifier',
-    'core/promise'
-], function ($, _, __, eventifier, Promise) {
+    'core/promise',
+    'taoTests/runner/providerRegistry'
+], function ($, _, __, eventifier, Promise, providerRegistry){
     'use strict';
 
     /**
@@ -34,211 +35,196 @@ define([
      */
     var _defaults = {};
 
-    /**
-     * Defines the QTI test runner
-     * @type {runner}
-     */
-    var runner = {
+
+    function testRunnerFactory(providerName, data, options){
+        
+        var provider = testRunnerFactory.getProvider(providerName);
+        
         /**
-         * Initializes the runner
-         * @param {Object} config
+         * Defines the QTI test runner
+         * @type {runner}
          */
-        init : function init(config) {
-            eventifier(this);
+        var runner = eventifier({
+            /**
+             * Initializes the runner
+             * @param {Object} config
+             */
+            init : function init(config){
 
-            this.config = _.omit(config || {}, function(value) {
-                return undefined === value || null === value;
-            });
-            this.config.is = {};
-
-            if (this.config.plugins) {
-                _.forEach(this.config.plugins, function(plugin) {
-                    // todo: load plugins, then fire the init event
+                this.config = _.omit(config || {}, function (value){
+                    return undefined === value || null === value;
                 });
+                this.config.is = {};
+
+                if(this.config.plugins){
+                    _.forEach(this.config.plugins, function (plugin){
+                        // todo: load plugins, then fire the init event
+                    });
+                }
+
+                this.trigger('init', this);
+                return this;
+            },
+            /**
+             * Sets the runner in the ready state
+             * @param {ServiceApi} serviceApi
+             */
+            ready : function ready(serviceApi){
+                this.serviceApi = serviceApi;
+                this.trigger('ready', this);
+                return this;
+            },
+            /**
+             *
+             */
+            load : function load(){
+                this.trigger('load', this);
+                return this;
+            },
+            /**
+             *
+             * @returns {runner}
+             */
+            terminate : function terminate(){
+                this.trigger('terminate', this);
+                return this;
+            },
+            /**
+             *
+             * @returns {runner}
+             */
+            endAttempt : function endAttempt(){
+                this.trigger('endattempt', this);
+                return this;
+            },
+            /**
+             *
+             * @returns {runner}
+             */
+            next : function next(){
+                this.trigger('next', this);
+                return this;
+            },
+            /**
+             *
+             * @returns {runner}
+             */
+            previous : function previous(){
+                this.trigger('previous', this);
+                return this;
+            },
+            /**
+             *
+             * @param scope
+             * @returns {runner}
+             */
+            exit : function exit(scope){
+                this.trigger('exit', scope, this);
+                return this;
+            },
+            /**
+             *
+             * @returns {runner}
+             */
+            skip : function skip(){
+                this.trigger('skip', this);
+                return this;
+            },
+            /**
+             *
+             * @param position
+             * @returns {runner}
+             */
+            jump : function jump(position){
+                this.trigger('jump', position, this);
+                return this;
+            },
+            /**
+             *
+             * @param action
+             * @param handler
+             * @returns {runner}
+             */
+            registerAction : function registerAction(action, handler){
+                this.on(action, handler);
+                return this;
+            },
+            /**
+             *
+             * @param command
+             * @returns {runner}
+             */
+            execute : function execute(command){
+                this.trigger.apply(this, arguments);
+                return this;
+            },
+            /**
+             *
+             * @param command
+             * @param params
+             * @param callback
+             * @returns {runner}
+             */
+            request : function request(command, params, callback){
+                var self = this;
+                this.beforeRequest(function (){
+                    $.ajax({
+                        url : self.testContext[command + 'Url'] || command,
+                        cache : false,
+                        data : params,
+                        async : true,
+                        dataType : 'json',
+                        success : function (testContext){
+                            self.processRequest(testContext, callback);
+                        }
+                    });
+                });
+                return this;
+            },
+            /**
+             *
+             * @param process
+             * @returns {runner}
+             */
+            beforeRequest : function beforeRequest(process){
+                process();
+                return this;
+            },
+            /**
+             *
+             * @param testContext
+             * @param callback
+             * @returns {runner}
+             */
+            processRequest : function processRequest(testContext, callback){
+                callback();
+                this.afterRequest();
+                return this;
+            },
+            /**
+             *
+             * @returns {runner}
+             */
+            afterRequest : function afterRequest(){
+                return this;
+            },
+            /**
+             * Checks if the runner has a particular state
+             * @param {String} state
+             * @returns {Boolean}
+             */
+            is : function is(state){
+                return !!this.config.is[state];
             }
-
-            this.trigger('init', this);
-            return this;
-        },
-
-        /**
-         * Sets the runner in the ready state
-         * @param {ServiceApi} serviceApi
-         */
-        ready : function ready(serviceApi) {
-            this.serviceApi = serviceApi;
-            this.trigger('ready', this);
-            return this;
-        },
-
-        /**
-         *
-         */
-        load : function load() {
-            this.trigger('load', this);
-            return this;
-        },
-
-        /**
-         *
-         * @returns {runner}
-         */
-        terminate : function terminate() {
-            this.trigger('terminate', this);
-            return this;
-        },
-
-        /**
-         *
-         * @returns {runner}
-         */
-        endAttempt : function endAttempt() {
-            this.trigger('endattempt', this);
-            return this;
-        },
-
-        /**
-         *
-         * @returns {runner}
-         */
-        next : function next() {
-            this.trigger('next', this);
-            return this;
-        },
-
-        /**
-         *
-         * @returns {runner}
-         */
-        previous : function previous() {
-            this.trigger('previous', this);
-            return this;
-        },
-
-        /**
-         *
-         * @param scope
-         * @returns {runner}
-         */
-        exit : function exit(scope) {
-            this.trigger('exit', scope, this);
-            return this;
-        },
-
-        /**
-         *
-         * @returns {runner}
-         */
-        skip : function skip() {
-            this.trigger('skip', this);
-            return this;
-        },
-
-        /**
-         *
-         * @param position
-         * @returns {runner}
-         */
-        jump : function jump(position) {
-            this.trigger('jump', position, this);
-            return this;
-        },
-
-        /**
-         *
-         * @param action
-         * @param handler
-         * @returns {runner}
-         */
-        registerAction : function registerAction(action, handler) {
-            this.on(action, handler);
-            return this;
-        },
-
-        /**
-         *
-         * @param command
-         * @returns {runner}
-         */
-        execute : function execute(command) {
-            this.trigger.apply(this, arguments);
-            return this;
-        },
-
-        /**
-         *
-         * @param command
-         * @param params
-         * @param callback
-         * @returns {runner}
-         */
-        request : function request(command, params, callback) {
-            var self = this;
-            this.beforeRequest(function() {
-                $.ajax({
-                    url: self.testContext[command + 'Url'] || command,
-                    cache: false,
-                    data: params,
-                    async: true,
-                    dataType: 'json',
-                    success: function(testContext) {
-                        self.processRequest(testContext, callback);
-                    }
-                });
-            });
-            return this;
-        },
-
-        /**
-         *
-         * @param process
-         * @returns {runner}
-         */
-        beforeRequest : function beforeRequest(process) {
-            process();
-            return this;
-        },
-
-        /**
-         *
-         * @param testContext
-         * @param callback
-         * @returns {runner}
-         */
-        processRequest : function processRequest(testContext, callback) {
-            callback();
-            this.afterRequest();
-            return this;
-        },
-
-        /**
-         *
-         * @returns {runner}
-         */
-        afterRequest : function afterRequest() {
-            return this;
-        },
-
-        /**
-         * Checks if the runner has a particular state
-         * @param {String} state
-         * @returns {Boolean}
-         */
-        is : function is(state) {
-            return !!this.config.is[state];
-        }
-    };
-
+        });
+        
+        return runner;
+    }
+    
     /**
      * Builds an instance of the QTI test runner
      * @param {Object} config
      * @returns {runner}
      */
-    var testRunnerFactory = function testRunnerFactory(config) {
-        var instance = _.clone(runner);
-        _.defaults(instance, _defaults);
-        return instance.init(config);
-    };
-
-    return testRunnerFactory;
+    return providerRegistry(testRunnerFactory);
 });
