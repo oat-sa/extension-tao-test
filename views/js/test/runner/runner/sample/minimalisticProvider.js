@@ -18,64 +18,68 @@
  */
 define([], function(){
 
+    function initEvents(runner){
+
+        runner
+            .on('ready', function(){
+
+                //the plugins are ready
+
+                //the DOM and GUI are also ready
+
+                //render item to this.gui.itemContainer
+                this.renderContent();
+            })
+            .after('move', function(type){
+                //refresh page content after each refresh
+                this.renderContent();
+            })
+            .on('next', function(){
+
+                var state = this.getState();
+                var newPos = state.pos + 1;
+
+                //move pointer, compute the new state object
+                if(newPos < state.definition.items.length){
+                    state.pos = newPos;
+                    this.setState(state);
+                }else{
+                    //end test
+                    this.complete();
+                }
+
+            })
+            .on('previous', function(){
+
+                var state = this.getState();
+                var newPos = state.pos - 1;
+
+                //move pointer, compute the new state object
+                if(newPos >= 0){
+                    state.pos = newPos;
+                    this.setState(state);
+                }else{
+                    //log warning ?
+                }
+
+            })
+            .on('jump', function(pos){
+                var state = this.getState();
+                //check if the jump "pos" is valid
+                var valid = (0 <= pos && pos < state.definition.items.length);
+                if(valid){
+                    state.pos = pos;
+                    this.setState(state);
+                }else{
+                    //log warning ?
+                }
+            });
+    }
+
     var minimal = {
         name : 'minimalTestRunner',
         init : function init(){
-
-            this.on('ready', function(){
-
-                    //the plugins are ready
-
-                    //the DOM and GUI are also ready
-
-                    //render item to this.gui.itemContainer
-                    this.renderContent();
-                })
-                .after('move', function(type){
-                    //refresh page content after each refresh
-                    this.renderContent();
-                })
-                .on('next', function(){
-
-                    var state = this.getState();
-                    var newPos = state.pos + 1;
-                    
-                    //move pointer, compute the new state object
-                    if(newPos < state.definition.items.length){
-                        state.pos = newPos;
-                        this.setState(state);
-                    }else{
-                        //end test
-                        this.complete();
-                    }
-
-                })
-                .on('previous', function(){
-
-                    var state = this.getState();
-                    var newPos = state.pos - 1;
-
-                    //move pointer, compute the new state object
-                    if(newPos >= 0){
-                        state.pos = newPos;
-                        this.setState(state);
-                    }else{
-                        //log warning ?
-                    }
-
-                })
-                .on('jump', function(pos){
-                    var state = this.getState();
-                    //check if the jump "pos" is valid
-                    var valid = (0 <= pos && pos < state.definition.items.length);
-                    if(valid){
-                        state.pos = pos;
-                        this.setState(state);
-                    }else{
-                        //log warning ?
-                    }
-                });
-
+            initEvents(this);
         },
         renderContent : function renderContent($container){
             var state = this.getState();
