@@ -33,16 +33,22 @@ define([
      * @type {Object}
      * @private
      */
-    var _defaults = {};
+    var _defaults = {
+        content : $()
+    };
 
-    function testRunnerFactory(providerName, options){
+    function testRunnerFactory(providerName, config){
         
-        var provider = testRunnerFactory.getProvider(providerName);
+        var _provider = testRunnerFactory.getProvider(providerName);
+        var _states;
+        var _state = {};
+        
+        config = _.defaults(config || {}, _defaults);
         
         function delegate(fnName, args){
-            if(provider){
-                if(_.isFunction(provider[fnName])){
-                    provider[fnName].apply(runner, _.isArray(args) ? args: []);
+            if(_provider){
+                if(_.isFunction(_provider[fnName])){
+                    _provider[fnName].apply(runner, _.isArray(args) ? args: []);
                 }
             }
         }
@@ -61,15 +67,16 @@ define([
                 this.config = _.omit(config || {}, function (value){
                     return undefined === value || null === value;
                 });
-                this.config.is = {};
+                _states = {};
 
                 if(this.config.plugins){
                     _.forEach(this.config.plugins, function (plugin){
                         // todo: load plugins, then fire the init event
+                        plugin.init(runner, config);
                     });
                 }
                 
-                delegate('init', [true, false]);
+                delegate('init', this);
                 this.trigger('init', this);
                 return this;
             },
@@ -110,7 +117,7 @@ define([
              * @returns {runner}
              */
             next : function next(){
-                this.trigger('next', this);
+                this.trigger('move', 'next');
                 return this;
             },
             /**
@@ -118,7 +125,15 @@ define([
              * @returns {runner}
              */
             previous : function previous(){
-                this.trigger('previous', this);
+                this.trigger('move', 'previous');
+                return this;
+            },
+            /**
+             *
+             * @returns {runner}
+             */
+            complete : function complete(){
+                this.trigger('complete');
                 return this;
             },
             /**
@@ -127,7 +142,7 @@ define([
              * @returns {runner}
              */
             exit : function exit(scope){
-                this.trigger('exit', scope, this);
+                this.trigger('exit', scope);
                 return this;
             },
             /**
@@ -135,7 +150,7 @@ define([
              * @returns {runner}
              */
             skip : function skip(){
-                this.trigger('skip', this);
+                this.trigger('move', 'skip');
                 return this;
             },
             /**
@@ -144,7 +159,7 @@ define([
              * @returns {runner}
              */
             jump : function jump(position){
-                this.trigger('jump', position, this);
+                this.trigger('move', 'jump', position);
                 return this;
             },
             /**
@@ -222,8 +237,39 @@ define([
              * @returns {Boolean}
              */
             is : function is(state){
-                return !!this.config.is[state];
+                return !!_states[state];
+            },
+            /**
+             * Set the current state object
+             * @param {Object} state
+             * @returns {undefined}
+             */
+            setState : function(state){
+                _state = state;
+                return this;
+            },
+            /**
+             * Return the current state object
+             * @returns {Object}
+             */
+            getState : function(){
+                return _state;
+            },
+            /**
+             * Render the content of the test given the current test state
+             * @returns {undefined}
+             */
+            renderContent : function renderContent(){
+                delegate('renderContent', [config.content, _state]);
+                return this;
+            },
+            
+            contentReady : function contentReady(){
+                this.trigger('contentready', config.content);
+                return this;
             }
+        }).on('move', function(type, otherArgs_){
+            this.trigger.apply(this, [].slice.call(arguments));
         });
         
         return runner;

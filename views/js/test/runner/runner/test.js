@@ -21,23 +21,19 @@
 define([
     'jquery',
     'lodash',
-    'taoTests/runner/runner'
-], function ($, _, runner){
+    'taoTests/runner/runner',
+    'json!taoTests/test/runner/runner/sample/minimalisticTest',
+    'taoTests/test/runner/runner/sample/minimalisticProvider'
+], function($, _, runner, minimalisticTest, minimalisticProvider){
     'use strict';
-    
-    var provider = {
-        init : function init(arg1, arg2){
-            console.log('init', arg1, arg2);
-        }
-    };
-    
+
     QUnit.module('runner', {
         setup : function(){
-            runner.registerProvider('unitTest', provider);
+            runner.registerProvider(minimalisticProvider.name, minimalisticProvider);
         }
     });
 
-    QUnit.test('module', 5, function (assert){
+    QUnit.test('module', 5, function(assert){
         assert.equal(typeof runner, 'function', "The runner module exposes a function");
         assert.equal(typeof runner(), 'object', "The runner factory produces an object");
         assert.notStrictEqual(runner(), runner(), "The runner factory provides a different object on each call");
@@ -70,14 +66,63 @@ define([
 
     QUnit
         .cases(testReviewApi)
-        .test('instance API', function (data, assert){
+        .test('instance API', function(data, assert){
             var instance = runner();
             assert.equal(typeof instance[data.name], 'function', 'The runner instance exposes a "' + data.title + '" function');
         });
 
-    QUnit.test('init', 0, function (data, assert){
-        var instance = runner();
-        instance.init();
+    QUnit.test('next/previous', function(assert){
+        var $content = $('#test-content');
+        var instance = runner(minimalisticProvider.name, {
+            content : $content
+        }).setState({
+            pos : 0,
+            definition : minimalisticTest
+        }).init().renderContent();
+        
+        assert.equal($content.html(), minimalisticTest.items[0].content, 'item 1 rendered');
+        
+        instance.next();
+        assert.equal($content.html(), minimalisticTest.items[1].content, 'item 2 rendered');
+        
+        instance.next();
+        assert.equal($content.html(), minimalisticTest.items[2].content, 'item 3 rendered');
+        
+        instance.next();
+        assert.equal($content.html(), minimalisticTest.items[2].content, 'stayed on the last item');
+        
+        instance.previous();
+        assert.equal($content.html(), minimalisticTest.items[1].content, 'back to item 2');
+        
+        instance.previous();
+        assert.equal($content.html(), minimalisticTest.items[0].content, 'back to item 1');
+        
+        instance.previous();
+        assert.equal($content.html(), minimalisticTest.items[0].content, 'stayed on item 1');
+    });
+    
+    QUnit.test('jump', function(assert){
+        var $content = $('#test-content');
+        var instance = runner(minimalisticProvider.name, {
+            content : $content
+        }).setState({
+            pos : 0,
+            definition : minimalisticTest
+        }).init().renderContent();
+        
+        assert.equal($content.html(), minimalisticTest.items[0].content, 'item 1 rendered');
+        
+        instance.jump(2);
+        assert.equal($content.html(), minimalisticTest.items[2].content, 'item 3 rendered');
+        
+        instance.previous();
+        assert.equal($content.html(), minimalisticTest.items[1].content, 'item 2 rendered');
+        
+        instance.next();
+        assert.equal($content.html(), minimalisticTest.items[2].content, 'item 3 rendered');
+        
+        instance.jump(0);
+        assert.equal($content.html(), minimalisticTest.items[0].content, 'item 2 rendered');
     });
 
 });
