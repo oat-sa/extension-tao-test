@@ -155,11 +155,11 @@ define([
             },
             /**
              *
-             * @param position
+             * @param itemId
              * @returns {runner}
              */
-            jump : function jump(position){
-                this.trigger('move', 'jump', position);
+            jump : function jump(itemId){
+                this.trigger('move', 'jump', itemId);
                 return this;
             },
             /**
@@ -242,7 +242,7 @@ define([
             /**
              * Set the current state object
              * @param {Object} state
-             * @returns {undefined}
+             * @returns {runner}
              */
             setState : function(state){
                 _state = state;
@@ -257,18 +257,21 @@ define([
             },
             /**
              * Render the content of the test given the current test state
-             * @returns {undefined}
+             * @returns {runner}
              */
             renderContent : function renderContent(){
                 delegate('renderContent', [config.content, _state]);
                 return this;
             },
-            
+            /**
+             * Infor that the content is rendered and ready for user interaction
+             * @returns {runner}
+             */
             contentReady : function contentReady(){
                 this.trigger('contentready', config.content);
                 return this;
             }
-        }).on('move', function(type, otherArgs_){
+        }).on('move', function move(type, otherArgs_){
             this.trigger.apply(this, [].slice.call(arguments));
         });
         
