@@ -22,8 +22,8 @@ define([
     'jquery',
     'lodash',
     'taoTests/runner/runner',
-    'json!taoTests/test/runner/runner/sample/minimalisticTest',
-    'taoTests/test/runner/runner/sample/minimalisticProvider'
+    'json!taoTests/test/runner/sample/minimalisticTest',
+    'taoTests/test/runner/sample/minimalisticProvider'
 ], function($, _, runner, minimalisticTest, minimalisticProvider){
     'use strict';
 
