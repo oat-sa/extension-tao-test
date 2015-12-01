@@ -32,7 +32,10 @@ define([
      * @returns {Function} - the generated plugin factory
      */
     function pluginFactory(_provider, _defaults){
-
+        
+        //@todo make name mandatory
+        var name = _provider && _provider.name || 'myPlugin';
+        
         _defaults = _defaults || {};
         
         /**
@@ -61,16 +64,19 @@ define([
 
             var _states = {};
             var config = _.defaults(config || {}, _defaults);
-
+            
             var plugin = eventifier({
                 /**
                  * Initializes the runner
                  * @param {Object} rootComponent - the component the plugin is to be plugged into
                  */
                 init : function init(rootComponent){
+                    
                     _states = {};
-                    delegate(this, 'init', [rootComponent, config]);
                     this.rootComponent = rootComponent;
+                    
+                    delegate(this, 'init', [rootComponent, config]);
+                    
                     this.state('init', true);
                     this.trigger('init');
                     return this;
@@ -81,8 +87,11 @@ define([
                  */
                 destroy : function destroy(){
                     delegate(this, 'destroy');
-                    this.testRunner = null;
-                    this.config = null;
+                    
+                    this.rootComponent = null;
+                    config = null;
+                    _states = {};
+                    
                     this.state('init', false);
                     this.trigger('destroy');
                     return this;
@@ -160,6 +169,20 @@ define([
                     return this;
                 }
             });
+            
+            //get the trigger function to overwrite it later
+            var trigger = plugin.trigger;
+            plugin.trigger = function superTrigger(){
+                var rootComponent = this.rootComponent;
+                var args = [].slice.call(arguments);
+                //implementation note : trigger is a delegated function so the applied context does not matter
+                trigger.apply(null, args);
+                if(rootComponent && rootComponent.trigger){
+                    //forward the triggered event to the root component too with the plugin name as suffix
+                    args[0] += '.'+name;
+                    rootComponent.trigger.apply(null, args);
+                }
+            };
             
             return plugin;
         };

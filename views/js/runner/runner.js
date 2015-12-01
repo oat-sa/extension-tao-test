@@ -72,7 +72,7 @@ define([
                 if(this.config.plugins){
                     _.forEach(this.config.plugins, function (plugin){
                         // todo: load plugins, then fire the init event
-                        plugin.init(runner, config);
+                        plugin.init(runner);
                     });
                 }
                 

@@ -20,8 +20,9 @@
  */
 define([
     'lodash',
-    'taoTests/runner/plugin'
-], function (_, pluginFactory){
+    'taoTests/runner/plugin',
+    'core/eventifier'
+], function (_, pluginFactory, eventifier){
     'use strict';
 
     QUnit.module('plugin');
@@ -125,77 +126,109 @@ define([
         instance1.enable();
         instance1.destroy();
     });
-    
+
     QUnit.test('state', 13, function (assert){
 
         var myPlugin = function myPlugin(config){
             return pluginFactory()(config);
         };
-        
+
         assert.equal(typeof myPlugin(), 'object', "My plugin factory produce a plugin instance object");
 
         var instance1 = myPlugin();
-        
+
         //custom state : active
         assert.strictEqual(instance1.state('active'), false, 'no state set by default');
         instance1.state('active', true);
         assert.strictEqual(instance1.state('active'), true, 'active state set');
         instance1.state('active', false);
         assert.strictEqual(instance1.state('active'), false, 'no state set by default');
-        
+
         //built-in state init:
         assert.strictEqual(instance1.state('init'), false, 'init state = false by default');
         instance1.init();
         assert.strictEqual(instance1.state('init'), true, 'init state set');
-        
+
         //built-in visible state
         assert.strictEqual(instance1.state('visible'), false, 'visible state = false by default');
         instance1.show();
         assert.strictEqual(instance1.state('visible'), true, 'visible state set');
         instance1.hide();
         assert.strictEqual(instance1.state('visible'), false, 'visible turns to false');
-        
+
         //built-in enabled state
         assert.strictEqual(instance1.state('enabled'), false, 'enabled state = false by default');
         instance1.enable();
         assert.strictEqual(instance1.state('enabled'), true, 'enabled state set');
         instance1.disable();
         assert.strictEqual(instance1.state('enabled'), false, 'enabled turns to false');
-        
+
         //built-in init state
         instance1.destroy();
         assert.strictEqual(instance1.state('init'), false, 'destoyed state set');
     });
-    
-    QUnit.test('rootComponent',  function (assert){
-        
+
+    QUnit.test('root component binding', 4, function (assert){
+
         var value1 = 'xxx';
         var theRootComponent = {
             prop1 : 123,
-            method1 : function(){
+            method1 : function (){
                 return value1;
             }
         };
-        
+
         var myPlugin = function myPlugin(config){
             var samplePluginImpl = {
                 init : function (rootComponent){
                     assert.ok(true, 'called init');
-                    
+
                     //perform operations on the rootComponent
                     assert.strictEqual(rootComponent.prop1, theRootComponent.prop1, 'access root component property');
                     assert.strictEqual(rootComponent.method1(), value1, 'called root component method');
                 }
             };
-            
+
             return pluginFactory(samplePluginImpl)(config);
         };
-        
-        assert.equal(typeof myPlugin(), 'object', "My plugin factory produce a plugin instance object");
 
         var instance1 = myPlugin();
         instance1.init(theRootComponent);
         assert.strictEqual(instance1.rootComponent, theRootComponent, 'root component is set');
+    });
+
+    QUnit.test('root component event', 10, function (assert){
+
+        var eventParams = ['ABC', true, 12345];
+        
+        var theRootComponent = eventifier()
+            .on('init.pluginA', function (){
+                assert.ok(true, 'root component knows knows that pluginA has been initialized');
+            })
+            .on('someEvent.pluginA', function (arg1, arg2, arg3){
+                assert.ok(true, 'someEvent triggered and forwarded to root component');
+                assert.strictEqual(eventParams[0], arg1, 'event param ok');
+                assert.strictEqual(eventParams[1], arg2, 'event param ok');
+                assert.strictEqual(eventParams[2], arg3, 'event param ok');
+            });
+
+        var myPlugin = function myPlugin(config){
+            return pluginFactory({name : 'pluginA'})(config);
+        };
+
+        var instance1 = myPlugin()
+            .on('someEvent', function (arg1, arg2, arg3){
+                assert.ok(true, 'someEvent triggered');
+                assert.strictEqual(eventParams[0], arg1, 'event param ok');
+                assert.strictEqual(eventParams[1], arg2, 'event param ok');
+                assert.strictEqual(eventParams[2], arg3, 'event param ok');
+            })
+            .init(theRootComponent);
+
+        assert.strictEqual(instance1.rootComponent, theRootComponent, 'root component is set');
+
+        //if the root component has been eventified, every event triggered by the plugin will be forwarded to the root component as well:
+        instance1.trigger('someEvent', eventParams[0], eventParams[1], eventParams[2]);
     });
 
 });
