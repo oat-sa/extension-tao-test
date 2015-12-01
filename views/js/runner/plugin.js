@@ -19,12 +19,9 @@
  * @author Jean-Sébastien Conan <jean-sebastien.conan@vesperiagroup.com>
  */
 define([
-    'jquery',
     'lodash',
-    'i18n',
-    'core/eventifier',
-    'taoTests/runner/providerRegistry'
-], function ($, _, __, eventifier, providerRegistry){
+    'core/eventifier'
+], function (_, eventifier){
     'use strict';
     
     /**
@@ -68,11 +65,12 @@ define([
             var plugin = eventifier({
                 /**
                  * Initializes the runner
-                 * @param {Object} config
+                 * @param {Object} rootComponent - the component the plugin is to be plugged into
                  */
-                init : function init(){
+                init : function init(rootComponent){
                     _states = {};
-                    delegate(this, 'init', [config]);
+                    delegate(this, 'init', [rootComponent, config]);
+                    this.rootComponent = rootComponent;
                     this.state('init', true);
                     this.trigger('init');
                     return this;

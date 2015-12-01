@@ -19,11 +19,9 @@
  * @author Jean-Sébastien Conan <jean-sebastien.conan@vesperiagroup.com>
  */
 define([
-    'jquery',
     'lodash',
-    'taoTests/runner/runner',
     'taoTests/runner/plugin'
-], function ($, _, runner, pluginFactory){
+], function (_, pluginFactory){
     'use strict';
 
     QUnit.module('plugin');
@@ -90,7 +88,7 @@ define([
             };
 
             var samplePluginImpl = {
-                init : function (cfg){
+                init : function (rootComponent, cfg){
                     assert.ok(true, 'called init');
                     assert.equal(cfg.a, samplePluginDefaults.a, 'instance1 inherits the default config');
                     assert.equal(cfg.b, samplePluginDefaults.b, 'instance1 inherit the default config');
@@ -167,6 +165,37 @@ define([
         //built-in init state
         instance1.destroy();
         assert.strictEqual(instance1.state('init'), false, 'destoyed state set');
+    });
+    
+    QUnit.test('rootComponent',  function (assert){
+        
+        var value1 = 'xxx';
+        var theRootComponent = {
+            prop1 : 123,
+            method1 : function(){
+                return value1;
+            }
+        };
+        
+        var myPlugin = function myPlugin(config){
+            var samplePluginImpl = {
+                init : function (rootComponent){
+                    assert.ok(true, 'called init');
+                    
+                    //perform operations on the rootComponent
+                    assert.strictEqual(rootComponent.prop1, theRootComponent.prop1, 'access root component property');
+                    assert.strictEqual(rootComponent.method1(), value1, 'called root component method');
+                }
+            };
+            
+            return pluginFactory(samplePluginImpl)(config);
+        };
+        
+        assert.equal(typeof myPlugin(), 'object', "My plugin factory produce a plugin instance object");
+
+        var instance1 = myPlugin();
+        instance1.init(theRootComponent);
+        assert.strictEqual(instance1.rootComponent, theRootComponent, 'root component is set');
     });
 
 });
