@@ -26,11 +26,26 @@ define([
     'taoTests/runner/providerRegistry'
 ], function ($, _, __, eventifier, providerRegistry){
     'use strict';
-
+    
+    /**
+     * Meta factory for plugins
+     * 
+     * @param {Object} _provider - the list of implemented methods
+     * @param {Object} _defaults - default configuration to be assigned
+     * @returns {Function} - the generated plugin factory
+     */
     function pluginFactory(_provider, _defaults){
 
         _defaults = _defaults || {};
-
+        
+        /**
+         * Delegate a function call to the provider
+         * 
+         * @param {Object} context - the context the function will apply to
+         * @param {String} fnName - the function name
+         * @param {Array} args - the array of arguments to be applied to the function
+         * @returns {undefined}
+         */
         function delegate(context, fnName, args){
             if(_provider){
                 if(_.isFunction(_provider[fnName])){
@@ -38,7 +53,13 @@ define([
                 }
             }
         }
-
+        
+        /**
+         * The created plugin factory
+         * 
+         * @param {Object} config
+         * @returns {Object} the plugin instance
+         */
         return function instanciatePlugin(config){
 
             var _states = {};
