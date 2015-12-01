@@ -21,117 +21,128 @@
 define([
     'jquery',
     'lodash',
-    'i18n'
-], function ($, _, __) {
+    'i18n',
+    'core/eventifier',
+    'taoTests/runner/providerRegistry'
+], function ($, _, __, eventifier, providerRegistry){
     'use strict';
 
-    /**
-     * Defines the bases of any QTI test runner plugins
-     * @type {plugin}
-     */
-    var plugin = {
-        /**
-         * Initializes the plugin
-         * @param testRunner
-         * @param config
-         * @param resolve
-         * @returns {plugin}
-         */
-        init : function init(testRunner, config, resolve) {
-            this.config = _.omit(config || {}, function(value) {
-                return value === undefined || value === null;
-            });
-            this.config.is = {};
-            this.testRunner = testRunner;
+    function pluginFactory(_provider, _defaults){
 
-            this.setup(resolve);
-            return this;
-        },
+        _defaults = _defaults || {};
 
-        /**
-         * Destroys the plugin
-         * @returns {plugin}
-         */
-        destroy : function destroy() {
-            this.tearDown();
-
-            this.testRunner = null;
-            this.config = null;
-
-            return this;
-        },
-
-        /**
-         * Checks if the plugin has a particular state
-         * @param {String} state
-         * @returns {Boolean}
-         */
-        is : function is(state) {
-            return !!this.config.is[state];
-        },
-
-        /**
-         * Shows the component related to this plugin
-         * @returns {plugin}
-         */
-        show : function show() {
-            return this;
-        },
-
-        /**
-         * Hides the component related to this plugin
-         * @returns {plugin}
-         */
-        hide : function hide() {
-            return this;
-        },
-
-        /**
-         * Enables the plugin
-         * @returns {plugin}
-         */
-        enable : function enable() {
-            return this;
-        },
-
-        /**
-         * Disables the plugin
-         * @returns {plugin}
-         */
-        disable : function disable() {
-            return this;
-        },
-
-        /**
-         * Additional setup onto the plugin config set
-         * @param {Function} resolve
-         * @private
-         */
-        setup : function setup(resolve) {
-            // just a template method to be overloaded
-            if (_.isFunction(resolve)) {
-                resolve();
+        function delegate(context, fnName, args){
+            if(_provider){
+                if(_.isFunction(_provider[fnName])){
+                    _provider[fnName].apply(context, _.isArray(args) ? args : []);
+                }
             }
-        },
-
-        /**
-         * Additional cleaning while uninstalling the plugin
-         * @private
-         */
-        tearDown : function tearDown() {
-            // just a template method to be overloaded
         }
-    };
 
-    /**
-     * Builds a plugin from the given specs
-     * @param {Object} specs
-     * @returns {plugin}
-     */
-    var pluginFactory = function pluginFactory(specs) {
-        var instance = _.clone(plugin);
-        return _.assign(instance, specs);
-    };
+        return function instanciatePlugin(config){
+
+            var _states = {};
+            var config = _.defaults(config || {}, _defaults);
+
+            var plugin = eventifier({
+                /**
+                 * Initializes the runner
+                 * @param {Object} config
+                 */
+                init : function init(){
+                    _states = {};
+                    delegate(this, 'init', [config]);
+                    this.trigger('init');
+                    return this;
+                },
+                /**
+                 * Destroys the plugin
+                 * @returns {plugin}
+                 */
+                destroy : function destroy(){
+                    delegate(this, 'destroy');
+                    this.testRunner = null;
+                    this.config = null;
+                    this.trigger('destroy');
+                    return this;
+                },
+                /**
+                 * Get the config
+                 * @returns {Object} config
+                 */
+                getConfig : function getConfig(){
+                    return config;
+                },
+                /**
+                 * Get the config
+                 * @returns {Object} config
+                 */
+                setConfig : function setConfig(name, value){
+                    if(_.isPlainObject(name)){
+                        config = _.defaults(name, config);
+                    }else{
+                        config[name] = value;
+                    }
+                    return this;
+                },
+                /**
+                 * Checks if the plugin has a particular state
+                 * @param {String} state
+                 * @returns {Boolean}
+                 */
+                is : function is(state){
+                    return !!_states[state];
+                },
+                /**
+                 * Checks if the plugin has a particular state
+                 * @param {String} state
+                 * @returns {plugin}
+                 */
+                toggleState : function toggleState(state, active){
+                    _states[state] = !!active;
+                    return this;
+                },
+                /**
+                 * Shows the component related to this plugin
+                 * @returns {plugin}
+                 */
+                show : function show(){
+                    delegate(this, 'show');
+                    this.trigger('show');
+                    return this;
+                },
+                /**
+                 * Hides the component related to this plugin
+                 * @returns {plugin}
+                 */
+                hide : function hide(){
+                    delegate(this, 'hide');
+                    this.trigger('hide');
+                    return this;
+                },
+                /**
+                 * Enables the plugin
+                 * @returns {plugin}
+                 */
+                enable : function enable(){
+                    delegate(this, 'enable');
+                    this.trigger('enable');
+                    return this;
+                },
+                /**
+                 * Disables the plugin
+                 * @returns {plugin}
+                 */
+                disable : function disable(){
+                    delegate(this, 'disable');
+                    this.trigger('disable');
+                    return this;
+                }
+            });
+            
+            return plugin;
+        };
+    }
 
     return pluginFactory;
 });

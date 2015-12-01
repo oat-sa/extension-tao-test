@@ -23,36 +23,78 @@ define([
     'lodash',
     'taoTests/runner/runner',
     'taoTests/runner/plugin'
-], function($, _, runner, plugin) {
+], function ($, _, runner, pluginFactory){
     'use strict';
 
     QUnit.module('plugin');
 
-
-    QUnit.test('module', 3, function(assert) {
-        assert.equal(typeof plugin, 'function', "The plugin module exposes a function");
-        assert.equal(typeof plugin(), 'object', "The plugin factory produces an object");
-        assert.notStrictEqual(plugin(), plugin(), "The plugin factory provides a different object on each call");
+    QUnit.test('module', 3, function (assert){
+        assert.equal(typeof pluginFactory, 'function', "The plugin module exposes a function");
+        assert.equal(typeof pluginFactory(), 'function', "The plugin factory produces a function");
+        assert.notStrictEqual(pluginFactory(), pluginFactory(), "The plugin factory provides a different object on each call");
     });
 
+    QUnit.test('create a plugin', function (assert){
+        
+        var samplePluginDefaults = {
+                a : false,
+                b : 10
+            };
+            
+        var myPlugin = function myPlugin(config){
 
-    var testReviewApi = [
-        { name : 'init', title : 'init' },
-        { name : 'destroy', title : 'destroy' },
-        { name : 'enable', title : 'enable' },
-        { name : 'disable', title : 'disable' },
-        { name : 'show', title : 'show' },
-        { name : 'hide', title : 'hide' },
-        { name : 'is', title : 'is' },
-        { name : 'setup', title : 'setup' },
-        { name : 'tearDown', title : 'tearDown' }
-    ];
+            var samplePluginImpl = {
+                init : function (cfg){
+                    console.log('init', cfg)
+                },
+                destroy : function (){
+                    console.log('destroy')
+                },
+                show : function (){
+                    console.log('show')
+                },
+                hide : function (){
+                    console.log('hude')
+                },
+                enable : function (){
+                    console.log('enable')
+                },
+                disable : function (){
+                    console.log('disable')
+                }
+            };
 
-    QUnit
-        .cases(testReviewApi)
-        .test('instance API ', function(data, assert) {
-            var instance = plugin();
-            assert.equal(typeof instance[data.name], 'function', 'The plugin instance exposes a "' + data.title + '" function');
-        });
+            var myPluginFactory = pluginFactory(samplePluginImpl, samplePluginDefaults);
+
+            return myPluginFactory(config);
+        };
+        
+        assert.equal(typeof myPlugin(), 'object', "My plugin factory produce a plugin instance object");
+        assert.notStrictEqual(myPlugin(), myPlugin(), "My plugin factory provides different object on each call");
+        
+        var _config2 = {
+            a : true,
+            b : 99
+        };
+
+        var instance1 = myPlugin();
+        assert.equal(typeof instance1.init, 'function', 'The plugin instance has function init');
+        assert.equal(typeof instance1.destroy, 'function', 'The plugin instance has function destroy');
+        assert.equal(typeof instance1.show, 'function', 'The plugin instance has function show');
+        assert.equal(typeof instance1.hide, 'function', 'The plugin instance has function hide');
+        assert.equal(typeof instance1.enable, 'function', 'The plugin instance has function enable');
+        assert.equal(typeof instance1.disable, 'function', 'The plugin instance has function disable');
+        assert.equal(typeof instance1.is, 'function', 'The plugin instance has also the default function is');
+        assert.equal(typeof instance1.toggleState, 'function', 'The plugin instance has also the default function toggleState');
+        
+        var config1 = instance1.getConfig();
+        assert.equal(config1.a, samplePluginDefaults.a, 'instance1 inherits the default config');
+        assert.equal(config1.b, samplePluginDefaults.b, 'instance1 inherit the default config');
+        
+        var instance2 = myPlugin(_config2);
+        var config2 = instance2.getConfig();
+        assert.equal(config2.a, _config2.a, 'instance2 has new config value');
+        assert.equal(config2.b, _config2.b, 'instance2 has new config value');
+    });
 
 });
