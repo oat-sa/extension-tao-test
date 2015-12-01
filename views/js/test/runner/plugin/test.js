@@ -34,7 +34,7 @@ define([
         assert.notStrictEqual(pluginFactory(), pluginFactory(), "The plugin factory provides a different object on each call");
     });
 
-    QUnit.test('create a plugin', function (assert){
+    QUnit.test('create a plugin', 13, function (assert){
 
         var samplePluginDefaults = {
             a : false,
@@ -55,7 +55,7 @@ define([
 
         var _config2 = {
             a : true,
-            b : 99
+            b : 999
         };
 
         var instance1 = myPlugin();
@@ -65,8 +65,7 @@ define([
         assert.equal(typeof instance1.hide, 'function', 'The plugin instance has also the default function hide');
         assert.equal(typeof instance1.enable, 'function', 'The plugin instance has also the default function enable');
         assert.equal(typeof instance1.disable, 'function', 'The plugin instance has also the default function disable');
-        assert.equal(typeof instance1.is, 'function', 'The plugin instance has also the default function is');
-        assert.equal(typeof instance1.toggleState, 'function', 'The plugin instance has also the default function toggleState');
+        assert.equal(typeof instance1.state, 'function', 'The plugin instance has also the default function state');
 
         // check default config
         var config1 = instance1.getConfig();
@@ -81,7 +80,7 @@ define([
 
     });
 
-    QUnit.test('call plugin methods', function (assert){
+    QUnit.test('call plugin methods', 9, function (assert){
 
         var myPlugin = function myPlugin(config){
 
@@ -119,7 +118,6 @@ define([
         };
 
         assert.equal(typeof myPlugin(), 'object', "My plugin factory produce a plugin instance object");
-        assert.notStrictEqual(myPlugin(), myPlugin(), "My plugin factory provides different object on each call");
 
         var instance1 = myPlugin();
         instance1.init();
@@ -128,6 +126,47 @@ define([
         instance1.disable();
         instance1.enable();
         instance1.destroy();
+    });
+    
+    QUnit.test('state', 13, function (assert){
+
+        var myPlugin = function myPlugin(config){
+            return pluginFactory()(config);
+        };
+        
+        assert.equal(typeof myPlugin(), 'object', "My plugin factory produce a plugin instance object");
+
+        var instance1 = myPlugin();
+        
+        //custom state : active
+        assert.strictEqual(instance1.state('active'), false, 'no state set by default');
+        instance1.state('active', true);
+        assert.strictEqual(instance1.state('active'), true, 'active state set');
+        instance1.state('active', false);
+        assert.strictEqual(instance1.state('active'), false, 'no state set by default');
+        
+        //built-in state init:
+        assert.strictEqual(instance1.state('init'), false, 'init state = false by default');
+        instance1.init();
+        assert.strictEqual(instance1.state('init'), true, 'init state set');
+        
+        //built-in visible state
+        assert.strictEqual(instance1.state('visible'), false, 'visible state = false by default');
+        instance1.show();
+        assert.strictEqual(instance1.state('visible'), true, 'visible state set');
+        instance1.hide();
+        assert.strictEqual(instance1.state('visible'), false, 'visible turns to false');
+        
+        //built-in enabled state
+        assert.strictEqual(instance1.state('enabled'), false, 'enabled state = false by default');
+        instance1.enable();
+        assert.strictEqual(instance1.state('enabled'), true, 'enabled state set');
+        instance1.disable();
+        assert.strictEqual(instance1.state('enabled'), false, 'enabled turns to false');
+        
+        //built-in init state
+        instance1.destroy();
+        assert.strictEqual(instance1.state('init'), false, 'destoyed state set');
     });
 
 });

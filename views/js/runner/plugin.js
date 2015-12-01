@@ -73,6 +73,7 @@ define([
                 init : function init(){
                     _states = {};
                     delegate(this, 'init', [config]);
+                    this.state('init', true);
                     this.trigger('init');
                     return this;
                 },
@@ -84,6 +85,7 @@ define([
                     delegate(this, 'destroy');
                     this.testRunner = null;
                     this.config = null;
+                    this.state('init', false);
                     this.trigger('destroy');
                     return this;
                 },
@@ -106,22 +108,18 @@ define([
                     }
                     return this;
                 },
-                /**
-                 * Checks if the plugin has a particular state
-                 * @param {String} state
-                 * @returns {Boolean}
-                 */
-                is : function is(state){
-                    return !!_states[state];
-                },
-                /**
-                 * Checks if the plugin has a particular state
-                 * @param {String} state
-                 * @returns {plugin}
-                 */
-                toggleState : function toggleState(state, active){
-                    _states[state] = !!active;
-                    return this;
+                state : function(name, active){
+                    if(_.isString(name)){
+                        if(active === undefined){
+                            //get state
+                            return !!_states[name];
+                        }else{
+                            //set state
+                            _states[name] = !!active;
+                        }
+                    }else{
+                        throw new TypeError('the state name must be a string');
+                    }
                 },
                 /**
                  * Shows the component related to this plugin
@@ -129,6 +127,7 @@ define([
                  */
                 show : function show(){
                     delegate(this, 'show');
+                    this.state('visible', true);
                     this.trigger('show');
                     return this;
                 },
@@ -138,6 +137,7 @@ define([
                  */
                 hide : function hide(){
                     delegate(this, 'hide');
+                    this.state('visible', false);
                     this.trigger('hide');
                     return this;
                 },
@@ -147,6 +147,7 @@ define([
                  */
                 enable : function enable(){
                     delegate(this, 'enable');
+                    this.state('enabled', true);
                     this.trigger('enable');
                     return this;
                 },
@@ -156,6 +157,7 @@ define([
                  */
                 disable : function disable(){
                     delegate(this, 'disable');
+                    this.state('enabled', false);
                     this.trigger('disable');
                     return this;
                 }
