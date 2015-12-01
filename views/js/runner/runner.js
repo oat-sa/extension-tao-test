@@ -62,15 +62,12 @@ define([
              * Initializes the runner
              * @param {Object} config
              */
-            init : function init(config){
+            init : function init(){
 
-                this.config = _.omit(config || {}, function (value){
-                    return undefined === value || null === value;
-                });
                 _states = {};
-
-                if(this.config.plugins){
-                    _.forEach(this.config.plugins, function (plugin){
+                
+                if(config.plugins){
+                    _.forEach(config.plugins, function (plugin){
                         // todo: load plugins, then fire the init event
                         plugin.init(runner);
                     });

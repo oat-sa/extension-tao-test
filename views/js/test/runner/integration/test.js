@@ -25,8 +25,9 @@ define([
     'taoTests/runner/gui',
     'json!taoTests/test/runner/sample/minimalisticTest',
     'taoTests/test/runner/sample/minimalisticProvider',
-    'taoTests/test/runner/sample/plugin/plugins'
-], function($, _, runner, gui, minimalisticTest, minimalisticProvider, plugins){
+    'taoTests/test/runner/sample/plugin/nextButton',
+    'taoTests/test/runner/sample/plugin/responseSubmitter'
+], function($, _, runner, gui, minimalisticTest, minimalisticProvider, pluginNextButton, pluginResponseSubmitter){
     'use strict';
 
     QUnit.module('runner', {
@@ -35,20 +36,17 @@ define([
         }
     });
 
-    QUnit.test('init', function(assert){
+    QUnit.asyncTest('init', 0, function(assert){
         
-        var pluginResponseSubmitter = _.find(plugins, {name : 'responseSubmitter'});
-        var pluginNextButton = _.find(plugins, {name : 'nextButton'});
         var $content = $('#test-content');
-        var $content = $('#action-bar');
         var instance = runner(minimalisticProvider.name, {
             content : $content,
             plugins : [
-                pluginNextButton.config({
-                    container : gui('#test-driver-container').getToolbar().getPosition(2),
-                    label : __('next')
+                pluginNextButton({
+                    container : $('#next'),
+                    label : 'next'
                 }),
-                pluginResponseSubmitter.config({
+                pluginResponseSubmitter({
                     url : 'some/end/point/url'
                 })
             ]
@@ -57,6 +55,13 @@ define([
             definition : minimalisticTest
         }).init().renderContent();
         
+        instance.on('submit.responseSubmitter', function(responses){
+            QUnit.start();
+            console.log('submit.responseSubmitter', responses);
+        });
+        
+        
+        return;
         assert.equal($content.html(), minimalisticTest.items[0].content, 'item 1 rendered');
         
         instance.next();
