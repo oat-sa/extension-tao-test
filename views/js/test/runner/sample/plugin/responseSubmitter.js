@@ -10,7 +10,6 @@ define(['lodash', 'taoTests/runner/plugin'], function (_, pluginFactory){
     var pluginImpl = {
         name : 'responseSubmitter',
         init : function (testRunner, cfg){
-            console.log(true, 'called init', testRunner, cfg);
             
             var self = this;
             
@@ -20,16 +19,14 @@ define(['lodash', 'taoTests/runner/plugin'], function (_, pluginFactory){
                 RESPONSE2 : ['A', 'B', 'C']
             };
             
-            _.delay(function(){
-                self.trigger('submit', itemResponses);
-            }, 200);
+            this.active = true;
             
-            //get ready to submit
-            testRunner.before('next', function (e){
+            //get ready to submit "on move" (warning ! not "on next" because it will currently fail)
+            testRunner.before('move', function (e){
                 
                 var done = e.done();
                 
-                //submit it to the server
+                //submit it to the server (the delay simulates latency)
                 _.delay(function(){
                     var success = true;
                     if(success){
@@ -43,19 +40,14 @@ define(['lodash', 'taoTests/runner/plugin'], function (_, pluginFactory){
             });
         },
         destroy : function (){
-            console.log(true, 'called destory');
+            //remove listners
         },
-        show : function (){
-            console.log(true, 'called show');
-        },
-        hide : function (){
-            console.log(true, 'called hide');
-        },
+        //does not need to implement show/hide because it is not a graphic plugin
         enable : function (){
-            console.log(true, 'called enable');
+            this.active = true;
         },
         disable : function (){
-            console.log(true, 'called disable');
+            this.active = false;
         }
     };
 

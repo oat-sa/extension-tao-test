@@ -10,40 +10,40 @@ define(['taoTests/runner/plugin'], function (pluginFactory){
     var pluginImpl = {
         name : 'nextButton',
         init : function (testRunner, cfg){
-            console.log(true, 'called init', testRunner, cfg);
+            
+            var $container = $(cfg.container);
+            var $button = $('<button class="next">');
+            this.$button = $button;
             
             //create button
-            //append listner
-            var self = this;
-            var $myContainer = $('#next');
-            $myContainer.append('<button>');
-            $myContainer.click(function(){
+            $container.append($button);
+            $button.click(function(){
                 testRunner.next();
             });
-
+            
+            //event handler
             testRunner.on('itemready', function(){
                 var state = this.getState();
                 var isLast = false;//can get this information from test runner's state var
                 if(isLast){
-                    $myContainer.hide();
+                    $button.hide();
                 }
             });
-            
         },
         destroy : function (){
-            console.log(true, 'called destory');
+            this.$button.remove();
         },
         show : function (){
-            console.log(true, 'called show');
+            this.$button.show();
         },
         hide : function (){
-            console.log(true, 'called hide');
+            this.$button.hide();
         },
         enable : function (){
-            console.log(true, 'called enable');
+            this.$button.removeClass('disable');
         },
         disable : function (){
-            console.log(true, 'called disable');
+            this.$button.addClass('disable');
         }
     };
 

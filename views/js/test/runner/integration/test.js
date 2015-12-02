@@ -33,12 +33,20 @@ define([
     QUnit.module('runner', {
         setup : function(){
             runner.registerProvider(minimalisticProvider.name, minimalisticProvider);
+            runner.startEventLog();
         }
     });
 
-    QUnit.asyncTest('init', 0, function(assert){
-
+    QUnit.asyncTest('init', function(assert){
+        
+        var iteration = 1;
         var $content = $('#test-content');
+        var $nextButton;
+        var expectedResponse = {
+                RESPONSE1 : 1,
+                RESPONSE2 : ['A', 'B', 'C']
+            };
+            
         var instance = runner(minimalisticProvider.name, {
                 contentContainer : $content,//also accepts a selector, e.g. #test-content
                 plugins : [
@@ -55,33 +63,70 @@ define([
                 pos : 0,
                 definition : minimalisticTest
             })
-            .init()
-            .renderContent()
+            .on('ready', function(){
+                
+                
+                //the test runner and the plugins are ready
+                $nextButton = $('#navigation-bar .next');
+                assert.equal($nextButton.length, 1, 'next button added');
+                
+            })
+            .on('contentready', function(){
+                
+                switch(iteration){
+                    case 1 :
+                        assert.equal($content.html(), minimalisticTest.items[0].content, 'item 1 rendered');
+                        $nextButton.click();
+                        break;
+                    case 2 :
+                        assert.equal($content.html(), minimalisticTest.items[1].content, 'item 2 rendered');
+                        $nextButton.click();
+                        break;
+                    case 3 :
+                        assert.equal($content.html(), minimalisticTest.items[2].content, 'item 3 rendered');
+                        $nextButton.click();
+                        break;
+                    case 4 :
+                        assert.equal($content.html(), minimalisticTest.items[2].content, 'stays in item 3');
+                        console.log('test complete', this.getState());
+                        QUnit.start();
+                        break;
+                        
+                }
+            })
             .on('submit.responseSubmitter', function(responses){
-                QUnit.start();
-                console.log('submit.responseSubmitter', responses);
-            });
-
-        return;
-        assert.equal($content.html(), minimalisticTest.items[0].content, 'item 1 rendered');
-
-        instance.next();
-        assert.equal($content.html(), minimalisticTest.items[1].content, 'item 2 rendered');
-
-        instance.next();
-        assert.equal($content.html(), minimalisticTest.items[2].content, 'item 3 rendered');
-
-        instance.next();
-        assert.equal($content.html(), minimalisticTest.items[2].content, 'stayed on the last item');
-
-        instance.previous();
-        assert.equal($content.html(), minimalisticTest.items[1].content, 'back to item 2');
-
-        instance.previous();
-        assert.equal($content.html(), minimalisticTest.items[0].content, 'back to item 1');
-
-        instance.previous();
-        assert.equal($content.html(), minimalisticTest.items[0].content, 'stayed on item 1');
+                
+                switch(iteration){
+                    case 1 :
+                        assert.ok(true, 'response 1 submitted');
+                        assert.deepEqual(expectedResponse, responses, 'response 1 ok');
+                        break;
+                    case 2 :
+                        assert.ok(true, 'response 2 submitted');
+                        assert.deepEqual(expectedResponse, responses, 'response 2 ok');
+                        break;
+                    case 3 :
+                        assert.ok(true, 'response 3 submitted');
+                        assert.deepEqual(expectedResponse, responses, 'response 3 ok');
+                        break;
+                }
+            })
+            .on('move', function(){
+                //increase iteration number
+                iteration ++;
+                
+                assert.equal($nextButton.length, 1, 'next button added');
+                
+                if(iteration === 3){
+                    
+                }
+            })
+            .on('complete', function(){
+                
+            })
+            .init()
+            .renderContent();
+        
     });
 
 });

@@ -32,7 +32,13 @@ define([], function(){
             })
             .after('move', function(type){
                 //refresh page content after each refresh
-                this.renderContent();
+                var complete = false;
+                if(complete){
+                    
+                }else{
+                    this.renderContent();
+                }
+                
             })
             .on('next', function(){
 
@@ -59,7 +65,8 @@ define([], function(){
                     state.pos = newPos;
                     this.setState(state);
                 }else{
-                    //log warning ?
+                    //the first item ? do nothing
+                    //or you can log a warning if you want to...
                 }
 
             })
@@ -80,6 +87,7 @@ define([], function(){
         name : 'minimalTestRunner',
         init : function init(){
             initEvents(this);
+            this.ready();
         },
         renderContent : function renderContent($container){
             var state = this.getState();
