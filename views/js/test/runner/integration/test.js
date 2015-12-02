@@ -37,48 +37,49 @@ define([
     });
 
     QUnit.asyncTest('init', 0, function(assert){
-        
+
         var $content = $('#test-content');
         var instance = runner(minimalisticProvider.name, {
-            content : $content,
-            plugins : [
-                pluginNextButton({
-                    container : $('#next'),
-                    label : 'next'
-                }),
-                pluginResponseSubmitter({
-                    url : 'some/end/point/url'
-                })
-            ]
-        }).setState({
-            pos : 0,
-            definition : minimalisticTest
-        }).init().renderContent();
-        
-        instance.on('submit.responseSubmitter', function(responses){
-            QUnit.start();
-            console.log('submit.responseSubmitter', responses);
-        });
-        
-        
+                contentContainer : $content,//also accepts a selector, e.g. #test-content
+                plugins : [
+                    pluginNextButton({
+                        container : '#navigation-bar',
+                        label : 'next'
+                    }),
+                    pluginResponseSubmitter({
+                        url : 'some/end/point/url'
+                    })
+                ]
+            })
+            .setState({
+                pos : 0,
+                definition : minimalisticTest
+            })
+            .init()
+            .renderContent()
+            .on('submit.responseSubmitter', function(responses){
+                QUnit.start();
+                console.log('submit.responseSubmitter', responses);
+            });
+
         return;
         assert.equal($content.html(), minimalisticTest.items[0].content, 'item 1 rendered');
-        
+
         instance.next();
         assert.equal($content.html(), minimalisticTest.items[1].content, 'item 2 rendered');
-        
+
         instance.next();
         assert.equal($content.html(), minimalisticTest.items[2].content, 'item 3 rendered');
-        
+
         instance.next();
         assert.equal($content.html(), minimalisticTest.items[2].content, 'stayed on the last item');
-        
+
         instance.previous();
         assert.equal($content.html(), minimalisticTest.items[1].content, 'back to item 2');
-        
+
         instance.previous();
         assert.equal($content.html(), minimalisticTest.items[0].content, 'back to item 1');
-        
+
         instance.previous();
         assert.equal($content.html(), minimalisticTest.items[0].content, 'stayed on item 1');
     });

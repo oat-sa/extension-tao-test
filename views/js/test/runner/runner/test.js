@@ -74,7 +74,7 @@ define([
     QUnit.test('next/previous', function(assert){
         var $content = $('#test-content');
         var instance = runner(minimalisticProvider.name, {
-            content : $content
+            contentContainer : $content
         }).setState({
             pos : 0,
             definition : minimalisticTest
@@ -104,7 +104,7 @@ define([
     QUnit.test('jump', function(assert){
         var $content = $('#test-content');
         var instance = runner(minimalisticProvider.name, {
-            content : $content
+            contentContainer : $content
         }).setState({
             pos : 0,
             definition : minimalisticTest

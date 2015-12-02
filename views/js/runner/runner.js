@@ -34,7 +34,7 @@ define([
      * @private
      */
     var _defaults = {
-        content : $()
+        content : ''
     };
 
     function testRunnerFactory(providerName, config){
@@ -42,8 +42,11 @@ define([
         var _provider = testRunnerFactory.getProvider(providerName);
         var _states;
         var _state = {};
+        var $contentContainer;
         
         config = _.defaults(config || {}, _defaults);
+        
+        $contentContainer = $(config.contentContainer);
         
         function delegate(fnName, args){
             if(_provider){
@@ -257,7 +260,7 @@ define([
              * @returns {runner}
              */
             renderContent : function renderContent(){
-                delegate('renderContent', [config.content, _state]);
+                delegate('renderContent', [$contentContainer, _state]);
                 return this;
             },
             /**
@@ -265,7 +268,7 @@ define([
              * @returns {runner}
              */
             contentReady : function contentReady(){
-                this.trigger('contentready', config.content);
+                this.trigger('contentready', $contentContainer);
                 return this;
             }
         }).on('move', function move(type, otherArgs_){
