@@ -16,6 +16,9 @@
  * Copyright (c) 2014 (original work) Open Assessment Technlogies SA (under the project TAO-PRODUCT);
  *
  */
+/**
+ * @author Sam <sam@taotesting.com>
+ */
 define(['lodash'], function(_){
     'use strict';
     

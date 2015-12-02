@@ -16,6 +16,9 @@
  * Copyright (c) 2015 (original work) Open Assessment Technologies SA ;
  *
  */
+/**
+ * @author Sam <sam@taotesting.com>
+ */
 define([], function(){
 
     function initEvents(runner){
