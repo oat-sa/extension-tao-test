@@ -41,27 +41,20 @@ define([
         assert.equal(typeof runner.getProvider, 'function', "The runner module exposes a function getProvider()");
     });
 
-
     var testReviewApi = [
         {name : 'init', title : 'init'},
         {name : 'ready', title : 'ready'},
         {name : 'load', title : 'load'},
         {name : 'terminate', title : 'terminate'},
-        {name : 'endAttempt', title : 'endAttempt'},
         {name : 'next', title : 'next'},
         {name : 'previous', title : 'previous'},
         {name : 'exit', title : 'exit'},
         {name : 'skip', title : 'skip'},
         {name : 'jump', title : 'jump'},
-        {name : 'registerAction', title : 'registerAction'},
-        {name : 'execute', title : 'execute'},
-        {name : 'request', title : 'request'},
-        {name : 'beforeRequest', title : 'beforeRequest'},
-        {name : 'processRequest', title : 'processRequest'},
-        {name : 'afterRequest', title : 'afterRequest'},
-        {name : 'is', title : 'is'},
         {name : 'trigger', title : 'trigger'},
-        {name : 'on', title : 'on'}
+        {name : 'before', title : 'before'},
+        {name : 'on', title : 'on'},
+        {name : 'after', title : 'after'}
     ];
 
     QUnit

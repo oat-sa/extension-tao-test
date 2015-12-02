@@ -39,6 +39,7 @@ define([
      * Log the event trigger, useful for debugging or profiling
      * 
      * @param {Array} events - the event name + the event params
+     * @private
      * @returns {undefined}
      */
     function _logEventTrigger(events){
@@ -59,7 +60,6 @@ define([
     function testRunnerFactory(providerName, config){
         
         var _provider = testRunnerFactory.getProvider(providerName);
-        var _states;
         var _state = {};
         var $contentContainer;
         
@@ -67,6 +67,14 @@ define([
         
         $contentContainer = $(config.contentContainer);
         
+        /**
+         * Delegate a function call to the selected provider
+         * 
+         * @param {String} fnName
+         * @param {Array} args - array of arguments to apply to the method 
+         * @private
+         * @returns {undefined}
+         */
         function delegate(fnName, args){
             if(_provider){
                 if(_.isFunction(_provider[fnName])){
@@ -80,13 +88,12 @@ define([
          * @type {runner}
          */
         var runner = eventifier({
+            
             /**
              * Initializes the runner
              * @param {Object} config
              */
             init : function init(){
-
-                _states = {};
                 
                 if(config.plugins){
                     _.forEach(config.plugins, function (plugin){
@@ -99,6 +106,7 @@ define([
                 this.trigger('init', this);
                 return this;
             },
+            
             /**
              * Sets the runner in the ready state
              * @param {ServiceApi} serviceApi
@@ -109,6 +117,7 @@ define([
                 this.trigger('ready', this);
                 return this;
             },
+            
             /**
              *
              */
@@ -116,6 +125,7 @@ define([
                 this.trigger('load', this);
                 return this;
             },
+            
             /**
              *
              * @returns {runner}
@@ -124,14 +134,7 @@ define([
                 this.trigger('terminate', this);
                 return this;
             },
-            /**
-             *
-             * @returns {runner}
-             */
-            endAttempt : function endAttempt(){
-                this.trigger('endattempt', this);
-                return this;
-            },
+            
             /**
              *
              * @returns {runner}
@@ -140,6 +143,7 @@ define([
                 this.trigger('move', 'next');
                 return this;
             },
+            
             /**
              *
              * @returns {runner}
@@ -148,6 +152,7 @@ define([
                 this.trigger('move', 'previous');
                 return this;
             },
+            
             /**
              *
              * @returns {runner}
@@ -156,6 +161,7 @@ define([
                 this.trigger('complete');
                 return this;
             },
+            
             /**
              *
              * @param scope
@@ -165,6 +171,7 @@ define([
                 this.trigger('exit', scope);
                 return this;
             },
+            
             /**
              *
              * @returns {runner}
@@ -173,6 +180,7 @@ define([
                 this.trigger('move', 'skip');
                 return this;
             },
+            
             /**
              *
              * @param itemId
@@ -182,83 +190,7 @@ define([
                 this.trigger('move', 'jump', itemId);
                 return this;
             },
-            /**
-             *
-             * @param action
-             * @param handler
-             * @returns {runner}
-             */
-            registerAction : function registerAction(action, handler){
-                this.on(action, handler);
-                return this;
-            },
-            /**
-             *
-             * @param command
-             * @returns {runner}
-             */
-            execute : function execute(command){
-                this.trigger.apply(this, arguments);
-                return this;
-            },
-            /**
-             *
-             * @param command
-             * @param params
-             * @param callback
-             * @returns {runner}
-             */
-            request : function request(command, params, callback){
-                var self = this;
-                this.beforeRequest(function (){
-                    $.ajax({
-                        url : self.testContext[command + 'Url'] || command,
-                        cache : false,
-                        data : params,
-                        async : true,
-                        dataType : 'json',
-                        success : function (testContext){
-                            self.processRequest(testContext, callback);
-                        }
-                    });
-                });
-                return this;
-            },
-            /**
-             *
-             * @param process
-             * @returns {runner}
-             */
-            beforeRequest : function beforeRequest(process){
-                process();
-                return this;
-            },
-            /**
-             *
-             * @param testContext
-             * @param callback
-             * @returns {runner}
-             */
-            processRequest : function processRequest(testContext, callback){
-                callback();
-                this.afterRequest();
-                return this;
-            },
-            /**
-             *
-             * @returns {runner}
-             */
-            afterRequest : function afterRequest(){
-                return this;
-            },
-            /**
-             * Checks if the runner has a particular state
-             * @param {String} state
-             * @returns {Boolean}
-             */
-            is : function is(state){
-                return !!_states[state];
-            },
+            
             /**
              * Set the current state object
              * @param {Object} state
@@ -268,6 +200,7 @@ define([
                 _state = state;
                 return this;
             },
+            
             /**
              * Return the current state object
              * @returns {Object}
@@ -275,6 +208,7 @@ define([
             getState : function(){
                 return _state;
             },
+            
             /**
              * Render the content of the test given the current test state
              * @returns {runner}
@@ -283,6 +217,7 @@ define([
                 delegate('renderContent', [$contentContainer, _state]);
                 return this;
             },
+            
             /**
              * Infor that the content is rendered and ready for user interaction
              * @returns {runner}
@@ -291,6 +226,7 @@ define([
                 this.trigger('contentready', $contentContainer);
                 return this;
             }
+            
         }).on('move', function move(type, otherArgs_){
             this.trigger.apply(this, [].slice.call(arguments));
         });

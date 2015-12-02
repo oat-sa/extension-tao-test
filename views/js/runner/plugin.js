@@ -33,7 +33,7 @@ define([
      */
     function pluginFactory(_provider, _defaults){
         
-        //@todo make name mandatory
+        //@todo make name mandatory ?
         var name = _provider && _provider.name || 'myPlugin';
         
         _defaults = _defaults || {};
@@ -66,6 +66,7 @@ define([
             var config = _.defaults(config || {}, _defaults);
             
             var plugin = eventifier({
+                
                 /**
                  * Initializes the runner
                  * @param {Object} rootComponent - the component the plugin is to be plugged into
@@ -81,6 +82,7 @@ define([
                     this.trigger('init');
                     return this;
                 },
+                
                 /**
                  * Destroys the plugin
                  * @returns {plugin}
@@ -96,6 +98,7 @@ define([
                     this.trigger('destroy');
                     return this;
                 },
+                
                 /**
                  * Get the config
                  * @returns {Object} config
@@ -103,6 +106,7 @@ define([
                 getConfig : function getConfig(){
                     return config;
                 },
+                
                 /**
                  * Get the config
                  * @returns {Object} config
@@ -115,6 +119,16 @@ define([
                     }
                     return this;
                 },
+                
+                /**
+                 * Get or set a state to the plugin
+                 * If the second argument is provided, it will set the state to true or false
+                 * Otherwise, it will return true if the state is set, or false otherwise.
+                 * 
+                 * @param {String} name - the state name
+                 * @param {Boolean} [active] - if undefined, 
+                 * @returns
+                 */
                 state : function(name, active){
                     if(_.isString(name)){
                         if(active === undefined){
@@ -128,6 +142,7 @@ define([
                         throw new TypeError('the state name must be a string');
                     }
                 },
+                
                 /**
                  * Shows the component related to this plugin
                  * @returns {plugin}
@@ -138,6 +153,7 @@ define([
                     this.trigger('show');
                     return this;
                 },
+                
                 /**
                  * Hides the component related to this plugin
                  * @returns {plugin}
@@ -148,6 +164,7 @@ define([
                     this.trigger('hide');
                     return this;
                 },
+                
                 /**
                  * Enables the plugin
                  * @returns {plugin}
@@ -158,6 +175,7 @@ define([
                     this.trigger('enable');
                     return this;
                 },
+                
                 /**
                  * Disables the plugin
                  * @returns {plugin}
