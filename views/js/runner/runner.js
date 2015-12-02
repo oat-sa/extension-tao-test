@@ -28,15 +28,34 @@ define([
 ], function ($, _, __, eventifier, Promise, providerRegistry){
     'use strict';
 
-    /**
-     * Some default values
-     * @type {Object}
-     * @private
-     */
     var _defaults = {
-        content : ''
+        contentContainer : ''
     };
-
+    
+    var _eventTriggerEnable = false;
+    var _eventTrigger = [];
+    
+    /**
+     * Log the event trigger, useful for debugging or profiling
+     * 
+     * @param {Array} events - the event name + the event params
+     * @returns {undefined}
+     */
+    function _logEventTrigger(events){
+        if(_eventTriggerEnable){
+            _eventTrigger.push(events);
+        }
+    }
+    
+    /**
+     * Builds an instance of the QTI test runner
+     *  
+     * @param {String} providerName
+     * @param {Object} config
+     * @param {String|DOMElement|JQuery} config.contentContainer - the dom element that is going to holds the test content (item, rubick, etc)
+     * @param {Array} [config.plugins] - the list of plugin instances to be initialized and bound to the test runner
+     * @returns {runner|_L28.testRunnerFactory.runner}
+     */
     function testRunnerFactory(providerName, config){
         
         var _provider = testRunnerFactory.getProvider(providerName);
@@ -71,7 +90,7 @@ define([
                 
                 if(config.plugins){
                     _.forEach(config.plugins, function (plugin){
-                        // todo: load plugins, then fire the init event
+                        //todo : manage plugin loading in an async context (Promise, callback, events ?)
                         plugin.init(runner);
                     });
                 }
@@ -85,6 +104,7 @@ define([
              * @param {ServiceApi} serviceApi
              */
             ready : function ready(serviceApi){
+                //@todo : check if we can remove the service Api
                 this.serviceApi = serviceApi;
                 this.trigger('ready', this);
                 return this;
@@ -275,13 +295,46 @@ define([
             this.trigger.apply(this, [].slice.call(arguments));
         });
         
+        var trigger = runner.trigger;//get the trigger function to overwrite it later
+        runner.trigger = function superTrigger(){
+            var args = [].slice.call(arguments);
+            //implementation note : trigger is a delegated function so the applied context does not matter
+            _logEventTrigger(args);
+            trigger.apply(null, args);
+        };
+            
         return runner;
     }
     
     /**
-     * Builds an instance of the QTI test runner
-     * @param {Object} config
-     * @returns {runner}
+     * Activate event logging
      */
+    testRunnerFactory.startEventLog = function(){
+        _eventTriggerEnable = true;
+    };
+    
+    /**
+     * Deactivate event logging
+     */
+    testRunnerFactory.stopEventLog = function(){
+        _eventTriggerEnable = false;
+    };
+    
+    /**
+     * Get cumulated event log
+     */
+    testRunnerFactory.getEventLog = function(){
+        return _eventTrigger;
+    };
+    
+    /**
+     * Empty the event log
+     */
+    testRunnerFactory.clearEventLog = function(){
+        _eventTrigger = [];
+    };
+    
+    
+    //bind the provider registration capabilities to the testRunnerFactory
     return providerRegistry(testRunnerFactory);
 });
