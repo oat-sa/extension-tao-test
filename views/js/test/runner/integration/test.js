@@ -22,12 +22,11 @@ define([
     'jquery',
     'lodash',
     'taoTests/runner/runner',
-    'taoTests/runner/gui',
     'json!taoTests/test/runner/sample/minimalisticTest',
     'taoTests/test/runner/sample/minimalisticProvider',
     'taoTests/test/runner/sample/plugin/nextButton',
     'taoTests/test/runner/sample/plugin/responseSubmitter'
-], function($, _, runner, gui, minimalisticTest, minimalisticProvider, pluginNextButton, pluginResponseSubmitter){
+], function($, _, runner, minimalisticTest, minimalisticProvider, pluginNextButton, pluginResponseSubmitter){
     'use strict';
 
     QUnit.module('runner', {
