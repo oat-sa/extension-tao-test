@@ -32,8 +32,8 @@ define([
         contentContainer : ''
     };
     
-    var _eventTriggerEnable = false;
-    var _eventTrigger = [];
+    var _eventLogEnabled = false;
+    var _eventLog = [];
     
     /**
      * Log the event trigger, useful for debugging or profiling
@@ -43,8 +43,8 @@ define([
      * @returns {undefined}
      */
     function _logEventTrigger(events){
-        if(_eventTriggerEnable){
-            _eventTrigger.push(events);
+        if(_eventLogEnabled){
+            _eventLog.push(events);
         }
     }
     
@@ -84,7 +84,7 @@ define([
         }
         
         /**
-         * Defines the QTI test runner
+         * Defines the test runner
          * @type {runner}
          */
         var runner = eventifier({
@@ -246,28 +246,28 @@ define([
      * Activate event logging
      */
     testRunnerFactory.startEventLog = function(){
-        _eventTriggerEnable = true;
+        _eventLogEnabled = true;
     };
     
     /**
      * Deactivate event logging
      */
     testRunnerFactory.stopEventLog = function(){
-        _eventTriggerEnable = false;
+        _eventLogEnabled = false;
     };
     
     /**
      * Get cumulated event log
      */
     testRunnerFactory.getEventLog = function(){
-        return _eventTrigger;
+        return _eventLog;
     };
     
     /**
      * Empty the event log
      */
     testRunnerFactory.clearEventLog = function(){
-        _eventTrigger = [];
+        _eventLog = [];
     };
     
     
