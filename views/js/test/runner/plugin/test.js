@@ -25,29 +25,27 @@ define([
 ], function (_, pluginFactory, eventifier){
     'use strict';
 
+    var mockProvider = {
+        name : 'foo',
+        init : _.noop
+    };
+
+    var samplePluginDefaults = {
+        a : false,
+        b : 10
+    };
+
     QUnit.module('plugin');
 
     QUnit.test('module', 3, function (assert){
         assert.equal(typeof pluginFactory, 'function', "The plugin module exposes a function");
-        assert.equal(typeof pluginFactory(), 'function', "The plugin factory produces a function");
-        assert.notStrictEqual(pluginFactory(), pluginFactory(), "The plugin factory provides a different object on each call");
+        assert.equal(typeof pluginFactory(mockProvider), 'function', "The plugin factory produces a function");
+        assert.notStrictEqual(pluginFactory(mockProvider), pluginFactory(mockProvider), "The plugin factory provides a different object on each call");
     });
 
     QUnit.test('create a plugin', 13, function (assert){
 
-        var samplePluginDefaults = {
-            a : false,
-            b : 10
-        };
-
-        var myPlugin = function myPlugin(config){
-
-            var samplePluginImpl = {};
-
-            var myPluginFactory = pluginFactory(samplePluginImpl, samplePluginDefaults);
-
-            return myPluginFactory(config);
-        };
+        var myPlugin = pluginFactory(mockProvider, samplePluginDefaults);
 
         assert.equal(typeof myPlugin(), 'object', "My plugin factory produce a plugin instance object");
         assert.notStrictEqual(myPlugin(), myPlugin(), "My plugin factory provides different object on each call");
@@ -72,7 +70,7 @@ define([
         assert.equal(config1.b, samplePluginDefaults.b, 'instance1 inherit the default config');
 
         // check overwritten config
-        var instance2 = myPlugin(_config2);
+        var instance2 = myPlugin({}, _config2);
         var config2 = instance2.getConfig();
         assert.equal(config2.a, _config2.a, 'instance2 has new config value');
         assert.equal(config2.b, _config2.b, 'instance2 has new config value');
@@ -81,40 +79,32 @@ define([
 
     QUnit.test('call plugin methods', 9, function (assert){
 
-        var myPlugin = function myPlugin(config){
-
-            var samplePluginDefaults = {
-                a : false,
-                b : 10
-            };
-
-            var samplePluginImpl = {
-                init : function (rootComponent, cfg){
-                    assert.ok(true, 'called init');
-                    assert.equal(cfg.a, samplePluginDefaults.a, 'instance1 inherits the default config');
-                    assert.equal(cfg.b, samplePluginDefaults.b, 'instance1 inherit the default config');
-                },
-                destroy : function (){
-                    assert.ok(true, 'called destory');
-                },
-                show : function (){
-                    assert.ok(true, 'called show');
-                },
-                hide : function (){
-                    assert.ok(true, 'called hide');
-                },
-                enable : function (){
-                    assert.ok(true, 'called enable');
-                },
-                disable : function (){
-                    assert.ok(true, 'called disable');
-                }
-            };
-
-            var myPluginFactory = pluginFactory(samplePluginImpl, samplePluginDefaults);
-
-            return myPluginFactory(config);
+        var samplePluginImpl = {
+            name : 'samplePluginImpl',
+            init : function (testRunner, cfg){
+                assert.ok(true, 'called init');
+                assert.equal(cfg.a, samplePluginDefaults.a, 'instance1 inherits the default config');
+                assert.equal(cfg.b, samplePluginDefaults.b, 'instance1 inherit the default config');
+            },
+            destroy : function (){
+                assert.ok(true, 'called destory');
+            },
+            show : function (){
+                assert.ok(true, 'called show');
+            },
+            hide : function (){
+                assert.ok(true, 'called hide');
+            },
+            enable : function (){
+                assert.ok(true, 'called enable');
+            },
+            disable : function (){
+                assert.ok(true, 'called disable');
+            }
         };
+
+        var myPlugin = pluginFactory(samplePluginImpl, samplePluginDefaults);
+
 
         assert.equal(typeof myPlugin(), 'object', "My plugin factory produce a plugin instance object");
 
@@ -129,9 +119,7 @@ define([
 
     QUnit.test('state', 13, function (assert){
 
-        var myPlugin = function myPlugin(config){
-            return pluginFactory()(config);
-        };
+        var myPlugin = pluginFactory(mockProvider);
 
         assert.equal(typeof myPlugin(), 'object', "My plugin factory produce a plugin instance object");
 
@@ -168,40 +156,39 @@ define([
         assert.strictEqual(instance1.state('init'), false, 'destoyed state set');
     });
 
-    QUnit.test('root component binding', 4, function (assert){
+    QUnit.test('test runner binding', 4, function (assert){
 
         var value1 = 'xxx';
-        var theRootComponent = {
+        var testRunner = {
             prop1 : 123,
             method1 : function (){
                 return value1;
             }
         };
 
-        var myPlugin = function myPlugin(config){
-            var samplePluginImpl = {
-                init : function (rootComponent){
-                    assert.ok(true, 'called init');
+        var samplePluginImpl = {
+            name : 'testRunnerPlugin',
+            init : function (testRunner){
+                assert.ok(true, 'called init');
 
-                    //perform operations on the rootComponent
-                    assert.strictEqual(rootComponent.prop1, theRootComponent.prop1, 'access root component property');
-                    assert.strictEqual(rootComponent.method1(), value1, 'called root component method');
-                }
-            };
-
-            return pluginFactory(samplePluginImpl)(config);
+                //perform operations on the testRunner
+                assert.strictEqual(testRunner.prop1, testRunner.prop1, 'access root component property');
+                assert.strictEqual(testRunner.method1(), value1, 'called root component method');
+            }
         };
 
-        var instance1 = myPlugin();
-        instance1.init(theRootComponent);
-        assert.strictEqual(instance1.rootComponent, theRootComponent, 'root component is set');
+        var myPlugin = pluginFactory(samplePluginImpl);
+
+        var instance1 = myPlugin(testRunner);
+        instance1.init();
+        assert.strictEqual(instance1.getTestRunner(), testRunner, 'root component is set');
     });
 
     QUnit.test('root component event', 10, function (assert){
 
         var eventParams = ['ABC', true, 12345];
-        
-        var theRootComponent = eventifier()
+
+        var testRunner = eventifier()
             .on('init.pluginA', function (){
                 assert.ok(true, 'root component knows knows that pluginA has been initialized');
             })
@@ -212,20 +199,21 @@ define([
                 assert.strictEqual(eventParams[2], arg3, 'event param ok');
             });
 
-        var myPlugin = function myPlugin(config){
-            return pluginFactory({name : 'pluginA'})(config);
-        };
+        var myPlugin = pluginFactory({
+            name : 'pluginA',
+            init : _.noop
+        });
 
-        var instance1 = myPlugin()
+        var instance1 = myPlugin(testRunner)
             .on('someEvent', function (arg1, arg2, arg3){
                 assert.ok(true, 'someEvent triggered');
                 assert.strictEqual(eventParams[0], arg1, 'event param ok');
                 assert.strictEqual(eventParams[1], arg2, 'event param ok');
                 assert.strictEqual(eventParams[2], arg3, 'event param ok');
             })
-            .init(theRootComponent);
+            .init();
 
-        assert.strictEqual(instance1.rootComponent, theRootComponent, 'root component is set');
+        assert.strictEqual(instance1.getTestRunner(), testRunner, 'root component is set');
 
         //if the root component has been eventified, every event triggered by the plugin will be forwarded to the root component as well:
         instance1.trigger('someEvent', eventParams[0], eventParams[1], eventParams[2]);
