@@ -181,26 +181,19 @@ class taoTests_models_classes_TestsService
     }
 
     /**
-     * Called whenever the label of the Test changes
+     * Used to be called whenever the label of the Test changed
+     * Deprecated in favor of eventmanager
      *
      * @access public
      * @author Joel Bout, <joel.bout@tudor.lu>
      * @param  Resource test
      * @return boolean
+     * @deprecated
      */
     public function onChangeTestLabel( core_kernel_classes_Resource $test = null)
     {
-        $returnValue = (bool) false;
-
-        $testModel = $this->getTestModel($test);
-        if (!is_null($testModel)) {
-        	$impl = $this->getTestModelImplementation($testModel);
-       		$impl->onChangeTestLabel($test);
-
-            $returnValue = true;
-        }
-
-        return (bool) $returnValue;
+        common_Logger::w('Call to deprecated '.__FUNCTION__);
+        return false;
     }
 
     /**
@@ -248,7 +241,6 @@ class taoTests_models_classes_TestsService
 			$impl = $this->getTestModelImplementation($this->getTestModel($instance));
 			$impl->cloneContent($instance, $clone);
 			
-			$this->onChangeTestLabel($clone);
 			$returnValue = $clone;
 		}
 
