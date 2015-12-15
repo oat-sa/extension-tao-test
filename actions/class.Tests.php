@@ -93,9 +93,6 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
     				$binder = new tao_models_classes_dataBinding_GenerisFormDataBinder($test);
     				$test = $binder->bind($propertyValues);
     
-    				//edit process label:
-    				$this->service->onChangeTestLabel($test);
-    
     		        $this->setData("selectNode", tao_helpers_Uri::encode($test->getUri()));
     				$this->setData('message', __('Test saved'));
     				$this->setData('reload', true);
