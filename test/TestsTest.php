@@ -141,16 +141,6 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
 
     /**
      * @depends testTests
-     * @param $test
-     * @return void
-     */
-    public function testOnChangeTestLabel($test) {
-        $result = $this->testsService->onChangeTestLabel($test);
-        $this->assertTrue($result);
-    }
-
-    /**
-     * @depends testTests
      * @param $tests
      * @return \core_kernel_classes_Class
      */
