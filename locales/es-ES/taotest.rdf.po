@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.1.0-sprint03\n"
-"PO-Revision-Date: 2015-08-11T14:05:38\n"
+"Project-Id-Version: TAO 3.1.0-sprint04\n"
+"PO-Revision-Date: 2015-12-22T13:32:19\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: es-ES\n"
@@ -13,70 +13,70 @@ msgstr ""
 # http://www.tao.lu/Ontologies/TAOTest.rdf#Test
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "Test"
-msgstr "Test"
+msgstr "Prueba"
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#Test
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "Test"
-msgstr "Test"
+msgstr "Prueba"
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestContent
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "Test Content"
-msgstr "Test Content"
+msgstr "Contenido de Prueba"
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestContent
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "Test Content"
-msgstr "Test Content"
+msgstr "Contenido de Prueba"
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestTestModel
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "Test Model"
-msgstr "Test Model"
+msgstr "Modelo de Prueba"
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestTestModel
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "Test Model"
-msgstr "Test Model"
+msgstr "Modelo de Prueba"
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestModelImplementation
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "Testmodel implementation"
-msgstr "Testmodel implementation"
+msgstr "Implementación Testmodel"
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestModelImplementation
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "Implementation of the test model"
-msgstr ""
+msgstr "Aplicación de la prueba modelo"
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "Tests Manager"
-msgstr "Tests Manager"
+msgstr "Administrador de Pruebas"
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "The Tests Manager Role"
-msgstr ""
+msgstr "El Rol Administrador de Pruebas"
 
 # http://www.tao.lu/Ontologies/TAOItem.rdf#TestAuthor
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "Test Author"
-msgstr ""
+msgstr "Autor de Prueba"
 
 # http://www.tao.lu/Ontologies/TAOItem.rdf#TestAuthor
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "The Test Author Role"
-msgstr ""
+msgstr "El Rol Autor de Prueba"
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestModelImplementation
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "Testmodel implementation"
-msgstr "Implementation of the test model"
+msgstr "Implementación Testmodel"
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "Tests Manager"
-msgstr "The Tests Manager Role"
+msgstr "Administrador de Pruebas"
 
