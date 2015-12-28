@@ -24,19 +24,30 @@ namespace oat\taoTests\scripts\update;
 
 class Updater extends \common_ext_ExtensionUpdater 
 {
-
 	/**
      * 
      * @param string $currentVersion
      * @return string $versionUpdatedTo
      */
-    public function update($initialVersion) {
+    public function update($initialVersion)
+    {
         
-        $currentVersion = $initialVersion;
-		if ($currentVersion == '2.6' || $currentVersion == '2.6.1') {
-			$currentVersion = '2.7';
+        if ($this->isBetween('0', '2.7')){
+            $this->setVersion('2.7');
+        }
+		// remove active prop
+		if ($this->isVersion('2.7')){
+		    $deprecatedProperty = new \core_kernel_classes_Property('http://www.tao.lu/Ontologies/TAOTest.rdf#active');
+		    $iterator = new \core_kernel_classes_ResourceIterator(array(\taoTests_models_classes_TestsService::singleton()->getRootClass()));
+		    foreach ($iterator as $resource) {
+		        $resource->removePropertyValues($deprecatedProperty);
+		    }
+		    $this->setVersion('2.7.1');
 		}
 
-		return $currentVersion;
+		if ($this->isVersion('2.7.1')){
+            $this->setVersion('2.8');
+        }
+		return null;
 	}
 }

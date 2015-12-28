@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; under version 2
@@ -18,7 +18,6 @@
  *               2009-2012 (update and modification) Public Research Centre Henri Tudor (under the project TAO-SUSTAIN & TAO-DEV);
  *
  */
-
 
 /**
  * Interface to implement by test models
@@ -39,13 +38,6 @@ interface taoTests_models_classes_TestModel
      * @return mixed
      */
     public function __construct();
-
-    /**
-     * Called when the label of a test changes
-     *
-     * @param Resource $test
-     */
-    public function onChangeTestLabel( core_kernel_classes_Resource $test);
 
     /**
      * Prepare the content of the test,
@@ -106,4 +98,7 @@ interface taoTests_models_classes_TestModel
 	 * @return oat\taoTests\model\pack\Packable the packer class to instantiate
 	 */
     public function getPackerClass();
+    
+    // onChangeTestLabel removed in favour of eventmanager
+    
 }

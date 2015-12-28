@@ -4,9 +4,9 @@ msgstr ""
 "PO-Revision-Date: 2015-12-23T13:38:13\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
-"Language: zh-CN\n"
+"Language: uk-UA\n"
 "sourceLanguage: en-US\n"
-"targetLanguage: zh-CN\n"
+"targetLanguage: uk-UA\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Basepath: ../../\n"
@@ -15,75 +15,75 @@ msgstr ""
 
 #, tao-public
 msgid "Authoring"
-msgstr "写着"
+msgstr ""
 
 #, tao-public
 msgid "Combine a selection of items into tests."
-msgstr "将一组所选的题目结合成考试。"
+msgstr ""
 
 #, tao-public
 msgid "Delete"
-msgstr "删除"
+msgstr ""
 
 #, tao-public
 msgid "Duplicate"
-msgstr "重制"
+msgstr ""
 
 #, tao-public
 msgid "Export"
-msgstr "导出"
+msgstr ""
 
 #, tao-public
 msgid "Filter"
-msgstr "过滤条件"
+msgstr ""
 
 #, tao-public
 msgid "Import"
-msgstr "导入"
+msgstr ""
 
 #, tao-public
 msgid "Manage tests"
-msgstr "管理考试"
+msgstr ""
 
 #, tao-public
 msgid "Move"
-msgstr "移动"
+msgstr ""
 
 #, tao-public
 msgid "New class"
-msgstr "新类别"
+msgstr ""
 
 #, tao-public
 msgid "New test"
-msgstr "新测试"
+msgstr ""
 
 #, tao-public
 msgid "Properties"
-msgstr "属性"
+msgstr ""
 
 #, tao-public
 msgid "Search"
-msgstr "搜索"
+msgstr ""
 
 msgid "Test properties"
-msgstr "考试属性"
+msgstr ""
 
 msgid "Test saved"
-msgstr "考试已储存"
+msgstr ""
 
 #, tao-public
 msgid "Tests"
-msgstr "考试"
+msgstr ""
 
 #, tao-public
 msgid "Tests library"
-msgstr "考试书库"
+msgstr ""
 
 msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
-msgstr "考试模式（顺序，得分，累加等）和布局也在这里进行配置。"
+msgstr ""
 
 msgid "The Tests module allows to combine a selection of Items to a Test."
-msgstr "考试模块可以把一组题目结合成考试。"
+msgstr ""
 
 msgid "You checked out this test %2s ago"
 msgstr ""

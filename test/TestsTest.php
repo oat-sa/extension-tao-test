@@ -141,16 +141,6 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
 
     /**
      * @depends testTests
-     * @param $test
-     * @return void
-     */
-    public function testOnChangeTestLabel($test) {
-        $result = $this->testsService->onChangeTestLabel($test);
-        $this->assertTrue($result);
-    }
-
-    /**
-     * @depends testTests
      * @param $tests
      * @return \core_kernel_classes_Class
      */
@@ -222,26 +212,6 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
 		$this->assertNotNull($clone);
 
         return $clone;
-    }
-
-    /**
-     * @depends testCloneInstance
-     * @param $test
-     * @return void
-     */
-    public function testSetActive($test) {
-		$result = $test->setPropertyValue(new core_kernel_classes_Property(TEST_ACTIVE_PROP), GENERIS_TRUE);
-		$this->assertTrue($result);
-    }
-
-    /**
-     * @depends testCloneInstance
-     * @param $test
-     * @return void
-     */
-    public function testIsTestActive($test) {
-        $isActive = $this->testsService->isTestActive($test);
-		$this->assertTrue($isActive);
     }
 
     /**

@@ -4,46 +4,46 @@ msgstr ""
 "PO-Revision-Date: 2015-12-23T13:38:13\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
-"Language: id-ID\n"
+"Language: uk-UA\n"
 "sourceLanguage: en-US\n"
-"targetLanguage: id-ID\n"
+"targetLanguage: uk-UA\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#Test
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "Test"
-msgstr "Test"
+msgstr ""
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#Test
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "Test"
-msgstr "Test"
+msgstr ""
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestContent
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "Test Content"
-msgstr "Test Content"
+msgstr ""
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestContent
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "Test Content"
-msgstr "Test Content"
+msgstr ""
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestTestModel
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "Test Model"
-msgstr "Test Model"
+msgstr ""
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestTestModel
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "Test Model"
-msgstr "Test Model"
+msgstr ""
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestModelImplementation
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "Testmodel implementation"
-msgstr "Testmodel implementation"
+msgstr ""
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestModelImplementation
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
@@ -53,7 +53,7 @@ msgstr ""
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "Tests Manager"
-msgstr "Tests Manager"
+msgstr ""
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
@@ -69,14 +69,4 @@ msgstr ""
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "The Test Author Role"
 msgstr ""
-
-# http://www.tao.lu/Ontologies/TAOTest.rdf#TestModelImplementation
-msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
-msgid "Testmodel implementation"
-msgstr "Implementation of the test model"
-
-# http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole
-msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
-msgid "Tests Manager"
-msgstr "The Tests Manager Role"
 

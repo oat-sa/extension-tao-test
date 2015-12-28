@@ -17,7 +17,7 @@
                           rootNode="http://www.tao.lu/Ontologies/TAOTest.rdf#Test"
                         />
                 </trees>
-                <actions>
+                <actions allowClassActions="true">
                 	
                 	<action id="test-class-properties" name="Properties" url="/tao/PropertiesAuthoring/index" group="content" context="class">
                         <icon id="icon-edit"/>

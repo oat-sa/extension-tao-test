@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO v3.1.0-sprint03\n"
-"PO-Revision-Date: 2015-07-21T16:52:30\n"
+"Project-Id-Version: TAO 3.1.0-sprint15\n"
+"PO-Revision-Date: 2015-12-23T13:38:13\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: pt-PT\n"
@@ -40,10 +40,6 @@ msgstr ""
 #, tao-public
 msgid "Import"
 msgstr "Importar"
-
-#, tao-public
-msgid "Lists"
-msgstr ""
 
 #, tao-public
 msgid "Manage tests"
