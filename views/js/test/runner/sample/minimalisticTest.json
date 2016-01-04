@@ -1,0 +1,17 @@
+{
+    "id": "testA-i123456798",
+    "items": [
+        {
+            "id" : "item1",
+            "content" : "content of item 1"
+        },
+        {
+            "id" : "item2",
+            "content" : "content of item 2"
+        },
+        {
+            "id" : "item3",
+            "content" : "content of item 3"
+        }
+    ]
+}
