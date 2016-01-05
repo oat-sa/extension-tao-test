@@ -17,26 +17,29 @@
  *
  */
 /**
+ *
+ * TODO generalize (core)
+ *
  * @author Sam <sam@taotesting.com>
  */
 define(['lodash'], function(_){
     'use strict';
-    
+
     /**
      * Transfor the target into a a provider registry
      * It adds two methods registerProvider() and getProvider();
-     * 
+     *
      * @todo useful to move it to tao/core ?
      * @param {Object} target
      * @param {Function} [validator] - a function to validate the provider to be registered
      * @returns {target} the target itself
      */
     function providerRegistry(target, validator){
-        
+
         var _providers = {};
         target = target || {};
-        
-        
+
+
         /**
         * Register an <i>provider</i> into the provider registry.
         * The provider provides the behavior required by the target object.
@@ -49,9 +52,9 @@ define(['lodash'], function(_){
         * @throws TypeError when a wrong provider is given or an empty name.
         */
         function registerProvider(name, provider){
-            
+
             var valid = true;
-            
+
             //type checking
             if(!_.isString(name) || name.length <= 0){
                 throw new TypeError('It is required to give a name to your provider.');
@@ -60,21 +63,21 @@ define(['lodash'], function(_){
                 throw new TypeError('A provider is an object that contains at least an init function.');
             }
             valid = validator && _.isFunction(validator) ? validator(provider) : valid;
-            
+
             if(valid){
                 _providers[name] = provider;
             }
         }
-        
+
         /**
          * Get a registered provider by its name
          * @param {String} providerName
          * @returns {Object} provider
          */
         function getProvider(providerName){
-            
+
             var provider;
-            
+
             //check a provider is available
             if(!_providers || _.size(_providers) === 0){
                 throw new Error('No provider regitered');
@@ -93,15 +96,18 @@ define(['lodash'], function(_){
             if(!provider){
                 throw new Error('No candidate found for the provider');
             }
-            
+
             return provider;
         }
-        
+
         target.registerProvider = registerProvider;
         target.getProvider = getProvider;
-        
+        target.clearProviders = function (){
+            _.providers = {};
+        };
+
         return target;
     }
-    
+
     return providerRegistry;
 });

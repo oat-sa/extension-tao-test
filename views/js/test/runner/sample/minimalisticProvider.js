@@ -20,29 +20,13 @@
  * @author Sam <sam@taotesting.com>
  */
 define([], function(){
+    'use strict';
 
-    function initEvents(runner){
+    return {
+        name : 'minimalTestRunner',
+        init : function init(){
 
-        runner
-            .on('ready', function(){
-
-                //the plugins are ready
-
-                //the DOM and GUI are also ready
-
-                //render item to this.gui.itemContainer
-                this.renderContent();
-            })
-            .after('move', function(type){
-                //refresh page content after each refresh
-                var complete = false;
-                if(complete){
-                    
-                }else{
-                    this.renderContent();
-                }
-                
-            })
+        this
             .on('next', function(){
 
                 var state = this.getState();
@@ -84,15 +68,11 @@ define([], function(){
                     //log warning ?
                 }
             });
-    }
 
-    var minimal = {
-        name : 'minimalTestRunner',
-        init : function init(){
-            initEvents(this);
             this.ready();
         },
         renderContent : function renderContent($container){
+            console.log(this);
             var state = this.getState();
             var definition = state.definition;
             var item = definition.items[state.pos];
@@ -104,6 +84,4 @@ define([], function(){
             this.contentReady();
         }
     };
-
-    return minimal;
 });

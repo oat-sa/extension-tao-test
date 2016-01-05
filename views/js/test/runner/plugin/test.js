@@ -15,8 +15,11 @@
  *
  * Copyright (c) 2015 (original work) Open Assessment Technologies SA ;
  */
+
 /**
+ * Test the test plugin
  * @author Sam <sam@taotesting.com>
+ * @author Bertrand Chevrier <bertrand@taotesting.com>
  */
 define([
     'lodash',
@@ -35,15 +38,48 @@ define([
         b : 10
     };
 
+    var mockRunner = {
+        trigger : _.noop
+    };
+
     QUnit.module('plugin');
 
-    QUnit.test('module', 3, function (assert){
+    QUnit.test('module', function (assert){
+        QUnit.expect(3);
+
         assert.equal(typeof pluginFactory, 'function', "The plugin module exposes a function");
         assert.equal(typeof pluginFactory(mockProvider), 'function', "The plugin factory produces a function");
         assert.notStrictEqual(pluginFactory(mockProvider), pluginFactory(mockProvider), "The plugin factory provides a different object on each call");
     });
 
-    QUnit.test('create a plugin', 13, function (assert){
+    QUnit.test('provider format', function (assert){
+        QUnit.expect(4);
+
+        assert.throws(function(){
+            pluginFactory();
+        }, TypeError, 'A provider should be an object');
+
+        assert.throws(function(){
+            pluginFactory({});
+        }, TypeError, 'A plugin provider should have a name');
+
+        assert.throws(function(){
+            pluginFactory({ name : ''});
+        }, TypeError, 'A plugin provider should have a valid name');
+
+        assert.throws(function(){
+            pluginFactory({ name : 'foo'});
+        }, TypeError, 'A plugin provider should have a init function');
+
+
+        pluginFactory({
+            name : 'foo',
+            init : _.noop
+        });
+    });
+
+    QUnit.test('create a plugin', function (assert){
+        QUnit.expect(16);
 
         var myPlugin = pluginFactory(mockProvider, samplePluginDefaults);
 
@@ -62,7 +98,10 @@ define([
         assert.equal(typeof instance1.hide, 'function', 'The plugin instance has also the default function hide');
         assert.equal(typeof instance1.enable, 'function', 'The plugin instance has also the default function enable');
         assert.equal(typeof instance1.disable, 'function', 'The plugin instance has also the default function disable');
-        assert.equal(typeof instance1.state, 'function', 'The plugin instance has also the default function state');
+        assert.equal(typeof instance1.setState, 'function', 'The plugin instance has also the default function setState');
+        assert.equal(typeof instance1.getState, 'function', 'The plugin instance has also the default function getState');
+        assert.equal(typeof instance1.getConfig, 'function', 'The plugin instance has also the default function getConfig');
+        assert.equal(typeof instance1.setConfig, 'function', 'The plugin instance has also the default function setConfig');
 
         // check default config
         var config1 = instance1.getConfig();
@@ -77,14 +116,17 @@ define([
 
     });
 
-    QUnit.test('call plugin methods', 9, function (assert){
+    QUnit.test('call plugin methods', function (assert){
+        QUnit.expect(9);
 
         var samplePluginImpl = {
             name : 'samplePluginImpl',
-            init : function (testRunner, cfg){
+            init : function (){
+                var config = this.getConfig();
                 assert.ok(true, 'called init');
-                assert.equal(cfg.a, samplePluginDefaults.a, 'instance1 inherits the default config');
-                assert.equal(cfg.b, samplePluginDefaults.b, 'instance1 inherit the default config');
+
+                assert.equal(config.a, samplePluginDefaults.a, 'instance1 inherits the default config');
+                assert.equal(config.b, samplePluginDefaults.b, 'instance1 inherit the default config');
             },
             destroy : function (){
                 assert.ok(true, 'called destory');
@@ -105,10 +147,9 @@ define([
 
         var myPlugin = pluginFactory(samplePluginImpl, samplePluginDefaults);
 
-
         assert.equal(typeof myPlugin(), 'object', "My plugin factory produce a plugin instance object");
 
-        var instance1 = myPlugin();
+        var instance1 = myPlugin(mockRunner);
         instance1.init();
         instance1.hide();
         instance1.show();
@@ -117,63 +158,68 @@ define([
         instance1.destroy();
     });
 
-    QUnit.test('state', 13, function (assert){
+    QUnit.test('state', function (assert){
+        QUnit.expect(14);
 
         var myPlugin = pluginFactory(mockProvider);
 
         assert.equal(typeof myPlugin(), 'object', "My plugin factory produce a plugin instance object");
 
-        var instance1 = myPlugin();
+        var instance1 = myPlugin(mockRunner);
+
+        assert.throws(function(){
+            instance1.setState({}, false);
+        }, TypeError, 'The state must have a valid name');
 
         //custom state : active
-        assert.strictEqual(instance1.state('active'), false, 'no state set by default');
-        instance1.state('active', true);
-        assert.strictEqual(instance1.state('active'), true, 'active state set');
-        instance1.state('active', false);
-        assert.strictEqual(instance1.state('active'), false, 'no state set by default');
+        assert.strictEqual(instance1.getState('active'), false, 'no state set by default');
+        instance1.setState('active', true);
+        assert.strictEqual(instance1.getState('active'), true, 'active state set');
+        instance1.setState('active', false);
+        assert.strictEqual(instance1.getState('active'), false, 'no state set by default');
 
         //built-in state init:
-        assert.strictEqual(instance1.state('init'), false, 'init state = false by default');
+        assert.strictEqual(instance1.getState('init'), false, 'init state = false by default');
         instance1.init();
-        assert.strictEqual(instance1.state('init'), true, 'init state set');
+        assert.strictEqual(instance1.getState('init'), true, 'init state set');
 
         //built-in visible state
-        assert.strictEqual(instance1.state('visible'), false, 'visible state = false by default');
+        assert.strictEqual(instance1.getState('visible'), false, 'visible state = false by default');
         instance1.show();
-        assert.strictEqual(instance1.state('visible'), true, 'visible state set');
+        assert.strictEqual(instance1.getState('visible'), true, 'visible state set');
         instance1.hide();
-        assert.strictEqual(instance1.state('visible'), false, 'visible turns to false');
+        assert.strictEqual(instance1.getState('visible'), false, 'visible turns to false');
 
         //built-in enabled state
-        assert.strictEqual(instance1.state('enabled'), false, 'enabled state = false by default');
+        assert.strictEqual(instance1.getState('enabled'), false, 'enabled state = false by default');
         instance1.enable();
-        assert.strictEqual(instance1.state('enabled'), true, 'enabled state set');
+        assert.strictEqual(instance1.getState('enabled'), true, 'enabled state set');
         instance1.disable();
-        assert.strictEqual(instance1.state('enabled'), false, 'enabled turns to false');
+        assert.strictEqual(instance1.getState('enabled'), false, 'enabled turns to false');
 
         //built-in init state
         instance1.destroy();
-        assert.strictEqual(instance1.state('init'), false, 'destoyed state set');
+        assert.strictEqual(instance1.getState('init'), false, 'destoyed state set');
     });
 
-    QUnit.test('test runner binding', 4, function (assert){
-
+    QUnit.test('test runner binding', function (assert){
+        QUnit.expect(4);
         var value1 = 'xxx';
         var testRunner = {
             prop1 : 123,
             method1 : function (){
                 return value1;
-            }
+            },
+            trigger: _.noop
         };
 
         var samplePluginImpl = {
             name : 'testRunnerPlugin',
-            init : function (testRunner){
+            init : function (){
                 assert.ok(true, 'called init');
 
-                //perform operations on the testRunner
-                assert.strictEqual(testRunner.prop1, testRunner.prop1, 'access root component property');
-                assert.strictEqual(testRunner.method1(), value1, 'called root component method');
+                assert.deepEqual(this.getTestRunner(), testRunner, 'The plugin has access to the test runner');
+                assert.strictEqual(this.getTestRunner().method1(), value1, 'called root component method');
             }
         };
 
@@ -184,39 +230,33 @@ define([
         assert.strictEqual(instance1.getTestRunner(), testRunner, 'root component is set');
     });
 
-    QUnit.test('root component event', 10, function (assert){
+
+
+    QUnit.asyncTest('root component event', function (assert){
+        QUnit.expect(6);
 
         var eventParams = ['ABC', true, 12345];
+        var myPlugin = pluginFactory({
+            name : 'pluginA',
+            init : function(){
+                this.trigger('someEvent', eventParams[0], eventParams[1], eventParams[2]);
+            }
+        });
 
         var testRunner = eventifier()
-            .on('init.pluginA', function (){
+            .on('init.pluginA', function (plugin){
                 assert.ok(true, 'root component knows knows that pluginA has been initialized');
+                assert.deepEqual(plugin, instance1, 'The given plugin instance is correct');
+                QUnit.start();
             })
-            .on('someEvent.pluginA', function (arg1, arg2, arg3){
+            .on('someEvent.pluginA', function (plugin, arg1, arg2, arg3){
                 assert.ok(true, 'someEvent triggered and forwarded to root component');
                 assert.strictEqual(eventParams[0], arg1, 'event param ok');
                 assert.strictEqual(eventParams[1], arg2, 'event param ok');
                 assert.strictEqual(eventParams[2], arg3, 'event param ok');
             });
 
-        var myPlugin = pluginFactory({
-            name : 'pluginA',
-            init : _.noop
-        });
-
-        var instance1 = myPlugin(testRunner)
-            .on('someEvent', function (arg1, arg2, arg3){
-                assert.ok(true, 'someEvent triggered');
-                assert.strictEqual(eventParams[0], arg1, 'event param ok');
-                assert.strictEqual(eventParams[1], arg2, 'event param ok');
-                assert.strictEqual(eventParams[2], arg3, 'event param ok');
-            })
-            .init();
-
-        assert.strictEqual(instance1.getTestRunner(), testRunner, 'root component is set');
-
-        //if the root component has been eventified, every event triggered by the plugin will be forwarded to the root component as well:
-        instance1.trigger('someEvent', eventParams[0], eventParams[1], eventParams[2]);
+        var instance1 = myPlugin(testRunner);
+        instance1.init();
     });
-
 });

@@ -32,12 +32,11 @@ define([
     QUnit.module('runner', {
         setup : function(){
             runner.registerProvider(minimalisticProvider.name, minimalisticProvider);
-            runner.startEventLog();
         }
     });
 
     QUnit.asyncTest('init', function(assert){
-        
+
         var iteration = 1;
         var $content = $('#test-content');
         var $nextButton;
@@ -45,7 +44,7 @@ define([
                 RESPONSE1 : 1,
                 RESPONSE2 : ['A', 'B', 'C']
             };
-            
+
         var instance = runner(minimalisticProvider.name, {
                 contentContainer : $content,//also accepts a selector, e.g. #test-content
                 plugins : [
@@ -63,15 +62,15 @@ define([
                 definition : minimalisticTest
             })
             .on('ready', function(){
-                
-                
+
+
                 //the test runner and the plugins are ready
                 $nextButton = $('#navigation-bar .next');
                 assert.equal($nextButton.length, 1, 'next button added');
-                
+
             })
             .on('contentready', function(){
-                
+
                 switch(iteration){
                     case 1 :
                         assert.equal($content.html(), minimalisticTest.items[0].content, 'item 1 rendered');
@@ -90,11 +89,11 @@ define([
                         console.log('test complete', this.getState());
                         QUnit.start();
                         break;
-                        
+
                 }
             })
             .on('submit.responseSubmitter', function(responses){
-                
+
                 switch(iteration){
                     case 1 :
                         assert.ok(true, 'response 1 submitted');
@@ -113,19 +112,19 @@ define([
             .on('move', function(){
                 //increase iteration number
                 iteration ++;
-                
+
                 assert.equal($nextButton.length, 1, 'next button added');
-                
+
                 if(iteration === 3){
-                    
+
                 }
             })
             .on('complete', function(){
-                
+
             })
             .init()
             .renderContent();
-        
+
     });
 
 });

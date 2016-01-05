@@ -18,24 +18,28 @@
 /**
  * @author Sam <sam@taotesting.com>
  */
-define(['taoTests/runner/plugin'], function (pluginFactory){
+define([
+    'jquery',
+    'taoTests/runner/plugin'
+], function ($, pluginFactory){
+    'use strict';
 
-    var _defaults = {};
-
-    var pluginImpl = {
+    return pluginFactory({
         name : 'nextButton',
-        init : function (testRunner, cfg){
-            
-            var $container = $(cfg.container);
+        init : function init(){
+
+            var config = this.getConfig();
+            var testRunner = this.getTestRunner();
+            var $container = $(config.container);
             var $button = $('<button class="next">');
             this.$button = $button;
-            
+
             //create button
             $container.append($button);
             $button.click(function(){
                 testRunner.next();
             });
-            
+
             //event handler
             testRunner.on('itemready', function(){
                 var state = this.getState();
@@ -60,9 +64,5 @@ define(['taoTests/runner/plugin'], function (pluginFactory){
         disable : function (){
             this.$button.addClass('disable');
         }
-    };
-
-    return function pluginNextButton(config){
-        return pluginFactory(pluginImpl, _defaults)(config);
-    };
+    });
 });

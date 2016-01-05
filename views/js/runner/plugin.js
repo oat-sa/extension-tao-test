@@ -20,9 +20,8 @@
  * @author Bertrand Chevrier <bertrand@taotesting.com>
  */
 define([
-    'lodash',
-    'core/eventifier'
-], function (_, eventifier){
+    'lodash'
+], function (_){
     'use strict';
 
     /**
@@ -60,16 +59,16 @@ define([
          */
         return function instanciatePlugin(runner, config){
             var plugin;
+
             var states = {};
 
             /**
-            * Delegate a function call to the provider
-            *
-            * @param {Object} context - the context the function will apply to
-            * @param {String} fnName - the function name
-            * @param {Array} args - the array of arguments to be applied to the function
-            * @returns {undefined}
-            */
+             * Delegate a function call to the provider
+             *
+             * @param {String} fnName - the function name
+             * @param {...} args - additional args are given to the provider
+             * @returns {*} up to the provider
+             */
             var delegate = function delegate(fnName){
                 if(_.isFunction(provider[fnName])){
                     return provider[fnName].apply(plugin, [].slice.call(arguments, 1));
@@ -77,9 +76,10 @@ define([
             };
 
 
+
             config = _.defaults(config || {}, defaults);
 
-            plugin = eventifier({
+            plugin = {
 
                 /**
                  * Initializes the runner plugin
@@ -88,9 +88,10 @@ define([
 
                     states = {};
 
-                    delegate('init', runner, config);
+                    delegate('init');
 
-                    this.state('init', true);
+                    this.setState('init', true);
+
                     this.trigger('init');
 
                     return this;
@@ -107,9 +108,21 @@ define([
                     config = {};
                     states = {};
 
-                    this.state('init', false);
+                    this.setState('init', false);
+
                     this.trigger('destroy');
 
+                    return this;
+                },
+
+                /**
+                * Triggers the events on the test runner using the pluginName as namespace
+                * @param {String} name - the event name
+                * @param {...} args - additional args are given to the event
+                */
+                trigger : function trigger(name){
+                    var args = [].slice.call(arguments, 1);
+                    runner.trigger.apply(runner, [name + '.' + pluginName, plugin].concat(args));
                     return this;
                 },
 
@@ -130,8 +143,10 @@ define([
                 },
 
                 /**
-                 * Get the config
-                 * @returns {Object} config
+                 * Set a config entry
+                 * @param {String|Object} name - the entry name or an object to merge
+                 * @param {*} [value] - the config value if name is an entry
+                 * @returns {plugin} chains
                  */
                 setConfig : function setConfig(name, value){
                     if(_.isPlainObject(name)){
@@ -143,85 +158,91 @@ define([
                 },
 
                 /**
-                 * Get or set a state to the plugin
-                 * If the second argument is provided, it will set the state to true or false
-                 * Otherwise, it will return true if the state is set, or false otherwise.
+                 * Get a state of the plugin
                  *
                  * @param {String} name - the state name
-                 * @param {Boolean} [active] - if undefined,
-                 * @returns
+                 * @returns {Boolean} if active, false if not set
                  */
-                state : function(name, active){
-                    if(_.isString(name)){
-                        if(active === undefined){
-                            //get state
-                            return !!states[name];
-                        }else{
-                            //set state
-                            states[name] = !!active;
-                        }
-                    }else{
-                        throw new TypeError('the state name must be a string');
-                    }
+                getState : function getState(name){
+                    return !!states[name];
                 },
 
                 /**
+                 * Set a state to the plugin
+                 *
+                 * @param {String} name - the state name
+                 * @param {Boolean} active - is the state active
+                 * @returns {plugin} chains
+                 * @throws {TypeError} if the state name is not a valid string
+                 */
+                setState : function setState(name, active){
+                    if(!_.isString(name) || _.isEmpty(name)){
+                        throw new TypeError('The state must have a name');
+                    }
+                    states[name] = !!active;
+
+                    return this;
+                },
+
+
+                /**
                  * Shows the component related to this plugin
-                 * @returns {plugin}
+                 * @returns {plugin} chains
                  */
                 show : function show(){
+
                     delegate('show');
-                    this.state('visible', true);
+
+                    this.setState('visible', true);
+
                     this.trigger('show');
+
                     return this;
                 },
 
                 /**
                  * Hides the component related to this plugin
-                 * @returns {plugin}
+                 * @returns {plugin} chains
                  */
                 hide : function hide(){
+
                     delegate('hide');
-                    this.state('visible', false);
+
+                    this.setState('visible', false);
+
                     this.trigger('hide');
+
                     return this;
                 },
 
                 /**
                  * Enables the plugin
-                 * @returns {plugin}
+                 * @returns {plugin} chains
                  */
                 enable : function enable(){
+
                     delegate('enable');
-                    this.state('enabled', true);
+
+                    this.setState('enabled', true);
+
                     this.trigger('enable');
+
                     return this;
                 },
 
                 /**
                  * Disables the plugin
-                 * @returns {plugin}
+                 * @returns {plugin} chains
                  */
                 disable : function disable(){
+
                     delegate('disable');
-                    this.state('enabled', false);
+
+                    this.setState('enabled', false);
+
                     this.trigger('disable');
 
                     return this;
-                }
-            });
-
-            //get the trigger function to overwrite it later
-            var trigger = plugin.trigger;
-            plugin.trigger = function superTrigger(){
-                var rootComponent = this.getTestRunner();
-                var args = [].slice.call(arguments);
-                //implementation note : trigger is a delegated function so the applied context does not matter
-                trigger.apply(null, args);
-                if(rootComponent && rootComponent.trigger){
-                    //forward the triggered event to the root component too with the plugin name as suffix
-                    args[0] += '.'+pluginName;
-                    rootComponent.trigger.apply(null, args);
                 }
             };
 
