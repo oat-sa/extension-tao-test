@@ -19,69 +19,124 @@
 /**
  * @author Sam <sam@taotesting.com>
  */
-define([], function(){
+define([
+    'jquery',
+    'lodash',
+    'core/promise',
+    'tpl!taoTests/test/runner/sample/layout',
+    'taoTests/runner/areaBroker'
+], function($, _, Promise, layoutTpl, areaBroker){
     'use strict';
 
+    //Test template
+    var $container = $(layoutTpl());
+
+    //set up the areaBroker on a detached node
+    var broker = areaBroker($container);
+    broker.defineAreas({
+        'content' : $('.content', $container),
+        'toolbox' : $('.toolbox', $container),
+        'navigation' : $('.navigation', $container),
+        'control' : $('.control', $container),
+        'panel' : $('.panel', $container)
+    });
+
     return {
-        name : 'minimalTestRunner',
+        name : 'minimalistic',
         init : function init(){
+            var self = this;
+            var config = this.getConfig();
 
-        this
-            .on('next', function(){
-
-                var state = this.getState();
-                var newPos = state.pos + 1;
-
-                //move pointer, compute the new state object
-                if(newPos < state.definition.items.length){
-                    state.pos = newPos;
-                    this.setState(state);
-                }else{
-                    //end test
-                    this.complete();
-                }
-
+            //install event based behavior
+            this.on('ready', function(){
+                this.loadItem(0);
             })
-            .on('previous', function(){
+            .on('move', function(type){
 
-                var state = this.getState();
-                var newPos = state.pos - 1;
+                var test = this.getContext();
 
-                //move pointer, compute the new state object
-                if(newPos >= 0){
-                    state.pos = newPos;
-                    this.setState(state);
-                }else{
-                    //the first item ? do nothing
-                    //or you can log a warning if you want to...
+
+                if(type === 'next'){
+                   if(test.items[test.current + 1]){
+                        self.loadItem(test.current + 1);
+                   } else {
+
+                        alert('the end');
+
+                        self.finish();
+                   }
                 }
+                else if(type === 'previous'){
 
-            })
-            .on('jump', function(pos){
-                var state = this.getState();
-                //check if the jump "pos" is valid
-                var valid = (0 <= pos && pos < state.definition.items.length);
-                if(valid){
-                    state.pos = pos;
-                    this.setState(state);
-                }else{
-                    //log warning ?
+                   if(test.items[test.current - 1]){
+                        self.loadItem(test.current - 1);
+                   } else {
+                        self.loadItem(0);
+                   }
                 }
             });
 
-            this.ready();
+
+            //load test data
+            return new Promise(function(resolve, reject){
+
+                $.getJSON(config.url).success(function(test){
+                    self.setContext(_.defaults(test || {}, {
+                        items : {},
+                        current: 0
+                    }));
+
+                    resolve();
+                });
+            });
         },
-        renderContent : function renderContent($container){
-            console.log(this);
-            var state = this.getState();
-            var definition = state.definition;
-            var item = definition.items[state.pos];
 
-            //load item data, prepare rendering
-            $container.html(item.content);
+        render : function(){
 
-            //notifiy test runner that the item ready
-            this.contentReady();
+            var config = this.getConfig();
+            var context = this.getContext();
+
+
+            broker.getContainer().find('.title').html('Running Test ' + context.id);
+
+            var $renderTo = config.$renderTo || $('body');
+
+
+
+            $renderTo.append(broker.getContainer());
+        },
+
+        loadItem : function loadItem(itemIndex){
+            var self = this;
+
+            var test = this.getContext();
+            var $content = broker.getContentArea();
+
+            $content.html('loading');
+
+            return new Promise(function(resolve, reject){
+
+                setTimeout(function(){
+                    test.current = itemIndex;
+                    self.setContext(test);
+
+                    resolve(test.items[itemIndex]);
+                }, 1000);
+            });
+
+        },
+
+        renderItem : function renderItem(item){
+
+            var $content = broker.getContentArea();
+            $content.html(
+                '<h1>' + item.id + '</h1>' +
+                '<div>' + item.content + '</div>'
+            );
+        },
+
+        getAreaBroker : function getAreaBroker(){
+            return broker;
         }
     };
 });

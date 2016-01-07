@@ -22,22 +22,24 @@ define([
     'jquery',
     'lodash',
     'taoTests/runner/runner',
-    'taoTests/runner/areaBroker'
-], function($, _, runner, areaBroker){
+    'taoTests/test/runner/sample/minimalisticProvider',
+    'taoTests/test/runner/sample/plugin/nextButton',
+    'taoTests/test/runner/sample/plugin/previousButton',
+], function($, _, runner, minimalisticProvider, nextButton, previousButton){
     'use strict';
 
-    runner.registerProvider('text', {
-        init : function(){
-            this.on
-        },
-        getAreaBroker : function(){
-            var $container = $('.test-runner');
-            var broker = areaBroker($container);
-            return broker;
-        }
-    });
 
-    runner();
+    runner.registerProvider(minimalisticProvider.name, minimalisticProvider);
+
+
+
+    runner(minimalisticProvider.name, {
+        previousButtonh : previousButton,
+        next : nextButton
+    }, {
+        url : '/taoTests/views/js/test/runner/sample/minimalisticTest.json'
+    })
+    .init();
 
 
  /*   QUnit.module('runner', {

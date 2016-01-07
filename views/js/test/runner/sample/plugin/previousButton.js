@@ -25,21 +25,21 @@ define([
     'use strict';
 
     return pluginFactory({
-        name : 'nextButton',
+        name : 'previousButton',
         init : function init(){
             var self = this;
             var config = this.getConfig();
             var testRunner = this.getTestRunner();
 
-            this.$button = $('<button class="next"> Next &gt;&gt; </button>');
+            this.$button = $('<button class="previous"> &lt;&lt; Previous </button>');
 
             this.$button.click(function(){
-                testRunner.trigger('move', 'next');
+                testRunner.trigger('move', 'previous');
             });
 
             testRunner.on('renderitem', function(){
                 var context = this.getContext();
-                if(context.current === context.items.length){
+                if(context.current === 0){
                     self.disable();
                 } else {
                     self.enable();

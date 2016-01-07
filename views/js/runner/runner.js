@@ -25,8 +25,9 @@ define([
     'i18n',
     'core/eventifier',
     'core/promise',
+    'core/logger',
     'taoTests/runner/providerRegistry'
-], function ($, _, __, eventifier, Promise, providerRegistry){
+], function ($, _, __, eventifier, Promise, logger, providerRegistry){
     'use strict';
 
     /**
@@ -38,7 +39,7 @@ define([
      * @param {Array} [config.plugins] - the list of plugin instances to be initialized and bound to the test runner
      * @returns {runner|_L28.testRunnerFactory.runner}
      */
-    function testRunnerFactory(providerName, config){
+    function testRunnerFactory(providerName, pluginFactories, config){
 
         var runner;
         var states = {
@@ -49,6 +50,7 @@ define([
             'destroy': false
         };
         var context    = {};
+        var plugins    = {};
         var provider   = testRunnerFactory.getProvider(providerName);
         var areaBroker = provider.getAreaBroker();
 
@@ -61,15 +63,19 @@ define([
          * @returns {undefined}
          */
         function delegate(fnName){
-            if(_.isFunction(provider[fnName])){
-                provider[fnName].apply(runner, [].slice.call(arguments, 1));
-            }
+            var args = [].slice.call(arguments, 1);
+            return new Promise(function(resolve){
+                if(!_.isFunction(provider[fnName])){
+                   resolve();
+                }
+                resolve(provider[fnName].apply(runner, args));
+            });
         }
 
-        //config defaults
-        config = _.defaults(config || {}, {
-            plugins : {}
-        });
+        //instantiate the plugins
+
+
+        config = config || {};
 
         /**
          * Defines the test runner
@@ -82,48 +88,53 @@ define([
              * @param {Object} config
              */
             init : function init(){
+                var self = this;
 
-                delegate('init');
+                delegate('init').then(function(){
+                    _.forEach(pluginFactories, function(pluginFactory, pluginName){
+                        plugins[pluginName] = pluginFactory(runner, areaBroker).init();
+                    });
 
-                _.forEach(this.getPlugins(), function (plugin){
-                    plugin(runner, areaBroker).init();
+                    self.setState('init', true);
+                    self.trigger('init')
+                        .render();
                 });
-
-                this.setState('init', true);
-                this.trigger('init');
-
                 return this;
             },
 
             render : function render(){
+                var self = this;
 
+                delegate('render').then(function(){
 
-                delegate('render');
+                    _.forEach(self.getPlugins(), function (plugin){
+                        if(_.isFunction(plugin.render)){
+                            plugin.render();
+                        }
+                    });
 
-                _.forEach(this.getPlugins(), function (plugin){
-                    if(_.isFunction(plugin.render)){
-                        plugin.render();
-                    }
+                    self.setState('ready', true);
+                    self.trigger('ready');
                 });
-
-                this.setState('ready', true);
-                this.trigger('ready')
-                    .trigger('render');
-
                 return this;
             },
 
-            loadItem : function loadItem(){
-                delegate('loadItem');
+            loadItem : function loadItem(itemRef){
+                var self = this;
 
-                this.trigger('loaditem');
+                delegate('loadItem', itemRef).then(function(itemData){
+                    self.trigger('loaditem', itemRef)
+                        .renderItem(itemData);
+                });
                 return this;
             },
 
-            renderItem : function renderItem(){
-                delegate('renderItem');
+            renderItem : function renderItem(itemData){
+                var self = this;
 
-                this.trigger('renderitem');
+                delegate('renderItem', itemData).then(function(){
+                    self.trigger('renderitem', itemData);
+                });
                 return this;
             },
 
@@ -161,11 +172,15 @@ define([
             },
 
             getPlugins : function getPlugins(){
-                return config.plugins;
+                return plugins;
             },
 
             getPlugin : function getPlugin(name){
-                return config.plugins[name];
+                return plugins[name];
+            },
+
+            getConfig : function getConfig(){
+                return config;
             },
 
             /**
@@ -204,7 +219,7 @@ define([
                     context = newContext;
                 }
             }
-        });
+        }, logger('testRunner'));
 
         runner.on('move', function move(type){
             this.trigger.apply(this, [type].concat([].slice.call(arguments, 1)));

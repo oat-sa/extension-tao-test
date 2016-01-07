@@ -158,6 +158,14 @@ define([
                 },
 
                 /**
+                 * Get the test runner
+                 * @returns {testRunner} the plugins's testRunner
+                 */
+                getAreaBroker : function getAreaBroker(){
+                    return areaBroker;
+                },
+
+                /**
                  * Get the config
                  * @returns {Object} config
                  */
