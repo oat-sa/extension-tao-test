@@ -18,12 +18,10 @@
 /**
  * @author Jean-Sébastien Conan <jean-sebastien.conan@vesperiagroup.com>
  */define([
-    'jquery',
     'lodash',
-    'i18n',
     'core/eventifier',
     'taoTests/runner/proxyRegistry'
-], function($, _, __, eventifier, proxyRegistry) {
+], function(_, eventifier, proxyRegistry) {
     'use strict';
 
     var _defaults = {};
