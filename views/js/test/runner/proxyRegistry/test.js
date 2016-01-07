@@ -18,11 +18,7 @@
 /**
  * @author Jean-Sébastien Conan <jean-sebastien.conan@vesperiagroup.com>
  */
-define([
-    'jquery',
-    'lodash',
-    'taoTests/runner/proxyRegistry'
-], function($, _, proxyRegistry) {
+define(['taoTests/runner/proxyRegistry'], function(proxyRegistry) {
     'use strict';
 
     QUnit.module('proxyRegistry');
@@ -53,9 +49,10 @@ define([
     };
     var validProxy = {
         init : function() {},
-        request : function() {},
-        submitState : function() {},
-        storeResponse : function() {},
+        destroy : function() {},
+        getItem : function() {},
+        submitItemState : function() {},
+        storeItemResponse : function() {},
         actionCall : function() {}
     };
 
@@ -115,18 +112,20 @@ define([
         var name1 = 'myProxy1';
         var proxy1 = {
             init : function() {},
-            request : function() {},
-            submitState : function() {},
-            storeResponse : function() {},
+            destroy : function() {},
+            getItem : function() {},
+            submitItemState : function() {},
+            storeItemResponse : function() {},
             actionCall : function() {}
         };
 
         var name2 = 'myProxy2';
         var proxy2 = {
             init : function() {},
-            request : function() {},
-            submitState : function() {},
-            storeResponse : function() {},
+            destroy : function() {},
+            getItem : function() {},
+            submitItemState : function() {},
+            storeItemResponse : function() {},
             actionCall : function() {}
         };
 
