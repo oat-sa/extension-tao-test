@@ -22,14 +22,25 @@ define([
     'jquery',
     'lodash',
     'taoTests/runner/runner',
-    'json!taoTests/test/runner/sample/minimalisticTest',
-    'taoTests/test/runner/sample/minimalisticProvider',
-    'taoTests/test/runner/sample/plugin/nextButton',
-    'taoTests/test/runner/sample/plugin/responseSubmitter'
-], function($, _, runner, minimalisticTest, minimalisticProvider, pluginNextButton, pluginResponseSubmitter){
+    'taoTests/runner/areaBroker'
+], function($, _, runner, areaBroker){
     'use strict';
 
-    QUnit.module('runner', {
+    runner.registerProvider('text', {
+        init : function(){
+            this.on
+        },
+        getAreaBroker : function(){
+            var $container = $('.test-runner');
+            var broker = areaBroker($container);
+            return broker;
+        }
+    });
+
+    runner();
+
+
+ /*   QUnit.module('runner', {
         setup : function(){
             runner.registerProvider(minimalisticProvider.name, minimalisticProvider);
         }
@@ -126,5 +137,5 @@ define([
             .renderContent();
 
     });
-
+*/
 });

@@ -41,10 +41,16 @@ define([
     function testRunnerFactory(providerName, config){
 
         var runner;
-        var provider = testRunnerFactory.getProvider(providerName);
-        var state = {};
-
-        var $contentContainer;
+        var states = {
+            'init':    false,
+            'ready':   false,
+            'render':  false,
+            'finish':  false,
+            'destroy': false
+        };
+        var context    = {};
+        var provider   = testRunnerFactory.getProvider(providerName);
+        var areaBroker = provider.getAreaBroker();
 
         /**
          * Delegate a function call to the selected provider
@@ -60,6 +66,11 @@ define([
             }
         }
 
+        //config defaults
+        config = _.defaults(config || {}, {
+            plugins : {}
+        });
+
         /**
          * Defines the test runner
          * @type {runner}
@@ -72,147 +83,143 @@ define([
              */
             init : function init(){
 
-                if(config && config.plugins){
-                    _.forEach(config.plugins, function (plugin){
-                        //todo : manage plugin loading in an async context (Promise, callback, events ?)
-                        plugin(runner).init();
-                    });
-                }
+                delegate('init');
 
-                provider.init.apply(this, [].slice.call(arguments));
+                _.forEach(this.getPlugins(), function (plugin){
+                    plugin(runner, areaBroker).init();
+                });
 
+                this.setState('init', true);
                 this.trigger('init');
+
                 return this;
             },
 
-            /**
-             * Sets the runner in the ready state
-             * @param {ServiceApi} serviceApi
-             */
-            ready : function ready(serviceApi){
-                this.trigger('ready');
+            render : function render(){
+
+
+                delegate('render');
+
+                _.forEach(this.getPlugins(), function (plugin){
+                    if(_.isFunction(plugin.render)){
+                        plugin.render();
+                    }
+                });
+
+                this.setState('ready', true);
+                this.trigger('ready')
+                    .trigger('render');
+
                 return this;
             },
 
+            loadItem : function loadItem(){
+                delegate('loadItem');
+
+                this.trigger('loaditem');
+                return this;
+            },
+
+            renderItem : function renderItem(){
+                delegate('renderItem');
+
+                this.trigger('renderitem');
+                return this;
+            },
+
+            finish : function finish(){
+                delegate('finish');
+
+                _.forEach(this.getPlugins(), function (plugin){
+                    if(_.isFunction(plugin.finish)){
+                        plugin.finish();
+                    }
+                });
+
+                this.setState('finish', true);
+                this.trigger('finish');
+
+                return this;
+            },
+
+            destroy : function destroy(){
+
+                context = {};
+
+                delegate('destroy');
+
+                _.forEach(this.getPlugins(), function (plugin){
+                    if(_.isFunction(plugin.destroy)){
+                        plugin.destroy();
+                    }
+                });
+
+                this.setState('destroy', true);
+                this.trigger('destroy');
+
+                return this;
+            },
+
+            getPlugins : function getPlugins(){
+                return config.plugins;
+            },
+
+            getPlugin : function getPlugin(name){
+                return config.plugins[name];
+            },
+
             /**
+             * Check a runner state
              *
+             * @param {String} name - the state name
+             * @returns {Boolean} if active, false if not set
              */
-            load : function load(){
-                this.trigger('load');
-                return this;
+            getState : function getState(name){
+                return !!states[name];
             },
 
             /**
+             * Define a runner state
              *
-             * @returns {runner}
+             * @param {String} name - the state name
+             * @param {Boolean} active - is the state active
+             * @returns {plugin} chains
+             * @throws {TypeError} if the state name is not a valid string
              */
-            terminate : function terminate(){
-                this.trigger('terminate');
+            setState : function setState(name, active){
+                if(!_.isString(name) || _.isEmpty(name)){
+                    throw new TypeError('The state must have a name');
+                }
+                states[name] = !!active;
+
                 return this;
             },
 
-            /**
-             *
-             * @returns {runner}
-             */
-            next : function next(){
-                this.trigger('move', 'next');
-                return this;
+            getContext : function getContext(){
+                return context;
             },
 
-            /**
-             *
-             * @returns {runner}
-             */
-            previous : function previous(){
-                this.trigger('move', 'previous');
-                return this;
-            },
-
-            /**
-             *
-             * @returns {runner}
-             */
-            complete : function complete(){
-                this.trigger('complete');
-                return this;
-            },
-
-            /**
-             *
-             * @param scope
-             * @returns {runner}
-             */
-            exit : function exit(scope){
-                this.trigger('exit', scope);
-                return this;
-            },
-
-            /**
-             *
-             * @returns {runner}
-             */
-            skip : function skip(){
-                this.trigger('move', 'skip');
-                return this;
-            },
-
-            /**
-             *
-             * @param itemId
-             * @returns {runner}
-             */
-            jump : function jump(itemId){
-                this.trigger('move', 'jump', itemId);
-                return this;
-            },
-
-            /**
-             * Set the current state object
-             * @param {Object} state
-             * @returns {runner}
-             */
-            setState : function setState(newState){
-                state = newState;
-                return this;
-            },
-
-            /**
-             * Return the current state object
-             * @returns {Object}
-             */
-            getState : function getState(){
-                return state;
-            },
-
-            /**
-             * Render the content of the test given the current test state
-             * @returns {runner}
-             */
-            renderContent : function renderContent($container){
-                delegate('renderContent', [$container]);
-                return this;
-            },
-
-            /**
-             * Infor that the content is rendered and ready for user interaction
-             * @returns {runner}
-             */
-            contentReady : function contentReady(){
-                this.trigger('contentready', $contentContainer);
-                return this;
+            setContext : function setContext(newContext){
+                if(_.isPlainObject(context)){
+                    context = newContext;
+                }
             }
-
         });
 
         runner.on('move', function move(type){
             this.trigger.apply(this, [type].concat([].slice.call(arguments, 1)));
         });
 
-
         return runner;
     }
 
     //bind the provider registration capabilities to the testRunnerFactory
-    return providerRegistry(testRunnerFactory);
+    return providerRegistry(testRunnerFactory, function validateProvider(provider){
+
+        //mandatory methods
+        if(!_.isFunction(provider.getAreaBroker)){
+            throw new TypeError('The runner provider MUST have a method that returns an areaBroker');
+        }
+       return true;
+    });
 });

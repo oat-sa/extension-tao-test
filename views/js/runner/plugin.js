@@ -57,7 +57,7 @@ define([
          * @param {Object} config
          * @returns {Object} the plugin instance
          */
-        return function instanciatePlugin(runner, config){
+        return function instanciatePlugin(runner, areaBroker, config){
             var plugin;
 
             var states = {};
@@ -76,7 +76,6 @@ define([
             };
 
 
-
             config = _.defaults(config || {}, defaults);
 
             plugin = {
@@ -93,6 +92,30 @@ define([
                     this.setState('init', true);
 
                     this.trigger('init');
+
+                    return this;
+                },
+
+                render : function render(){
+
+                    delegate('render');
+
+                    this.setState('ready', true);
+
+                    this.trigger('render')
+                        .trigger('ready');
+
+                    return this;
+                },
+
+
+                finish : function finish(){
+
+                    delegate('finish');
+
+                    this.setState('finish', true);
+
+                    this.trigger('finish');
 
                     return this;
                 },
