@@ -32,29 +32,15 @@ define([
         /**
          * Initializes the proxy
          * @param {Object} config - The config provided to the proxy factory
+         * @returns {Promise} - Returns a promise. The proxy will be fully initialized on resolve.
+         *                      Any error will be provided if rejected.
          */
         init: function init(config) {
-            // do initialisation
-        },
-
-        /**
-         * Uninstalls the proxy
-         */
-        destroy: function destroy() {
-            // do uninstall actions
-        },
-
-        /**
-         * Gets an item by its URI
-         * @param string uri - The URI of the item to get
-         * @returns {Promise} - Returns a promise that will be resolved with the item data
-         */
-        getItem: function getItem(uri) {
             // the method must return a promise
             return new Promise(function(resolve, reject) {
-                // get the item data
-                // once the item is loaded provide the data by resolving the promise
-                resolve(/* the item data */);
+                // do initialisation
+                // once the proxy has been fully initialized notify the success by resolving the promise
+                resolve();
 
                 // you can also notify error by rejecting the promise
                 // reject(error);
@@ -62,10 +48,124 @@ define([
         },
 
         /**
-         * Submits the current item state
+         * Uninstalls the proxy
+         * @returns {Promise} - Returns a promise. The proxy will be fully uninstalled on resolve.
+         *                      Any error will be provided if rejected.
+         */
+        destroy: function destroy() {
+            // the method must return a promise
+            return new Promise(function(resolve, reject) {
+                // do uninstall actions
+                // once the proxy has been fully uninstalled notify the success by resolving the promise
+                resolve();
+
+                // you can also notify error by rejecting the promise
+                // reject(error);
+            });
+        },
+
+        /**
+         * Gets the test definition
+         * @param uri - The URI of the test for which get the definition
+         * @returns {Promise} - Returns a promise. The test definition data will be provided on resolve.
+         *                      Any error will be provided if rejected.
+         */
+        getTestDefinition : function(uri) {
+            // the method must return a promise
+            return new Promise(function(resolve, reject) {
+                // get the test definition
+
+                // once the action has been processed notify the success by resolving the promise
+                resolve(/* the test definition data */);
+
+                // you can also notify error by rejecting the promise
+                // reject(error);
+            });
+        },
+
+        /**
+         * Gets the test context
+         * @param uri - The URI of the test for which get the context object
+         * @returns {Promise} - Returns a promise. The context object will be provided on resolve.
+         *                      Any error will be provided if rejected.
+         */
+        getTestContext: function getTestContext(uri) {
+            // the method must return a promise
+            return new Promise(function(resolve, reject) {
+                // get the test context object
+
+                // once the action has been processed notify the success by resolving the promise
+                resolve(/* the test context object */);
+
+                // you can also notify error by rejecting the promise
+                // reject(error);
+            });
+        },
+
+        /**
+         * Calls an action related to the test
+         * @param {String} uri - The URI of the test for which call the action
+         * @param {String} action - The name of the action to call
+         * @param {Object} [params] - Some optional parameters to join to the call
+         * @returns {Promise} - Returns a promise. The result of the request will be provided on resolve.
+         *                      Any error will be provided if rejected.
+         */
+        callTestAction: function callTestAction(uri, action, params) {
+            // the method must return a promise
+            return new Promise(function(resolve, reject) {
+                // call the action
+
+                // once the action has been processed notify the success by resolving the promise
+                resolve(/* the action response */);
+
+                // you can also notify error by rejecting the promise
+                // reject(error);
+            });
+        },
+
+        /**
+         * Gets an item definition by its URI
+         * @param string uri - The URI of the item to get
+         * @returns {Promise} - Returns a promise. The item definition data will be provided on resolve.
+         *                      Any error will be provided if rejected.
+         * @fires getItemDefinition
+         */
+        getItemDefinition: function getItemDefinition(uri) {
+            // the method must return a promise
+            return new Promise(function(resolve, reject) {
+                // get the item definition
+                // once the item definition is loaded provide the data by resolving the promise
+                resolve(/* the item definition data */);
+
+                // you can also notify error by rejecting the promise
+                // reject(error);
+            });
+        },
+
+        /**
+         * Gets an item state by the item URI
+         * @param string uri - The URI of the item for which get the state
+         * @returns {Promise} - Returns a promise. The item state object will be provided on resolve.
+         *                      Any error will be provided if rejected.
+         */
+        getItemState: function getItemState(uri) {
+            // the method must return a promise
+            return new Promise(function(resolve, reject) {
+                // get the item state
+                // once the item state is loaded provide the data by resolving the promise
+                resolve(/* the item state object */);
+
+                // you can also notify error by rejecting the promise
+                // reject(error);
+            });
+        },
+
+        /**
+         * Submits the state of a particular item
          * @param {String} uri - The URI of the item to update
-         * @param {Object} state
-         * @returns {Promise}
+         * @param {Object} state - The state to submit
+         * @returns {Promise} - Returns a promise. The result of the request will be provided on resolve.
+         *                      Any error will be provided if rejected.
          */
         submitItemState: function submitItemState(uri, state) {
             // the method must return a promise
@@ -81,10 +181,11 @@ define([
         },
 
         /**
-         * Stores the current item response
+         * Stores the response for a particular item
          * @param {String} uri - The URI of the item to update
-         * @param {Object} response
-         * @returns {Promise}
+         * @param {Object} response - The response object to submit
+         * @returns {Promise} - Returns a promise. The result of the request will be provided on resolve.
+         *                      Any error will be provided if rejected.
          */
         storeItemResponse: function storeItemResponse(uri, response) {
             // the method must return a promise
@@ -100,13 +201,14 @@ define([
         },
 
         /**
-         * Calls a particular action
-         * @param {String} uri - The URI of the item to update
-         * @param {String} action
-         * @param {Object} params
-         * @returns {Promise}
+         * Calls an action related to a particular item
+         * @param {String} uri - The URI of the item for which call the action
+         * @param {String} action - The name of the action to call
+         * @param {Object} [params] - Some optional parameters to join to the call
+         * @returns {Promise} - Returns a promise. The result of the request will be provided on resolve.
+         *                      Any error will be provided if rejected.
          */
-        actionCall: function actionCall(uri, action, params) {
+        callItemAction: function callItemAction(uri, action, params) {
             // the method must return a promise
             return new Promise(function(resolve, reject) {
                 // call the action
@@ -118,7 +220,6 @@ define([
                 // reject(error);
             });
         }
-
     };
 
     return sampleProxy;

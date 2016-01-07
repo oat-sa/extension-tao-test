@@ -26,30 +26,51 @@
 
     var _defaults = {};
 
+    var _slice = [].slice;
+
     /**
+     * Defines a proxy bound to a particular adapter
      *
-     * @param {String} proxyName
-     * @param {Object} config
-     * @returns {proxy}
+     * @param {String} proxyName - The name of the proxy adapter to use in the returned proxy instance
+     * @param {Object} [config] - Some optional config, this object will be forwarded as in to the proxy adapter
+     * @returns {proxy} - The proxy instance, bound to the selected proxy adapter
      */
     function proxyFactory(proxyName, config) {
         var proxyAdapter = proxyFactory.getProxy(proxyName);
         var initConfig = _.defaults(config || {}, _defaults);
 
         /**
-         * Delegate a function call to the selected proxy
+         * Delegates a function call to the selected proxy.
+         * Fires the related event
          *
-         * @param {String} fnName
-         * @param {Array} [args] - array of arguments to apply to the method
+         * @param {String} fnName - The name of the delegated method to call
+         * @param {Array} [args] - An optional array of arguments to apply to the method
+         * @returns {Promise} - The delegated method must return a promise
          * @private
-         * @returns {undefined}
+         * @throws Error
          */
         function delegate(fnName, args) {
+            var promise;
+
             if (proxyAdapter) {
                 if (_.isFunction(proxyAdapter[fnName])) {
-                    return proxyAdapter[fnName].apply(proxy, _.isArray(args) ? args : []);
+                    // need real array of params, even if empty
+                    args = args ? _slice.call(args) : [];
+
+                    // delegate the call to the adapter
+                    promise = proxyAdapter[fnName].apply(proxy, args);
+
+                    // fire the method related event
+                    // the promise has to be provided as first argument in all events
+                    proxy.trigger.apply(proxy, [fnName, promise].concat(args));
+                } else {
+                    throw new Error('There is no method called ' + fnName + ' in the proxy adapter!');
                 }
+            } else {
+                throw new Error('There is no proxy adapter!');
             }
+
+            return promise;
         }
 
         /**
@@ -59,121 +80,171 @@
         var proxy = eventifier({
             /**
              * Initializes the proxy
-             * @returns {proxy}
+             * @returns {Promise} - Returns a promise. The proxy will be fully initialized on resolve.
+             *                      Any error will be provided if rejected.
              * @fires init
              */
             init: function init() {
-                delegate('init', [initConfig]);
-
                 /**
                  * @event proxy#init
+                 * @param {Promise} promise
                  * @param {Object} config
                  */
-                this.trigger('init', initConfig);
-
-                return this;
+                return delegate('init', [initConfig]);
             },
 
             /**
              * Uninstalls the proxy
-             * @returns {proxy}
+             * @returns {Promise} - Returns a promise. The proxy will be fully uninstalled on resolve.
+             *                      Any error will be provided if rejected.
              * @fires destroy
              */
             destroy: function destroy() {
-                delegate('destroy');
-
                 /**
                  * @event proxy#destroy
-                 */
-                this.trigger('destroy');
-
-                return this;
-            },
-
-            /**
-             * Gets an item by its URI
-             * @param string uri - The URI of the item to get
-             * @returns {Promise} - Returns a promise that will be resolved with the item data
-             * @fires getItem
-             */
-            getItem: function getItem(uri) {
-                var promise = delegate('getItem', [uri]);
-
-                /**
-                 * @event proxy#getItem
-                 * @param {String} uri
                  * @param {Promise} promise
                  */
-                this.trigger('getItem', uri, promise);
-
-                return promise;
+                return delegate('destroy');
             },
 
             /**
-             * Submits the current item state
-             * @param {String} uri - The URI of the item to update
-             * @param {Object} state
-             * @returns {Promise}
-             * @fires submitItemState
+             * Gets the test definition
+             * @param uri - The URI of the test for which get the definition
+             * @returns {Promise} - Returns a promise. The test definition data will be provided on resolve.
+             *                      Any error will be provided if rejected.
+             * @fires getTestDefinition
              */
-            submitItemState: function submitItemState(uri, state) {
-                var promise = delegate('submitItemState', [uri, state]);
-
+            getTestDefinition: function getTestDefinition(uri) {
                 /**
-                 * @event proxy#submitItemState
-                 * @param {String} uri
-                 * @param {Object} state
+                 * @event proxy#getTestDefinition
                  * @param {Promise} promise
-                 */
-                this.trigger('submitItemState', uri, state, promise);
-
-                return promise;
-            },
-
-            /**
-             * Stores the current item response
-             * @param {String} uri - The URI of the item to update
-             * @param {Object} response
-             * @returns {Promise}
-             * @fires storeItemResponse
-             */
-            storeItemResponse: function storeItemResponse(uri, response) {
-                var promise = delegate('storeItemResponse', [uri, response]);
-
-                /**
-                 * @event proxy#storeItemResponse
                  * @param {String} uri
-                 * @param {Object} response
-                 * @param {Promise} promise
                  */
-                this.trigger('storeItemResponse', uri, response, promise);
-
-                return promise;
+                return delegate('getTestDefinition', [uri]);
             },
 
             /**
-             * Calls a particular action
-             * @param {String} uri - The URI of the item to update
-             * @param {String} action
-             * @param {Object} params
-             * @returns {Promise}
-             * @fires actionCall
+             * Gets the test context
+             * @param uri - The URI of the test for which get the context object
+             * @returns {Promise} - Returns a promise. The context object will be provided on resolve.
+             *                      Any error will be provided if rejected.
              */
-            actionCall: function actionCall(uri, action, params) {
-                var promise = delegate('actionCall', [uri, action, params]);
-
+            getTestContext: function getTestContext(uri) {
                 /**
-                 * @event proxy#actionCall
+                 * @event proxy#getTestContext
+                 * @param {Promise} promise
+                 * @param {String} uri
+                 */
+                return delegate('getTestContext', [uri]);
+            },
+
+            /**
+             * Calls an action related to the test
+             * @param {String} uri - The URI of the test for which call the action
+             * @param {String} action - The name of the action to call
+             * @param {Object} [params] - Some optional parameters to join to the call
+             * @returns {Promise} - Returns a promise. The result of the request will be provided on resolve.
+             *                      Any error will be provided if rejected.
+             * @fires callTestAction
+             */
+            callTestAction: function callTestAction(uri, action, params) {
+                /**
+                 * @event proxy#callTestAction
+                 * @param {Promise} promise
                  * @param {String} uri
                  * @param {String} action
                  * @param {Object} params
-                 * @param {Promise} promise
                  */
-                this.trigger('actionCall', uri, action, params, promise);
+                return delegate('callTestAction', [uri, action, params]);
+            },
 
-                return promise;
+            /**
+             * Gets an item definition by its URI
+             * @param string uri - The URI of the item to get
+             * @returns {Promise} - Returns a promise. The item definition data will be provided on resolve.
+             *                      Any error will be provided if rejected.
+             * @fires getItemDefinition
+             */
+            getItemDefinition: function getItemDefinition(uri) {
+                /**
+                 * @event proxy#getItemDefinition
+                 * @param {Promise} promise
+                 * @param {String} uri
+                 */
+                return delegate('getItemDefinition', [uri]);
+            },
+
+            /**
+             * Gets an item state by the item URI
+             * @param string uri - The URI of the item for which get the state
+             * @returns {Promise} - Returns a promise. The item state object will be provided on resolve.
+             *                      Any error will be provided if rejected.
+             * @fires getItemState
+             */
+            getItemState: function getItemState(uri) {
+                /**
+                 * @event proxy#getItemState
+                 * @param {Promise} promise
+                 * @param {String} uri
+                 */
+                return delegate('getItemState', [uri]);
+            },
+
+            /**
+             * Submits the state of a particular item
+             * @param {String} uri - The URI of the item to update
+             * @param {Object} state - The state to submit
+             * @returns {Promise} - Returns a promise. The result of the request will be provided on resolve.
+             *                      Any error will be provided if rejected.
+             * @fires submitItemState
+             */
+            submitItemState: function submitItemState(uri, state) {
+                /**
+                 * @event proxy#submitItemState
+                 * @param {Promise} promise
+                 * @param {String} uri
+                 * @param {Object} state
+                 */
+                return delegate('submitItemState', [uri, state]);
+            },
+
+            /**
+             * Stores the response for a particular item
+             * @param {String} uri - The URI of the item to update
+             * @param {Object} response - The response object to submit
+             * @returns {Promise} - Returns a promise. The result of the request will be provided on resolve.
+             *                      Any error will be provided if rejected.
+             * @fires storeItemResponse
+             */
+            storeItemResponse: function storeItemResponse(uri, response) {
+                /**
+                 * @event proxy#storeItemResponse
+                 * @param {Promise} promise
+                 * @param {String} uri
+                 * @param {Object} response
+                 */
+                return delegate('storeItemResponse', [uri, response]);
+            },
+
+            /**
+             * Calls an action related to a particular item
+             * @param {String} uri - The URI of the item for which call the action
+             * @param {String} action - The name of the action to call
+             * @param {Object} [params] - Some optional parameters to join to the call
+             * @returns {Promise} - Returns a promise. The result of the request will be provided on resolve.
+             *                      Any error will be provided if rejected.
+             * @fires callItemAction
+             */
+            callItemAction: function callItemAction(uri, action, params) {
+                /**
+                 * @event proxy#callItemAction
+                 * @param {Promise} promise
+                 * @param {String} uri
+                 * @param {String} action
+                 * @param {Object} params
+                 */
+                return delegate('callItemAction', [uri, action, params]);
             }
-
         });
 
         return proxy;
