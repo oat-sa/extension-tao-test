@@ -32,7 +32,8 @@
      * Defines a proxy bound to a particular adapter
      *
      * @param {String} proxyName - The name of the proxy adapter to use in the returned proxy instance
-     * @param {Object} [config] - Some optional config, this object will be forwarded as in to the proxy adapter
+     * @param {Object} [config] - Some optional config depending of implementation,
+     *                            this object will be forwarded to the proxy adapter
      * @returns {proxy} - The proxy instance, bound to the selected proxy adapter
      */
     function proxyFactory(proxyName, config) {
@@ -108,54 +109,48 @@
             },
 
             /**
-             * Gets the test definition
-             * @param uri - The URI of the test for which get the definition
+             * Gets the test definition data
              * @returns {Promise} - Returns a promise. The test definition data will be provided on resolve.
              *                      Any error will be provided if rejected.
-             * @fires getTestDefinition
+             * @fires getTestData
              */
-            getTestDefinition: function getTestDefinition(uri) {
+            getTestData: function getTestData() {
                 /**
-                 * @event proxy#getTestDefinition
+                 * @event proxy#getTestData
                  * @param {Promise} promise
-                 * @param {String} uri
                  */
-                return delegate('getTestDefinition', [uri]);
+                return delegate('getTestData');
             },
 
             /**
              * Gets the test context
-             * @param uri - The URI of the test for which get the context object
              * @returns {Promise} - Returns a promise. The context object will be provided on resolve.
              *                      Any error will be provided if rejected.
              */
-            getTestContext: function getTestContext(uri) {
+            getTestContext: function getTestContext() {
                 /**
                  * @event proxy#getTestContext
                  * @param {Promise} promise
-                 * @param {String} uri
                  */
-                return delegate('getTestContext', [uri]);
+                return delegate('getTestContext');
             },
 
             /**
              * Calls an action related to the test
-             * @param {String} uri - The URI of the test for which call the action
              * @param {String} action - The name of the action to call
              * @param {Object} [params] - Some optional parameters to join to the call
              * @returns {Promise} - Returns a promise. The result of the request will be provided on resolve.
              *                      Any error will be provided if rejected.
              * @fires callTestAction
              */
-            callTestAction: function callTestAction(uri, action, params) {
+            callTestAction: function callTestAction(action, params) {
                 /**
                  * @event proxy#callTestAction
                  * @param {Promise} promise
-                 * @param {String} uri
                  * @param {String} action
                  * @param {Object} params
                  */
-                return delegate('callTestAction', [uri, action, params]);
+                return delegate('callTestAction', [action, params]);
             },
 
             /**
@@ -163,15 +158,15 @@
              * @param string uri - The URI of the item to get
              * @returns {Promise} - Returns a promise. The item definition data will be provided on resolve.
              *                      Any error will be provided if rejected.
-             * @fires getItemDefinition
+             * @fires getItemData
              */
-            getItemDefinition: function getItemDefinition(uri) {
+            getItemData: function getItemData(uri) {
                 /**
-                 * @event proxy#getItemDefinition
+                 * @event proxy#getItemData
                  * @param {Promise} promise
                  * @param {String} uri
                  */
-                return delegate('getItemDefinition', [uri]);
+                return delegate('getItemData', [uri]);
             },
 
             /**

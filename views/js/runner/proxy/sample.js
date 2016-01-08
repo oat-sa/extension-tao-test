@@ -65,15 +65,14 @@ define([
         },
 
         /**
-         * Gets the test definition
-         * @param uri - The URI of the test for which get the definition
+         * Gets the test definition data
          * @returns {Promise} - Returns a promise. The test definition data will be provided on resolve.
          *                      Any error will be provided if rejected.
          */
-        getTestDefinition : function(uri) {
+        getTestData: function getTestData() {
             // the method must return a promise
             return new Promise(function(resolve, reject) {
-                // get the test definition
+                // get the test definition data
 
                 // once the action has been processed notify the success by resolving the promise
                 resolve(/* the test definition data */);
@@ -85,11 +84,10 @@ define([
 
         /**
          * Gets the test context
-         * @param uri - The URI of the test for which get the context object
          * @returns {Promise} - Returns a promise. The context object will be provided on resolve.
          *                      Any error will be provided if rejected.
          */
-        getTestContext: function getTestContext(uri) {
+        getTestContext: function getTestContext() {
             // the method must return a promise
             return new Promise(function(resolve, reject) {
                 // get the test context object
@@ -104,13 +102,12 @@ define([
 
         /**
          * Calls an action related to the test
-         * @param {String} uri - The URI of the test for which call the action
          * @param {String} action - The name of the action to call
          * @param {Object} [params] - Some optional parameters to join to the call
          * @returns {Promise} - Returns a promise. The result of the request will be provided on resolve.
          *                      Any error will be provided if rejected.
          */
-        callTestAction: function callTestAction(uri, action, params) {
+        callTestAction: function callTestAction(action, params) {
             // the method must return a promise
             return new Promise(function(resolve, reject) {
                 // call the action
@@ -128,12 +125,12 @@ define([
          * @param string uri - The URI of the item to get
          * @returns {Promise} - Returns a promise. The item definition data will be provided on resolve.
          *                      Any error will be provided if rejected.
-         * @fires getItemDefinition
+         * @fires getItemData
          */
-        getItemDefinition: function getItemDefinition(uri) {
+        getItemData: function getItemData(uri) {
             // the method must return a promise
             return new Promise(function(resolve, reject) {
-                // get the item definition
+                // get the item definition data
                 // once the item definition is loaded provide the data by resolving the promise
                 resolve(/* the item definition data */);
 
