@@ -20,15 +20,15 @@
  */
 define([
     'jquery',
+    'core/promise',
     'taoTests/runner/plugin'
-], function ($, pluginFactory){
+], function ($, Promise, pluginFactory){
     'use strict';
 
     return pluginFactory({
         name : 'nextButton',
         init : function init(){
             var self = this;
-            var config = this.getConfig();
             var testRunner = this.getTestRunner();
 
             this.$button = $('<button class="next"> Next &gt;&gt; </button>');
@@ -38,7 +38,7 @@ define([
             });
 
             testRunner.on('renderitem', function(){
-                var context = this.getContext();
+                var context = this.getTestContext();
                 if(context.current === context.items.length){
                     self.disable();
                 } else {

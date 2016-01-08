@@ -20,8 +20,9 @@
  */
 define([
     'jquery',
+    'core/promise',
     'taoTests/runner/plugin'
-], function ($, pluginFactory){
+], function ($, Promise, pluginFactory){
     'use strict';
 
     return pluginFactory({
@@ -38,7 +39,7 @@ define([
             });
 
             testRunner.on('renderitem', function(){
-                var context = this.getContext();
+                var context = this.getTestContext();
                 if(context.current === 0){
                     self.disable();
                 } else {

@@ -16,20 +16,28 @@
  * Copyright (c) 2015 (original work) Open Assessment Technologies SA ;
  */
 /**
+ *
+ * Runner plugin
+ *
+ * TODO usage example
+ *
  * @author Sam <sam@taotesting.com>
  * @author Bertrand Chevrier <bertrand@taotesting.com>
  */
 define([
-    'lodash'
-], function (_){
+    'lodash',
+    'core/promise'
+], function (_, Promise){
     'use strict';
 
     /**
-     * Meta factory for plugins
+     * Meta factory for plugins. Let's you create a plugin definition.
      *
      * @param {Object} provider - the list of implemented methods
      * @param {String} provider.name - the plugin name
      * @param {Function} provider.init - the plugin initialization method
+     * @param {Function} [provider.render] - plugin render behaviorV
+     * @param {Function} [provider.finish] - plugin render behaviorV
      * @param {Function} [provider.destroy] - plugin destroy behavior
      * @param {Function} [provider.show] - plugin show behavior
      * @param {Function} [provider.hide] - plugin hide behavior
@@ -54,8 +62,10 @@ define([
         /**
          * The configured plugin factory
          *
-         * @param {Object} config
-         * @returns {Object} the plugin instance
+         * @param {testRunner} runner - a test runner instance
+         * @param {areaBroker} areaBroker - an instance of an areaBrokee
+         * @param {Object} [config] - plugin configuration
+         * @returns {plugin} the plugin instance
          */
         return function instanciatePlugin(runner, areaBroker, config){
             var plugin;
@@ -69,83 +79,95 @@ define([
              * @param {...} args - additional args are given to the provider
              * @returns {*} up to the provider
              */
-            var delegate = function delegate(fnName){
-                if(_.isFunction(provider[fnName])){
-                    return provider[fnName].apply(plugin, [].slice.call(arguments, 1));
-                }
-            };
+            function delegate(fnName){
+                var args = [].slice.call(arguments, 1);
+                return new Promise(function(resolve){
+                    if(!_.isFunction(provider[fnName])){
+                        resolve();
+                    }
+                    resolve(provider[fnName].apply(plugin, args));
+                });
+            }
 
 
             config = _.defaults(config || {}, defaults);
 
+            /**
+             * The plugin instance.
+             * @typedef {plugin}
+             */
             plugin = {
 
                 /**
-                 * Initializes the runner plugin
+                 * Called when the testRunner is initializing
+                 * @returns {Promise} to resolve async delegation
                  */
                 init : function init(){
-
+                    var self = this;
                     states = {};
 
-                    delegate('init');
-
-                    this.setState('init', true);
-
-                    this.trigger('init');
-
-                    return this;
-                },
-
-                render : function render(){
-
-                    delegate('render');
-
-                    this.setState('ready', true);
-
-                    this.trigger('render')
-                        .trigger('ready');
-
-                    return this;
-                },
-
-
-                finish : function finish(){
-
-                    delegate('finish');
-
-                    this.setState('finish', true);
-
-                    this.trigger('finish');
-
-                    return this;
+                    return delegate('init').then(function(){
+                        self.setState('init', true)
+                            .trigger('init');
+                    });
                 },
 
                 /**
-                 * Destroys the plugin
-                 * @returns {plugin}
+                 * Called when the testRunner is rendering
+                 * @returns {Promise} to resolve async delegation
+                 */
+                render : function render(){
+                    var self = this;
+
+                    return delegate('render').then(function(){
+                        self.setState('ready', true)
+                            .trigger('render')
+                            .trigger('ready');
+                    });
+                },
+
+                /**
+                 * Called when the testRunner is finishing
+                 * @returns {Promise} to resolve async delegation
+                 */
+                finish : function finish(){
+                    var self = this;
+
+                    return delegate('finish').then(function(){
+                        self.setState('finish', true)
+                            .trigger('finish');
+                    });
+                },
+
+                /**
+                 * Called when the testRunner is destroying
+                 * @returns {Promise} to resolve async delegation
                  */
                 destroy : function destroy(){
+                    var self = this;
 
-                    delegate('destroy');
+                    return delegate('destroy').then(function(){
 
-                    config = {};
-                    states = {};
+                        config = {};
+                        states = {};
 
-                    this.setState('init', false);
-
-                    this.trigger('destroy');
-
-                    return this;
+                        self.setState('init', false);
+                        self.trigger('destroy');
+                    });
                 },
 
                 /**
-                * Triggers the events on the test runner using the pluginName as namespace
-                * @param {String} name - the event name
-                * @param {...} args - additional args are given to the event
-                */
+                 * Triggers the events on the test runner using the pluginName as namespace
+                 * and prefixed by plugin-
+                 * For example trigger('foo') will trigger('plugin-foo.pluginA') on the runner.
+                 *
+                 * @param {String} name - the event name
+                 * @param {...} args - additional args are given to the event
+                 * @returns {plugin} chains
+                 */
                 trigger : function trigger(name){
                     var args = [].slice.call(arguments, 1);
-                    runner.trigger.apply(runner, [name + '.' + pluginName, plugin].concat(args));
+                    runner.trigger.apply(runner, ['plugin-' + name + '.' + pluginName, plugin].concat(args));
                     return this;
                 },
 
@@ -218,62 +240,54 @@ define([
 
                 /**
                  * Shows the component related to this plugin
-                 * @returns {plugin} chains
+                 * @returns {Promise} to resolve async delegation
                  */
                 show : function show(){
+                    var self = this;
 
-                    delegate('show');
-
-                    this.setState('visible', true);
-
-                    this.trigger('show');
-
-                    return this;
+                    return delegate('show').then(function(){
+                        self.setState('visible', true)
+                            .trigger('show');
+                    });
                 },
 
                 /**
                  * Hides the component related to this plugin
-                 * @returns {plugin} chains
+                 * @returns {Promise} to resolve async delegation
                  */
                 hide : function hide(){
+                    var self = this;
 
-                    delegate('hide');
-
-                    this.setState('visible', false);
-
-                    this.trigger('hide');
-
-                    return this;
+                    return delegate('hide').then(function(){
+                        self.setState('visible', false)
+                            .trigger('hide');
+                    });
                 },
 
                 /**
                  * Enables the plugin
-                 * @returns {plugin} chains
+                 * @returns {Promise} to resolve async delegation
                  */
                 enable : function enable(){
+                    var self = this;
 
-                    delegate('enable');
-
-                    this.setState('enabled', true);
-
-                    this.trigger('enable');
-
-                    return this;
+                    return delegate('enable').then(function(){
+                        self.setState('enabled', true)
+                            .trigger('enable');
+                    });
                 },
 
                 /**
                  * Disables the plugin
-                 * @returns {plugin} chains
+                 * @returns {Promise} to resolve async delegation
                  */
                 disable : function disable(){
+                    var self = this;
 
-                    delegate('disable');
-
-                    this.setState('enabled', false);
-
-                    this.trigger('disable');
-
-                    return this;
+                    return delegate('disable').then(function(){
+                        self.setState('enabled', false)
+                            .trigger('disable');
+                    });
                 }
             };
 

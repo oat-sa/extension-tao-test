@@ -53,22 +53,21 @@ define([
             })
             .on('move', function(type){
 
-                var test = this.getContext();
+                var test = this.getTestContext();
 
 
                 if(type === 'next'){
                    if(test.items[test.current + 1]){
+                        self.unloadItem(test.current);
                         self.loadItem(test.current + 1);
                    } else {
-
-                        alert('the end');
-
                         self.finish();
                    }
                 }
                 else if(type === 'previous'){
 
                    if(test.items[test.current - 1]){
+                        self.unloadItem(test.current);
                         self.loadItem(test.current - 1);
                    } else {
                         self.loadItem(0);
@@ -81,7 +80,7 @@ define([
             return new Promise(function(resolve, reject){
 
                 $.getJSON(config.url).success(function(test){
-                    self.setContext(_.defaults(test || {}, {
+                    self.setTestContext(_.defaults(test || {}, {
                         items : {},
                         current: 0
                     }));
@@ -94,7 +93,7 @@ define([
         render : function(){
 
             var config = this.getConfig();
-            var context = this.getContext();
+            var context = this.getTestContext();
 
 
             broker.getContainer().find('.title').html('Running Test ' + context.id);
@@ -109,7 +108,7 @@ define([
         loadItem : function loadItem(itemIndex){
             var self = this;
 
-            var test = this.getContext();
+            var test = this.getTestContext();
             var $content = broker.getContentArea();
 
             $content.html('loading');
@@ -118,10 +117,10 @@ define([
 
                 setTimeout(function(){
                     test.current = itemIndex;
-                    self.setContext(test);
+                    self.setTestContext(test);
 
                     resolve(test.items[itemIndex]);
-                }, 1000);
+                }, 500);
             });
 
         },

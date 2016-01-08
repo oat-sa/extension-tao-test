@@ -41,7 +41,29 @@ define([
      */
     function testRunnerFactory(providerName, pluginFactories, config){
 
+        /**
+         * @type {Object} The test runner instance
+         */
         var runner;
+
+        /**
+         * @type {Object} the test definition data
+         */
+        var testData       = {};
+
+        /**
+         * @type {Object} contextual test data (the state of the test)
+         */
+        var testContext    = {};
+
+        /**
+         * @type {Object} the registered plugins
+         */
+        var plugins        = {};
+
+        /**
+         * @type {Object} the test of the runner
+         */
         var states = {
             'init':    false,
             'ready':   false,
@@ -49,55 +71,79 @@ define([
             'finish':  false,
             'destroy': false
         };
-        var context    = {};
-        var plugins    = {};
-        var provider   = testRunnerFactory.getProvider(providerName);
-        var areaBroker = provider.getAreaBroker();
 
         /**
-         * Delegate a function call to the selected provider
-         *
-         * @param {String} fnName
-         * @param {Array} args - array of arguments to apply to the method
-         * @private
-         * @returns {undefined}
+         * The selected test runner provider
          */
-        function delegate(fnName){
+        var provider       = testRunnerFactory.getProvider(providerName);
+
+        /**
+         * The provider gives us a reference to an areaBroker (so our provider can attach elements to the GUI)
+         */
+        var areaBroker     = provider.getAreaBroker();
+
+        /**
+         * Run a method of the provider (by delegation)
+         *
+         * @param {String} method - the method to run
+         * @param {...} args - rest parameters given to the provider method
+         * @returns {Promise} so provider can do async stuffs
+         */
+        function providerRun(method){
             var args = [].slice.call(arguments, 1);
             return new Promise(function(resolve){
-                if(!_.isFunction(provider[fnName])){
+                if(!_.isFunction(provider[method])){
                    resolve();
                 }
-                resolve(provider[fnName].apply(runner, args));
+                resolve(provider[method].apply(runner, args));
             });
         }
 
-        //instantiate the plugins
+        /**
+         * Run a method in all plugins
+         *
+         * @param {String} method - the method to run
+         * @returns {Promise} once that resolve when all plugins are done
+         */
+        function pluginRun(method){
+            var execStack = [];
+
+            _.forEach(runner.getPlugins(), function (plugin){
+                if(_.isFunction(plugin[method])){
+                    execStack.push(plugin[method]());
+                }
+            });
+
+            return Promise.all(execStack);
+        }
 
 
         config = config || {};
 
         /**
          * Defines the test runner
+         *
          * @type {runner}
          */
         runner = eventifier({
 
             /**
              * Initializes the runner
-             * @param {Object} config
              */
             init : function init(){
                 var self = this;
 
-                delegate('init').then(function(){
-                    _.forEach(pluginFactories, function(pluginFactory, pluginName){
-                        plugins[pluginName] = pluginFactory(runner, areaBroker).init();
-                    });
+                //instantiate the plugins first
+                _.forEach(pluginFactories, function(pluginFactory, pluginName){
+                    plugins[pluginName] = pluginFactory(runner, areaBroker);
+                });
 
-                    self.setState('init', true);
-                    self.trigger('init')
-                        .render();
+                providerRun('init').then(function(){
+                    pluginRun('init').then(function(){
+                        self.setState('init', true)
+                            .trigger('init')
+                            .render();
+                    });
                 });
                 return this;
             },
@@ -105,16 +151,12 @@ define([
             render : function render(){
                 var self = this;
 
-                delegate('render').then(function(){
-
-                    _.forEach(self.getPlugins(), function (plugin){
-                        if(_.isFunction(plugin.render)){
-                            plugin.render();
-                        }
+                providerRun('render').then(function(){
+                    pluginRun('render').then(function(){
+                        self.setState('ready', true)
+                            .trigger('render')
+                            .trigger('ready');
                     });
-
-                    self.setState('ready', true);
-                    self.trigger('ready');
                 });
                 return this;
             },
@@ -122,7 +164,7 @@ define([
             loadItem : function loadItem(itemRef){
                 var self = this;
 
-                delegate('loadItem', itemRef).then(function(itemData){
+                providerRun('loadItem', itemRef).then(function(itemData){
                     self.trigger('loaditem', itemRef)
                         .renderItem(itemData);
                 });
@@ -132,32 +174,38 @@ define([
             renderItem : function renderItem(itemData){
                 var self = this;
 
-                delegate('renderItem', itemData).then(function(){
+                providerRun('renderItem', itemData).then(function(){
                     self.trigger('renderitem', itemData);
                 });
                 return this;
             },
 
-            finish : function finish(){
-                delegate('finish');
+            unloadItem : function loadItem(itemRef){
+                var self = this;
 
-                _.forEach(this.getPlugins(), function (plugin){
-                    if(_.isFunction(plugin.finish)){
-                        plugin.finish();
-                    }
+                providerRun('unloadItem', itemRef).then(function(itemData){
+                    self.trigger('unloaditem', itemRef);
                 });
+                return this;
+            },
 
-                this.setState('finish', true);
-                this.trigger('finish');
+            finish : function finish(){
+                var self = this;
 
+                providerRun('finish').then(function(){
+                    pluginRun('finish').then(function(){
+                        self.setState('finish', true)
+                            .trigger('finish');
+                    });
+                });
                 return this;
             },
 
             destroy : function destroy(){
 
-                context = {};
+                testContext = {};
 
-                delegate('destroy');
+                providerRun('destroy');
 
                 _.forEach(this.getPlugins(), function (plugin){
                     if(_.isFunction(plugin.destroy)){
@@ -210,15 +258,60 @@ define([
                 return this;
             },
 
-            getContext : function getContext(){
-                return context;
+            getTestContext : function getTestContext(){
+                return testContext;
             },
 
-            setContext : function setContext(newContext){
+            setTestContext : function setTestContext(context){
                 if(_.isPlainObject(context)){
-                    context = newContext;
+                    testContext = context;
                 }
+            },
+
+            getTestData : function getTestData(){
+                return testData;
+            },
+
+            setTestData : function setTestData(data){
+                testData  = data;
+            },
+
+            //aliases / actions
+            next : function next(){
+                this.trigger('move', 'next');
+                return this;
+            },
+
+            previous : function previous(){
+                this.trigger('move', 'previous');
+                return this;
+            },
+
+            jump : function jump(to){
+                this.trigger('move', 'jump', to);
+                return this;
+            },
+
+            skip : function skip(to){
+                this.trigger('sip');
+                return this;
+            },
+
+            exit : function exit(way, reason){
+
+                this.trigger('exit', way, reason);
+                return this;
+            },
+
+            pause : function pause(){
+                this.trigger('pause');
+                return this;
+            },
+            resume : function resume(){
+                this.trigger('resume');
+                return this;
             }
+
         }, logger('testRunner'));
 
         runner.on('move', function move(type){

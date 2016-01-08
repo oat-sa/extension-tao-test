@@ -79,7 +79,7 @@ define([
     });
 
     QUnit.test('create a plugin', function (assert){
-        QUnit.expect(16);
+        QUnit.expect(19);
 
         var myPlugin = pluginFactory(mockProvider, samplePluginDefaults);
 
@@ -93,6 +93,9 @@ define([
 
         var instance1 = myPlugin();
         assert.equal(typeof instance1.init, 'function', 'The plugin instance has also the default function init');
+        assert.equal(typeof instance1.getAreaBroker, 'function', 'The plugin instance has also the default function getAreaBroker');
+        assert.equal(typeof instance1.finish, 'function', 'The plugin instance has also the default function finish');
+        assert.equal(typeof instance1.render, 'function', 'The plugin instance has also the default function render');
         assert.equal(typeof instance1.destroy, 'function', 'The plugin instance has also the default function destroy');
         assert.equal(typeof instance1.show, 'function', 'The plugin instance has also the default function show');
         assert.equal(typeof instance1.hide, 'function', 'The plugin instance has also the default function hide');
@@ -109,7 +112,7 @@ define([
         assert.equal(config1.b, samplePluginDefaults.b, 'instance1 inherit the default config');
 
         // check overwritten config
-        var instance2 = myPlugin({}, _config2);
+        var instance2 = myPlugin({}, {}, _config2);
         var config2 = instance2.getConfig();
         assert.equal(config2.a, _config2.a, 'instance2 has new config value');
         assert.equal(config2.b, _config2.b, 'instance2 has new config value');
@@ -158,7 +161,7 @@ define([
         instance1.destroy();
     });
 
-    QUnit.test('state', function (assert){
+    QUnit.asyncTest('state', function (assert){
         QUnit.expect(14);
 
         var myPlugin = pluginFactory(mockProvider);
@@ -180,26 +183,36 @@ define([
 
         //built-in state init:
         assert.strictEqual(instance1.getState('init'), false, 'init state = false by default');
-        instance1.init();
-        assert.strictEqual(instance1.getState('init'), true, 'init state set');
+        instance1.init().then(function(){
 
-        //built-in visible state
-        assert.strictEqual(instance1.getState('visible'), false, 'visible state = false by default');
-        instance1.show();
-        assert.strictEqual(instance1.getState('visible'), true, 'visible state set');
-        instance1.hide();
-        assert.strictEqual(instance1.getState('visible'), false, 'visible turns to false');
+            assert.strictEqual(instance1.getState('init'), true, 'init state set');
 
-        //built-in enabled state
-        assert.strictEqual(instance1.getState('enabled'), false, 'enabled state = false by default');
-        instance1.enable();
-        assert.strictEqual(instance1.getState('enabled'), true, 'enabled state set');
-        instance1.disable();
-        assert.strictEqual(instance1.getState('enabled'), false, 'enabled turns to false');
+            //built-in visible state
+            assert.strictEqual(instance1.getState('visible'), false, 'visible state = false by default');
+            instance1.show().then(function(){
+                assert.strictEqual(instance1.getState('visible'), true, 'visible state set');
+                instance1.hide().then(function(){
+                    assert.strictEqual(instance1.getState('visible'), false, 'visible turns to false');
+                });
+            });
 
-        //built-in init state
-        instance1.destroy();
-        assert.strictEqual(instance1.getState('init'), false, 'destoyed state set');
+            //built-in enabled state
+            assert.strictEqual(instance1.getState('enabled'), false, 'enabled state = false by default');
+            instance1.enable().then(function(){
+                assert.strictEqual(instance1.getState('enabled'), true, 'enabled state set');
+                instance1.disable().then(function(){
+                    assert.strictEqual(instance1.getState('enabled'), false, 'enabled turns to false');
+                });
+            });
+
+            //built-in init state
+            setTimeout(function(){
+                instance1.destroy().then(function(){
+                    assert.strictEqual(instance1.getState('init'), false, 'destoyed state set');
+                    QUnit.start();
+                });
+            }, 10);
+        });
     });
 
     QUnit.test('test runner binding', function (assert){
@@ -231,7 +244,6 @@ define([
     });
 
 
-
     QUnit.asyncTest('root component event', function (assert){
         QUnit.expect(6);
 
@@ -244,12 +256,12 @@ define([
         });
 
         var testRunner = eventifier()
-            .on('init.pluginA', function (plugin){
+            .on('plugin-init.pluginA', function (plugin){
                 assert.ok(true, 'root component knows knows that pluginA has been initialized');
                 assert.deepEqual(plugin, instance1, 'The given plugin instance is correct');
                 QUnit.start();
             })
-            .on('someEvent.pluginA', function (plugin, arg1, arg2, arg3){
+            .on('plugin-someEvent.pluginA', function (plugin, arg1, arg2, arg3){
                 assert.ok(true, 'someEvent triggered and forwarded to root component');
                 assert.strictEqual(eventParams[0], arg1, 'event param ok');
                 assert.strictEqual(eventParams[1], arg2, 'event param ok');

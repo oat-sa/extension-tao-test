@@ -22,13 +22,15 @@
 define([
     'jquery',
     'lodash',
+    'core/promise',
     'taoTests/runner/runner',
     'taoTests/runner/plugin'
-], function($, _, runnerFactory, pluginFactory){
+], function($, _, Promise, runnerFactory, pluginFactory){
     'use strict';
 
     var mockProvider = {
-        init : _.noop
+        init : _.noop,
+        getAreaBroker  : _.noop
     };
 
 
@@ -50,15 +52,25 @@ define([
     });
 
     var testReviewApi = [
+
         {name : 'init', title : 'init'},
-        {name : 'ready', title : 'ready'},
-        {name : 'load', title : 'load'},
-        {name : 'terminate', title : 'terminate'},
-        {name : 'next', title : 'next'},
-        {name : 'previous', title : 'previous'},
-        {name : 'exit', title : 'exit'},
-        {name : 'skip', title : 'skip'},
-        {name : 'jump', title : 'jump'},
+        {name : 'render', title : 'render'},
+        {name : 'finish', title : 'finish'},
+        {name : 'destroy', title : 'destroy'},
+        {name : 'loadItem', title : 'loadItem'},
+        {name : 'renderItem', title : 'renderItem'},
+        {name : 'unloadItem', title : 'unloadItem'},
+
+        {name : 'getPlugins', title : 'getPlugins'},
+        {name : 'getPlugin', title : 'getPlugin'},
+        {name : 'getConfig', title : 'getConfig'},
+        {name : 'getState', title : 'getState'},
+        {name : 'setState', title : 'setState'},
+        {name : 'getTestData', title : 'getTestData'},
+        {name : 'setTestData', title : 'setTestData'},
+        {name : 'getTestContext', title : 'getTestContext'},
+        {name : 'setTestContext', title : 'setTestContext'},
+
         {name : 'trigger', title : 'trigger'},
         {name : 'before', title : 'before'},
         {name : 'on', title : 'on'},
@@ -83,7 +95,10 @@ define([
        QUnit.expect(1);
 
         runnerFactory.registerProvider('foo', {
-            init : function init(){
+            getAreaBroker : function(){
+                return {};
+            },
+            init : function(){
                assert.equal(this.bar, 'baz', 'The provider is executed on the runner context');
                QUnit.start();
             }
@@ -94,33 +109,179 @@ define([
         runner.init();
     });
 
-    QUnit.asyncTest('state access', function(assert){
-       QUnit.expect(2);
+
+    QUnit.asyncTest('get config', function(assert){
+       QUnit.expect(1);
+
+        var config = {
+            'moo' : 'norz'
+        };
 
         runnerFactory.registerProvider('foo', {
-            init : function init(){
-               var currentState = this.getState();
-               assert.equal(typeof currentState, 'object', 'The provider has access to the state');
-               assert.equal(currentState.moo, 'boo', 'The state is correct');
+            getAreaBroker : function(){
+                return {};
+            },
+            init : function(){
+                var myConfig = this.getConfig();
+                assert.deepEqual(myConfig, config, 'The retrieved config is the right one');
+                QUnit.start();
+            }
+        });
+
+        var runner = runnerFactory('foo', {}, config);
+        runner.init();
+    });
+
+    QUnit.asyncTest('render after async init', function(assert){
+       QUnit.expect(4);
+
+        var resolved = false;
+
+        runnerFactory.registerProvider('foo', {
+            getAreaBroker : function(){
+                return {};
+            },
+            init : function(){
+                var self = this;
+                var p = new Promise(function(resolve){
+                    setTimeout(function(){
+                        resolved = true;
+                        resolve();
+                    }, 50);
+                });
+                assert.equal(resolved, false, 'Init is not yet resolved');
+                return p;
+            },
+            render : function(){
+               assert.equal(resolved, true, 'Render is called only when init is resolved');
+            }
+        });
+
+        var runner = runnerFactory('foo');
+
+        assert.equal(resolved, false, 'Init is not yet resolved');
+        runner
+           .on('ready', function(){
+               assert.equal(resolved, true, 'Ready is triggered only when init is resolved');
+               QUnit.start();
+            })
+            .init();
+    });
+
+    QUnit.asyncTest('states', function(assert){
+       QUnit.expect(11);
+
+        runnerFactory.registerProvider('foo', mockProvider);
+        var runner = runnerFactory('foo');
+
+        assert.throws(function(){
+            runner.setState({ custom : true });
+        }, TypeError, 'A state must have a name');
+
+        runner
+            .setState('custom', true)
+            .on('init', function(){
+
+                assert.equal(this.getState('custom'), true, 'The runner has the custom state');
+                assert.equal(this.getState('init'), true, 'The runner is initialized');
+                assert.equal(this.getState('ready'), false, 'The runner is not rendered');
+                assert.equal(this.getState('destroy'), false, 'The runner is not destroyed');
+            })
+            .on('ready', function(){
+                assert.equal(this.getState('init'), true, 'The runner is initialized');
+                assert.equal(this.getState('ready'), true, 'The runner is rendered');
+                assert.equal(this.getState('destroy'), false, 'The runner is not destroyed');
+
+                this.destroy();
+            })
+            .on('destroy', function(){
+
+                assert.equal(this.getState('init'), true, 'The runner is initialized');
+                assert.equal(this.getState('ready'), true, 'The runner is rendered');
+                assert.equal(this.getState('destroy'), true, 'The runner is destroyed');
+                QUnit.start();
+            })
+            .init();
+    });
+
+    QUnit.asyncTest('load and render item', function(assert){
+       QUnit.expect(1);
+
+        var items = {
+            'aaa' : 'AAA',
+            'zzz' : 'ZZZ'
+        };
+
+        runnerFactory.registerProvider('foo', {
+            getAreaBroker : function(){
+                return {};
+            },
+            init : _.noop,
+            loadItem : function(itemRef){
+               return items[itemRef];
+            },
+            renderItem : function(itemData){
+               assert.equal(itemData, 'ZZZ', 'The rendered item is correct');
                QUnit.start();
             }
         });
 
-        runnerFactory('foo')
-            .setState({'moo' : 'boo'})
+        var runner = runnerFactory('foo');
+        runner
+            .on('ready', function(){
+                this.loadItem('zzz');
+            })
             .init();
     });
 
-    QUnit.module('events', {
-        setup: function(){
-            runnerFactory.clearProviders();
-        }
+    QUnit.asyncTest('load async and render item', function(assert){
+       QUnit.expect(3);
+
+       var resolved = false;
+        var items = {
+            'aaa' : 'AAA',
+            'zzz' : 'ZZZ'
+        };
+
+        runnerFactory.registerProvider('foo', {
+            getAreaBroker : function(){
+                return {};
+            },
+            init : _.noop,
+            loadItem : function(itemRef){
+               var p = new Promise(function(resolve){
+                    setTimeout(function(){
+                        resolved = true;
+                        resolve(items[itemRef]);
+                    }, 50);
+                });
+                assert.equal(resolved, false, 'Item loading is not yet resolved');
+               return p;
+            },
+            renderItem : function(itemData){
+
+                assert.equal(resolved, true, 'Item loading is resolved');
+               assert.equal(itemData, 'ZZZ', 'The rendered item is correct');
+               QUnit.start();
+            }
+        });
+
+        var runner = runnerFactory('foo');
+        runner
+            .on('ready', function(){
+
+                this.loadItem('zzz');
+            })
+            .init();
     });
 
     QUnit.asyncTest('move next', function(assert){
        QUnit.expect(2);
 
         runnerFactory.registerProvider('foo', {
+            getAreaBroker : function(){
+                return {};
+            },
             init : function init(){
 
                 this.on('init', function(){
@@ -135,7 +296,7 @@ define([
 
         runnerFactory('foo')
             .init()
-            .next();
+            .trigger('move', 'next');
     });
 
 
@@ -147,7 +308,7 @@ define([
 
 
     QUnit.asyncTest('initialize', function(assert){
-       QUnit.expect(2);
+       QUnit.expect(3);
 
         var boo = pluginFactory({
             name : 'boo',
@@ -157,80 +318,22 @@ define([
         });
 
         runnerFactory.registerProvider('foo', {
+            getAreaBroker : function(){
+                return {};
+            },
             init : function init(){
 
-                this.on('init.boo', function(){
-                    assert.ok(true, 'the boo plugin is initialized');
+                this.on('plugin-init.boo', function(plugin){
+                    assert.equal(typeof plugin, 'object', 'The event has a plugin in parameter');
+                    assert.ok(plugin.getState('init'), 'The plugin is initialized');
                     QUnit.start();
                 });
             }
         });
 
         runnerFactory('foo', {
-            plugins: [boo]
+            boo: boo
         })
-        .init()
-        .next();
+        .init();
     });
-/*
-
-    QUnit.test('next/previous', function(assert){
-
-        var $content = $('#test-content');
-        var instance = runner(minimalisticProvider.name, {
-            contentContainer : $content
-        });
-        instance
-        .setState({
-            pos : 0,
-            definition : minimalisticTest
-        })
-        .init()
-        .renderContent();
-
-        assert.equal($content.html(), minimalisticTest.items[0].content, 'item 1 rendered');
-
-        instance.next();
-        assert.equal($content.html(), minimalisticTest.items[1].content, 'item 2 rendered');
-
-        instance.next();
-        assert.equal($content.html(), minimalisticTest.items[2].content, 'item 3 rendered');
-
-        instance.next();
-        assert.equal($content.html(), minimalisticTest.items[2].content, 'stayed on the last item');
-
-        instance.previous();
-        assert.equal($content.html(), minimalisticTest.items[1].content, 'back to item 2');
-
-        instance.previous();
-        assert.equal($content.html(), minimalisticTest.items[0].content, 'back to item 1');
-
-        instance.previous();
-        assert.equal($content.html(), minimalisticTest.items[0].content, 'stayed on item 1');
-    });
-
-    QUnit.test('jump', function(assert){
-        var $content = $('#test-content');
-        var instance = runner(minimalisticProvider.name, {
-            contentContainer : $content
-        }).setState({
-            pos : 0,
-            definition : minimalisticTest
-        }).init().renderContent();
-
-        assert.equal($content.html(), minimalisticTest.items[0].content, 'item 1 rendered');
-
-        instance.jump(2);
-        assert.equal($content.html(), minimalisticTest.items[2].content, 'item 3 rendered');
-
-        instance.previous();
-        assert.equal($content.html(), minimalisticTest.items[1].content, 'item 2 rendered');
-
-        instance.next();
-        assert.equal($content.html(), minimalisticTest.items[2].content, 'item 3 rendered');
-
-        instance.jump(0);
-        assert.equal($content.html(), minimalisticTest.items[0].content, 'item 2 rendered');
-    });
-*/
 });
