@@ -122,7 +122,7 @@ define([
 
         /**
          * Gets an item definition by its URI
-         * @param string uri - The URI of the item to get
+         * @param {String} uri - The URI of the item to get
          * @returns {Promise} - Returns a promise. The item definition data will be provided on resolve.
          *                      Any error will be provided if rejected.
          * @fires getItemData
@@ -141,7 +141,7 @@ define([
 
         /**
          * Gets an item state by the item URI
-         * @param string uri - The URI of the item for which get the state
+         * @param {String} uri - The URI of the item for which get the state
          * @returns {Promise} - Returns a promise. The item state object will be provided on resolve.
          *                      Any error will be provided if rejected.
          */
