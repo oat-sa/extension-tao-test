@@ -29,16 +29,19 @@ define([
     'use strict';
 
     //Test template
-    var $container = $(layoutTpl());
+    var broker;
+
+
+    var $layout = $(layoutTpl());
 
     //set up the areaBroker on a detached node
-    var broker = areaBroker($container);
+    broker = areaBroker($layout);
     broker.defineAreas({
-        'content' : $('.content', $container),
-        'toolbox' : $('.toolbox', $container),
-        'navigation' : $('.navigation', $container),
-        'control' : $('.control', $container),
-        'panel' : $('.panel', $container)
+        'content' : $('.content', $layout),
+        'toolbox' : $('.toolbox', $layout),
+        'navigation' : $('.navigation', $layout),
+        'control' : $('.control', $layout),
+        'panel' : $('.panel', $layout)
     });
 
     return {
@@ -76,6 +79,7 @@ define([
             });
 
 
+
             //load test data
             return new Promise(function(resolve, reject){
 
@@ -96,11 +100,10 @@ define([
             var context = this.getTestContext();
 
 
+
             broker.getContainer().find('.title').html('Running Test ' + context.id);
 
-            var $renderTo = config.$renderTo || $('body');
-
-
+            var $renderTo = config.renderTo || $('body');
 
             $renderTo.append(broker.getContainer());
         },
@@ -132,6 +135,12 @@ define([
                 '<h1>' + item.id + '</h1>' +
                 '<div>' + item.content + '</div>'
             );
+        },
+
+        finish : function(){
+
+            var $content = broker.getContentArea();
+            $content.html('<h1>Done</h1>');
         },
 
         getAreaBroker : function getAreaBroker(){

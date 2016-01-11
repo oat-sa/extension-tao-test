@@ -35,7 +35,7 @@ define([
             this.$button = $('<button class="previous"> &lt;&lt; Previous </button>');
 
             this.$button.click(function(){
-                testRunner.trigger('move', 'previous');
+                testRunner.previous();
             });
 
             testRunner.on('renderitem', function(){
@@ -45,6 +45,10 @@ define([
                 } else {
                     self.enable();
                 }
+            }).on('pause', function(){
+                self.disable();
+            }).on('resume', function(){
+                self.enable();
             });
         },
         render : function render(){

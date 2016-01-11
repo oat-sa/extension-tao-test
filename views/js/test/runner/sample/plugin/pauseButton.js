@@ -26,34 +26,39 @@ define([
     'use strict';
 
     return pluginFactory({
-        name : 'nextButton',
+        name : 'pauseButton',
         init : function init(){
             var self = this;
             var testRunner = this.getTestRunner();
 
-            this.$button = $('<button class="next"> Next &gt;&gt; </button>');
+            this.$button = $('<button class="pause"> Pause  </button>');
 
             this.$button.click(function(){
-                testRunner.next();
-            });
-
-            testRunner.on('renderitem', function(){
-                var context = this.getTestContext();
-                if(context.current === context.items.length){
-                    self.disable();
+                if(!testRunner.getState('pause')){
+                    testRunner.pause();
+                    self.$button.text('Resume');
                 } else {
-                    self.enable();
+                    testRunner.resume();
+                    self.$button.text('Pause');
                 }
-            })
-            .on('finish', function(){
-                self.disable();
-            })
-            .on('pause', function(){
-                self.disable();
-            }).on('resume', function(){
-                self.enable();
             });
 
+
+
+            self.disable();
+            testRunner
+                .on('loadItem', function(){
+                    self.disable();
+                })
+                .on('renderitem', function(){
+                    self.enable();
+                })
+                .on('pause', function(){
+                    self.getAreaBroker().getContentArea().css('opacity', '0.3');
+                })
+                .on('resume', function(){
+                    self.getAreaBroker().getContentArea().css('opacity', '1');
+                });
         },
         render : function render(){
 

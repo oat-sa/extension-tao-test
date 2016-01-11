@@ -120,7 +120,7 @@ define([
     });
 
     QUnit.test('call plugin methods', function (assert){
-        QUnit.expect(9);
+        QUnit.expect(11);
 
         var samplePluginImpl = {
             name : 'samplePluginImpl',
@@ -130,6 +130,12 @@ define([
 
                 assert.equal(config.a, samplePluginDefaults.a, 'instance1 inherits the default config');
                 assert.equal(config.b, samplePluginDefaults.b, 'instance1 inherit the default config');
+            },
+            render : function (){
+                assert.ok(true, 'called render');
+            },
+            finish : function (){
+                assert.ok(true, 'called finish');
             },
             destroy : function (){
                 assert.ok(true, 'called destory');
@@ -154,10 +160,12 @@ define([
 
         var instance1 = myPlugin(mockRunner);
         instance1.init();
+        instance1.render();
         instance1.hide();
         instance1.show();
         instance1.disable();
         instance1.enable();
+        instance1.finish();
         instance1.destroy();
     });
 

@@ -26,49 +26,54 @@ define([
     'use strict';
 
     return pluginFactory({
-        name : 'nextButton',
+        name : 'timer',
         init : function init(){
             var self = this;
+
+            var config = this.getConfig();
             var testRunner = this.getTestRunner();
 
-            this.$button = $('<button class="next"> Next &gt;&gt; </button>');
+            var start = function(){
+                var $timer = $('.timer', self.$element);
+                if(!self.interval){
+                    self.interval = setInterval(function(){
+                        $timer.text(++self.time);
+                    }, 1000);
+                }
+            };
+            var stop  = function(interval){
+                var $timer = $('.timer', self.$element);
+                if(self.interval){
+                    clearInterval(self.interval);
+                    self.interval = null;
+                }
+            };
 
-            this.$button.click(function(){
-                testRunner.next();
-            });
+            this.$element = $('<p>Elapsed : <span class="timer">00</span>s</p>');
+            this.time = 0;
 
             testRunner.on('renderitem', function(){
-                var context = this.getTestContext();
-                if(context.current === context.items.length){
-                    self.disable();
-                } else {
-                    self.enable();
-                }
+                start();
             })
             .on('finish', function(){
-                self.disable();
+                stop();
             })
             .on('pause', function(){
-                self.disable();
-            }).on('resume', function(){
-                self.enable();
+                stop();
+            })
+            .on('resume', function(){
+                start();
             });
-
         },
         render : function render(){
 
-            var $container = this.getAreaBroker().getNavigationArea();
-            $container.append(this.$button);
+            var $container = this.getAreaBroker().getControlArea();
+            $container.append(this.$element);
+
 
         },
         destroy : function (){
-            this.$button.remove();
-        },
-        enable : function (){
-            this.$button.removeProp('disabled');
-        },
-        disable : function (){
-            this.$button.prop('disabled', true);
+            this.stop();
         }
     });
 });

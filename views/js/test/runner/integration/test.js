@@ -25,119 +25,73 @@ define([
     'taoTests/test/runner/sample/minimalisticProvider',
     'taoTests/test/runner/sample/plugin/nextButton',
     'taoTests/test/runner/sample/plugin/previousButton',
-], function($, _, runner, minimalisticProvider, nextButton, previousButton){
+    'taoTests/test/runner/sample/plugin/pauseButton',
+    'taoTests/test/runner/sample/plugin/timer',
+], function($, _, runner, minimalisticProvider, nextButton, previousButton, pauseButton, timer){
     'use strict';
-
 
     runner.registerProvider(minimalisticProvider.name, minimalisticProvider);
 
+    QUnit.test('provider regsitration', function(assert){
+        QUnit.expect(1);
 
-
-    runner(minimalisticProvider.name, {
-        previousButtonh : previousButton,
-        next : nextButton
-    }, {
-        url : '/taoTests/views/js/test/runner/sample/minimalisticTest.json'
-    })
-    .init();
-
-
- /*   QUnit.module('runner', {
-        setup : function(){
-            runner.registerProvider(minimalisticProvider.name, minimalisticProvider);
-        }
+        assert.deepEqual(runner.getProvider(minimalisticProvider.name), minimalisticProvider, 'The provider is regsitered');
     });
 
-    QUnit.asyncTest('init', function(assert){
+    QUnit.asyncTest('dom integration', function(assert){
+        QUnit.expect(8);
 
-        var iteration = 1;
-        var $content = $('#test-content');
-        var $nextButton;
-        var expectedResponse = {
-                RESPONSE1 : 1,
-                RESPONSE2 : ['A', 'B', 'C']
-            };
+        var $container = $('#qunit-fixture');
 
-        var instance = runner(minimalisticProvider.name, {
-                contentContainer : $content,//also accepts a selector, e.g. #test-content
-                plugins : [
-                    pluginNextButton({
-                        container : '#navigation-bar',
-                        label : 'next'
-                    }),
-                    pluginResponseSubmitter({
-                        url : 'some/end/point/url'
-                    })
-                ]
-            })
-            .setState({
-                pos : 0,
-                definition : minimalisticTest
-            })
-            .on('ready', function(){
+        runner(minimalisticProvider.name, {
+            previousButtonh : previousButton,
+            next : nextButton,
+            pause : pauseButton,
+            timer: timer
+        }, {
+            url : '/taoTests/views/js/test/runner/sample/minimalisticTest.json',
+            renderTo : $container
+        })
+        .on('ready', function(){
 
+            assert.equal($('.test-runner', $container).length, 1, 'The test runner container is attached');
+            assert.equal($('.test-runner .content', $container).length, 1, 'The content area is attached');
+            assert.equal($('.test-runner .navigation', $container).length, 1, 'The navigation area is attached');
 
-                //the test runner and the plugins are ready
-                $nextButton = $('#navigation-bar .next');
-                assert.equal($nextButton.length, 1, 'next button added');
+            assert.equal($('.previous', $container).length, 1, 'The next button is attached');
+            assert.equal($('.next', $container).length, 1, 'The previous button is attached');
+            assert.equal($('.pause', $container).length, 1, 'The pause button is attached');
 
-            })
-            .on('contentready', function(){
+            assert.equal($('.next', $container).prop('disabled'), false, 'The next button is enabled');
+            assert.equal($('.previous', $container).prop('disabled'), true, 'The previous button is disabled');
 
-                switch(iteration){
-                    case 1 :
-                        assert.equal($content.html(), minimalisticTest.items[0].content, 'item 1 rendered');
-                        $nextButton.click();
-                        break;
-                    case 2 :
-                        assert.equal($content.html(), minimalisticTest.items[1].content, 'item 2 rendered');
-                        $nextButton.click();
-                        break;
-                    case 3 :
-                        assert.equal($content.html(), minimalisticTest.items[2].content, 'item 3 rendered');
-                        $nextButton.click();
-                        break;
-                    case 4 :
-                        assert.equal($content.html(), minimalisticTest.items[2].content, 'stays in item 3');
-                        console.log('test complete', this.getState());
-                        QUnit.start();
-                        break;
-
-                }
-            })
-            .on('submit.responseSubmitter', function(responses){
-
-                switch(iteration){
-                    case 1 :
-                        assert.ok(true, 'response 1 submitted');
-                        assert.deepEqual(expectedResponse, responses, 'response 1 ok');
-                        break;
-                    case 2 :
-                        assert.ok(true, 'response 2 submitted');
-                        assert.deepEqual(expectedResponse, responses, 'response 2 ok');
-                        break;
-                    case 3 :
-                        assert.ok(true, 'response 3 submitted');
-                        assert.deepEqual(expectedResponse, responses, 'response 3 ok');
-                        break;
-                }
-            })
-            .on('move', function(){
-                //increase iteration number
-                iteration ++;
-
-                assert.equal($nextButton.length, 1, 'next button added');
-
-                if(iteration === 3){
-
-                }
-            })
-            .on('complete', function(){
-
-            })
-            .init()
-            .renderContent();
-
+            QUnit.start();
+        })
+        .init();
     });
-*/
+
+
+    QUnit.asyncTest('visual integration', function(assert){
+        QUnit.expect(1);
+
+        var $container = $('#external');
+
+        runner(minimalisticProvider.name, {
+            previousButtonh : previousButton,
+            next : nextButton,
+            pause : pauseButton,
+            timer: timer
+        }, {
+            url : '/taoTests/views/js/test/runner/sample/minimalisticTest.json',
+            renderTo : $container
+        })
+        .on('ready', function(){
+
+            assert.ok(true, 'the test is ready');
+
+
+            QUnit.start();
+        })
+        .init();
+    });
 });

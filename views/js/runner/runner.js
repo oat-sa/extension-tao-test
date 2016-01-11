@@ -128,7 +128,13 @@ define([
         runner = eventifier({
 
             /**
-             * Initializes the runner
+             * Intialize the runner
+             *  - instantiate the plugins
+             *  - provider init
+             *  - plugins init
+             *  - call render
+             * @fires runner#init
+             * @returns {runner} chains
              */
             init : function init(){
                 var self = this;
@@ -148,6 +154,14 @@ define([
                 return this;
             },
 
+            /**
+             * Render the runner
+             *  - provider render
+             *  - plugins render
+             * @fires runner#render
+             * @fires runner#ready
+             * @returns {runner} chains
+             */
             render : function render(){
                 var self = this;
 
@@ -161,6 +175,15 @@ define([
                 return this;
             },
 
+            /**
+             * Load an item
+             *  - provider loadItem, resolve or return the itemData
+             *  - plugins loadItem
+             *  - call renderItem
+             * @param {*} itemRef - something that let you identify the item to load
+             * @fires runner#loaditem
+             * @returns {runner} chains
+             */
             loadItem : function loadItem(itemRef){
                 var self = this;
 
@@ -171,6 +194,14 @@ define([
                 return this;
             },
 
+            /**
+             * Render an item
+             *  - provider renderItem
+             *  - plugins renderItem
+             * @param {Object} itemData - the loaded item data
+             * @fires runner#renderitem
+             * @returns {runner} chains
+             */
             renderItem : function renderItem(itemData){
                 var self = this;
 
@@ -180,15 +211,30 @@ define([
                 return this;
             },
 
-            unloadItem : function loadItem(itemRef){
+            /**
+             * Unload an item (for example to destroy the item)
+             *  - provider unloadItem
+             *  - plugins unloadItem
+             * @param {*} itemRef - something that let you identify the item to unload
+             * @fires runner#unloaditem
+             * @returns {runner} chains
+             */
+            unloadItem : function unloadItem(itemRef){
                 var self = this;
 
-                providerRun('unloadItem', itemRef).then(function(itemData){
+                providerRun('unloadItem', itemRef).then(function(){
                     self.trigger('unloaditem', itemRef);
                 });
                 return this;
             },
 
+            /**
+             * When the test is terminated
+             *  - provider finish
+             *  - plugins finsh
+             * @fires runner#finish
+             * @returns {runner} chains
+             */
             finish : function finish(){
                 var self = this;
 
@@ -201,32 +247,49 @@ define([
                 return this;
             },
 
+            /**
+             * Destroy
+             *  - provider destroy
+             *  - plugins destroy
+             * @fires runner#destroy
+             * @returns {runner} chains
+             */
             destroy : function destroy(){
+                var self = this;
 
-                testContext = {};
+                providerRun('destroy').then(function(){
+                    pluginRun('destroy').then(function(){
 
-                providerRun('destroy');
+                        testContext = {};
 
-                _.forEach(this.getPlugins(), function (plugin){
-                    if(_.isFunction(plugin.destroy)){
-                        plugin.destroy();
-                    }
+                        self.setState('destroy', true)
+                            .trigger('destroy');
+                    });
                 });
-
-                this.setState('destroy', true);
-                this.trigger('destroy');
-
                 return this;
             },
 
+            /**
+             * Get the runner pugins
+             * @returns {plugin[]} the plugins
+             */
             getPlugins : function getPlugins(){
                 return plugins;
             },
 
+            /**
+             * Get a plugin
+             * @param {String} name - the plugin name
+             * @returns {plugin} the plugin
+             */
             getPlugin : function getPlugin(name){
                 return plugins[name];
             },
 
+            /**
+             * Get the config
+             * @returns {Object} the config
+             */
             getConfig : function getConfig(){
                 return config;
             },
@@ -246,7 +309,7 @@ define([
              *
              * @param {String} name - the state name
              * @param {Boolean} active - is the state active
-             * @returns {plugin} chains
+             * @returns {runner} chains
              * @throws {TypeError} if the state name is not a valid string
              */
             setState : function setState(name, active){
@@ -258,57 +321,124 @@ define([
                 return this;
             },
 
-            getTestContext : function getTestContext(){
-                return testContext;
-            },
-
-            setTestContext : function setTestContext(context){
-                if(_.isPlainObject(context)){
-                    testContext = context;
-                }
-            },
-
+            /**
+             * Get the test data/definition
+             * @returns {Object} the test data
+             */
             getTestData : function getTestData(){
                 return testData;
             },
 
+            /**
+             * Set the test data/definition
+             * @param {Object} data - the test data
+             * @returns {runner} chains
+             */
             setTestData : function setTestData(data){
                 testData  = data;
-            },
 
-            //aliases / actions
-            next : function next(){
-                this.trigger('move', 'next');
                 return this;
             },
 
-            previous : function previous(){
-                this.trigger('move', 'previous');
+            /**
+             * Get the test context/state
+             * @returns {Object} the test context
+             */
+            getTestContext : function getTestContext(){
+                return testContext;
+            },
+
+            /**
+             * Set the test context/state
+             * @param {Object} context - the context to set
+             * @returns {runner} chains
+             */
+            setTestContext : function setTestContext(context){
+                if(_.isPlainObject(context)){
+                    testContext = context;
+                }
                 return this;
             },
 
-            jump : function jump(to){
-                this.trigger('move', 'jump', to);
+            /**
+             * Move next alias
+             * @param {String|*} [scope] - the movement scope
+             * @fires runner#move
+             * @returns {runner} chains
+             */
+            next : function next(scope){
+                this.trigger('move', 'next', scope);
                 return this;
             },
 
-            skip : function skip(to){
-                this.trigger('sip');
+            /**
+             * Move previous alias
+             * @param {String|*} [scope] - the movement scope
+             * @fires runner#move
+             * @returns {runner} chains
+             */
+            previous : function previous(scope){
+                this.trigger('move', 'previous', scope);
                 return this;
             },
 
-            exit : function exit(way, reason){
-
-                this.trigger('exit', way, reason);
+            /**
+             * Move to alias
+             * @param {String|Number} position - where to jump
+             * @param {String|*} [scope] - the movement scope
+             * @fires runner#move
+             * @returns {runner} chains
+             */
+            jump : function jump(position, scope){
+                this.trigger('move', 'jump', position, scope);
                 return this;
             },
 
+            /**
+             * Skip alias
+             * @param {String|*} [scope] - the movement scope
+             * @fires runner#move
+             * @returns {runner} chains
+             */
+            skip : function skip(scope){
+                this.trigger('move', 'skip', scope);
+                return this;
+            },
+
+            /**
+             * Exit the test
+             * @param {String|*} [why] - reason the test is exited
+             * @fires runner#exit
+             * @returns {runner} chains
+             */
+            exit : function exit(why){
+                this.trigger('exit', why);
+                return this;
+            },
+
+            /**
+             * Pause the current execution
+             * @fires runner#pause
+             * @returns {runner} chains
+             */
             pause : function pause(){
-                this.trigger('pause');
+                if(!this.getState('pause')){
+                    this.setState('pause', true)
+                        .trigger('pause');
+                }
                 return this;
             },
+
+            /**
+             * Resume a paused test
+             * @fires runner#pause
+             * @returns {runner} chains
+             */
             resume : function resume(){
-                this.trigger('resume');
+                if(this.getState('pause') === true){
+                    this.setState('pause', false)
+                        .trigger('resume');
+                }
                 return this;
             }
 
