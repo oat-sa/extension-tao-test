@@ -47,16 +47,20 @@ define([
         'toolbox',      //the place to add arbitrary tools, like a zoom, a comment box, etc.
         'navigation',   //the navigation controls like next, previous, skip
         'control',      //the control center of the test, progress, timers, etc.
+        'header',       //the area that could contains the test titles
         'panel'         //a panel to add more advanced GUI (item review, navigation pane, etc.)
     ];
 
     /**
-     * Creates a new broker
+     * Creates a new broker.
+     * Please note the mapping should contain
+     *
      * @param {jQueryElement|HTMLElement|String} $container - the main container
+     * @param {Object} mapping - keys are the area names, values are jQueryElement
      * @returns {broker} the broker
      * @throws {TypeError} without a valid container
      */
-    return function areaBroker($container){
+    return function areaBroker($container, mapping){
 
         var broker,
             areas;
@@ -80,7 +84,7 @@ define([
              * This method needs to be called before getting areas.
              * It's separated from the factory call in order to prepare the mapping in a separated step.
              *
-             * @param {Object} mapping - keys are the area names, values are jQueryElement (
+             * @param {Object} mapping - keys are the area names, values are jQueryElement
              * @throws {TypeError} if the required areas are not part of the mapping
              */
             defineAreas : function defineAreas(mapping){
@@ -117,11 +121,13 @@ define([
              */
             getArea : function getArea(name){
                 if(!areas){
-                    throw new Error('Sorry areas hav not been defined yet!');
+                    throw new Error('Sorry areas have not been defined yet!');
                 }
                 return areas[name];
             }
         };
+
+        broker.defineAreas(mapping);
 
         _.forEach(requireAreas, function(area){
             broker['get' + area[0].toUpperCase() + area.slice(1) + 'Area'] = _.bind(_.partial(broker.getArea, area), broker);

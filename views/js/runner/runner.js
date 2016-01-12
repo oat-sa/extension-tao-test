@@ -75,12 +75,9 @@ define([
         /**
          * The selected test runner provider
          */
-        var provider       = testRunnerFactory.getProvider(providerName);
+        var provider  = testRunnerFactory.getProvider(providerName);
 
-        /**
-         * The provider gives us a reference to an areaBroker (so our provider can attach elements to the GUI)
-         */
-        var areaBroker     = provider.getAreaBroker();
+        var areaBroker;
 
         /**
          * Run a method of the provider (by delegation)
@@ -117,6 +114,10 @@ define([
             return Promise.all(execStack);
         }
 
+        function reportError(err){
+            runner.trigger('error', err);
+        }
+
 
         config = config || {};
 
@@ -141,7 +142,7 @@ define([
 
                 //instantiate the plugins first
                 _.forEach(pluginFactories, function(pluginFactory, pluginName){
-                    plugins[pluginName] = pluginFactory(runner, areaBroker);
+                    plugins[pluginName] = pluginFactory(runner, self.getAreaBroker());
                 });
 
                 providerRun('init').then(function(){
@@ -149,8 +150,9 @@ define([
                         self.setState('init', true)
                             .trigger('init')
                             .render();
-                    });
-                });
+                    }).catch(reportError);
+                }).catch(reportError);
+
                 return this;
             },
 
@@ -170,8 +172,8 @@ define([
                         self.setState('ready', true)
                             .trigger('render')
                             .trigger('ready');
-                    });
-                });
+                    }).catch(reportError);
+                }).catch(reportError);
                 return this;
             },
 
@@ -190,7 +192,7 @@ define([
                 providerRun('loadItem', itemRef).then(function(itemData){
                     self.trigger('loaditem', itemRef)
                         .renderItem(itemData);
-                });
+                }).catch(reportError);
                 return this;
             },
 
@@ -207,7 +209,7 @@ define([
 
                 providerRun('renderItem', itemData).then(function(){
                     self.trigger('renderitem', itemData);
-                });
+                }).catch(reportError);
                 return this;
             },
 
@@ -224,7 +226,7 @@ define([
 
                 providerRun('unloadItem', itemRef).then(function(){
                     self.trigger('unloaditem', itemRef);
-                });
+                }).catch(reportError);
                 return this;
             },
 
@@ -242,8 +244,8 @@ define([
                     pluginRun('finish').then(function(){
                         self.setState('finish', true)
                             .trigger('finish');
-                    });
-                });
+                    }).catch(reportError);
+                }).catch(reportError);
                 return this;
             },
 
@@ -264,8 +266,8 @@ define([
 
                         self.setState('destroy', true)
                             .trigger('destroy');
-                    });
-                });
+                    }).catch(reportError);
+                }).catch(reportError);
                 return this;
             },
 
@@ -292,6 +294,18 @@ define([
              */
             getConfig : function getConfig(){
                 return config;
+            },
+
+            /**
+             * Get the area broker
+             *
+             * @returns {areaBroker} the areaBroker
+             */
+            getAreaBroker : function getAreaBroker(){
+                if(!areaBroker){
+                    areaBroker = provider.loadAreaBroker();
+                }
+                return areaBroker;
             },
 
             /**
@@ -441,8 +455,7 @@ define([
                 }
                 return this;
             }
-
-        }, logger('testRunner'));
+        });
 
         runner.on('move', function move(type){
             this.trigger.apply(this, [type].concat([].slice.call(arguments, 1)));
@@ -455,7 +468,7 @@ define([
     return providerRegistry(testRunnerFactory, function validateProvider(provider){
 
         //mandatory methods
-        if(!_.isFunction(provider.getAreaBroker)){
+        if(!_.isFunction(provider.loadAreaBroker)){
             throw new TypeError('The runner provider MUST have a method that returns an areaBroker');
         }
        return true;

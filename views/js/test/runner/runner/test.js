@@ -30,7 +30,7 @@ define([
 
     var mockProvider = {
         init : _.noop,
-        getAreaBroker  : _.noop
+        loadAreaBroker  : _.noop
     };
 
 
@@ -70,6 +70,7 @@ define([
         {name : 'setTestData', title : 'setTestData'},
         {name : 'getTestContext', title : 'getTestContext'},
         {name : 'setTestContext', title : 'setTestContext'},
+        {name : 'getAreaBroker', title : 'getAreaBroker'},
 
         {name : 'next', title : 'next'},
         {name : 'previous', title : 'previous'},
@@ -103,7 +104,7 @@ define([
        QUnit.expect(1);
 
         runnerFactory.registerProvider('foo', {
-            getAreaBroker : function(){
+            loadAreaBroker : function(){
                 return {};
             },
             init : function(){
@@ -126,7 +127,7 @@ define([
         };
 
         runnerFactory.registerProvider('foo', {
-            getAreaBroker : function(){
+            loadAreaBroker : function(){
                 return {};
             },
             init : function(){
@@ -146,7 +147,7 @@ define([
         var resolved = false;
 
         runnerFactory.registerProvider('foo', {
-            getAreaBroker : function(){
+            loadAreaBroker : function(){
                 return {};
             },
             init : function(){
@@ -232,7 +233,7 @@ define([
         };
 
         runnerFactory.registerProvider('foo', {
-            getAreaBroker : function(){
+            loadAreaBroker : function(){
                 return {};
             },
             init : _.noop,
@@ -263,7 +264,7 @@ define([
         };
 
         runnerFactory.registerProvider('foo', {
-            getAreaBroker : function(){
+            loadAreaBroker : function(){
                 return {};
             },
             init : _.noop,
@@ -303,7 +304,7 @@ define([
         };
 
         runnerFactory.registerProvider('foo', {
-            getAreaBroker : function(){
+            loadAreaBroker : function(){
                 return {};
             },
             init : _.noop,
@@ -333,6 +334,30 @@ define([
             .init();
     });
 
+    QUnit.asyncTest('init error', function(assert){
+       QUnit.expect(2);
+
+        runnerFactory.registerProvider('foo', {
+            loadAreaBroker : function(){
+                return {};
+            },
+            init : function(){
+                return new Promise(function(resolve, reject){
+                    reject(new Error('test'));
+                });
+            }
+        });
+
+        var runner = runnerFactory('foo');
+        runner
+            .on('error', function(err){
+                assert.ok(err instanceof Error, 'The parameter is an error');
+                assert.equal(err.message, 'test', 'The error message is correct');
+                QUnit.start();
+            })
+            .init();
+    });
+
     QUnit.asyncTest('context and data', function(assert){
        QUnit.expect(8);
 
@@ -344,7 +369,7 @@ define([
         };
 
         runnerFactory.registerProvider('foo', {
-            getAreaBroker : function(){
+            loadAreaBroker : function(){
                 return {};
             },
             init : function(){
@@ -386,7 +411,7 @@ define([
        QUnit.expect(2);
 
         runnerFactory.registerProvider('foo', {
-            getAreaBroker : function(){
+            loadAreaBroker : function(){
                 return {};
             },
             init : function init(){
@@ -425,7 +450,7 @@ define([
         });
 
         runnerFactory.registerProvider('foo', {
-            getAreaBroker : function(){
+            loadAreaBroker : function(){
                 return {};
             },
             init : function init(){

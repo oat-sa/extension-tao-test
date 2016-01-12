@@ -29,20 +29,7 @@ define([
     'use strict';
 
     //Test template
-    var broker;
 
-
-    var $layout = $(layoutTpl());
-
-    //set up the areaBroker on a detached node
-    broker = areaBroker($layout);
-    broker.defineAreas({
-        'content' : $('.content', $layout),
-        'toolbox' : $('.toolbox', $layout),
-        'navigation' : $('.navigation', $layout),
-        'control' : $('.control', $layout),
-        'panel' : $('.panel', $layout)
-    });
 
     return {
         name : 'minimalistic',
@@ -98,8 +85,7 @@ define([
 
             var config = this.getConfig();
             var context = this.getTestContext();
-
-
+            var broker = this.getAreaBroker();
 
             broker.getContainer().find('.title').html('Running Test ' + context.id);
 
@@ -112,6 +98,7 @@ define([
             var self = this;
 
             var test = this.getTestContext();
+            var broker = this.getAreaBroker();
             var $content = broker.getContentArea();
 
             $content.html('loading');
@@ -130,6 +117,7 @@ define([
 
         renderItem : function renderItem(item){
 
+            var broker = this.getAreaBroker();
             var $content = broker.getContentArea();
             $content.html(
                 '<h1>' + item.id + '</h1>' +
@@ -139,12 +127,23 @@ define([
 
         finish : function(){
 
+            var broker = this.getAreaBroker();
             var $content = broker.getContentArea();
             $content.html('<h1>Done</h1>');
         },
 
-        getAreaBroker : function getAreaBroker(){
-            return broker;
+        loadAreaBroker : function loadAreaBroker(){
+
+            var $layout = $(layoutTpl());
+            //set up the areaBroker on a detached node
+            return  areaBroker($layout, {
+                'content' : $('.content', $layout),
+                'toolbox' : $('.toolbox', $layout),
+                'navigation' : $('.navigation', $layout),
+                'control' : $('.control', $layout),
+                'panel' : $('.panel', $layout),
+                'header' : $('header', $layout)
+            });
         }
     };
 });

@@ -39,7 +39,7 @@ define([
     });
 
     QUnit.asyncTest('dom integration', function(assert){
-        QUnit.expect(8);
+        QUnit.expect(12);
 
         var $container = $('#qunit-fixture');
 
@@ -63,7 +63,19 @@ define([
             assert.equal($('.pause', $container).length, 1, 'The pause button is attached');
 
             assert.equal($('.next', $container).prop('disabled'), false, 'The next button is enabled');
+            assert.equal($('.previous', $container).prop('disabled'), false, 'The previous button is enabled');
+
+
+            assert.equal($('.content', $container).text(), '', 'The content is empty');
+
+        })
+        .after('renderitem', function(){
+
+            assert.equal($('.next', $container).prop('disabled'), false, 'The next button is enabled');
             assert.equal($('.previous', $container).prop('disabled'), true, 'The previous button is disabled');
+
+            assert.ok($('.content', $container).text().length > 0, 'The content is set');
+
 
             QUnit.start();
         })
