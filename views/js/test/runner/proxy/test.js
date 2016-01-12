@@ -26,10 +26,14 @@ define(['lodash', 'taoTests/runner/proxy'], function(_, proxyFactory) {
     var defaultProxy = {
         init : function() {},
         destroy : function() {},
-        getItem : function() {},
+        getTestData : function() {},
+        getTestContext : function() {},
+        callTestAction : function() {},
+        getItemData : function() {},
+        getItemState : function() {},
         submitItemState : function() {},
         storeItemResponse : function() {},
-        actionCall : function() {}
+        callItemAction : function() {}
     };
 
 
@@ -45,13 +49,27 @@ define(['lodash', 'taoTests/runner/proxy'], function(_, proxyFactory) {
     });
 
 
+    // small coverage check to facilitate dev of unit tests
+    var coverage = {};
+    QUnit.moduleDone(function() {
+        _.forEach(proxyApi, function(api) {
+            if (!coverage[api.name]) {
+                console.log('Missing unit test for method proxyFactory.' + api.name);
+            }
+        });
+    });
+
     var proxyApi = [
         { name : 'init', title : 'init' },
         { name : 'destroy', title : 'destroy' },
-        { name : 'getItem', title : 'getItem' },
+        { name : 'getTestData', title : 'getTestData' },
+        { name : 'getTestContext', title : 'getTestContext' },
+        { name : 'callTestAction', title : 'callTestAction' },
+        { name : 'getItemData', title : 'getItemData' },
+        { name : 'getItemState', title : 'getItemState' },
         { name : 'submitItemState', title : 'submitItemState' },
         { name : 'storeItemResponse', title : 'storeItemResponse' },
-        { name : 'actionCall', title : 'actionCall' }
+        { name : 'callItemAction', title : 'callItemAction' }
     ];
 
     QUnit
@@ -62,47 +80,161 @@ define(['lodash', 'taoTests/runner/proxy'], function(_, proxyFactory) {
         });
 
 
-    QUnit.asyncTest('proxyFactory.init', 4, function(assert) {
+    QUnit.asyncTest('proxyFactory.init', 6, function(assert) {
         var initConfig = {};
+        var promise = {
+            resolve: function() {},
+            reject: function() {},
+            then: function() {},
+            catch: function() {}
+        };
 
         QUnit.stop();
+        coverage.init = true;
 
         proxyFactory.registerProxy('default', _.defaults({
             init : function(config) {
                 assert.ok(true, 'The proxyFactory has delegated the call to init');
                 assert.equal(config, initConfig, 'The proxyFactory has provided the config object to the init method');
                 QUnit.start();
+                return promise;
             }
         }, defaultProxy));
 
-        proxyFactory('default', initConfig).on('init', function(config) {
+        var result = proxyFactory('default', initConfig).on('init', function(p, config) {
             assert.ok(true, 'The proxyFactory has fired the "init" event');
+            assert.equal(p, promise, 'The proxyFactory has provided the promise through the "init" event');
             assert.equal(config, initConfig, 'The proxyFactory has provided the config object through the "init" event');
             QUnit.start();
         }).init();
+
+        assert.equal(result, promise, 'The proxyFactory.init method has returned a promise');
     });
 
 
-    QUnit.asyncTest('proxyFactory.destroy', 2, function(assert) {
-        var initConfig = {};
+    QUnit.asyncTest('proxyFactory.destroy', 4, function(assert) {
+        var promise = {
+            resolve: function() {},
+            reject: function() {},
+            then: function() {},
+            catch: function() {}
+        };
 
         QUnit.stop();
+        coverage.destroy = true;
 
         proxyFactory.registerProxy('default', _.defaults({
             destroy : function() {
                 assert.ok(true, 'The proxyFactory has delegated the call to destroy');
                 QUnit.start();
+                return promise;
             }
         }, defaultProxy));
 
-        proxyFactory('default', initConfig).on('destroy', function() {
+        var result = proxyFactory('default').on('destroy', function(p) {
             assert.ok(true, 'The proxyFactory has fired the "destroy" event');
+            assert.equal(p, promise, 'The proxyFactory has provided the promise through the "destroy" event');
             QUnit.start();
         }).destroy();
+
+        assert.equal(result, promise, 'The proxyFactory.destroy method has returned a promise');
     });
 
 
-    QUnit.asyncTest('proxyFactory.getItem', 6, function(assert) {
+    QUnit.asyncTest('proxyFactory.getTestData', 4, function(assert) {
+        var promise = {
+            resolve: function() {},
+            reject: function() {},
+            then: function() {},
+            catch: function() {}
+        };
+
+        QUnit.stop();
+        coverage.getTestData = true;
+
+        proxyFactory.registerProxy('default', _.defaults({
+            getTestData : function() {
+                assert.ok(true, 'The proxyFactory has delegated the call to getTestData');
+                QUnit.start();
+                return promise;
+            }
+        }, defaultProxy));
+
+        var result = proxyFactory('default').on('getTestData', function(p) {
+            assert.ok(true, 'The proxyFactory has fired the "getTestData" event');
+            assert.equal(p, promise, 'The proxyFactory has provided the promise through the "getTestData" event');
+            QUnit.start();
+        }).getTestData();
+
+        assert.equal(result, promise, 'The proxyFactory.getTestData method has returned a promise');
+    });
+
+
+    QUnit.asyncTest('proxyFactory.getTestContext', 4, function(assert) {
+        var promise = {
+            resolve: function() {},
+            reject: function() {},
+            then: function() {},
+            catch: function() {}
+        };
+
+        QUnit.stop();
+        coverage.getTestContext = true;
+
+        proxyFactory.registerProxy('default', _.defaults({
+            getTestContext : function() {
+                assert.ok(true, 'The proxyFactory has delegated the call to getTestContext');
+                QUnit.start();
+                return promise;
+            }
+        }, defaultProxy));
+
+        var result = proxyFactory('default').on('getTestContext', function(p) {
+            assert.ok(true, 'The proxyFactory has fired the "getTestContext" event');
+            assert.equal(p, promise, 'The proxyFactory has provided the promise through the "getTestContext" event');
+            QUnit.start();
+        }).getTestContext();
+
+        assert.equal(result, promise, 'The proxyFactory.getTestContext method has returned a promise');
+    });
+
+
+    QUnit.asyncTest('proxyFactory.callTestAction', 8, function(assert) {
+        var expectedAction = 'test';
+        var expectedParams = {};
+        var promise = {
+            resolve: function() {},
+            reject: function() {},
+            then: function() {},
+            catch: function() {}
+        };
+
+        QUnit.stop();
+        coverage.callTestAction = true;
+
+        proxyFactory.registerProxy('default', _.defaults({
+            callTestAction : function(action, params) {
+                assert.ok(true, 'The proxyFactory has delegated the call to callTestAction');
+                assert.equal(action, expectedAction, 'The proxyFactory has provided the action to the callTestAction method');
+                assert.equal(params, expectedParams, 'The proxyFactory has provided the params to the callTestAction method');
+                QUnit.start();
+                return promise;
+            }
+        }, defaultProxy));
+
+        var result = proxyFactory('default').on('callTestAction', function(p, action, params) {
+            assert.ok(true, 'The proxyFactory has fired the "callTestAction" event');
+            assert.equal(p, promise, 'The proxyFactory has provided the promise through the "callTestAction" event');
+            assert.equal(action, expectedAction, 'The proxyFactory has provided the action through the "callTestAction" event');
+            assert.equal(params, expectedParams, 'The proxyFactory has provided the params through the "callTestAction" event');
+            QUnit.start();
+        }).callTestAction(expectedAction, expectedParams);
+
+        assert.equal(result, promise, 'The proxyFactory.callTestAction method has returned a promise');
+    });
+
+
+    QUnit.asyncTest('proxyFactory.getItemData', 6, function(assert) {
         var expectedUri = 'http://tao.dev#item123';
         var promise = {
             resolve: function() {},
@@ -112,24 +244,57 @@ define(['lodash', 'taoTests/runner/proxy'], function(_, proxyFactory) {
         };
 
         QUnit.stop();
+        coverage.getItemData = true;
 
         proxyFactory.registerProxy('default', _.defaults({
-            getItem : function(uri) {
-                assert.ok(true, 'The proxyFactory has delegated the call to getItem');
-                assert.equal(uri, expectedUri, 'The proxyFactory has provided the URI to the getItem method');
+            getItemData : function(uri) {
+                assert.ok(true, 'The proxyFactory has delegated the call to getItemData');
+                assert.equal(uri, expectedUri, 'The proxyFactory has provided the URI to the getItemData method');
                 QUnit.start();
                 return promise;
             }
         }, defaultProxy));
 
-        var result = proxyFactory('default').on('getItem', function(uri, p) {
-            assert.ok(true, 'The proxyFactory has fired the "getItem" event');
-            assert.equal(uri, expectedUri, 'The proxyFactory has provided the URI through the "getItem" event');
-            assert.equal(p, promise, 'The proxyFactory has provided the promise through the "getItem" event');
+        var result = proxyFactory('default').on('getItemData', function(p, uri) {
+            assert.ok(true, 'The proxyFactory has fired the "getItemData" event');
+            assert.equal(p, promise, 'The proxyFactory has provided the promise through the "getItemData" event');
+            assert.equal(uri, expectedUri, 'The proxyFactory has provided the URI through the "getItemData" event');
             QUnit.start();
-        }).getItem(expectedUri);
+        }).getItemData(expectedUri);
 
-        assert.equal(result, promise, 'The proxyFactory.getItem method has returned a promise');
+        assert.equal(result, promise, 'The proxyFactory.getItemData method has returned a promise');
+    });
+
+
+    QUnit.asyncTest('proxyFactory.getItemState', 6, function(assert) {
+        var expectedUri = 'http://tao.dev#item123';
+        var promise = {
+            resolve: function() {},
+            reject: function() {},
+            then: function() {},
+            catch: function() {}
+        };
+
+        QUnit.stop();
+        coverage.getItemState = true;
+
+        proxyFactory.registerProxy('default', _.defaults({
+            getItemState : function(uri) {
+                assert.ok(true, 'The proxyFactory has delegated the call to getItemState');
+                assert.equal(uri, expectedUri, 'The proxyFactory has provided the URI to the getItemState method');
+                QUnit.start();
+                return promise;
+            }
+        }, defaultProxy));
+
+        var result = proxyFactory('default').on('getItemState', function(p, uri) {
+            assert.ok(true, 'The proxyFactory has fired the "getItemState" event');
+            assert.equal(p, promise, 'The proxyFactory has provided the promise through the "getItemState" event');
+            assert.equal(uri, expectedUri, 'The proxyFactory has provided the URI through the "getItemState" event');
+            QUnit.start();
+        }).getItemState(expectedUri);
+
+        assert.equal(result, promise, 'The proxyFactory.getItemState method has returned a promise');
     });
 
 
@@ -144,6 +309,7 @@ define(['lodash', 'taoTests/runner/proxy'], function(_, proxyFactory) {
         };
 
         QUnit.stop();
+        coverage.submitItemState = true;
 
         proxyFactory.registerProxy('default', _.defaults({
             submitItemState : function(uri, state) {
@@ -155,11 +321,11 @@ define(['lodash', 'taoTests/runner/proxy'], function(_, proxyFactory) {
             }
         }, defaultProxy));
 
-        var result = proxyFactory('default').on('submitItemState', function(uri, state, p) {
+        var result = proxyFactory('default').on('submitItemState', function(p, uri, state) {
             assert.ok(true, 'The proxyFactory has fired the "submitItemState" event');
+            assert.equal(p, promise, 'The proxyFactory has provided the promise through the "submitItemState" event');
             assert.equal(uri, expectedUri, 'The proxyFactory has provided the URI through the "submitItemState" event');
             assert.equal(state, expectedState, 'The proxyFactory has provided the state through the "submitItemState" event');
-            assert.equal(p, promise, 'The proxyFactory has provided the promise through the "submitItemState" event');
             QUnit.start();
         }).submitItemState(expectedUri, expectedState);
 
@@ -178,6 +344,7 @@ define(['lodash', 'taoTests/runner/proxy'], function(_, proxyFactory) {
         };
 
         QUnit.stop();
+        coverage.storeItemResponse = true;
 
         proxyFactory.registerProxy('default', _.defaults({
             storeItemResponse : function(uri, response) {
@@ -189,11 +356,11 @@ define(['lodash', 'taoTests/runner/proxy'], function(_, proxyFactory) {
             }
         }, defaultProxy));
 
-        var result = proxyFactory('default').on('storeItemResponse', function(uri, response, p) {
+        var result = proxyFactory('default').on('storeItemResponse', function(p, uri, response) {
             assert.ok(true, 'The proxyFactory has fired the "storeItemResponse" event');
+            assert.equal(p, promise, 'The proxyFactory has provided the promise through the "storeItemResponse" event');
             assert.equal(uri, expectedUri, 'The proxyFactory has provided the URI through the "storeItemResponse" event');
             assert.equal(response, expectedResponse, 'The proxyFactory has provided the response through the "storeItemResponse" event');
-            assert.equal(p, promise, 'The proxyFactory has provided the promise through the "storeItemResponse" event');
             QUnit.start();
         }).storeItemResponse(expectedUri, expectedResponse);
 
@@ -201,7 +368,7 @@ define(['lodash', 'taoTests/runner/proxy'], function(_, proxyFactory) {
     });
 
 
-    QUnit.asyncTest('proxyFactory.actionCall', 10, function(assert) {
+    QUnit.asyncTest('proxyFactory.callItemAction', 10, function(assert) {
         var expectedUri = 'http://tao.dev#item123';
         var expectedAction = 'test';
         var expectedParams = {};
@@ -213,27 +380,28 @@ define(['lodash', 'taoTests/runner/proxy'], function(_, proxyFactory) {
         };
 
         QUnit.stop();
+        coverage.callItemAction = true;
 
         proxyFactory.registerProxy('default', _.defaults({
-            actionCall : function(uri, action, params) {
-                assert.ok(true, 'The proxyFactory has delegated the call to actionCall');
-                assert.equal(uri, expectedUri, 'The proxyFactory has provided the URI to the actionCall method');
-                assert.equal(action, expectedAction, 'The proxyFactory has provided the action to the actionCall method');
-                assert.equal(params, expectedParams, 'The proxyFactory has provided the params to the actionCall method');
+            callItemAction : function(uri, action, params) {
+                assert.ok(true, 'The proxyFactory has delegated the call to callItemAction');
+                assert.equal(uri, expectedUri, 'The proxyFactory has provided the URI to the callItemAction method');
+                assert.equal(action, expectedAction, 'The proxyFactory has provided the action to the callItemAction method');
+                assert.equal(params, expectedParams, 'The proxyFactory has provided the params to the callItemAction method');
                 QUnit.start();
                 return promise;
             }
         }, defaultProxy));
 
-        var result = proxyFactory('default').on('actionCall', function(uri, action, params, p) {
-            assert.ok(true, 'The proxyFactory has fired the "actionCall" event');
-            assert.equal(uri, expectedUri, 'The proxyFactory has provided the URI through the "actionCall" event');
-            assert.equal(action, expectedAction, 'The proxyFactory has provided the action through the "actionCall" event');
-            assert.equal(params, expectedParams, 'The proxyFactory has provided the params through the "actionCall" event');
-            assert.equal(p, promise, 'The proxyFactory has provided the promise through the "actionCall" event');
+        var result = proxyFactory('default').on('callItemAction', function(p, uri, action, params) {
+            assert.ok(true, 'The proxyFactory has fired the "callItemAction" event');
+            assert.equal(p, promise, 'The proxyFactory has provided the promise through the "callItemAction" event');
+            assert.equal(uri, expectedUri, 'The proxyFactory has provided the URI through the "callItemAction" event');
+            assert.equal(action, expectedAction, 'The proxyFactory has provided the action through the "callItemAction" event');
+            assert.equal(params, expectedParams, 'The proxyFactory has provided the params through the "callItemAction" event');
             QUnit.start();
-        }).actionCall(expectedUri, expectedAction, expectedParams);
+        }).callItemAction(expectedUri, expectedAction, expectedParams);
 
-        assert.equal(result, promise, 'The proxyFactory.actionCall method has returned a promise');
+        assert.equal(result, promise, 'The proxyFactory.callItemAction method has returned a promise');
     });
 });

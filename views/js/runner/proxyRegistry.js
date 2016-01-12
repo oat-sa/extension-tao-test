@@ -29,10 +29,14 @@ define(['lodash'], function(_) {
     var _proxyApi = [
         'init',
         'destroy',
-        'getItem',
+        'getTestData',
+        'getTestContext',
+        'callTestAction',
+        'getItemData',
+        'getItemState',
         'submitItemState',
         'storeItemResponse',
-        'actionCall'
+        'callItemAction'
     ];
 
     /**

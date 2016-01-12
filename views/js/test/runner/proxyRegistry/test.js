@@ -50,10 +50,14 @@ define(['taoTests/runner/proxyRegistry'], function(proxyRegistry) {
     var validProxy = {
         init : function() {},
         destroy : function() {},
-        getItem : function() {},
+        getTestData : function() {},
+        getTestContext : function() {},
+        callTestAction : function() {},
+        getItemData : function() {},
+        getItemState : function() {},
         submitItemState : function() {},
         storeItemResponse : function() {},
-        actionCall : function() {}
+        callItemAction : function() {}
     };
 
     var proxies = [{
@@ -113,20 +117,28 @@ define(['taoTests/runner/proxyRegistry'], function(proxyRegistry) {
         var proxy1 = {
             init : function() {},
             destroy : function() {},
-            getItem : function() {},
+            getTestData : function() {},
+            getTestContext : function() {},
+            callTestAction : function() {},
+            getItemData : function() {},
+            getItemState : function() {},
             submitItemState : function() {},
             storeItemResponse : function() {},
-            actionCall : function() {}
+            callItemAction : function() {}
         };
 
         var name2 = 'myProxy2';
         var proxy2 = {
             init : function() {},
             destroy : function() {},
-            getItem : function() {},
+            getTestData : function() {},
+            getTestContext : function() {},
+            callTestAction : function() {},
+            getItemData : function() {},
+            getItemState : function() {},
             submitItemState : function() {},
             storeItemResponse : function() {},
-            actionCall : function() {}
+            callItemAction : function() {}
         };
 
         assert.throws(function() {
