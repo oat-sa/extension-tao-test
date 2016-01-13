@@ -17,10 +17,12 @@
  *
  */
 /**
+ * Enable to register providers to a target.
  *
  * TODO generalize (core)
  *
  * @author Sam <sam@taotesting.com>
+ * @author Bertrand Chevrier <bertrand@taotesting.com>
  */
 define(['lodash'], function(_){
     'use strict';
@@ -100,11 +102,16 @@ define(['lodash'], function(_){
             return provider;
         }
 
+        /**
+         * Clear the registered providers
+         */
+        function clearProviders(){
+            _providers = {};
+        }
+
         target.registerProvider = registerProvider;
-        target.getProvider = getProvider;
-        target.clearProviders = function (){
-            _.providers = {};
-        };
+        target.getProvider      = getProvider;
+        target.clearProviders   = clearProviders;
 
         return target;
     }

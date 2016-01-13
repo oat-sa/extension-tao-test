@@ -71,6 +71,7 @@ define([
         {name : 'getTestContext', title : 'getTestContext'},
         {name : 'setTestContext', title : 'setTestContext'},
         {name : 'getAreaBroker', title : 'getAreaBroker'},
+        {name : 'getProxy', title : 'getProxy'},
 
         {name : 'next', title : 'next'},
         {name : 'previous', title : 'previous'},

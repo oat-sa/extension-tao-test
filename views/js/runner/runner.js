@@ -77,7 +77,17 @@ define([
          */
         var provider  = testRunnerFactory.getProvider(providerName);
 
+        /**
+         * Keep the area broker instance
+         * @see taoTests/runner/areaBroker
+         */
         var areaBroker;
+
+        /**
+         * Keep the proxy instance
+         * @see taoTests/runner/proxy
+         */
+        var proxy;
 
         /**
          * Run a method of the provider (by delegation)
@@ -90,9 +100,9 @@ define([
             var args = [].slice.call(arguments, 1);
             return new Promise(function(resolve){
                 if(!_.isFunction(provider[method])){
-                   resolve();
+                   return resolve();
                 }
-                resolve(provider[method].apply(runner, args));
+                return resolve(provider[method].apply(runner, args));
             });
         }
 
@@ -114,6 +124,11 @@ define([
             return Promise.all(execStack);
         }
 
+        /**
+         * Trigger error event
+         * @param {Error|String} err - the error
+         * @fires runner#error
+         */
         function reportError(err){
             runner.trigger('error', err);
         }
@@ -297,15 +312,31 @@ define([
             },
 
             /**
-             * Get the area broker
+             * Get the area broker, load it if not present
              *
              * @returns {areaBroker} the areaBroker
              */
             getAreaBroker : function getAreaBroker(){
                 if(!areaBroker){
-                    areaBroker = provider.loadAreaBroker();
+                    areaBroker = provider.loadAreaBroker.call(this);
                 }
                 return areaBroker;
+            },
+
+
+            /**
+             * Get the proxy, load it if not present
+             *
+             * @returns {proxy} the proxy
+             */
+            getProxy : function getProxy(){
+                if(!proxy){
+                    if(!_.isFunction(provider.loadProxy)){
+                        throw new Error('The provider does not have a loadProxy method');
+                    }
+                    proxy = provider.loadProxy.call(this);
+                }
+                return proxy;
             },
 
             /**

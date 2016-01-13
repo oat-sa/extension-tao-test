@@ -83,9 +83,9 @@ define([
                 var args = [].slice.call(arguments, 1);
                 return new Promise(function(resolve){
                     if(!_.isFunction(provider[fnName])){
-                        resolve();
+                        return resolve();
                     }
-                    resolve(provider[fnName].apply(plugin, args));
+                    return resolve(provider[fnName].apply(plugin, args));
                 });
             }
 
