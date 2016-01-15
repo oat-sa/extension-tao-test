@@ -28,6 +28,7 @@ define(['lodash', 'taoTests/runner/proxy'], function(_, proxyFactory) {
         destroy : function() {},
         getTestData : function() {},
         getTestContext : function() {},
+        getTestMap : function() {},
         callTestAction : function() {},
         getItemData : function() {},
         getItemState : function() {},
@@ -64,6 +65,7 @@ define(['lodash', 'taoTests/runner/proxy'], function(_, proxyFactory) {
         { name : 'destroy', title : 'destroy' },
         { name : 'getTestData', title : 'getTestData' },
         { name : 'getTestContext', title : 'getTestContext' },
+        { name : 'getTestMap', title : 'getTestMap' },
         { name : 'callTestAction', title : 'callTestAction' },
         { name : 'getItemData', title : 'getItemData' },
         { name : 'getItemState', title : 'getItemState' },
@@ -196,6 +198,35 @@ define(['lodash', 'taoTests/runner/proxy'], function(_, proxyFactory) {
         }).getTestContext();
 
         assert.equal(result, promise, 'The proxyFactory.getTestContext method has returned a promise');
+    });
+
+
+    QUnit.asyncTest('proxyFactory.getTestMap', 4, function(assert) {
+        var promise = {
+            resolve: function() {},
+            reject: function() {},
+            then: function() {},
+            catch: function() {}
+        };
+
+        QUnit.stop();
+        coverage.getTestMap = true;
+
+        proxyFactory.registerProxy('default', _.defaults({
+            getTestMap : function() {
+                assert.ok(true, 'The proxyFactory has delegated the call to getTestMap');
+                QUnit.start();
+                return promise;
+            }
+        }, defaultProxy));
+
+        var result = proxyFactory('default').on('getTestMap', function(p) {
+            assert.ok(true, 'The proxyFactory has fired the "getTestMap" event');
+            assert.equal(p, promise, 'The proxyFactory has provided the promise through the "getTestMap" event');
+            QUnit.start();
+        }).getTestMap();
+
+        assert.equal(result, promise, 'The proxyFactory.getTestMap method has returned a promise');
     });
 
 

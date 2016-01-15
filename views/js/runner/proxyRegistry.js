@@ -31,6 +31,7 @@ define(['lodash'], function(_) {
         'destroy',
         'getTestData',
         'getTestContext',
+        'getTestMap',
         'callTestAction',
         'getItemData',
         'getItemState',
