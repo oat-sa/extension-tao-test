@@ -136,6 +136,19 @@
             },
 
             /**
+             * Gets the test map
+             * @returns {Promise} - Returns a promise. The test map object will be provided on resolve.
+             *                      Any error will be provided if rejected.
+             */
+            getTestMap: function getTestMap() {
+                /**
+                 * @event proxy#getTestMap
+                 * @param {Promise} promise
+                 */
+                return delegate('getTestMap');
+            },
+
+            /**
              * Calls an action related to the test
              * @param {String} action - The name of the action to call
              * @param {Object} [params] - Some optional parameters to join to the call
