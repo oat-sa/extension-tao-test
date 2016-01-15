@@ -446,7 +446,7 @@ define([
              * @returns {runner} chains
              */
             skip : function skip(scope){
-                this.trigger('move', 'skip', scope);
+                this.trigger('skip', scope);
                 return this;
             },
 
