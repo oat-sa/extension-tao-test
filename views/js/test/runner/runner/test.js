@@ -432,6 +432,30 @@ define([
             .next();
     });
 
+    QUnit.asyncTest('skip', function(assert){
+       QUnit.expect(2);
+
+        runnerFactory.registerProvider('foo', {
+            loadAreaBroker : function(){
+                return {};
+            },
+            init : _.noop
+        });
+
+        runnerFactory('foo')
+            .on('ready', function(){
+                assert.ok(true, 'The runner is ready');
+                this.skip('section');
+            })
+            .on('move', function(){
+                assert.ok(false, 'Skip is not a move');
+            })
+            .on('skip', function(scope){
+                assert.equal(scope, 'section', 'The scope is correct');
+                QUnit.start();
+            })
+            .init();
+    });
 
     QUnit.module('plugins', {
         setup: function(){
