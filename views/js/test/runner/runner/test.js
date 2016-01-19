@@ -84,6 +84,7 @@ define([
         {name : 'exit', title : 'exit'},
         {name : 'pause', title : 'pause'},
         {name : 'resume', title : 'resume'},
+        {name : 'timeout', title : 'timeout'},
 
         {name : 'trigger', title : 'trigger'},
         {name : 'before', title : 'before'},
