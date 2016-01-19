@@ -575,6 +575,30 @@ define([
             .init();
     });
 
+    QUnit.asyncTest('timeout', function(assert){
+        QUnit.expect(2);
+
+        runnerFactory.registerProvider('foo', {
+            loadAreaBroker : function(){
+                return {};
+            },
+            init : function init(){
+
+                this.on('init', function(){
+                        assert.ok(true, 'we can listen for init in providers init');
+                    })
+                    .on('timeout', function(){
+                        assert.ok(true, 'The timeout event has been triggered');
+                        QUnit.start();
+                    });
+            }
+        });
+
+        runnerFactory('foo')
+            .init()
+            .timeout();
+    });
+
     QUnit.module('plugins', {
         setup: function(){
             runnerFactory.clearProviders();

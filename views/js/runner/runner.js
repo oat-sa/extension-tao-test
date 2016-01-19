@@ -573,6 +573,16 @@ define([
                         .trigger('resume');
                 }
                 return this;
+            },
+
+            /**
+             * Notify a test timeout
+             * @fires runner#timeout
+             * @returns {runner} chains
+             */
+            timeout : function timeout(){
+                this.trigger('timeout');
+                return this;
             }
         });
 
