@@ -52,6 +52,9 @@ define([
             url : '/taoTests/views/js/test/runner/sample/minimalisticTest.json',
             renderTo : $container
         })
+        .on('error', function(err){
+            throw err;
+        })
         .on('ready', function(){
 
             assert.equal($('.test-runner', $container).length, 1, 'The test runner container is attached');
@@ -96,6 +99,9 @@ define([
         }, {
             url : '/taoTests/views/js/test/runner/sample/minimalisticTest.json',
             renderTo : $container
+        })
+        .on('error', function(err){
+            throw err;
         })
         .on('ready', function(){
 

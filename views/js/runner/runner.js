@@ -73,6 +73,11 @@ define([
         };
 
         /**
+         * @type {Object} keeps the states of the items
+         */
+        var itemStates = {};
+
+        /**
          * The selected test runner provider
          */
         var provider  = testRunnerFactory.getProvider(providerName);
@@ -205,8 +210,9 @@ define([
                 var self = this;
 
                 providerRun('loadItem', itemRef).then(function(itemData){
-                    self.trigger('loaditem', itemRef)
-                        .renderItem(itemData);
+                    self.setItemState(itemRef, 'loaded', true)
+                        .trigger('loaditem', itemRef)
+                        .renderItem(itemRef, itemData);
                 }).catch(reportError);
                 return this;
             },
@@ -219,11 +225,12 @@ define([
              * @fires runner#renderitem
              * @returns {runner} chains
              */
-            renderItem : function renderItem(itemData){
+            renderItem : function renderItem(itemRef, itemData){
                 var self = this;
 
-                providerRun('renderItem', itemData).then(function(){
-                    self.trigger('renderitem', itemData);
+                providerRun('renderItem', itemRef, itemData).then(function(){
+                    self.setItemState(itemRef, 'ready', true)
+                        .trigger('renderitem', itemRef, itemData);
                 }).catch(reportError);
                 return this;
             },
@@ -240,8 +247,48 @@ define([
                 var self = this;
 
                 providerRun('unloadItem', itemRef).then(function(){
+                    itemStates = _.omit(itemStates, itemRef);
                     self.trigger('unloaditem', itemRef);
                 }).catch(reportError);
+                return this;
+            },
+
+            /**
+             * Disable an item
+             *  - provider disableItem
+             * @param {*} itemRef - something that let you identify the item
+             * @fires runner#disableitem
+             * @returns {runner} chains
+             */
+            disableItem : function disableItem(itemRef){
+                var self = this;
+
+                if(!this.getItemState(itemRef, 'disabled')){
+
+                    providerRun('disableItem', itemRef).then(function(){
+                        self.setItemState(itemRef, 'disabled', true)
+                            .trigger('disableitem', itemRef);
+                    }).catch(reportError);
+                }
+                return this;
+            },
+
+            /**
+             * Enable an item
+             *  - provider enableItem
+             * @param {*} itemRef - something that let you identify the item
+             * @fires runner#disableitem
+             * @returns {runner} chains
+             */
+            enableItem : function enableItem(itemRef){
+                var self = this;
+
+                if(this.getItemState(itemRef, 'disabled')){
+                    providerRun('enableItem', itemRef).then(function(){
+                        self.setItemState(itemRef, 'disabled', false)
+                            .trigger('enableitem', itemRef);
+                    }).catch(reportError);
+                }
                 return this;
             },
 
@@ -362,6 +409,47 @@ define([
                     throw new TypeError('The state must have a name');
                 }
                 states[name] = !!active;
+
+                return this;
+            },
+
+            /**
+             * Check an item state
+             *
+             * @param {*} itemRef - something that let you identify the item
+             * @param {String} name - the state name
+             * @returns {Boolean} if active, false if not set
+             *
+             * @throws {TypeError} if there is no itemRef nor name
+             */
+            getItemState : function getItemState(itemRef, name){
+                if( _.isEmpty(itemRef) || _.isEmpty(name)){
+                    throw new TypeError('The state is identified by an itemRef and a name');
+                }
+                return !!(itemStates[itemRef] && itemStates[itemRef][name]);
+            },
+
+            /**
+             * Check an item state
+             *
+             * @param {*} itemRef - something that let you identify the item
+             * @param {String} name - the state name
+             * @param {Boolean} active - is the state active
+             * @returns {runner} chains
+             *
+             * @throws {TypeError} if there is no itemRef nor name
+             */
+            setItemState : function setItemState(itemRef, name, active){
+                if( _.isEmpty(itemRef) || _.isEmpty(name)){
+                    throw new TypeError('The state is identified by an itemRef and a name');
+                }
+                itemStates[itemRef] = itemStates[itemRef] || {
+                    'loaded' : false,
+                    'ready'  : false,
+                    'disabled': false
+                };
+
+                itemStates[itemRef][name] = !!active;
 
                 return this;
             },
