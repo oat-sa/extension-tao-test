@@ -57,6 +57,11 @@ define([
         var testContext    = {};
 
         /**
+         * @type {Object} contextual test map (the map of accessible items)
+         */
+        var testMap        = {};
+
+        /**
          * @type {Object} the registered plugins
          */
         var plugins        = {};
@@ -489,6 +494,26 @@ define([
             setTestContext : function setTestContext(context){
                 if(_.isPlainObject(context)){
                     testContext = context;
+                }
+                return this;
+            },
+
+            /**
+             * Get the test items map
+             * @returns {Object} the test map
+             */
+            getTestMap : function getTestMap(){
+                return testMap;
+            },
+
+            /**
+             * Set the test items map
+             * @param {Object} map - the map to set
+             * @returns {runner} chains
+             */
+            setTestMap : function setTestMap(map){
+                if(_.isPlainObject(map)){
+                    testMap = map;
                 }
                 return this;
             },
