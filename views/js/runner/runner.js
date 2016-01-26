@@ -548,7 +548,7 @@ define([
              * @returns {runner} chains
              */
             jump : function jump(position, scope){
-                this.trigger('move', 'jump', position, scope);
+                this.trigger('move', 'jump', scope, position);
                 return this;
             },
 
