@@ -40,11 +40,110 @@ define([
      */
     return function probeOverseerFactory(testIdentifier, runner){
 
-        var store;
-        var writing;
-        var queue = [];
+        // the created instance
+        var overseer;
+
+        // the list of registered probes
         var probes = [];
 
+        //the data store instance
+        var store;
+
+        //temp queue
+        var queue = [];
+
+        //current write promise
+        var writing;
+
+        //is the overseer started
+        var started = false;
+
+        /**
+         * Register the collection event of a probe against a runner
+         * @param {Object} probe - a valid probe
+         */
+        var collectEvent = function collectEvent(probe){
+
+            //event handler registered to collect data
+            var probeHandler = function probeHandler(){
+                var now = moment();
+                var last;
+                var data = {
+                    id   : uuid(8, 16),
+                    type : probe.name,
+                    timestamp : now.format('x') / 1000
+                };
+                if(typeof probe.capture === 'function'){
+                    data.context = probe.capture(runner);
+                }
+                overseer.push(data);
+            };
+
+            //fallback
+            if(probe.latency){
+                return collectLatencyEvent(probe);
+            }
+
+            _.forEach(probe.events, function(eventName){
+                runner.on(eventName + '.probe-' + probe.name, probeHandler);
+            });
+        };
+
+        var collectLatencyEvent = function collectLatencyEvent(probe){
+
+            var eventNs = '.probe-' + probe.name;
+
+            //start event handler registered to collect data
+            var startHandler = function startHandler(){
+                var now = moment();
+                var data = {
+                    id: uuid(8, 16),
+                    marker: 'start',
+                    type : probe.name,
+                    timestamp : now.format('x') / 1000
+                };
+
+                if(typeof probe.capture === 'function'){
+                    data.context = probe.capture(runner);
+                }
+                overseer.push(data);
+            };
+
+            //stop event handler registered to collect data
+            var stopHandler = function stopHandler(){
+                var now = moment();
+                var last;
+                var data = {
+                    type : probe.name,
+                    timestamp : now.format('x') / 1000
+                };
+                overseer.getQueue().then(function(queue){
+                    last = _.findLast(queue, { type : probe.name, marker : 'start' });
+                    if(last && !_.findLast(queue, { type : probe.name, marker : 'stop', id : last.id })){
+                        data.id = last.id;
+                        data.marker = 'end';
+                        if(typeof probe.capture === 'function'){
+                            data.context = probe.capture(runner);
+                        }
+                        overseer.push(data);
+                    }
+                });
+            };
+
+            //fallback
+            if(!probe.latency){
+                return collectEvent(probe);
+            }
+
+            _.forEach(probe.startEvents, function(eventName){
+                runner.on(eventName + eventNs, startHandler);
+            });
+            _.forEach(probe.stopEvents, function(eventName){
+                runner.on(eventName + eventNs, stopHandler);
+            });
+        };
+
+        //argument validation
         if(_.isEmpty(testIdentifier)){
             throw new TypeError('Please set a test identifier');
         }
@@ -60,7 +159,7 @@ define([
         /**
          * @typedef {probeOverseer}
          */
-        return {
+        overseer = {
 
             /**
              * Add a new probe
@@ -98,12 +197,22 @@ define([
                     if(!probe.startEvents.length || !probe.stopEvents.length){
                         throw new TypeError('Latency based probes must have startEvents and stopEvents defined');
                     }
+
+                    //if already started we register the events on addition
+                    if(started){
+                        collectLatencyEvent(probe);
+                    }
                 } else {
                     if(_.isString(probe.events) && !_.isEmpty(probe.events)){
                         probe.events = [probe.events];
                     }
                     if(!_.isArray(probe.events) || probe.events.length === 0){
                         throw new TypeError('A probe must define events');
+                    }
+
+                    //if already started we register the events on addition
+                    if(started){
+                        collectEvent(probe);
                     }
                 }
 
@@ -165,77 +274,8 @@ define([
              * Start the probes
              */
             start : function start(){
-                var self = this;
-                _.forEach(probes, function(probe){
-                    var probeHandler,
-                        startHandler,
-                        stopHandler;
-
-                    var eventNs = '.probe-' + probe.name;
-
-                    if(probe.latency){
-
-                        startHandler = function startHandler(){
-                            var now = moment();
-                            var data = {
-                                id: uuid(8, 16),
-                                marker: 'start',
-                                type : probe.name,
-                                timestamp : now.format('x') / 1000
-                            };
-
-                            if(typeof probe.capture === 'function'){
-                                data.context = probe.capture(runner);
-                            }
-                            self.push(data);
-                        };
-
-                        stopHandler = function stopHandler(){
-                            var now = moment();
-                            var last;
-                            var data = {
-                                type : probe.name,
-                                timestamp : now.format('x') / 1000
-                            };
-                            self.getQueue().then(function(queue){
-                                last = _.findLast(queue, { type : probe.name, marker : 'start' });
-                                if(last && !_.findLast(queue, { type : probe.name, marker : 'stop', id : last.id })){
-                                    data.id = last.id;
-                                    data.marker = 'end';
-                                    if(typeof probe.capture === 'function'){
-                                        data.context = probe.capture(runner);
-                                    }
-                                    self.push(data);
-                                }
-                            });
-                        };
-                        _.forEach(probe.startEvents, function(eventName){
-                            runner.on(eventName + eventNs, startHandler);
-                        });
-                        _.forEach(probe.stopEvents, function(eventName){
-                            runner.on(eventName + eventNs, stopHandler);
-                        });
-                    } else {
-
-                        probeHandler = function probeHandler(){
-                            var now = moment();
-                            var last;
-                            var data = {
-                                id   : uuid(8, 16),
-                                type : probe.name,
-                                timestamp : now.format('x') / 1000
-                            };
-                            if(typeof probe.capture === 'function'){
-                                data.context = probe.capture(runner);
-                            }
-                            self.push(data);
-                        };
-
-                        _.forEach(probe.events, function(eventName){
-                            runner.on(eventName + eventNs, probeHandler);
-                        });
-                    }
-                });
+                _.forEach(probes, collectEvent);
+                started = true;
             },
 
 
@@ -244,6 +284,7 @@ define([
              * Be carefull, stop will also clear the store and the queue
              */
             stop  : function stop(){
+                started = false;
                 _.forEach(probes, function(probe){
                     var eventNs = '.probe-' + probe.name;
                     var removeHandler = function removeHandler(eventName){
@@ -259,5 +300,6 @@ define([
                 store.clear();
             }
         };
+        return overseer;
     };
 });
