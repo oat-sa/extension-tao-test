@@ -64,6 +64,8 @@ define([
          */
         var collectEvent = function collectEvent(probe){
 
+            var eventNs = '.probe-' + probe.name;
+
             //event handler registered to collect data
             var probeHandler = function probeHandler(){
                 var now = moment();
@@ -85,7 +87,8 @@ define([
             }
 
             _.forEach(probe.events, function(eventName){
-                runner.on(eventName + '.probe-' + probe.name, probeHandler);
+                var listen = eventName.indexOf('.') > 0 ? eventName : eventName + eventNs;
+                runner.on(listen, probeHandler);
             });
         };
 
@@ -136,10 +139,12 @@ define([
             }
 
             _.forEach(probe.startEvents, function(eventName){
-                runner.on(eventName + eventNs, startHandler);
+                var listen = eventName.indexOf('.') > 0 ? eventName : eventName + eventNs;
+                runner.on(listen, startHandler);
             });
             _.forEach(probe.stopEvents, function(eventName){
-                runner.on(eventName + eventNs, stopHandler);
+                var listen = eventName.indexOf('.') > 0 ? eventName : eventName + eventNs;
+                runner.on(listen, stopHandler);
             });
         };
 
