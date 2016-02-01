@@ -99,6 +99,13 @@ define([
          */
         var proxy;
 
+
+        /**
+         * Keep the instance of the probes overseer
+         * @see taoTests/runner/probeOverseer
+         */
+        var probeOverseer;
+
         /**
          * Run a method of the provider (by delegation)
          *
@@ -389,6 +396,19 @@ define([
                     proxy = provider.loadProxy.call(this);
                 }
                 return proxy;
+            },
+
+            /**
+             * Get the probeOverseer, and load it if not present
+             *
+             * @returns {probeOverseer} the probe overseer
+             */
+            getProbeOverseer : function getProbeOverseer(){
+                if(!probeOverseer && _.isFunction(provider.loadProbeOverseer)){
+                    probeOverseer = provider.loadProbeOverseer.call(this);
+                }
+
+                return probeOverseer;
             },
 
             /**
