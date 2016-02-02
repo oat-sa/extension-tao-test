@@ -27,9 +27,12 @@ define([
     'core/promise',
     'moment',
     'lib/uuid',
-    'lib/localforage'
+    'lib/localforage',
+    'lib/moment-timezone.min'
 ], function (_, Promise, moment, uuid, localforage){
     'use strict';
+
+    var timeZone = moment.tz.guess();
 
     /**
      * Create the overseer intance
@@ -73,7 +76,8 @@ define([
                 var data = {
                     id   : uuid(8, 16),
                     type : probe.name,
-                    timestamp : now.format('x') / 1000
+                    timestamp : now.format('x') / 1000,
+                    timezone  : now.tz(timeZone).format('Z')
                 };
                 if(typeof probe.capture === 'function'){
                     data.context = probe.capture(runner);
@@ -103,7 +107,8 @@ define([
                     id: uuid(8, 16),
                     marker: 'start',
                     type : probe.name,
-                    timestamp : now.format('x') / 1000
+                    timestamp : now.format('x') / 1000,
+                    timezone  : now.tz(timeZone).format('Z')
                 };
 
                 if(typeof probe.capture === 'function'){
@@ -118,7 +123,8 @@ define([
                 var last;
                 var data = {
                     type : probe.name,
-                    timestamp : now.format('x') / 1000
+                    timestamp : now.format('x') / 1000,
+                    timezone  : now.tz(timeZone).format('Z')
                 };
                 overseer.getQueue().then(function(queue){
                     last = _.findLast(queue, { type : probe.name, marker : 'start' });
