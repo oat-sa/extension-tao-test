@@ -201,14 +201,11 @@ define([
     QUnit.module('collection', {
         setup: function() {
             runnerFactory.clearProviders();
-            //localforage.createInstance({
-                //name: 'test-probe-' + testId
-            //}).clear();
         }
     });
 
     QUnit.asyncTest('simple', function(assert) {
-        QUnit.expect(10);
+        QUnit.expect(12);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker: _.noop,
@@ -248,6 +245,8 @@ define([
                         assert.equal(typeof queue[0].timestamp, 'number', 'The queue entry contains a timestamp');
                         assert.ok(queue[0].timestamp >= creation && creation > 0, 'The timestamp is superior to the test creation');
                         assert.ok(queue[0].timestamp >= init && init > 0, 'The timestamp is superior or equal to the test init');
+                        assert.equal(typeof queue[0].timezone, 'string', 'The queue entry contains a timezone');
+                        assert.ok(/^[\+\-]{1}[0-9]{2}:[0-9]{2}$/.test(queue[0].timezone), 'The timezone is formatted correclty');
                         assert.equal(queue[0].type, 'test-ready', 'The entry type is correct');
                         assert.deepEqual(queue[0].context, {
                             foo: 'bar'
@@ -266,7 +265,7 @@ define([
     });
 
     QUnit.asyncTest('latency', function(assert) {
-        QUnit.expect(14);
+        QUnit.expect(16);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker: _.noop,
@@ -322,6 +321,9 @@ define([
                         }, 'The entry context is correct');
                         assert.ok(startEntry.timestamp >= creation && creation > 0, 'The timestamp is superior to the test creation');
                         assert.ok(startEntry.timestamp >= init && init > 0, 'The timestamp is superior or equal to the test init');
+
+                        assert.equal(typeof queue[0].timezone, 'string', 'The queue entry contains a timezone');
+                        assert.ok(/^[\+\-]{1}[0-9]{2}:[0-9]{2}$/.test(queue[0].timezone), 'The timezone is formatted correclty');
 
                         assert.equal(typeof stopEntry, 'object', 'The stop entry is an object');
                         assert.equal(stopEntry.id, startEntry.id, 'string', 'The stop entry id is the same than the start entry');
