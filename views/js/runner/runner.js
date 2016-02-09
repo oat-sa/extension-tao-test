@@ -57,6 +57,11 @@ define([
         var testContext    = {};
 
         /**
+         * @type {Object} contextual test map (the map of accessible items)
+         */
+        var testMap        = {};
+
+        /**
          * @type {Object} the registered plugins
          */
         var plugins        = {};
@@ -71,6 +76,11 @@ define([
             'finish':  false,
             'destroy': false
         };
+
+        /**
+         * @type {Object} keeps the states of the items
+         */
+        var itemStates = {};
 
         /**
          * The selected test runner provider
@@ -88,6 +98,13 @@ define([
          * @see taoTests/runner/proxy
          */
         var proxy;
+
+
+        /**
+         * Keep the instance of the probes overseer
+         * @see taoTests/runner/probeOverseer
+         */
+        var probeOverseer;
 
         /**
          * Run a method of the provider (by delegation)
@@ -205,8 +222,9 @@ define([
                 var self = this;
 
                 providerRun('loadItem', itemRef).then(function(itemData){
-                    self.trigger('loaditem', itemRef)
-                        .renderItem(itemData);
+                    self.setItemState(itemRef, 'loaded', true)
+                        .trigger('loaditem', itemRef)
+                        .renderItem(itemRef, itemData);
                 }).catch(reportError);
                 return this;
             },
@@ -219,11 +237,12 @@ define([
              * @fires runner#renderitem
              * @returns {runner} chains
              */
-            renderItem : function renderItem(itemData){
+            renderItem : function renderItem(itemRef, itemData){
                 var self = this;
 
-                providerRun('renderItem', itemData).then(function(){
-                    self.trigger('renderitem', itemData);
+                providerRun('renderItem', itemRef, itemData).then(function(){
+                    self.setItemState(itemRef, 'ready', true)
+                        .trigger('renderitem', itemRef, itemData);
                 }).catch(reportError);
                 return this;
             },
@@ -240,8 +259,48 @@ define([
                 var self = this;
 
                 providerRun('unloadItem', itemRef).then(function(){
+                    itemStates = _.omit(itemStates, itemRef);
                     self.trigger('unloaditem', itemRef);
                 }).catch(reportError);
+                return this;
+            },
+
+            /**
+             * Disable an item
+             *  - provider disableItem
+             * @param {*} itemRef - something that let you identify the item
+             * @fires runner#disableitem
+             * @returns {runner} chains
+             */
+            disableItem : function disableItem(itemRef){
+                var self = this;
+
+                if(!this.getItemState(itemRef, 'disabled')){
+
+                    providerRun('disableItem', itemRef).then(function(){
+                        self.setItemState(itemRef, 'disabled', true)
+                            .trigger('disableitem', itemRef);
+                    }).catch(reportError);
+                }
+                return this;
+            },
+
+            /**
+             * Enable an item
+             *  - provider enableItem
+             * @param {*} itemRef - something that let you identify the item
+             * @fires runner#disableitem
+             * @returns {runner} chains
+             */
+            enableItem : function enableItem(itemRef){
+                var self = this;
+
+                if(this.getItemState(itemRef, 'disabled')){
+                    providerRun('enableItem', itemRef).then(function(){
+                        self.setItemState(itemRef, 'disabled', false)
+                            .trigger('enableitem', itemRef);
+                    }).catch(reportError);
+                }
                 return this;
             },
 
@@ -340,6 +399,19 @@ define([
             },
 
             /**
+             * Get the probeOverseer, and load it if not present
+             *
+             * @returns {probeOverseer} the probe overseer
+             */
+            getProbeOverseer : function getProbeOverseer(){
+                if(!probeOverseer && _.isFunction(provider.loadProbeOverseer)){
+                    probeOverseer = provider.loadProbeOverseer.call(this);
+                }
+
+                return probeOverseer;
+            },
+
+            /**
              * Check a runner state
              *
              * @param {String} name - the state name
@@ -362,6 +434,47 @@ define([
                     throw new TypeError('The state must have a name');
                 }
                 states[name] = !!active;
+
+                return this;
+            },
+
+            /**
+             * Check an item state
+             *
+             * @param {*} itemRef - something that let you identify the item
+             * @param {String} name - the state name
+             * @returns {Boolean} if active, false if not set
+             *
+             * @throws {TypeError} if there is no itemRef nor name
+             */
+            getItemState : function getItemState(itemRef, name){
+                if( _.isEmpty(itemRef) || _.isEmpty(name)){
+                    throw new TypeError('The state is identified by an itemRef and a name');
+                }
+                return !!(itemStates[itemRef] && itemStates[itemRef][name]);
+            },
+
+            /**
+             * Check an item state
+             *
+             * @param {*} itemRef - something that let you identify the item
+             * @param {String} name - the state name
+             * @param {Boolean} active - is the state active
+             * @returns {runner} chains
+             *
+             * @throws {TypeError} if there is no itemRef nor name
+             */
+            setItemState : function setItemState(itemRef, name, active){
+                if( _.isEmpty(itemRef) || _.isEmpty(name)){
+                    throw new TypeError('The state is identified by an itemRef and a name');
+                }
+                itemStates[itemRef] = itemStates[itemRef] || {
+                    'loaded' : false,
+                    'ready'  : false,
+                    'disabled': false
+                };
+
+                itemStates[itemRef][name] = !!active;
 
                 return this;
             },
@@ -406,6 +519,26 @@ define([
             },
 
             /**
+             * Get the test items map
+             * @returns {Object} the test map
+             */
+            getTestMap : function getTestMap(){
+                return testMap;
+            },
+
+            /**
+             * Set the test items map
+             * @param {Object} map - the map to set
+             * @returns {runner} chains
+             */
+            setTestMap : function setTestMap(map){
+                if(_.isPlainObject(map)){
+                    testMap = map;
+                }
+                return this;
+            },
+
+            /**
              * Move next alias
              * @param {String|*} [scope] - the movement scope
              * @fires runner#move
@@ -435,7 +568,7 @@ define([
              * @returns {runner} chains
              */
             jump : function jump(position, scope){
-                this.trigger('move', 'jump', position, scope);
+                this.trigger('move', 'jump', scope, position);
                 return this;
             },
 
@@ -484,6 +617,16 @@ define([
                     this.setState('pause', false)
                         .trigger('resume');
                 }
+                return this;
+            },
+
+            /**
+             * Notify a test timeout
+             * @fires runner#timeout
+             * @returns {runner} chains
+             */
+            timeout : function timeout(){
+                this.trigger('timeout');
                 return this;
             }
         });

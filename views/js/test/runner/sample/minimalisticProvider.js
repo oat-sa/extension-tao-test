@@ -39,7 +39,7 @@ define([
 
             //install event based behavior
             this.on('ready', function(){
-                this.loadItem(0);
+                this.loadItem('item-0');
             })
             .on('move', function(type){
 
@@ -48,8 +48,8 @@ define([
 
                 if(type === 'next'){
                    if(test.items[test.current + 1]){
-                        self.unloadItem(test.current);
-                        self.loadItem(test.current + 1);
+                        self.unloadItem('item-' +test.current);
+                        self.loadItem('item-' + (test.current + 1));
                    } else {
                         self.finish();
                    }
@@ -57,10 +57,10 @@ define([
                 else if(type === 'previous'){
 
                    if(test.items[test.current - 1]){
-                        self.unloadItem(test.current);
-                        self.loadItem(test.current - 1);
+                        self.unloadItem('item-' +test.current);
+                        self.loadItem('item-' + (test.current - 1));
                    } else {
-                        self.loadItem(0);
+                        self.loadItem('item-0');
                    }
                 }
             });
@@ -106,16 +106,17 @@ define([
             return new Promise(function(resolve, reject){
 
                 setTimeout(function(){
-                    test.current = itemIndex;
+
+                    test.current = parseInt(itemIndex.replace('item-',''), 10);
                     self.setTestContext(test);
 
-                    resolve(test.items[itemIndex]);
+                    resolve(test.items[test.current]);
                 }, 500);
             });
 
         },
 
-        renderItem : function renderItem(item){
+        renderItem : function renderItem(itemIndex, item){
 
             var broker = this.getAreaBroker();
             var $content = broker.getContentArea();

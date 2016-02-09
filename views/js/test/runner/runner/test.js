@@ -60,18 +60,23 @@ define([
         {name : 'loadItem', title : 'loadItem'},
         {name : 'renderItem', title : 'renderItem'},
         {name : 'unloadItem', title : 'unloadItem'},
+        {name : 'disableItem', title : 'disableItem'},
+        {name : 'enableItem', title : 'enableItem'},
 
         {name : 'getPlugins', title : 'getPlugins'},
         {name : 'getPlugin', title : 'getPlugin'},
         {name : 'getConfig', title : 'getConfig'},
         {name : 'getState', title : 'getState'},
         {name : 'setState', title : 'setState'},
+        {name : 'getItemState', title : 'getItemState'},
+        {name : 'setItemState', title : 'setItemState'},
         {name : 'getTestData', title : 'getTestData'},
         {name : 'setTestData', title : 'setTestData'},
         {name : 'getTestContext', title : 'getTestContext'},
         {name : 'setTestContext', title : 'setTestContext'},
         {name : 'getAreaBroker', title : 'getAreaBroker'},
         {name : 'getProxy', title : 'getProxy'},
+        {name : 'getProbeOverseer', title : 'getProbeOverseer'},
 
         {name : 'next', title : 'next'},
         {name : 'previous', title : 'previous'},
@@ -80,6 +85,7 @@ define([
         {name : 'exit', title : 'exit'},
         {name : 'pause', title : 'pause'},
         {name : 'resume', title : 'resume'},
+        {name : 'timeout', title : 'timeout'},
 
         {name : 'trigger', title : 'trigger'},
         {name : 'before', title : 'before'},
@@ -226,7 +232,7 @@ define([
     });
 
     QUnit.asyncTest('load and render item', function(assert){
-       QUnit.expect(1);
+       QUnit.expect(2);
 
         var items = {
             'aaa' : 'AAA',
@@ -241,7 +247,8 @@ define([
             loadItem : function(itemRef){
                return items[itemRef];
             },
-            renderItem : function(itemData){
+            renderItem : function(itemRef, itemData){
+               assert.equal(itemRef, 'zzz', 'The rendered item is correct');
                assert.equal(itemData, 'ZZZ', 'The rendered item is correct');
                QUnit.start();
             }
@@ -256,7 +263,7 @@ define([
     });
 
     QUnit.asyncTest('load async and render item', function(assert){
-       QUnit.expect(3);
+       QUnit.expect(4);
 
        var resolved = false;
         var items = {
@@ -279,9 +286,10 @@ define([
                 assert.equal(resolved, false, 'Item loading is not yet resolved');
                return p;
             },
-            renderItem : function(itemData){
+            renderItem : function(itemRef, itemData){
 
-                assert.equal(resolved, true, 'Item loading is resolved');
+               assert.equal(resolved, true, 'Item loading is resolved');
+               assert.equal(itemRef, 'zzz', 'The rendered item is correct');
                assert.equal(itemData, 'ZZZ', 'The rendered item is correct');
                QUnit.start();
             }
@@ -330,6 +338,118 @@ define([
             .on('unloaditem', function(itemRef){
                 assert.equal(itemRef, 'zzz', 'The provider is called with the correct reference');
                 assert.equal(items[itemRef], null, 'The item is now unloaded');
+                QUnit.start();
+            })
+            .init();
+    });
+
+    QUnit.asyncTest('item state', function(assert){
+       QUnit.expect(15);
+
+        var items = {
+            'aaa' : 'AAA',
+            'zzz' : 'ZZZ'
+        };
+
+        runnerFactory.registerProvider('foo', {
+            loadAreaBroker : function(){
+                return {};
+            },
+            init : _.noop,
+            loadItem : function(itemRef){
+               return items[itemRef];
+            }
+        });
+
+        var runner = runnerFactory('foo');
+        runner
+            .on('init', function(){
+
+                assert.throws(function(){
+                    this.getItemState();
+                }, TypeError, 'The item state should have an itemRef');
+
+                assert.throws(function(){
+                    this.getItemState('zzz');
+                }, TypeError, 'The item state should have an itemRef and a name');
+
+                assert.throws(function(){
+                    this.setItemState();
+                }, TypeError, 'The item state should have an itemRef');
+
+                assert.throws(function(){
+                    this.setItemState('zzz');
+                }, TypeError, 'The item state should have an itemRef and a name');
+
+                assert.equal(this.getItemState('zzz', 'loaded'), false, 'The item is not loaded');
+                assert.equal(this.getItemState('zzz', 'ready'), false, 'The item is not ready');
+                assert.equal(this.getItemState('zzz', 'foo'), false, 'The item is not foo');
+            })
+            .on('ready', function(){
+                this.loadItem('zzz');
+            })
+            .on('loaditem', function(itemRef){
+                assert.equal(itemRef, 'zzz', 'The loaded item is correct');
+                assert.equal(this.getItemState('zzz', 'loaded'), true, 'The item is loaded');
+                assert.equal(this.getItemState('zzz', 'ready'), false, 'The item is not ready');
+
+                this.setItemState('zzz', 'foo', true);
+                assert.equal(this.getItemState('zzz', 'foo'), true, 'The item is foo');
+            })
+            .on('renderitem', function(itemRef, itemData){
+
+                assert.equal(itemRef, 'zzz', 'The rendered item is correct');
+                assert.equal(this.getItemState('zzz', 'loaded'), true, 'The item is loaded');
+                assert.equal(this.getItemState('zzz', 'ready'), true, 'The item is ready');
+                assert.equal(this.getItemState('zzz', 'foo'), true, 'The item is foo');
+
+               QUnit.start();
+            })
+            .init();
+    });
+
+    QUnit.asyncTest('disable items', function(assert){
+       QUnit.expect(6);
+
+        var items = {
+            'aaa' : 'AAA',
+            'zzz' : 'ZZZ'
+        };
+
+        runnerFactory.registerProvider('foo', {
+            loadAreaBroker : function(){
+                return {};
+            },
+            init : _.noop,
+            loadItem : function(itemRef){
+               return items[itemRef];
+            },
+            renderItem : function(itemRef){
+                var self = this;
+                this.disableItem(itemRef);
+                setTimeout(function(){
+                    self.enableItem(itemRef);
+                }, 50);
+            }
+        });
+
+        var runner = runnerFactory('foo');
+        runner
+            .on('ready', function(){
+                this.loadItem('zzz');
+            })
+            .on('loaditem', function(itemRef){
+                assert.equal(itemRef, 'zzz', 'The provider is called with the correct reference');
+                assert.equal(this.getItemState('zzz', 'disabled'), false, 'The item is not disabled');
+            })
+            .on('disableitem', function(itemRef){
+                assert.equal(itemRef, 'zzz', 'The provider is called with the correct reference');
+                assert.equal(this.getItemState('zzz', 'disabled'), true, 'The item is now disabled');
+            })
+            .on('enableitem', function(itemRef){
+                assert.equal(itemRef, 'zzz', 'The provider is called with the correct reference');
+                assert.equal(this.getItemState('zzz', 'disabled'), false, 'The item is not disabled anymore');
+
                 QUnit.start();
             })
             .init();
@@ -455,6 +575,30 @@ define([
                 QUnit.start();
             })
             .init();
+    });
+
+    QUnit.asyncTest('timeout', function(assert){
+        QUnit.expect(2);
+
+        runnerFactory.registerProvider('foo', {
+            loadAreaBroker : function(){
+                return {};
+            },
+            init : function init(){
+
+                this.on('init', function(){
+                        assert.ok(true, 'we can listen for init in providers init');
+                    })
+                    .on('timeout', function(){
+                        assert.ok(true, 'The timeout event has been triggered');
+                        QUnit.start();
+                    });
+            }
+        });
+
+        runnerFactory('foo')
+            .init()
+            .timeout();
     });
 
     QUnit.module('plugins', {
