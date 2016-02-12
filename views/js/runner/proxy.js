@@ -37,8 +37,10 @@
      * @returns {proxy} - The proxy instance, bound to the selected proxy adapter
      */
     function proxyFactory(proxyName, config) {
-        var proxyAdapter = proxyFactory.getProxy(proxyName);
-        var initConfig = _.defaults(config || {}, _defaults);
+
+        var extraCallParams = {};
+        var proxyAdapter    = proxyFactory.getProxy(proxyName);
+        var initConfig      = _.defaults(config || {}, _defaults);
 
         /**
          * Delegates a function call to the selected proxy.
@@ -109,6 +111,17 @@
             },
 
             /**
+             * Add extra parameters that will be added to the next callTestAction or callItemAction
+             * This enables plugins to place parameters for next calls
+             * @param {Object} params - the extra parameters
+             */
+            addCallActionParams : function addCallActionParams(params){
+                if(_.isPlainObject(params)){
+                    _.merge(extraCallParams, params);
+                }
+            },
+
+            /**
              * Gets the test definition data
              * @returns {Promise} - Returns a promise. The test definition data will be provided on resolve.
              *                      Any error will be provided if rejected.
@@ -157,13 +170,18 @@
              * @fires callTestAction
              */
             callTestAction: function callTestAction(action, params) {
+
+                //merge extra parameters
+                var mergedParams = _.merge({}, params, extraCallParams);
+                extraCallParams = {};
+
                 /**
                  * @event proxy#callTestAction
                  * @param {Promise} promise
                  * @param {String} action
                  * @param {Object} params
                  */
-                return delegate('callTestAction', [action, params]);
+                return delegate('callTestAction', [action, mergedParams]);
             },
 
             /**
@@ -244,6 +262,11 @@
              * @fires callItemAction
              */
             callItemAction: function callItemAction(uri, action, params) {
+
+                //merge extra parameters
+                var mergedParams = _.merge({}, params, extraCallParams);
+                extraCallParams = {};
+
                 /**
                  * @event proxy#callItemAction
                  * @param {Promise} promise
@@ -251,7 +274,7 @@
                  * @param {String} action
                  * @param {Object} params
                  */
-                return delegate('callItemAction', [uri, action, params]);
+                return delegate('callItemAction', [uri, action, mergedParams]);
             }
         });
 
