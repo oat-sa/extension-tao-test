@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: TAO 3.1.0-sprint15\n"
-"PO-Revision-Date: 2015-12-23T13:38:13\n"
+"PO-Revision-Date: 2016-02-19T14:23:46\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: it-IT\n"
@@ -15,76 +15,76 @@ msgstr ""
 
 #, tao-public
 msgid "Authoring"
-msgstr ""
+msgstr "Authoring"
 
 #, tao-public
 msgid "Combine a selection of items into tests."
-msgstr ""
+msgstr "Combina una selezione di item nel test"
 
 #, tao-public
 msgid "Delete"
-msgstr ""
+msgstr "Cancella"
 
 #, tao-public
 msgid "Duplicate"
-msgstr ""
+msgstr "Duplica"
 
 #, tao-public
 msgid "Export"
-msgstr ""
+msgstr "Esporta"
 
 #, tao-public
 msgid "Filter"
-msgstr ""
+msgstr "Filtro"
 
 #, tao-public
 msgid "Import"
-msgstr ""
+msgstr "Importa"
 
 #, tao-public
 msgid "Manage tests"
-msgstr ""
+msgstr "Gestisci i test"
 
 #, tao-public
 msgid "Move"
-msgstr ""
+msgstr "Sposta"
 
 #, tao-public
 msgid "New class"
-msgstr ""
+msgstr "Nuova classe"
 
 #, tao-public
 msgid "New test"
-msgstr ""
+msgstr "Nuovo test"
 
 #, tao-public
 msgid "Properties"
-msgstr ""
+msgstr "Proprietà"
 
 #, tao-public
 msgid "Search"
-msgstr ""
+msgstr "Cerca"
 
 msgid "Test properties"
-msgstr ""
+msgstr "Proprietà testo"
 
 msgid "Test saved"
-msgstr ""
+msgstr "Test salvato"
 
 #, tao-public
 msgid "Tests"
-msgstr ""
+msgstr "Test"
 
 #, tao-public
 msgid "Tests library"
-msgstr ""
+msgstr "Biblioteca di test"
 
 msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
-msgstr ""
+msgstr "La modalita' test (sequenza, punteggio, cumulo, ecc.) e il layout sono anche configurati qui."
 
 msgid "The Tests module allows to combine a selection of Items to a Test."
-msgstr ""
+msgstr "La modalita' test ti consente di mettere insieme una selezione di item nel test"
 
 msgid "You checked out this test %2s ago"
-msgstr ""
+msgstr "Hai controllato questo test %2s "
 
