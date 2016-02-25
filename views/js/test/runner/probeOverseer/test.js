@@ -246,7 +246,7 @@ define([
                         assert.ok(queue[0].timestamp >= creation && creation > 0, 'The timestamp is superior to the test creation');
                         assert.ok(queue[0].timestamp >= init && init > 0, 'The timestamp is superior or equal to the test init');
                         assert.equal(typeof queue[0].timezone, 'string', 'The queue entry contains a timezone');
-                        assert.ok(/^[\+\-]{1}[0-9]{2}:[0-9]{2}$/.test(queue[0].timezone), 'The timezone is formatted correclty');
+                        assert.ok( new RegExp('^[\+\-]{1}[0-9]{2}:[0-9]{2}$').test(queue[0].timezone) , 'The timezone is formatted correclty');
                         assert.equal(queue[0].type, 'test-ready', 'The entry type is correct');
                         assert.deepEqual(queue[0].context, {
                             foo: 'bar'
