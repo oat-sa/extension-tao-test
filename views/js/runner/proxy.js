@@ -17,11 +17,13 @@
  */
 /**
  * @author Jean-Sébastien Conan <jean-sebastien.conan@vesperiagroup.com>
- */define([
+ */
+define([
     'lodash',
     'core/eventifier',
-    'taoTests/runner/proxyRegistry'
-], function(_, eventifier, proxyRegistry) {
+    'taoTests/runner/proxyRegistry',
+    'taoTests/runner/securityToken'
+], function(_, eventifier, proxyRegistry, securityTokenFactory) {
     'use strict';
 
     var _defaults = {};
@@ -41,6 +43,7 @@
         var extraCallParams = {};
         var proxyAdapter    = proxyFactory.getProxy(proxyName);
         var initConfig      = _.defaults(config || {}, _defaults);
+        var securityToken   = securityTokenFactory();
 
         /**
          * Delegates a function call to the selected proxy.
@@ -108,6 +111,14 @@
                  * @param {Promise} promise
                  */
                 return delegate('destroy');
+            },
+
+            /**
+             * Gets the security token handler
+             * @returns {securityToken}
+             */
+            getSecurityToken : function getSecurityToken() {
+                return securityToken;
             },
 
             /**

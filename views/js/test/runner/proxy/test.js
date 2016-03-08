@@ -52,6 +52,7 @@ define(['lodash', 'taoTests/runner/proxy'], function(_, proxyFactory) {
     var proxyApi = [
         { name : 'init', title : 'init' },
         { name : 'destroy', title : 'destroy' },
+        { name : 'getSecurityToken', title : 'getSecurityToken' },
         { name : 'addCallActionParams', title : 'addCallActionParams' },
         { name : 'getTestData', title : 'getTestData' },
         { name : 'getTestContext', title : 'getTestContext' },
@@ -454,5 +455,19 @@ define(['lodash', 'taoTests/runner/proxy'], function(_, proxyFactory) {
 
         proxy.callItemAction(expectedItemUri, expectedAction, expectedParams);
         proxy.callTestAction(expectedAction, expectedParams);
+    });
+
+    QUnit.test('proxyFactory.getSecurityToken', function(assert) {
+
+        proxyFactory.registerProxy('default', defaultProxy);
+
+        var proxy = proxyFactory('default');
+
+        var securityToken = proxy.getSecurityToken();
+
+        assert.equal(typeof securityToken, 'object', 'The proxy has built a securityToken handler');
+        assert.equal(typeof securityToken.getToken, 'function', 'The securityToken handler has a getToken method');
+        assert.equal(typeof securityToken.setToken, 'function', 'The securityToken handler has a setToken method');
+
     });
 });
