@@ -121,18 +121,18 @@ define([
         },
 
         /**
-         * Gets an item definition by its URI
+         * Gets an item definition by its URI, also gets its current state
          * @param {String} uri - The URI of the item to get
-         * @returns {Promise} - Returns a promise. The item definition data will be provided on resolve.
+         * @returns {Promise} - Returns a promise. The item data will be provided on resolve.
          *                      Any error will be provided if rejected.
-         * @fires getItemData
+         * @fires getItem
          */
-        getItemData: function getItemData(uri) {
+        getItem: function getItem(uri) {
             // the method must return a promise
             return new Promise(function(resolve, reject) {
-                // get the item definition data
-                // once the item definition is loaded provide the data by resolving the promise
-                resolve(/* the item definition data */);
+                // get the definition data and the state of the item
+                // once the item data is loaded provide the data by resolving the promise
+                resolve(/* the item data */);
 
                 // you can also notify error by rejecting the promise
                 // reject(error);
@@ -140,56 +140,20 @@ define([
         },
 
         /**
-         * Gets an item state by the item URI
-         * @param {String} uri - The URI of the item for which get the state
-         * @returns {Promise} - Returns a promise. The item state object will be provided on resolve.
-         *                      Any error will be provided if rejected.
-         */
-        getItemState: function getItemState(uri) {
-            // the method must return a promise
-            return new Promise(function(resolve, reject) {
-                // get the item state
-                // once the item state is loaded provide the data by resolving the promise
-                resolve(/* the item state object */);
-
-                // you can also notify error by rejecting the promise
-                // reject(error);
-            });
-        },
-
-        /**
-         * Submits the state of a particular item
+         * Submits the state and the response of a particular item
          * @param {String} uri - The URI of the item to update
          * @param {Object} state - The state to submit
-         * @returns {Promise} - Returns a promise. The result of the request will be provided on resolve.
-         *                      Any error will be provided if rejected.
-         */
-        submitItemState: function submitItemState(uri, state) {
-            // the method must return a promise
-            return new Promise(function(resolve, reject) {
-                // submit the item state
-
-                // once the state has been processed notify the success by resolving the promise
-                resolve(/* the action response */);
-
-                // you can also notify error by rejecting the promise
-                // reject(error);
-            });
-        },
-
-        /**
-         * Stores the response for a particular item
-         * @param {String} uri - The URI of the item to update
          * @param {Object} response - The response object to submit
          * @returns {Promise} - Returns a promise. The result of the request will be provided on resolve.
          *                      Any error will be provided if rejected.
+         * @fires submitItem
          */
-        storeItemResponse: function storeItemResponse(uri, response) {
+        submitItem: function submitItem(uri, state, response) {
             // the method must return a promise
             return new Promise(function(resolve, reject) {
-                // store the item response
+                // submit the state and the response of the item
 
-                // once the response has been stored notify the success by resolving the promise
+                // once the data has been processed notify the success by resolving the promise
                 resolve(/* the action response */);
 
                 // you can also notify error by rejecting the promise

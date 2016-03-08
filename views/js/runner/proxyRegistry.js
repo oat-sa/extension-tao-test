@@ -33,10 +33,8 @@ define(['lodash'], function(_) {
         'getTestContext',
         'getTestMap',
         'callTestAction',
-        'getItemData',
-        'getItemState',
-        'submitItemState',
-        'storeItemResponse',
+        'getItem',
+        'submitItem',
         'callItemAction'
     ];
 

@@ -24,7 +24,8 @@ define(['taoTests/runner/proxyRegistry'], function(proxyRegistry) {
     QUnit.module('proxyRegistry');
 
 
-    QUnit.test('module', 3, function(assert) {
+    QUnit.test('module', function(assert) {
+        QUnit.expect(3);
         assert.equal(typeof proxyRegistry, 'function', "The proxyRegistry module exposes a function");
         assert.equal(typeof proxyRegistry(), 'object', "The proxyRegistry factory produces an object");
         assert.notStrictEqual(proxyRegistry(), proxyRegistry(), "The proxyRegistry factory provides a different object on each call");
@@ -40,6 +41,7 @@ define(['taoTests/runner/proxyRegistry'], function(proxyRegistry) {
         .cases(proxyRegistryApi)
         .test('instance API ', function(data, assert) {
             var instance = proxyRegistry();
+            QUnit.expect(1);
             assert.equal(typeof instance[data.name], 'function', 'The proxyRegistry instance exposes a "' + data.title + '" function');
         });
 
@@ -54,10 +56,8 @@ define(['taoTests/runner/proxyRegistry'], function(proxyRegistry) {
         getTestContext : function() {},
         getTestMap : function() {},
         callTestAction : function() {},
-        getItemData : function() {},
-        getItemState : function() {},
-        submitItemState : function() {},
-        storeItemResponse : function() {},
+        getItem : function() {},
+        submitItem : function() {},
         callItemAction : function() {}
     };
 
@@ -99,6 +99,8 @@ define(['taoTests/runner/proxyRegistry'], function(proxyRegistry) {
         .test('registerProxy', function(data, assert) {
             var registry = proxyRegistry({}, data.validator);
 
+            QUnit.expect(1);
+
             if (!data.valid) {
                 assert.throws(function() {
                     registry.registerProxy(data.name, data.proxy);
@@ -122,10 +124,8 @@ define(['taoTests/runner/proxyRegistry'], function(proxyRegistry) {
             getTestContext : function() {},
             getTestMap : function() {},
             callTestAction : function() {},
-            getItemData : function() {},
-            getItemState : function() {},
-            submitItemState : function() {},
-            storeItemResponse : function() {},
+            getItem : function() {},
+            submitItem : function() {},
             callItemAction : function() {}
         };
 
@@ -137,12 +137,12 @@ define(['taoTests/runner/proxyRegistry'], function(proxyRegistry) {
             getTestContext : function() {},
             getTestMap : function() {},
             callTestAction : function() {},
-            getItemData : function() {},
-            getItemState : function() {},
-            submitItemState : function() {},
-            storeItemResponse : function() {},
+            getItem : function() {},
+            submitItem : function() {},
             callItemAction : function() {}
         };
+
+        QUnit.expect(7);
 
         assert.throws(function() {
             registry.getProxy();

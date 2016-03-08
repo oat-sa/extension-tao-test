@@ -196,71 +196,39 @@ define([
             },
 
             /**
-             * Gets an item definition by its URI
+             * Gets an item definition by its URI, also gets its current state
              * @param {String} uri - The URI of the item to get
-             * @returns {Promise} - Returns a promise. The item definition data will be provided on resolve.
+             * @returns {Promise} - Returns a promise. The item data will be provided on resolve.
              *                      Any error will be provided if rejected.
-             * @fires getItemData
+             * @fires getItem
              */
-            getItemData: function getItemData(uri) {
+            getItem: function getItem(uri) {
                 /**
-                 * @event proxy#getItemData
+                 * @event proxy#getItem
                  * @param {Promise} promise
                  * @param {String} uri
                  */
-                return delegate('getItemData', [uri]);
+                return delegate('getItem', [uri]);
             },
 
             /**
-             * Gets an item state by the item URI
-             * @param {String} uri - The URI of the item for which get the state
-             * @returns {Promise} - Returns a promise. The item state object will be provided on resolve.
-             *                      Any error will be provided if rejected.
-             * @fires getItemState
-             */
-            getItemState: function getItemState(uri) {
-                /**
-                 * @event proxy#getItemState
-                 * @param {Promise} promise
-                 * @param {String} uri
-                 */
-                return delegate('getItemState', [uri]);
-            },
-
-            /**
-             * Submits the state of a particular item
+             * Submits the state and the response of a particular item
              * @param {String} uri - The URI of the item to update
              * @param {Object} state - The state to submit
-             * @returns {Promise} - Returns a promise. The result of the request will be provided on resolve.
-             *                      Any error will be provided if rejected.
-             * @fires submitItemState
-             */
-            submitItemState: function submitItemState(uri, state) {
-                /**
-                 * @event proxy#submitItemState
-                 * @param {Promise} promise
-                 * @param {String} uri
-                 * @param {Object} state
-                 */
-                return delegate('submitItemState', [uri, state]);
-            },
-
-            /**
-             * Stores the response for a particular item
-             * @param {String} uri - The URI of the item to update
              * @param {Object} response - The response object to submit
              * @returns {Promise} - Returns a promise. The result of the request will be provided on resolve.
              *                      Any error will be provided if rejected.
-             * @fires storeItemResponse
+             * @fires submitItem
              */
-            storeItemResponse: function storeItemResponse(uri, response) {
+            submitItem: function submitItem(uri, state, response) {
                 /**
-                 * @event proxy#storeItemResponse
+                 * @event proxy#submitItem
                  * @param {Promise} promise
                  * @param {String} uri
+                 * @param {Object} state
                  * @param {Object} response
                  */
-                return delegate('storeItemResponse', [uri, response]);
+                return delegate('submitItem', [uri, state, response]);
             },
 
             /**
