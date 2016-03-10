@@ -59,7 +59,7 @@ class SessionCsrfToken implements CsrfToken
      */
     public function __construct($name)
     {
-        $this->name;
+        $this->name = $name;
     }
 
     /**
