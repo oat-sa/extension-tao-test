@@ -47,7 +47,7 @@ define(['lodash', 'taoTests/runner/tokenHandler'], function(_, tokenHandlerFacto
 
 
     QUnit.test('setters', function(assert) {
-        QUnit.expect(3);
+        QUnit.expect(4);
 
         var tokenHandler = tokenHandlerFactory();
         var expectedToken ="e56fg1a3b9de2237f";
@@ -57,6 +57,6 @@ define(['lodash', 'taoTests/runner/tokenHandler'], function(_, tokenHandlerFacto
         assert.equal(tokenHandler.setToken(expectedToken), tokenHandler, 'The setToken method return the chain instance');
 
         assert.equal(tokenHandler.getToken(), expectedToken, 'The getToken method returns the right token');
-
+        assert.equal(tokenHandler.getToken(), null, 'The getToken method returns the token only once');
     });
 });

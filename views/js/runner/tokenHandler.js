@@ -26,15 +26,18 @@ define(function () {
      * @returns {tokenHandler}
      */
     function tokenHandlerFactory() {
-        var token;
+        var token = null;
 
         return {
             /**
-             * Gets the current security token
+             * Gets the current security token.
+             * Once the token is got, it is erased from the memory and a new token must be provided.
              * @returns {String}
              */
             getToken: function getToken() {
-                return token;
+                var currentToken = token;
+                token = null;
+                return currentToken;
             },
 
             /**
