@@ -52,7 +52,7 @@ define(['lodash', 'taoTests/runner/proxy'], function(_, proxyFactory) {
     var proxyApi = [
         { name : 'init', title : 'init' },
         { name : 'destroy', title : 'destroy' },
-        { name : 'getSecurityToken', title : 'getSecurityToken' },
+        { name : 'getTokenHandler', title : 'getTokenHandler' },
         { name : 'addCallActionParams', title : 'addCallActionParams' },
         { name : 'getTestData', title : 'getTestData' },
         { name : 'getTestContext', title : 'getTestContext' },
@@ -403,13 +403,13 @@ define(['lodash', 'taoTests/runner/proxy'], function(_, proxyFactory) {
         proxy.callTestAction(expectedAction, expectedParams);
     });
 
-    QUnit.test('proxyFactory.getSecurityToken', function(assert) {
+    QUnit.test('proxyFactory.getTokenHandler', function(assert) {
 
         proxyFactory.registerProxy('default', defaultProxy);
 
         var proxy = proxyFactory('default');
 
-        var securityToken = proxy.getSecurityToken();
+        var securityToken = proxy.getTokenHandler();
 
         QUnit.expect(3);
 

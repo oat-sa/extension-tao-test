@@ -23,7 +23,7 @@ define([
     'core/eventifier',
     'taoTests/runner/proxyRegistry',
     'taoTests/runner/securityToken'
-], function(_, eventifier, proxyRegistry, securityTokenFactory) {
+], function(_, eventifier, proxyRegistry, tokenHandlerFactory) {
     'use strict';
 
     var _defaults = {};
@@ -43,7 +43,7 @@ define([
         var extraCallParams = {};
         var proxyAdapter    = proxyFactory.getProxy(proxyName);
         var initConfig      = _.defaults(config || {}, _defaults);
-        var securityToken   = securityTokenFactory();
+        var tokenHandler   = tokenHandlerFactory();
 
         /**
          * Delegates a function call to the selected proxy.
@@ -115,10 +115,10 @@ define([
 
             /**
              * Gets the security token handler
-             * @returns {securityToken}
+             * @returns {tokenHandler}
              */
-            getSecurityToken : function getSecurityToken() {
-                return securityToken;
+            getTokenHandler : function getTokenHandler() {
+                return tokenHandler;
             },
 
             /**

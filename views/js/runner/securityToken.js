@@ -23,9 +23,9 @@ define(function () {
 
     /**
      * Stores the security token
-     * @returns {securityToken}
+     * @returns {tokenHandler}
      */
-    function securityTokenFactory() {
+    function tokenHandlerFactory() {
         var token;
 
         return {
@@ -49,5 +49,5 @@ define(function () {
         };
     }
 
-    return securityTokenFactory;
+    return tokenHandlerFactory;
 });
