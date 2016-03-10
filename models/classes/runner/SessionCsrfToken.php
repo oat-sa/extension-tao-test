@@ -103,7 +103,11 @@ class SessionCsrfToken implements CsrfToken
             $valid = $lifetime >= time() - $session->getAttribute($timestampKey);
         }
 
-        return $valid && !$session->hasAttribute($tokenKey) || $session->getAttribute($tokenKey) == $token;
+        if ($valid) {
+            $valid = !$session->hasAttribute($tokenKey) || $session->getAttribute($tokenKey) == $token;
+        }
+
+        return $valid;
     }
 
     /**
