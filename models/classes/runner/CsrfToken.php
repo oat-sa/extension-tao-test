@@ -27,7 +27,7 @@ namespace oat\taoTests\models\runner;
  *
  * Provides the API to handle CSRF tokens
  *
- * @package oat\taoQtiTest\models\runner
+ * @package oat\taoTests\models\runner
  */
 interface CsrfToken
 {

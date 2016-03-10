@@ -27,7 +27,7 @@ namespace oat\taoTests\models\runner;
  *
  * Handles CSRF token through the PHP session
  *
- * @package oat\taoQtiTest\models\runner
+ * @package oat\taoTests\models\runner
  */
 class SessionCsrfToken implements CsrfToken
 {
