@@ -254,6 +254,26 @@ define([
                  * @param {Object} params
                  */
                 return delegate('callItemAction', [uri, action, mergedParams]);
+            },
+
+            /**
+             * Sends a telemetry signal
+             * @param {String} uri - The URI of the item for which sends the telemetry signal
+             * @param {String} signal - The name of the signal to send
+             * @param {Object} [params] - Some optional parameters to join to the signal
+             * @returns {Promise} - Returns a promise. The result of the request will be provided on resolve.
+             *                      Any error will be provided if rejected.
+             * @fires telemetry
+             */
+            telemetry: function telemetry(uri, signal, params) {
+                /**
+                 * @event proxy#telemetry
+                 * @param {Promise} promise
+                 * @param {String} uri
+                 * @param {String} signal
+                 * @param {Object} params
+                 */
+                return delegate('telemetry', [uri, signal, params]);
             }
         });
 

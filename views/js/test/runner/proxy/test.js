@@ -32,7 +32,8 @@ define(['lodash', 'taoTests/runner/proxy'], function(_, proxyFactory) {
         callTestAction : function() {},
         getItem : function() {},
         submitItem : function() {},
-        callItemAction : function() {}
+        callItemAction : function() {},
+        telemetry : function() {}
     };
 
 
@@ -363,7 +364,46 @@ define(['lodash', 'taoTests/runner/proxy'], function(_, proxyFactory) {
 
         assert.equal(result, promise, 'The proxyFactory.callItemAction method has returned a promise');
     });
+    
+    
+    QUnit.asyncTest('proxyFactory.telemetry', function(assert) {
+        var expectedUri = 'http://tao.dev#item123';
+        var expectedSignal = 'test';
+        var expectedParams = {};
+        var promise = {
+            resolve: function() {},
+            reject: function() {},
+            then: function() {},
+            catch: function() {}
+        };
 
+        QUnit.expect(10);
+        QUnit.stop();
+
+        proxyFactory.registerProxy('default', _.defaults({
+            telemetry : function(uri, signal, params) {
+                assert.ok(true, 'The proxyFactory has delegated the call to telemetry');
+                assert.equal(uri, expectedUri, 'The proxyFactory has provided the URI to the telemetry method');
+                assert.equal(signal, expectedSignal, 'The proxyFactory has provided the signal to the telemetry method');
+                assert.deepEqual(params, expectedParams, 'The proxyFactory has provided the params to the telemetry method');
+                QUnit.start();
+                return promise;
+            }
+        }, defaultProxy));
+
+        var result = proxyFactory('default').on('telemetry', function(p, uri, signal, params) {
+            assert.ok(true, 'The proxyFactory has fired the "telemetry" event');
+            assert.equal(p, promise, 'The proxyFactory has provided the promise through the "telemetry" event');
+            assert.equal(uri, expectedUri, 'The proxyFactory has provided the URI through the "telemetry" event');
+            assert.equal(signal, expectedSignal, 'The proxyFactory has provided the signal through the "telemetry" event');
+            assert.deepEqual(params, expectedParams, 'The proxyFactory has provided the params through the "telemetry" event');
+            QUnit.start();
+        }).telemetry(expectedUri, expectedSignal, expectedParams);
+
+        assert.equal(result, promise, 'The proxyFactory.telemetry method has returned a promise');
+    });
+
+    
     QUnit.asyncTest('proxyFactory.addCallActionParams', function(assert) {
         QUnit.expect(5);
 
@@ -403,6 +443,7 @@ define(['lodash', 'taoTests/runner/proxy'], function(_, proxyFactory) {
         proxy.callTestAction(expectedAction, expectedParams);
     });
 
+    
     QUnit.test('proxyFactory.getTokenHandler', function(assert) {
 
         proxyFactory.registerProxy('default', defaultProxy);

@@ -35,7 +35,8 @@ define(['lodash'], function(_) {
         'callTestAction',
         'getItem',
         'submitItem',
-        'callItemAction'
+        'callItemAction',
+        'telemetry'
     ];
 
     /**

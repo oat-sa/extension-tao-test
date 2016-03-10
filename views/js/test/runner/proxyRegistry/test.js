@@ -58,7 +58,8 @@ define(['taoTests/runner/proxyRegistry'], function(proxyRegistry) {
         callTestAction : function() {},
         getItem : function() {},
         submitItem : function() {},
-        callItemAction : function() {}
+        callItemAction : function() {},
+        telemetry : function() {}
     };
 
     var proxies = [{
@@ -126,7 +127,8 @@ define(['taoTests/runner/proxyRegistry'], function(proxyRegistry) {
             callTestAction : function() {},
             getItem : function() {},
             submitItem : function() {},
-            callItemAction : function() {}
+            callItemAction : function() {},
+            telemetry : function() {}
         };
 
         var name2 = 'myProxy2';
@@ -139,7 +141,8 @@ define(['taoTests/runner/proxyRegistry'], function(proxyRegistry) {
             callTestAction : function() {},
             getItem : function() {},
             submitItem : function() {},
-            callItemAction : function() {}
+            callItemAction : function() {},
+            telemetry : function() {}
         };
 
         QUnit.expect(7);

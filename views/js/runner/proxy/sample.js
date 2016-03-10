@@ -180,6 +180,28 @@ define([
                 // you can also notify error by rejecting the promise
                 // reject(error);
             });
+        },
+
+        /**
+         * Sends a telemetry signal
+         * @param {String} uri - The URI of the item for which sends the telemetry signal
+         * @param {String} signal - The name of the signal to send
+         * @param {Object} [params] - Some optional parameters to join to the signal
+         * @returns {Promise} - Returns a promise. The result of the request will be provided on resolve.
+         *                      Any error will be provided if rejected.
+         * @fires telemetry
+         */
+        telemetry: function telemetry(uri, signal, params) {
+            // the method must return a promise
+            return new Promise(function(resolve, reject) {
+                // send the signal
+
+                // once the signal has been processed notify the success by resolving the promise
+                resolve(/* the signal response */);
+
+                // you can also notify error by rejecting the promise
+                // reject(error);
+            });
         }
     };
 
