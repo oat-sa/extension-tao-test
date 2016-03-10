@@ -18,17 +18,17 @@
 /**
  * @author Jean-Sébastien Conan <jean-sebastien.conan@vesperiagroup.com>
  */
-define(['lodash', 'taoTests/runner/securityToken'], function(_, securityTokenFactory) {
+define(['lodash', 'taoTests/runner/tokenHandler'], function(_, tokenHandlerFactory) {
     'use strict';
 
-    QUnit.module('securityToken');
+    QUnit.module('tokenHandler');
 
     QUnit.test('module', function(assert) {
         QUnit.expect(3);
 
-        assert.equal(typeof securityTokenFactory, 'function', "The securityToken module exposes a function");
-        assert.equal(typeof securityTokenFactory(), 'object', "The securityToken factory produces an object");
-        assert.notStrictEqual(securityTokenFactory(), securityTokenFactory(), "The securityToken factory provides a different object on each call");
+        assert.equal(typeof tokenHandlerFactory, 'function', "The tokenHandler module exposes a function");
+        assert.equal(typeof tokenHandlerFactory(), 'object', "The tokenHandler factory produces an object");
+        assert.notStrictEqual(tokenHandlerFactory(), tokenHandlerFactory(), "The tokenHandler factory provides a different object on each call");
     });
 
     var proxyApi = [
@@ -41,22 +41,22 @@ define(['lodash', 'taoTests/runner/securityToken'], function(_, securityTokenFac
         .test('instance API ', function(data, assert) {
             QUnit.expect(1);
 
-            var instance = securityTokenFactory();
-            assert.equal(typeof instance[data.name], 'function', 'The securityToken instance exposes a "' + data.name + '" function');
+            var instance = tokenHandlerFactory();
+            assert.equal(typeof instance[data.name], 'function', 'The tokenHandler instance exposes a "' + data.name + '" function');
         });
 
 
     QUnit.test('setters', function(assert) {
         QUnit.expect(3);
 
-        var securityToken = securityTokenFactory();
+        var tokenHandler = tokenHandlerFactory();
         var expectedToken ="e56fg1a3b9de2237f";
 
-        assert.equal(securityToken.getToken(), undefined, 'There is no registered token in a fresh instance');
+        assert.equal(tokenHandler.getToken(), undefined, 'There is no registered token in a fresh instance');
 
-        assert.equal(securityToken.setToken(expectedToken), securityToken, 'The setToken method return the chain instance');
+        assert.equal(tokenHandler.setToken(expectedToken), tokenHandler, 'The setToken method return the chain instance');
 
-        assert.equal(securityToken.getToken(), expectedToken, 'The getToken method returns the right token');
+        assert.equal(tokenHandler.getToken(), expectedToken, 'The getToken method returns the right token');
 
     });
 });

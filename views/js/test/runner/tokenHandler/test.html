@@ -2,13 +2,13 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Test Runner - SecurityToken</title>
+        <title>Test Runner - TokenHandler</title>
         <base href="../../../../../../tao/views/" />
         <link rel="stylesheet" type="text/css" href="js/lib/qunit/qunit.css">
         <script type="text/javascript" src="js/lib/require.js"></script>
         <script type="text/javascript" src="js/lib/qunit/qunit.js"></script>
         <script type="text/javascript" src="js/lib/qunit/qunit-parameterize.js"></script>
-        <script type="text/javascript" src="js/lib/blanket/blanket.min.js" data-cover-flag="branchTracking" data-cover-only="runner/securityToken.js"></script>
+        <script type="text/javascript" src="js/lib/blanket/blanket.min.js" data-cover-flag="branchTracking" data-cover-only="runner/tokenHandler.js"></script>
 
         <script  type="text/javascript">
 
@@ -19,7 +19,7 @@
             require(['/tao/ClientConfig/config'], function(){
 
                 //load the test
-                require(['taoTests/test/runner/securityToken/test'], function(){
+                require(['taoTests/test/runner/tokenHandler/test'], function(){
 
                     //Tests loaded, run tests
                     QUnit.start();

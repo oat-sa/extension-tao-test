@@ -22,7 +22,7 @@ define([
     'lodash',
     'core/eventifier',
     'taoTests/runner/proxyRegistry',
-    'taoTests/runner/securityToken'
+    'taoTests/runner/tokenHandler'
 ], function(_, eventifier, proxyRegistry, tokenHandlerFactory) {
     'use strict';
 
