@@ -17,11 +17,13 @@
  */
 /**
  * @author Jean-Sébastien Conan <jean-sebastien.conan@vesperiagroup.com>
- */define([
+ */
+define([
     'lodash',
     'core/eventifier',
-    'taoTests/runner/proxyRegistry'
-], function(_, eventifier, proxyRegistry) {
+    'taoTests/runner/proxyRegistry',
+    'taoTests/runner/tokenHandler'
+], function(_, eventifier, proxyRegistry, tokenHandlerFactory) {
     'use strict';
 
     var _defaults = {};
@@ -41,6 +43,7 @@
         var extraCallParams = {};
         var proxyAdapter    = proxyFactory.getProxy(proxyName);
         var initConfig      = _.defaults(config || {}, _defaults);
+        var tokenHandler   = tokenHandlerFactory();
 
         /**
          * Delegates a function call to the selected proxy.
@@ -108,6 +111,14 @@
                  * @param {Promise} promise
                  */
                 return delegate('destroy');
+            },
+
+            /**
+             * Gets the security token handler
+             * @returns {tokenHandler}
+             */
+            getTokenHandler : function getTokenHandler() {
+                return tokenHandler;
             },
 
             /**
@@ -185,71 +196,39 @@
             },
 
             /**
-             * Gets an item definition by its URI
+             * Gets an item definition by its URI, also gets its current state
              * @param {String} uri - The URI of the item to get
-             * @returns {Promise} - Returns a promise. The item definition data will be provided on resolve.
+             * @returns {Promise} - Returns a promise. The item data will be provided on resolve.
              *                      Any error will be provided if rejected.
-             * @fires getItemData
+             * @fires getItem
              */
-            getItemData: function getItemData(uri) {
+            getItem: function getItem(uri) {
                 /**
-                 * @event proxy#getItemData
+                 * @event proxy#getItem
                  * @param {Promise} promise
                  * @param {String} uri
                  */
-                return delegate('getItemData', [uri]);
+                return delegate('getItem', [uri]);
             },
 
             /**
-             * Gets an item state by the item URI
-             * @param {String} uri - The URI of the item for which get the state
-             * @returns {Promise} - Returns a promise. The item state object will be provided on resolve.
-             *                      Any error will be provided if rejected.
-             * @fires getItemState
-             */
-            getItemState: function getItemState(uri) {
-                /**
-                 * @event proxy#getItemState
-                 * @param {Promise} promise
-                 * @param {String} uri
-                 */
-                return delegate('getItemState', [uri]);
-            },
-
-            /**
-             * Submits the state of a particular item
+             * Submits the state and the response of a particular item
              * @param {String} uri - The URI of the item to update
              * @param {Object} state - The state to submit
-             * @returns {Promise} - Returns a promise. The result of the request will be provided on resolve.
-             *                      Any error will be provided if rejected.
-             * @fires submitItemState
-             */
-            submitItemState: function submitItemState(uri, state) {
-                /**
-                 * @event proxy#submitItemState
-                 * @param {Promise} promise
-                 * @param {String} uri
-                 * @param {Object} state
-                 */
-                return delegate('submitItemState', [uri, state]);
-            },
-
-            /**
-             * Stores the response for a particular item
-             * @param {String} uri - The URI of the item to update
              * @param {Object} response - The response object to submit
              * @returns {Promise} - Returns a promise. The result of the request will be provided on resolve.
              *                      Any error will be provided if rejected.
-             * @fires storeItemResponse
+             * @fires submitItem
              */
-            storeItemResponse: function storeItemResponse(uri, response) {
+            submitItem: function submitItem(uri, state, response) {
                 /**
-                 * @event proxy#storeItemResponse
+                 * @event proxy#submitItem
                  * @param {Promise} promise
                  * @param {String} uri
+                 * @param {Object} state
                  * @param {Object} response
                  */
-                return delegate('storeItemResponse', [uri, response]);
+                return delegate('submitItem', [uri, state, response]);
             },
 
             /**
@@ -275,6 +254,26 @@
                  * @param {Object} params
                  */
                 return delegate('callItemAction', [uri, action, mergedParams]);
+            },
+
+            /**
+             * Sends a telemetry signal
+             * @param {String} uri - The URI of the item for which sends the telemetry signal
+             * @param {String} signal - The name of the signal to send
+             * @param {Object} [params] - Some optional parameters to join to the signal
+             * @returns {Promise} - Returns a promise. The result of the request will be provided on resolve.
+             *                      Any error will be provided if rejected.
+             * @fires telemetry
+             */
+            telemetry: function telemetry(uri, signal, params) {
+                /**
+                 * @event proxy#telemetry
+                 * @param {Promise} promise
+                 * @param {String} uri
+                 * @param {String} signal
+                 * @param {Object} params
+                 */
+                return delegate('telemetry', [uri, signal, params]);
             }
         });
 
