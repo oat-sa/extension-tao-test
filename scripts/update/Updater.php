@@ -45,7 +45,7 @@ class Updater extends \common_ext_ExtensionUpdater
 		    $this->setVersion('2.7.1');
 		}
 
-		$this->skip('2.7.1','2.11.1');
+		$this->skip('2.7.1','2.12.0');
         
 		return null;
 	}
