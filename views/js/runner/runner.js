@@ -622,11 +622,13 @@ define([
 
             /**
              * Notify a test timeout
+             * @param {String} scope
+             * @param {String} ref
              * @fires runner#timeout
              * @returns {runner} chains
              */
-            timeout : function timeout(){
-                this.trigger('timeout');
+            timeout : function timeout(scope, ref){
+                this.trigger('timeout', scope, ref);
                 return this;
             }
         });
