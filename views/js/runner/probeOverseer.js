@@ -283,16 +283,24 @@ define([
 
             /**
              * Start the probes
+             * @returns {Promise} once started
              */
             start : function start(){
-                _.forEach(probes, collectEvent);
-                started = true;
+                return store.getItem('queue').then(function(savedQueue){
+
+                    if(_.isArray(savedQueue)){
+                        queue = savedQueue;
+                    }
+                    _.forEach(probes, collectEvent);
+                    started = true;
+                });
             },
 
 
             /**
              * Stop the probes
              * Be carefull, stop will also clear the store and the queue
+             * @returns {Promise} once stopped
              */
             stop  : function stop(){
                 started = false;
@@ -308,7 +316,7 @@ define([
                 });
 
                 queue = [];
-                store.clear();
+                return store.clear();
             }
         };
         return overseer;
