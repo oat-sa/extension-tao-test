@@ -23,7 +23,7 @@
 namespace oat\taoTests\models\runner\time;
 
 /**
- * Interface TimePoint
+ * Class TimePoint
  * @package oat\taoTests\models\runner\time
  */
 class TimePoint implements \Serializable
