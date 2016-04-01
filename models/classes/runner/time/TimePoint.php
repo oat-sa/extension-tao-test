@@ -119,7 +119,14 @@ interface TimePoint extends \Serializable
     public function getTag($index = 0);
 
     /**
-     * Gets all tags from te TimePoint
+     * Sets the tags of the TimePoint
+     * @param array $tags
+     * @return TimePoint
+     */
+    public function setTags($tags);
+    
+    /**
+     * Gets all tags from the TimePoint
      * @return array
      */
     public function getTags();
