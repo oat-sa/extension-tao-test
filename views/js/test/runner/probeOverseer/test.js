@@ -259,7 +259,7 @@ define([
                         }).catch(function(err) {
                             assert.ok(false, err);
                         });
-                    }, 50); //time to write in the db
+                    }, 150); //time to write in the db
                 })
                 .init();
         });
