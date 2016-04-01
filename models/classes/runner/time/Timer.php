@@ -20,11 +20,11 @@
  * @author Jean-Sébastien Conan <jean-sebastien.conan@vesperiagroup.com>
  */
 
-namespace oat\taoQtiTest\models\runner\time;
+namespace oat\taoTests\models\runner\time;
 
 /**
  * Interface Timer
- * @package oat\taoQtiTest\models\runner\time
+ * @package oat\taoTests\models\runner\time
  */
 interface Timer
 {
