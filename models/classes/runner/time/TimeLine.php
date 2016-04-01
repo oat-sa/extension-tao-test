@@ -26,7 +26,7 @@ namespace oat\taoTests\models\runner\time;
  * Interface TimeLine
  * @package oat\taoTests\models\runner\time
  */
-interface TimeLine extends \Serializable
+interface TimeLine extends \Serializable, \ArrayAccess, \Iterator, \Countable
 {
     /**
      * Adds another TimePoint inside the TimeLine
