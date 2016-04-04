@@ -51,7 +51,7 @@ interface TimeLine extends \Serializable
      * Removes all TimePoint corresponding to the provided criteria
      * @param string|array $tag A tag or a list of tags to filter
      * @param int $target The type of target TimePoint to filter
-     * @param int $type The tyoe of TimePoint to filter
+     * @param int $type The type of TimePoint to filter
      * @return int Returns the number of removed TimePoints
      */
     public function remove($tag, $target = TimePoint::TARGET_ALL, $type = TimePoint::TYPE_ALL);
@@ -63,13 +63,22 @@ interface TimeLine extends \Serializable
     public function clear();
 
     /**
+     * Gets a filtered TimeLine, containing the TimePoint corresponding to the provided criteria
+     * @param string|array $tag A tag or a list of tags to filter
+     * @param int $target The type of target TimePoint to filter
+     * @param int $type The type of TimePoint to filter
+     * @return TimeLine Returns a subset corresponding to the found TimePoints
+     */
+    public function filter($tag = null, $target = TimePoint::TARGET_ALL, $type = TimePoint::TYPE_ALL);
+
+    /**
      * Finds all TimePoint corresponding to the provided criteria
      * @param string|array $tag A tag or a list of tags to filter
      * @param int $target The type of target TimePoint to filter
-     * @param int $type The tyoe of TimePoint to filter
-     * @return TimeLine Returns a subset corresponding to the found TimePoints
+     * @param int $type The type of TimePoint to filter
+     * @return array Returns a list of the found TimePoints
      */
-    public function find($tag, $target = TimePoint::TARGET_ALL, $type = TimePoint::TYPE_ALL);
+    public function find($tag = null, $target = TimePoint::TARGET_ALL, $type = TimePoint::TYPE_ALL);
 
     /**
      * Computes the total duration represented by the filtered TimePoints
