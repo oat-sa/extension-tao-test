@@ -76,6 +76,7 @@ interface TimeLine extends \Serializable
      * @param string|array $tag A tag or a list of tags to filter
      * @param int $target The type of target TimePoint to filter
      * @return float Returns the total computed duration
+     * @throws TimeException
      */
     public function compute($tag = null, $target = TimePoint::TARGET_ALL);
 }
