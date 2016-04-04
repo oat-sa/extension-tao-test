@@ -227,41 +227,42 @@ define([
                 };
             }
         });
-        probes.start();
+        probes.start().then(function(){
 
-        var creation = Date.now() / 1000;
-        var init;
-        runner
-            .on('init', function() {
-                init = Date.now() / 1000;
-            })
-            .after('ready', function() {
-                setTimeout(function() {
-                    probes.getQueue().then(function(queue) {
+            var creation = Date.now() / 1000;
+            var init;
+            runner
+                .on('init', function() {
+                    init = Date.now() / 1000;
+                })
+                .after('ready', function() {
+                    setTimeout(function() {
+                        probes.getQueue().then(function(queue) {
 
-                        assert.equal(queue.length, 1, 'The queue contains an entry');
-                        assert.equal(typeof queue[0], 'object', 'The queue entry is an object');
-                        assert.equal(typeof queue[0].id, 'string', 'The queue entry contains an id');
-                        assert.equal(typeof queue[0].timestamp, 'number', 'The queue entry contains a timestamp');
-                        assert.ok(queue[0].timestamp >= creation && creation > 0, 'The timestamp is superior to the test creation');
-                        assert.ok(queue[0].timestamp >= init && init > 0, 'The timestamp is superior or equal to the test init');
-                        assert.equal(typeof queue[0].timezone, 'string', 'The queue entry contains a timezone');
-                        assert.ok( new RegExp('^[\+\-]{1}[0-9]{2}:[0-9]{2}$').test(queue[0].timezone) , 'The timezone is formatted correclty');
-                        assert.equal(queue[0].type, 'test-ready', 'The entry type is correct');
-                        assert.deepEqual(queue[0].context, {
-                            foo: 'bar'
-                        }, 'The entry context is correct');
+                            assert.equal(queue.length, 1, 'The queue contains an entry');
+                            assert.equal(typeof queue[0], 'object', 'The queue entry is an object');
+                            assert.equal(typeof queue[0].id, 'string', 'The queue entry contains an id');
+                            assert.equal(typeof queue[0].timestamp, 'number', 'The queue entry contains a timestamp');
+                            assert.ok(queue[0].timestamp >= creation && creation > 0, 'The timestamp is superior to the test creation');
+                            assert.ok(queue[0].timestamp >= init && init > 0, 'The timestamp is superior or equal to the test init');
+                            assert.equal(typeof queue[0].timezone, 'string', 'The queue entry contains a timezone');
+                            assert.ok( new RegExp('^[\+\-]{1}[0-9]{2}:[0-9]{2}$').test(queue[0].timezone) , 'The timezone is formatted correclty');
+                            assert.equal(queue[0].type, 'test-ready', 'The entry type is correct');
+                            assert.deepEqual(queue[0].context, {
+                                foo: 'bar'
+                            }, 'The entry context is correct');
 
-                        probes.stop();
+                            probes.stop();
 
-                        QUnit.start();
+                            QUnit.start();
 
-                    }).catch(function(err) {
-                        assert.ok(false, err);
-                    });
-                }, 50); //time to write in the db
-            })
-            .init();
+                        }).catch(function(err) {
+                            assert.ok(false, err);
+                        });
+                    }, 150); //time to write in the db
+                })
+                .init();
+        });
     });
 
     QUnit.asyncTest('latency', function(assert) {
@@ -289,55 +290,55 @@ define([
                 };
             }
         });
-        probes.start();
+        probes.start().then(function(){
 
+            var creation = Date.now() / 1000;
+            var init;
+            runner
+                .on('init', function() {
+                    init = Date.now() / 1000;
+                })
+                .after('ready', function() {
+                    setTimeout(function() {
+                        runner.finish();
+                    }, 50);
+                })
+                .after('finish', function() {
 
-        var creation = Date.now() / 1000;
-        var init;
-        runner
-            .on('init', function() {
-                init = Date.now() / 1000;
-            })
-            .after('ready', function() {
-                setTimeout(function() {
-                    runner.finish();
-                }, 50);
-            })
-            .after('finish', function() {
+                    setTimeout(function() {
+                        probes.getQueue().then(function(queue) {
 
-                setTimeout(function() {
-                    probes.getQueue().then(function(queue) {
+                            assert.equal(queue.length, 2, 'The queue contains the two entries');
+                            var startEntry = queue[0];
+                            var stopEntry = queue[1];
 
-                        assert.equal(queue.length, 2, 'The queue contains the two entries');
-                        var startEntry = queue[0];
-                        var stopEntry = queue[1];
+                            assert.equal(typeof startEntry, 'object', 'The start entry is an object');
+                            assert.equal(typeof startEntry.id, 'string', 'The start entry contains an id');
+                            assert.equal(typeof startEntry.timestamp, 'number', 'The start entry contains a timestamp');
+                            assert.equal(startEntry.type, 'test-latency', 'The entry type is correct');
+                            assert.deepEqual(startEntry.context, {
+                                foo: 'bar'
+                            }, 'The entry context is correct');
+                            assert.ok(startEntry.timestamp >= creation && creation > 0, 'The timestamp is superior to the test creation');
+                            assert.ok(startEntry.timestamp >= init && init > 0, 'The timestamp is superior or equal to the test init');
 
-                        assert.equal(typeof startEntry, 'object', 'The start entry is an object');
-                        assert.equal(typeof startEntry.id, 'string', 'The start entry contains an id');
-                        assert.equal(typeof startEntry.timestamp, 'number', 'The start entry contains a timestamp');
-                        assert.equal(startEntry.type, 'test-latency', 'The entry type is correct');
-                        assert.deepEqual(startEntry.context, {
-                            foo: 'bar'
-                        }, 'The entry context is correct');
-                        assert.ok(startEntry.timestamp >= creation && creation > 0, 'The timestamp is superior to the test creation');
-                        assert.ok(startEntry.timestamp >= init && init > 0, 'The timestamp is superior or equal to the test init');
+                            assert.equal(typeof queue[0].timezone, 'string', 'The queue entry contains a timezone');
+                            assert.ok(/^[\+\-]{1}[0-9]{2}:[0-9]{2}$/.test(queue[0].timezone), 'The timezone is formatted correclty');
 
-                        assert.equal(typeof queue[0].timezone, 'string', 'The queue entry contains a timezone');
-                        assert.ok(/^[\+\-]{1}[0-9]{2}:[0-9]{2}$/.test(queue[0].timezone), 'The timezone is formatted correclty');
+                            assert.equal(typeof stopEntry, 'object', 'The stop entry is an object');
+                            assert.equal(stopEntry.id, startEntry.id, 'string', 'The stop entry id is the same than the start entry');
 
-                        assert.equal(typeof stopEntry, 'object', 'The stop entry is an object');
-                        assert.equal(stopEntry.id, startEntry.id, 'string', 'The stop entry id is the same than the start entry');
+                            probes.stop();
 
-                        probes.stop();
+                            QUnit.start();
 
-                        QUnit.start();
-
-                    }).catch(function(err) {
-                        assert.ok(false, err);
-                    });
-                }, 50); //time to write in the db
-            })
-            .init();
+                        }).catch(function(err) {
+                            assert.ok(false, err);
+                        });
+                    }, 50); //time to write in the db
+                })
+                .init();
+        });
     });
 
 
@@ -357,39 +358,40 @@ define([
             name: 'foo',
             events: 'foo'
         });
-        probes.start();
+        probes.start().then(function(){
 
-        runner
-            .on('ready', function() {
-                runner.trigger('foo')
-                    .trigger('foo')
-                    .trigger('foo');
-            })
-            .after('ready', function() {
+            runner
+                .on('ready', function() {
+                    runner.trigger('foo')
+                        .trigger('foo')
+                        .trigger('foo');
+                })
+                .after('ready', function() {
 
-                setTimeout(function() {
+                    setTimeout(function() {
 
-                    probes.getQueue()
-                        .then(function(queue) {
-                            assert.equal(queue.length, 3, 'The queue contains 3 entries');
-                        })
-                        .then(function() {
-                            return probes.flush().then(function(flushed) {
-                                assert.equal(flushed.length, 3, 'The queue contains 3 entries');
+                        probes.getQueue()
+                            .then(function(queue) {
+                                assert.equal(queue.length, 3, 'The queue contains 3 entries');
+                            })
+                            .then(function() {
+                                return probes.flush().then(function(flushed) {
+                                    assert.equal(flushed.length, 3, 'The queue contains 3 entries');
+                                });
+                            })
+                            .then(function() {
+                                return probes.getQueue().then(function(queue) {
+                                    assert.equal(queue.length, 0, 'The queue is empty now');
+                                });
+                            })
+                            .then(function() {
+                                probes.stop();
+                                QUnit.start();
                             });
-                        })
-                        .then(function() {
-                            return probes.getQueue().then(function(queue) {
-                                assert.equal(queue.length, 0, 'The queue is empty now');
-                            });
-                        })
-                        .then(function() {
-                            probes.stop();
-                            QUnit.start();
-                        });
-                }, 150);
-            })
-            .init();
+                    }, 150);
+                })
+                .init();
+        });
     });
 
     QUnit.asyncTest('stop', function(assert) {
@@ -408,35 +410,37 @@ define([
             name: 'foo',
             events: 'foo'
         });
-        probes.start();
+        probes.start().then(function(){
 
-        runner
-            .on('ready', function() {
-                runner.trigger('foo')
-                    .trigger('foo')
-                    .trigger('foo');
-            })
-            .after('ready', function() {
-                setTimeout(function() {
+            runner
+                .on('ready', function() {
+                    runner.trigger('foo')
+                        .trigger('foo')
+                        .trigger('foo');
+                })
+                .after('ready', function() {
+                    setTimeout(function() {
 
-                    probes.getQueue()
-                        .then(function(queue) {
-                            assert.equal(queue.length, 3, 'The queue contains 3 entries');
-                        })
-                        .then(function() {
-                            probes.stop();
-                            runner.trigger('foo');
-                        })
-                        .then(function() {
-                            setTimeout(function() {
-                                probes.getQueue().then(function(queue) {
-                                    assert.equal(queue, null, 'The queue is not there');
-                                    QUnit.start();
+                        probes.getQueue()
+                            .then(function(queue) {
+                                assert.equal(queue.length, 3, 'The queue contains 3 entries');
+                            })
+                            .then(function() {
+                                return probes.stop().then(function(){
+                                    runner.trigger('foo');
                                 });
-                            }, 150);
-                        });
-                }, 150);
-            })
-            .init();
+                            })
+                            .then(function() {
+                                setTimeout(function() {
+                                    probes.getQueue().then(function(queue) {
+                                        assert.equal(queue, null, 'The queue is not there');
+                                        QUnit.start();
+                                    });
+                                }, 150);
+                            });
+                    }, 150);
+                })
+                .init();
+        });
     });
 });
