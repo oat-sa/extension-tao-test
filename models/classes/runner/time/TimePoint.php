@@ -323,13 +323,15 @@ class TimePoint implements \Serializable
      * @param int $type
      * @return array
      */
-    public function match(array $tags, $target = self::TARGET_ALL, $type = self::TYPE_ALL)
+    public function match(array $tags = null, $target = self::TARGET_ALL, $type = self::TYPE_ALL)
     {
-        return (
-            ($this->getType() & $type) &&
-            ($this->getTarget() & $target) &&
-            (count(array_intersect($tags, $this->getTags())) == count($tags))
-        );
+        $match = ($this->getType() & $type) && ($this->getTarget() & $target);
+        
+        if ($match && isset($tags)) {
+            $match = (count(array_intersect($tags, $this->getTags())) == count($tags));
+        }
+        
+        return $match;
     }
 
     /**
