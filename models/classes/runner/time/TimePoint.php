@@ -59,6 +59,11 @@ class TimePoint implements \Serializable
     const TARGET_ALL = 3;
 
     /**
+     * The decimal precision used to compare timestamps
+     */
+    const PRECISION = 1000;
+
+    /**
      * The timestamp representing the TimePoint
      * @var float
      */
@@ -224,7 +229,7 @@ class TimePoint implements \Serializable
      */
     public function addTag($tag)
     {
-        $this->tags []= (string)$tag;
+        $this->tags[] = (string)$tag;
         return $this;
     }
 
@@ -265,7 +270,7 @@ class TimePoint implements \Serializable
         $this->tags = [];
 
         if (is_array($tags)) {
-            foreach($tags as $tag) {
+            foreach ($tags as $tag) {
                 $this->addTag($tag);
             }
         } else {
@@ -293,7 +298,11 @@ class TimePoint implements \Serializable
      */
     public function match(array $tags, $target = self::TARGET_ALL, $type = self::TYPE_ALL)
     {
-        return ($this->getType() & $type) && ($this->getTarget() & $target) && count(array_intersect($tags, $this->getTags()));
+        return (
+            ($this->getType() & $type) &&
+            ($this->getTarget() & $target) &&
+            (count(array_intersect($tags, $this->getTags())) == count($tags))
+        );
     }
 
     /**
@@ -303,16 +312,13 @@ class TimePoint implements \Serializable
      */
     public function compare(TimePoint $point)
     {
-        $diff = $point->getTimestamp() - $this->getTimestamp();
+        $diff = floor($point->getTimestamp() * self::PRECISION) - floor($this->getTimestamp() * self::PRECISION);
         if ($diff == 0) {
             $diff = $point->getType() - $this->getType();
-            if (!$diff) {
+            if ($diff == 0) {
                 $diff = $point->getTarget() - $this->getTarget();
-                if (!$diff) {
-                    $diff = count(array_diff($point->getTags(), $this->getTags()));
-                }
             }
         }
-        return intval($diff);
+        return $diff;
     }
 }
