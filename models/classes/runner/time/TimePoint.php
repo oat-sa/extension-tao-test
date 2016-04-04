@@ -300,6 +300,17 @@ class TimePoint implements \Serializable
     }
 
     /**
+     * Gets a unique reference to name the TimePoint
+     * @return string
+     */
+    public function getRef()
+    {
+        $tags = $this->tags;
+        sort($tags);
+        return md5(implode('-', $tags));
+    }
+
+    /**
      * Checks if a TimePoint matches the criteria
      * @param array $tags
      * @param int $target
