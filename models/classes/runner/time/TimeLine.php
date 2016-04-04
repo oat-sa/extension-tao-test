@@ -24,6 +24,12 @@ namespace oat\taoTests\models\runner\time;
 
 /**
  * Interface TimeLine
+ * 
+ * Describes the API needed to build and manage a time line.
+ * A TimeLine is represented by a list of TimePoint.
+ * These TimePoint represents the bounds of time ranges.
+ * Each time range must be represented by two TimePoint: START and END.
+ * 
  * @package oat\taoTests\models\runner\time
  */
 interface TimeLine extends \Serializable
@@ -70,6 +76,7 @@ interface TimeLine extends \Serializable
      * @param string|array $tag A tag or a list of tags to filter
      * @param int $target The type of target TimePoint to filter
      * @return float Returns the total computed duration
+     * @throws TimeException
      */
     public function compute($tag = null, $target = TimePoint::TARGET_ALL);
 }

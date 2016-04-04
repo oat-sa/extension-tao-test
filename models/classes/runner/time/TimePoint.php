@@ -24,6 +24,12 @@ namespace oat\taoTests\models\runner\time;
 
 /**
  * Class TimePoint
+ * 
+ * Describes a temporal point by storing a timestamp with microseconds and some flags.
+ * A TimePoint can describe a START or a END temporal point used to define a time range.
+ * Each TimePoint can be related to a target (CLIENT or SERVER).
+ * A list of tags can be attached to a TimePoint to explain its role or its context.
+ * 
  * @package oat\taoTests\models\runner\time
  */
 class TimePoint implements \Serializable
@@ -317,13 +323,15 @@ class TimePoint implements \Serializable
      * @param int $type
      * @return array
      */
-    public function match(array $tags, $target = self::TARGET_ALL, $type = self::TYPE_ALL)
+    public function match(array $tags = null, $target = self::TARGET_ALL, $type = self::TYPE_ALL)
     {
-        return (
-            ($this->getType() & $type) &&
-            ($this->getTarget() & $target) &&
-            (count(array_intersect($tags, $this->getTags())) == count($tags))
-        );
+        $match = ($this->getType() & $type) && ($this->getTarget() & $target);
+        
+        if ($match && isset($tags)) {
+            $match = (count(array_intersect($tags, $this->getTags())) == count($tags));
+        }
+        
+        return $match;
     }
 
     /**
