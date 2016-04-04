@@ -29,6 +29,12 @@ namespace oat\taoTests\models\runner\time;
 interface TimeLine extends \Serializable
 {
     /**
+     * Gets the list of TimePoint present in the TimeLine
+     * @return array
+     */
+    public function getPoints();
+    
+    /**
      * Adds another TimePoint inside the TimeLine
      * @param TimePoint $point
      * @return TimeLine
