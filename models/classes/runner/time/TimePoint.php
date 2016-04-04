@@ -183,6 +183,16 @@ class TimePoint implements \Serializable
     }
 
     /**
+     * Gets the normalized value of the timestamp. This value is the result of:
+     * `normalized_timestamp = timestamp_with_microseconds * precision`
+     * @return int
+     */
+    public function getNormalizedTimestamp()
+    {
+        return floor($this->getTimestamp() * self::PRECISION);
+    }
+
+    /**
      * Sets the type of TimePoint
      * @param int $type Must be a value from TYPE_START or TYPE_END constants.
      * @return TimePoint
@@ -312,11 +322,11 @@ class TimePoint implements \Serializable
      */
     public function compare(TimePoint $point)
     {
-        $diff = floor($point->getTimestamp() * self::PRECISION) - floor($this->getTimestamp() * self::PRECISION);
+        $diff = $this->getNormalizedTimestamp() - $point->getNormalizedTimestamp();
         if ($diff == 0) {
-            $diff = $point->getType() - $this->getType();
+            $diff = $this->getType() - $point->getType();
             if ($diff == 0) {
-                $diff = $point->getTarget() - $this->getTarget();
+                $diff = $this->getTarget() - $point->getTarget();
             }
         }
         return $diff;
