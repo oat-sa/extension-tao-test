@@ -47,6 +47,7 @@ interface Timer
      * @param string $itemRef
      * @param float $timestamp
      * @return Timer
+     * @throws TimeException
      */
     public function start($itemRef, $timestamp);
 
@@ -55,6 +56,7 @@ interface Timer
      * @param string $itemRef
      * @param float $timestamp
      * @return Timer
+     * @throws TimeException
      */
     public function end($itemRef, $timestamp);
 
@@ -63,6 +65,7 @@ interface Timer
      * @param string $itemRef
      * @param float $duration
      * @return Timer
+     * @throws TimeException
      */
     public function adjust($itemRef, $duration);
 
@@ -71,6 +74,7 @@ interface Timer
      * @param string|array $tag A tag or a list of tags to filter
      * @param int $target The type of target TimePoint to filter
      * @return float Returns the total computed duration
+     * @throws TimeException
      */
     public function compute($tag, $target);
 
@@ -80,19 +84,20 @@ interface Timer
      * @param string|array $tag A tag or a list of tags to filter
      * @param int $target The type of target TimePoint to filter
      * @return bool Returns true if the timeout is reached
+     * @throws TimeException
      */
     public function timeout($timeLimit, $tag, $target);
 
     /**
      * Sets the storage used to maintain the data
-     * @param $storage
+     * @param TimeStorage $storage
      * @return Timer
      */
-    public function setStorage($storage);
+    public function setStorage(TimeStorage $storage);
 
     /**
      * Gets the storage used to maintain the data
-     * @return mixed
+     * @return TimeStorage
      */
     public function getStorage();
 
