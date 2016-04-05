@@ -160,11 +160,13 @@ class TimerPointTest extends TaoPhpUnitTestRunner
     {
         return [
             [
+                'abc',
                 1459335349,
                 TimePoint::TYPE_START,
                 TimePoint::TARGET_SERVER,
             ],
             [
+                ['a', 'b', 'c'],
                 1459335572,
                 TimePoint::TYPE_START,
                 TimePoint::TARGET_SERVER,
