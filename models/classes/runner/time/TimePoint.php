@@ -67,7 +67,7 @@ class TimePoint implements \Serializable
     /**
      * The decimal precision used to compare timestamps
      */
-    const PRECISION = 1000;
+    const PRECISION = 10000;
 
     /**
      * The timestamp representing the TimePoint
