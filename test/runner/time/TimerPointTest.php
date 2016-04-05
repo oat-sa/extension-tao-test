@@ -125,6 +125,29 @@ class TimerPointTest extends TaoPhpUnitTestRunner
     }
 
     /**
+     * Test TimePoint::getRef() method
+     */
+    public function testGetRef()
+    {
+        $timePoint = new TimePoint(['a', 'b', 'c']);
+        $timePoint2 = new TimePoint(['c', 'b', 'a']);
+        $timePoint3 = new TimePoint(['a', 'b', 'x']);
+        $this->assertEquals($timePoint->getRef(), $timePoint2->getRef());
+        $this->assertNotEquals($timePoint->getRef(), $timePoint3->getRef());
+    }
+
+    /**
+     * Test TimePoint::testGetTag() method
+     */
+    public function testGetTag()
+    {
+        $timePoint = new TimePoint(['a', 'b', 'c']);
+        $this->assertEquals('a', $timePoint->getTag(0));
+        $this->assertEquals('b', $timePoint->getTag(1));
+        $this->assertEquals('c', $timePoint->getTag(2));
+    }
+
+    /**
      * Test TimePoint::match() method
      */
     public function testMatch()
