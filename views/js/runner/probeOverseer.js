@@ -270,12 +270,13 @@ define([
              */
             flush: function flush(){
 
-                return new Promise(function(resolve){
+                return new Promise(function(resolve, reject){
                     storage.getItem('queue').then(function(flushed){
                         queue = [];
-                        storage.setItem('queue', queue);
-                        resolve(flushed);
-                    });
+                        return storage.setItem('queue', queue).then(function(){
+                            resolve(flushed);
+                        });
+                    }).catch(reject);
                 });
             },
 
