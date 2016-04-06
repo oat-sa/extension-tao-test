@@ -44,7 +44,7 @@ interface Timer
 {
     /**
      * Adds a "server start" TimePoint at a particular timestamp for the provided ItemRef
-     * @param string $itemRef
+     * @param mixed $itemRef
      * @param float $timestamp
      * @return Timer
      * @throws TimeException
@@ -53,7 +53,7 @@ interface Timer
 
     /**
      * Adds a "server end" TimePoint at a particular timestamp for the provided ItemRef
-     * @param string $itemRef
+     * @param mixed $itemRef
      * @param float $timestamp
      * @return Timer
      * @throws TimeException
@@ -62,7 +62,7 @@ interface Timer
 
     /**
      * Adds "client start" and "client end" TimePoint based on the provided duration for a particular ItemRef
-     * @param string $itemRef
+     * @param mixed $itemRef
      * @param float $duration
      * @return Timer
      * @throws TimeException
