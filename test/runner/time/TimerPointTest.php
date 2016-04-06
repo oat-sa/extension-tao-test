@@ -212,12 +212,12 @@ class TimerPointTest extends TaoPhpUnitTestRunner
             [
                 new TimePoint(null, 1459335300, TimePoint::TYPE_START, TimePoint::TARGET_CLIENT),
                 new TimePoint(null, 1459335311, TimePoint::TYPE_START, TimePoint::TARGET_CLIENT),
-                -11000,
+                -110000,
             ],
             [
                 new TimePoint(null, 1459335300, TimePoint::TYPE_START, TimePoint::TARGET_CLIENT),
                 new TimePoint(null, 1459335289, TimePoint::TYPE_START, TimePoint::TARGET_CLIENT),
-                11000,
+                110000,
             ],
             [
                 new TimePoint(null, 1459335300, TimePoint::TYPE_START, TimePoint::TARGET_CLIENT),
