@@ -27,6 +27,8 @@
  * @author Patrick Plichart, patrick@taotesting.com
  *   
  */
+ 
+ use \oat\taoQtiTest\models\classes\testqti;
 class taoTests_models_classes_CrudTestsService
     extends tao_models_classes_CrudService
 {
@@ -63,11 +65,33 @@ class taoTests_models_classes_CrudTestsService
 		//hmmm
 		unset($propertiesValues[RDFS_LABEL]);
 		unset($propertiesValues[RDF_TYPE]);
-		$resource =  parent::create($label, $type, $propertiesValues);
+		$resource =  parent::createNew($label, $type, $propertiesValues);
 		return $resource;
     }
 
     
-} 
+
+
+public function importFromArray(array $propertiesValues,$uploadedFile){
+
+		//test versioning
+ try {
+ 
+                
+                // The zip extraction is a long process that can exceed the 30s timeout
+                helpers_TimeOutHelper::setTimeOutLimit(helpers_TimeOutHelper::LONG);
+                $class = new core_kernel_classes_Class(TAO_TEST_CLASS);
+                $report = taoQtiTest_models_classes_QtiTestService::singleton()->importMultipleTests($class, $uploadedFile);
+                
+                helpers_TimeOutHelper::reset();
+                tao_helpers_File::remove($uploadedFile);
+          
+            return $report;
+        }
+        catch (Exception $e) {
+            return common_report_Report::createFailure($e->getMessage());
+        }
+	}
+}
 
 ?>
