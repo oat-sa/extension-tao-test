@@ -25,11 +25,11 @@
 define([
     'lodash',
     'core/promise',
+    'core/store',
     'moment',
     'lib/uuid',
-    'lib/localforage',
     'lib/moment-timezone.min'
-], function (_, Promise, moment, uuid, localforage){
+], function (_, Promise, store, moment, uuid){
     'use strict';
 
     var timeZone = moment.tz.guess();
@@ -50,7 +50,7 @@ define([
         var probes = [];
 
         //the data store instance
-        var store;
+        var storage;
 
         //temp queue
         var queue = [];
@@ -163,9 +163,7 @@ define([
         }
 
         //create a unique instance in the offline storage
-        store = localforage.createInstance({
-            name: 'test-probe-' + testIdentifier
-        });
+        storage = store('test-probe-' + testIdentifier);
 
         /**
          * @typedef {probeOverseer}
@@ -238,7 +236,7 @@ define([
              * @returns {Promise} with the data in parameterj
              */
             getQueue : function getQueue(){
-                return store.getItem('queue');
+                return storage.getItem('queue');
             },
 
             /**
@@ -259,10 +257,10 @@ define([
                 //ensure the queue is pushed to the store consistently and atomically
                 if(writing){
                     writing.then(function(){
-                        return store.setItem('queue', queue);
+                        return storage.setItem('queue', queue);
                     });
                 } else {
-                    writing = store.setItem('queue', queue);
+                    writing = storage.setItem('queue', queue);
                 }
             },
 
@@ -272,12 +270,13 @@ define([
              */
             flush: function flush(){
 
-                return new Promise(function(resolve){
-                    store.getItem('queue').then(function(flushed){
+                return new Promise(function(resolve, reject){
+                    storage.getItem('queue').then(function(flushed){
                         queue = [];
-                        store.setItem('queue', queue);
-                        resolve(flushed);
-                    });
+                        return storage.setItem('queue', queue).then(function(){
+                            resolve(flushed);
+                        });
+                    }).catch(reject);
                 });
             },
 
@@ -286,7 +285,7 @@ define([
              * @returns {Promise} once started
              */
             start : function start(){
-                return store.getItem('queue').then(function(savedQueue){
+                return storage.getItem('queue').then(function(savedQueue){
 
                     if(_.isArray(savedQueue)){
                         queue = savedQueue;
@@ -316,7 +315,7 @@ define([
                 });
 
                 queue = [];
-                return store.clear();
+                return storage.clear();
             }
         };
         return overseer;

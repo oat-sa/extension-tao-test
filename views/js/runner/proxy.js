@@ -216,11 +216,13 @@ define([
              * @param {String} uri - The URI of the item to update
              * @param {Object} state - The state to submit
              * @param {Object} response - The response object to submit
+             * @param {Object} [params] - addtional params to be appended
              * @returns {Promise} - Returns a promise. The result of the request will be provided on resolve.
              *                      Any error will be provided if rejected.
              * @fires submitItem
              */
-            submitItem: function submitItem(uri, state, response) {
+            submitItem: function submitItem(uri, state, response, params) {
+
                 /**
                  * @event proxy#submitItem
                  * @param {Promise} promise
@@ -228,7 +230,7 @@ define([
                  * @param {Object} state
                  * @param {Object} response
                  */
-                return delegate('submitItem', [uri, state, response]);
+                return delegate('submitItem', [uri, state, response, params]);
             },
 
             /**
