@@ -28,6 +28,9 @@
  * @package taoTests
  
  */
+
+use oat\taoDelivery\actions\Delivery;
+use oat\ltiDeliveryProvider\controller\DeliveryLinks;
 class taoTests_models_classes_TestsService
     extends tao_models_classes_ClassService
 {
@@ -177,23 +180,42 @@ class taoTests_models_classes_TestsService
 		}
 
 
+       // return (array) $returnValue;
+        return (array) $itemClazz->getInstances(true);
+    }
+    public function getItemsData($items)
+    {
+        $returnValue = array();
+        $itemClazz = new core_kernel_classes_Class(TAO_ITEM_CLASS);
+        foreach($itemClazz->getInstances(true) as $instance){
+            if (in_array($instance->getUri(),array_values($items[RDFS_ITEMSLIST]) )) {
+                $returnValue[$instance->getUri()]=$instance;
+            }
+
+        }
         return (array) $returnValue;
     }
-
     /**
-     * Used to be called whenever the label of the Test changed
-     * Deprecated in favor of eventmanager
+     * Called whenever the label of the Test changes
      *
      * @access public
      * @author Joel Bout, <joel.bout@tudor.lu>
      * @param  Resource test
      * @return boolean
-     * @deprecated
      */
     public function onChangeTestLabel( core_kernel_classes_Resource $test = null)
     {
-        common_Logger::w('Call to deprecated '.__FUNCTION__);
-        return false;
+        $returnValue = (bool) false;
+
+        $testModel = $this->getTestModel($test);
+        if (!is_null($testModel)) {
+        	$impl = $this->getTestModelImplementation($testModel);
+       		$impl->onChangeTestLabel($test);
+
+            $returnValue = true;
+        }
+
+        return (bool) $returnValue;
     }
 
     /**
@@ -241,6 +263,7 @@ class taoTests_models_classes_TestsService
 			$impl = $this->getTestModelImplementation($this->getTestModel($instance));
 			$impl->cloneContent($instance, $clone);
 			
+			$this->onChangeTestLabel($clone);
 			$returnValue = $clone;
 		}
 
@@ -261,6 +284,14 @@ class taoTests_models_classes_TestsService
             $this->setTestModel($test, current($models));
         }
     }
+    protected function setDefaultModelNew($test,$items)
+    {
+        $testModelClass = new core_kernel_classes_Class(CLASS_TESTMODEL);
+        $models = $testModelClass->getInstances();
+        if (count($models) > 0) {
+            $this->setTestModelNew($test, current($models),$items);
+        }
+    }
     
     /**
      * Short description of method createInstance
@@ -273,11 +304,52 @@ class taoTests_models_classes_TestsService
      */
     public function createInstance( core_kernel_classes_Class $clazz, $label = '')
     {
+       // var_dump($this->getAllItems());
+
+        $returnValue = null;
+
 		$test = parent::createInstance($clazz, $label);
         $this->setDefaultModel($test);
 		
-        return $test;
+		//set the the default state to 'activ':
+		$test->setPropertyValue(new core_kernel_classes_Property(TEST_ACTIVE_PROP), GENERIS_TRUE);
+
+       // $this->setTestModelNew($test,$this->getTestModel($test));
+       // die('Allah help me');
+		$returnValue = $test;
+
+        return $returnValue;
     }
+    public function createInstanceNew( core_kernel_classes_Class $clazz, $label = '',$items)
+    {
+
+        $returnValue = null;
+
+        $test = parent::createInstanceNew($clazz, $label,(array)$items);
+        $this->setDefaultModelNew($test,$items);
+
+        //set the the default state to 'activ':
+        $test->setPropertyValue(new core_kernel_classes_Property(TEST_ACTIVE_PROP), GENERIS_TRUE);
+
+        $this->setTestModelNew($test,$this->getTestModel($test),$items);
+     
+        $returnValue = $test;
+     //   $del=new taoDelivery_actions_Delivery();
+    //  $deliveryUri=  $del->createDelivery($test);
+    //    $deliveryLink=new DeliveryLinks();
+    //  $result=  $deliveryLink->DeliveryLink($deliveryUri);
+
+        return $returnValue ;
+    }
+    public function createDelivery2( core_kernel_classes_Resource $test)
+    {
+        var_dump($test);
+        //$test = new core_kernel_classes_Resource($myForm->getValue('test'));
+        $label = __("Delivery of %s", $test->getLabel());
+        $deliveryClass = new core_kernel_classes_Class('http://www.tao.lu/Ontologies/TAODelivery.rdf#AssembledDelivery');
+        $report = taoDelivery_models_classes_SimpleDeliveryFactory::create($deliveryClass, $test, $label);
+    }
+
 
     /**
      * Short description of method getTestItems
@@ -291,11 +363,33 @@ class taoTests_models_classes_TestsService
     {
     	$returnValue = array();
     	$model = $this->getTestModel($test);
-    	if (!is_null($model) && $model instanceof core_kernel_classes_Resource) {
+    	if (!is_null($model)) {
     		$returnValue = $this->getTestModelImplementation($model)->getItems($test);
     	}
 
         return (array) $returnValue;
+    }
+
+    /**
+     * Short description of method isTestActive
+     *
+     * @access public
+     * @author Joel Bout, <joel.bout@tudor.lu>
+     * @param  Resource test
+     * @return boolean
+     */
+    public function isTestActive( core_kernel_classes_Resource $test)
+    {
+        $returnValue = (bool) false;
+
+		$active = $test->getOnePropertyValue(new core_kernel_classes_Property(TEST_ACTIVE_PROP));
+		if (!is_null($active)){
+			if ($active->getUri() == GENERIS_TRUE){
+				$returnValue = true;
+			}
+		}
+
+        return (bool) $returnValue;
     }
     
     /**
@@ -307,9 +401,12 @@ class taoTests_models_classes_TestsService
      */
     public function setTestModel(core_kernel_classes_Resource $test, core_kernel_classes_Resource $testModel) {
 		$current = $this->getTestModel($test);
+      //  die('here setTestModel');
 		// did the model change?
 		if (is_null($current) || !$current->equals($testModel)) {
 			$items = array();
+        //   $items=$this->getItemsData();
+
 			if (!is_null($current)) {
 				$former = $this->getTestModelImplementation($current);
 				if (!empty($former)) {
@@ -319,10 +416,42 @@ class taoTests_models_classes_TestsService
 			}
 			$test->editPropertyValues(new core_kernel_classes_Property(PROPERTY_TEST_TESTMODEL), $testModel);
 			$newImpl = $this->getTestModelImplementation($testModel);
+
 			if (!empty($newImpl)) {
+
 				$newImpl->prepareContent($test, $items);
+              //  var_dump($newImpl);
+               // die('setTestModel');
 			}
 		}
+    }
+    public function setTestModelNew(core_kernel_classes_Resource $test, core_kernel_classes_Resource $testModel,$item) {
+      //  var_dump($item);
+     //   die('setTestModelNew');
+        $current = $this->getTestModel($test);
+     //   die('here setTestModelNew');
+        // did the model change?
+        if (is_null($current) || !$current->equals($testModel)) {
+            //	$items = array();
+            $items=$this->getItemsData($item);
+           // var_dump($items);
+          //  die('here in new');
+            if (!is_null($current)) {
+                $former = $this->getTestModelImplementation($current);
+                if (!empty($former)) {
+                    $items = $former->getItems($test);
+                    $former->deleteContent($test);
+                }
+            }
+            $test->editPropertyValues(new core_kernel_classes_Property(PROPERTY_TEST_TESTMODEL), $testModel);
+            $newImpl = $this->getTestModelImplementation($testModel);
+
+            if (!empty($newImpl)) {
+                $newImpl->prepareContent($test, $items);
+                //  var_dump($newImpl);
+                // die('setTestModel');
+            }
+        }
     }
 
     public function getCompilerClass(core_kernel_classes_Resource $test) {
@@ -340,8 +469,7 @@ class taoTests_models_classes_TestsService
      * @return core_kernel_classes_Container
      */
     public function getTestModel(core_kernel_classes_Resource $test) {
-		$testModel = $test->getOnePropertyValue(new core_kernel_classes_Property(PROPERTY_TEST_TESTMODEL));
-		return $testModel instanceof core_kernel_classes_Resource ? $testModel : null;
+		return $test->getOnePropertyValue(new core_kernel_classes_Property(PROPERTY_TEST_TESTMODEL));
     }
 
     /**
