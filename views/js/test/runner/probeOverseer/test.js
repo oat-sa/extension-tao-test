@@ -24,6 +24,7 @@ define([
     'lodash',
     'taoTests/runner/runner',
     'taoTests/runner/probeOverseer',
+    'core/store'
 ], function($, _, runnerFactory, probeOverseer) {
     'use strict';
 
@@ -258,8 +259,9 @@ define([
 
                         }).catch(function(err) {
                             assert.ok(false, err);
+                            QUnit.start();
                         });
-                    }, 150); //time to write in the db
+                    }, 200); //time to write in the db
                 })
                 .init();
         });
@@ -334,13 +336,14 @@ define([
 
                         }).catch(function(err) {
                             assert.ok(false, err);
+
+                            QUnit.start();
                         });
-                    }, 50); //time to write in the db
+                    }, 200); //time to write in the db
                 })
                 .init();
         });
     });
-
 
     QUnit.asyncTest('flush', function(assert) {
         QUnit.expect(3);
@@ -368,8 +371,8 @@ define([
                 })
                 .after('ready', function() {
 
-                    setTimeout(function() {
 
+                    setTimeout(function() {
                         probes.getQueue()
                             .then(function(queue) {
                                 assert.equal(queue.length, 3, 'The queue contains 3 entries');
@@ -387,8 +390,12 @@ define([
                             .then(function() {
                                 probes.stop();
                                 QUnit.start();
+                            }).catch(function(err) {
+                                assert.ok(false, err);
+
+                                QUnit.start();
                             });
-                    }, 150);
+                    }, 200); //time to write in the db
                 })
                 .init();
         });
