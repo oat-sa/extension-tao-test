@@ -177,6 +177,15 @@ class TimerPointTest extends TaoPhpUnitTestRunner
     }
 
     /**
+     * Test TimePoint::sort() method
+     * @dataProvider testSortProvider
+     */
+    public function testSort(array $range, array $expectedResult)
+    {
+        $this->assertEquals($expectedResult, TimePoint::sort($range));
+    }
+
+    /**
      * @return array
      */
     public function testSerializeProvider()
@@ -239,6 +248,78 @@ class TimerPointTest extends TaoPhpUnitTestRunner
                 new TimePoint(null, 1459335300, TimePoint::TYPE_START, TimePoint::TARGET_SERVER),
                 -1,
             ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function testSortProvider()
+    {
+        $points1 = [
+            0 => new TimePoint(['item-1', 'item-1#0'], 1459335300, TimePoint::TYPE_START, TimePoint::TARGET_SERVER),
+            1 => new TimePoint(['item-2', 'item-2#0'], 1459335320, TimePoint::TYPE_START, TimePoint::TARGET_SERVER),
+            2 => new TimePoint(['item-1', 'item-1#1'], 1459335340, TimePoint::TYPE_START, TimePoint::TARGET_SERVER),
+
+            3 => new TimePoint(['item-1', 'item-1#0'], 1459335310, TimePoint::TYPE_END, TimePoint::TARGET_SERVER),
+            4 => new TimePoint(['item-2', 'item-2#0'], 1459335330, TimePoint::TYPE_END, TimePoint::TARGET_SERVER),
+            5 => new TimePoint(['item-1', 'item-1#1'], 1459335350, TimePoint::TYPE_END, TimePoint::TARGET_SERVER),
+        ];
+
+        $points2 = [
+            0 => new TimePoint(['item-1', 'item-1#0'], 1459335300, TimePoint::TYPE_START, TimePoint::TARGET_SERVER),
+            1 => new TimePoint(['item-2', 'item-2#0'], 1459335320, TimePoint::TYPE_START, TimePoint::TARGET_SERVER),
+            2 => new TimePoint(['item-1', 'item-1#1'], 1459335340, TimePoint::TYPE_START, TimePoint::TARGET_SERVER),
+
+            3 => new TimePoint(['item-1', 'item-1#0'], 1459335305, TimePoint::TYPE_START, TimePoint::TARGET_CLIENT),
+            4 => new TimePoint(['item-2', 'item-2#0'], 1459335325, TimePoint::TYPE_START, TimePoint::TARGET_CLIENT),
+            5 => new TimePoint(['item-1', 'item-1#1'], 1459335345, TimePoint::TYPE_START, TimePoint::TARGET_CLIENT),
+
+            6 => new TimePoint(['item-1', 'item-1#0'], 1459335315, TimePoint::TYPE_END, TimePoint::TARGET_SERVER),
+            7 => new TimePoint(['item-2', 'item-2#0'], 1459335335, TimePoint::TYPE_END, TimePoint::TARGET_SERVER),
+            8 => new TimePoint(['item-1', 'item-1#1'], 1459335355, TimePoint::TYPE_END, TimePoint::TARGET_SERVER),
+
+            9 => new TimePoint(['item-1', 'item-1#0'], 1459335310, TimePoint::TYPE_END, TimePoint::TARGET_CLIENT),
+            10 => new TimePoint(['item-2', 'item-2#0'], 1459335330, TimePoint::TYPE_END, TimePoint::TARGET_CLIENT),
+            11 => new TimePoint(['item-1', 'item-1#1'], 1459335350, TimePoint::TYPE_END, TimePoint::TARGET_CLIENT),
+        ];
+        
+        $points3 = [
+            0 => new TimePoint(['item-1', 'item-1#0'], 1460116638.5226, TimePoint::TYPE_START, TimePoint::TARGET_SERVER),
+            1 => new TimePoint(['item-1', 'item-1#0'], 1460116645.4868, TimePoint::TYPE_END, TimePoint::TARGET_SERVER),
+
+            2 => new TimePoint(['item-1', 'item-1#0'], 1460116646.2684, TimePoint::TYPE_START, TimePoint::TARGET_SERVER),
+            3 => new TimePoint(['item-1', 'item-1#0'], 1460116653.7042, TimePoint::TYPE_END, TimePoint::TARGET_SERVER),
+
+            4 => new TimePoint(['item-1', 'item-1#0'], 1460116733.6273, TimePoint::TYPE_START, TimePoint::TARGET_SERVER),
+            5 => new TimePoint(['item-1', 'item-1#0'], 1460116784.4006, TimePoint::TYPE_END, TimePoint::TARGET_SERVER),
+        ];
+
+
+        return [
+            [
+                $points1,
+                [
+                    $points1[1], $points1[4], // item-2#0
+                    $points1[2], $points1[5], // item-1#1
+                    $points1[0], $points1[3], // item-1#0
+                ],
+            ],
+            [
+                $points2,
+                [
+                    $points2[4], $points2[10],  // item-2#0 client
+                    $points2[1], $points2[7],   // item-2#0 server
+                    $points2[5], $points2[11],  // item-1#1 client
+                    $points2[2], $points2[8],   // item-1#1 server
+                    $points2[3], $points2[9],   // item-1#0 client
+                    $points2[0], $points2[6],   // item-1#0 server
+                ],
+            ],
+            [
+                $points3,
+                $points3,
+            ]
         ];
     }
 }
