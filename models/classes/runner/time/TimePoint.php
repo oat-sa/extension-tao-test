@@ -351,8 +351,8 @@ class TimePoint implements \Serializable
      * The comparison is made in this order:
      * - reference
      * - target
-     * - type
      * - timestamp
+     * - type
      * 
      * CAUTION!: The result order is not based on chronological order. 
      * Its goal is to gather TimePoint by reference and target, then sort by type and timestamp.
@@ -366,9 +366,9 @@ class TimePoint implements \Serializable
         if ($diff == 0) {
             $diff = $this->getTarget() - $point->getTarget();
             if ($diff == 0) {
-                $diff = $this->getType() - $point->getType();
+                $diff = $this->getNormalizedTimestamp() - $point->getNormalizedTimestamp();
                 if ($diff == 0) {
-                    $diff = $this->getNormalizedTimestamp() - $point->getNormalizedTimestamp();
+                    $diff = $this->getType() - $point->getType();
                 }
             }
         }
