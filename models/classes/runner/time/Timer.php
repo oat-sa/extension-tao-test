@@ -44,30 +44,30 @@ interface Timer
 {
     /**
      * Adds a "server start" TimePoint at a particular timestamp for the provided ItemRef
-     * @param mixed $itemRef
+     * @param TimerItemRef $itemRef
      * @param float $timestamp
      * @return Timer
      * @throws TimeException
      */
-    public function start($itemRef, $timestamp);
+    public function start(TimerItemRef $itemRef, $timestamp);
 
     /**
      * Adds a "server end" TimePoint at a particular timestamp for the provided ItemRef
-     * @param mixed $itemRef
+     * @param TimerItemRef $itemRef
      * @param float $timestamp
      * @return Timer
      * @throws TimeException
      */
-    public function end($itemRef, $timestamp);
+    public function end(TimerItemRef $itemRef, $timestamp);
 
     /**
      * Adds "client start" and "client end" TimePoint based on the provided duration for a particular ItemRef
-     * @param mixed $itemRef
+     * @param TimerItemRef $itemRef
      * @param float $duration
      * @return Timer
      * @throws TimeException
      */
-    public function adjust($itemRef, $duration);
+    public function adjust(TimerItemRef $itemRef, $duration);
 
     /**
      * Computes the total duration represented by the filtered TimePoints
