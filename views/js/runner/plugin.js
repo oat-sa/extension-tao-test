@@ -237,6 +237,14 @@ define([
                     return this;
                 },
 
+                /**
+                 * Get the plugin name
+                 *
+                 * @returns {String} the name
+                 */
+                getName : function getName(){
+                    return pluginName;
+                },
 
                 /**
                  * Shows the component related to this plugin
