@@ -174,7 +174,8 @@ define([
 
                 //instantiate the plugins first
                 _.forEach(pluginFactories, function(pluginFactory, pluginName){
-                    plugins[pluginName] = pluginFactory(runner, self.getAreaBroker());
+                    var plugin = pluginFactory(runner, self.getAreaBroker());
+                    plugins[plugin.getName()] = plugin;
                 });
 
                 providerRun('init').then(function(){

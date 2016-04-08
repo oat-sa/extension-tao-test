@@ -79,7 +79,7 @@ define([
     });
 
     QUnit.test('create a plugin', function (assert){
-        QUnit.expect(19);
+        QUnit.expect(20);
 
         var myPlugin = pluginFactory(mockProvider, samplePluginDefaults);
 
@@ -105,6 +105,7 @@ define([
         assert.equal(typeof instance1.getState, 'function', 'The plugin instance has also the default function getState');
         assert.equal(typeof instance1.getConfig, 'function', 'The plugin instance has also the default function getConfig');
         assert.equal(typeof instance1.setConfig, 'function', 'The plugin instance has also the default function setConfig');
+        assert.equal(typeof instance1.getName, 'function', 'The plugin instance has also the default function getName');
 
         // check default config
         var config1 = instance1.getConfig();
@@ -277,6 +278,30 @@ define([
             });
 
         var instance1 = myPlugin(testRunner);
+        instance1.init();
+    });
+
+    QUnit.asyncTest('get plugin name', function(assert){
+        QUnit.expect(3);
+
+        var name = 'foo-plugin';
+        var testRunner = {
+            trigger: _.noop
+        };
+
+        var samplePluginImpl = {
+            name : name,
+            init : function (){
+                assert.ok(true, 'called init');
+                assert.equal(this.getName(), name, 'The name matches');
+                QUnit.start();
+            }
+        };
+
+        var myPlugin = pluginFactory(samplePluginImpl);
+
+        var instance1 = myPlugin(testRunner);
+        assert.equal(instance1.getName(), name, 'The name matches');
         instance1.init();
     });
 });
