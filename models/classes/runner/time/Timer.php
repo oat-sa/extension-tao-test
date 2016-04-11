@@ -43,50 +43,50 @@ namespace oat\taoTests\models\runner\time;
 interface Timer
 {
     /**
-     * Adds a "server start" TimePoint at a particular timestamp for the provided ItemRef
-     * @param TimerItemRef $itemRef
+     * Adds a "server start" TimePoint at a particular timestamp for the provided tags
+     * @param string|array $tags
      * @param float $timestamp
      * @return Timer
      * @throws TimeException
      */
-    public function start(TimerItemRef $itemRef, $timestamp);
+    public function start($tags, $timestamp);
 
     /**
-     * Adds a "server end" TimePoint at a particular timestamp for the provided ItemRef
-     * @param TimerItemRef $itemRef
+     * Adds a "server end" TimePoint at a particular timestamp for the provided tags
+     * @param string|array $tags
      * @param float $timestamp
      * @return Timer
      * @throws TimeException
      */
-    public function end(TimerItemRef $itemRef, $timestamp);
+    public function end($tags, $timestamp);
 
     /**
-     * Adds "client start" and "client end" TimePoint based on the provided duration for a particular ItemRef
-     * @param TimerItemRef $itemRef
+     * Adds "client start" and "client end" TimePoint based on the provided duration for particular tags
+     * @param string|array $tags
      * @param float $duration
      * @return Timer
      * @throws TimeException
      */
-    public function adjust(TimerItemRef $itemRef, $duration);
+    public function adjust($tags, $duration);
 
     /**
      * Computes the total duration represented by the filtered TimePoints
-     * @param string|array $tag A tag or a list of tags to filter
+     * @param string|array $tags A tag or a list of tags to filter
      * @param int $target The type of target TimePoint to filter
      * @return float Returns the total computed duration
      * @throws TimeException
      */
-    public function compute($tag, $target);
+    public function compute($tags, $target);
 
     /**
      * Checks if the duration of a TimeLine subset reached the timeout
      * @param float $timeLimit The time limit against which compare the duration
-     * @param string|array $tag A tag or a list of tags to filter
+     * @param string|array $tags A tag or a list of tags to filter
      * @param int $target The type of target TimePoint to filter
      * @return bool Returns true if the timeout is reached
      * @throws TimeException
      */
-    public function timeout($timeLimit, $tag, $target);
+    public function timeout($timeLimit, $tags, $target);
 
     /**
      * Sets the storage used to maintain the data
