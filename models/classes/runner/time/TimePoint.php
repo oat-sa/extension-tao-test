@@ -67,7 +67,7 @@ class TimePoint implements \Serializable
     /**
      * The decimal precision used to compare timestamps
      */
-    const PRECISION = 1000;
+    const PRECISION = 10000;
 
     /**
      * The timestamp representing the TimePoint
@@ -92,6 +92,12 @@ class TimePoint implements \Serializable
      * @var int
      */
     protected $target = 0;
+
+    /**
+     * The unique reference to name the TimePoint
+     * @var string
+     */
+    protected $ref;
 
     /**
      * QtiTimePoint constructor.
@@ -246,11 +252,12 @@ class TimePoint implements \Serializable
     public function addTag($tag)
     {
         $this->tags[] = (string)$tag;
+        $this->ref = null;
         return $this;
     }
 
     /**
-     * Remove a tag from the TimePoint
+     * Removes a tag from the TimePoint
      * @param string $tag
      * @return TimePoint
      */
@@ -260,6 +267,7 @@ class TimePoint implements \Serializable
 
         if ($index !== false) {
             array_splice($this->tags, $index, 1);
+            $this->ref = null;
         }
 
         return $this;
@@ -284,6 +292,7 @@ class TimePoint implements \Serializable
     public function setTags($tags)
     {
         $this->tags = [];
+        $this->ref = null;
 
         if (is_array($tags)) {
             foreach ($tags as $tag) {
@@ -311,9 +320,12 @@ class TimePoint implements \Serializable
      */
     public function getRef()
     {
-        $tags = $this->tags;
-        sort($tags);
-        return md5(implode('-', $tags));
+        if (is_null($this->ref)) {
+            $tags = $this->tags;
+            sort($tags);
+            $this->ref = md5(implode('-', $tags));
+        }
+        return $this->ref;
     }
 
     /**
@@ -335,19 +347,43 @@ class TimePoint implements \Serializable
     }
 
     /**
-     * Compare the TimePoint with another instance
+     * Compares the TimePoint with another instance.
+     * The comparison is made in this order:
+     * - reference
+     * - target
+     * - timestamp
+     * - type
+     * 
+     * CAUTION!: The result order is not based on chronological order. 
+     * Its goal is to gather TimePoint by reference and target, then sort by type and timestamp.
+     * 
      * @param TimePoint $point
      * @return int
      */
     public function compare(TimePoint $point)
     {
-        $diff = $this->getNormalizedTimestamp() - $point->getNormalizedTimestamp();
+        $diff = strcmp($this->getRef(), $point->getRef());
         if ($diff == 0) {
-            $diff = $this->getType() - $point->getType();
+            $diff = $this->getTarget() - $point->getTarget();
             if ($diff == 0) {
-                $diff = $this->getTarget() - $point->getTarget();
+                $diff = $this->getNormalizedTimestamp() - $point->getNormalizedTimestamp();
+                if ($diff == 0) {
+                    $diff = $this->getType() - $point->getType();
+                }
             }
         }
         return $diff;
+    }
+
+    /**
+     * Sorts a range of TimePoint
+     * @param array $range
+     * @return array
+     */
+    public static function sort(array &$range) {
+        usort($range, function(TimePoint $a, TimePoint $b) {
+            return $a->compare($b);
+        });
+        return $range;
     }
 }
