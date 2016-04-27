@@ -52,6 +52,11 @@ define([
         //temp queue
         var queue = [];
 
+        /**
+         * @type {Storage} to store the collected events
+         */
+        var storage;
+
         //current write promise
         var writing;
 
@@ -151,6 +156,20 @@ define([
             });
         };
 
+        /**
+         * Get the storaget instance
+         * @returns {Promise} that resolves with the storage
+         */
+        var getStorage = function getStorage(){
+            if(storage){
+                return Promise.resolve(storage);
+            }
+            return store('test-probe-' + testIdentifier).then(function(newStorage){
+                storage = newStorage;
+                return Promise.resolve(storage);
+            });
+        };
+
         //argument validation
         if(_.isEmpty(testIdentifier)){
             throw new TypeError('Please set a test identifier');
@@ -159,17 +178,10 @@ define([
             throw new TypeError('Please set a test runner');
         }
 
-
-
         /**
          * @typedef {probeOverseer}
          */
         overseer = {
-
-            /**
-             * @type {Storage} to store the events
-             */
-            storage : null,
 
             /**
              * Add a new probe
@@ -237,10 +249,9 @@ define([
              * @returns {Promise} with the data in parameterj
              */
             getQueue : function getQueue(){
-                if(!this.storage){
-                    throw new Error('No storage, please start before');
-                }
-                return this.storage.getItem('queue');
+                return getStorage().then(function(storage){
+                    return storage.getItem('queue');
+                });
             },
 
             /**
@@ -256,19 +267,19 @@ define([
              * @param {Object} entry - the time entry
              */
             push : function push(entry){
-                var self = this;
-                if(!this.storage){
-                    throw new Error('No storage, please start before');
-                }
                 queue.push(entry);
 
                 //ensure the queue is pushed to the store consistently and atomically
                 if(writing){
                     writing.then(function(){
-                        return self.storage.setItem('queue', queue);
+                        return getStorage().then(function(storage){
+                            return storage.setItem('queue', queue);
+                        });
                     });
                 } else {
-                    writing = self.storage.setItem('queue', queue);
+                    writing = getStorage().then(function(storage){
+                        return storage.setItem('queue', queue);
+                    });
                 }
             },
 
@@ -278,16 +289,15 @@ define([
              */
             flush: function flush(){
                 var self = this;
-                if(!this.storage){
-                    throw new Error('No storage, please start before');
-                }
-                return new Promise(function(resolve, reject){
-                    self.storage.getItem('queue').then(function(flushed){
-                        queue = [];
-                        return self.storage.setItem('queue', queue).then(function(){
-                            resolve(flushed);
+                return getStorage().then(function(storage){
+                    return new Promise(function(resolve){
+                        storage.getItem('queue').then(function(flushed){
+                            queue = [];
+                            return storage.setItem('queue', queue).then(function(){
+                                resolve(flushed);
+                           });
                         });
-                    }).catch(reject);
+                    });
                 });
             },
 
@@ -296,12 +306,8 @@ define([
              * @returns {Promise} once started
              */
             start : function start(){
-                var self = this;
-                //create a unique instance in the offline storage
-                store('test-probe-' + testIdentifier).then(function(storage){
-                    self.storage = storage;
-                    return self.storage.getItem('queue').then(function(savedQueue){
-
+                return getStorage().then(function(storage){
+                    return storage.getItem('queue').then(function(savedQueue){
                         if(_.isArray(savedQueue)){
                             queue = savedQueue;
                         }
@@ -318,9 +324,6 @@ define([
              * @returns {Promise} once stopped
              */
             stop  : function stop(){
-                if(!this.storage){
-                    throw new Error('No storage, please start before');
-                }
                 started = false;
                 _.forEach(probes, function(probe){
                     var eventNs = '.probe-' + probe.name;
@@ -334,7 +337,9 @@ define([
                 });
 
                 queue = [];
-                return this.storage.clear();
+                return getStorage().then(function(storage){
+                    return storage.clear();
+                });
             }
         };
         return overseer;
