@@ -49,9 +49,6 @@ define([
         // the list of registered probes
         var probes = [];
 
-        //the data store instance
-        var storage;
-
         //temp queue
         var queue = [];
 
@@ -162,13 +159,17 @@ define([
             throw new TypeError('Please set a test runner');
         }
 
-        //create a unique instance in the offline storage
-        storage = store('test-probe-' + testIdentifier);
+
 
         /**
          * @typedef {probeOverseer}
          */
         overseer = {
+
+            /**
+             * @type {Storage} to store the events
+             */
+            storage : null,
 
             /**
              * Add a new probe
@@ -236,7 +237,10 @@ define([
              * @returns {Promise} with the data in parameterj
              */
             getQueue : function getQueue(){
-                return storage.getItem('queue');
+                if(!this.storage){
+                    throw new Error('No storage, please start before');
+                }
+                return this.storage.getItem('queue');
             },
 
             /**
@@ -252,15 +256,19 @@ define([
              * @param {Object} entry - the time entry
              */
             push : function push(entry){
+                var self = this;
+                if(!this.storage){
+                    throw new Error('No storage, please start before');
+                }
                 queue.push(entry);
 
                 //ensure the queue is pushed to the store consistently and atomically
                 if(writing){
                     writing.then(function(){
-                        return storage.setItem('queue', queue);
+                        return self.storage.setItem('queue', queue);
                     });
                 } else {
-                    writing = storage.setItem('queue', queue);
+                    writing = self.storage.setItem('queue', queue);
                 }
             },
 
@@ -269,11 +277,14 @@ define([
              * @returns {Promise} with the data in parameter
              */
             flush: function flush(){
-
+                var self = this;
+                if(!this.storage){
+                    throw new Error('No storage, please start before');
+                }
                 return new Promise(function(resolve, reject){
-                    storage.getItem('queue').then(function(flushed){
+                    self.storage.getItem('queue').then(function(flushed){
                         queue = [];
-                        return storage.setItem('queue', queue).then(function(){
+                        return self.storage.setItem('queue', queue).then(function(){
                             resolve(flushed);
                         });
                     }).catch(reject);
@@ -285,13 +296,18 @@ define([
              * @returns {Promise} once started
              */
             start : function start(){
-                return storage.getItem('queue').then(function(savedQueue){
+                var self = this;
+                //create a unique instance in the offline storage
+                store('test-probe-' + testIdentifier).then(function(storage){
+                    self.storage = storage;
+                    return self.storage.getItem('queue').then(function(savedQueue){
 
-                    if(_.isArray(savedQueue)){
-                        queue = savedQueue;
-                    }
-                    _.forEach(probes, collectEvent);
-                    started = true;
+                        if(_.isArray(savedQueue)){
+                            queue = savedQueue;
+                        }
+                        _.forEach(probes, collectEvent);
+                        started = true;
+                    });
                 });
             },
 
@@ -302,6 +318,9 @@ define([
              * @returns {Promise} once stopped
              */
             stop  : function stop(){
+                if(!this.storage){
+                    throw new Error('No storage, please start before');
+                }
                 started = false;
                 _.forEach(probes, function(probe){
                     var eventNs = '.probe-' + probe.name;
@@ -315,7 +334,7 @@ define([
                 });
 
                 queue = [];
-                return storage.clear();
+                return this.storage.clear();
             }
         };
         return overseer;
