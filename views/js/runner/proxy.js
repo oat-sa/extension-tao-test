@@ -20,10 +20,11 @@
  */
 define([
     'lodash',
+    'async',
     'core/eventifier',
     'taoTests/runner/proxyRegistry',
     'taoTests/runner/tokenHandler'
-], function(_, eventifier, proxyRegistry, tokenHandlerFactory) {
+], function(_, async, eventifier, proxyRegistry, tokenHandlerFactory) {
     'use strict';
 
     var _defaults = {};
@@ -43,7 +44,56 @@ define([
         var extraCallParams = {};
         var proxyAdapter    = proxyFactory.getProxy(proxyName);
         var initConfig      = _.defaults(config || {}, _defaults);
-        var tokenHandler   = tokenHandlerFactory();
+        var tokenHandler    = tokenHandlerFactory();
+        var middlewares     = {};
+
+        /**
+         * Gets the aggregated list of middlewares for a particular queue name
+         * @param {String} queue - The name of the queue to get
+         * @returns {Array}
+         */
+        function getMiddlewares(queue) {
+            var list = middlewares[queue] || [];
+            if (middlewares.all) {
+                list = list.concat(middlewares.all);
+            }
+            return list;
+        }
+
+        /**
+         * Applies the list of registered middlewares onto the received response
+         * @param {Object} request - The request descriptor
+         * @param {String} request.command - The name of the requested command
+         * @param {Object} request.params - The map of provided parameters
+         * @param {Object} response The response descriptor
+         * @param {String} response.status The status of the response, can be either 'success' or 'error'
+         * @param {Object} response.data The full response data
+         * @returns {Promise}
+         */
+        function applyMiddlewares(request, response) {
+            // wrap each middleware to provide parameters
+            var list = _.map(getMiddlewares(request.command), function(middleware) {
+                return function(next) {
+                    middleware(request, response, next);
+                };
+            });
+
+            // apply each middleware in series, then resolve or reject the promise
+            return new Promise(function(resolve, reject) {
+                async.series(list, function(err) {
+                    // handle implicit error from response descriptor
+                    if (!err && 'error' === response.status) {
+                        err = response.data;
+                    }
+
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(response.data);
+                    }
+                });
+            });
+        }
 
         /**
          * Delegates a function call to the selected proxy.
@@ -56,15 +106,30 @@ define([
          * @throws Error
          */
         function delegate(fnName, args) {
-            var promise;
+            var promise, request;
 
             if (proxyAdapter) {
                 if (_.isFunction(proxyAdapter[fnName])) {
                     // need real array of params, even if empty
                     args = args ? _slice.call(args) : [];
 
-                    // delegate the call to the adapter
-                    promise = proxyAdapter[fnName].apply(proxy, args);
+                    // delegate the call to the adapter and apply the middleware
+                    request = {command: fnName, params: args};
+                    promise = proxyAdapter[fnName].apply(proxy, args)
+                        .then(function(data) {
+                            // handle successful request
+                            return applyMiddlewares(request, {
+                                status: 'success',
+                                data: data
+                            });
+                        })
+                        .catch(function(data) {
+                            // handle failed request
+                            return applyMiddlewares(request, {
+                                status: 'error',
+                                data: data
+                            });
+                        });
 
                     // fire the method related event
                     // the promise has to be provided as first argument in all events
@@ -84,6 +149,25 @@ define([
          * @type {proxy}
          */
         var proxy = eventifier({
+            /**
+             * Add a middleware
+             * @param {String} [command] The command queue in which add the middleware (default: 'all')
+             * @param {Function} callback A middleware callback. Must accept 3 parameters: request, response, next.
+             * @returns {proxy}
+             */
+            use: function use(command, callback) {
+                var queue = command && _.isString(command) ? command : 'all';
+                var list = middlewares[queue] || [];
+                middlewares[queue] = list;
+
+                _.each(arguments, function(callback) {
+                    if (_.isFunction(callback)) {
+                        list.push(callback);
+                    }
+                });
+                return this;
+            },
+
             /**
              * Initializes the proxy
              * @returns {Promise} - Returns a promise. The proxy will be fully initialized on resolve.
