@@ -23,8 +23,7 @@ define([
     'jquery',
     'lodash',
     'taoTests/runner/runner',
-    'taoTests/runner/probeOverseer',
-    'core/store'
+    'taoTests/runner/probeOverseer'
 ], function($, _, runnerFactory, probeOverseer) {
     'use strict';
 
