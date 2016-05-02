@@ -245,7 +245,7 @@ define([
             }
         });
 
-        delegate = delegator(proxy, proxyAdapter, 'proxy');
+        delegate = delegator(proxy, proxyAdapter, {name: 'proxy'});
 
         return proxy;
     }
