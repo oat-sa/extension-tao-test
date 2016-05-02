@@ -23,7 +23,7 @@ define([
     'core/delegator',
     'core/eventifier',
     'core/providerRegistry',
-    'taoTests/runner/tokenHandler'
+    'core/tokenHandler'
 ], function(_, delegator, eventifier, providerRegistry, tokenHandlerFactory) {
     'use strict';
 
