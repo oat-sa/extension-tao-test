@@ -20,15 +20,14 @@
  */
 define([
     'lodash',
+    'core/delegator',
     'core/eventifier',
-    'taoTests/runner/proxyRegistry',
+    'core/providerRegistry',
     'taoTests/runner/tokenHandler'
-], function(_, eventifier, proxyRegistry, tokenHandlerFactory) {
+], function(_, delegator, eventifier, providerRegistry, tokenHandlerFactory) {
     'use strict';
 
     var _defaults = {};
-
-    var _slice = [].slice;
 
     /**
      * Defines a proxy bound to a particular adapter
@@ -41,43 +40,10 @@ define([
     function proxyFactory(proxyName, config) {
 
         var extraCallParams = {};
-        var proxyAdapter    = proxyFactory.getProxy(proxyName);
+        var proxyAdapter    = proxyFactory.getProvider(proxyName);
         var initConfig      = _.defaults(config || {}, _defaults);
         var tokenHandler   = tokenHandlerFactory();
-
-        /**
-         * Delegates a function call to the selected proxy.
-         * Fires the related event
-         *
-         * @param {String} fnName - The name of the delegated method to call
-         * @param {Array} [args] - An optional array of arguments to apply to the method
-         * @returns {Promise} - The delegated method must return a promise
-         * @private
-         * @throws Error
-         */
-        function delegate(fnName, args) {
-            var promise;
-
-            if (proxyAdapter) {
-                if (_.isFunction(proxyAdapter[fnName])) {
-                    // need real array of params, even if empty
-                    args = args ? _slice.call(args) : [];
-
-                    // delegate the call to the adapter
-                    promise = proxyAdapter[fnName].apply(proxy, args);
-
-                    // fire the method related event
-                    // the promise has to be provided as first argument in all events
-                    proxy.trigger.apply(proxy, [fnName, promise].concat(args));
-                } else {
-                    throw new Error('There is no method called ' + fnName + ' in the proxy adapter!');
-                }
-            } else {
-                throw new Error('There is no proxy adapter!');
-            }
-
-            return promise;
-        }
+        var delegate;
 
         /**
          * Defines the test runner proxy
@@ -279,8 +245,10 @@ define([
             }
         });
 
+        delegate = delegator(proxy, proxyAdapter, 'proxy');
+
         return proxy;
     }
 
-    return proxyRegistry(proxyFactory);
+    return providerRegistry(proxyFactory);
 });

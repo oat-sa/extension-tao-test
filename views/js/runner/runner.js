@@ -26,7 +26,7 @@ define([
     'core/eventifier',
     'core/promise',
     'core/logger',
-    'taoTests/runner/providerRegistry'
+    'core/providerRegistry'
 ], function ($, _, __, eventifier, Promise, logger, providerRegistry){
     'use strict';
 

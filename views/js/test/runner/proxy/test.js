@@ -41,10 +41,10 @@ define(['lodash', 'taoTests/runner/proxy'], function(_, proxyFactory) {
         QUnit.expect(5);
 
         assert.equal(typeof proxyFactory, 'function', "The proxyFactory module exposes a function");
-        assert.equal(typeof proxyFactory.registerProxy, 'function', "The proxyFactory module exposes a registerProxy method");
-        assert.equal(typeof proxyFactory.getProxy, 'function', "The proxyFactory module exposes a getProxy method");
+        assert.equal(typeof proxyFactory.registerProvider, 'function', "The proxyFactory module exposes a registerProvider method");
+        assert.equal(typeof proxyFactory.getProvider, 'function', "The proxyFactory module exposes a getProvider method");
 
-        proxyFactory.registerProxy('default', defaultProxy);
+        proxyFactory.registerProvider('default', defaultProxy);
 
         assert.equal(typeof proxyFactory(), 'object', "The proxyFactory factory produces an object");
         assert.notStrictEqual(proxyFactory(), proxyFactory(), "The proxyFactory factory provides a different object on each call");
@@ -85,7 +85,7 @@ define(['lodash', 'taoTests/runner/proxy'], function(_, proxyFactory) {
         QUnit.expect(6);
         QUnit.stop();
 
-        proxyFactory.registerProxy('default', _.defaults({
+        proxyFactory.registerProvider('default', _.defaults({
             init : function(config) {
                 assert.ok(true, 'The proxyFactory has delegated the call to init');
                 assert.equal(config, initConfig, 'The proxyFactory has provided the config object to the init method');
@@ -116,7 +116,7 @@ define(['lodash', 'taoTests/runner/proxy'], function(_, proxyFactory) {
         QUnit.expect(4);
         QUnit.stop();
 
-        proxyFactory.registerProxy('default', _.defaults({
+        proxyFactory.registerProvider('default', _.defaults({
             destroy : function() {
                 assert.ok(true, 'The proxyFactory has delegated the call to destroy');
                 QUnit.start();
@@ -145,7 +145,7 @@ define(['lodash', 'taoTests/runner/proxy'], function(_, proxyFactory) {
         QUnit.expect(4);
         QUnit.stop();
 
-        proxyFactory.registerProxy('default', _.defaults({
+        proxyFactory.registerProvider('default', _.defaults({
             getTestData : function() {
                 assert.ok(true, 'The proxyFactory has delegated the call to getTestData');
                 QUnit.start();
@@ -174,7 +174,7 @@ define(['lodash', 'taoTests/runner/proxy'], function(_, proxyFactory) {
         QUnit.expect(4);
         QUnit.stop();
 
-        proxyFactory.registerProxy('default', _.defaults({
+        proxyFactory.registerProvider('default', _.defaults({
             getTestContext : function() {
                 assert.ok(true, 'The proxyFactory has delegated the call to getTestContext');
                 QUnit.start();
@@ -203,7 +203,7 @@ define(['lodash', 'taoTests/runner/proxy'], function(_, proxyFactory) {
         QUnit.expect(4);
         QUnit.stop();
 
-        proxyFactory.registerProxy('default', _.defaults({
+        proxyFactory.registerProvider('default', _.defaults({
             getTestMap : function() {
                 assert.ok(true, 'The proxyFactory has delegated the call to getTestMap');
                 QUnit.start();
@@ -236,7 +236,7 @@ define(['lodash', 'taoTests/runner/proxy'], function(_, proxyFactory) {
         QUnit.expect(8);
         QUnit.stop();
 
-        proxyFactory.registerProxy('default', _.defaults({
+        proxyFactory.registerProvider('default', _.defaults({
             callTestAction : function(action, params) {
                 assert.ok(true, 'The proxyFactory has delegated the call to callTestAction');
                 assert.equal(action, expectedAction, 'The proxyFactory has provided the action to the callTestAction method');
@@ -270,7 +270,7 @@ define(['lodash', 'taoTests/runner/proxy'], function(_, proxyFactory) {
         QUnit.expect(6);
         QUnit.stop();
 
-        proxyFactory.registerProxy('default', _.defaults({
+        proxyFactory.registerProvider('default', _.defaults({
             getItem : function(uri) {
                 assert.ok(true, 'The proxyFactory has delegated the call to getItem');
                 assert.equal(uri, expectedUri, 'The proxyFactory has provided the URI to the getItem method');
@@ -305,7 +305,7 @@ define(['lodash', 'taoTests/runner/proxy'], function(_, proxyFactory) {
 
         QUnit.expect(12);
 
-        proxyFactory.registerProxy('default', _.defaults({
+        proxyFactory.registerProvider('default', _.defaults({
             submitItem : function(uri, state, response, params) {
                 assert.ok(true, 'The proxyFactory has delegated the call to submitItem');
                 assert.equal(uri, expectedUri, 'The proxyFactory has provided the URI to the submitItem method');
@@ -346,7 +346,7 @@ define(['lodash', 'taoTests/runner/proxy'], function(_, proxyFactory) {
         QUnit.expect(10);
         QUnit.stop();
 
-        proxyFactory.registerProxy('default', _.defaults({
+        proxyFactory.registerProvider('default', _.defaults({
             callItemAction : function(uri, action, params) {
                 assert.ok(true, 'The proxyFactory has delegated the call to callItemAction');
                 assert.equal(uri, expectedUri, 'The proxyFactory has provided the URI to the callItemAction method');
@@ -384,7 +384,7 @@ define(['lodash', 'taoTests/runner/proxy'], function(_, proxyFactory) {
         QUnit.expect(10);
         QUnit.stop();
 
-        proxyFactory.registerProxy('default', _.defaults({
+        proxyFactory.registerProvider('default', _.defaults({
             telemetry : function(uri, signal, params) {
                 assert.ok(true, 'The proxyFactory has delegated the call to telemetry');
                 assert.equal(uri, expectedUri, 'The proxyFactory has provided the URI to the telemetry method');
@@ -421,7 +421,7 @@ define(['lodash', 'taoTests/runner/proxy'], function(_, proxyFactory) {
             noz : 'moo'
         };
 
-        proxyFactory.registerProxy('default', defaultProxy);
+        proxyFactory.registerProvider('default', defaultProxy);
 
         var proxy = proxyFactory('default');
 
@@ -450,7 +450,7 @@ define(['lodash', 'taoTests/runner/proxy'], function(_, proxyFactory) {
 
     QUnit.test('proxyFactory.getTokenHandler', function(assert) {
 
-        proxyFactory.registerProxy('default', defaultProxy);
+        proxyFactory.registerProvider('default', defaultProxy);
 
         var proxy = proxyFactory('default');
 
