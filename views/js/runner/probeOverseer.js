@@ -49,11 +49,13 @@ define([
         // the list of registered probes
         var probes = [];
 
-        //the data store instance
-        var storage;
-
         //temp queue
         var queue = [];
+
+        /**
+         * @type {Storage} to store the collected events
+         */
+        var storage;
 
         //current write promise
         var writing;
@@ -154,6 +156,20 @@ define([
             });
         };
 
+        /**
+         * Get the storaget instance
+         * @returns {Promise} that resolves with the storage
+         */
+        var getStorage = function getStorage(){
+            if(storage){
+                return Promise.resolve(storage);
+            }
+            return store('test-probe-' + testIdentifier).then(function(newStorage){
+                storage = newStorage;
+                return Promise.resolve(storage);
+            });
+        };
+
         //argument validation
         if(_.isEmpty(testIdentifier)){
             throw new TypeError('Please set a test identifier');
@@ -161,9 +177,6 @@ define([
         if(!_.isPlainObject(runner) || !_.isFunction(runner.init) || !_.isFunction(runner.on)){
             throw new TypeError('Please set a test runner');
         }
-
-        //create a unique instance in the offline storage
-        storage = store('test-probe-' + testIdentifier);
 
         /**
          * @typedef {probeOverseer}
@@ -236,7 +249,9 @@ define([
              * @returns {Promise} with the data in parameterj
              */
             getQueue : function getQueue(){
-                return storage.getItem('queue');
+                return getStorage().then(function(storage){
+                    return storage.getItem('queue');
+                });
             },
 
             /**
@@ -257,10 +272,14 @@ define([
                 //ensure the queue is pushed to the store consistently and atomically
                 if(writing){
                     writing.then(function(){
-                        return storage.setItem('queue', queue);
+                        return getStorage().then(function(storage){
+                            return storage.setItem('queue', queue);
+                        });
                     });
                 } else {
-                    writing = storage.setItem('queue', queue);
+                    writing = getStorage().then(function(storage){
+                        return storage.setItem('queue', queue);
+                    });
                 }
             },
 
@@ -269,14 +288,16 @@ define([
              * @returns {Promise} with the data in parameter
              */
             flush: function flush(){
-
-                return new Promise(function(resolve, reject){
-                    storage.getItem('queue').then(function(flushed){
-                        queue = [];
-                        return storage.setItem('queue', queue).then(function(){
-                            resolve(flushed);
+                var self = this;
+                return getStorage().then(function(storage){
+                    return new Promise(function(resolve){
+                        storage.getItem('queue').then(function(flushed){
+                            queue = [];
+                            return storage.setItem('queue', queue).then(function(){
+                                resolve(flushed);
+                           });
                         });
-                    }).catch(reject);
+                    });
                 });
             },
 
@@ -285,13 +306,14 @@ define([
              * @returns {Promise} once started
              */
             start : function start(){
-                return storage.getItem('queue').then(function(savedQueue){
-
-                    if(_.isArray(savedQueue)){
-                        queue = savedQueue;
-                    }
-                    _.forEach(probes, collectEvent);
-                    started = true;
+                return getStorage().then(function(storage){
+                    return storage.getItem('queue').then(function(savedQueue){
+                        if(_.isArray(savedQueue)){
+                            queue = savedQueue;
+                        }
+                        _.forEach(probes, collectEvent);
+                        started = true;
+                    });
                 });
             },
 
@@ -315,7 +337,9 @@ define([
                 });
 
                 queue = [];
-                return storage.clear();
+                return getStorage().then(function(storage){
+                    return storage.clear();
+                });
             }
         };
         return overseer;
