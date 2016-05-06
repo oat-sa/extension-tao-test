@@ -22,9 +22,10 @@ define([
     'lodash',
     'core/delegator',
     'core/eventifier',
+    'core/promise',
     'core/providerRegistry',
     'core/tokenHandler'
-], function(_, delegator, eventifier, providerRegistry, tokenHandlerFactory) {
+], function(_, delegator, eventifier, Promise, providerRegistry, tokenHandlerFactory) {
     'use strict';
 
     var _defaults = {};
@@ -42,8 +43,8 @@ define([
         var extraCallParams = {};
         var proxyAdapter    = proxyFactory.getProvider(proxyName);
         var initConfig      = _.defaults(config || {}, _defaults);
-        var tokenHandler   = tokenHandlerFactory();
-        var delegate;
+        var tokenHandler    = tokenHandlerFactory();
+        var delegate, communicator;
 
         /**
          * Defines the test runner proxy
@@ -62,7 +63,7 @@ define([
                  * @param {Promise} promise
                  * @param {Object} config
                  */
-                return delegate('init', [initConfig]);
+                return delegate('init', initConfig);
             },
 
             /**
@@ -76,7 +77,11 @@ define([
                  * @event proxy#destroy
                  * @param {Promise} promise
                  */
-                return delegate('destroy');
+                return delegate('destroy').then(function() {
+                    if (communicator) {
+                        return communicator.destroy();
+                    }
+                });
             },
 
             /**
@@ -85,6 +90,20 @@ define([
              */
             getTokenHandler : function getTokenHandler() {
                 return tokenHandler;
+            },
+
+            /**
+             * Gets access to the communication channel, load it if not present
+             * @returns {communicator} the communication channel
+             */
+            getCommunicator : function getCommunicator() {
+                if(!communicator){
+                    if(!_.isFunction(proxyAdapter.getCommunicator)){
+                        throw new Error('The proxy provider does not have a getCommunicator method');
+                    }
+                    communicator = proxyAdapter.getCommunicator.call(this);
+                }
+                return communicator;
             },
 
             /**
@@ -158,7 +177,7 @@ define([
                  * @param {String} action
                  * @param {Object} params
                  */
-                return delegate('callTestAction', [action, mergedParams]);
+                return delegate('callTestAction', action, mergedParams);
             },
 
             /**
@@ -174,7 +193,7 @@ define([
                  * @param {Promise} promise
                  * @param {String} uri
                  */
-                return delegate('getItem', [uri]);
+                return delegate('getItem', uri);
             },
 
             /**
@@ -196,7 +215,7 @@ define([
                  * @param {Object} state
                  * @param {Object} response
                  */
-                return delegate('submitItem', [uri, state, response, params]);
+                return delegate('submitItem', uri, state, response, params);
             },
 
             /**
@@ -221,7 +240,7 @@ define([
                  * @param {String} action
                  * @param {Object} params
                  */
-                return delegate('callItemAction', [uri, action, mergedParams]);
+                return delegate('callItemAction', uri, action, mergedParams);
             },
 
             /**
@@ -241,7 +260,7 @@ define([
                  * @param {String} signal
                  * @param {Object} params
                  */
-                return delegate('telemetry', [uri, signal, params]);
+                return delegate('telemetry', uri, signal, params);
             }
         });
 

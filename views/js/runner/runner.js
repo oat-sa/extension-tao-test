@@ -336,11 +336,19 @@ define([
 
                 providerRun('destroy').then(function(){
                     pluginRun('destroy').then(function(){
+                        var destroyed;
 
-                        testContext = {};
+                        if (proxy) {
+                            destroyed = proxy.destroy();
+                        } else {
+                            destroyed = Promise.resolve();
+                        }
 
-                        self.setState('destroy', true)
-                            .trigger('destroy');
+                        return destroyed.then(function() {
+                            testContext = {};
+                            self.setState('destroy', true)
+                                .trigger('destroy');
+                        });
                     }).catch(reportError);
                 }).catch(reportError);
                 return this;
