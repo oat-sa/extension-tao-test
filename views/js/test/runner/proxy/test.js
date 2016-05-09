@@ -356,7 +356,14 @@ define(['lodash', 'core/promise', 'taoTests/runner/proxy'], function(_, Promise,
             noz : 'moo'
         };
 
-        proxyFactory.registerProvider('default', defaultProxy);
+        proxyFactory.registerProvider('default', _.defaults({
+            callTestAction: function () {
+                return Promise.resolve();
+            },
+            callItemAction: function () {
+                return Promise.resolve();
+            }
+        }, defaultProxy));
 
         var proxy = proxyFactory('default');
 
@@ -433,6 +440,83 @@ define(['lodash', 'core/promise', 'taoTests/runner/proxy'], function(_, Promise,
 
         proxy.destroy()
             .then(function() {
+                QUnit.start();
+            });
+    });
+
+
+    QUnit.asyncTest('proxyFactory.use#success', function (assert) {
+        QUnit.expect(18);
+
+        proxyFactory.registerProvider('default', _.defaults({
+            init: function () {
+                return Promise.resolve();
+            },
+            getTestData: function () {
+                return Promise.resolve();
+            }
+        }, defaultProxy));
+
+        var proxy = proxyFactory('default');
+
+        proxy
+            .use(function (req, res, next) {
+                assert.ok(true, 'The global middleware has been called');
+                assert.equal(typeof req, 'object', 'The request object has been provided');
+                assert.equal(typeof req.command, 'string', 'The request command has been provided');
+                assert.equal(typeof res, 'object', 'The response object has been provided');
+                assert.equal(typeof res.status, 'string', 'The response status has been provided');
+                assert.equal(res.status, 'success', 'The response has a success status');
+                next();
+            })
+            .use('init', function (req, res, next) {
+                assert.ok(true, 'The init middleware has been called');
+                assert.equal(typeof req, 'object', 'The request object has been provided');
+                assert.equal(typeof req.command, 'string', 'The request command has been provided');
+                assert.equal(typeof res, 'object', 'The response object has been provided');
+                assert.equal(typeof res.status, 'string', 'The response status has been provided');
+                assert.equal(res.status, 'success', 'The response has a success status');
+                next();
+            })
+            .init().then(function () {
+                proxy.getTestData().then(function () {
+                    QUnit.start();
+                });
+            });
+    });
+
+
+    QUnit.asyncTest('proxyFactory.use#fail', function (assert) {
+        QUnit.expect(12);
+
+        proxyFactory.registerProvider('default', _.defaults({
+            init: function () {
+                return Promise.reject('error');
+            }
+        }, defaultProxy));
+
+        var proxy = proxyFactory('default');
+
+        proxy
+            .use(function (req, res, next) {
+                assert.ok(true, 'The global middleware has been called');
+                assert.equal(typeof req, 'object', 'The request object has been provided');
+                assert.equal(typeof req.command, 'string', 'The request command has been provided');
+                assert.equal(typeof res, 'object', 'The response object has been provided');
+                assert.equal(typeof res.status, 'string', 'The response status has been provided');
+                assert.equal(res.status, 'error', 'The response has a failed status');
+                next();
+            })
+            .use('init', function (req, res, next) {
+                assert.ok(true, 'The init middleware has been called');
+                assert.equal(typeof req, 'object', 'The request object has been provided');
+                assert.equal(typeof req.command, 'string', 'The request command has been provided');
+                assert.equal(typeof res, 'object', 'The response object has been provided');
+                assert.equal(typeof res.status, 'string', 'The response status has been provided');
+                assert.equal(res.status, 'error', 'The response has a failed status');
+                next();
+            })
+            .init().catch(function () {
                 QUnit.start();
             });
     });

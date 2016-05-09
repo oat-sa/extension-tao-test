@@ -20,15 +20,18 @@
  */
 define([
     'lodash',
+    'async',
     'core/delegator',
     'core/eventifier',
     'core/promise',
     'core/providerRegistry',
     'core/tokenHandler'
-], function(_, delegator, eventifier, Promise, providerRegistry, tokenHandlerFactory) {
+], function(_, async, delegator, eventifier, Promise, providerRegistry, tokenHandlerFactory) {
     'use strict';
 
     var _defaults = {};
+
+    var _slice = [].slice;
 
     /**
      * Defines a proxy bound to a particular adapter
@@ -44,13 +47,108 @@ define([
         var proxyAdapter    = proxyFactory.getProvider(proxyName);
         var initConfig      = _.defaults(config || {}, _defaults);
         var tokenHandler    = tokenHandlerFactory();
-        var delegate, communicator;
+        var middlewares     = {};
+        var delegateProxy, communicator;
+
+        /**
+         * Gets the aggregated list of middlewares for a particular queue name
+         * @param {String} queue - The name of the queue to get
+         * @returns {Array}
+         */
+        function getMiddlewares(queue) {
+            var list = middlewares[queue] || [];
+            if (middlewares.all) {
+                list = list.concat(middlewares.all);
+            }
+            return list;
+        }
+
+        /**
+         * Applies the list of registered middlewares onto the received response
+         * @param {Object} request - The request descriptor
+         * @param {String} request.command - The name of the requested command
+         * @param {Object} request.params - The map of provided parameters
+         * @param {Object} response The response descriptor
+         * @param {String} response.status The status of the response, can be either 'success' or 'error'
+         * @param {Object} response.data The full response data
+         * @returns {Promise}
+         */
+        function applyMiddlewares(request, response) {
+            // wrap each middleware to provide parameters
+            var list = _.map(getMiddlewares(request.command), function(middleware) {
+                return function(next) {
+                    middleware(request, response, next);
+                };
+            });
+
+            // apply each middleware in series, then resolve or reject the promise
+            return new Promise(function(resolve, reject) {
+                async.series(list, function(err) {
+                    // handle implicit error from response descriptor
+                    if (!err && 'error' === response.status) {
+                        err = response.data;
+                    }
+
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(response.data);
+                    }
+                });
+            });
+        }
+
+        /**
+         * Delegates the call to the proxy implementation and apply the middleware.
+         *
+         * @param {String} fnName - The name of the delegated method to call
+         * @returns {Promise} - The delegated method must return a promise
+         * @private
+         * @throws Error
+         */
+        function delegate(fnName) {
+            var request = {command: fnName, params: _slice.call(arguments, 1)};
+            return delegateProxy.apply(null, arguments)
+                .then(function(data) {
+                    // handle successful request
+                    return applyMiddlewares(request, {
+                        status: 'success',
+                        data: data
+                    });
+                })
+                .catch(function(data) {
+                    // handle failed request
+                    return applyMiddlewares(request, {
+                        status: 'error',
+                        data: data
+                    });
+                });
+        }
 
         /**
          * Defines the test runner proxy
          * @type {proxy}
          */
         var proxy = eventifier({
+            /**
+             * Add a middleware
+             * @param {String} [command] The command queue in which add the middleware (default: 'all')
+             * @param {Function} callback A middleware callback. Must accept 3 parameters: request, response, next.
+             * @returns {proxy}
+             */
+            use: function use(command, callback) {
+                var queue = command && _.isString(command) ? command : 'all';
+                var list = middlewares[queue] || [];
+                middlewares[queue] = list;
+
+                _.each(arguments, function(callback) {
+                    if (_.isFunction(callback)) {
+                        list.push(callback);
+                    }
+                });
+                return this;
+            },
+
             /**
              * Initializes the proxy
              * @returns {Promise} - Returns a promise. The proxy will be fully initialized on resolve.
@@ -264,7 +362,7 @@ define([
             }
         });
 
-        delegate = delegator(proxy, proxyAdapter, {name: 'proxy'});
+        delegateProxy = delegator(proxy, proxyAdapter, {name: 'proxy'});
 
         return proxy;
     }
