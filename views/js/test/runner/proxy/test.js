@@ -424,14 +424,14 @@ define(['lodash', 'core/promise', 'taoTests/runner/proxy'], function(_, Promise,
             destroy: function() {
                 return Promise.resolve();
             },
-            getCommunicator: function() {
+            loadCommunicator: function() {
                 return expectedCommunicator;
             }
         });
 
         assert.throws(function() {
-            proxyFactory('default').getCommunicator()
-        }, 'An error is thrown when the getCommunicator() method does not exists');
+            proxyFactory('default').getCommunicator();
+        }, 'An error is thrown when the loadCommunicator() method does not exists');
 
         var proxy = proxyFactory('communicator');
         var communicator = proxy.getCommunicator();

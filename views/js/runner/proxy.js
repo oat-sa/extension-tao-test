@@ -196,10 +196,10 @@ define([
              */
             getCommunicator : function getCommunicator() {
                 if(!communicator){
-                    if(!_.isFunction(proxyAdapter.getCommunicator)){
-                        throw new Error('The proxy provider does not have a getCommunicator method');
+                    if(!_.isFunction(proxyAdapter.loadCommunicator)){
+                        throw new Error('The proxy provider does not have a loadCommunicator method');
                     }
-                    communicator = proxyAdapter.getCommunicator.call(this);
+                    communicator = proxyAdapter.loadCommunicator.call(this);
                 }
                 return communicator;
             },
