@@ -405,8 +405,8 @@ define([
                     }
                     proxy = provider.loadProxy.call(this);
 
-                    proxy.on('error', function (data) {
-                        self.trigger('error', data);
+                    proxy.on('error', function (error) {
+                        self.trigger('error', error);
                     });
                 }
                 return proxy;
