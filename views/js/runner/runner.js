@@ -398,11 +398,16 @@ define([
              * @returns {proxy} the proxy
              */
             getProxy : function getProxy(){
+                var self = this;
                 if(!proxy){
                     if(!_.isFunction(provider.loadProxy)){
                         throw new Error('The provider does not have a loadProxy method');
                     }
                     proxy = provider.loadProxy.call(this);
+
+                    proxy.on('error', function (data) {
+                        self.trigger('error', data);
+                    });
                 }
                 return proxy;
             },
