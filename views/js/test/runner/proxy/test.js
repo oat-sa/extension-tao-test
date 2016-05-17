@@ -461,20 +461,68 @@ define(['lodash', 'core/promise', 'core/eventifier', 'taoTests/runner/proxy'], f
         });
     });
 
+    QUnit.asyncTest('proxyFactory.getCommunicator #failed to open', function(assert) {
+        QUnit.expect(5);
 
-    QUnit.asyncTest('proxyFactory.getCommunicator #no communicator', function(assert) {
-        QUnit.expect(1);
-
+        var expectedCommunicator = {
+            on: function() {
+                return this;
+            },
+            init: function() {
+                assert.ok(true, 'The communicator is initialized');
+                return Promise.resolve();
+            },
+            open: function() {
+                assert.ok(true, 'The communicator is not open');
+                return Promise.reject();
+            },
+            destroy: function() {
+                assert.ok(true, 'The communicator must be destroyed when the proxy is destroying');
+                return Promise.resolve();
+            }
+        };
 
         proxyFactory.registerProvider('communicator', {
             init: _.noop,
-            loadCommunicator: _.noop
+            destroy: function() {
+                return Promise.resolve();
+            },
+            loadCommunicator: function() {
+                return expectedCommunicator;
+            }
+        });
+
+        var proxy = proxyFactory('communicator');
+        proxy.getCommunicator().catch(function() {
+            assert.ok(true, 'The proxy has failed to build a communicator handler');
+            proxy.destroy()
+                .then(function() {
+                    assert.ok(true, 'The proxy has been destroyed');
+                    QUnit.start();
+                });
+        });
+    });
+
+
+    QUnit.asyncTest('proxyFactory.getCommunicator #no communicator', function(assert) {
+        QUnit.expect(2);
+
+        proxyFactory.registerProvider('communicator', {
+            init: _.noop,
+            loadCommunicator: _.noop,
+            destroy: function() {
+                return Promise.resolve();
+            }
         });
 
         var proxy = proxyFactory('communicator');
         proxy.getCommunicator().catch(function() {
             assert.ok(true, 'An error is thrown when the loadCommunicator() does not return any communicator');
-            QUnit.start();
+            proxy.destroy()
+                .then(function() {
+                    assert.ok(true, 'The proxy has been destroyed');
+                    QUnit.start();
+                });
         });
     });
 

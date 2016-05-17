@@ -48,7 +48,7 @@ define([
         var initConfig      = _.defaults(config || {}, _defaults);
         var tokenHandler    = tokenHandlerFactory();
         var middlewares     = {};
-        var delegateProxy, communicator;
+        var delegateProxy, communicator, communicatorPromise;
 
         /**
          * Gets the aggregated list of middlewares for a particular queue name
@@ -178,8 +178,30 @@ define([
                  * @param {Promise} promise
                  */
                 return delegate('destroy').then(function() {
-                    if (communicator) {
-                        return communicator.destroy();
+                    // a communicator has been invoked and...
+                    if (communicatorPromise) {
+                        return new Promise(function(resolve, reject) {
+
+                            function destroyCommunicator() {
+                                communicator.destroy()
+                                    .then(resolve)
+                                    .catch(reject);
+                            }
+
+                            communicatorPromise
+                                // ... has been loaded successfully, then destroy it
+                                .then(function() {
+                                    destroyCommunicator();
+                                })
+                                // ...has failed to be loaded, maybe no need to destroy it
+                                .catch(function() {
+                                    if (communicator) {
+                                        destroyCommunicator();
+                                    } else {
+                                        resolve();
+                                    }
+                                });
+                        });
                     }
                 });
             },
@@ -198,33 +220,36 @@ define([
              */
             getCommunicator : function getCommunicator() {
                 var self = this;
-                if (!communicator) {
-                    if (_.isFunction(proxyAdapter.loadCommunicator)) {
-                        communicator = proxyAdapter.loadCommunicator.call(this);
-                        if (communicator) {
-                            return communicator
-                                .on('error', function(error) {
-                                    self.trigger('error', error);
-                                })
-                                .on('receive', function(response) {
-                                    self.trigger('receive', response, 'communicator');
-                                })
-                                .init()
-                                .then(function () {
-                                    return communicator.open()
-                                        .then(function() {
-                                            return Promise.resolve(communicator);
-                                        });
-                                });
+                if (!communicatorPromise) {
+                    communicatorPromise = new Promise(function(resolve, reject) {
+                        if (_.isFunction(proxyAdapter.loadCommunicator)) {
+                            communicator = proxyAdapter.loadCommunicator.call(this);
+                            if (communicator) {
+                                communicator
+                                    .on('error', function(error) {
+                                        self.trigger('error', error);
+                                    })
+                                    .on('receive', function(response) {
+                                        self.trigger('receive', response, 'communicator');
+                                    })
+                                    .init()
+                                    .then(function () {
+                                        return communicator.open()
+                                            .then(function() {
+                                                resolve(communicator);
+                                            })
+                                            .catch(reject);
+                                    })
+                                    .catch(reject);
+                            } else {
+                                reject(new Error('No communicator has been set up!'));
+                            }
                         } else {
-                            return Promise.reject(new Error('No communicator has been set up!'));
+                            reject(new Error('The proxy provider does not have a loadCommunicator method'));
                         }
-                    } else {
-                        return Promise.reject(new Error('The proxy provider does not have a loadCommunicator method'));
-                    }
-                } else {
-                    return Promise.resolve(communicator);
+                    });
                 }
+                return communicatorPromise;
             },
 
             /**
