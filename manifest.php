@@ -39,7 +39,7 @@ return array(
 	'requires' => array(
 	    'taoItems' => '>=2.6',
 	    'taoBackOffice' => '>=0.8',
-		'tao' => '>=3.1.0'
+		'tao' => '>=3.2.0'
     ),
 	'models' => array(
 		'http://www.tao.lu/Ontologies/TAOTest.rdf',
