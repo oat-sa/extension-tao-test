@@ -260,9 +260,12 @@ define([
              * @throws TypeError if the name is missing or the handler is not a callback
              */
             channel: function channel(name, handler) {
-                this.getCommunicator().then(function(communicator) {
-                    communicator.channel(name, handler);
-                });
+                this.getCommunicator()
+                    .then(function(communicator) {
+                        communicator.channel(name, handler);
+                    })
+                    // just an empty catch to avoid any error to be displayed in the console when the communicator is not enabled
+                    .catch(_.noop);
                 return this;
             },
 
