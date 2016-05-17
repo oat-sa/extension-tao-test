@@ -18,10 +18,14 @@
 /**
  * @author Jean-Sébastien Conan <jean-sebastien.conan@vesperiagroup.com>
  */
-define(['lodash', 'core/promise', 'taoTests/runner/proxy'], function(_, Promise, proxyFactory) {
+define(['lodash', 'core/promise', 'core/eventifier', 'taoTests/runner/proxy'], function(_, Promise, eventifier, proxyFactory) {
     'use strict';
 
-    QUnit.module('proxyFactory');
+    QUnit.module('proxyFactory', {
+        setup: function () {
+            proxyFactory.clearProviders();
+        }
+    });
 
     var defaultProxy = {
         init : _.noop,
@@ -54,6 +58,9 @@ define(['lodash', 'core/promise', 'taoTests/runner/proxy'], function(_, Promise,
         { name : 'init', title : 'init' },
         { name : 'destroy', title : 'destroy' },
         { name : 'getTokenHandler', title : 'getTokenHandler' },
+        { name : 'getCommunicator', title : 'getCommunicator' },
+        { name : 'channel', title : 'channel' },
+        { name : 'send', title : 'send' },
         { name : 'addCallActionParams', title : 'addCallActionParams' },
         { name : 'getTestData', title : 'getTestData' },
         { name : 'getTestContext', title : 'getTestContext' },
@@ -67,7 +74,8 @@ define(['lodash', 'core/promise', 'taoTests/runner/proxy'], function(_, Promise,
     QUnit
         .cases(proxyApi)
         .test('instance API ', function(data, assert) {
-            var instance = proxyFactory();
+            proxyFactory.registerProvider('default', defaultProxy);
+            var instance = proxyFactory('default');
             QUnit.expect(1);
             assert.equal(typeof instance[data.name], 'function', 'The proxyFactory instance exposes a "' + data.title + '" function');
         });
@@ -408,16 +416,25 @@ define(['lodash', 'core/promise', 'taoTests/runner/proxy'], function(_, Promise,
 
 
     QUnit.asyncTest('proxyFactory.getCommunicator', function(assert) {
-        QUnit.expect(3);
-        // QUnit.stop();
+        QUnit.expect(5);
 
         var expectedCommunicator = {
+            on: function() {
+                return this;
+            },
+            init: function() {
+                assert.ok(true, 'The communicator is initialized');
+                return Promise.resolve();
+            },
+            open: function() {
+                assert.ok(true, 'The communicator is open');
+                return Promise.resolve();
+            },
             destroy: function() {
                 assert.ok(true, 'The communicator must be destroyed when the proxy is destroying');
                 return Promise.resolve();
             }
         };
-        proxyFactory.registerProvider('default', defaultProxy);
 
         proxyFactory.registerProvider('communicator', {
             init: _.noop,
@@ -429,19 +446,220 @@ define(['lodash', 'core/promise', 'taoTests/runner/proxy'], function(_, Promise,
             }
         });
 
-        assert.throws(function() {
-            proxyFactory('default').getCommunicator();
-        }, 'An error is thrown when the loadCommunicator() method does not exists');
+        var proxy = proxyFactory('communicator');
+        proxy.getCommunicator().then(function(communicator) {
+            assert.equal(communicator, expectedCommunicator, 'The proxy has built a communicator handler');
+
+            proxy.getCommunicator().then(function(communicator) {
+                assert.equal(communicator, expectedCommunicator, 'The proxy returned the already built communicator handler');
+
+                proxy.destroy()
+                    .then(function() {
+                        QUnit.start();
+                    });
+            });
+        });
+    });
+
+    QUnit.asyncTest('proxyFactory.getCommunicator #failed to open', function(assert) {
+        QUnit.expect(5);
+
+        var expectedCommunicator = {
+            on: function() {
+                return this;
+            },
+            init: function() {
+                assert.ok(true, 'The communicator is initialized');
+                return Promise.resolve();
+            },
+            open: function() {
+                assert.ok(true, 'The communicator is not open');
+                return Promise.reject();
+            },
+            destroy: function() {
+                assert.ok(true, 'The communicator must be destroyed when the proxy is destroying');
+                return Promise.resolve();
+            }
+        };
+
+        proxyFactory.registerProvider('communicator', {
+            init: _.noop,
+            destroy: function() {
+                return Promise.resolve();
+            },
+            loadCommunicator: function() {
+                return expectedCommunicator;
+            }
+        });
 
         var proxy = proxyFactory('communicator');
-        var communicator = proxy.getCommunicator();
+        proxy.getCommunicator().catch(function() {
+            assert.ok(true, 'The proxy has failed to build a communicator handler');
+            proxy.destroy()
+                .then(function() {
+                    assert.ok(true, 'The proxy has been destroyed');
+                    QUnit.start();
+                });
+        });
+    });
 
-        assert.equal(communicator, expectedCommunicator, 'The proxy has built a communicator handler');
 
-        proxy.destroy()
-            .then(function() {
+    QUnit.asyncTest('proxyFactory.getCommunicator #no communicator', function(assert) {
+        QUnit.expect(2);
+
+        proxyFactory.registerProvider('communicator', {
+            init: _.noop,
+            loadCommunicator: _.noop,
+            destroy: function() {
+                return Promise.resolve();
+            }
+        });
+
+        var proxy = proxyFactory('communicator');
+        proxy.getCommunicator().catch(function() {
+            assert.ok(true, 'An error is thrown when the loadCommunicator() does not return any communicator');
+            proxy.destroy()
+                .then(function() {
+                    assert.ok(true, 'The proxy has been destroyed');
+                    QUnit.start();
+                });
+        });
+    });
+
+
+    QUnit.asyncTest('proxyFactory.getCommunicator #missing loadCommunicator', function(assert) {
+        QUnit.expect(1);
+
+        proxyFactory.registerProvider('default', defaultProxy);
+
+        proxyFactory('default').getCommunicator().catch(function() {
+            assert.ok(true, 'An error is thrown when the loadCommunicator() method does not exists');
+            QUnit.start();
+        });
+    });
+
+
+    QUnit.asyncTest('proxyFactory.getCommunicator #events', function(assert) {
+        QUnit.expect(6);
+        QUnit.stop(1);
+
+        var expectedCommunicator = eventifier({
+            init: function() {
+                assert.ok(true, 'The communicator is initialized');
+                return Promise.resolve();
+            },
+            open: function() {
+                assert.ok(true, 'The communicator is open');
+                return Promise.resolve();
+            }
+        });
+
+        var expectedError = 'error';
+        var expectedResponse = 'Hello';
+
+        proxyFactory.registerProvider('communicator', {
+            init: _.noop,
+            loadCommunicator: function() {
+                return expectedCommunicator;
+            }
+        });
+
+        var proxy = proxyFactory('communicator');
+
+        proxy
+            .on('error', function(error) {
+                assert.equal(error, expectedError, 'The right error has been caught');
                 QUnit.start();
+            })
+            .on('receive', function(response, context) {
+                assert.equal(response, expectedResponse, 'The right response has been received');
+                assert.equal(context, 'communicator', 'The right context has been set');
+                QUnit.start();
+            })
+            .getCommunicator().then(function(communicator) {
+                assert.equal(communicator, expectedCommunicator, 'The communicator is built');
+                communicator.trigger('error', expectedError);
+                communicator.trigger('receive', expectedResponse);
             });
+    });
+
+
+
+    QUnit.asyncTest('proxyFactory.channel', function(assert) {
+        QUnit.expect(5);
+
+        var expectedCommunicator = {
+            on: function() {
+                return this;
+            },
+            init: function() {
+                assert.ok(true, 'The communicator is initialized');
+                return Promise.resolve();
+            },
+            open: function() {
+                assert.ok(true, 'The communicator is open');
+                return Promise.resolve();
+            },
+            channel: function(name, handler) {
+                assert.equal(name, expectedName, 'The channel is created with the right name');
+                assert.equal(handler, expectedHandler, 'The channel is created with the right handler');
+                QUnit.start();
+            }
+        };
+
+        var expectedName = 'myChannel';
+        var expectedHandler = function() {};
+
+        proxyFactory.registerProvider('communicator', {
+            init: _.noop,
+            loadCommunicator: function() {
+                return expectedCommunicator;
+            }
+        });
+
+        var proxy = proxyFactory('communicator');
+        assert.equal(proxy.channel(expectedName, expectedHandler), proxy, 'The channel method returns the proxy instance');
+    });
+
+
+    QUnit.asyncTest('proxyFactory.send', function(assert) {
+        QUnit.expect(5);
+
+        var expectedCommunicator = {
+            on: function() {
+                return this;
+            },
+            init: function() {
+                assert.ok(true, 'The communicator is initialized');
+                return Promise.resolve();
+            },
+            open: function() {
+                assert.ok(true, 'The communicator is open');
+                return Promise.resolve();
+            },
+            send: function(channel, message) {
+                assert.equal(channel, expectedChannel, 'The message is sent using the right channel');
+                assert.equal(message, expectedMessage, 'The message is sent with the right content');
+                return Promise.resolve();
+            }
+        };
+
+        var expectedChannel = 'myChannel';
+        var expectedMessage = 'Hello';
+
+        proxyFactory.registerProvider('communicator', {
+            init: _.noop,
+            loadCommunicator: function() {
+                return expectedCommunicator;
+            }
+        });
+
+        var proxy = proxyFactory('communicator');
+
+        proxy.send(expectedChannel, expectedMessage).then(function() {
+            assert.ok(true, 'The message has been sent');
+            QUnit.start();
+        });
     });
 
 

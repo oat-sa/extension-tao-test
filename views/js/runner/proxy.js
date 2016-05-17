@@ -48,7 +48,7 @@ define([
         var initConfig      = _.defaults(config || {}, _defaults);
         var tokenHandler    = tokenHandlerFactory();
         var middlewares     = {};
-        var delegateProxy, communicator;
+        var delegateProxy, communicator, communicatorPromise;
 
         /**
          * Gets the aggregated list of middlewares for a particular queue name
@@ -90,8 +90,10 @@ define([
                     }
 
                     if (err) {
+                        proxy.trigger('error', err);
                         reject(err);
                     } else {
+                        proxy.trigger('receive', response.data, 'proxy');
                         resolve(response.data);
                     }
                 });
@@ -176,8 +178,30 @@ define([
                  * @param {Promise} promise
                  */
                 return delegate('destroy').then(function() {
-                    if (communicator) {
-                        return communicator.destroy();
+                    // a communicator has been invoked and...
+                    if (communicatorPromise) {
+                        return new Promise(function(resolve, reject) {
+
+                            function destroyCommunicator() {
+                                communicator.destroy()
+                                    .then(resolve)
+                                    .catch(reject);
+                            }
+
+                            communicatorPromise
+                                // ... has been loaded successfully, then destroy it
+                                .then(function() {
+                                    destroyCommunicator();
+                                })
+                                // ...has failed to be loaded, maybe no need to destroy it
+                                .catch(function() {
+                                    if (communicator) {
+                                        destroyCommunicator();
+                                    } else {
+                                        resolve();
+                                    }
+                                });
+                        });
                     }
                 });
             },
@@ -192,16 +216,67 @@ define([
 
             /**
              * Gets access to the communication channel, load it if not present
-             * @returns {communicator} the communication channel
+             * @returns {Promise} Returns a promise that will resolve the communication channel
              */
             getCommunicator : function getCommunicator() {
-                if(!communicator){
-                    if(!_.isFunction(proxyAdapter.loadCommunicator)){
-                        throw new Error('The proxy provider does not have a loadCommunicator method');
-                    }
-                    communicator = proxyAdapter.loadCommunicator.call(this);
+                var self = this;
+                if (!communicatorPromise) {
+                    communicatorPromise = new Promise(function(resolve, reject) {
+                        if (_.isFunction(proxyAdapter.loadCommunicator)) {
+                            communicator = proxyAdapter.loadCommunicator.call(self);
+                            if (communicator) {
+                                communicator
+                                    .on('error', function(error) {
+                                        self.trigger('error', error);
+                                    })
+                                    .on('receive', function(response) {
+                                        self.trigger('receive', response, 'communicator');
+                                    })
+                                    .init()
+                                    .then(function () {
+                                        return communicator.open()
+                                            .then(function() {
+                                                resolve(communicator);
+                                            })
+                                            .catch(reject);
+                                    })
+                                    .catch(reject);
+                            } else {
+                                reject(new Error('No communicator has been set up!'));
+                            }
+                        } else {
+                            reject(new Error('The proxy provider does not have a loadCommunicator method'));
+                        }
+                    });
                 }
-                return communicator;
+                return communicatorPromise;
+            },
+
+            /**
+             * Registers a listener on a particular channel
+             * @param {String} name - The name of the channel to listen
+             * @param {Function} handler - The listener callback
+             * @returns {proxy}
+             * @throws TypeError if the name is missing or the handler is not a callback
+             */
+            channel: function channel(name, handler) {
+                this.getCommunicator().then(function(communicator) {
+                    communicator.channel(name, handler);
+                });
+                return this;
+            },
+
+            /**
+             * Sends an messages through the communication implementation.
+             * @param {String} channel - The name of the communication channel to use
+             * @param {Object} message - The message to send
+             * @returns {Promise} The delegated provider's method must return a promise
+             */
+            send: function send(channel, message) {
+                return this.getCommunicator()
+                    .then(function(communicator) {
+                        return communicator.send(channel, message);
+                    });
             },
 
             /**
