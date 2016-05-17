@@ -223,7 +223,7 @@ define([
                 if (!communicatorPromise) {
                     communicatorPromise = new Promise(function(resolve, reject) {
                         if (_.isFunction(proxyAdapter.loadCommunicator)) {
-                            communicator = proxyAdapter.loadCommunicator.call(this);
+                            communicator = proxyAdapter.loadCommunicator.call(self);
                             if (communicator) {
                                 communicator
                                     .on('error', function(error) {
