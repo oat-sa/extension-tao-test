@@ -173,7 +173,7 @@ define([
                 var self = this;
 
                 //instantiate the plugins first
-                _.forEach(pluginFactories, function(pluginFactory, pluginName){
+                _.forEach(pluginFactories, function(pluginFactory){
                     var plugin = pluginFactory(runner, self.getAreaBroker());
                     plugins[plugin.getName()] = plugin;
                 });
@@ -319,6 +319,25 @@ define([
                     pluginRun('finish').then(function(){
                         self.setState('finish', true)
                             .trigger('finish');
+                    }).catch(reportError);
+                }).catch(reportError);
+                return this;
+            },
+
+            /**
+             * Flushes the runner
+             *  - provider flush
+             *  - plugins flush
+             * @fires runner#flush
+             * @returns {runner} chains
+             */
+            flush : function flush(){
+                var self = this;
+
+                providerRun('flush').then(function(){
+                    pluginRun('flush').then(function(){
+                        self.setState('flush', true)
+                            .trigger('flush');
                     }).catch(reportError);
                 }).catch(reportError);
                 return this;
