@@ -65,6 +65,7 @@ define(['lodash', 'core/promise', 'core/eventifier', 'taoTests/runner/proxy'], f
         { name : 'getTestData', title : 'getTestData' },
         { name : 'getTestContext', title : 'getTestContext' },
         { name : 'getTestMap', title : 'getTestMap' },
+        { name : 'sendVariables', title : 'sendVariables' },
         { name : 'callTestAction', title : 'callTestAction' },
         { name : 'getItem', title : 'getItem' },
         { name : 'submitItem', title : 'submitItem' },
@@ -195,6 +196,34 @@ define(['lodash', 'core/promise', 'core/eventifier', 'taoTests/runner/proxy'], f
     });
 
 
+    QUnit.asyncTest('proxyFactory.sendVariables', function(assert) {
+        var expectedVariables = {
+            foo : 'bar'
+        };
+
+        QUnit.expect(6);
+        QUnit.stop();
+
+        proxyFactory.registerProvider('default', _.defaults({
+            sendVariables : function(variables) {
+                assert.ok(true, 'The proxyFactory has delegated the call to sendVariables');
+                assert.deepEqual(variables, expectedVariables, 'The proxyFactory has provided the variables to the sendVariables method');
+                QUnit.start();
+                return Promise.resolve();
+            }
+        }, defaultProxy));
+
+        var result = proxyFactory('default').on('sendVariables', function(promise, variables) {
+            assert.ok(true, 'The proxyFactory has fired the "sendVariables" event');
+            assert.ok(promise instanceof Promise, 'The proxyFactory has provided the promise through the "sendVariables" event');
+            assert.deepEqual(variables, expectedVariables, 'The proxyFactory has provided the variables through the "sendVariables" event');
+            QUnit.start();
+        }).sendVariables(expectedVariables);
+
+        assert.ok(result instanceof Promise, 'The proxyFactory.sendVariables method has returned a promise');
+    });
+    
+    
     QUnit.asyncTest('proxyFactory.callTestAction', function(assert) {
         var expectedAction = 'test';
         var expectedParams = {
