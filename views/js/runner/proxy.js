@@ -21,10 +21,12 @@
 define([
     'lodash',
     'async',
+    'core/delegator',
     'core/eventifier',
-    'taoTests/runner/proxyRegistry',
-    'taoTests/runner/tokenHandler'
-], function(_, async, eventifier, proxyRegistry, tokenHandlerFactory) {
+    'core/promise',
+    'core/providerRegistry',
+    'core/tokenHandler'
+], function(_, async, delegator, eventifier, Promise, providerRegistry, tokenHandlerFactory) {
     'use strict';
 
     var _defaults = {};
@@ -42,10 +44,11 @@ define([
     function proxyFactory(proxyName, config) {
 
         var extraCallParams = {};
-        var proxyAdapter    = proxyFactory.getProxy(proxyName);
+        var proxyAdapter    = proxyFactory.getProvider(proxyName);
         var initConfig      = _.defaults(config || {}, _defaults);
         var tokenHandler    = tokenHandlerFactory();
         var middlewares     = {};
+        var delegateProxy, communicator, communicatorPromise;
 
         /**
          * Gets the aggregated list of middlewares for a particular queue name
@@ -87,8 +90,10 @@ define([
                     }
 
                     if (err) {
+                        proxy.trigger('error', err);
                         reject(err);
                     } else {
+                        proxy.trigger('receive', response.data, 'proxy');
                         resolve(response.data);
                     }
                 });
@@ -96,52 +101,30 @@ define([
         }
 
         /**
-         * Delegates a function call to the selected proxy.
-         * Fires the related event
+         * Delegates the call to the proxy implementation and apply the middleware.
          *
          * @param {String} fnName - The name of the delegated method to call
-         * @param {Array} [args] - An optional array of arguments to apply to the method
          * @returns {Promise} - The delegated method must return a promise
          * @private
          * @throws Error
          */
-        function delegate(fnName, args) {
-            var promise, request;
-
-            if (proxyAdapter) {
-                if (_.isFunction(proxyAdapter[fnName])) {
-                    // need real array of params, even if empty
-                    args = args ? _slice.call(args) : [];
-
-                    // delegate the call to the adapter and apply the middleware
-                    request = {command: fnName, params: args};
-                    promise = proxyAdapter[fnName].apply(proxy, args)
-                        .then(function(data) {
-                            // handle successful request
-                            return applyMiddlewares(request, {
-                                status: 'success',
-                                data: data
-                            });
-                        })
-                        .catch(function(data) {
-                            // handle failed request
-                            return applyMiddlewares(request, {
-                                status: 'error',
-                                data: data
-                            });
-                        });
-
-                    // fire the method related event
-                    // the promise has to be provided as first argument in all events
-                    proxy.trigger.apply(proxy, [fnName, promise].concat(args));
-                } else {
-                    throw new Error('There is no method called ' + fnName + ' in the proxy adapter!');
-                }
-            } else {
-                throw new Error('There is no proxy adapter!');
-            }
-
-            return promise;
+        function delegate(fnName) {
+            var request = {command: fnName, params: _slice.call(arguments, 1)};
+            return delegateProxy.apply(null, arguments)
+                .then(function(data) {
+                    // handle successful request
+                    return applyMiddlewares(request, {
+                        status: 'success',
+                        data: data
+                    });
+                })
+                .catch(function(data) {
+                    // handle failed request
+                    return applyMiddlewares(request, {
+                        status: 'error',
+                        data: data
+                    });
+                });
         }
 
         /**
@@ -180,7 +163,7 @@ define([
                  * @param {Promise} promise
                  * @param {Object} config
                  */
-                return delegate('init', [initConfig]);
+                return delegate('init', initConfig);
             },
 
             /**
@@ -194,7 +177,33 @@ define([
                  * @event proxy#destroy
                  * @param {Promise} promise
                  */
-                return delegate('destroy');
+                return delegate('destroy').then(function() {
+                    // a communicator has been invoked and...
+                    if (communicatorPromise) {
+                        return new Promise(function(resolve, reject) {
+
+                            function destroyCommunicator() {
+                                communicator.destroy()
+                                    .then(resolve)
+                                    .catch(reject);
+                            }
+
+                            communicatorPromise
+                                // ... has been loaded successfully, then destroy it
+                                .then(function() {
+                                    destroyCommunicator();
+                                })
+                                // ...has failed to be loaded, maybe no need to destroy it
+                                .catch(function() {
+                                    if (communicator) {
+                                        destroyCommunicator();
+                                    } else {
+                                        resolve();
+                                    }
+                                });
+                        });
+                    }
+                });
             },
 
             /**
@@ -203,6 +212,74 @@ define([
              */
             getTokenHandler : function getTokenHandler() {
                 return tokenHandler;
+            },
+
+            /**
+             * Gets access to the communication channel, load it if not present
+             * @returns {Promise} Returns a promise that will resolve the communication channel
+             */
+            getCommunicator : function getCommunicator() {
+                var self = this;
+                if (!communicatorPromise) {
+                    communicatorPromise = new Promise(function(resolve, reject) {
+                        if (_.isFunction(proxyAdapter.loadCommunicator)) {
+                            communicator = proxyAdapter.loadCommunicator.call(self);
+                            if (communicator) {
+                                communicator
+                                    .on('error', function(error) {
+                                        self.trigger('error', error);
+                                    })
+                                    .on('receive', function(response) {
+                                        self.trigger('receive', response, 'communicator');
+                                    })
+                                    .init()
+                                    .then(function () {
+                                        return communicator.open()
+                                            .then(function() {
+                                                resolve(communicator);
+                                            })
+                                            .catch(reject);
+                                    })
+                                    .catch(reject);
+                            } else {
+                                reject(new Error('No communicator has been set up!'));
+                            }
+                        } else {
+                            reject(new Error('The proxy provider does not have a loadCommunicator method'));
+                        }
+                    });
+                }
+                return communicatorPromise;
+            },
+
+            /**
+             * Registers a listener on a particular channel
+             * @param {String} name - The name of the channel to listen
+             * @param {Function} handler - The listener callback
+             * @returns {proxy}
+             * @throws TypeError if the name is missing or the handler is not a callback
+             */
+            channel: function channel(name, handler) {
+                this.getCommunicator()
+                    .then(function(communicator) {
+                        communicator.channel(name, handler);
+                    })
+                    // just an empty catch to avoid any error to be displayed in the console when the communicator is not enabled
+                    .catch(_.noop);
+                return this;
+            },
+
+            /**
+             * Sends an messages through the communication implementation.
+             * @param {String} channel - The name of the communication channel to use
+             * @param {Object} message - The message to send
+             * @returns {Promise} The delegated provider's method must return a promise
+             */
+            send: function send(channel, message) {
+                return this.getCommunicator()
+                    .then(function(communicator) {
+                        return communicator.send(channel, message);
+                    });
             },
 
             /**
@@ -276,7 +353,7 @@ define([
                  * @param {String} action
                  * @param {Object} params
                  */
-                return delegate('callTestAction', [action, mergedParams]);
+                return delegate('callTestAction', action, mergedParams);
             },
 
             /**
@@ -292,7 +369,7 @@ define([
                  * @param {Promise} promise
                  * @param {String} uri
                  */
-                return delegate('getItem', [uri]);
+                return delegate('getItem', uri);
             },
 
             /**
@@ -314,7 +391,7 @@ define([
                  * @param {Object} state
                  * @param {Object} response
                  */
-                return delegate('submitItem', [uri, state, response, params]);
+                return delegate('submitItem', uri, state, response, params);
             },
 
             /**
@@ -339,7 +416,7 @@ define([
                  * @param {String} action
                  * @param {Object} params
                  */
-                return delegate('callItemAction', [uri, action, mergedParams]);
+                return delegate('callItemAction', uri, action, mergedParams);
             },
 
             /**
@@ -359,12 +436,14 @@ define([
                  * @param {String} signal
                  * @param {Object} params
                  */
-                return delegate('telemetry', [uri, signal, params]);
+                return delegate('telemetry', uri, signal, params);
             }
         });
+
+        delegateProxy = delegator(proxy, proxyAdapter, {name: 'proxy'});
 
         return proxy;
     }
 
-    return proxyRegistry(proxyFactory);
+    return providerRegistry(proxyFactory);
 });

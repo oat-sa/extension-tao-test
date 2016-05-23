@@ -26,7 +26,7 @@ define([
     'core/eventifier',
     'core/promise',
     'core/logger',
-    'taoTests/runner/providerRegistry'
+    'core/providerRegistry'
 ], function ($, _, __, eventifier, Promise, logger, providerRegistry){
     'use strict';
 
@@ -336,11 +336,19 @@ define([
 
                 providerRun('destroy').then(function(){
                     pluginRun('destroy').then(function(){
+                        var destroyed;
 
-                        testContext = {};
+                        if (proxy) {
+                            destroyed = proxy.destroy();
+                        } else {
+                            destroyed = Promise.resolve();
+                        }
 
-                        self.setState('destroy', true)
-                            .trigger('destroy');
+                        return destroyed.then(function() {
+                            testContext = {};
+                            self.setState('destroy', true)
+                                .trigger('destroy');
+                        });
                     }).catch(reportError);
                 }).catch(reportError);
                 return this;
@@ -390,11 +398,16 @@ define([
              * @returns {proxy} the proxy
              */
             getProxy : function getProxy(){
+                var self = this;
                 if(!proxy){
                     if(!_.isFunction(provider.loadProxy)){
                         throw new Error('The provider does not have a loadProxy method');
                     }
                     proxy = provider.loadProxy.call(this);
+
+                    proxy.on('error', function (error) {
+                        self.trigger('error', error);
+                    });
                 }
                 return proxy;
             },
