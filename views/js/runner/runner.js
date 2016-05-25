@@ -472,6 +472,48 @@ define([
             },
 
             /**
+             * Checks a runner persistent state
+             *  - provider getPersistentState
+             *
+             * @param {String} name - the state name
+             * @returns {Boolean} if active, false if not set
+             */
+            getPersistentState : function getPersistentState(name) {
+                var getPersistentState = provider.getPersistentState;
+                var state;
+
+                if(_.isFunction(getPersistentState)){
+                    state = getPersistentState.call(runner, name);
+                }
+
+                return !!state;
+            },
+
+            /**
+             * Defines a runner persistent state
+             *  - provider setPersistentState
+             *
+             * @param {String} name - the state name
+             * @param {Boolean} active - is the state active
+             * @returns {Promise} Returns a promise that:
+             *                      - will be resolved once the state is fully stored
+             *                      - will be rejected if any error occurs or if the state name is not a valid string
+             */
+            setPersistentState : function setPersistentState(name, active) {
+                var stored;
+
+                if (!_.isString(name) || _.isEmpty(name)) {
+                    stored = Promise.reject(new TypeError('The state must have a name'));
+                } else {
+                    stored = providerRun('setPersistentState', name, !!active);
+                }
+
+                stored.catch(reportError);
+
+                return stored;
+            },
+
+            /**
              * Check an item state
              *
              * @param {*} itemRef - something that let you identify the item
