@@ -327,6 +327,25 @@ define([
             },
 
             /**
+             * Flushes the runner
+             *  - provider flush
+             *  - plugins flush
+             * @fires runner#flush
+             * @returns {runner} chains
+             */
+            flush : function flush(){
+                var self = this;
+
+                providerRun('flush').then(function(){
+                    pluginRun('flush').then(function(){
+                        self.setState('flush', true)
+                            .trigger('flush');
+                    }).catch(reportError);
+                }).catch(reportError);
+                return this;
+            },
+
+            /**
              * Destroy
              *  - provider destroy
              *  - plugins destroy

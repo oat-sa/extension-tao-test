@@ -65,6 +65,7 @@ define(['lodash', 'core/promise', 'core/eventifier', 'taoTests/runner/proxy'], f
         { name : 'getTestData', title : 'getTestData' },
         { name : 'getTestContext', title : 'getTestContext' },
         { name : 'getTestMap', title : 'getTestMap' },
+        { name : 'sendVariables', title : 'sendVariables' },
         { name : 'callTestAction', title : 'callTestAction' },
         { name : 'getItem', title : 'getItem' },
         { name : 'submitItem', title : 'submitItem' },
@@ -102,6 +103,35 @@ define(['lodash', 'core/promise', 'core/eventifier', 'taoTests/runner/proxy'], f
             assert.equal(config, initConfig, 'The proxyFactory has provided the config object through the "init" event');
             QUnit.start();
         }).init();
+
+        assert.ok(result instanceof Promise, 'The proxyFactory.init method has returned a promise');
+    });
+
+
+    QUnit.asyncTest('proxyFactory.init with params', function(assert) {
+        var initConfig = {};
+        var initParams = {param1:"1", param2: 2};
+
+        QUnit.expect(8);
+        QUnit.stop();
+
+        proxyFactory.registerProvider('default', _.defaults({
+            init : function(config, params) {
+                assert.ok(true, 'The proxyFactory has delegated the call to init');
+                assert.equal(config, initConfig, 'The proxyFactory has provided the config object to the init method');
+                assert.deepEqual(params, initParams, 'The proxyFactory has provided the init params to the init method');
+                QUnit.start();
+                return Promise.resolve();
+            }
+        }, defaultProxy));
+
+        var result = proxyFactory('default', initConfig).on('init', function(promise, config, params) {
+            assert.ok(true, 'The proxyFactory has fired the "init" event');
+            assert.ok(promise instanceof Promise, 'The proxyFactory has provided the promise through the "init" event');
+            assert.equal(config, initConfig, 'The proxyFactory has provided the config object through the "init" event');
+            assert.deepEqual(params, initParams, 'The proxyFactory has provided the init params through the "init" event');
+            QUnit.start();
+        }).addCallActionParams(initParams).init();
 
         assert.ok(result instanceof Promise, 'The proxyFactory.init method has returned a promise');
     });
@@ -195,6 +225,34 @@ define(['lodash', 'core/promise', 'core/eventifier', 'taoTests/runner/proxy'], f
     });
 
 
+    QUnit.asyncTest('proxyFactory.sendVariables', function(assert) {
+        var expectedVariables = {
+            foo : 'bar'
+        };
+
+        QUnit.expect(6);
+        QUnit.stop();
+
+        proxyFactory.registerProvider('default', _.defaults({
+            sendVariables : function(variables) {
+                assert.ok(true, 'The proxyFactory has delegated the call to sendVariables');
+                assert.deepEqual(variables, expectedVariables, 'The proxyFactory has provided the variables to the sendVariables method');
+                QUnit.start();
+                return Promise.resolve();
+            }
+        }, defaultProxy));
+
+        var result = proxyFactory('default').on('sendVariables', function(promise, variables) {
+            assert.ok(true, 'The proxyFactory has fired the "sendVariables" event');
+            assert.ok(promise instanceof Promise, 'The proxyFactory has provided the promise through the "sendVariables" event');
+            assert.deepEqual(variables, expectedVariables, 'The proxyFactory has provided the variables through the "sendVariables" event');
+            QUnit.start();
+        }).sendVariables(expectedVariables);
+
+        assert.ok(result instanceof Promise, 'The proxyFactory.sendVariables method has returned a promise');
+    });
+    
+    
     QUnit.asyncTest('proxyFactory.callTestAction', function(assert) {
         var expectedAction = 'test';
         var expectedParams = {
