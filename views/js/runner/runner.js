@@ -161,7 +161,7 @@ define([
         runner = eventifier({
 
             /**
-             * Intialize the runner
+             * Initialize the runner
              *  - instantiate the plugins
              *  - provider init
              *  - plugins init
@@ -178,13 +178,15 @@ define([
                     plugins[plugin.getName()] = plugin;
                 });
 
-                providerRun('init').then(function(){
-                    pluginRun('init').then(function(){
+                pluginRun('install')
+                    .then(_.partial(providerRun, 'init'))
+                    .then(_.partial(pluginRun, 'init'))
+                    .then(function() {
                         self.setState('init', true)
                             .trigger('init')
                             .render();
-                    }).catch(reportError);
-                }).catch(reportError);
+                    })
+                    .catch(reportError);
 
                 return this;
             },
