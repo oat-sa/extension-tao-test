@@ -539,6 +539,7 @@ define([
 
                 this.on('init', function(){
                     assert.ok(true, 'we can listen for init in providers init');
+                    this.next();
                 })
                 .on('move', function(type){
                     assert.equal(type, 'next', 'The sub event is correct');
@@ -548,8 +549,7 @@ define([
         });
 
         runnerFactory('foo')
-            .init()
-            .next();
+            .init();
     });
 
     QUnit.asyncTest('skip', function(assert){
@@ -591,6 +591,7 @@ define([
 
                 this.on('init', function(){
                         assert.ok(true, 'we can listen for init in providers init');
+                        this.timeout(expectedScope, expectedRef)
                     })
                     .on('timeout', function(scope, ref){
                         assert.ok(true, 'The timeout event has been triggered');
@@ -604,8 +605,7 @@ define([
         });
 
         runnerFactory('foo')
-            .init()
-            .timeout(expectedScope, expectedRef);
+            .init();
     });
 
     QUnit.module('plugins', {
