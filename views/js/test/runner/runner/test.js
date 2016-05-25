@@ -23,9 +23,10 @@ define([
     'jquery',
     'lodash',
     'core/promise',
+    'core/eventifier',
     'taoTests/runner/runner',
     'taoTests/runner/plugin'
-], function($, _, Promise, runnerFactory, pluginFactory){
+], function($, _, Promise, eventifier, runnerFactory, pluginFactory){
     'use strict';
 
     var mockProvider = {
@@ -56,6 +57,7 @@ define([
         {name : 'init', title : 'init'},
         {name : 'render', title : 'render'},
         {name : 'finish', title : 'finish'},
+        {name : 'flush', title : 'flush'},
         {name : 'destroy', title : 'destroy'},
         {name : 'loadItem', title : 'loadItem'},
         {name : 'renderItem', title : 'renderItem'},
@@ -185,7 +187,7 @@ define([
     });
 
     QUnit.asyncTest('states', function(assert){
-       QUnit.expect(18);
+       QUnit.expect(31);
 
         runnerFactory.registerProvider('foo', mockProvider);
         var runner = runnerFactory('foo');
@@ -201,13 +203,15 @@ define([
                 assert.equal(this.getState('custom'), true, 'The runner has the custom state');
                 assert.equal(this.getState('init'), true, 'The runner is initialized');
                 assert.equal(this.getState('ready'), false, 'The runner is not rendered');
-                assert.equal(this.getState('finish'), false, 'The runner is not  finshed');
+                assert.equal(this.getState('finish'), false, 'The runner is not  finished');
+                assert.equal(this.getState('flush'), false, 'The runner is not flushed');
                 assert.equal(this.getState('destroy'), false, 'The runner is not destroyed');
             })
             .on('ready', function(){
                 assert.equal(this.getState('init'), true, 'The runner is initialized');
                 assert.equal(this.getState('ready'), true, 'The runner is rendered');
-                assert.equal(this.getState('finish'), false, 'The runner is not  finshed');
+                assert.equal(this.getState('finish'), false, 'The runner is not finished');
+                assert.equal(this.getState('flush'), false, 'The runner is not flushed');
                 assert.equal(this.getState('destroy'), false, 'The runner is not destroyed');
 
                 this.finish();
@@ -215,7 +219,17 @@ define([
             .on('finish', function(){
                 assert.equal(this.getState('init'), true, 'The runner is initialized');
                 assert.equal(this.getState('ready'), true, 'The runner is rendered');
-                assert.equal(this.getState('finish'), true, 'The runner is finshed');
+                assert.equal(this.getState('finish'), true, 'The runner is finished');
+                assert.equal(this.getState('flush'), false, 'The runner is not flushed');
+                assert.equal(this.getState('destroy'), false, 'The runner is not destroyed');
+
+                this.flush();
+            })
+            .on('flush', function(){
+                assert.equal(this.getState('init'), true, 'The runner is initialized');
+                assert.equal(this.getState('ready'), true, 'The runner is rendered');
+                assert.equal(this.getState('finish'), true, 'The runner is finished');
+                assert.equal(this.getState('flush'), true, 'The runner is flushed');
                 assert.equal(this.getState('destroy'), false, 'The runner is not destroyed');
 
                 this.destroy();
@@ -224,11 +238,28 @@ define([
 
                 assert.equal(this.getState('init'), true, 'The runner is initialized');
                 assert.equal(this.getState('ready'), true, 'The runner is rendered');
-                assert.equal(this.getState('finish'), true, 'The runner is finshed');
+                assert.equal(this.getState('finish'), true, 'The runner is finished');
+                assert.equal(this.getState('flush'), true, 'The runner is flushed');
                 assert.equal(this.getState('destroy'), true, 'The runner is destroyed');
                 QUnit.start();
             })
             .init();
+
+        assert.throws(function() {
+            runner.getItemState('', '');
+        }, 'getItemState needs an itemRef');
+
+        assert.throws(function() {
+            runner.getItemState('123', '');
+        }, 'getItemState needs a state name');
+
+        assert.throws(function() {
+            runner.setItemState('', '');
+        }, 'setItemState needs an itemRef');
+
+        assert.throws(function() {
+            runner.setItemState('123', '');
+        }, 'setItemState needs a state name');
     });
 
     QUnit.asyncTest('load and render item', function(assert){
@@ -480,13 +511,19 @@ define([
     });
 
     QUnit.asyncTest('context and data', function(assert){
-       QUnit.expect(8);
+       QUnit.expect(10);
 
         var testData = {
             items : {
                 'lemmy' : 'kilmister',
                 'david' : 'bowie'
             }
+        };
+
+        var testMap = {
+            jumps: [],
+            parts: [],
+            map: {}
         };
 
         runnerFactory.registerProvider('foo', {
@@ -497,6 +534,7 @@ define([
 
                 this.setTestData(testData);
                 this.setTestContext({ best : testData.items.lemmy });
+                this.setTestMap(testMap);
             }
         });
 
@@ -506,11 +544,14 @@ define([
 
                 var context = this.getTestContext();
                 var data    = this.getTestData();
+                var map    = this.getTestMap();
 
                 assert.equal(typeof context, 'object', 'The test context is an object');
                 assert.equal(typeof data, 'object', 'The test data is an object');
+                assert.equal(typeof map, 'object', 'The test map is an object');
                 assert.deepEqual(data, testData, 'The test data is correct');
                 assert.equal(context.best, 'kilmister', 'The context gives you the best');
+                assert.equal(map, testMap, 'The map is correct');
 
                 this.destroy();
             })
@@ -550,6 +591,60 @@ define([
         runnerFactory('foo')
             .init()
             .next();
+    });
+
+    QUnit.asyncTest('move previous', function(assert){
+       QUnit.expect(2);
+
+        runnerFactory.registerProvider('foo', {
+            loadAreaBroker : function(){
+                return {};
+            },
+            init : function init(){
+
+                this.on('init', function(){
+                    assert.ok(true, 'we can listen for init in providers init');
+                })
+                .on('move', function(type){
+                    assert.equal(type, 'previous', 'The sub event is correct');
+                    QUnit.start();
+                });
+            }
+        });
+
+        runnerFactory('foo')
+            .init()
+            .previous();
+    });
+
+    QUnit.asyncTest('jump', function(assert){
+       QUnit.expect(4);
+
+        var expectedScope = "section";
+        var expectedPosition = 3;
+
+        runnerFactory.registerProvider('foo', {
+            loadAreaBroker : function(){
+                return {};
+            },
+            init : function init(){
+
+                this.on('init', function(){
+                    assert.ok(true, 'we can listen for init in providers init');
+                })
+                .on('move', function(type, scope, position){
+                    assert.equal(type, 'jump', 'The sub event is correct');
+                    assert.equal(scope, expectedScope, 'The scope is correct');
+                    assert.equal(position, expectedPosition, 'The position is correct');
+
+                    QUnit.start();
+                });
+            }
+        });
+
+        runnerFactory('foo')
+            .init()
+            .jump(expectedPosition, expectedScope);
     });
 
     QUnit.asyncTest('skip', function(assert){
@@ -607,6 +702,165 @@ define([
             .init()
             .timeout(expectedScope, expectedRef);
     });
+
+
+    QUnit.asyncTest('exit', function(assert) {
+        QUnit.expect(3);
+
+        var expectedReason = 'the reason why';
+
+        runnerFactory.registerProvider('foo', {
+            loadAreaBroker : function(){
+                return {};
+            },
+            init : function init(){
+
+                this
+                    .on('init', function(){
+                        assert.ok(true, 'we can listen for init in providers init');
+                    })
+                    .on('exit', function(why){
+                        assert.ok(true, 'The exit event has been triggered');
+
+                        assert.equal(why, expectedReason, 'The exit reason is provided');
+
+                        QUnit.start();
+                    });
+            }
+        });
+
+        runnerFactory('foo')
+            .init()
+            .exit(expectedReason);
+    });
+
+
+    QUnit.asyncTest('pause and resume', function(assert) {
+        QUnit.expect(5);
+
+        runnerFactory.registerProvider('foo', {
+            loadAreaBroker : function(){
+                return {};
+            },
+            init : function init(){
+
+                this
+                    .on('init', function(){
+                        assert.ok(true, 'we can listen for init in providers init');
+
+                        this.pause();
+                    })
+                    .on('pause', function(){
+                        assert.ok(true, 'The pause event has been triggered');
+                        assert.ok(this.getState('pause'), 'The runner is paused');
+
+                        this.resume();
+                    })
+                    .on('resume', function(){
+                        assert.ok(true, 'The resume event has been triggered');
+                        assert.ok(!this.getState('resume'), 'The runner is resumed');
+
+                        QUnit.start();
+                    });
+            }
+        });
+
+        runnerFactory('foo').init();
+    });
+
+    QUnit.asyncTest('proxy', function(assert) {
+        QUnit.expect(5);
+
+        var expectedProxy = eventifier({
+            init: function(){},
+            destroy: function() {
+                assert.ok(true, 'The proxy.destroy method has been called');
+                return Promise.resolve();
+            }
+        });
+
+        var expectedError = "an error";
+
+        runnerFactory.registerProvider('foo', {
+            loadAreaBroker : function(){
+                return {};
+            },
+            loadProxy: function() {
+                assert.ok(true, 'The loadProxy method has been called');
+                return expectedProxy;
+            },
+            init : function init(){
+                this
+                    .on('error', function(error) {
+                        assert.ok(true, 'The error event has been triggered');
+                        assert.equal(error, expectedError, 'The right error is provided');
+                    })
+                    .on('destroy', function() {
+                        assert.ok(true, 'The runner is destroying');
+                        QUnit.start();
+                    })
+                    .getProxy().trigger('error', expectedError);
+            }
+        });
+
+        runnerFactory('foo')
+            .init()
+            .destroy();
+    });
+
+    QUnit.test('probeOverseer', function(assert) {
+        QUnit.expect(2);
+
+        var expectedProbeOverseer = {
+            init: function(){},
+            destroy: function() {}
+        };
+
+        runnerFactory.registerProvider('foo', {
+            loadAreaBroker : function(){
+                return {};
+            },
+            loadProbeOverseer: function() {
+                assert.ok(true, 'The loadProbeOverseer method has been called');
+                return expectedProbeOverseer;
+            },
+            init : function init(){}
+        });
+
+        var probeOverseer = runnerFactory('foo').getProbeOverseer();
+
+        assert.equal(probeOverseer, expectedProbeOverseer, 'The right probeOverseer has been provided');
+    });
+
+    QUnit.test('no loadProxy', function(assert) {
+        QUnit.expect(1);
+
+        runnerFactory.registerProvider('foo', {
+            loadAreaBroker : function(){
+                return {};
+            },
+            init : function init(){
+
+            }
+        });
+
+        assert.throws(function() {
+           runnerFactory('foo').getProxy();
+        }, 'An exception is thrown when the loadAreaBroker() is missing');
+    });
+
+    QUnit.test('no loadAreaBroker', function(assert) {
+        QUnit.expect(1);
+
+        assert.throws(function() {
+            runnerFactory.registerProvider('foo', {
+                init : function init(){
+
+                }
+            });
+        }, 'An exception is thrown when the loadAreaBroker() is missing');
+    });
+
 
     QUnit.module('plugins', {
         setup: function(){
