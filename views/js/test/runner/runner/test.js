@@ -604,6 +604,7 @@ define([
 
                 this.on('init', function(){
                     assert.ok(true, 'we can listen for init in providers init');
+                    this.previous();
                 })
                 .on('move', function(type){
                     assert.equal(type, 'previous', 'The sub event is correct');
@@ -613,8 +614,7 @@ define([
         });
 
         runnerFactory('foo')
-            .init()
-            .previous();
+            .init();
     });
 
     QUnit.asyncTest('jump', function(assert){
@@ -631,6 +631,7 @@ define([
 
                 this.on('init', function(){
                     assert.ok(true, 'we can listen for init in providers init');
+                    this.jump(expectedPosition, expectedScope);
                 })
                 .on('move', function(type, scope, position){
                     assert.equal(type, 'jump', 'The sub event is correct');
@@ -643,8 +644,7 @@ define([
         });
 
         runnerFactory('foo')
-            .init()
-            .jump(expectedPosition, expectedScope);
+            .init();
     });
 
     QUnit.asyncTest('skip', function(assert){
@@ -718,6 +718,7 @@ define([
                 this
                     .on('init', function(){
                         assert.ok(true, 'we can listen for init in providers init');
+                        this.exit(expectedReason);
                     })
                     .on('exit', function(why){
                         assert.ok(true, 'The exit event has been triggered');
@@ -730,8 +731,7 @@ define([
         });
 
         runnerFactory('foo')
-            .init()
-            .exit(expectedReason);
+            .init();
     });
 
 
@@ -769,7 +769,7 @@ define([
     });
 
     QUnit.asyncTest('proxy', function(assert) {
-        QUnit.expect(5);
+        QUnit.expect(6);
 
         var expectedProxy = eventifier({
             init: function(){},
@@ -791,6 +791,10 @@ define([
             },
             init : function init(){
                 this
+                    .on('init', function(){
+                        assert.ok(true, 'we can listen for init in providers init');
+                        this.destroy();
+                    })
                     .on('error', function(error) {
                         assert.ok(true, 'The error event has been triggered');
                         assert.equal(error, expectedError, 'The right error is provided');
@@ -804,8 +808,7 @@ define([
         });
 
         runnerFactory('foo')
-            .init()
-            .destroy();
+            .init();
     });
 
     QUnit.test('probeOverseer', function(assert) {
