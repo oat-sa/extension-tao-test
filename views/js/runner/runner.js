@@ -178,7 +178,8 @@ define([
                     plugins[plugin.getName()] = plugin;
                 });
 
-                pluginRun('install')
+                providerRun('loadPersistentStates')
+                    .then(_.partial(pluginRun, 'install'))
                     .then(_.partial(providerRun, 'init'))
                     .then(_.partial(pluginRun, 'init'))
                     .then(function() {
