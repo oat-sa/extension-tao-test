@@ -906,4 +906,62 @@ define([
         })
         .init();
     });
+
+
+    QUnit.asyncTest('persistent state', function(assert) {
+        QUnit.expect(9);
+        QUnit.stop(2);
+
+        var states = {};
+
+        var expectedName = 'pause';
+        var expectedValue = true;
+
+        runnerFactory.registerProvider('foo', {
+            loadAreaBroker : function(){
+                return {};
+            },
+            init : function init(){},
+            getPersistentState : function(name) {
+                assert.equal(name, expectedName, 'The getPersistentState() method has been delegated to the provider with the right name');
+                return states[name];
+            },
+            setPersistentState : function(name, value) {
+                assert.equal(name, expectedName, 'The setPersistentState() method has been delegated to the provider with the right name');
+                assert.equal(value, expectedValue, 'The setPersistentState() method has been delegated to the provider with the right value');
+                states[name] = value;
+            }
+        });
+
+        runnerFactory('foo')
+            .on('ready', function(){
+                var self = this;
+                this.setPersistentState(expectedName, 1).then(function() {
+                    assert.ok(true, 'The setPersistentState() method has returned a promise that has been resolved');
+
+                    assert.equal(self.getPersistentState(expectedName), expectedValue, 'The getPersistentState() method has returned the expected value');
+
+                    runnerFactory('foo')
+                        .on('ready', function(){
+                            assert.equal(this.getPersistentState(expectedName), expectedValue, 'The state has persisted between runner instances');
+
+                            QUnit.start();
+                        })
+                        .init();
+                });
+
+                this.setPersistentState().catch(function() {
+                    assert.ok(true, 'The setPersistentState() method has returned a promise that has been rejected due to missing name');
+
+                    QUnit.start();
+                });
+
+                this.setPersistentState('').catch(function() {
+                    assert.ok(true, 'The setPersistentState() method has returned a promise that has been rejected due to empty name');
+
+                    QUnit.start();
+                });
+            })
+            .init();
+    });
 });
