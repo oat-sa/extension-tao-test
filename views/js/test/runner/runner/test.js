@@ -604,6 +604,7 @@ define([
 
                 this.on('init', function(){
                     assert.ok(true, 'we can listen for init in providers init');
+                    this.previous();
                 })
                 .on('move', function(type){
                     assert.equal(type, 'previous', 'The sub event is correct');
@@ -613,8 +614,7 @@ define([
         });
 
         runnerFactory('foo')
-            .init()
-            .previous();
+            .init();
     });
 
     QUnit.asyncTest('jump', function(assert){
@@ -631,6 +631,7 @@ define([
 
                 this.on('init', function(){
                     assert.ok(true, 'we can listen for init in providers init');
+                    this.jump(expectedPosition, expectedScope);
                 })
                 .on('move', function(type, scope, position){
                     assert.equal(type, 'jump', 'The sub event is correct');
@@ -643,8 +644,7 @@ define([
         });
 
         runnerFactory('foo')
-            .init()
-            .jump(expectedPosition, expectedScope);
+            .init();
     });
 
     QUnit.asyncTest('skip', function(assert){
@@ -718,6 +718,7 @@ define([
                 this
                     .on('init', function(){
                         assert.ok(true, 'we can listen for init in providers init');
+                        this.exit(expectedReason);
                     })
                     .on('exit', function(why){
                         assert.ok(true, 'The exit event has been triggered');
@@ -730,8 +731,7 @@ define([
         });
 
         runnerFactory('foo')
-            .init()
-            .exit(expectedReason);
+            .init();
     });
 
 
@@ -769,7 +769,7 @@ define([
     });
 
     QUnit.asyncTest('proxy', function(assert) {
-        QUnit.expect(5);
+        QUnit.expect(6);
 
         var expectedProxy = eventifier({
             init: function(){},
@@ -791,6 +791,10 @@ define([
             },
             init : function init(){
                 this
+                    .on('init', function(){
+                        assert.ok(true, 'we can listen for init in providers init');
+                        this.destroy();
+                    })
                     .on('error', function(error) {
                         assert.ok(true, 'The error event has been triggered');
                         assert.equal(error, expectedError, 'The right error is provided');
@@ -804,8 +808,7 @@ define([
         });
 
         runnerFactory('foo')
-            .init()
-            .destroy();
+            .init();
     });
 
     QUnit.test('probeOverseer', function(assert) {
@@ -902,5 +905,63 @@ define([
             assert.equal(typeof this.getPlugin('boo'), 'object', 'The boo plugin exists');
         })
         .init();
+    });
+
+
+    QUnit.asyncTest('persistent state', function(assert) {
+        QUnit.expect(9);
+        QUnit.stop(2);
+
+        var states = {};
+
+        var expectedName = 'pause';
+        var expectedValue = true;
+
+        runnerFactory.registerProvider('foo', {
+            loadAreaBroker : function(){
+                return {};
+            },
+            init : function init(){},
+            getPersistentState : function(name) {
+                assert.equal(name, expectedName, 'The getPersistentState() method has been delegated to the provider with the right name');
+                return states[name];
+            },
+            setPersistentState : function(name, value) {
+                assert.equal(name, expectedName, 'The setPersistentState() method has been delegated to the provider with the right name');
+                assert.equal(value, expectedValue, 'The setPersistentState() method has been delegated to the provider with the right value');
+                states[name] = value;
+            }
+        });
+
+        runnerFactory('foo')
+            .on('ready', function(){
+                var self = this;
+                this.setPersistentState(expectedName, 1).then(function() {
+                    assert.ok(true, 'The setPersistentState() method has returned a promise that has been resolved');
+
+                    assert.equal(self.getPersistentState(expectedName), expectedValue, 'The getPersistentState() method has returned the expected value');
+
+                    runnerFactory('foo')
+                        .on('ready', function(){
+                            assert.equal(this.getPersistentState(expectedName), expectedValue, 'The state has persisted between runner instances');
+
+                            QUnit.start();
+                        })
+                        .init();
+                });
+
+                this.setPersistentState().catch(function() {
+                    assert.ok(true, 'The setPersistentState() method has returned a promise that has been rejected due to missing name');
+
+                    QUnit.start();
+                });
+
+                this.setPersistentState('').catch(function() {
+                    assert.ok(true, 'The setPersistentState() method has returned a promise that has been rejected due to empty name');
+
+                    QUnit.start();
+                });
+            })
+            .init();
     });
 });
