@@ -154,9 +154,44 @@ Methods | Mandatory | Promise | Purpose
 
 The runner provides an API its providers must reflect for a big part. Here is a list:
 
-Methods | Provider | Promise | Events | State | Purpose
-------- | -------- | ------- | ------ | ----- | -------
-
+Methods | Provider | Promise | Plugin | Events | State | Purpose
+------- | -------- | ------- | ------ | ------ | ----- | -------
+`init()` | [x] | [ ] | `init()`, `install()` | `init` | `init` | Initializes the runner, instantiates the plugins and calls `.render()`. 
+`render()` | [x] | [ ] | `render` | `render`, `ready` | `ready` | Renders the runner. 
+`loadItem(itemRef)` | [x] | [ ] | | `loaditem` | item `loaded` | Loads an item then render it by calling `.renderItem()`.
+`renderItem(itemRef, itemData)` | [x] | [ ] | | `renderitem` | item `ready` | Renders an item.
+`unloadItem(itemRef)` | [x] | [ ] | | `unloaditem` | erase item states | Cleans up and remove an item.
+`disableItem(itemRef)` | [x] | [ ] | | `disableitem` | item `disabled` | Disables an item. If the item is already disabled does nothing.
+`enableItem(itemRef)` | [x] | [ ] | | `enableitem` | item erase `disabled` | Enables an item. If the item is already enabled does nothing.
+`finish()` | [x] | [ ] | `finish()` | `finish` | `finish` | Terminates the test.
+`flush()` | [x] | [ ] | `flush()` | `flush` | `flush` | Flushes the test data before the runner is destroyed.
+`destroy()` | [x] | [ ] | `destroy()` | `destroy` | `destroy` | Destroys the runner. If a proxy has been involved also destroys it before.
+`getPlugins()` | [ ] | [ ] | | | | Gets the list of installed plugins.
+`getPlugin(name)` | [ ] | [ ] | | | | Gets a particular installed plugin.
+`getConfig()` | [ ] | [ ] | | | | Gets the runner's config.
+`getAreaBroker()` | [ ] | [ ] | | | | Gets the area broker. If the area broker is not present, load it through a call to the method `.loadAreaBroker()` the provider must implement.
+`getProbeOverseer()` | [ ] | [ ] | | | | Gets the probe overseer. If the probe overseer is not present, load it through a call to the method `.loadProbeOverseer()` the provider must implement. As this method is not mandatory, the prove overseer may never exist.
+`getProxy()` | [ ] | [ ] | | | | Gets the proxy. If the proxy is not present, load it through a call to the method `.loadProxy()` the provider must implement. Can throw error if the provider does not implement this method.
+`getState(name)` | [ ] | [ ] | | | | Checks an internal state.
+`setState(name, active)` | [ ] | [ ] | | | | Sets an internal state. Can throw error if the provided name is empty or is not a string.
+`getPersistentState(name)` | [x] | [ ] | | | | Checks a persistent state. The provider must manage the persistent state storage.
+`setPersistentState(name, active)` | [x] | [x] | | | | Sets a persistent state. Can throw error if the provided name is empty or is not a string. The provider must manage the persistent state storage. As the storage may be asynchronous, returns a promise.
+`getItemState(itemRef, name)` | [ ] | [ ] | | | | Checks an item state. Can throw error if one of the provided name or item ref is empty.
+`setItemState(itemRef, name, active)` | [ ] | [ ] | | | | Sets an item state. Can throw error if one of the provided name or item ref is empty.
+`getTestData()` | [ ] | [ ] | | | | Gets the test data/definition.
+`setTestData(data)` | [ ] | [ ] | | | | Sets the test data/definition.
+`getTestContext()` | [ ] | [ ] | | | | Gets the test context/state.
+`setTestContext(context)` | [ ] | [ ] | | | | Sets the test context/state.
+`getTestMap()` | [ ] | [ ] | | | | Gets the test items map.
+`setTestMap(map)` | [ ] | [ ] | | | | Sets the test items map.
+`next(scope)` | [ ] | [ ] | | `move` | | Triggers a move forward for a particular scope.
+`previous(scope)` | [ ] | [ ] | | `move` | | Triggers a move backward for a particular scope.
+`jump(position, scope)` | [ ] | [ ] | | `move` | | Triggers a move to a position for a particular scope.
+`skip(scope)` | [ ] | [ ] | | `skip` | | Triggers a skip for a particular scope.
+`exit(reason)` | [ ] | [ ] | | `exit` | | Triggers a test exit for a particular reason.
+`pause()` | [ ] | [ ] | | `pause` | `pause` | Triggers a test pause. If the test is already in pause state does nothing.
+`resume()` | [ ] | [ ] | | `resume` | erase `pause` | Triggers a test pause. If the test is not in pause state does nothing.
+`timeout(scope, ref)` | [ ] | [ ] | | `timeout` | | Triggers a timeout for a particular scope.
 
 
 ### Runner Events
