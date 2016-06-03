@@ -244,6 +244,7 @@ State | Persistent | Purpose
  
 In addition to the its internal states, the runner also maintains some internal states for the items.
 These item states are gathered by item references.
+
 State | Purpose
 ----- | -------
 `loaded` | Set when the item is loaded. 
