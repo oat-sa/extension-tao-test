@@ -202,7 +202,26 @@ An updated enumeration should be provided aside each provider implementation.
 
 Event | Parameters | Purpose
 ----- | ---------- | -------
-
+`init` | | Triggered when the `init()` method has been called.
+`render` | | Triggered when the `render()` method has been called.
+`ready` | | Triggered when the runner is ready to work.
+`loaditem` | `itemRef` | Triggered when the `loadItem()` method has been called.
+`renderitem` | `itemRef`, `itemData` | Triggered when the `renderItem()` method has been called.
+`unloaditem` | `itemRef` | Triggered when the `unloadItem()` method has been called.
+`disableitem` | `itemRef` | Triggered when the `disableItem()` method has been called.
+`enableitem` | `itemRef` | Triggered when the `enableItem()` method has been called.
+`finish` | | Triggered when the `finish()` method has been called.
+`flush` | | Triggered when the `flush()` method has been called.
+`destroy` | | Triggered when the `destroy()` method has been called.
+`move` | `type` | Notifies a move. The first parameter provides the type of move to do, the rest is contextual to the move type.
+`next` | `scope` | Notifies a move forward. The parameter provides the move scope.
+`previous` | `scope` | Notifies a move backward. The parameter provides the move scope.
+`jump` | `scope`, `position` | Notifies a jump to a particular position. The parameters provide the move scope and the target position.
+`skip` | `scope` |  Notifies a skip move. The parameter provides the move scope.
+`exit` | `reason` | Notifies a test exit. The parameter provides the reason why.
+`pause` | | Notifies a test pause.
+`resume` | | Notifies a test resume.
+`timeout` | `scope`, `ref` | Notifies a timeout. The parameters provide the scope and the reference of the timed out element.
 
 
 ### Runner States
@@ -213,7 +232,20 @@ An updated enumeration should be provided aside each provider implementation.
 
 State | Persistent | Purpose
 ----- | ---------- | -------
-
+`init` | [ ] | Set when the runner is initialized.  
+`ready` | [ ] | Set when the runner is ready to work.
+`finish` | [ ] | Set when the test is terminated.
+`flush` | [ ] | Set when the runner has cleaned up its context and is going to be destroyed.
+`destroy` | [ ] | Set when the runner has been destroyed. 
+`pause` | [ ] | Set when the runner is paused.
+ 
+In addition to the its internal states, the runner also maintains some internal states for the items.
+These item states are gathered by item references.
+State | Purpose
+----- | -------
+`loaded` | Set when the item is loaded. 
+`ready` | Set when the item is ready to work.
+`disabled` | Set when the item is disabled.
 
 
 ### Runner Life Cycle
