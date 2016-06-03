@@ -33,8 +33,11 @@ About the new Test Runner
     - [Probe Overseer Usage](#probe-overseer-usage)
     - [Probe Overseer API](#probe-overseer-api)
 - [Plugins](#plugins)
+    - [Create a Plugin](#create-a-plugin)
     - [Plugins Usage](#plugins-usage)
+    - [Plugins Provider](#plugins-provider)
     - [Plugins API](#plugins-api)
+    - [Plugins Life Cycle](#plugins-life-cycle)
 
 
 ## Runner
@@ -78,7 +81,7 @@ First you need to require the modules.
         'taoTests/runner/runner',
         'taoTests/runner/proxy',
         'core/communicator'
-    ], function (runner, proxy, communicator) {
+    ], function (runnerFactory, proxyFactory, communicatorFactory) {
         'use strict';
         ...
     });
@@ -89,34 +92,34 @@ Before to be able to get an instance of the runner you first need to register th
 The registration of runner's providers is mandatory. You cannot use the runner without a provider. 
 Of course you can register several providers, but only one can be linked to a runner instance. 
 ```javascript
-    runner.registerProvider(name, runnerProvider);
+    runnerFactory.registerProvider(name, runnerProvider);
 ```
 
 If your runner makes use of proxy, you also need to register proxy providers.
 ```javascript
-    proxy.registerProvider(name, proxyProvider);
+    proxyFactory.registerProvider(name, proxyProvider);
 ```
 
 When the communication channel is enabled, communicator providers must be registered as well.
 ```javascript
-    communicator.registerProvider(name, communicatorProvider);
+    communicatorFactory.registerProvider(name, communicatorProvider);
 ```
 
 Once all required modules have been properly loaded and registered, you can get an instance of the runner.
 ```javascript
-    var myRunner = runner(name, plugins, config);
+    var runner = runnerFactory(name, plugins, config);
 ```
 
 The runner produces events you can listen to.
 ```javascript
-    myRunner.on('error', onError)
-            .on('ready', onReady)
-            .after('destroy', tearDown);
+    runner.on('error', onError)
+          .on('ready', onReady)
+          .after('destroy', tearDown);
 ```
 
 And then the runner can start its life cycle.
 ```javascript
-    myRunner.init();
+    runner.init();
 ```
 
 
@@ -282,7 +285,7 @@ First you need to require the modules.
     define([
         'taoTests/runner/proxy',
         'core/communicator'
-    ], function (proxy, communicator) {
+    ], function (proxyFactory, communicatorFactory) {
         'use strict';
         ...
     });
@@ -293,24 +296,24 @@ Before to be able to get an instance of the proxy you first need to register the
 The registration of proxy's providers is mandatory. You cannot use the proxy without a provider. 
 Of course you can register several providers, but only one can be linked to a proxy instance. 
 ```javascript
-    proxy.registerProvider(name, proxyProvider);
+    proxyFactory.registerProvider(name, proxyProvider);
 ```
 
 When the communication channel is enabled, communicator providers must be registered as well.
 ```javascript
-    communicator.registerProvider(name, communicatorProvider);
+    communicatorFactory.registerProvider(name, communicatorProvider);
 ```
 
 Once all required modules have been properly loaded and registered, you can get an instance of the proxy.
 ```javascript
-    var myProxy = proxy(name, config);
+    var proxy = proxyFactory(name, config);
 ```
 
 Example for a runner provider:
 ```javascript
     var proxyName = 'myProxy';
     
-    proxy.registerProvider(proxyName, proxyProvider);
+    proxyFactory.registerProvider(proxyName, proxyProvider);
     
     function loadProxy(){
         var config = this.getConfig();
@@ -320,7 +323,7 @@ Example for a runner provider:
             'serviceCallId',
             'bootstrap'
         ]);
-        return proxy(proxyName, proxyConfig);
+        return proxyFactory(proxyName, proxyConfig);
     }
 ```
 
@@ -464,19 +467,19 @@ The proxy triggers events, and some of them are forwarded to the runner. Here is
 
 Event | Forwarded | Parameters | Purpose
 ----- | --------- | ---------- | -------
-`error` | [x] | error | Triggered when any error occurs. The error details is provider as parameter. 
-`receive` | [ ] | data | Triggered each time the endpoint sends data through the communication channel. The provided parameter contains the raw received data.
-`init` | [ ] | promise | Triggered when the `init()` method has been called. The result is provided as parameter. 
-`destroy` | [ ] | promise | Triggered when the `destroy()` method has been called. The result is provided as parameter.
-`getTestData` | [ ] | promise | Triggered when the `getTestData()` method has been called. The result is provided as parameter.
-`getTestContext` | [ ] | promise | Triggered when the `getTestContext()` method has been called. The result is provided as parameter.
-`getTestMap` | [ ] | promise | Triggered when the `getTestMap()` method has been called. The result is provided as parameter.
-`sendVariables` | [ ] | promise, variables | Triggered when the `sendVariables()` method has been called. The result is provided as parameter, then the rest of the parameters.
-`callTestAction` | [ ] | promise, action, params | Triggered when the `callTestAction()` method has been called. The result is provided as parameter, then the rest of the parameters.
-`getItem` | [ ] | promise, uri | Triggered when the `getItem()` method has been called. The result is provided as parameter, then the rest of the parameters.
-`submitItem` | [ ] | promise, uri, state, response, params | Triggered when the `submitItem()` method has been called. The result is provided as parameter, then the rest of the parameters.
-`callItemAction` | [ ] | promise, uri, action, params | Triggered when the `callItemAction()` method has been called. The result is provided as parameter, then the rest of the parameters.
-`telemetry` | [ ] | promise, uri, signal, params | Triggered when the `telemetry()` method has been called. The result is provided as parameter, then the rest of the parameters.
+`error` | [x] | `error` | Triggered when any error occurs. The error details is provider as parameter. 
+`receive` | [ ] | `data` | Triggered each time the endpoint sends data through the communication channel. The provided parameter contains the raw received data.
+`init` | [ ] | `promise` | Triggered when the `init()` method has been called. The result is provided as parameter. 
+`destroy` | [ ] | `promise` | Triggered when the `destroy()` method has been called. The result is provided as parameter.
+`getTestData` | [ ] | `promise` | Triggered when the `getTestData()` method has been called. The result is provided as parameter.
+`getTestContext` | [ ] | `promise` | Triggered when the `getTestContext()` method has been called. The result is provided as parameter.
+`getTestMap` | [ ] | `promise` | Triggered when the `getTestMap()` method has been called. The result is provided as parameter.
+`sendVariables` | [ ] | `promise`, `variables` | Triggered when the `sendVariables()` method has been called. The result is provided as parameter, then the rest of the parameters.
+`callTestAction` | [ ] | `promise`, `action`, `params` | Triggered when the `callTestAction()` method has been called. The result is provided as parameter, then the rest of the parameters.
+`getItem` | [ ] | `promise`, `uri` | Triggered when the `getItem()` method has been called. The result is provided as parameter, then the rest of the parameters.
+`submitItem` | [ ] | `promise`, `uri`, state, response, params | Triggered when the `submitItem()` method has been called. The result is provided as parameter, then the rest of the parameters.
+`callItemAction` | [ ] | `promise`, `uri`, `action`, `params` | Triggered when the `callItemAction()` method has been called. The result is provided as parameter, then the rest of the parameters.
+`telemetry` | [ ] | `promise`, `uri`, `signal`, `params` | Triggered when the `telemetry()` method has been called. The result is provided as parameter, then the rest of the parameters.
 
 
 ### Proxy Life Cycle
@@ -527,7 +530,7 @@ First you need to require the module.
 ```javascript
     define([
         'core/communicator'
-    ], function (communicator) {
+    ], function (communicatorFactory) {
         'use strict';
         ...
     });
@@ -538,25 +541,25 @@ Before to be able to get an instance of the communicator you first need to regis
 The registration of communicator's providers is mandatory. You cannot use the communicator without a provider. 
 Of course you can register several providers, but only one can be linked to a communicator instance. 
 ```javascript
-    communicator.registerProvider(name, communicatorProvider);
+    communicatorFactory.registerProvider(name, communicatorProvider);
 ```
 
 **Note:** For now there is only one existing provider, that polls the endpoint every period of time: `core/communicator/poll`.
 
 Once all required modules have been properly loaded and registered, you can get an instance of the communicator.
 ```javascript
-    var myCommunicator = communicator(name, config);
+    var communicator = communicatorFactory(name, config);
 ```
 
 Example for a proxy provider:
 ```javascript
     var communicatorName = 'myCommunicator';
 
-    communicator.registerProvider(communicatorName, communicatorProvider);
+    communicatorFactory.registerProvider(communicatorName, communicatorProvider);
 
     function loadCommunicator() {
         var config = this.config.communicator;
-        return communicator(communicatorName, config);
+        return communicatorFactory(communicatorName, config);
     }
 ```
 
@@ -640,20 +643,20 @@ The communicator triggers events, and some of them are forwarded to the proxy. H
 
 Event | Forwarded | Parameters | Purpose
 ----- | --------- | ---------- | -------
-`error` | [x] | error | Triggered when any error occurs. The error details is provider as parameter. 
-`init` | [ ] | promise | Triggered when the `init()` method has been called. The result is provided as parameter. 
+`error` | [x] | `error` | Triggered when any error occurs. The error details is provider as parameter. 
+`init` | [ ] | `promise` | Triggered when the `init()` method has been called. The result is provided as parameter. 
 `ready` | [ ] | | Triggered when the communicator has been successfully initialized and is ready to work.
-`destroy` | [ ] | promise | Triggered when the `destroy()` method has been called. The result is provided as parameter.
+`destroy` | [ ] | `promise` | Triggered when the `destroy()` method has been called. The result is provided as parameter.
 `destroyed` | [ ] | | Triggered when the communicator has been successfully destroyed.
-`open` | [ ] | promise | Triggered when the `open()` method has been called. The result is provided as parameter.
+`open` | [ ] | `promise` | Triggered when the `open()` method has been called. The result is provided as parameter.
 `opened` | [ ] | | Triggered when the communication has been successfully opened.
-`close` | [ ] | promise | Triggered when the `close()` method has been called. The result is provided as parameter.
+`close` | [ ] | `promise` | Triggered when the `close()` method has been called. The result is provided as parameter.
 `closed` | [ ] | | Triggered when the communication has been successfully closed.
-`send` | [ ] | promise, channel, message | Triggered when the `send()` method has been called. The result is provided as parameter.
-`sent` | [ ] | channel, message, response | Triggered when a message has been successfully sent.
-`message` | [ ] | channel, message | Triggered when a message is received from the endpoint.
-`channel-<name>` | [ ] | message | Triggered when a message is received from the endpoint on the channel `<name>`.
-`receive` | [x] | data | Triggered each time the endpoint sends data. The provided parameter contains the raw received data.
+`send` | [ ] | `promise`, `channel`, `message` | Triggered when the `send()` method has been called. The result is provided as parameter.
+`sent` | [ ] | `channel`, `message`, `response` | Triggered when a message has been successfully sent.
+`message` | [ ] | `channel`, `message` | Triggered when a message is received from the endpoint.
+`channel-<name>` | [ ] | `message` | Triggered when a message is received from the endpoint on the channel `<name>`.
+`receive` | [x] | `data` | Triggered each time the endpoint sends data. The provided parameter contains the raw received data.
 
 
 ### Communicator States
@@ -698,7 +701,7 @@ First you need to require the module.
 ```javascript
     define([
         'taoTests/runner/areaBroker'
-    ], function (areaBroker) {
+    ], function (areaBrokerFactory) {
         'use strict';
         ...
     });
@@ -706,14 +709,14 @@ First you need to require the module.
 
 Then you can create an instance of the Area Broker and provides the links to the actual user interface.
 ```javascript
-    var myAreaBroker = areaBroker($container, areas);
+    var areaBroker = areaBrokerFactory($container, areas);
 ```
 
 Example for a runner provider:
 ```javascript
    function loadAreaBroker(){
        var $layout = $(layoutTpl());
-       return areaBroker($layout, {
+       return areaBrokerFactory($layout, {
            content:    $('.runner-content', $layout),
            toolbox:    $('.runner-toolbox', $layout),
            navigation: $('.runner-navigation', $layout),
@@ -777,7 +780,7 @@ First you need to require the module.
 ```javascript
     define([
         'taoTests/runner/probeOverseer'
-    ], function (probeOverseer) {
+    ], function (probeOverseerFactory) {
         'use strict';
         ...
     });
@@ -785,7 +788,7 @@ First you need to require the module.
 
 Then you can create an instance of the Probe Overseer and provide a reference to the runner in order to enable the audit.
 ```javascript
-    var myProbeOverseer = probeOverseer(identifier, runner);
+    var probeOverseer = probeOverseerFactory(identifier, runner);
 ```
 
 Example for a runner provider:
@@ -793,7 +796,7 @@ Example for a runner provider:
     function loadProbeOverseer(){
         var config = this.getConfig();
         var identifier = config.serviceCallId || 'test-' + Date.now();
-        return probeOverseer(identifier, this);
+        return probeOverseerFactory(identifier, this);
     }
 ```
 
@@ -876,12 +879,122 @@ Methods | Purpose
 
 ## Plugins
 
+Plugins also use the *Delegation* design pattern. 
+However they don't need to address several implementations through registered providers, and the plugin factory just 
+binds its API to a single implementation. 
+
+- The plugin factory binds a provider with its API, then returns a constructor that will build instances of the plugin. 
+- Most of the API is delegated to the provider.
+- The provider is bound to the plugin API when you generate the constructor, so it cannot be changed later.
+- The execution context remains on the plugin's instance, thus all properties created by the provider's methods are bound to this instance. 
+- A provider can only bring functions. However it must also bring its name as a property.
+- If a provider does not provide a particular method, the plugin will ignore it and will fall back in a gracious way.
+ 
+The plugin factory implements a comprehensive life cycle that can suit most of the use cases.
+It also implements a layer for host binding and an API to forward events to the host.
+
+**Note:** The host must implement an eventifier, otherwise an error will be thrown when you will try to bound a plugin to this host.
+
+
+### Create a Plugin
+
+First you need to require the module.
+```javascript
+    define([
+        'core/plugin'
+    ], function (pluginFactory) {
+        'use strict';
+        ...
+    });
+```
+
+Then you can create a plugin constructor from your implementation.
+```javascript
+    var plugin = pluginFactory(implementation, defaultConfig);
+```
+
+When you create a plugin instance, you must provide the host to which the plugin will be bound.
+You can also provide an area broker to allow access to the user interface, and a config set.
+
+```javascript
+    var instance = plugin(host, areaBroker, config);
+```
 
 
 ### Plugins Usage
 
+After you have got a plugin instance you can access all the plugin API. By example:
+
+```javascript
+    plugin.install();
+    plugin.init();
+```
+
+Almost all plugin methods return promises, so do not forget to catch them.
+ 
+```javascript
+    plugin
+        .install()
+        .then(function() {
+            console.log('installed!');
+        });
+```
+
+
+### Plugins Provider
+
+A provider is an object that contains a list of particular methods expected by the plugin API.
+There is no mandatory method, however it is recommended to implement either `install()` or `init()`.
+
+Except for its name, the plugin provider cannot contains properties since only the methods are targeted.
+However, the methods of the provider can create properties that will be bound to the plugin instance.
+
+The methods of the provider must reflect the plugin API. All responses will be translated to promise.
+Here is a list of these methods, with notices that a method is recommended to be implemented.
+
+Methods | Recommended | Promise | Purpose
+------- | ----------- | ------- | -------
+`install()` | [x] | [x] | Installs the plugin.
+`init(content)` | [x] | [x] | Initializes the plugin with the provided content.
+`render()` | [ ] | [x] | Ensures the rendering of the plugin.
+`finish()` | [ ] | [x] | Reacts to the 'finish' step of the host.
+`destroy()` | [ ] | [x] | Cleans up and destroys the plugin.
+`show()` | [ ] | [x] | Shows the underlying component.
+`hide()` | [ ] | [x] | Hides the underlying component.
+`enable()` | [ ] | [x] | Enables the plugin.
+`disable()` | [ ] | [x] | Disables the plugin.
 
 
 ### Plugins API
 
+Plugins must suit to their host life cycle, so a big part of the plugin API is dedicated to this. 
+The rest is provided to manage the plugin itself.
 
+Methods | Provider | Promise | Events | State | Purpose
+------- | -------- | ------- | ------ | ----- | -------
+`install()` | [x] | [x] | `install` | | Called when the host is installing the plugins.
+`init(content)` | [x] | [x] | `init` | `init` | Called when the host is initializing. Some content can be provided at this step.
+`render()` | [x] | [x] | `render`, `ready` | `ready` | Called when the host is rendering.
+`finish()` | [x] | [x] | `finish` | `finish` | Called when the host is finishing.
+`destroy()` | [x] | [x] | `destroy` | erase all | Called when the host is destroying. Erases states and config.
+`trigger(name)` | [ ] | [ ] | | | Triggers the events on the host using the pluginName as namespace and prefixed by `plugin-`. Example: `trigger('foo')` will `trigger('plugin-foo.pluginA')` on the host.
+`getHost()` | [ ] | [ ] | | | Gets the plugin host.
+`getAreaBroker()` | [ ] | [ ] | | | Gets the bound areaBroker.
+`getConfig()` | [ ] | [ ] | | | Gets current config set.
+`setConfig(name, value)` | [ ] | [ ] | | | Sets a config value, or the whole config set.
+`getState(state)` | [ ] | [ ] | | | Gets a state of the plugin.
+`setState(state, active)` | [ ] | [ ] | | | Sets a state of the plugin. Can throw error if the name is empty or is not a string.
+`getContent()` | [ ] | [ ] | | | Gets the plugin content.
+`setContent(content)` | [ ] | [ ] | | | Sets the plugin content.
+`getName()` | [ ] | [ ] | | | Gets the plugin's name.
+`show()` | [x] | [x] | `show` | `visible` | Shows the component related to this plugin.
+`hide()` | [x] | [x] | `hide` | erase `visible` | Hides the component related to this plugin.
+`enable()` | [x] | [x] | `enable` | `enabled` | Enables the plugin.
+`disable()` | [x] | [x] | `disable` | erase `enabled` | Disables the plugin.
+
+
+### Plugins Life Cycle
+
+The life cycle of a plugin depends of its host. However, regarding its API, a common life cycle can be described.
+
+install() -> init() -> render() -> processing -> finish() -> destroy()
