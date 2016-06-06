@@ -61,6 +61,20 @@ interface Timer
     public function end($tags, $timestamp);
 
     /**
+     * Gets the first timestamp of the range for the provided tags
+     * @param string|array $tags
+     * @return float $timestamp
+     */
+    public function getFirstTimestamp($tags);
+
+    /**
+     * Gets the last timestamp of the range for the provided tags
+     * @param string|array $tags
+     * @return float $timestamp
+     */
+    public function getLastTimestamp($tags);
+
+    /**
      * Adds "client start" and "client end" TimePoint based on the provided duration for particular tags
      * @param string|array $tags
      * @param float $duration

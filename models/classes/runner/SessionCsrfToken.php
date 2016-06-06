@@ -29,7 +29,7 @@ namespace oat\taoTests\models\runner;
  *
  * @package oat\taoTests\models\runner
  */
-class SessionCsrfToken implements CsrfToken
+class SessionCsrfToken extends AbstractCsrfToken
 {
     /**
      * The name of the storage key for the current CSRF token
@@ -40,11 +40,6 @@ class SessionCsrfToken implements CsrfToken
      * The name of the storage key for the creation time of the current CSRF token
      */
     const TIMESTAMP_KEY = 'SECURITY_TIME_';
-
-    /**
-     * The desired length of the CSRF token string
-     */
-    const TOKEN_LENGTH = 40;
 
     /**
      * The token name
@@ -79,7 +74,7 @@ class SessionCsrfToken implements CsrfToken
     {
         $session = \PHPSession::singleton();
 
-        $token = bin2hex(openssl_random_pseudo_bytes(self::TOKEN_LENGTH / 2));
+        $token = $this->generateToken();
         $session->setAttribute(self::TOKEN_KEY . $this->name, $token);
         $session->setAttribute(self::TIMESTAMP_KEY . $this->name, time());
         return $token;

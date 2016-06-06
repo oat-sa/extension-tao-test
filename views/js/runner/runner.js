@@ -161,7 +161,7 @@ define([
         runner = eventifier({
 
             /**
-             * Intialize the runner
+             * Initialize the runner
              *  - instantiate the plugins
              *  - provider init
              *  - plugins init
@@ -173,18 +173,21 @@ define([
                 var self = this;
 
                 //instantiate the plugins first
-                _.forEach(pluginFactories, function(pluginFactory, pluginName){
+                _.forEach(pluginFactories, function(pluginFactory){
                     var plugin = pluginFactory(runner, self.getAreaBroker());
                     plugins[plugin.getName()] = plugin;
                 });
 
-                providerRun('init').then(function(){
-                    pluginRun('init').then(function(){
+                providerRun('loadPersistentStates')
+                    .then(_.partial(pluginRun, 'install'))
+                    .then(_.partial(providerRun, 'init'))
+                    .then(_.partial(pluginRun, 'init'))
+                    .then(function() {
                         self.setState('init', true)
                             .trigger('init')
                             .render();
-                    }).catch(reportError);
-                }).catch(reportError);
+                    })
+                    .catch(reportError);
 
                 return this;
             },
@@ -325,6 +328,25 @@ define([
             },
 
             /**
+             * Flushes the runner
+             *  - provider flush
+             *  - plugins flush
+             * @fires runner#flush
+             * @returns {runner} chains
+             */
+            flush : function flush(){
+                var self = this;
+
+                providerRun('flush').then(function(){
+                    pluginRun('flush').then(function(){
+                        self.setState('flush', true)
+                            .trigger('flush');
+                    }).catch(reportError);
+                }).catch(reportError);
+                return this;
+            },
+
+            /**
              * Destroy
              *  - provider destroy
              *  - plugins destroy
@@ -450,6 +472,48 @@ define([
                 states[name] = !!active;
 
                 return this;
+            },
+
+            /**
+             * Checks a runner persistent state
+             *  - provider getPersistentState
+             *
+             * @param {String} name - the state name
+             * @returns {Boolean} if active, false if not set
+             */
+            getPersistentState : function getPersistentState(name) {
+                var getPersistentState = provider.getPersistentState;
+                var state;
+
+                if(_.isFunction(getPersistentState)){
+                    state = getPersistentState.call(runner, name);
+                }
+
+                return !!state;
+            },
+
+            /**
+             * Defines a runner persistent state
+             *  - provider setPersistentState
+             *
+             * @param {String} name - the state name
+             * @param {Boolean} active - is the state active
+             * @returns {Promise} Returns a promise that:
+             *                      - will be resolved once the state is fully stored
+             *                      - will be rejected if any error occurs or if the state name is not a valid string
+             */
+            setPersistentState : function setPersistentState(name, active) {
+                var stored;
+
+                if (!_.isString(name) || _.isEmpty(name)) {
+                    stored = Promise.reject(new TypeError('The state must have a name'));
+                } else {
+                    stored = providerRun('setPersistentState', name, !!active);
+                }
+
+                stored.catch(reportError);
+
+                return stored;
             },
 
             /**

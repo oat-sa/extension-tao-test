@@ -51,6 +51,17 @@ define([
         var delegateProxy, communicator, communicatorPromise;
 
         /**
+         * Gets parameters merged with extra parameters
+         * @param {Object} [params]
+         * @return {Object}
+         */
+        function getParams(params) {
+            var mergedParams = _.merge({}, params, extraCallParams);
+            extraCallParams = {};
+            return mergedParams;
+        }
+
+        /**
          * Gets the aggregated list of middlewares for a particular queue name
          * @param {String} queue - The name of the queue to get
          * @returns {Array}
@@ -162,8 +173,9 @@ define([
                  * @event proxy#init
                  * @param {Promise} promise
                  * @param {Object} config
+                 * @param {Object} params
                  */
-                return delegate('init', initConfig);
+                return delegate('init', initConfig, getParams());
             },
 
             /**
@@ -283,14 +295,16 @@ define([
             },
 
             /**
-             * Add extra parameters that will be added to the next callTestAction or callItemAction
+             * Add extra parameters that will be added to the init or the next callTestAction or callItemAction
              * This enables plugins to place parameters for next calls
              * @param {Object} params - the extra parameters
+             * @returns {proxy}
              */
             addCallActionParams : function addCallActionParams(params){
                 if(_.isPlainObject(params)){
                     _.merge(extraCallParams, params);
                 }
+                return this;
             },
 
             /**
@@ -334,6 +348,21 @@ define([
             },
 
             /**
+             * Sends the test variables
+             * @param {Object} variables
+             * @returns {Promise} - Returns a promise. The result of the request will be provided on resolve.
+             *                      Any error will be provided if rejected.
+             * @fires sendVariables
+             */
+            sendVariables: function sendVariables(variables) {
+                /**
+                 * @event proxy#sendVariables
+                 * @param {Promise} promise
+                 */
+                return delegate('sendVariables', variables);
+            },
+
+            /**
              * Calls an action related to the test
              * @param {String} action - The name of the action to call
              * @param {Object} [params] - Some optional parameters to join to the call
@@ -342,18 +371,13 @@ define([
              * @fires callTestAction
              */
             callTestAction: function callTestAction(action, params) {
-
-                //merge extra parameters
-                var mergedParams = _.merge({}, params, extraCallParams);
-                extraCallParams = {};
-
                 /**
                  * @event proxy#callTestAction
                  * @param {Promise} promise
                  * @param {String} action
                  * @param {Object} params
                  */
-                return delegate('callTestAction', action, mergedParams);
+                return delegate('callTestAction', action, getParams(params));
             },
 
             /**
@@ -404,11 +428,6 @@ define([
              * @fires callItemAction
              */
             callItemAction: function callItemAction(uri, action, params) {
-
-                //merge extra parameters
-                var mergedParams = _.merge({}, params, extraCallParams);
-                extraCallParams = {};
-
                 /**
                  * @event proxy#callItemAction
                  * @param {Promise} promise
@@ -416,7 +435,7 @@ define([
                  * @param {String} action
                  * @param {Object} params
                  */
-                return delegate('callItemAction', uri, action, mergedParams);
+                return delegate('callItemAction', uri, action, getParams(params));
             },
 
             /**
