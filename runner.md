@@ -265,7 +265,7 @@ init -> render -> loadItem -> renderItem -> unloadItem -> finish -> flush -> des
 In fact the life cycle of the runner is more complex, as it involves events and states. 
 A test runner does not carry on only one item, so the life cycle is manager through a loop.
 
-![Runner Life Cycle](runner-flow.graphml)
+![Runner Life Cycle](runner-flow.png)
 
 ## Proxy
 
