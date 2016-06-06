@@ -258,6 +258,14 @@ The life cycle of the runner is quite complex. In addition, any provider impleme
 
 The basic life cycle is described here. An updated description should be provided aside each provider implementation.
 
+Here is a very simplified life cycle to illustrate the main workflow of the runner:
+
+init -> render -> loadItem -> renderItem -> unloadItem -> finish -> flush -> destroy
+
+In fact the life cycle of the runner is more complex, as it involves events and states. 
+A test runner does not carry on only one item, so the life cycle is manager through a loop.
+
+![Runner Life Cycle](runner-flow.graphml)
 
 ## Proxy
 
@@ -998,4 +1006,4 @@ Methods | Provider | Promise | Events | State | Purpose
 
 The life cycle of a plugin depends of its host. However, regarding its API, a common life cycle can be described.
 
-install() -> init() -> render() -> processing -> finish() -> destroy()
+install -> init -> render -> processing -> finish -> destroy
