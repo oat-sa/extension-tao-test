@@ -72,9 +72,8 @@ define([
             var eventNs = '.probe-' + probe.name;
 
             //event handler registered to collect data
-            var probeHandler = function probeHandler(){
+            var probeHandler = function probeHandler(eventName){
                 var now = moment();
-                var last;
                 var data = {
                     id   : uuid(8, 16),
                     type : probe.name,
@@ -82,7 +81,7 @@ define([
                     timezone  : now.tz(timeZone).format('Z')
                 };
                 if(typeof probe.capture === 'function'){
-                    data.context = probe.capture(runner);
+                    data.context = probe.capture(runner, eventName);
                 }
                 overseer.push(data);
             };
@@ -94,7 +93,7 @@ define([
 
             _.forEach(probe.events, function(eventName){
                 var listen = eventName.indexOf('.') > 0 ? eventName : eventName + eventNs;
-                runner.on(listen, probeHandler);
+                runner.on(listen, _.partial(probeHandler, eventName));
             });
         };
 
@@ -103,7 +102,7 @@ define([
             var eventNs = '.probe-' + probe.name;
 
             //start event handler registered to collect data
-            var startHandler = function startHandler(){
+            var startHandler = function startHandler(eventName){
                 var now = moment();
                 var data = {
                     id: uuid(8, 16),
@@ -114,13 +113,13 @@ define([
                 };
 
                 if(typeof probe.capture === 'function'){
-                    data.context = probe.capture(runner);
+                    data.context = probe.capture(runner, eventName);
                 }
                 overseer.push(data);
             };
 
             //stop event handler registered to collect data
-            var stopHandler = function stopHandler(){
+            var stopHandler = function stopHandler(eventName){
                 var now = moment();
                 var last;
                 var data = {
@@ -134,7 +133,7 @@ define([
                         data.id = last.id;
                         data.marker = 'end';
                         if(typeof probe.capture === 'function'){
-                            data.context = probe.capture(runner);
+                            data.context = probe.capture(runner, eventName);
                         }
                         overseer.push(data);
                     }
@@ -148,11 +147,11 @@ define([
 
             _.forEach(probe.startEvents, function(eventName){
                 var listen = eventName.indexOf('.') > 0 ? eventName : eventName + eventNs;
-                runner.on(listen, startHandler);
+                runner.on(listen, _.partial(startHandler, eventName));
             });
             _.forEach(probe.stopEvents, function(eventName){
                 var listen = eventName.indexOf('.') > 0 ? eventName : eventName + eventNs;
-                runner.on(listen, stopHandler);
+                runner.on(listen, _.partial(stopHandler, eventName));
             });
         };
 
