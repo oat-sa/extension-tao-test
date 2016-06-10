@@ -779,8 +779,8 @@ Optionally the runner can be audited in order to produce stats. To do so a parti
 The probe overseer provides a way to register probes that reacts to particular events.
 There are two kinds of probes:
 
-- probes that captures info when they are activated by an event
-- probes that computes time spent from their activation to their deactivation and captures info at this time
+- probes that capture info when they are activated by an event
+- probes that compute time spent from their activation to their deactivation and capture info at this time
 
 
 ### Create a Probe Overseer Instance
@@ -816,10 +816,21 @@ From inside the runner you can access to the probe overseer by the `.getProbeOve
 If the probe overseer is not already created, this method will invoke the `.loadProbeOverseer()` method the provider must implement.
 Once the probe overseer is created, the `.getProbeOverseer()` method will always return the same instance.
 
-After you have got the probe overseer instance through `.getProbeOverseer()`, you can manage the probes. By example:
+After you have got the probe overseer instance through `.getProbeOverseer()`, you can manage the probes. 
+
+To register a new probe you must call the `.add()` method. This method needs a single parameter, an object that describes the probe:
+
+- *String* `name` - the probe name
+- *Boolean* `latency` - simple (`false`) or latency (`true`) mode (default: `false`)
+- *String[]* `events` - the list of events to listen (simple mode)
+- *String[]* `startEvents` - the list of events to mark the start (latency mode)
+- *String[]* `stopEvents` - the list of events to mark the end (latency mode)
+- *Function* `capture` - a callback to define the data context, it receive the test runner and the event parameters: `function(runner, eventName)`
+
+By example:
 
 ```javascript
-    function capture(testRunner){
+    function capture(testRunner, eventName){
         var data = testRunner.getTestData();
         var context = testRunner.getTestContext();
         return {
@@ -828,12 +839,14 @@ After you have got the probe overseer instance through `.getProbeOverseer()`, yo
         };
     }
 
+    // add a probe that captures info when it will be activated by an event
     this.getProbeOverseer().add({
         name    : 'log-move',
         events  : 'move',
         capture : capture
     });
     
+    // add a probe that computes time spent from its activation to is deactivation and captures info at this time
     this.getProbeOverseer().add({
         name        : 'log-attempt',
         startEvents : 'renderitem',
