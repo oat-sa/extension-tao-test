@@ -74,7 +74,6 @@ define([
             //event handler registered to collect data
             var probeHandler = function probeHandler(){
                 var now = moment();
-                var last;
                 var data = {
                     id   : uuid(8, 16),
                     type : probe.name,
@@ -157,7 +156,7 @@ define([
         };
 
         /**
-         * Get the storaget instance
+         * Get the storage instance
          * @returns {Promise} that resolves with the storage
          */
         var getStorage = function getStorage(){
@@ -168,6 +167,13 @@ define([
                 storage = newStorage;
                 return Promise.resolve(storage);
             });
+        };
+
+        /**
+         * Unset the storage instance
+         */
+        var resetStorage = function resetStorage() {
+            storage = null;
         };
 
         //argument validation
@@ -338,7 +344,7 @@ define([
 
                 queue = [];
                 return getStorage().then(function(storage){
-                    return storage.clear();
+                    return storage.removeStore().then(resetStorage);
                 });
             }
         };
