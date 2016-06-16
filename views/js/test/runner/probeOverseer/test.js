@@ -205,7 +205,7 @@ define([
     });
 
     QUnit.asyncTest('simple', function(assert) {
-        QUnit.expect(12);
+        QUnit.expect(14);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker: _.noop,
@@ -219,9 +219,11 @@ define([
         probes.add({
             name: 'test-ready',
             events: 'ready',
-            capture: function(testRunner) {
+            capture: function(testRunner, eventName) {
                 assert.equal(typeof testRunner, 'object', 'The runner is given in parameter');
                 assert.deepEqual(testRunner, runner, 'The runner instance is given in parameter');
+                assert.equal(typeof eventName, 'string', 'The event name is given in parameter');
+                assert.equal(eventName, 'ready', 'The event name is given in parameter');
                 return {
                     'foo': 'bar'
                 };
@@ -267,7 +269,7 @@ define([
     });
 
     QUnit.asyncTest('latency', function(assert) {
-        QUnit.expect(16);
+        QUnit.expect(20);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker: _.noop,
@@ -283,9 +285,11 @@ define([
             latency: true,
             startEvents: ['ready'],
             stopEvents: ['finish'],
-            capture: function(testRunner) {
+            capture: function(testRunner, eventName) {
                 assert.equal(typeof testRunner, 'object', 'The runner is given in parameter');
                 assert.deepEqual(testRunner, runner, 'The runner instance is given in parameter');
+                assert.equal(typeof eventName, 'string', 'The event name is given in parameter');
+                assert.ok(['ready', 'finish'].indexOf(eventName) > -1, 'The event name is given in parameter');
                 return {
                     'foo': 'bar'
                 };
