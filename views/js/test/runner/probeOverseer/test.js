@@ -205,7 +205,7 @@ define([
     });
 
     QUnit.asyncTest('simple', function(assert) {
-        QUnit.expect(12);
+        QUnit.expect(14);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker: _.noop,
@@ -219,9 +219,11 @@ define([
         probes.add({
             name: 'test-ready',
             events: 'ready',
-            capture: function(testRunner) {
+            capture: function(testRunner, eventName) {
                 assert.equal(typeof testRunner, 'object', 'The runner is given in parameter');
                 assert.deepEqual(testRunner, runner, 'The runner instance is given in parameter');
+                assert.equal(typeof eventName, 'string', 'The event name is given in parameter');
+                assert.equal(eventName, 'ready', 'The event name is given in parameter');
                 return {
                     'foo': 'bar'
                 };
@@ -266,8 +268,74 @@ define([
         });
     });
 
+    QUnit.asyncTest('simple(param)', function(assert) {
+        QUnit.expect(15);
+
+        runnerFactory.registerProvider('foo', {
+            loadAreaBroker: _.noop,
+            init: _.noop
+        });
+
+        var runner = runnerFactory('foo');
+
+        var probes = probeOverseer(testId, runner);
+
+        probes.add({
+            name: 'test-param',
+            events: 'custom',
+            capture: function(testRunner, eventName, eventParam) {
+                assert.equal(typeof testRunner, 'object', 'The runner is given in parameter');
+                assert.deepEqual(testRunner, runner, 'The runner instance is given in parameter');
+                assert.equal(typeof eventName, 'string', 'The event name is given in parameter');
+                assert.equal(eventName, 'custom', 'The event name is given in parameter');
+                assert.equal(eventParam, 'foo', 'The event comes with parameter');
+                return {
+                    'foo': 'bar'
+                };
+            }
+        });
+        probes.start().then(function(){
+
+            var creation = Date.now() / 1000;
+            var init;
+            runner
+                .on('init', function() {
+                    init = Date.now() / 1000;
+                    this.trigger('custom', 'foo');
+                })
+                .after('ready', function() {
+                    setTimeout(function() {
+                        probes.getQueue().then(function(queue) {
+
+                            assert.equal(queue.length, 1, 'The queue contains an entry');
+                            assert.equal(typeof queue[0], 'object', 'The queue entry is an object');
+                            assert.equal(typeof queue[0].id, 'string', 'The queue entry contains an id');
+                            assert.equal(typeof queue[0].timestamp, 'number', 'The queue entry contains a timestamp');
+                            assert.ok(queue[0].timestamp >= creation && creation > 0, 'The timestamp is superior to the test creation');
+                            assert.ok(queue[0].timestamp >= init && init > 0, 'The timestamp is superior or equal to the test init');
+                            assert.equal(typeof queue[0].timezone, 'string', 'The queue entry contains a timezone');
+                            assert.ok( new RegExp('^[\+\-]{1}[0-9]{2}:[0-9]{2}$').test(queue[0].timezone) , 'The timezone is formatted correclty');
+                            assert.equal(queue[0].type, 'test-param', 'The entry type is correct');
+                            assert.deepEqual(queue[0].context, {
+                                foo: 'bar'
+                            }, 'The entry context is correct');
+
+                            probes.stop();
+
+                            QUnit.start();
+
+                        }).catch(function(err) {
+                            assert.ok(false, err);
+                            QUnit.start();
+                        });
+                    }, 200); //time to write in the db
+                })
+                .init();
+        });
+    });
+
     QUnit.asyncTest('latency', function(assert) {
-        QUnit.expect(16);
+        QUnit.expect(20);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker: _.noop,
@@ -283,9 +351,11 @@ define([
             latency: true,
             startEvents: ['ready'],
             stopEvents: ['finish'],
-            capture: function(testRunner) {
+            capture: function(testRunner, eventName) {
                 assert.equal(typeof testRunner, 'object', 'The runner is given in parameter');
                 assert.deepEqual(testRunner, runner, 'The runner instance is given in parameter');
+                assert.equal(typeof eventName, 'string', 'The event name is given in parameter');
+                assert.ok(['ready', 'finish'].indexOf(eventName) > -1, 'The event name is given in parameter');
                 return {
                     'foo': 'bar'
                 };
@@ -306,6 +376,88 @@ define([
                 })
                 .after('finish', function() {
 
+                    setTimeout(function() {
+                        probes.getQueue().then(function(queue) {
+
+                            assert.equal(queue.length, 2, 'The queue contains the two entries');
+                            var startEntry = queue[0];
+                            var stopEntry = queue[1];
+
+                            assert.equal(typeof startEntry, 'object', 'The start entry is an object');
+                            assert.equal(typeof startEntry.id, 'string', 'The start entry contains an id');
+                            assert.equal(typeof startEntry.timestamp, 'number', 'The start entry contains a timestamp');
+                            assert.equal(startEntry.type, 'test-latency', 'The entry type is correct');
+                            assert.deepEqual(startEntry.context, {
+                                foo: 'bar'
+                            }, 'The entry context is correct');
+                            assert.ok(startEntry.timestamp >= creation && creation > 0, 'The timestamp is superior to the test creation');
+                            assert.ok(startEntry.timestamp >= init && init > 0, 'The timestamp is superior or equal to the test init');
+
+                            assert.equal(typeof queue[0].timezone, 'string', 'The queue entry contains a timezone');
+                            assert.ok(/^[\+\-]{1}[0-9]{2}:[0-9]{2}$/.test(queue[0].timezone), 'The timezone is formatted correclty');
+
+                            assert.equal(typeof stopEntry, 'object', 'The stop entry is an object');
+                            assert.equal(stopEntry.id, startEntry.id, 'string', 'The stop entry id is the same than the start entry');
+
+                            probes.stop();
+
+                            QUnit.start();
+
+                        }).catch(function(err) {
+                            assert.ok(false, err);
+
+                            QUnit.start();
+                        });
+                    }, 200); //time to write in the db
+                })
+                .init();
+        });
+    });
+
+    QUnit.asyncTest('latency(param)', function(assert) {
+        QUnit.expect(22);
+
+        runnerFactory.registerProvider('foo', {
+            loadAreaBroker: _.noop,
+            init: _.noop
+        });
+
+        var runner = runnerFactory('foo');
+
+        var probes = probeOverseer(testId, runner);
+
+        probes.add({
+            name: 'test-latency',
+            latency: true,
+            startEvents: ['start'],
+            stopEvents: ['end'],
+            capture: function(testRunner, eventName, eventParam) {
+                assert.equal(typeof testRunner, 'object', 'The runner is given in parameter');
+                assert.deepEqual(testRunner, runner, 'The runner instance is given in parameter');
+                assert.equal(typeof eventName, 'string', 'The event name is given in parameter');
+                assert.ok(['start', 'end'].indexOf(eventName) > -1, 'The event name is given in parameter');
+                assert.equal(eventParam, eventName === 'start' ? 'fooStart' : 'fooEnd', 'The event comes with parameter');
+                return {
+                    'foo': 'bar'
+                };
+            }
+        });
+        probes.start().then(function(){
+
+            var creation = Date.now() / 1000;
+            var init;
+            runner
+                .on('init', function() {
+                    init = Date.now() / 1000;
+                })
+                .after('ready', function() {
+                    this.trigger('start', 'fooStart');
+                    setTimeout(function() {
+                        runner.finish();
+                    }, 50);
+                })
+                .after('finish', function() {
+                    this.trigger('end', 'fooEnd');
                     setTimeout(function() {
                         probes.getQueue().then(function(queue) {
 

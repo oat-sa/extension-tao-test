@@ -34,6 +34,8 @@ define([
 
     var timeZone = moment.tz.guess();
 
+    var slice = Array.prototype.slice;
+
     /**
      * Create the overseer intance
      * @param {String} testIdentifier - a unique id for a test execution
@@ -74,7 +76,6 @@ define([
             //event handler registered to collect data
             var probeHandler = function probeHandler(){
                 var now = moment();
-                var last;
                 var data = {
                     id   : uuid(8, 16),
                     type : probe.name,
@@ -82,7 +83,7 @@ define([
                     timezone  : now.tz(timeZone).format('Z')
                 };
                 if(typeof probe.capture === 'function'){
-                    data.context = probe.capture(runner);
+                    data.context = probe.capture.apply(probe, [runner].concat(slice.call(arguments)));
                 }
                 overseer.push(data);
             };
@@ -94,7 +95,7 @@ define([
 
             _.forEach(probe.events, function(eventName){
                 var listen = eventName.indexOf('.') > 0 ? eventName : eventName + eventNs;
-                runner.on(listen, probeHandler);
+                runner.on(listen, _.partial(probeHandler, eventName));
             });
         };
 
@@ -114,7 +115,7 @@ define([
                 };
 
                 if(typeof probe.capture === 'function'){
-                    data.context = probe.capture(runner);
+                    data.context = probe.capture.apply(probe, [runner].concat(slice.call(arguments)));
                 }
                 overseer.push(data);
             };
@@ -128,13 +129,14 @@ define([
                     timestamp : now.format('x') / 1000,
                     timezone  : now.tz(timeZone).format('Z')
                 };
+                var args = slice.call(arguments);
                 overseer.getQueue().then(function(queue){
                     last = _.findLast(queue, { type : probe.name, marker : 'start' });
                     if(last && !_.findLast(queue, { type : probe.name, marker : 'stop', id : last.id })){
                         data.id = last.id;
                         data.marker = 'end';
                         if(typeof probe.capture === 'function'){
-                            data.context = probe.capture(runner);
+                            data.context = probe.capture.apply(probe, [runner].concat(args));
                         }
                         overseer.push(data);
                     }
@@ -148,11 +150,11 @@ define([
 
             _.forEach(probe.startEvents, function(eventName){
                 var listen = eventName.indexOf('.') > 0 ? eventName : eventName + eventNs;
-                runner.on(listen, startHandler);
+                runner.on(listen, _.partial(startHandler, eventName));
             });
             _.forEach(probe.stopEvents, function(eventName){
                 var listen = eventName.indexOf('.') > 0 ? eventName : eventName + eventNs;
-                runner.on(listen, stopHandler);
+                runner.on(listen, _.partial(stopHandler, eventName));
             });
         };
 
