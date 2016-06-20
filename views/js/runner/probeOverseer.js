@@ -34,6 +34,8 @@ define([
 
     var timeZone = moment.tz.guess();
 
+    var slice = Array.prototype.slice;
+
     /**
      * Create the overseer intance
      * @param {String} testIdentifier - a unique id for a test execution
@@ -72,7 +74,7 @@ define([
             var eventNs = '.probe-' + probe.name;
 
             //event handler registered to collect data
-            var probeHandler = function probeHandler(eventName){
+            var probeHandler = function probeHandler(){
                 var now = moment();
                 var data = {
                     id   : uuid(8, 16),
@@ -81,7 +83,7 @@ define([
                     timezone  : now.tz(timeZone).format('Z')
                 };
                 if(typeof probe.capture === 'function'){
-                    data.context = probe.capture(runner, eventName);
+                    data.context = probe.capture.apply(probe, [runner].concat(slice.call(arguments)));
                 }
                 overseer.push(data);
             };
@@ -102,7 +104,7 @@ define([
             var eventNs = '.probe-' + probe.name;
 
             //start event handler registered to collect data
-            var startHandler = function startHandler(eventName){
+            var startHandler = function startHandler(){
                 var now = moment();
                 var data = {
                     id: uuid(8, 16),
@@ -113,13 +115,13 @@ define([
                 };
 
                 if(typeof probe.capture === 'function'){
-                    data.context = probe.capture(runner, eventName);
+                    data.context = probe.capture.apply(probe, [runner].concat(slice.call(arguments)));
                 }
                 overseer.push(data);
             };
 
             //stop event handler registered to collect data
-            var stopHandler = function stopHandler(eventName){
+            var stopHandler = function stopHandler(){
                 var now = moment();
                 var last;
                 var data = {
@@ -127,13 +129,14 @@ define([
                     timestamp : now.format('x') / 1000,
                     timezone  : now.tz(timeZone).format('Z')
                 };
+                var args = slice.call(arguments);
                 overseer.getQueue().then(function(queue){
                     last = _.findLast(queue, { type : probe.name, marker : 'start' });
                     if(last && !_.findLast(queue, { type : probe.name, marker : 'stop', id : last.id })){
                         data.id = last.id;
                         data.marker = 'end';
                         if(typeof probe.capture === 'function'){
-                            data.context = probe.capture(runner, eventName);
+                            data.context = probe.capture.apply(probe, [runner].concat(args));
                         }
                         overseer.push(data);
                     }
