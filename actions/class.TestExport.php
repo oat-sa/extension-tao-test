@@ -19,6 +19,8 @@
  *               2009-2012 (update and modification) Public Research Centre Henri Tudor (under the project TAO-SUSTAIN & TAO-DEV);
  * 
  */
+use oat\oatbox\event\EventManagerAwareTrait;
+use oat\taoTests\models\event\TestExportEvent;
 
 /**
  * This controller provide the actions to export tests 
@@ -31,6 +33,7 @@
  */
 class taoTests_actions_TestExport extends tao_actions_Export {
 
+    use EventManagerAwareTrait;
     /**
      * overwrite the parent index to add the requiresRight for Tests
      *
@@ -63,5 +66,14 @@ class taoTests_actions_TestExport extends tao_actions_Export {
 		}
 		
 		return $returnValue;
-	}	
+    }
+
+    protected function sendFileToClient($file, $test)
+    {
+        $this->getEventManager()->trigger(new TestExportEvent($test->getUri()));
+
+        parent::sendFileToClient($file, $test);
+    }
+
+
 }

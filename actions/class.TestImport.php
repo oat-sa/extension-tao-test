@@ -18,6 +18,7 @@
  *               
  * 
  */
+use oat\taoTests\models\event\TestImportEvent;
 
 /**
  * This controller provide the actions to import items 
@@ -56,4 +57,12 @@ class taoTests_actions_TestImport extends tao_actions_Import {
 		
 		return $returnValue;
 	}
+
+    protected function onAfterImport(common_report_Report $report)
+    {
+        if (common_report_Report::TYPE_SUCCESS == $report->getType()) {
+            $this->getEventManager()->trigger(new TestImportEvent($report));
+        }
+    }
+
 }

@@ -19,6 +19,9 @@
  *               2009-2012 (update and modification) Public Research Centre Henri Tudor (under the project TAO-SUSTAIN & TAO-DEV);
  * 
  */
+use oat\taoTests\models\event\TestCreatedEvent;
+use oat\taoTests\models\event\TestDuplicatedEvent;
+use oat\taoTests\models\event\TestRemovedEvent;
 
 /**
  * Service methods to manage the Tests business models using the RDF API.
@@ -71,7 +74,7 @@ class taoTests_models_classes_TestsService
      *
      * @access public
      * @author Joel Bout, <joel.bout@tudor.lu>
-     * @param  Resource test
+     * @param  core_kernel_classes_Resource $test
      * @return boolean
      */
     public function deleteTest( core_kernel_classes_Resource $test)
@@ -88,6 +91,7 @@ class taoTests_models_classes_TestsService
 			}
 
 			$returnValue = $test->delete();
+            $this->getEventManager()->trigger(new TestRemovedEvent($test->getUri()));
 		}
 
 
@@ -201,8 +205,8 @@ class taoTests_models_classes_TestsService
      *
      * @access public
      * @author Joel Bout, <joel.bout@tudor.lu>
-     * @param  Resource instance
-     * @param  Class clazz
+     * @param  core_kernel_classes_Resource $instance
+     * @param  core_kernel_classes_Class $clazz
      * @return core_kernel_classes_Resource
      */
     public function cloneInstance( core_kernel_classes_Resource $instance,  core_kernel_classes_Class $clazz = null)
@@ -240,8 +244,10 @@ class taoTests_models_classes_TestsService
 			
 			$impl = $this->getTestModelImplementation($this->getTestModel($instance));
 			$impl->cloneContent($instance, $clone);
-			
-			$returnValue = $clone;
+
+            $this->getEventManager()->trigger(new TestDuplicatedEvent($instance->getUri(), $clone->getUri()));
+
+            $returnValue = $clone;
 		}
 
 
@@ -267,15 +273,17 @@ class taoTests_models_classes_TestsService
      *
      * @access public
      * @author Joel Bout, <joel.bout@tudor.lu>
-     * @param  Class clazz
-     * @param  string label
+     * @param  core_kernel_classes_Class $clazz
+     * @param  string $label
      * @return core_kernel_classes_Resource
      */
     public function createInstance( core_kernel_classes_Class $clazz, $label = '')
     {
 		$test = parent::createInstance($clazz, $label);
         $this->setDefaultModel($test);
-		
+
+        $this->getEventManager()->trigger(new TestCreatedEvent($test->getUri()));
+
         return $test;
     }
 
