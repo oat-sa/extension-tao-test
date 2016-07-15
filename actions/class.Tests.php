@@ -19,7 +19,9 @@
  *               2009-2012 (update and modification) Public Research Centre Henri Tudor (under the project TAO-SUSTAIN & TAO-DEV);
  * 
  */
+use oat\oatbox\event\EventManagerAwareTrait;
 use oat\tao\model\lock\LockManager;
+use oat\taoTests\models\event\TestUpdatedEvent;
 
 /**
  * Tests Controller provide actions performed from url resolution
@@ -31,6 +33,7 @@ use oat\tao\model\lock\LockManager;
  *
  */
 class taoTests_actions_Tests extends tao_actions_SaSModule {
+    use EventManagerAwareTrait;
 
 	protected function getClassService() {
 		return taoTests_models_classes_TestsService::singleton();
@@ -92,8 +95,9 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
     				//then save the property values as usual
     				$binder = new tao_models_classes_dataBinding_GenerisFormDataBinder($test);
     				$test = $binder->bind($propertyValues);
-    
-    		        $this->setData("selectNode", tao_helpers_Uri::encode($test->getUri()));
+                    $this->getEventManager()->trigger(new TestUpdatedEvent($test->getUri(), $propertyValues));
+
+                    $this->setData("selectNode", tao_helpers_Uri::encode($test->getUri()));
     				$this->setData('message', __('Test saved'));
     				$this->setData('reload', true);
     			}
