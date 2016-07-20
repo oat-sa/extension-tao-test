@@ -238,6 +238,14 @@ define([
             },
 
             /**
+             * Checks if a communication channel has been requested.
+             * @returns {Boolean}
+             */
+            hasCommunicator : function hasCommunicator() {
+                return !!communicatorPromise;
+            },
+
+            /**
              * Gets access to the communication channel, load it if not present
              * @returns {Promise} Returns a promise that will resolve the communication channel
              */

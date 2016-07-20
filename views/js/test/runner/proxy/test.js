@@ -600,6 +600,59 @@ define(['lodash', 'core/promise', 'core/eventifier', 'taoTests/runner/proxy'], f
     });
 
 
+    QUnit.asyncTest('proxyFactory.hasCommunicator', function(assert) {
+        QUnit.expect(7);
+
+        var expectedCommunicator = {
+            on: function() {
+                return this;
+            },
+            init: function() {
+                assert.ok(true, 'The communicator is initialized');
+                return Promise.resolve();
+            },
+            open: function() {
+                assert.ok(true, 'The communicator is open');
+                return Promise.resolve();
+            },
+            destroy: function() {
+                assert.ok(true, 'The communicator must be destroyed when the proxy is destroying');
+                return Promise.resolve();
+            }
+        };
+
+        proxyFactory.registerProvider('communicator', {
+            init: _.noop,
+            destroy: function() {
+                return Promise.resolve();
+            },
+            loadCommunicator: function() {
+                return expectedCommunicator;
+            }
+        });
+
+        var proxy = proxyFactory('communicator');
+
+        assert.equal(proxy.hasCommunicator(), false, 'No communicator has been requested before init');
+
+        proxy.init().then(function () {
+
+            assert.equal(proxy.hasCommunicator(), false, 'No communicator has been requested at init');
+
+            proxy.getCommunicator().then(function(communicator) {
+                assert.equal(communicator, expectedCommunicator, 'The proxy has built a communicator handler');
+
+                assert.equal(proxy.hasCommunicator(), true, 'A communicator has been requested');
+
+                proxy.destroy()
+                    .then(function() {
+                        QUnit.start();
+                });
+            });
+        });
+    });
+
+
     QUnit.asyncTest('proxyFactory.getCommunicator', function(assert) {
         QUnit.expect(6);
 
