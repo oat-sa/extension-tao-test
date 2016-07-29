@@ -56,7 +56,7 @@ class PluginRegistry extends AbstractRegistry
      */
     public function register(TestPlugin $plugin)
     {
-        if(!is_null($plugin) && ! empty($plugin->getModule) ) {
+        if(!is_null($plugin) && ! empty($plugin->getModule()) ) {
 
             //encode the plugin into an assoc array
             $pluginData = json_decode(json_encode($plugin), true);
