@@ -25,6 +25,9 @@ use oat\taoTests\models\runner\plugins\TestPluginService;
 use oat\oatbox\service\ServiceManager;
 
 /**
+ * Installation action that registers the TestPluginService
+ *
+ * @author Bertrand Chevrier <bertrand@taotesting.com>
  */
 class RegisterTestPluginService extends \common_ext_action_InstallAction
 {
