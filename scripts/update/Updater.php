@@ -47,7 +47,9 @@ class Updater extends \common_ext_ExtensionUpdater
             $this->setVersion('2.7.1');
         }
 
-        if ($this->isVersion('2.7.1')){
+        $this->skip('2.7.1', '2.23.0');
+
+        if ($this->isVersion('2.23.0')){
 
             //register test plugin service
             $registerService = new RegisterTestPluginService();
