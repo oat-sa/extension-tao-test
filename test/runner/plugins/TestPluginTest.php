@@ -24,12 +24,17 @@ use oat\taoTests\models\runner\plugins\TestPlugin;
 use oat\tao\test\TaoPhpUnitTestRunner;
 
 /**
+ * Test the TestPlugin pojo
  *
  * @author Bertrand Chevrier <bertrand@taotesting.com>
  */
 class TestPluginTest extends TaoPhpUnitTestRunner
 {
 
+    /**
+     * Data provider
+     * @return array the data
+     */
     public function accessorsProvider()
     {
         return [
@@ -169,7 +174,9 @@ class TestPluginTest extends TaoPhpUnitTestRunner
         $this->assertEquals(!$output['active'], $testPlugin->isActive());
     }
 
-
+    /**
+     * Test encoding the object to json
+     */
     public function testJsonSerialize()
     {
         $expected = '{"id":"bar","module":"bar\/bar","bundle":"plugins\/bundle.min","position":12,"name":"Bar","description":"The best bar ever","category":"dummy","active":false,"tags":["dummy","goofy"]}';

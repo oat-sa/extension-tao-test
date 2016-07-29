@@ -142,6 +142,11 @@ class TestPlugin implements JsonSerializable
         return $this->category;
     }
 
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
     public function isActive()
     {
         return $this->active;
