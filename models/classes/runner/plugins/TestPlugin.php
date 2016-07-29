@@ -197,10 +197,7 @@ class TestPlugin implements JsonSerializable
         if( !isset($data['id']) || !isset($data['module']) || !isset($data['category']) ) {
             throw new common_exception_InconsistentData('The plugin requires an id, a module and a category');
         }
-        if(self::validateRequiredData($data['id'], $data['module'], $data['category'])){
-            return new self($data['id'], $data['module'], $data['category'], $data);
-        }
-        return null;
+        return new self($data['id'], $data['module'], $data['category'], $data);
     }
 
     /**
