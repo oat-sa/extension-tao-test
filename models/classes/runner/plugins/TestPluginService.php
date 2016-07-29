@@ -52,9 +52,13 @@ class TestPluginService extends ConfigurableService
      */
     public function getAllPlugins()
     {
-        return array_map(function($value) {
-          return TestPlugin::fromArray($value);
+        $plugins = array_map(function($value) {
+            return $this->loadPlugin($value);
         }, $this->registry->getMap());
+
+        return array_filter($plugins, function($plugin){
+            return !is_null($plugin);
+        });
     }
 
     /**
@@ -67,10 +71,26 @@ class TestPluginService extends ConfigurableService
     {
         foreach($this->registry->getMap() as $plugin){
             if($plugin['id'] == $id){
-                return TestPlugin::fromArray($plugin);
+                return $this->loadPlugin($plugin);
             }
         }
         return null;
+    }
+
+    /**
+     * Load a test plugin from the given data
+     * @param array $data
+     * @return TestPlugin|null
+     */
+    private function loadPlugin(array $data)
+    {
+        $plugin = null;
+        try {
+            $plugin = TestPlugin::fromArray($data);
+        } catch(\common_exception_InconsistentData $dataException) {
+            \common_Logger::w('Got inconsistent plugin data, skipping.');
+        }
+        return $plugin;
     }
 
     /**
