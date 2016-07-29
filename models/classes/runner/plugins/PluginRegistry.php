@@ -25,9 +25,11 @@ use oat\oatbox\AbstractRegistry;
 use oat\taoTests\models\runner\plugins\TestPlugin;
 
 /**
+ * Store the <b>available</b> test runner plugins, even if not activated,
+ * plugins have to be activated.
  *
- * Registry to store client library paths that will be provide to requireJs
  *
+ * @author Bertrand Chevrier <bertrand@taotesting.com>
  */
 class PluginRegistry extends AbstractRegistry
 {
@@ -47,10 +49,16 @@ class PluginRegistry extends AbstractRegistry
         return common_ext_ExtensionsManager::singleton()->getExtensionById('taoTests');
     }
 
+    /**
+     * Register a plugin
+     * @param TestPlugin $plugin the plugin to register
+     * @return boolean true if registered
+     */
     public function register(TestPlugin $plugin)
     {
-        if(!is_null($plugin)) {
+        if(!is_null($plugin) && ! empty($plugin->getModule) ) {
 
+            //encode the plugin into an assoc array
             $pluginData = json_decode(json_encode($plugin), true);
 
             self::getRegistry()->set($plugin->getModule(),  $pluginData);
@@ -58,10 +66,5 @@ class PluginRegistry extends AbstractRegistry
             return true;
         }
         return false;
-    }
-
-    public function getPlugins()
-    {
-        self::getRegistry()->getMap();
     }
 }

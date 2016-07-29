@@ -19,8 +19,7 @@
  */
 namespace oat\taoTests\test\runner\plugins;
 
-use Prophecy\Argument;
-use Prophecy\Prophet;
+use common_exception_InconsistentData;
 use oat\taoTests\models\runner\plugins\TestPlugin;
 use oat\tao\test\TaoPhpUnitTestRunner;
 
@@ -38,37 +37,31 @@ class TestPluginTest extends TaoPhpUnitTestRunner
                 [
                     'id'          => 'foo',
                     'name'        => 'Foo',
+                    'module'      => 'plugin/foo',
+                    'category'    => 'dummy',
                     'description' => 'The best foo ever',
                     'active'      => true,
                     'tags'        => ['required']
                 ], [
                     'id'          => 'foo',
                     'name'        => 'Foo',
+                    'module'      => 'plugin/foo',
+                    'category'    => 'dummy',
                     'description' => 'The best foo ever',
                     'active'      => true,
                     'tags'        => ['required']
                 ]
             ], [
                 [
-                    'id'          => 12,
+                    'id'          => '12',
                     'name'        => 21,
+                    'module'      => 'plugin/foo',
+                    'category'    => 'dummy',
                 ], [
                     'id'          => '12',
                     'name'        => '21',
-                    'description' => '',
-                    'active'      => true,
-                    'tags'        => []
-                ]
-            ], [
-                [
-                    'id'          => null,
-                    'name'        => null,
-                    'description' => null,
-                    'active'      => null,
-                    'tags'        => null
-                ], [
-                    'id'          => '',
-                    'name'        => '',
+                    'module'      => 'plugin/foo',
+                    'category'    => 'dummy',
                     'description' => '',
                     'active'      => true,
                     'tags'        => []
@@ -78,20 +71,96 @@ class TestPluginTest extends TaoPhpUnitTestRunner
     }
 
     /**
-     *
+     * @expectedException common_exception_InconsistentData
+     */
+    public function testConstructBadId()
+    {
+        new TestPlugin(12, 'foo', 'bar');
+    }
+
+
+    /**
+     * @expectedException common_exception_InconsistentData
+     */
+    public function testConstructEmptyId()
+    {
+        new TestPlugin('', 'foo', 'bar');
+    }
+
+    /**
+     * @expectedException common_exception_InconsistentData
+     */
+    public function testConstructBadModule()
+    {
+        new TestPlugin('foo', true, 'bar');
+    }
+
+    /**
+     * @expectedException common_exception_InconsistentData
+     */
+    public function testConstructiEmptyModule()
+    {
+        new TestPlugin('foo', '', 'bar');
+    }
+
+    /**
+     * @expectedException common_exception_InconsistentData
+     */
+    public function testConstructBadCategory()
+    {
+        new TestPlugin('foo', 'bar', []);
+    }
+
+    /**
+     * @expectedException common_exception_InconsistentData
+     */
+    public function testConstructNoCategory()
+    {
+        new TestPlugin('foo', 'bar', null);
+    }
+
+    /**
+     * @expectedException common_exception_InconsistentData
+     */
+    public function testFromArrayNoRequiredData()
+    {
+        TestPlugin::fromArray([]);
+    }
+
+    /**
+     * Test contructor and getter
      * @dataProvider accessorsProvider
      */
-    public function testAccessors($input, $output)
+    public function testConstruct($input, $output)
     {
 
-        if(isset($input['description'])){
-            $testPlugin = new TestPlugin($input['id'], $input['name'], $input['description'], $input['active'], $input['tags']);
-        } else {
-            $testPlugin = new TestPlugin($input['id'], $input['name']);
-        }
+        $testPlugin = new TestPlugin($input['id'], $input['module'], $input['category'], $input);
 
         $this->assertEquals($output['id'], $testPlugin->getId());
         $this->assertEquals($output['name'], $testPlugin->getName());
+        $this->assertEquals($output['module'], $testPlugin->getModule());
+        $this->assertEquals($output['category'], $testPlugin->getCategory());
+        $this->assertEquals($output['description'], $testPlugin->getDescription());
+        $this->assertEquals($output['active'], $testPlugin->isActive());
+        $this->assertEquals($output['tags'], $testPlugin->getTags());
+
+        $testPlugin->setActive(!$output['active']);
+        $this->assertEquals(!$output['active'], $testPlugin->isActive());
+    }
+
+    /**
+     * Test from array and getters
+     * @dataProvider accessorsProvider
+     */
+    public function testFromArray($input, $output)
+    {
+
+        $testPlugin = TestPlugin::fromArray($input);
+
+        $this->assertEquals($output['id'], $testPlugin->getId());
+        $this->assertEquals($output['name'], $testPlugin->getName());
+        $this->assertEquals($output['module'], $testPlugin->getModule());
+        $this->assertEquals($output['category'], $testPlugin->getCategory());
         $this->assertEquals($output['description'], $testPlugin->getDescription());
         $this->assertEquals($output['active'], $testPlugin->isActive());
         $this->assertEquals($output['tags'], $testPlugin->getTags());
@@ -103,9 +172,16 @@ class TestPluginTest extends TaoPhpUnitTestRunner
 
     public function testJsonSerialize()
     {
-        $expected = '{"id":"bar","name":"Bar","description":"The best bar ever","active":false,"tags":["dummy","goofy"]}';
+        $expected = '{"id":"bar","module":"bar\/bar","bundle":"plugins\/bundle.min","position":12,"name":"Bar","description":"The best bar ever","category":"dummy","active":false,"tags":["dummy","goofy"]}';
 
-        $testPlugin = new TestPlugin('bar', 'Bar', 'The best bar ever', false, ['dummy', 'goofy']);
+        $testPlugin = new TestPlugin('bar', 'bar/bar', 'dummy', [
+            'name' => 'Bar',
+            'description' => 'The best bar ever',
+            'active' =>  false,
+            'position' => 12,
+            'bundle' => 'plugins/bundle.min',
+            'tags' => ['dummy', 'goofy']
+        ]);
 
         $serialized = json_encode($testPlugin);
 
