@@ -172,6 +172,15 @@ class TestPlugin implements JsonSerializable
      */
     public function jsonSerialize()
     {
+        return $this->toArray();
+    }
+
+    /**
+     * Convenient method to convert the members to an assoc array
+     * @return array the data
+     */
+    public function toArray()
+    {
         return [
             'id'          => $this->id,
             'module'      => $this->module,
