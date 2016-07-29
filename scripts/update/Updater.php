@@ -21,31 +21,41 @@
 
 namespace oat\taoTests\scripts\update;
 
+use oat\taoTests\scripts\install\RegisterTestPluginService;
 
-class Updater extends \common_ext_ExtensionUpdater 
+class Updater extends \common_ext_ExtensionUpdater
 {
-	/**
-     * 
+        /**
+     *
      * @param string $currentVersion
      * @return string $versionUpdatedTo
      */
     public function update($initialVersion)
     {
-        
+
         if ($this->isBetween('0', '2.7')){
             $this->setVersion('2.7');
         }
-		// remove active prop
-		if ($this->isVersion('2.7')){
-		    $deprecatedProperty = new \core_kernel_classes_Property('http://www.tao.lu/Ontologies/TAOTest.rdf#active');
-		    $iterator = new \core_kernel_classes_ResourceIterator(array(\taoTests_models_classes_TestsService::singleton()->getRootClass()));
-		    foreach ($iterator as $resource) {
-		        $resource->removePropertyValues($deprecatedProperty);
-		    }
-		    $this->setVersion('2.7.1');
-		}
+
+        // remove active prop
+        if ($this->isVersion('2.7')){
+            $deprecatedProperty = new \core_kernel_classes_Property('http://www.tao.lu/Ontologies/TAOTest.rdf#active');
+            $iterator = new \core_kernel_classes_ResourceIterator(array(\taoTests_models_classes_TestsService::singleton()->getRootClass()));
+            foreach ($iterator as $resource) {
+                $resource->removePropertyValues($deprecatedProperty);
+            }
+            $this->setVersion('2.7.1');
+        }
 
         $this->skip('2.7.1', '2.23.0');
 
-	}
+        if ($this->isVersion('2.23.0')){
+
+            //register test plugin service
+            $registerService = new RegisterTestPluginService();
+            $registerService([]);
+
+            $this->setVersion('3.0.0');
+        }
+    }
 }
