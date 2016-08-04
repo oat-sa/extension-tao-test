@@ -48,6 +48,7 @@ define([
         var initConfig      = _.defaults(config || {}, _defaults);
         var tokenHandler    = tokenHandlerFactory();
         var middlewares     = {};
+        var initialized     = false;
         var delegateProxy, communicator, communicatorPromise;
 
         /**
@@ -121,8 +122,15 @@ define([
          */
         function delegate(fnName) {
             var request = {command: fnName, params: _slice.call(arguments, 1)};
+            if (!initialized && fnName !== 'init') {
+                return Promise.reject(new Error('Proxy is not properly initialized or has been destroyed!'));
+            }
             return delegateProxy.apply(null, arguments)
                 .then(function(data) {
+                    // If the delegate call succeed the proxy is initialized.
+                    // Place this set here to avoid to wrap the init() into another promise.
+                    initialized = true;
+
                     // handle successful request
                     return applyMiddlewares(request, {
                         status: 'success',
@@ -190,6 +198,9 @@ define([
                  * @param {Promise} promise
                  */
                 return delegate('destroy').then(function() {
+                    // The proxy is now destroyed. A call to init() is mandatory to be able to use it again.
+                    initialized = false;
+                    
                     // a communicator has been invoked and...
                     if (communicatorPromise) {
                         return new Promise(function(resolve, reject) {
@@ -227,11 +238,22 @@ define([
             },
 
             /**
+             * Checks if a communication channel has been requested.
+             * @returns {Boolean}
+             */
+            hasCommunicator : function hasCommunicator() {
+                return !!communicatorPromise;
+            },
+
+            /**
              * Gets access to the communication channel, load it if not present
              * @returns {Promise} Returns a promise that will resolve the communication channel
              */
             getCommunicator : function getCommunicator() {
                 var self = this;
+                if (!initialized) {
+                    return Promise.reject(new Error('Proxy is not properly initialized or has been destroyed!'));
+                }
                 if (!communicatorPromise) {
                     communicatorPromise = new Promise(function(resolve, reject) {
                         if (_.isFunction(proxyAdapter.loadCommunicator)) {
@@ -459,7 +481,12 @@ define([
             }
         });
 
-        delegateProxy = delegator(proxy, proxyAdapter, {name: 'proxy'});
+        delegateProxy = delegator(proxy, proxyAdapter, {
+            name: 'proxy',
+            wrapper: function pluginWrapper(response){
+                return Promise.resolve(response);
+            }
+        });
 
         return proxy;
     }
