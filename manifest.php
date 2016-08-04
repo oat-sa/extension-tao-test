@@ -47,7 +47,7 @@ return array(
 	'install' => array(
 		'rdf' => array(
 				dirname(__FILE__). '/models/ontology/taotest.rdf'
-                            ),
+		),
             'php' => [
                 'oat\\taoTests\\scripts\\install\\RegisterTestPluginService'
             ]
