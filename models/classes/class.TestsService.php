@@ -22,7 +22,7 @@
 use oat\taoTests\models\event\TestCreatedEvent;
 use oat\taoTests\models\event\TestDuplicatedEvent;
 use oat\taoTests\models\event\TestRemovedEvent;
-
+use oat\generis\model\fileReference\FileReferenceSerializer;
 /**
  * Service methods to manage the Tests business models using the RDF API.
  *
@@ -376,6 +376,8 @@ class taoTests_models_classes_TestsService
     /**
      * Get the core_kernel_file_File object corresponding to the content of $test.
      *
+     * @deprecated use $this->getTestContentFile instead
+     *
      * @param core_kernel_classes_Resource $test  A resource corresponding to a TAO Test in the Knowledge Base.
      * @throws common_exception_Error If an error occurs while retrieving the test content.
      * @return core_kernel_file_File
@@ -394,7 +396,8 @@ class taoTests_models_classes_TestsService
             $msg = "Multiple contents found for test '${uri}'.";
             throw new common_exception_Error($msg);
         }
-        if ($testcontent instanceof core_kernel_classes_Resource) {            
+        if ($testcontent instanceof core_kernel_classes_Resource) {
+
             return new core_kernel_file_File($testcontent->getUri());
         } else {
             $uri = $test->getUri();
@@ -403,5 +406,47 @@ class taoTests_models_classes_TestsService
             return $testcontent;
         }
     }
-    
+
+    /**
+     * Get the File object corresponding to the content of $test.
+     *
+     * @param core_kernel_classes_Resource $test
+     * @return core_kernel_classes_Container|\oat\oatbox\filesystem\FileSystemHandler
+     * @throws common_exception_Error
+     */
+    public function getTestDirectory(core_kernel_classes_Resource $test)
+    {
+        $testContentProperty = $this->getProperty(TEST_TESTCONTENT_PROP);
+        try {
+            $testcontent = $test->getUniquePropertyValue($testContentProperty);
+        } catch (common_exception_EmptyProperty $e) {
+            $uri = $test->getUri();
+            $msg = "Test '${uri}' has no content.";
+            throw new common_exception_Error($msg);
+        } catch (common_Exception $e) {
+            $uri = $test->getUri();
+            $msg = "Multiple contents found for test '${uri}'.";
+            throw new common_exception_Error($msg);
+        }
+
+
+        if ($testcontent instanceof core_kernel_classes_Resource) {
+            return $this->getFileReferenceSerializer()->unserializeDirectory($testcontent->getUri());
+        } else {
+            $uri = $test->getUri();
+            $msg = "Test '${uri}' content is not a resource. " . $testcontent;
+            common_Logger::w($msg);
+            return $testcontent;
+        }
+    }
+
+    /**
+     * Get serializer to persist filesystem object
+     *
+     * @return FileReferenceSerializer
+     */
+    protected function getFileReferenceSerializer()
+    {
+        return $this->getServiceManager()->get(FileReferenceSerializer::SERVICE_ID);
+    }
 }
