@@ -36,7 +36,7 @@ class TestPluginServiceTest extends TaoPhpUnitTestRunner
 {
 
     //data to stub the regsitry content
-    const PLUGIN_DATA =  [
+    private static $pluginData =  [
         'taoQtiTest/runner/plugins/controls/title/title' => [
                 'id' => 'title',
                 'module' => 'taoQtiTest/runner/plugins/controls/title/title',
@@ -72,7 +72,7 @@ class TestPluginServiceTest extends TaoPhpUnitTestRunner
         $prophet = new Prophet();
         $prophecy = $prophet->prophesize();
         $prophecy->willExtend(PluginRegistry::class);
-        $prophecy->getMap()->willReturn(self::PLUGIN_DATA);
+        $prophecy->getMap()->willReturn(self::$pluginData);
 
         $testPluginService->setRegistry($prophecy->reveal());
 

@@ -159,7 +159,7 @@ define([
         };
 
         /**
-         * Get the storaget instance
+         * Get the storage instance
          * @returns {Promise} that resolves with the storage
          */
         var getStorage = function getStorage(){
@@ -170,6 +170,13 @@ define([
                 storage = newStorage;
                 return Promise.resolve(storage);
             });
+        };
+
+        /**
+         * Unset the storage instance
+         */
+        var resetStorage = function resetStorage() {
+            storage = null;
         };
 
         //argument validation
@@ -340,7 +347,7 @@ define([
 
                 queue = [];
                 return getStorage().then(function(storage){
-                    return storage.clear();
+                    return storage.removeStore().then(resetStorage);
                 });
             }
         };
