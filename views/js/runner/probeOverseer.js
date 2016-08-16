@@ -133,17 +133,16 @@ define([
                     timezone  : now.tz(timeZone).format('Z')
                 };
                 var args = slice.call(arguments);
-                overseer.getQueue().then(function(queue){
-                    last = _.findLast(immutableQueue, { type : probe.name, marker : 'start' });
-                    if(last && !_.findLast(immutableQueue, { type : probe.name, marker : 'stop', id : last.id })){
-                        data.id = last.id;
-                        data.marker = 'end';
-                        if(typeof probe.capture === 'function'){
-                            data.context = probe.capture.apply(probe, [runner].concat(args));
-                        }
-                        overseer.push(data);
+
+                last = _.findLast(immutableQueue, { type : probe.name, marker : 'start' });
+                if(last && !_.findLast(immutableQueue, { type : probe.name, marker : 'stop', id : last.id })){
+                    data.id = last.id;
+                    data.marker = 'end';
+                    if(typeof probe.capture === 'function'){
+                        data.context = probe.capture.apply(probe, [runner].concat(args));
                     }
-                });
+                    overseer.push(data);
+                }
             };
 
             //fallback
