@@ -172,18 +172,19 @@ define([
 
             /**
              * Initializes the proxy
+             * @param {Object} [params] - An optional list of parameters
              * @returns {Promise} - Returns a promise. The proxy will be fully initialized on resolve.
              *                      Any error will be provided if rejected.
              * @fires init
              */
-            init: function init() {
+            init: function init(params) {
                 /**
                  * @event proxy#init
                  * @param {Promise} promise
                  * @param {Object} config
                  * @param {Object} params
                  */
-                return delegate('init', initConfig, getParams());
+                return delegate('init', initConfig, getParams(params));
             },
 
             /**
@@ -200,7 +201,7 @@ define([
                 return delegate('destroy').then(function() {
                     // The proxy is now destroyed. A call to init() is mandatory to be able to use it again.
                     initialized = false;
-                    
+
                     // a communicator has been invoked and...
                     if (communicatorPromise) {
                         return new Promise(function(resolve, reject) {
