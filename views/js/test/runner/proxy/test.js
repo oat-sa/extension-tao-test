@@ -84,14 +84,18 @@ define(['lodash', 'core/promise', 'core/eventifier', 'taoTests/runner/proxy'], f
 
     QUnit.asyncTest('proxyFactory.init', function(assert) {
         var initConfig = {};
+        var expectedParams = {
+            storeId: '342FEEF6-ECA0-418E-81E3-4E6F7D1F90E4'
+        };
 
-        QUnit.expect(6);
+        QUnit.expect(7);
         QUnit.stop();
 
         proxyFactory.registerProvider('default', _.defaults({
-            init : function(config) {
+            init : function(config, params) {
                 assert.ok(true, 'The proxyFactory has delegated the call to init');
                 assert.equal(config, initConfig, 'The proxyFactory has provided the config object to the init method');
+                assert.deepEqual(params, expectedParams, 'The delegated method received the expected params');
                 QUnit.start();
                 return Promise.resolve();
             }
@@ -102,7 +106,7 @@ define(['lodash', 'core/promise', 'core/eventifier', 'taoTests/runner/proxy'], f
             assert.ok(promise instanceof Promise, 'The proxyFactory has provided the promise through the "init" event');
             assert.equal(config, initConfig, 'The proxyFactory has provided the config object through the "init" event');
             QUnit.start();
-        }).init();
+        }).init(expectedParams);
 
         assert.ok(result instanceof Promise, 'The proxyFactory.init method has returned a promise');
     });
@@ -110,7 +114,11 @@ define(['lodash', 'core/promise', 'core/eventifier', 'taoTests/runner/proxy'], f
 
     QUnit.asyncTest('proxyFactory.init with params', function(assert) {
         var initConfig = {};
-        var initParams = {param1:"1", param2: 2};
+        var extraParams = {param1:"1", param2: 2};
+        var initParams = {
+            storeId: '342FEEF6-ECA0-418E-81E3-4E6F7D1F90E4'
+        };
+        var expectedParams = _.merge({}, initParams, extraParams);
 
         QUnit.expect(8);
         QUnit.stop();
@@ -119,7 +127,7 @@ define(['lodash', 'core/promise', 'core/eventifier', 'taoTests/runner/proxy'], f
             init : function(config, params) {
                 assert.ok(true, 'The proxyFactory has delegated the call to init');
                 assert.equal(config, initConfig, 'The proxyFactory has provided the config object to the init method');
-                assert.deepEqual(params, initParams, 'The proxyFactory has provided the init params to the init method');
+                assert.deepEqual(params, expectedParams, 'The proxyFactory has provided the init params to the init method');
                 QUnit.start();
                 return Promise.resolve();
             }
@@ -129,9 +137,9 @@ define(['lodash', 'core/promise', 'core/eventifier', 'taoTests/runner/proxy'], f
             assert.ok(true, 'The proxyFactory has fired the "init" event');
             assert.ok(promise instanceof Promise, 'The proxyFactory has provided the promise through the "init" event');
             assert.equal(config, initConfig, 'The proxyFactory has provided the config object through the "init" event');
-            assert.deepEqual(params, initParams, 'The proxyFactory has provided the init params through the "init" event');
+            assert.deepEqual(params, expectedParams, 'The proxyFactory has provided the init params through the "init" event');
             QUnit.start();
-        }).addCallActionParams(initParams).init();
+        }).addCallActionParams(extraParams).init(initParams);
 
         assert.ok(result instanceof Promise, 'The proxyFactory.init method has returned a promise');
     });
@@ -316,8 +324,8 @@ define(['lodash', 'core/promise', 'core/eventifier', 'taoTests/runner/proxy'], f
             assert.ok(result instanceof Promise, 'The proxyFactory.sendVariables method has returned a promise');
         });
     });
-    
-    
+
+
     QUnit.asyncTest('proxyFactory.callTestAction', function(assert) {
         var expectedAction = 'test';
         var expectedParams = {
