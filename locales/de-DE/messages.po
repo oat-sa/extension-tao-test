@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.1.0-sprint15\n"
-"PO-Revision-Date: 2015-12-23T13:38:13\n"
+"Project-Id-Version: TAO 3.1.0-sprint23\n"
+"PO-Revision-Date: 2016-08-18T12:01:01\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: de-DE\n"
@@ -15,11 +15,11 @@ msgstr ""
 
 #, tao-public
 msgid "Authoring"
-msgstr ""
+msgstr "Verfassen"
 
 #, tao-public
 msgid "Combine a selection of items into tests."
-msgstr ""
+msgstr "Eine Auswahl von Elementen zu einem Test kombinieren."
 
 #, tao-public
 msgid "Delete"
@@ -35,7 +35,7 @@ msgstr "Export"
 
 #, tao-public
 msgid "Filter"
-msgstr ""
+msgstr "Filter"
 
 #, tao-public
 msgid "Import"
@@ -47,7 +47,7 @@ msgstr "Tests verwalten"
 
 #, tao-public
 msgid "Move"
-msgstr ""
+msgstr "Verschieben"
 
 #, tao-public
 msgid "New class"
@@ -59,14 +59,14 @@ msgstr "Neuer Test"
 
 #, tao-public
 msgid "Properties"
-msgstr ""
+msgstr "Eigenschaften"
 
 #, tao-public
 msgid "Search"
 msgstr "Suchen"
 
 msgid "Test properties"
-msgstr ""
+msgstr "Testeigenschaften"
 
 msgid "Test saved"
 msgstr "Test gespeichert"
@@ -86,5 +86,5 @@ msgid "The Tests module allows to combine a selection of Items to a Test."
 msgstr "Das Test-Modul erlaubt das Zusammenfassen von Items zu Tests."
 
 msgid "You checked out this test %2s ago"
-msgstr ""
+msgstr "Test wurde vor %2s ausgecheckt"
 
