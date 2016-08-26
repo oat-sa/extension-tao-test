@@ -54,6 +54,9 @@ define([
         //temp queue
         var queue = [];
 
+        //immutable queue which will not be flushed
+        var immutableQueue = [];
+
         /**
          * @type {Storage} to store the collected events
          */
@@ -130,17 +133,16 @@ define([
                     timezone  : now.tz(timeZone).format('Z')
                 };
                 var args = slice.call(arguments);
-                overseer.getQueue().then(function(queue){
-                    last = _.findLast(queue, { type : probe.name, marker : 'start' });
-                    if(last && !_.findLast(queue, { type : probe.name, marker : 'stop', id : last.id })){
-                        data.id = last.id;
-                        data.marker = 'end';
-                        if(typeof probe.capture === 'function'){
-                            data.context = probe.capture.apply(probe, [runner].concat(args));
-                        }
-                        overseer.push(data);
+
+                last = _.findLast(immutableQueue, { type : probe.name, marker : 'start' });
+                if(last && !_.findLast(immutableQueue, { type : probe.name, marker : 'stop', id : last.id })){
+                    data.id = last.id;
+                    data.marker = 'end';
+                    if(typeof probe.capture === 'function'){
+                        data.context = probe.capture.apply(probe, [runner].concat(args));
                     }
-                });
+                    overseer.push(data);
+                }
             };
 
             //fallback
@@ -277,7 +279,7 @@ define([
              */
             push : function push(entry){
                 queue.push(entry);
-
+                immutableQueue.push(entry);
                 //ensure the queue is pushed to the store consistently and atomically
                 if(writing){
                     writing.then(function(){
@@ -319,6 +321,7 @@ define([
                     return storage.getItem('queue').then(function(savedQueue){
                         if(_.isArray(savedQueue)){
                             queue = savedQueue;
+                            immutableQueue = savedQueue;
                         }
                         _.forEach(probes, collectEvent);
                         started = true;
@@ -346,6 +349,7 @@ define([
                 });
 
                 queue = [];
+                immutableQueue = [];
                 return getStorage().then(function(storage){
                     return storage.removeStore().then(resetStorage);
                 });
