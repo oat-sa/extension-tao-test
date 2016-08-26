@@ -62,8 +62,8 @@ define([
          */
         var storage;
 
-        //current write promise
-        var writing;
+        //writing promises array
+        var writing = [];
 
         //is the overseer started
         var started = false;
@@ -281,17 +281,11 @@ define([
                 queue.push(entry);
                 immutableQueue.push(entry);
                 //ensure the queue is pushed to the store consistently and atomically
-                if(writing){
-                    writing.then(function(){
-                        return getStorage().then(function(storage){
-                            return storage.setItem('queue', queue);
-                        });
+                Promise.all(writing).then(function(){
+                    getStorage().then(function(storage){
+                        writing.push(storage.setItem('queue', queue));
                     });
-                } else {
-                    writing = getStorage().then(function(storage){
-                        return storage.setItem('queue', queue);
-                    });
-                }
+                });
             },
 
             /**
@@ -302,11 +296,14 @@ define([
                 var self = this;
                 return getStorage().then(function(storage){
                     return new Promise(function(resolve){
-                        storage.getItem('queue').then(function(flushed){
-                            queue = [];
-                            return storage.setItem('queue', queue).then(function(){
-                                resolve(flushed);
-                           });
+                        Promise.all(writing).then(function () {
+                            writing = [];
+                            storage.getItem('queue').then(function(flushed){
+                                queue = [];
+                                return storage.setItem('queue', queue).then(function(){
+                                    resolve(flushed);
+                               });
+                            });
                         });
                     });
                 });
