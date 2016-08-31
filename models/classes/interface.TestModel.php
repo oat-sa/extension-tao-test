@@ -31,15 +31,6 @@ interface taoTests_models_classes_TestModel
 {
 
     /**
-     * constructor called
-     *
-     * @access public
-     * @author Joel Bout, <joel@taotesting.com>
-     * @return mixed
-     */
-    public function __construct();
-
-    /**
      * Prepare the content of the test,
      * using the provided items if possible
      *
