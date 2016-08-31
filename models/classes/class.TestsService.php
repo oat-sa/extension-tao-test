@@ -362,15 +362,15 @@ class taoTests_models_classes_TestsService
 		if (empty($testModel)) {
 			throw new common_exception_NoImplementation(__FUNCTION__.' called on a NULL testModel');
 		}
-		$classname = (string)$testModel->getOnePropertyValue(new core_kernel_classes_Property(PROPERTY_TESTMODEL_IMPLEMENTATION));
-		if (empty($classname)) {
+		$serviceId = (string)$testModel->getOnePropertyValue(new core_kernel_classes_Property(PROPERTY_TESTMODEL_IMPLEMENTATION));
+		if (empty($serviceId)) {
 			throw new common_exception_NoImplementation('No implementation found for testmodel '.$testModel->getUri());
 		}
-		if (!class_exists($classname) || !in_array('taoTests_models_classes_TestModel', class_implements($classname))) {
-			throw new common_exception_Error('Test model service '.$classname.' not found, or not compatible for test model '.$testModel->getUri());
-			
+        $testModelService = $this->getServiceManager()->get($serviceId);
+		if (!in_array('taoTests_models_classes_TestModel', class_implements($testModelService))) {
+			throw new common_exception_Error('Test model service '.get_class($testModelService).' not found, or not compatible for test model '.$testModel->getUri());
 		}
-		return new $classname();
+		return $testModelService;
     }
 
     /**
