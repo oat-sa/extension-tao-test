@@ -359,16 +359,24 @@ class taoTests_models_classes_TestsService
      * @return taoTests_models_classes_TestModel
      */
     public function getTestModelImplementation(core_kernel_classes_Resource $testModel) {
-		if (empty($testModel)) {
-			throw new common_exception_NoImplementation(__FUNCTION__.' called on a NULL testModel');
-		}
+
 		$serviceId = (string)$testModel->getOnePropertyValue(new core_kernel_classes_Property(PROPERTY_TESTMODEL_IMPLEMENTATION));
 		if (empty($serviceId)) {
 			throw new common_exception_NoImplementation('No implementation found for testmodel '.$testModel->getUri());
 		}
-        $testModelService = $this->getServiceManager()->get($serviceId);
+        try{
+            $testModelService = $this->getServiceManager()->get($serviceId);
+        } catch(\oat\oatbox\service\ServiceNotFoundException $e){
+            common_Logger::i($e->getMessage());
+            //it was the old way so it's a classname instead of a serviceid
+            if(!class_exists($serviceId)){
+                throw new common_exception_Error('Test model service '.$serviceId.' not found');
+            }
+            $testModelService = new $serviceId();
+
+        }
 		if (!in_array('taoTests_models_classes_TestModel', class_implements($testModelService))) {
-			throw new common_exception_Error('Test model service '.get_class($testModelService).' not found, or not compatible for test model '.$testModel->getUri());
+			throw new common_exception_Error('Test model service '.get_class($testModelService).' not compatible for test model '.$testModel->getUri());
 		}
 		return $testModelService;
     }
