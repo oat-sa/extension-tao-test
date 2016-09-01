@@ -359,15 +359,15 @@ class taoTests_models_classes_TestsService
         try{
             $testModelService = $this->getServiceManager()->get($serviceId);
         } catch(\oat\oatbox\service\ServiceNotFoundException $e){
-            common_Logger::i($e->getMessage());
-            //it was the old way so it's a classname instead of a serviceid
             if(!class_exists($serviceId)){
                 throw new common_exception_Error('Test model service '.$serviceId.' not found');
             }
+            // for backward compatibility support classname instead of a serviceid
+            common_Logger::w('Outdated model definition "'.$serviceId.'", please use test model service');
             $testModelService = new $serviceId();
 
         }
-		if (!in_array('taoTests_models_classes_TestModel', class_implements($testModelService))) {
+		if (!$testModelService instanceof \taoTests_models_classes_TestModel) {
 			throw new common_exception_Error('Test model service '.get_class($testModelService).' not compatible for test model '.$testModel->getUri());
 		}
 		return $testModelService;
