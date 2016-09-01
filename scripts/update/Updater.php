@@ -27,7 +27,7 @@ class Updater extends \common_ext_ExtensionUpdater
 {
 	/**
      *
-     * @param string $currentVersion
+     * @param string $initialVersion
      * @return string $versionUpdatedTo
      */
     public function update($initialVersion)

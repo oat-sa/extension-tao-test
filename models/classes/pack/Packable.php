@@ -22,7 +22,6 @@
 namespace oat\taoTests\models\pack;
 
 use \core_kernel_classes_Resource;
-use oat\taoTests\models\pack\TestPack;
 
 /**
  * To allow packing of test. The goal of the packing is to reprensent the data needed
@@ -36,7 +35,7 @@ interface Packable
      * Create a pack for an item.
      *
      * @param core_kernel_classes_Resource $test the test to pack
-     * @return TestPack
+     * @return \oat\taoTests\models\pack\TestPack
      */
     public function packTest(core_kernel_classes_Resource $test);
 }
