@@ -54,13 +54,16 @@ define([
         //temp queue
         var queue = [];
 
+        //immutable queue which will not be flushed
+        var immutableQueue = [];
+
         /**
          * @type {Storage} to store the collected events
          */
         var storage;
 
-        //current write promise
-        var writing;
+        //writing promises array
+        var writing = [];
 
         //is the overseer started
         var started = false;
@@ -130,17 +133,16 @@ define([
                     timezone  : now.tz(timeZone).format('Z')
                 };
                 var args = slice.call(arguments);
-                overseer.getQueue().then(function(queue){
-                    last = _.findLast(queue, { type : probe.name, marker : 'start' });
-                    if(last && !_.findLast(queue, { type : probe.name, marker : 'stop', id : last.id })){
-                        data.id = last.id;
-                        data.marker = 'end';
-                        if(typeof probe.capture === 'function'){
-                            data.context = probe.capture.apply(probe, [runner].concat(args));
-                        }
-                        overseer.push(data);
+
+                last = _.findLast(immutableQueue, { type : probe.name, marker : 'start' });
+                if(last && !_.findLast(immutableQueue, { type : probe.name, marker : 'stop', id : last.id })){
+                    data.id = last.id;
+                    data.marker = 'end';
+                    if(typeof probe.capture === 'function'){
+                        data.context = probe.capture.apply(probe, [runner].concat(args));
                     }
-                });
+                    overseer.push(data);
+                }
             };
 
             //fallback
@@ -277,19 +279,13 @@ define([
              */
             push : function push(entry){
                 queue.push(entry);
-
+                immutableQueue.push(entry);
                 //ensure the queue is pushed to the store consistently and atomically
-                if(writing){
-                    writing.then(function(){
-                        return getStorage().then(function(storage){
-                            return storage.setItem('queue', queue);
-                        });
+                Promise.all(writing).then(function(){
+                    getStorage().then(function(storage){
+                        writing.push(storage.setItem('queue', queue));
                     });
-                } else {
-                    writing = getStorage().then(function(storage){
-                        return storage.setItem('queue', queue);
-                    });
-                }
+                });
             },
 
             /**
@@ -300,11 +296,14 @@ define([
                 var self = this;
                 return getStorage().then(function(storage){
                     return new Promise(function(resolve){
-                        storage.getItem('queue').then(function(flushed){
-                            queue = [];
-                            return storage.setItem('queue', queue).then(function(){
-                                resolve(flushed);
-                           });
+                        Promise.all(writing).then(function () {
+                            writing = [];
+                            storage.getItem('queue').then(function(flushed){
+                                queue = [];
+                                return storage.setItem('queue', queue).then(function(){
+                                    resolve(flushed);
+                               });
+                            });
                         });
                     });
                 });
@@ -319,6 +318,7 @@ define([
                     return storage.getItem('queue').then(function(savedQueue){
                         if(_.isArray(savedQueue)){
                             queue = savedQueue;
+                            immutableQueue = savedQueue;
                         }
                         _.forEach(probes, collectEvent);
                         started = true;
@@ -346,6 +346,7 @@ define([
                 });
 
                 queue = [];
+                immutableQueue = [];
                 return getStorage().then(function(storage){
                     return storage.removeStore().then(resetStorage);
                 });
