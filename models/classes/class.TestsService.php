@@ -384,9 +384,7 @@ class taoTests_models_classes_TestsService
     /**
      * Get the core_kernel_file_File object corresponding to the content of $test.
      *
-     * @deprecated use $this->getTestContentFile instead
-     *
-     * @param core_kernel_classes_Resource $test  A resource corresponding to a TAO Test in the Knowledge Base.
+     * @param core_kernel_classes_Resource $test A resource corresponding to a TAO Test in the Knowledge Base.
      * @throws common_exception_Error If an error occurs while retrieving the test content.
      * @return core_kernel_file_File
      */
