@@ -131,4 +131,14 @@ class TestPluginService extends ConfigurableService
     {
         $this->registry = $registry;
     }
+
+    /**
+     * todo: add doc
+     * todo: rename this?
+     * @return array
+     */
+    public function getToggableDeliveryFeatures() {
+        \common_Logger::w('in original');
+        return [];
+    }
 }
