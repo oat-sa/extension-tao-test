@@ -4,7 +4,9 @@ namespace oat\taoTests\models\runner\plugins;
 
 
 //todo: write unit test
-abstract class TestRunnerFeature  {
+use oat\oatbox\PhpSerializable;
+
+abstract class TestRunnerFeature implements PhpSerializable  {
 
     public function __construct() {
         if(! is_string($this->getId()) || empty($this->getId())) {
@@ -27,6 +29,14 @@ abstract class TestRunnerFeature  {
 
     public function isEnabledByDefault() {
         return true;
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see \oat\oatbox\PhpSerializable::__toPhpCode()
+     */
+    public function __toPhpCode() {
+        return 'new '.get_class($this).'()';
     }
 
 }

@@ -131,14 +131,4 @@ class TestPluginService extends ConfigurableService
     {
         $this->registry = $registry;
     }
-
-    /**
-     * Test Features are groups of plugins representing a user-level feature
-     * that can be toggled per delivery
-     *
-     * @return TestRunnerFeature[]
-     */
-    public function getTestRunnerFeatures() {
-        return array();
-    }
 }
