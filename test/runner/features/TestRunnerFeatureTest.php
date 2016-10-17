@@ -40,16 +40,25 @@ class TestRunnerFeatureTest extends TaoPhpUnitTestRunner
             'id' => 'myPlugin',
             'module' => 'taoQtiTest/runner/plugins/myPlugin',
             'category' => 'test',
+            'active' => true
         ],
         'taoQtiTest/runner/plugins/controls/title/title' => [
             'id' => 'title',
             'module' => 'taoQtiTest/runner/plugins/controls/title/title',
             'category' => 'controls',
+            'active' => true
         ],
         'taoQtiTest/runner/plugins/controls/timer/timer' => [
             'id' => 'timer',
             'module' => 'taoQtiTest/runner/plugins/controls/timer/timer',
             'category' => 'controls',
+            'active' => true
+        ],
+        'taoQtiTest/runner/plugins/inactive' => [
+            'id' => 'inactive',
+            'module' => 'taoQtiTest/runner/plugins/inactive',
+            'category' => 'test',
+            'active' => false
         ]
     ];
 
@@ -127,6 +136,19 @@ class TestRunnerFeatureTest extends TaoPhpUnitTestRunner
         new TestFeature(
             'myId',
             ['iDontExist'],
+            true,
+            $this->getTestPluginRegistry()
+        );
+    }
+
+    /**
+     * @expectedException common_exception_InconsistentData
+     */
+    public function testConstructPluginsInactive()
+    {
+        new TestFeature(
+            'myId',
+            ['inactive'],
             true,
             $this->getTestPluginRegistry()
         );

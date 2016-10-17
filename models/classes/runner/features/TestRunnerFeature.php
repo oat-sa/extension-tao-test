@@ -43,7 +43,7 @@ abstract class TestRunnerFeature implements PhpSerializable
     public function __construct(
         $id,
         $pluginsIds,
-        $isEnabledByDefault = true,
+        $isEnabledByDefault,
         PluginRegistry $pluginRegistry)
     {
         $this->id = $id;
@@ -80,17 +80,24 @@ abstract class TestRunnerFeature implements PhpSerializable
     }
 
     /**
-     * Check that the content of $pluginsIds matches existing plugin Ids
+     * Check that the content of $pluginsIds matches existing and active plugin Ids
      * @throws \common_exception_InconsistentData
      */
     private function checkPluginsIds() {
         $allPluginIds = [];
+        $inactivePluginsIds = [];
         foreach ($this->pluginRegistry->getMap() as $plugin) {
             $allPluginIds[] = $plugin['id'];
+            if ($plugin['active'] === false) {
+                $inactivePluginsIds[] = $plugin['id'];
+            }
         }
         foreach ($this->pluginsIds as $id) {
             if (! in_array($id, $allPluginIds)) {
                 throw new \common_exception_InconsistentData('Invalid plugin Id ' . $id);
+            }
+            if (in_array($id, $inactivePluginsIds)) {
+                throw new \common_exception_InconsistentData('Cannot register inactive plugin ' . $id);
             }
         }
     }

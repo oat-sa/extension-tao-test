@@ -39,16 +39,19 @@ class TestRunnerFeatureServiceTest extends TaoPhpUnitTestRunner
             'id' => 'myPlugin',
             'module' => 'taoQtiTest/runner/plugins/myPlugin',
             'category' => 'test',
+            'active' => true
         ],
         'taoQtiTest/runner/plugins/controls/title/title' => [
             'id' => 'title',
             'module' => 'taoQtiTest/runner/plugins/controls/title/title',
             'category' => 'controls',
+            'active' => true
         ],
         'taoQtiTest/runner/plugins/controls/timer/timer' => [
             'id' => 'timer',
             'module' => 'taoQtiTest/runner/plugins/controls/timer/timer',
             'category' => 'controls',
+            'active' => true
         ]
     ];
 
