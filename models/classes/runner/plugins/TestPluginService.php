@@ -133,12 +133,12 @@ class TestPluginService extends ConfigurableService
     }
 
     /**
-     * todo: add doc
-     * todo: rename this?
-     * @return array
+     * Test Features are groups of plugins representing a user-level feature
+     * that can be toggled per delivery
+     *
+     * @return TestRunnerFeature[]
      */
-    public function getToggableDeliveryFeatures() {
-        \common_Logger::w('in original');
-        return [];
+    public function getTestRunnerFeatures() {
+        return array();
     }
 }
