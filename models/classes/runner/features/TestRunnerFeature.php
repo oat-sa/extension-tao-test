@@ -2,22 +2,44 @@
 
 namespace oat\taoTests\models\runner\features;
 
-
-//todo: write unit test
-// todo: phpdoc
 use oat\oatbox\PhpSerializable;
 use oat\taoTests\models\runner\plugins\PluginRegistry;
 
+/**
+ * A test runner feature is a user feature that can be expressed by one or more test runner plugins.
+ * They can be toggled at the delivery level.
+ *
+ * @author Christophe Noël <christophe@taotesting.com>
+ */
+
 abstract class TestRunnerFeature implements PhpSerializable
 {
+    /**
+     * @var string
+     */
     private $id;
 
+    /**
+     * @var string[] must match test runner plugins Ids
+     */
     private $pluginsIds;
 
+    /**
+     * @var bool Determine if the feature will be automatically enabled upon delivery creation
+     */
     private $isEnabledByDefault;
 
+    /**
+     * @var PluginRegistry Used to check the existence of plugins Ids
+     */
     private $pluginRegistry;
 
+    /**
+     * @param string $id
+     * @param string[] $pluginsIds
+     * @param bool $isEnabledByDefault
+     * @param PluginRegistry $pluginRegistry
+     */
     public function __construct(
         $id,
         $pluginsIds,
@@ -32,7 +54,11 @@ abstract class TestRunnerFeature implements PhpSerializable
         $this->checkData();
     }
 
-    public function checkData() {
+    /**
+     * Check the validity of user params
+     * @throws \common_exception_InconsistentData
+     */
+    private function checkData() {
         if(! is_string($this->id) || empty($this->id)) {
             throw new \common_exception_InconsistentData('The test runner feature needs an id');
         }
@@ -43,6 +69,7 @@ abstract class TestRunnerFeature implements PhpSerializable
 
         $this->checkPluginsIds();
 
+        // also check that abstract methods have been implemented correctly
         if(! is_string($this->getLabel()) || empty($this->getLabel())) {
             throw new \common_exception_InconsistentData('The test runner feature needs a label');
         }
@@ -50,10 +77,13 @@ abstract class TestRunnerFeature implements PhpSerializable
         if(! is_string($this->getDescription()) || empty($this->getDescription())) {
             throw new \common_exception_InconsistentData('The test runner feature needs a description');
         }
-
     }
 
-    public function checkPluginsIds() {
+    /**
+     * Check that the content of $pluginsIds matches existing plugin Ids
+     * @throws \common_exception_InconsistentData
+     */
+    private function checkPluginsIds() {
         $allPluginIds = [];
         foreach ($this->pluginRegistry->getMap() as $plugin) {
             $allPluginIds[] = $plugin['id'];
@@ -65,24 +95,40 @@ abstract class TestRunnerFeature implements PhpSerializable
         }
     }
 
+    /**
+     * @return string
+     */
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * @return string[]
+     */
     public function getPluginsIds()
     {
         return $this->pluginsIds;
-
     }
 
+    /**
+     * @return bool
+     */
     public function isEnabledByDefault()
     {
         return $this->isEnabledByDefault;
     }
 
+    /**
+     * User-friendly localized label for the feature
+     * @return string
+     */
     abstract function getLabel();
 
+    /**
+     * User-friendly localized description for the feature
+     * @return mixed
+     */
     abstract public function getDescription();
 
     /**
