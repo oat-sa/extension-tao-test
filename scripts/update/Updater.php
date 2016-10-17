@@ -67,7 +67,7 @@ class Updater extends \common_ext_ExtensionUpdater
             $registerService = new RegisterTestRunnerFeatureService();
             $registerService([]);
 
-//            $this->setVersion('3.5.0');
+            $this->setVersion('3.5.0');
         }
 	}
 }
