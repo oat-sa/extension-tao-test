@@ -22,6 +22,8 @@ namespace oat\taoTests\models\runner\features;
 use oat\oatbox\service\ConfigurableService;
 
 /**
+ * A service to register Test Runner Features
+ *
  * @author Christophe Noël <christophe@taotesting.com>
  */
 class TestRunnerFeatureService extends ConfigurableService {
@@ -35,20 +37,26 @@ class TestRunnerFeatureService extends ConfigurableService {
      *
      * @param TestRunnerFeature $testRunnerFeature
      * @return string Id of the registered feature
+     * @throws \common_exception_InconsistentData
      */
     public function register(TestRunnerFeature $testRunnerFeature)
     {
         $registeredFeatures = $this->getOption(self::OPTION_AVAILABLE);
-        $baseId = method_exists($testRunnerFeature, 'getId') ? $testRunnerFeature->getId() : '';
-        $nr = 0;
-        while (isset($registeredFeatures[$baseId.$nr])) {
-            $nr++;
+        if ($registeredFeatures == null) {
+            $registeredFeatures = [];
         }
-        $registeredFeatures[$baseId.$nr] = $testRunnerFeature;
-        $this->setOption(self::OPTION_AVAILABLE, $registeredFeatures);
-        return $baseId.$nr;
-    }
 
+        $featureId = $testRunnerFeature->getId();
+
+        if (array_key_exists($featureId, $registeredFeatures)) {
+            throw new \common_exception_InconsistentData('Cannot register two features with the same id ' . $featureId);
+        }
+
+        $registeredFeatures[$featureId] = $testRunnerFeature;
+        $this->setOption(self::OPTION_AVAILABLE, $registeredFeatures);
+
+        return $featureId;
+    }
 
     /**
      * Return all available features
