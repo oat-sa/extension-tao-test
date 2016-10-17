@@ -27,7 +27,7 @@ use oat\taoTests\models\runner\features\TestRunnerFeatureService;
 /**
  * Installation action that registers the TestPluginService
  *
- * @author Bertrand Chevrier <bertrand@taotesting.com>
+ * @author Christophe Noël <christophe@taotesting.com>
  */
 class RegisterTestRunnerFeatureService extends \common_ext_action_InstallAction
 {
