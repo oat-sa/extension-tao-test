@@ -1,6 +1,6 @@
 <?php
 
-namespace oat\taoTests\models\runner\plugins;
+namespace oat\taoTests\models\runner\features;
 
 
 //todo: write unit test

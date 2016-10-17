@@ -17,7 +17,7 @@
  * Copyright (c) 2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  */
-namespace oat\taoTests\models\runner\plugins;
+namespace oat\taoTests\models\runner\features;
 
 use oat\oatbox\service\ConfigurableService;
 

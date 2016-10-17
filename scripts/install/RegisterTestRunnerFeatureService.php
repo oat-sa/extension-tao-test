@@ -22,7 +22,7 @@
 namespace oat\taoTests\scripts\install;
 
 use oat\oatbox\service\ServiceManager;
-use oat\taoTests\models\runner\plugins\TestRunnerFeatureService;
+use oat\taoTests\models\runner\features\TestRunnerFeatureService;
 
 /**
  * Installation action that registers the TestPluginService
