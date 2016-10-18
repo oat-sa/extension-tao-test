@@ -22,6 +22,7 @@ namespace oat\taoTests\test\runner\features;
 use common_exception_InconsistentData;
 use oat\tao\test\TaoPhpUnitTestRunner;
 use oat\taoTests\models\runner\plugins\PluginRegistry;
+use oat\taoTests\models\runner\plugins\TestPluginService;
 use oat\taoTests\test\runner\features\samples\TestFeature;
 use oat\taoTests\test\runner\features\samples\TestFeatureEmptyDescription;
 use oat\taoTests\test\runner\features\samples\TestFeatureEmptyLabel;
@@ -64,16 +65,20 @@ class TestRunnerFeatureTest extends TaoPhpUnitTestRunner
 
     /**
      * Get the service with the stubbed registry
-     * @return PluginRegistry
+     * @return TestPluginService
      */
-    protected function getTestPluginRegistry()
+    protected function getTestPluginService()
     {
+        $testPluginService = new TestPluginService();
+
         $prophet = new Prophet();
         $prophecy = $prophet->prophesize();
         $prophecy->willExtend(PluginRegistry::class);
         $prophecy->getMap()->willReturn(self::$pluginData);
 
-        return $prophecy->reveal();
+        $testPluginService->setRegistry($prophecy->reveal());
+
+        return $testPluginService;
     }
 
     /**
@@ -85,7 +90,7 @@ class TestRunnerFeatureTest extends TaoPhpUnitTestRunner
             '',
             ['myPlugin'],
             true,
-            $this->getTestPluginRegistry()
+            $this->getTestPluginService()->getAllPlugins()
         );
     }
 
@@ -98,7 +103,7 @@ class TestRunnerFeatureTest extends TaoPhpUnitTestRunner
             69,
             ['myPlugin'],
             true,
-            $this->getTestPluginRegistry()
+            $this->getTestPluginService()->getAllPlugins()
         );
     }
 
@@ -111,7 +116,7 @@ class TestRunnerFeatureTest extends TaoPhpUnitTestRunner
             'myId',
             '',
             true,
-            $this->getTestPluginRegistry()
+            $this->getTestPluginService()->getAllPlugins()
         );
     }
 
@@ -124,7 +129,7 @@ class TestRunnerFeatureTest extends TaoPhpUnitTestRunner
             'myId',
             'myPlugin',
             true,
-            $this->getTestPluginRegistry()
+            $this->getTestPluginService()->getAllPlugins()
         );
     }
 
@@ -137,7 +142,7 @@ class TestRunnerFeatureTest extends TaoPhpUnitTestRunner
             'myId',
             ['iDontExist'],
             true,
-            $this->getTestPluginRegistry()
+            $this->getTestPluginService()->getAllPlugins()
         );
     }
 
@@ -150,7 +155,7 @@ class TestRunnerFeatureTest extends TaoPhpUnitTestRunner
             'myId',
             ['inactive'],
             true,
-            $this->getTestPluginRegistry()
+            $this->getTestPluginService()->getAllPlugins()
         );
     }
 
@@ -163,7 +168,7 @@ class TestRunnerFeatureTest extends TaoPhpUnitTestRunner
             'myId',
             ['myPlugin'],
             true,
-            $this->getTestPluginRegistry()
+            $this->getTestPluginService()->getAllPlugins()
         );
     }
 
@@ -176,7 +181,7 @@ class TestRunnerFeatureTest extends TaoPhpUnitTestRunner
             'myId',
             ['myPlugin'],
             true,
-            $this->getTestPluginRegistry()
+            $this->getTestPluginService()->getAllPlugins()
         );
     }
 
@@ -191,7 +196,7 @@ class TestRunnerFeatureTest extends TaoPhpUnitTestRunner
             self::$featureData['id'],
             self::$featureData['pluginsIds'],
             self::$featureData['isEnabledByDefault'],
-            $this->getTestPluginRegistry()
+            $this->getTestPluginService()->getAllPlugins()
         );
     }
 

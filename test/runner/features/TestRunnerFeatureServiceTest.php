@@ -23,6 +23,7 @@ use common_exception_InconsistentData;
 use oat\tao\test\TaoPhpUnitTestRunner;
 use oat\taoTests\models\runner\features\TestRunnerFeatureService;
 use oat\taoTests\models\runner\plugins\PluginRegistry;
+use oat\taoTests\models\runner\plugins\TestPluginService;
 use oat\taoTests\test\runner\features\samples\TestFeature;
 use Prophecy\Prophet;
 
@@ -57,16 +58,20 @@ class TestRunnerFeatureServiceTest extends TaoPhpUnitTestRunner
 
     /**
      * Get the service with the stubbed registry
-     * @return PluginRegistry
+     * @return TestPluginService
      */
-    protected function getTestPluginRegistry()
+    protected function getTestPluginService()
     {
+        $testPluginService = new TestPluginService();
+
         $prophet = new Prophet();
         $prophecy = $prophet->prophesize();
         $prophecy->willExtend(PluginRegistry::class);
         $prophecy->getMap()->willReturn(self::$pluginData);
 
-        return $prophecy->reveal();
+        $testPluginService->setRegistry($prophecy->reveal());
+
+        return $testPluginService;
     }
 
     public function testGetAll()
@@ -75,14 +80,14 @@ class TestRunnerFeatureServiceTest extends TaoPhpUnitTestRunner
             'myId1',
             ['myPlugin'],
             true,
-            $this->getTestPluginRegistry()
+            $this->getTestPluginService()->getAllPlugins()
         );
 
         $feature2 = new TestFeature(
             'myId2',
             ['title', 'timer'],
             false,
-            $this->getTestPluginRegistry()
+            $this->getTestPluginService()->getAllPlugins()
         );
 
         $testRunnerFeatureService = new TestRunnerFeatureService();
@@ -104,13 +109,13 @@ class TestRunnerFeatureServiceTest extends TaoPhpUnitTestRunner
             'myId1',
             ['myPlugin'],
             true,
-            $this->getTestPluginRegistry()
+            $this->getTestPluginService()->getAllPlugins()
         );
         $feature2 = new TestFeature(
             'myId1',
             ['title', 'timer'],
             false,
-            $this->getTestPluginRegistry()
+            $this->getTestPluginService()->getAllPlugins()
         );
         $testRunnerFeatureService = new TestRunnerFeatureService();
         $testRunnerFeatureService->register($feature1);

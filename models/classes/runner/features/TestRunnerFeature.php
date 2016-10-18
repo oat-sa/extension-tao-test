@@ -3,7 +3,7 @@
 namespace oat\taoTests\models\runner\features;
 
 use oat\oatbox\PhpSerializable;
-use oat\taoTests\models\runner\plugins\PluginRegistry;
+use oat\taoTests\models\runner\plugins\TestPlugin;
 
 /**
  * A test runner feature is a user feature that can be expressed by one or more test runner plugins.
@@ -20,7 +20,7 @@ abstract class TestRunnerFeature implements PhpSerializable
     private $id;
 
     /**
-     * @var string[] must match test runner plugins Ids
+     * @var string[] must match active test runner plugins Ids
      */
     private $pluginsIds;
 
@@ -30,26 +30,26 @@ abstract class TestRunnerFeature implements PhpSerializable
     private $isEnabledByDefault;
 
     /**
-     * @var PluginRegistry Used to check the existence of plugins Ids
+     * @var $allPlugins Used to check the existence of plugins Ids
      */
-    private $pluginRegistry;
+    private $allPlugins;
 
     /**
      * @param string $id
      * @param string[] $pluginsIds
      * @param bool $isEnabledByDefault
-     * @param PluginRegistry $pluginRegistry
+     * @param TestPlugin[] $allPlugins
      */
     public function __construct(
         $id,
         $pluginsIds,
         $isEnabledByDefault,
-        PluginRegistry $pluginRegistry)
+        $allPlugins)
     {
         $this->id = $id;
         $this->pluginsIds = $pluginsIds;
         $this->isEnabledByDefault = $isEnabledByDefault;
-        $this->pluginRegistry = $pluginRegistry;
+        $this->allPlugins = $allPlugins;
 
         $this->checkData();
     }
@@ -86,18 +86,19 @@ abstract class TestRunnerFeature implements PhpSerializable
     private function checkPluginsIds() {
         $allPluginIds = [];
         $inactivePluginsIds = [];
-        foreach ($this->pluginRegistry->getMap() as $plugin) {
-            $allPluginIds[] = $plugin['id'];
-            if ($plugin['active'] === false) {
-                $inactivePluginsIds[] = $plugin['id'];
+
+        foreach ($this->allPlugins as $plugin) {
+            $allPluginIds[] = $plugin->getId();
+            if ($plugin->isActive() === false) {
+                $inactivePluginsIds[] = $plugin->getId();
             }
         }
         foreach ($this->pluginsIds as $id) {
             if (! in_array($id, $allPluginIds)) {
-                throw new \common_exception_InconsistentData('Invalid plugin Id ' . $id);
+                throw new \common_exception_InconsistentData('Invalid plugin Id ' . $id . ' for test runner feature ' . $this->id);
             }
             if (in_array($id, $inactivePluginsIds)) {
-                throw new \common_exception_InconsistentData('Cannot register inactive plugin ' . $id);
+                throw new \common_exception_InconsistentData('Cannot include inactive plugin ' . $id . ' in test runner feature ' . $this->id);
             }
         }
     }
