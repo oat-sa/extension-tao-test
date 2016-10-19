@@ -59,6 +59,21 @@ class TestRunnerFeatureService extends ConfigurableService {
     }
 
     /**
+     * Unregister a feature
+     *
+     * @param string $featureId
+     */
+    public function unregister($featureId) {
+        $registeredFeatures = $this->getOption(self::OPTION_AVAILABLE);
+        if (array_key_exists($featureId, $registeredFeatures)) {
+            unset($registeredFeatures[$featureId]);
+            $this->setOption(self::OPTION_AVAILABLE, $registeredFeatures);
+        } else {
+            throw new \common_exception_InconsistentData('Cannot unregister inexistant feature ' . $featureId);
+        }
+    }
+
+    /**
      * Return all available features
      *
      * @return TestRunnerFeature[]

@@ -122,5 +122,9 @@ class TestRunnerFeatureServiceTest extends TaoPhpUnitTestRunner
         $testRunnerFeatureService->register($feature2);
     }
 
+    public function testUnregisterFeature() {
+
+    }
+
 }
 
