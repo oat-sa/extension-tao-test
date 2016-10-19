@@ -48,15 +48,16 @@ abstract class TestRunnerFeature implements PhpSerializable
     private $isEnabledByDefault;
 
     /**
-     * @var $allPlugins Used to check the existence of plugins Ids
+     * @var TestPlugin[] Used to check the existence of plugins Ids
      */
     private $allPlugins;
 
     /**
-     * @param string $id
-     * @param string[] $pluginsIds
-     * @param bool $isEnabledByDefault
-     * @param TestPlugin[] $allPlugins
+     * @param string        $id
+     * @param string[]      $pluginsIds
+     * @param bool          $isEnabledByDefault
+     * @param TestPlugin[]  $allPlugins
+     * @throws \common_exception_InconsistentData
      */
     public function __construct(
         $id,
@@ -64,26 +65,26 @@ abstract class TestRunnerFeature implements PhpSerializable
         $isEnabledByDefault,
         $allPlugins)
     {
+        if(! is_string($id) || empty($id)) {
+            throw new \common_exception_InconsistentData('id should be a valid string');
+        }
+
+        if(! is_array($pluginsIds) || empty($pluginsIds) || ! is_string($pluginsIds[0])) {
+            throw new \common_exception_InconsistentData('pluginsIds should be a array of strings');
+        }
+
+        if(! is_bool($isEnabledByDefault)) {
+            throw new \common_exception_InconsistentData('isEnabledByDefault should be a boolean');
+        }
+
+        if(! is_array($allPlugins) || empty($allPlugins) || ! current($allPlugins) instanceof TestPlugin) {
+            throw new \common_exception_InconsistentData('allPlugins should be an array of TestPlugin');
+        }
+
         $this->id = $id;
         $this->pluginsIds = $pluginsIds;
         $this->isEnabledByDefault = $isEnabledByDefault;
         $this->allPlugins = $allPlugins;
-
-        $this->checkData();
-    }
-
-    /**
-     * Check the validity of user params
-     * @throws \common_exception_InconsistentData
-     */
-    private function checkData() {
-        if(! is_string($this->id) || empty($this->id)) {
-            throw new \common_exception_InconsistentData('The test runner feature needs an id');
-        }
-
-        if(! is_array($this->pluginsIds) || empty($this->pluginsIds)) {
-            throw new \common_exception_InconsistentData('The test runner feature needs some plugin id');
-        }
 
         $this->checkPluginsIds();
 

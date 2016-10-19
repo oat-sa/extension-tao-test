@@ -22,6 +22,7 @@ namespace oat\taoTests\test\runner\features;
 use common_exception_InconsistentData;
 use oat\tao\test\TaoPhpUnitTestRunner;
 use oat\taoTests\models\runner\plugins\PluginRegistry;
+use oat\taoTests\models\runner\plugins\TestPlugin;
 use oat\taoTests\models\runner\plugins\TestPluginService;
 use oat\taoTests\test\runner\features\samples\TestFeature;
 use oat\taoTests\test\runner\features\samples\TestFeatureEmptyDescription;
@@ -82,54 +83,45 @@ class TestRunnerFeatureTest extends TaoPhpUnitTestRunner
     }
 
     /**
-     * @expectedException common_exception_InconsistentData
+     *
      */
-    public function testConstructEmptyId()
-    {
-        new TestFeature(
-            '',
-            ['myPlugin'],
-            true,
-            $this->getTestPluginService()->getAllPlugins()
-        );
+    public function provideBadConstructorParameters() {
+        return [
+            // bad id
+            [ '',     ['myPlugin'], true,   $this->getTestPluginService()->getAllPlugins() ],
+            [ 69,     ['myPlugin'], true,   $this->getTestPluginService()->getAllPlugins() ],
+
+            // bad pluginId
+            [ 'myId', '',           true,   $this->getTestPluginService()->getAllPlugins() ],
+            [ 'myId', [],           true,   $this->getTestPluginService()->getAllPlugins() ],
+            [ 'myId', [69],         true,   $this->getTestPluginService()->getAllPlugins() ],
+
+            // bad isEnabledByDefault
+            [ 'myId', ['myPlugin'], null,   $this->getTestPluginService()->getAllPlugins() ],
+            [ 'myId', ['myPlugin'], 'true', $this->getTestPluginService()->getAllPlugins() ],
+
+            // bad allPlugins
+            [ 'myId', ['myPlugin'], true,   ''],
+            [ 'myId', ['myPlugin'], true,   []],
+            [ 'myId', ['myPlugin'], true,   ['myPlugin']],
+        ];
     }
 
     /**
+     * @param string        $id
+     * @param string[]      $pluginsIds
+     * @param bool          $isEnabledByDefault
+     * @param TestPlugin[]  $allPlugins
+     *
+     * @dataProvider provideBadConstructorParameters
      * @expectedException common_exception_InconsistentData
      */
-    public function testConstructIdNotString()
-    {
+    public function testBadConstructorParameters($id, $pluginsIds, $isEnabledByDefault, $allPlugins) {
         new TestFeature(
-            69,
-            ['myPlugin'],
-            true,
-            $this->getTestPluginService()->getAllPlugins()
-        );
-    }
-
-    /**
-     * @expectedException common_exception_InconsistentData
-     */
-    public function testConstructEmptyPluginsIds()
-    {
-        new TestFeature(
-            'myId',
-            '',
-            true,
-            $this->getTestPluginService()->getAllPlugins()
-        );
-    }
-
-    /**
-     * @expectedException common_exception_InconsistentData
-     */
-    public function testConstructPluginsIdNotArray()
-    {
-        new TestFeature(
-            'myId',
-            'myPlugin',
-            true,
-            $this->getTestPluginService()->getAllPlugins()
+            $id,
+            $pluginsIds,
+            $isEnabledByDefault,
+            $allPlugins
         );
     }
 
