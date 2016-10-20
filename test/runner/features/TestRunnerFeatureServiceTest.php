@@ -123,8 +123,50 @@ class TestRunnerFeatureServiceTest extends TaoPhpUnitTestRunner
     }
 
     public function testUnregisterFeature() {
+        // first we register 2 features
+        $feature1 = new TestFeature(
+            'myId1',
+            ['myPlugin'],
+            true,
+            $this->getTestPluginService()->getAllPlugins()
+        );
 
+        $feature2 = new TestFeature(
+            'myId2',
+            ['title', 'timer'],
+            false,
+            $this->getTestPluginService()->getAllPlugins()
+        );
+
+        $testRunnerFeatureService = new TestRunnerFeatureService();
+        $testRunnerFeatureService->register($feature1);
+        $testRunnerFeatureService->register($feature2);
+
+        $registeredFeatures = $testRunnerFeatureService->getAll();
+
+        $this->assertEquals(2, count($registeredFeatures));
+        $this->assertEquals('myId1', $registeredFeatures['myId1']->getId());
+        $this->assertEquals('myId2', $registeredFeatures['myId2']->getId());
+
+        // then we remove the first one
+        $testRunnerFeatureService->unregister('myId1');
+
+        $registeredFeatures = $testRunnerFeatureService->getAll();
+        $this->assertEquals(1, count($registeredFeatures));
+
+        // then the second one
+        $testRunnerFeatureService->unregister('myId2');
+
+        $registeredFeatures = $testRunnerFeatureService->getAll();
+        $this->assertEquals(0, count($registeredFeatures));
     }
 
+    /**
+     * @expectedException \common_exception_InconsistentData
+     */
+    public function testUnregisterBarId() {
+        $testRunnerFeatureService = new TestRunnerFeatureService();
+        $testRunnerFeatureService->unregister('idontexist');
+    }
 }
 

@@ -62,10 +62,11 @@ class TestRunnerFeatureService extends ConfigurableService {
      * Unregister a feature
      *
      * @param string $featureId
+     * @throws \common_exception_InconsistentData
      */
     public function unregister($featureId) {
         $registeredFeatures = $this->getOption(self::OPTION_AVAILABLE);
-        if (array_key_exists($featureId, $registeredFeatures)) {
+        if (is_array($registeredFeatures) && array_key_exists($featureId, $registeredFeatures)) {
             unset($registeredFeatures[$featureId]);
             $this->setOption(self::OPTION_AVAILABLE, $registeredFeatures);
         } else {
