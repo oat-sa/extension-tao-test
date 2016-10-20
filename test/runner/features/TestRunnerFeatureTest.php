@@ -20,6 +20,7 @@
 namespace oat\taoTests\test\runner\features;
 
 use common_exception_InconsistentData;
+use oat\generis\test\oatbox\log\TestLogger;
 use oat\tao\test\TaoPhpUnitTestRunner;
 use oat\taoTests\models\runner\plugins\PluginRegistry;
 use oat\taoTests\models\runner\plugins\TestPlugin;
@@ -28,6 +29,7 @@ use oat\taoTests\test\runner\features\samples\TestFeature;
 use oat\taoTests\test\runner\features\samples\TestFeatureEmptyDescription;
 use oat\taoTests\test\runner\features\samples\TestFeatureEmptyLabel;
 use Prophecy\Prophet;
+use Psr\Log\LogLevel;
 
 /**
  * Test of TestRunnerFeatureTest abstract class. Test implementations are in samples folder.
@@ -125,30 +127,32 @@ class TestRunnerFeatureTest extends TaoPhpUnitTestRunner
         );
     }
 
-    /**
-     * @expectedException common_exception_InconsistentData
-     */
     public function testConstructPluginsIdNotInRegistry()
     {
-        new TestFeature(
+        $testLogger = new TestLogger();
+        new TestFeatureWithCustomLogger(
             'myId',
             ['iDontExist'],
             true,
-            $this->getTestPluginService()->getAllPlugins()
+            $this->getTestPluginService()->getAllPlugins(),
+            $testLogger
         );
+
+        $this->assertTrue($testLogger->has(LogLevel::WARNING, 'Invalid plugin Id iDontExist for test runner feature myId'));
     }
 
-    /**
-     * @expectedException common_exception_InconsistentData
-     */
     public function testConstructPluginsInactive()
     {
-        new TestFeature(
+        $testLogger = new TestLogger();
+        new TestFeatureWithCustomLogger(
             'myId',
             ['inactive'],
             true,
-            $this->getTestPluginService()->getAllPlugins()
+            $this->getTestPluginService()->getAllPlugins(),
+            $testLogger
         );
+
+        $this->assertTrue($testLogger->has(LogLevel::WARNING, 'Cannot include inactive plugin inactive in test runner feature myId'));
     }
 
     /**
@@ -213,3 +217,11 @@ class TestRunnerFeatureTest extends TaoPhpUnitTestRunner
     }
 }
 
+
+class TestFeatureWithCustomLogger extends TestFeature {
+    public function __construct($id, array $pluginsIds, $isEnabledByDefault, array $allPlugins, $customLogger)
+    {
+        $this->setLogger($customLogger);
+        parent::__construct($id, $pluginsIds, $isEnabledByDefault, $allPlugins);
+    }
+}

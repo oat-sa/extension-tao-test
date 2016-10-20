@@ -20,12 +20,14 @@
 namespace oat\taoTests\test\runner\features;
 
 use common_exception_InconsistentData;
+use oat\generis\test\oatbox\log\TestLogger;
 use oat\tao\test\TaoPhpUnitTestRunner;
 use oat\taoTests\models\runner\features\TestRunnerFeatureService;
 use oat\taoTests\models\runner\plugins\PluginRegistry;
 use oat\taoTests\models\runner\plugins\TestPluginService;
 use oat\taoTests\test\runner\features\samples\TestFeature;
 use Prophecy\Prophet;
+use Psr\Log\LogLevel;
 
 /**
  * Test of TestRunnerFeatureServiceTest
@@ -161,12 +163,14 @@ class TestRunnerFeatureServiceTest extends TaoPhpUnitTestRunner
         $this->assertEquals(0, count($registeredFeatures));
     }
 
-    /**
-     * @expectedException \common_exception_InconsistentData
-     */
-    public function testUnregisterBarId() {
+    public function testUnregisterBadId() {
+        $testLogger = new TestLogger();
+
         $testRunnerFeatureService = new TestRunnerFeatureService();
+        $testRunnerFeatureService->setLogger($testLogger);
         $testRunnerFeatureService->unregister('idontexist');
+
+        $this->assertTrue($testLogger->has(LogLevel::WARNING, 'Cannot unregister inexistant feature idontexist'));
     }
 }
 

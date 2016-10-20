@@ -22,6 +22,8 @@ namespace oat\taoTests\models\runner\features;
 
 use oat\oatbox\PhpSerializable;
 use oat\taoTests\models\runner\plugins\TestPlugin;
+use Psr\Log\LoggerAwareInterface;
+use oat\oatbox\log\LoggerAwareTrait;
 
 /**
  * A test runner feature is a user feature that can be expressed by one or more test runner plugins.
@@ -30,8 +32,10 @@ use oat\taoTests\models\runner\plugins\TestPlugin;
  * @author Christophe Noël <christophe@taotesting.com>
  */
 
-abstract class TestRunnerFeature implements PhpSerializable
+abstract class TestRunnerFeature implements PhpSerializable, LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     /**
      * @var string
      */
@@ -114,10 +118,10 @@ abstract class TestRunnerFeature implements PhpSerializable
         }
         foreach ($this->pluginsIds as $id) {
             if (! in_array($id, $allPluginIds)) {
-                throw new \common_exception_InconsistentData('Invalid plugin Id ' . $id . ' for test runner feature ' . $this->id);
+                $this->logWarning('Invalid plugin Id ' . $id . ' for test runner feature ' . $this->id);
             }
             if (in_array($id, $inactivePluginsIds)) {
-                throw new \common_exception_InconsistentData('Cannot include inactive plugin ' . $id . ' in test runner feature ' . $this->id);
+                $this->logWarning('Cannot include inactive plugin ' . $id . ' in test runner feature ' . $this->id);
             }
         }
     }

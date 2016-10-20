@@ -19,14 +19,18 @@
  */
 namespace oat\taoTests\models\runner\features;
 
+use oat\oatbox\log\LoggerAwareTrait;
 use oat\oatbox\service\ConfigurableService;
+use Psr\Log\LoggerAwareInterface;
 
 /**
  * A service to register Test Runner Features
  *
  * @author Christophe Noël <christophe@taotesting.com>
  */
-class TestRunnerFeatureService extends ConfigurableService {
+class TestRunnerFeatureService extends ConfigurableService implements LoggerAwareInterface {
+
+    use LoggerAwareTrait;
 
     const SERVICE_ID = 'taoTests/testRunnerFeature';
 
@@ -70,7 +74,7 @@ class TestRunnerFeatureService extends ConfigurableService {
             unset($registeredFeatures[$featureId]);
             $this->setOption(self::OPTION_AVAILABLE, $registeredFeatures);
         } else {
-            throw new \common_exception_InconsistentData('Cannot unregister inexistant feature ' . $featureId);
+            $this->logWarning('Cannot unregister inexistant feature ' . $featureId);
         }
     }
 
