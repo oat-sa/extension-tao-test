@@ -22,6 +22,7 @@
 namespace oat\taoTests\scripts\update;
 
 use oat\taoTests\scripts\install\RegisterTestPluginService;
+use oat\taoTests\scripts\install\RegisterTestRunnerFeatureService;
 
 class Updater extends \common_ext_ExtensionUpdater
 {
@@ -59,5 +60,14 @@ class Updater extends \common_ext_ExtensionUpdater
         }
 
         $this->skip('3.0.0', '3.4.1');
+
+        if ($this->isVersion('3.4.1')){
+
+            //register test runner feature service
+            $registerService = new RegisterTestRunnerFeatureService();
+            $registerService([]);
+
+            $this->setVersion('3.5.0');
+        }
 	}
 }
