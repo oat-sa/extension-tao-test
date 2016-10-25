@@ -85,7 +85,8 @@ class TestRunnerFeatureService extends ConfigurableService implements LoggerAwar
      */
     public function getAll()
     {
-        return $this->getOption(self::OPTION_AVAILABLE);
+        $option = $this->getOption(self::OPTION_AVAILABLE);
+        return empty($option) ? [] : $option;
     }
 
 }
