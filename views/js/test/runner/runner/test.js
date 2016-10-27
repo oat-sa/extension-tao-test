@@ -837,12 +837,13 @@ define([
     });
 
     QUnit.test('registry', function(assert) {
-        QUnit.expect(2);
-
         var expectedValue = {
             init: function(){},
             destroy: function() {}
         };
+        var runner;
+
+        QUnit.expect(3);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker : function(){
@@ -855,9 +856,9 @@ define([
             init : function init(){}
         });
 
-        var myValue = runnerFactory('foo').getRegistry('myValue');
-
-        assert.equal(myValue, expectedValue, 'The right myValue has been provided');
+        runner = runnerFactory('foo');;
+        assert.equal(runner.getRegistry('myValue'), expectedValue, 'The right myValue has been provided');
+        assert.equal(runner.getRegistry('ubknown'), null, 'The unknown values are seeded to null');
     });
 
     QUnit.test('no loadProxy', function(assert) {

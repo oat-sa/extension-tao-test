@@ -380,6 +380,8 @@ define([
                     loader = 'load' + name.charAt(0).toUpperCase() + name.substr(1);
                     if(_.isFunction(provider[loader])){
                         registry[name] = provider[loader].call(runner);
+                    } else {
+                        registry[name] = null;
                     }
                 }
                 return registry[name];
