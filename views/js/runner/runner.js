@@ -67,6 +67,11 @@ define([
         var plugins        = {};
 
         /**
+         * @type {Object} registry for some inner values
+         */
+        var registry       = {};
+
+        /**
          * @type {Object} the test of the runner
          */
         var states = {
@@ -88,23 +93,10 @@ define([
         var provider  = testRunnerFactory.getProvider(providerName);
 
         /**
-         * Keep the area broker instance
-         * @see taoTests/runner/areaBroker
-         */
-        var areaBroker;
-
-        /**
          * Keep the proxy instance
          * @see taoTests/runner/proxy
          */
         var proxy;
-
-
-        /**
-         * Keep the instance of the probes overseer
-         * @see taoTests/runner/probeOverseer
-         */
-        var probeOverseer;
 
         /**
          * Run a method of the provider (by delegation)
@@ -368,12 +360,31 @@ define([
 
                         return destroyed.then(function() {
                             testContext = {};
+                            registry = {};
                             self.setState('destroy', true)
                                 .trigger('destroy');
                         });
                     }).catch(reportError);
                 }).catch(reportError);
                 return this;
+            },
+
+            /**
+             * Reads a value from the registry. If the value has not been set, requests the provider to seed the value.
+             * @param {String} name - The name of the value to read
+             * @returns {*}
+             */
+            getRegistry : function getRegistry(name) {
+                var loader;
+                if ('undefined' === typeof(registry[name])) {
+                    loader = 'load' + name.charAt(0).toUpperCase() + name.substr(1);
+                    if(_.isFunction(provider[loader])){
+                        registry[name] = provider[loader].call(runner);
+                    } else {
+                        registry[name] = null;
+                    }
+                }
+                return registry[name];
             },
 
             /**
@@ -407,12 +418,8 @@ define([
              * @returns {areaBroker} the areaBroker
              */
             getAreaBroker : function getAreaBroker(){
-                if(!areaBroker){
-                    areaBroker = provider.loadAreaBroker.call(this);
-                }
-                return areaBroker;
+                return this.getRegistry('areaBroker');
             },
-
 
             /**
              * Get the proxy, load it if not present
@@ -440,11 +447,7 @@ define([
              * @returns {probeOverseer} the probe overseer
              */
             getProbeOverseer : function getProbeOverseer(){
-                if(!probeOverseer && _.isFunction(provider.loadProbeOverseer)){
-                    probeOverseer = provider.loadProbeOverseer.call(this);
-                }
-
-                return probeOverseer;
+                return this.getRegistry('probeOverseer');
             },
 
             /**
@@ -482,11 +485,10 @@ define([
              * @returns {Boolean} if active, false if not set
              */
             getPersistentState : function getPersistentState(name) {
-                var getPersistentState = provider.getPersistentState;
                 var state;
 
-                if(_.isFunction(getPersistentState)){
-                    state = getPersistentState.call(runner, name);
+                if(_.isFunction(provider.getPersistentState)){
+                    state = provider.getPersistentState.call(runner, name);
                 }
 
                 return !!state;

@@ -65,6 +65,7 @@ define([
         {name : 'disableItem', title : 'disableItem'},
         {name : 'enableItem', title : 'enableItem'},
 
+        {name : 'getRegistry', title : 'getRegistry'},
         {name : 'getPlugins', title : 'getPlugins'},
         {name : 'getPlugin', title : 'getPlugin'},
         {name : 'getConfig', title : 'getConfig'},
@@ -833,6 +834,31 @@ define([
         var probeOverseer = runnerFactory('foo').getProbeOverseer();
 
         assert.equal(probeOverseer, expectedProbeOverseer, 'The right probeOverseer has been provided');
+    });
+
+    QUnit.test('registry', function(assert) {
+        var expectedValue = {
+            init: function(){},
+            destroy: function() {}
+        };
+        var runner;
+
+        QUnit.expect(3);
+
+        runnerFactory.registerProvider('foo', {
+            loadAreaBroker : function(){
+                return {};
+            },
+            loadMyValue: function() {
+                assert.ok(true, 'The loadMyValue method has been called');
+                return expectedValue;
+            },
+            init : function init(){}
+        });
+
+        runner = runnerFactory('foo');;
+        assert.equal(runner.getRegistry('myValue'), expectedValue, 'The right myValue has been provided');
+        assert.equal(runner.getRegistry('ubknown'), null, 'The unknown values are seeded to null');
     });
 
     QUnit.test('no loadProxy', function(assert) {
