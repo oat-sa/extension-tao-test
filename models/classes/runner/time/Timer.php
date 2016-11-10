@@ -25,7 +25,7 @@ namespace oat\taoTests\models\runner\time;
 /**
  * Interface Timer
  *
- * Describes the API needed yo build and manage a timer.
+ * Describes the API needed to build and manage a timer.
  * A Timer is represented by a TimeLine on which it will apply actions and constraints.
  * The actions are:
  * - add time ranges by setting start and end TimePoints (SERVER)
