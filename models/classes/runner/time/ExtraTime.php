@@ -61,5 +61,5 @@ interface ExtraTime
      * @param float $time
      * @return ExtraTime
      */
-    public function consumeTime($time);
+    public function consumeExtraTime($time);
 }
