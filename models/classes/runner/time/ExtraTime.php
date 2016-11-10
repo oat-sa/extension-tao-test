@@ -43,6 +43,20 @@ interface ExtraTime
      * @return ExtraTime
      */
     public function setExtraTime($time);
+    
+    /**
+     * Appends extra time
+     * @param float $time
+     * @return ExtraTime
+     */
+    public function addExtraTime($time);
+    
+    /**
+     * Removes extra time
+     * @param float $time
+     * @return ExtraTime
+     */
+    public function subExtraTime($time);
 
     /**
      * Gets the amount of already consumed extra time
