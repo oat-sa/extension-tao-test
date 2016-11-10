@@ -48,7 +48,13 @@ interface ExtraTime
      * Gets the amount of already consumed extra time
      * @return float
      */
-    public function getConsumedTime();
+    public function getConsumedExtraTime();
+    
+    /**
+     * Gets the amount of remaining extra time
+     * @return float
+     */
+    public function getRemainingExtraTime();
 
     /**
      * Consumes an amount of extra time
