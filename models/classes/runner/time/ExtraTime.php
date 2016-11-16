@@ -43,26 +43,13 @@ interface ExtraTime
      * @return ExtraTime
      */
     public function setExtraTime($time);
-    
-    /**
-     * Appends extra time
-     * @param float $time
-     * @return ExtraTime
-     */
-    public function addExtraTime($time);
-    
-    /**
-     * Removes extra time
-     * @param float $time
-     * @return ExtraTime
-     */
-    public function subExtraTime($time);
 
     /**
-     * Gets the amount of already consumed extra time
+     * Gets the amount of already consumed extra time. If tags are provided, only take care of the related time. 
+     * @param string|array $tags A tag or a list of tags to filter
      * @return float
      */
-    public function getConsumedExtraTime();
+    public function getConsumedExtraTime($tags = null);
     
     /**
      * Gets the amount of remaining extra time
@@ -71,9 +58,11 @@ interface ExtraTime
     public function getRemainingExtraTime();
 
     /**
-     * Consumes an amount of extra time
+     * Consumes an amount of extra time.
+     * If tags are provided, assign them to the consumed time.
      * @param float $time
+     * @param string|array $tags A tag or a list of tags to assign
      * @return ExtraTime
      */
-    public function consumeExtraTime($time);
+    public function consumeExtraTime($time, $tags = null);
 }
