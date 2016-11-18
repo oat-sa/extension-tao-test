@@ -84,8 +84,9 @@ interface TimeLine extends \Serializable
      * Computes the total duration represented by the filtered TimePoints
      * @param string|array $tag A tag or a list of tags to filter
      * @param int $target The type of target TimePoint to filter
+     * @param int $lastTimestamp An optional timestamp that will be utilized to close the last open range, if any
      * @return float Returns the total computed duration
      * @throws TimeException
      */
-    public function compute($tag = null, $target = TimePoint::TARGET_ALL);
+    public function compute($tag = null, $target = TimePoint::TARGET_ALL, $lastTimestamp = 0);
 }

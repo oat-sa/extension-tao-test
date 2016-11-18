@@ -421,7 +421,7 @@ define(['lodash', 'core/promise', 'core/eventifier', 'taoTests/runner/proxy'], f
                 assert.equal(uri, expectedUri, 'The proxyFactory has provided the URI to the submitItem method');
                 assert.equal(state, expectedState, 'The proxyFactory has provided the state to the submitItem method');
                 assert.equal(response, expectedResponse, 'The proxyFactory has provided the response to the submitItem method');
-                assert.equal(params, expectedParams, 'The proxyFactory has provided the params to the submitItem method');
+                assert.deepEqual(params, expectedParams, 'The proxyFactory has provided the params to the submitItem method');
 
                 return Promise.resolve();
             }
@@ -433,7 +433,7 @@ define(['lodash', 'core/promise', 'core/eventifier', 'taoTests/runner/proxy'], f
             assert.equal(uri, expectedUri, 'The proxyFactory has provided the URI through the "submitItem" event');
             assert.equal(state, expectedState, 'The proxyFactory has provided the state through the "submitItem" event');
             assert.equal(response, expectedResponse, 'The proxyFactory has provided the response through the "submitItem" event');
-            assert.equal(params, expectedParams, 'The proxyFactory has provided the params through the "submitItem" event');
+            assert.deepEqual(params, expectedParams, 'The proxyFactory has provided the params through the "submitItem" event');
 
             QUnit.start();
         });
@@ -543,8 +543,6 @@ define(['lodash', 'core/promise', 'core/eventifier', 'taoTests/runner/proxy'], f
 
 
     QUnit.asyncTest('proxyFactory.addCallActionParams', function(assert) {
-        QUnit.expect(5);
-
         var expectedItemUri = 'http://tao.dev#item123';
         var expectedAction = 'test';
         var expectedParams = {
@@ -554,6 +552,11 @@ define(['lodash', 'core/promise', 'core/eventifier', 'taoTests/runner/proxy'], f
         var extraParams = {
             noz : 'moo'
         };
+        var expectedState    = { state: true };
+        var expectedResponse = { response: true };
+        var extraParamsSet = false;
+
+        QUnit.expect(20);
 
         proxyFactory.registerProvider('default', _.defaults({
             callTestAction: function () {
@@ -561,32 +564,72 @@ define(['lodash', 'core/promise', 'core/eventifier', 'taoTests/runner/proxy'], f
             },
             callItemAction: function () {
                 return Promise.resolve();
+            },
+            submitItem: function () {
+                return Promise.resolve();
             }
         }, defaultProxy));
 
         var proxy = proxyFactory('default');
 
         proxy.init().then(function () {
-            proxy.addCallActionParams(extraParams);
-
             proxy
                 .on('callItemAction', function(p, uri, action, params) {
 
                     assert.equal(uri, expectedItemUri, 'The proxyFactory has provided the URI through the "callItemAction" event');
                     assert.equal(action, expectedAction, 'The proxyFactory has provided the action through the "callItemAction" event');
-                    assert.deepEqual(params, _.merge({}, expectedParams, extraParams), 'The proxyFactory has provided the params through the "callItemAction" event with extra parameters');
 
+                    if (extraParamsSet) {
+                        assert.deepEqual(params, _.merge({}, expectedParams, extraParams), 'The proxyFactory has provided the params through the "callItemAction" event with extra parameters');
+
+                        extraParamsSet = false;
+                        proxy.callItemAction(expectedItemUri, expectedAction, expectedParams);
+                    } else {
+                        assert.deepEqual(params, expectedParams, 'The proxyFactory has provided the params through the "callItemAction" event without extra parameters');
+
+                        proxy.addCallActionParams(extraParams);
+                        extraParamsSet = true;
+                        proxy.callTestAction(expectedAction, expectedParams);
+                    }
                 })
                 .on('callTestAction', function(p, action, params) {
 
                     assert.equal(action, expectedAction, 'The proxyFactory has provided the action through the "callTestAction" event');
-                    assert.deepEqual(params, expectedParams, 'The proxyFactory has provided the params through the "callTestAction" event without extra parameters');
 
-                    QUnit.start();
+                    if (extraParamsSet) {
+                        assert.deepEqual(params, _.merge({}, expectedParams, extraParams), 'The proxyFactory has provided the params through the "callTestAction" event with extra parameters');
+
+                        extraParamsSet = false;
+                        proxy.callTestAction(expectedAction, expectedParams);
+                    } else {
+                        assert.deepEqual(params, expectedParams, 'The proxyFactory has provided the params through the "callTestAction" event without extra parameters');
+
+                        proxy.addCallActionParams(extraParams);
+                        extraParamsSet = true;
+                        proxy.submitItem(expectedItemUri, expectedState, expectedResponse, expectedParams);
+                    }
+                })
+                .on('submitItem', function(promise, uri, state, response, params) {
+                    assert.ok(promise instanceof Promise, 'The proxyFactory has provided the promise through the "submitItem" event');
+                    assert.equal(uri, expectedItemUri, 'The proxyFactory has provided the URI through the "submitItem" event');
+                    assert.equal(state, expectedState, 'The proxyFactory has provided the state through the "submitItem" event');
+                    assert.equal(response, expectedResponse, 'The proxyFactory has provided the response through the "submitItem" event');
+
+                    if (extraParamsSet) {
+                        assert.deepEqual(params, _.merge({}, expectedParams, extraParams), 'The proxyFactory has provided the params through the "submitItem" event with extra parameters');
+
+                        extraParamsSet = false;
+                        proxy.submitItem(expectedItemUri, expectedState, expectedResponse, expectedParams);
+                    } else {
+                        assert.deepEqual(params, expectedParams, 'The proxyFactory has provided the params through the "submitItem" event without extra parameters');
+
+                        QUnit.start();
+                    }
                 });
 
+            proxy.addCallActionParams(extraParams);
+            extraParamsSet = true;
             proxy.callItemAction(expectedItemUri, expectedAction, expectedParams);
-            proxy.callTestAction(expectedAction, expectedParams);
         });
     });
 

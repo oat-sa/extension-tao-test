@@ -438,7 +438,7 @@ define([
                  * @param {Object} state
                  * @param {Object} response
                  */
-                return delegate('submitItem', uri, state, response, params);
+                return delegate('submitItem', uri, state, response, getParams(params));
             },
 
             /**
