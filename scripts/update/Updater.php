@@ -24,6 +24,8 @@ namespace oat\taoTests\scripts\update;
 use oat\tao\scripts\update\OntologyUpdater;
 use oat\taoTests\scripts\install\RegisterTestPluginService;
 use oat\taoTests\scripts\install\RegisterTestRunnerFeatureService;
+use oat\taoTests\models\runner\plugins\TestPluginService;
+use oat\taoTests\models\runner\plugins\TestPluginProvider;
 
 class Updater extends \common_ext_ExtensionUpdater
 {
@@ -77,6 +79,6 @@ class Updater extends \common_ext_ExtensionUpdater
             OntologyUpdater::syncModels();
             $this->setVersion('3.6.0');
         }
-        $this->skip('3.6.0', '3.7.0');
+        $this->skip('3.6.0', '3.8.0');
 	}
 }

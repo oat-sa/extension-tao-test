@@ -40,15 +40,20 @@ class TestPluginService extends ConfigurableService
      */
     private $registry;
 
-    public function __construct()
+    /**
+     * TestPluginService constructor.
+     * @param array $options
+     */
+    public function __construct($options = [])
     {
+        parent::__construct($options);
         $this->registry = PluginRegistry::getRegistry();
     }
 
     /**
      * Retrieve the list of all available plugins (from the registry)
      *
-     * @return TestPlugin[] the avaialble plugins
+     * @return TestPlugin[] the available plugins
      */
     public function getAllPlugins()
     {
