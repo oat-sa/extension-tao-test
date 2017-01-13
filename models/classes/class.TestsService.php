@@ -99,6 +99,11 @@ class taoTests_models_classes_TestsService
         return (bool) $returnValue;
     }
 
+    public function deleteResource(core_kernel_classes_Resource $resource)
+    {
+        return $this->deleteTest($resource);
+    }
+
     /**
      * get the test class
      *
