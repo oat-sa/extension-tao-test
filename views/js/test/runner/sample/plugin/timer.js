@@ -64,9 +64,13 @@ define([
             .on('resume', function(){
                 start();
             });
+        },
+        render : function render(){
 
-            // register the button in the control area
-            this.getAreaBroker().addControlComponent(this.getName(), this.$element);
+            var $container = this.getAreaBroker().getControlArea();
+            $container.append(this.$element);
+
+
         },
         destroy : function (){
             this.stop();
