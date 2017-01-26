@@ -24,15 +24,14 @@ define([
     'lodash',
     'core/promise',
     'core/eventifier',
-    'core/areaBroker',
     'taoTests/runner/runner',
     'taoTests/runner/plugin'
-], function($, _, Promise, eventifier, areaBroker, runnerFactory, pluginFactory){
+], function($, _, Promise, eventifier, runnerFactory, pluginFactory){
     'use strict';
 
     var mockProvider = {
         init : _.noop,
-        loadAreaBroker : function() { return areaBroker([], $('<div>'), {}); }
+        loadAreaBroker : _.noop
     };
 
     var testReviewApi;
