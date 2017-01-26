@@ -24,16 +24,18 @@ define([
     'lodash',
     'core/promise',
     'core/eventifier',
+    'core/areaBroker',
     'taoTests/runner/runner',
     'taoTests/runner/plugin'
-], function($, _, Promise, eventifier, runnerFactory, pluginFactory){
+], function($, _, Promise, eventifier, areaBroker, runnerFactory, pluginFactory){
     'use strict';
 
     var mockProvider = {
         init : _.noop,
-        loadAreaBroker  : _.noop
+        loadAreaBroker : function() { return areaBroker([], $('<div>'), {}); }
     };
 
+    var testReviewApi;
 
     QUnit.module('factory', {
         setup: function(){
@@ -52,7 +54,7 @@ define([
         assert.equal(typeof runnerFactory.getProvider, 'function', "The runner module exposes a function getProvider()");
     });
 
-    var testReviewApi = [
+    testReviewApi = [
 
         {name : 'init', title : 'init'},
         {name : 'render', title : 'render'},
@@ -110,30 +112,33 @@ define([
     });
 
     QUnit.asyncTest('init', function(assert){
-       QUnit.expect(1);
+        var runner;
+
+        QUnit.expect(1);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker : function(){
                 return {};
             },
             init : function(){
-               assert.equal(this.bar, 'baz', 'The provider is executed on the runner context');
-               QUnit.start();
+                assert.equal(this.bar, 'baz', 'The provider is executed on the runner context');
+                QUnit.start();
             }
         });
 
-        var runner = runnerFactory('foo');
+        runner = runnerFactory('foo');
         runner.bar = 'baz';
         runner.init();
     });
 
 
     QUnit.asyncTest('get config', function(assert){
-       QUnit.expect(1);
+        var runner,
+            config = {
+                'moo' : 'norz'
+            };
 
-        var config = {
-            'moo' : 'norz'
-        };
+        QUnit.expect(1);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker : function(){
@@ -146,21 +151,21 @@ define([
             }
         });
 
-        var runner = runnerFactory('foo', {}, config);
+        runner = runnerFactory('foo', {}, config);
         runner.init();
     });
 
     QUnit.asyncTest('render after async init', function(assert){
-       QUnit.expect(4);
+        var runner,
+            resolved = false;
 
-        var resolved = false;
+        QUnit.expect(4);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker : function(){
                 return {};
             },
             init : function(){
-                var self = this;
                 var p = new Promise(function(resolve){
                     setTimeout(function(){
                         resolved = true;
@@ -171,26 +176,28 @@ define([
                 return p;
             },
             render : function(){
-               assert.equal(resolved, true, 'Render is called only when init is resolved');
+                assert.equal(resolved, true, 'Render is called only when init is resolved');
             }
         });
 
-        var runner = runnerFactory('foo');
+        runner = runnerFactory('foo');
 
         assert.equal(resolved, false, 'Init is not yet resolved');
         runner
            .on('ready', function(){
                assert.equal(resolved, true, 'Ready is triggered only when init is resolved');
                QUnit.start();
-            })
-            .init();
+           })
+           .init();
     });
 
     QUnit.asyncTest('states', function(assert){
-       QUnit.expect(31);
+        var runner;
+
+        QUnit.expect(31);
 
         runnerFactory.registerProvider('foo', mockProvider);
-        var runner = runnerFactory('foo');
+        runner = runnerFactory('foo');
 
         assert.throws(function(){
             runner.setState({ custom : true });
@@ -263,12 +270,13 @@ define([
     });
 
     QUnit.asyncTest('load and render item', function(assert){
-       QUnit.expect(2);
+        var runner,
+            items = {
+                'aaa' : 'AAA',
+                'zzz' : 'ZZZ'
+            };
 
-        var items = {
-            'aaa' : 'AAA',
-            'zzz' : 'ZZZ'
-        };
+        QUnit.expect(2);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker : function(){
@@ -276,16 +284,16 @@ define([
             },
             init : _.noop,
             loadItem : function(itemRef){
-               return items[itemRef];
+                return items[itemRef];
             },
             renderItem : function(itemRef, itemData){
-               assert.equal(itemRef, 'zzz', 'The rendered item is correct');
-               assert.equal(itemData, 'ZZZ', 'The rendered item is correct');
-               QUnit.start();
+                assert.equal(itemRef, 'zzz', 'The rendered item is correct');
+                assert.equal(itemData, 'ZZZ', 'The rendered item is correct');
+                QUnit.start();
             }
         });
 
-        var runner = runnerFactory('foo');
+        runner = runnerFactory('foo');
         runner
             .on('ready', function(){
                 this.loadItem('zzz');
@@ -294,13 +302,14 @@ define([
     });
 
     QUnit.asyncTest('load async and render item', function(assert){
-       QUnit.expect(4);
+        var runner,
+            resolved = false,
+            items = {
+                'aaa' : 'AAA',
+                'zzz' : 'ZZZ'
+            };
 
-       var resolved = false;
-        var items = {
-            'aaa' : 'AAA',
-            'zzz' : 'ZZZ'
-        };
+        QUnit.expect(4);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker : function(){
@@ -308,25 +317,24 @@ define([
             },
             init : _.noop,
             loadItem : function(itemRef){
-               var p = new Promise(function(resolve){
+                var p = new Promise(function(resolve){
                     setTimeout(function(){
                         resolved = true;
                         resolve(items[itemRef]);
                     }, 50);
                 });
                 assert.equal(resolved, false, 'Item loading is not yet resolved');
-               return p;
+                return p;
             },
             renderItem : function(itemRef, itemData){
-
-               assert.equal(resolved, true, 'Item loading is resolved');
-               assert.equal(itemRef, 'zzz', 'The rendered item is correct');
-               assert.equal(itemData, 'ZZZ', 'The rendered item is correct');
-               QUnit.start();
+                assert.equal(resolved, true, 'Item loading is resolved');
+                assert.equal(itemRef, 'zzz', 'The rendered item is correct');
+                assert.equal(itemData, 'ZZZ', 'The rendered item is correct');
+                QUnit.start();
             }
         });
 
-        var runner = runnerFactory('foo');
+        runner = runnerFactory('foo');
         runner
             .on('ready', function(){
 
@@ -336,12 +344,13 @@ define([
     });
 
     QUnit.asyncTest('unload item async', function(assert){
-       QUnit.expect(4);
+        var runner,
+            items = {
+                'aaa' : 'AAA',
+                'zzz' : 'ZZZ'
+            };
 
-        var items = {
-            'aaa' : 'AAA',
-            'zzz' : 'ZZZ'
-        };
+        QUnit.expect(4);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker : function(){
@@ -361,7 +370,7 @@ define([
             }
         });
 
-        var runner = runnerFactory('foo');
+        runner = runnerFactory('foo');
         runner
             .on('ready', function(){
                 this.unloadItem('zzz');
@@ -375,12 +384,13 @@ define([
     });
 
     QUnit.asyncTest('item state', function(assert){
-       QUnit.expect(15);
+        var runner,
+            items = {
+                'aaa' : 'AAA',
+                'zzz' : 'ZZZ'
+            };
 
-        var items = {
-            'aaa' : 'AAA',
-            'zzz' : 'ZZZ'
-        };
+        QUnit.expect(15);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker : function(){
@@ -388,11 +398,11 @@ define([
             },
             init : _.noop,
             loadItem : function(itemRef){
-               return items[itemRef];
+                return items[itemRef];
             }
         });
 
-        var runner = runnerFactory('foo');
+        runner = runnerFactory('foo');
         runner
             .on('init', function(){
 
@@ -427,25 +437,26 @@ define([
                 this.setItemState('zzz', 'foo', true);
                 assert.equal(this.getItemState('zzz', 'foo'), true, 'The item is foo');
             })
-            .on('renderitem', function(itemRef, itemData){
+            .on('renderitem', function(itemRef){
 
                 assert.equal(itemRef, 'zzz', 'The rendered item is correct');
                 assert.equal(this.getItemState('zzz', 'loaded'), true, 'The item is loaded');
                 assert.equal(this.getItemState('zzz', 'ready'), true, 'The item is ready');
                 assert.equal(this.getItemState('zzz', 'foo'), true, 'The item is foo');
 
-               QUnit.start();
+                QUnit.start();
             })
             .init();
     });
 
     QUnit.asyncTest('disable items', function(assert){
-       QUnit.expect(6);
+        var runner,
+            items = {
+                'aaa' : 'AAA',
+                'zzz' : 'ZZZ'
+            };
 
-        var items = {
-            'aaa' : 'AAA',
-            'zzz' : 'ZZZ'
-        };
+        QUnit.expect(6);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker : function(){
@@ -464,7 +475,7 @@ define([
             }
         });
 
-        var runner = runnerFactory('foo');
+        runner = runnerFactory('foo');
         runner
             .on('ready', function(){
                 this.loadItem('zzz');
@@ -487,7 +498,9 @@ define([
     });
 
     QUnit.asyncTest('init error', function(assert){
-       QUnit.expect(2);
+        var runner;
+
+        QUnit.expect(2);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker : function(){
@@ -500,7 +513,7 @@ define([
             }
         });
 
-        var runner = runnerFactory('foo');
+        runner = runnerFactory('foo');
         runner
             .on('error', function(err){
                 assert.ok(err instanceof Error, 'The parameter is an error');
@@ -511,7 +524,7 @@ define([
     });
 
     QUnit.asyncTest('context and data', function(assert){
-       QUnit.expect(10);
+        var runner;
 
         var testData = {
             items : {
@@ -526,6 +539,8 @@ define([
             map: {}
         };
 
+        QUnit.expect(10);
+
         runnerFactory.registerProvider('foo', {
             loadAreaBroker : function(){
                 return {};
@@ -538,7 +553,7 @@ define([
             }
         });
 
-        var runner = runnerFactory('foo');
+        runner = runnerFactory('foo');
         runner
             .on('init', function(){
 
@@ -570,7 +585,7 @@ define([
     });
 
     QUnit.asyncTest('move next', function(assert){
-       QUnit.expect(2);
+        QUnit.expect(2);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker : function(){
@@ -594,7 +609,7 @@ define([
     });
 
     QUnit.asyncTest('move previous', function(assert){
-       QUnit.expect(2);
+        QUnit.expect(2);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker : function(){
@@ -618,10 +633,10 @@ define([
     });
 
     QUnit.asyncTest('jump', function(assert){
-       QUnit.expect(4);
-
         var expectedScope = "section";
         var expectedPosition = 3;
+
+        QUnit.expect(4);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker : function(){
@@ -648,7 +663,7 @@ define([
     });
 
     QUnit.asyncTest('skip', function(assert){
-       QUnit.expect(2);
+        QUnit.expect(2);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker : function(){
@@ -673,10 +688,10 @@ define([
     });
 
     QUnit.asyncTest('timeout', function(assert){
-        QUnit.expect(4);
-
         var expectedScope = 'assessmentSection';
         var expectedRef = 'assessmentSection-1';
+
+        QUnit.expect(4);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker : function(){
@@ -685,9 +700,9 @@ define([
             init : function init(){
 
                 this.on('init', function(){
-                        assert.ok(true, 'we can listen for init in providers init');
-                        this.timeout(expectedScope, expectedRef)
-                    })
+                    assert.ok(true, 'we can listen for init in providers init');
+                    this.timeout(expectedScope, expectedRef);
+                })
                     .on('timeout', function(scope, ref){
                         assert.ok(true, 'The timeout event has been triggered');
 
@@ -705,9 +720,9 @@ define([
 
 
     QUnit.asyncTest('exit', function(assert) {
-        QUnit.expect(3);
-
         var expectedReason = 'the reason why';
+
+        QUnit.expect(3);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker : function(){
@@ -769,8 +784,6 @@ define([
     });
 
     QUnit.asyncTest('proxy', function(assert) {
-        QUnit.expect(6);
-
         var expectedProxy = eventifier({
             init: function(){},
             destroy: function() {
@@ -780,6 +793,8 @@ define([
         });
 
         var expectedError = "an error";
+
+        QUnit.expect(6);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker : function(){
@@ -812,12 +827,13 @@ define([
     });
 
     QUnit.test('probeOverseer', function(assert) {
-        QUnit.expect(2);
+        var probeOverseer,
+            expectedProbeOverseer = {
+                init: function(){},
+                destroy: function() {}
+            };
 
-        var expectedProbeOverseer = {
-            init: function(){},
-            destroy: function() {}
-        };
+        QUnit.expect(2);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker : function(){
@@ -830,7 +846,7 @@ define([
             init : function init(){}
         });
 
-        var probeOverseer = runnerFactory('foo').getProbeOverseer();
+        probeOverseer = runnerFactory('foo').getProbeOverseer();
 
         assert.equal(probeOverseer, expectedProbeOverseer, 'The right probeOverseer has been provided');
     });
@@ -848,7 +864,7 @@ define([
         });
 
         assert.throws(function() {
-           runnerFactory('foo').getProxy();
+            runnerFactory('foo').getProxy();
         }, 'An exception is thrown when the loadAreaBroker() is missing');
     });
 
@@ -873,14 +889,14 @@ define([
 
 
     QUnit.asyncTest('initialize', function(assert){
-       QUnit.expect(6);
-
         var boo = pluginFactory({
             name : 'boo',
             init : function init(){
                 assert.ok(true, 'the plugin is initializing');
             }
         });
+
+        QUnit.expect(6);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker : function(){
@@ -909,13 +925,13 @@ define([
 
 
     QUnit.asyncTest('persistent state', function(assert) {
-        QUnit.expect(9);
-        QUnit.stop(2);
-
         var states = {};
 
         var expectedName = 'pause';
         var expectedValue = true;
+
+        QUnit.expect(9);
+        QUnit.stop(2);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker : function(){

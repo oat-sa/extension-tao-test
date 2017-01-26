@@ -117,7 +117,7 @@ define([
             var args = [].slice.call(arguments, 1);
             return new Promise(function(resolve){
                 if(!_.isFunction(provider[method])){
-                   return resolve();
+                    return resolve();
                 }
                 return resolve(provider[method].apply(runner, args));
             });
@@ -194,6 +194,7 @@ define([
 
             /**
              * Render the runner
+             *  - areas render
              *  - provider render
              *  - plugins render
              * @fires runner#render
@@ -203,14 +204,30 @@ define([
             render : function render(){
                 var self = this;
 
-                providerRun('render').then(function(){
-                    pluginRun('render').then(function(){
+                providerRun('render')
+                    .then(this.renderAreas.bind(this))
+                    .then(_.partial(pluginRun, 'render'))
+                    .then(function(){
                         self.setState('ready', true)
                             .trigger('render')
                             .trigger('ready');
-                    }).catch(reportError);
-                }).catch(reportError);
+                    })
+                    .catch(reportError);
                 return this;
+            },
+
+            /**
+             * Render all the areas from the areaBroker, if defined
+             * @returns {Promise}
+             */
+            renderAreas : function renderAreas() {
+                this.getAreaBroker();
+
+                if (areaBroker && _.isFunction(areaBroker.renderAll)) {
+                    return areaBroker.renderAll();
+                }
+
+                return Promise.resolve();
             },
 
             /**
