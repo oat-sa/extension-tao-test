@@ -66,7 +66,7 @@ define([
             });
         },
         render : function render(){
-
+            // we still use the old render method to check for backward compatibility
             var $container = this.getAreaBroker().getControlArea();
             $container.append(this.$element);
 

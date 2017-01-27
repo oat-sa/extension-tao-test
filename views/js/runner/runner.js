@@ -142,6 +142,20 @@ define([
         }
 
         /**
+         * Run a method on the areaBroker, if defined
+         *
+         * @param {String} method - the method to run
+         * @returns {Promise}
+         */
+        function areasRun(method){
+            if (areaBroker && _.isFunction(areaBroker[method])) {
+                // This should be made async in the future
+                areaBroker[method]();
+            }
+            return Promise.resolve();
+        }
+
+        /**
          * Trigger error event
          * @param {Error|String} err - the error
          * @fires runner#error
@@ -181,6 +195,7 @@ define([
                 providerRun('loadPersistentStates')
                     .then(_.partial(pluginRun, 'install'))
                     .then(_.partial(providerRun, 'init'))
+                    .then(_.partial(areasRun, 'initAll'))
                     .then(_.partial(pluginRun, 'init'))
                     .then(function() {
                         self.setState('init', true)
@@ -204,8 +219,10 @@ define([
             render : function render(){
                 var self = this;
 
+                this.getAreaBroker();
+
                 providerRun('render')
-                    .then(this.renderAreas.bind(this))
+                    .then(_.partial(areasRun, 'renderAll'))
                     .then(_.partial(pluginRun, 'render'))
                     .then(function(){
                         self.setState('ready', true)
@@ -214,20 +231,6 @@ define([
                     })
                     .catch(reportError);
                 return this;
-            },
-
-            /**
-             * Render all the areas from the areaBroker, if defined
-             * @returns {Promise}
-             */
-            renderAreas : function renderAreas() {
-                this.getAreaBroker();
-
-                if (areaBroker && _.isFunction(areaBroker.renderAll)) {
-                    return areaBroker.renderAll();
-                }
-
-                return Promise.resolve();
             },
 
             /**
@@ -373,8 +376,10 @@ define([
             destroy : function destroy(){
                 var self = this;
 
-                providerRun('destroy').then(function(){
-                    pluginRun('destroy').then(function(){
+                providerRun('destroy')
+                    .then(_.partial(pluginRun, 'destroy'))
+                    .then(_.partial(areasRun, 'destroyAll'))
+                    .then(function(){
                         var destroyed;
 
                         if (proxy) {
@@ -388,8 +393,8 @@ define([
                             self.setState('destroy', true)
                                 .trigger('destroy');
                         });
-                    }).catch(reportError);
-                }).catch(reportError);
+                    })
+                    .catch(reportError);
                 return this;
             },
 

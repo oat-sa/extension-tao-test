@@ -61,7 +61,7 @@ define([
                 });
 
             // register the button in the navigation area
-            this.getAreaBroker().addNavigationComponent(this.getName(), this.$button);
+            this.getAreaBroker().addNavigationElement(this.getName(), this.$button);
         },
         destroy : function (){
             this.$button.remove();
