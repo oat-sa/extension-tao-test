@@ -178,6 +178,7 @@ define([
              * Initialize the runner
              *  - instantiate the plugins
              *  - provider init
+             *  - areas init
              *  - plugins init
              *  - call render
              * @fires runner#init
@@ -369,6 +370,7 @@ define([
             /**
              * Destroy
              *  - provider destroy
+             *  - areas destroy
              *  - plugins destroy
              * @fires runner#destroy
              * @returns {runner} chains
