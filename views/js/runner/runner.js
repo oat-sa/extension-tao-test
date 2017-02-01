@@ -142,20 +142,6 @@ define([
         }
 
         /**
-         * Run a method on the areaBroker, if defined
-         *
-         * @param {String} method - the method to run
-         * @returns {Promise}
-         */
-        function areasRun(method){
-            if (areaBroker && _.isFunction(areaBroker[method])) {
-                // This should be made async in the future
-                areaBroker[method]();
-            }
-            return Promise.resolve();
-        }
-
-        /**
          * Trigger error event
          * @param {Error|String} err - the error
          * @fires runner#error
@@ -178,7 +164,6 @@ define([
              * Initialize the runner
              *  - instantiate the plugins
              *  - provider init
-             *  - areas init
              *  - plugins init
              *  - call render
              * @fires runner#init
@@ -196,7 +181,6 @@ define([
                 providerRun('loadPersistentStates')
                     .then(_.partial(pluginRun, 'install'))
                     .then(_.partial(providerRun, 'init'))
-                    .then(_.partial(areasRun, 'initAll'))
                     .then(_.partial(pluginRun, 'init'))
                     .then(function() {
                         self.setState('init', true)
@@ -210,7 +194,6 @@ define([
 
             /**
              * Render the runner
-             *  - areas render
              *  - provider render
              *  - plugins render
              * @fires runner#render
@@ -223,7 +206,6 @@ define([
                 this.getAreaBroker();
 
                 providerRun('render')
-                    .then(_.partial(areasRun, 'renderAll'))
                     .then(_.partial(pluginRun, 'render'))
                     .then(function(){
                         self.setState('ready', true)
@@ -370,7 +352,6 @@ define([
             /**
              * Destroy
              *  - provider destroy
-             *  - areas destroy
              *  - plugins destroy
              * @fires runner#destroy
              * @returns {runner} chains
@@ -380,7 +361,6 @@ define([
 
                 providerRun('destroy')
                     .then(_.partial(pluginRun, 'destroy'))
-                    .then(_.partial(areasRun, 'destroyAll'))
                     .then(function(){
                         var destroyed;
 
