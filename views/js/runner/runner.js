@@ -117,7 +117,7 @@ define([
             var args = [].slice.call(arguments, 1);
             return new Promise(function(resolve){
                 if(!_.isFunction(provider[method])){
-                   return resolve();
+                    return resolve();
                 }
                 return resolve(provider[method].apply(runner, args));
             });
@@ -203,13 +203,16 @@ define([
             render : function render(){
                 var self = this;
 
-                providerRun('render').then(function(){
-                    pluginRun('render').then(function(){
+                this.getAreaBroker();
+
+                providerRun('render')
+                    .then(_.partial(pluginRun, 'render'))
+                    .then(function(){
                         self.setState('ready', true)
                             .trigger('render')
                             .trigger('ready');
-                    }).catch(reportError);
-                }).catch(reportError);
+                    })
+                    .catch(reportError);
                 return this;
             },
 
@@ -356,8 +359,9 @@ define([
             destroy : function destroy(){
                 var self = this;
 
-                providerRun('destroy').then(function(){
-                    pluginRun('destroy').then(function(){
+                providerRun('destroy')
+                    .then(_.partial(pluginRun, 'destroy'))
+                    .then(function(){
                         var destroyed;
 
                         if (proxy) {
@@ -371,8 +375,8 @@ define([
                             self.setState('destroy', true)
                                 .trigger('destroy');
                         });
-                    }).catch(reportError);
-                }).catch(reportError);
+                    })
+                    .catch(reportError);
                 return this;
             },
 

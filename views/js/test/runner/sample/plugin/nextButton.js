@@ -54,12 +54,8 @@ define([
                 self.enable();
             });
 
-        },
-        render : function render(){
-
-            var $container = this.getAreaBroker().getNavigationArea();
-            $container.append(this.$button);
-
+            // register the button in the navigation area
+            this.getAreaBroker().addNavigationElement(this.getName(), this.$button);
         },
         destroy : function (){
             this.$button.remove();

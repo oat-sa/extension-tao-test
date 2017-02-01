@@ -19,28 +19,29 @@
  * @author Sam <sam@taotesting.com>
  */
 define(['lodash', 'taoTests/runner/plugin'], function (_, pluginFactory){
+    'use strict';
 
     var _defaults = {};
 
     var pluginImpl = {
         name : 'responseSubmitter',
-        init : function (testRunner, cfg){
-            
+        init : function (testRunner){
+
             var self = this;
-            
+
             //listen item response change
             var itemResponses = {
                 RESPONSE1 : 1,
                 RESPONSE2 : ['A', 'B', 'C']
             };
-            
+
             this.active = true;
-            
+
             //get ready to submit "on move" (warning ! not "on next" because it will currently fail)
             testRunner.before('move', function (e){
-                
+
                 var done = e.done();
-                
+
                 //submit it to the server (the delay simulates latency)
                 _.delay(function(){
                     var success = true;

@@ -26,7 +26,7 @@ define([
     'taoTests/test/runner/sample/plugin/nextButton',
     'taoTests/test/runner/sample/plugin/previousButton',
     'taoTests/test/runner/sample/plugin/pauseButton',
-    'taoTests/test/runner/sample/plugin/timer',
+    'taoTests/test/runner/sample/plugin/timer'
 ], function($, _, runner, minimalisticProvider, nextButton, previousButton, pauseButton, timer){
     'use strict';
 
@@ -39,9 +39,9 @@ define([
     });
 
     QUnit.asyncTest('dom integration', function(assert){
-        QUnit.expect(12);
-
         var $container = $('#qunit-fixture');
+
+        QUnit.expect(12);
 
         runner(minimalisticProvider.name, {
             previousButtonh : previousButton,
@@ -87,9 +87,9 @@ define([
 
 
     QUnit.asyncTest('visual integration', function(assert){
-        QUnit.expect(1);
-
         var $container = $('#external');
+
+        QUnit.expect(1);
 
         runner(minimalisticProvider.name, {
             previousButtonh : previousButton,
