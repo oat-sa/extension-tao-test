@@ -80,7 +80,7 @@ define([
             var probeHandler = function probeHandler(){
                 var now = moment();
                 var data = {
-                    id   : uuid(8, 16),
+                    id   : uuid(12, 16),
                     type : probe.name,
                     timestamp : now.format('x') / 1000,
                     timezone  : now.tz(timeZone).format('Z')
@@ -110,7 +110,7 @@ define([
             var startHandler = function startHandler(){
                 var now = moment();
                 var data = {
-                    id: uuid(8, 16),
+                    id: uuid(12, 16),
                     marker: 'start',
                     type : probe.name,
                     timestamp : now.format('x') / 1000,
@@ -135,7 +135,7 @@ define([
                 var args = slice.call(arguments);
 
                 last = _.findLast(immutableQueue, { type : probe.name, marker : 'start' });
-                if(last && !_.findLast(immutableQueue, { type : probe.name, marker : 'stop', id : last.id })){
+                if(last && !_.findLast(immutableQueue, { type : probe.name, marker : 'end', id : last.id })){
                     data.id = last.id;
                     data.marker = 'end';
                     if(typeof probe.capture === 'function'){
@@ -293,7 +293,6 @@ define([
              * @returns {Promise} with the data in parameter
              */
             flush: function flush(){
-                var self = this;
                 return getStorage().then(function(storage){
                     return new Promise(function(resolve){
                         Promise.all(writing).then(function () {
@@ -302,7 +301,7 @@ define([
                                 queue = [];
                                 return storage.setItem('queue', queue).then(function(){
                                     resolve(flushed);
-                               });
+                                });
                             });
                         });
                     });
