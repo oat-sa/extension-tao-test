@@ -49,7 +49,7 @@ define([
         var tokenHandler    = tokenHandlerFactory();
         var middlewares     = {};
         var initialized     = false;
-        var delegateProxy, communicator, communicatorPromise;
+        var proxy, delegateProxy, communicator, communicatorPromise;
 
         /**
          * Gets parameters merged with extra parameters
@@ -148,9 +148,9 @@ define([
 
         /**
          * Defines the test runner proxy
-         * @type {proxy}
+         * @typedef {proxy}
          */
-        var proxy = eventifier({
+        proxy = eventifier({
             /**
              * Add a middleware
              * @param {String} [command] The command queue in which add the middleware (default: 'all')
@@ -162,9 +162,9 @@ define([
                 var list = middlewares[queue] || [];
                 middlewares[queue] = list;
 
-                _.each(arguments, function(callback) {
-                    if (_.isFunction(callback)) {
-                        list.push(callback);
+                _.each(arguments, function(cb) {
+                    if (_.isFunction(cb)) {
+                        list.push(cb);
                     }
                 });
                 return this;
@@ -304,8 +304,8 @@ define([
                 }
 
                 this.getCommunicator()
-                    .then(function(communicator) {
-                        communicator.channel(name, handler);
+                    .then(function(communicatorInstance) {
+                        communicatorInstance.channel(name, handler);
                     })
                     // just an empty catch to avoid any error to be displayed in the console when the communicator is not enabled
                     .catch(_.noop);
@@ -323,8 +323,8 @@ define([
              */
             send: function send(channel, message) {
                 return this.getCommunicator()
-                    .then(function(communicator) {
-                        return communicator.send(channel, message);
+                    .then(function(communicatorInstance) {
+                        return communicatorInstance.send(channel, message);
                     });
             },
 
