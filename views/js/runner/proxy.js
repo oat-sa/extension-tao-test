@@ -49,7 +49,7 @@ define([
         var tokenHandler    = tokenHandlerFactory();
         var middlewares     = {};
         var initialized     = false;
-        var delegateProxy, communicator, communicatorPromise;
+        var proxy, delegateProxy, communicator, communicatorPromise;
 
         /**
          * Gets parameters merged with extra parameters
@@ -148,9 +148,9 @@ define([
 
         /**
          * Defines the test runner proxy
-         * @type {proxy}
+         * @typedef {proxy}
          */
-        var proxy = eventifier({
+        proxy = eventifier({
             /**
              * Add a middleware
              * @param {String} [command] The command queue in which add the middleware (default: 'all')
@@ -162,9 +162,9 @@ define([
                 var list = middlewares[queue] || [];
                 middlewares[queue] = list;
 
-                _.each(arguments, function(callback) {
-                    if (_.isFunction(callback)) {
-                        list.push(callback);
+                _.each(arguments, function(cb) {
+                    if (_.isFunction(cb)) {
+                        list.push(cb);
                     }
                 });
                 return this;
@@ -295,12 +295,23 @@ define([
              * @throws TypeError if the name is missing or the handler is not a callback
              */
             channel: function channel(name, handler) {
+                if (!_.isString(name) || name.length <= 0) {
+                    throw new TypeError('A channel must have a name');
+                }
+
+                if (!_.isFunction(handler)) {
+                    throw new TypeError('A handler must be attached to a channel');
+                }
+
                 this.getCommunicator()
-                    .then(function(communicator) {
-                        communicator.channel(name, handler);
+                    .then(function(communicatorInstance) {
+                        communicatorInstance.channel(name, handler);
                     })
                     // just an empty catch to avoid any error to be displayed in the console when the communicator is not enabled
                     .catch(_.noop);
+
+                this.on('channel-' + name, handler);
+
                 return this;
             },
 
@@ -312,8 +323,8 @@ define([
              */
             send: function send(channel, message) {
                 return this.getCommunicator()
-                    .then(function(communicator) {
-                        return communicator.send(channel, message);
+                    .then(function(communicatorInstance) {
+                        return communicatorInstance.send(channel, message);
                     });
             },
 
@@ -481,6 +492,25 @@ define([
                 return delegate('telemetry', uri, signal, params);
             }
         });
+
+        // catch platform messages that come outside of the communicator component, then each is dispatched to the right channel
+        proxy
+            .on('message', function (channel, message) {
+                this.trigger('channel-' + channel, message);
+            })
+            .use(function(request, response, next) {
+                if (response.data && response.data.messages) {
+                    // receive server messages
+                    _.forEach(response.data.messages, function (msg) {
+                        if (msg.channel) {
+                            proxy.trigger('message', msg.channel, msg.message);
+                        } else {
+                            proxy.trigger('message', 'malformed', msg);
+                        }
+                    });
+                }
+                next();
+            });
 
         delegateProxy = delegator(proxy, proxyAdapter, {
             name: 'proxy',

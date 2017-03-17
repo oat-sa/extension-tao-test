@@ -34,7 +34,6 @@ class Updater extends \common_ext_ExtensionUpdater
      */
     public function update($initialVersion)
     {
-
         if ($this->isBetween('0', '2.7')){
             $this->setVersion('2.7');
         }
@@ -77,6 +76,7 @@ class Updater extends \common_ext_ExtensionUpdater
             OntologyUpdater::syncModels();
             $this->setVersion('3.6.0');
         }
-        $this->skip('3.6.0', '3.7.2');
+        
+        $this->skip('3.6.0', '3.9.0');
 	}
 }
