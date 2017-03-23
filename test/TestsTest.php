@@ -280,7 +280,7 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
      */
     public function testGetTestContent() {
        
-        $testContentProperty = new core_kernel_classes_Property(TEST_TESTCONTENT_PROP);
+        $testContentProperty = new core_kernel_classes_Property(taoTests_models_classes_TestsService::TEST_TESTCONTENT_PROP);
 
         $prophet = new Prophet();
         $testProphecy = $prophet->prophesize('core_kernel_classes_Resource');
@@ -312,7 +312,7 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
      */
     public function testGetTestContentEmtpty() 
     {
-        $testContentProperty = new core_kernel_classes_Property(TEST_TESTCONTENT_PROP);
+        $testContentProperty = new core_kernel_classes_Property(taoTests_models_classes_TestsService::TEST_TESTCONTENT_PROP);
         
         $prophet = new Prophet();
         $testProphecy = $prophet->prophesize('core_kernel_classes_Resource');
@@ -338,7 +338,7 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
      */
     public function testGetTestContentNoContent()
     {
-        $testContentProperty = new core_kernel_classes_Property(TEST_TESTCONTENT_PROP);
+        $testContentProperty = new core_kernel_classes_Property(taoTests_models_classes_TestsService::TEST_TESTCONTENT_PROP);
     
         $prophet = new Prophet();
         $testProphecy = $prophet->prophesize('core_kernel_classes_Resource');

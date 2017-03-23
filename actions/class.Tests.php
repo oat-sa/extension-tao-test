@@ -81,9 +81,9 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
     				$propertyValues = $myForm->getValues();
     
     				// don't hande the testmodel via bindProperties
-    				if(array_key_exists(PROPERTY_TEST_TESTMODEL, $propertyValues)){
-    					$modelUri = $propertyValues[PROPERTY_TEST_TESTMODEL];
-    					unset($propertyValues[PROPERTY_TEST_TESTMODEL]);
+    				if(array_key_exists(taoTests_models_classes_TestsService::PROPERTY_TEST_TESTMODEL, $propertyValues)){
+    					$modelUri = $propertyValues[taoTests_models_classes_TestsService::PROPERTY_TEST_TESTMODEL];
+    					unset($propertyValues[taoTests_models_classes_TestsService::PROPERTY_TEST_TESTMODEL]);
     					if (!empty($modelUri)) {
     						$testModel = new core_kernel_classes_Resource($modelUri);
     						$this->service->setTestModel($test, $testModel);
@@ -103,7 +103,7 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
     			}
     		}
     
-    		$myForm->removeElement(tao_helpers_Uri::encode(TEST_TESTCONTENT_PROP));
+    		$myForm->removeElement(tao_helpers_Uri::encode(taoTests_models_classes_TestsService::TEST_TESTCONTENT_PROP));
     
     		$this->setData('uri', tao_helpers_Uri::encode($test->getUri()));
     		$this->setData('classUri', tao_helpers_Uri::encode($clazz->getUri()));
