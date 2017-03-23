@@ -31,6 +31,9 @@
 class taoTests_models_classes_TestsService
     extends tao_models_classes_ClassService
 {
+
+    const PROPERTY_TEST_TESTMODEL = 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestTestModel';
+    const TEST_TESTCONTENT_PROP = 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestContent';
     // --- ASSOCIATIONS ---
 
 
@@ -217,7 +220,7 @@ class taoTests_models_classes_TestsService
 
 		if(!is_null($clone)){
 			$noCloningProperties = array(
-				TEST_TESTCONTENT_PROP,
+				self::TEST_TESTCONTENT_PROP,
 				RDF_TYPE
 			);
 
@@ -317,7 +320,7 @@ class taoTests_models_classes_TestsService
 					$former->deleteContent($test);
 				}	
 			}
-			$test->editPropertyValues(new core_kernel_classes_Property(PROPERTY_TEST_TESTMODEL), $testModel);
+			$test->editPropertyValues(new core_kernel_classes_Property(self::PROPERTY_TEST_TESTMODEL), $testModel);
 			$newImpl = $this->getTestModelImplementation($testModel);
 			if (!empty($newImpl)) {
 				$newImpl->prepareContent($test, $items);
@@ -340,7 +343,7 @@ class taoTests_models_classes_TestsService
      * @return core_kernel_classes_Container
      */
     public function getTestModel(core_kernel_classes_Resource $test) {
-		$testModel = $test->getOnePropertyValue(new core_kernel_classes_Property(PROPERTY_TEST_TESTMODEL));
+		$testModel = $test->getOnePropertyValue(new core_kernel_classes_Property(self::PROPERTY_TEST_TESTMODEL));
 		return $testModel instanceof core_kernel_classes_Resource ? $testModel : null;
     }
 
@@ -382,7 +385,7 @@ class taoTests_models_classes_TestsService
      */
     public function getTestContent(core_kernel_classes_Resource $test)
     {
-        $testContentProperty = new core_kernel_classes_Property(TEST_TESTCONTENT_PROP);
+        $testContentProperty = new core_kernel_classes_Property(self::TEST_TESTCONTENT_PROP);
         try {
             $testcontent = $test->getUniquePropertyValue($testContentProperty);
         } catch (common_exception_EmptyProperty $e) {
