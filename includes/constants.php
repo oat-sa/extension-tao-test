@@ -35,7 +35,6 @@ $todefine = array(
 	'INSTANCE_SERVICEDEFINITION_ITEMRUNNER' => 'http://www.tao.lu/Ontologies/TAODelivery.rdf#ServiceItemRunner',
 
 	'CLASS_TESTMODEL'					=> 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestModel',
-	'PROPERTY_TEST_TESTMODEL'			=> 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestTestModel',
 	'PROPERTY_TESTMODEL_IMPLEMENTATION' => 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestModelImplementation',
 	'INSTANCE_TESTMODEL_SIMPLE'			=> 'http://www.tao.lu/Ontologies/TAOTest.rdf#SimpleTestModel'
 );
