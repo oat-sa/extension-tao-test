@@ -34,12 +34,12 @@ return array(
     'label' => 'Test core extension',
     'description' => 'TAO Tests extension contains the abstraction of the test-runners, but requires an implementation in order to be able to run tests',
     'license' => 'GPL-2.0',
-    'version' => '4.1.0',
+    'version' => '6.0.0',
     'author' => 'Open Assessment Technologies, CRP Henri Tudor',
     'requires' => array(
         'taoItems' => '>=2.20.1',
         'taoBackOffice' => '>=0.8',
-        'tao' => '>=8.0.0'
+        'tao' => '>=9.2.0'
     ),
     'models' => array(
         'http://www.tao.lu/Ontologies/TAOTest.rdf',
@@ -80,9 +80,5 @@ return array(
 
 		#BASE URL (usually the domain root)
 		'BASE_URL'				=> ROOT_URL	.'taoTests/',
-
-		#BASE WWW the web resources path
-		'BASE_WWW'				=> ROOT_URL	.'taoTests/views/',
-
 	)
 );
