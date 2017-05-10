@@ -40,7 +40,7 @@ class RegisterTestPluginService extends \common_ext_action_InstallAction
 
         $testPluginService = new TestPluginService();
         $testPluginService->setServiceManager($serviceManager);
-        $serviceManager->register(TestPluginService::CONFIG_ID, $testPluginService);
+        $serviceManager->register(TestPluginService::SERVICE_ID, $testPluginService);
     }
 }
 
