@@ -14,121 +14,45 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2016 (original work) Open Assessment Technologies SA;
- *
+ * Copyright (c) 2016-2017 (original work) Open Assessment Technologies SA;
  */
 namespace oat\taoTests\models\runner\plugins;
 
-use core_kernel_classes_Resource;
-use oat\oatbox\service\ConfigurableService;
-use oat\oatbox\service\ServiceManager;
-use tao_models_classes_service_ConstantParameter as ConstantParameter;
-use tao_models_classes_service_ServiceCall as ServiceCall;
+use oat\tao\model\plugins\PluginService;
+use oat\tao\model\plugins\PluginModule;
 
 /**
  * Manage test plugins
  *
  * @author Bertrand Chevrier <bertrand@taotesting.com>
+ * @author Jean-Sébastien Conan <jean-sebastien@taotesting.com>
  */
-class TestPluginService extends ConfigurableService
+class TestPluginService extends PluginService
 {
-
-    const CONFIG_ID = 'taoTests/TestPlugin';
+    const SERVICE_ID = 'taoTests/TestPlugin';
 
     /**
-     * @var PluginRegistry
+     * @deprecated
      */
-    private $registry;
+    const CONFIG_ID = self::SERVICE_ID;
 
-    public function __construct()
+    /**
+     * TestPluginService constructor.
+     * @param array $options
+     */
+    public function __construct($options = array())
     {
-        $this->registry = PluginRegistry::getRegistry();
+        parent::__construct($options);
+        $this->setRegistry(PluginRegistry::getRegistry());
     }
 
     /**
-     * Retrieve the list of all available plugins (from the registry)
-     *
-     * @return TestPlugin[] the avaialble plugins
+     * Creates a plugin object from data array
+     * @param $data
+     * @return PluginModule
      */
-    public function getAllPlugins()
+    protected function createFromArray($data)
     {
-        $plugins = array_map(function($value) {
-            return $this->loadPlugin($value);
-        }, $this->registry->getMap());
-
-        return array_filter($plugins, function($plugin){
-            return !is_null($plugin);
-        });
-    }
-
-    /**
-     * Retrieve the given plugin from the registry
-     *
-     * @param string $id the identifier of the plugin to retrieve
-     * @return TestPlugin|null the plugin
-     */
-    public function getPlugin($id)
-    {
-        foreach($this->registry->getMap() as $plugin){
-            if($plugin['id'] == $id){
-                return $this->loadPlugin($plugin);
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Load a test plugin from the given data
-     * @param array $data
-     * @return TestPlugin|null
-     */
-    private function loadPlugin(array $data)
-    {
-        $plugin = null;
-        try {
-            $plugin = TestPlugin::fromArray($data);
-        } catch(\common_exception_InconsistentData $dataException) {
-            \common_Logger::w('Got inconsistent plugin data, skipping.');
-        }
-        return $plugin;
-    }
-
-    /**
-     * Change the state of a plugin to active
-     *
-     * @param TestPlugin $plugin the plugin to activate
-     * @return boolean true if activated
-     */
-    public function activatePlugin(TestPlugin $plugin)
-    {
-        if(!is_null($plugin)){
-            $plugin->setActive(true);
-            return $this->registry->register($plugin);
-        }
-
-        return false;
-    }
-
-    /**
-     * Change the state of a plugin to inactive
-     *
-     * @param TestPlugin $plugin the plugin to deactivate
-     * @return boolean true if deactivated
-     */
-    public function deactivatePlugin(TestPlugin $plugin)
-    {
-        if(!is_null($plugin)){
-            $plugin->setActive(false);
-            $this->registry->register($plugin);
-        }
-    }
-
-    /**
-     * Registry setter
-     * @param PlguinRegistry $registry
-     */
-    public function setRegistry(PluginRegistry $registry)
-    {
-        $this->registry = $registry;
+        return TestPlugin::fromArray($data);
     }
 }
