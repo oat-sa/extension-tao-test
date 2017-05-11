@@ -18,7 +18,7 @@
  */
 namespace oat\taoTests\models\runner\plugins;
 
-use oat\tao\model\plugins\PluginService;
+use oat\tao\model\plugins\AbstractPluginService;
 use oat\tao\model\plugins\PluginModule;
 
 /**
@@ -27,7 +27,7 @@ use oat\tao\model\plugins\PluginModule;
  * @author Bertrand Chevrier <bertrand@taotesting.com>
  * @author Jean-Sébastien Conan <jean-sebastien@taotesting.com>
  */
-class TestPluginService extends PluginService
+class TestPluginService extends AbstractPluginService
 {
     const SERVICE_ID = 'taoTests/TestPlugin';
 
