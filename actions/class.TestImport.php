@@ -18,7 +18,9 @@
  *               
  * 
  */
+
 use oat\taoTests\models\event\TestImportEvent;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
 
 /**
  * This controller provide the actions to import items 
@@ -26,7 +28,6 @@ use oat\taoTests\models\event\TestImportEvent;
  * @author CRP Henri Tudor - TAO Team - {@link http://www.tao.lu}
  * @license GPLv2  http://www.opensource.org/licenses/gpl-2.0.php
  * @package taoItems
- 
  *
  */
 class taoTests_actions_TestImport extends tao_actions_Import {
@@ -50,11 +51,14 @@ class taoTests_actions_TestImport extends tao_actions_Import {
 			$impl = taoTests_models_classes_TestsService::singleton()->getTestModelImplementation($model);
 			if (in_array('tao_models_classes_import_ImportProvider', class_implements($impl))) {
 				foreach ($impl->getImportHandlers() as $handler) {
+				    if ($handler instanceof ServiceLocatorAwareInterface) {
+                        $handler->setServiceLocator($this->getServiceManager());
+                    }
 					array_unshift($returnValue, $handler);
 				}
 			}
 		}
-		
+
 		return $returnValue;
 	}
 
