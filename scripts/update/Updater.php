@@ -24,6 +24,9 @@ namespace oat\taoTests\scripts\update;
 use oat\tao\scripts\update\OntologyUpdater;
 use oat\taoTests\scripts\install\RegisterTestPluginService;
 use oat\taoTests\scripts\install\RegisterTestRunnerFeatureService;
+use oat\tao\model\accessControl\func\AclProxy;
+use oat\tao\model\accessControl\func\AccessRule;
+use oat\tao\model\user\TaoRoles;
 
 class Updater extends \common_ext_ExtensionUpdater
 {
@@ -78,5 +81,13 @@ class Updater extends \common_ext_ExtensionUpdater
         }
 
         $this->skip('3.6.0', '6.0.0');
+
+        // remove anonymous access
+        if ($this->isVersion('6.0.0')) {
+            AclProxy::revokeRule(new AccessRule(AccessRule::GRANT, TaoRoles::ANONYMOUS, \taoTests_actions_RestTests::class));
+            $this->setVersion('6.0.1');
+        }
+
+        $this->skip('6.0.1', '6.1.0');
 	}
 }
