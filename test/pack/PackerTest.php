@@ -77,10 +77,6 @@ class PackerTest extends TaoPhpUnitTestRunner
             ->will($this->returnValue(new core_kernel_classes_Resource('fooModel')));
 
         $serviceMock
-            ->method('getTestContent')
-            ->will($this->returnValue(''));
-
-        $serviceMock
             ->method('getTestModelImplementation')
             ->with($this->equalTo($model))
             ->will($this->returnValue($modelMock));

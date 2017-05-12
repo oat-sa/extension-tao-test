@@ -390,40 +390,6 @@ class taoTests_models_classes_TestsService
     }
 
     /**
-     * Get the core_kernel_file_File object corresponding to the content of $test.
-     *
-     * @deprecated test content is managed by the respective test model
-     *
-     * @param core_kernel_classes_Resource $test  A resource corresponding to a TAO Test in the Knowledge Base.
-     * @throws common_exception_Error If an error occurs while retrieving the test content.
-     * @return core_kernel_file_File
-     */
-    public function getTestContent(core_kernel_classes_Resource $test)
-    {
-        $testContentProperty = new core_kernel_classes_Property(self::TEST_TESTCONTENT_PROP);
-        try {
-            $testcontent = $test->getUniquePropertyValue($testContentProperty);
-        } catch (common_exception_EmptyProperty $e) {
-                $uri = $test->getUri();
-                $msg = "Test '${uri}' has no content.";
-                throw new common_exception_Error($msg);
-        } catch (common_Exception $e) {
-            $uri = $test->getUri();
-            $msg = "Multiple contents found for test '${uri}'.";
-            throw new common_exception_Error($msg);
-        }
-        if ($testcontent instanceof core_kernel_classes_Resource) {
-
-            return new core_kernel_file_File($testcontent->getUri());
-        } else {
-            $uri = $test->getUri();
-            $msg = "Test '${uri}' content is not a resource. " . $testcontent;
-            common_Logger::w($msg);
-            return $testcontent;
-        }
-    }
-
-    /**
      * Get serializer to persist filesystem object
      *
      * @return FileReferenceSerializer
