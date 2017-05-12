@@ -14,24 +14,21 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2016 (original work) Open Assessment Technologies SA;
- *
+ * Copyright (c) 2016-2017 (original work) Open Assessment Technologies SA;
  */
 namespace oat\taoTests\models\runner\plugins;
 
-use common_Logger;
 use common_ext_ExtensionsManager;
-use oat\oatbox\AbstractRegistry;
-use oat\taoTests\models\runner\plugins\TestPlugin;
+use oat\tao\model\plugins\AbstractPluginRegistry;
 
 /**
  * Store the <b>available</b> test runner plugins, even if not activated,
  * plugins have to be activated.
  *
- *
  * @author Bertrand Chevrier <bertrand@taotesting.com>
+ * @author Jean-Sébastien Conan <jean-sebastien@taotesting.com>
  */
-class PluginRegistry extends AbstractRegistry
+class PluginRegistry extends AbstractPluginRegistry
 {
     /**
      * @see \oat\oatbox\AbstractRegistry::getConfigId()
@@ -47,24 +44,5 @@ class PluginRegistry extends AbstractRegistry
     protected function getExtension()
     {
         return common_ext_ExtensionsManager::singleton()->getExtensionById('taoTests');
-    }
-
-    /**
-     * Register a plugin
-     * @param TestPlugin $plugin the plugin to register
-     * @return boolean true if registered
-     */
-    public function register(TestPlugin $plugin)
-    {
-        if(!is_null($plugin) && ! empty($plugin->getModule()) ) {
-
-            //encode the plugin into an assoc array
-            $pluginData = $plugin->toArray();
-
-            self::getRegistry()->set($plugin->getModule(),  $pluginData);
-
-            return true;
-        }
-        return false;
     }
 }
