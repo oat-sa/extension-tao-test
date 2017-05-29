@@ -375,12 +375,12 @@ define([
     });
 
     QUnit.asyncTest('item state', function(assert){
-       QUnit.expect(15);
-
         var items = {
             'aaa' : 'AAA',
             'zzz' : 'ZZZ'
         };
+
+        QUnit.expect(17);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker : function(){
@@ -388,12 +388,11 @@ define([
             },
             init : _.noop,
             loadItem : function(itemRef){
-               return items[itemRef];
+                return items[itemRef];
             }
         });
 
-        var runner = runnerFactory('foo');
-        runner
+        runnerFactory('foo')
             .on('init', function(){
 
                 assert.throws(function(){
@@ -419,8 +418,10 @@ define([
             .on('ready', function(){
                 this.loadItem('zzz');
             })
-            .on('loaditem', function(itemRef){
+            .on('loaditem', function(itemRef, itemData){
+
                 assert.equal(itemRef, 'zzz', 'The loaded item is correct');
+                assert.equal(itemData, 'ZZZ', 'The loaded item data is correct');
                 assert.equal(this.getItemState('zzz', 'loaded'), true, 'The item is loaded');
                 assert.equal(this.getItemState('zzz', 'ready'), false, 'The item is not ready');
 
@@ -430,11 +431,12 @@ define([
             .on('renderitem', function(itemRef, itemData){
 
                 assert.equal(itemRef, 'zzz', 'The rendered item is correct');
+                assert.equal(itemData, 'ZZZ', 'The rendered item data is correct');
                 assert.equal(this.getItemState('zzz', 'loaded'), true, 'The item is loaded');
                 assert.equal(this.getItemState('zzz', 'ready'), true, 'The item is ready');
                 assert.equal(this.getItemState('zzz', 'foo'), true, 'The item is foo');
 
-               QUnit.start();
+                QUnit.start();
             })
             .init();
     });

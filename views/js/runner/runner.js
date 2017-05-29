@@ -227,7 +227,7 @@ define([
 
                 providerRun('loadItem', itemRef).then(function(itemData){
                     self.setItemState(itemRef, 'loaded', true)
-                        .trigger('loaditem', itemRef)
+                        .trigger('loaditem', itemRef, itemData)
                         .renderItem(itemRef, itemData);
                 }).catch(reportError);
                 return this;
