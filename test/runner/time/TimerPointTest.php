@@ -43,6 +43,72 @@ class TimerPointTest extends TaoPhpUnitTestRunner
      * @param $type
      * @param $target
      */
+    public function testJsonSerialize($tags, $timestamp, $type, $target)
+    {
+        $timePoint = new TimePoint($tags, $timestamp, $type, $target);
+        $data = $timePoint->jsonSerialize();
+        
+        $this->assertEquals($timePoint->getTimestamp(), $data['ts']);
+        $this->assertEquals($timePoint->getTarget(), $data['target']);
+        $this->assertEquals($timePoint->getTags(), $data['tags']);
+        $this->assertEquals($timePoint->getType(), $data['type']);
+    }
+    
+    /**
+     * @dataProvider testSerializeProvider
+     * @param $tags
+     * @param $timestamp
+     * @param $type
+     * @param $target
+     */
+    public function testToArray($tags, $timestamp, $type, $target)
+    {
+        $timePoint = new TimePoint($tags, $timestamp, $type, $target);
+        $data = $timePoint->toArray();
+        
+        $this->assertEquals($timePoint->getTimestamp(), $data['ts']);
+        $this->assertEquals($timePoint->getTarget(), $data['target']);
+        $this->assertEquals($timePoint->getTags(), $data['tags']);
+        $this->assertEquals($timePoint->getType(), $data['type']);
+    }
+
+    /**
+     * @dataProvider testSerializeProvider
+     * @param $tags
+     * @param $timestamp
+     * @param $type
+     * @param $target
+     */
+    public function testFromArray($tags, $timestamp, $type, $target)
+    {
+        $timePoint = new TimePoint();
+        $timePoint->fromArray([
+            'ts' => $timestamp,
+            'type' => $type,
+            'target' => $target,
+            'tags' => $tags,
+        ]);
+        
+        $expected = [
+            'ts' => $timestamp,
+            'type' => $type,
+            'target' => $target,
+            'tags' => (array)$tags,
+        ];
+
+        $this->assertEquals($expected['ts'], $timePoint->getTimestamp());
+        $this->assertEquals($expected['target'], $timePoint->getTarget());
+        $this->assertEquals($expected['tags'], $timePoint->getTags());
+        $this->assertEquals($expected['type'], $timePoint->getType());
+    }
+    
+    /**
+     * @dataProvider testSerializeProvider
+     * @param $tags
+     * @param $timestamp
+     * @param $type
+     * @param $target
+     */
     public function testSerialize($tags, $timestamp, $type, $target)
     {
         $timePoint = new TimePoint($tags, $timestamp, $type, $target);
