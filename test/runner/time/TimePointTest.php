@@ -25,7 +25,7 @@ namespace oat\taoTests\test;
 use oat\tao\test\TaoPhpUnitTestRunner;
 use oat\taoTests\models\runner\time\TimePoint;
 
-class TimerPointTest extends TaoPhpUnitTestRunner
+class TimePointTest extends TaoPhpUnitTestRunner
 {
     /**
      * tests initialization
