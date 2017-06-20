@@ -417,17 +417,18 @@ define([
             /**
              * Gets an item definition by its URI, also gets its current state
              * @param {String} uri - The URI of the item to get
+             * @param {Object} [params] - addtional params to be appended
              * @returns {Promise} - Returns a promise. The item data will be provided on resolve.
              *                      Any error will be provided if rejected.
              * @fires getItem
              */
-            getItem: function getItem(uri) {
+            getItem: function getItem(uri, params) {
                 /**
                  * @event proxy#getItem
                  * @param {Promise} promise
                  * @param {String} uri
                  */
-                return delegate('getItem', uri);
+                return delegate('getItem', uri, params);
             },
 
             /**
