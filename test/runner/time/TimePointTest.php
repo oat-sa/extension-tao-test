@@ -52,6 +52,7 @@ class TimePointTest extends TaoPhpUnitTestRunner
         $this->assertEquals($timePoint->getTarget(), $data['target']);
         $this->assertEquals($timePoint->getTags(), $data['tags']);
         $this->assertEquals($timePoint->getType(), $data['type']);
+        $this->assertEquals(json_encode($data), json_encode($timePoint));
     }
     
     /**
