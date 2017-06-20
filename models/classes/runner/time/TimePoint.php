@@ -32,7 +32,7 @@ namespace oat\taoTests\models\runner\time;
  * 
  * @package oat\taoTests\models\runner\time
  */
-class TimePoint implements ArraySerialize, \Serializable, \JsonSerializable
+class TimePoint implements ArraySerializable, \Serializable, \JsonSerializable
 {
     /**
      * Type of TimePoint: start of range

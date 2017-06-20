@@ -24,10 +24,10 @@
 namespace oat\taoTests\models\runner\time;
 
 /**
- * Interface ArraySerialize
+ * Interface ArraySerializable
  * @package oat\taoTests\models\classes\runner\time
  */
-interface ArraySerialize
+interface ArraySerializable
 {
     /**
      * Exports the internal state to an array
