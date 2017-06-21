@@ -32,7 +32,7 @@ namespace oat\taoTests\models\runner\time;
  * 
  * @package oat\taoTests\models\runner\time
  */
-class TimePoint implements \Serializable
+class TimePoint implements ArraySerializable, \Serializable, \JsonSerializable
 {
     /**
      * Type of TimePoint: start of range
@@ -126,35 +126,25 @@ class TimePoint implements \Serializable
     }
 
     /**
-     * String representation of object
-     * @link http://php.net/manual/en/serializable.serialize.php
-     * @return string the string representation of the object or null
-     * @since 5.1.0
+     * Exports the internal state to an array
+     * @return array
      */
-    public function serialize()
+    public function toArray()
     {
-        $data = [
+        return [
             'ts' => $this->getTimestamp(),
             'type' => $this->getType(),
             'target' => $this->getTarget(),
             'tags' => $this->getTags(),
         ];
-        return serialize($data);
     }
 
     /**
-     * Constructs the object
-     * @link http://php.net/manual/en/serializable.unserialize.php
-     * @param string $serialized <p>
-     * The string representation of the object.
-     * </p>
-     * @return void
-     * @since 5.1.0
+     * Imports the internal state from an array
+     * @param array $data
      */
-    public function unserialize($serialized)
+    public function fromArray($data)
     {
-        $data = unserialize($serialized);
-
         if ($data) {
             if (isset($data['tags'])) {
                 $this->setTags($data['tags']);
@@ -172,6 +162,43 @@ class TimePoint implements \Serializable
                 $this->setTarget($data['target']);
             }
         }
+    }
+
+    /**
+     * Specify data which should be serialized to JSON
+     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
+     * @return mixed data which can be serialized by <b>json_encode</b>,
+     * which is a value of any type other than a resource.
+     * @since 5.4.0
+     */
+    public function jsonSerialize()
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * String representation of object
+     * @link http://php.net/manual/en/serializable.serialize.php
+     * @return string the string representation of the object or null
+     * @since 5.1.0
+     */
+    public function serialize()
+    {
+        return serialize($this->toArray());
+    }
+
+    /**
+     * Constructs the object
+     * @link http://php.net/manual/en/serializable.unserialize.php
+     * @param string $serialized <p>
+     * The string representation of the object.
+     * </p>
+     * @return void
+     * @since 5.1.0
+     */
+    public function unserialize($serialized)
+    {
+        $this->fromArray(unserialize($serialized));
     }
 
     /**

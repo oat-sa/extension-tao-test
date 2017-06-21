@@ -32,7 +32,7 @@ namespace oat\taoTests\models\runner\time;
  * 
  * @package oat\taoTests\models\runner\time
  */
-interface TimeLine extends \Serializable
+interface TimeLine
 {
     /**
      * Gets the list of TimePoint present in the TimeLine
