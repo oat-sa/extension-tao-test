@@ -370,28 +370,35 @@ define(['lodash', 'core/promise', 'core/eventifier', 'taoTests/runner/proxy'], f
 
 
     QUnit.asyncTest('proxyFactory.getItem', function(assert) {
-        var expectedUri = 'http://tao.dev#item123';
+        var proxy;
+        var expectedUri    = 'http://tao.dev#item123';
+        var expectedParams = {
+            itemIdentifier : 'Item-123'
+        };
 
-        QUnit.expect(7);
+        QUnit.expect(8);
         QUnit.stop();
 
         proxyFactory.registerProvider('default', _.defaults({
-            getItem : function(uri) {
+            getItem : function(uri, params) {
                 assert.ok(true, 'The proxyFactory has delegated the call to getItem');
                 assert.equal(uri, expectedUri, 'The proxyFactory has provided the URI to the getItem method');
+                assert.deepEqual(params, expectedParams, 'The given parameters are corrects');
+
                 QUnit.start();
                 return Promise.resolve();
             }
         }, defaultProxy));
 
-        var proxy = proxyFactory('default').on('getItem', function(promise, uri) {
+        proxy = proxyFactory('default').on('getItem', function(promise, uri) {
             assert.ok(true, 'The proxyFactory has fired the "getItem" event');
             assert.ok(promise instanceof Promise, 'The proxyFactory has provided the promise through the "getItem" event');
             assert.equal(uri, expectedUri, 'The proxyFactory has provided the URI through the "getItem" event');
+
             QUnit.start();
         });
 
-        proxy.getItem(expectedUri)
+        proxy.getItem(expectedUri, expectedParams)
             .then(function() {
                 assert.ok(false, 'The proxy must be initialized');
             })
@@ -400,7 +407,7 @@ define(['lodash', 'core/promise', 'core/eventifier', 'taoTests/runner/proxy'], f
             });
 
         proxy.init().then(function () {
-            var result = proxy.getItem(expectedUri);
+            var result = proxy.getItem(expectedUri, expectedParams);
 
             assert.ok(result instanceof Promise, 'The proxyFactory.getItem method has returned a promise');
         });
