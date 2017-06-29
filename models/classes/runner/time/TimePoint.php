@@ -228,7 +228,7 @@ class TimePoint implements ArraySerializable, \Serializable, \JsonSerializable
      */
     public function getNormalizedTimestamp()
     {
-        return floor($this->getTimestamp() * self::PRECISION);
+        return round($this->getTimestamp() * self::PRECISION);
     }
 
     /**
@@ -360,7 +360,7 @@ class TimePoint implements ArraySerializable, \Serializable, \JsonSerializable
      * @param array $tags
      * @param int $target
      * @param int $type
-     * @return array
+     * @return bool
      */
     public function match(array $tags = null, $target = self::TARGET_ALL, $type = self::TYPE_ALL)
     {
