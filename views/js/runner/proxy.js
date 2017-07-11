@@ -25,8 +25,9 @@ define([
     'core/eventifier',
     'core/promise',
     'core/providerRegistry',
-    'core/tokenHandler'
-], function(_, async, delegator, eventifier, Promise, providerRegistry, tokenHandlerFactory) {
+    'core/tokenHandler',
+    'core/connectivity'
+], function(_, async, delegator, eventifier, Promise, providerRegistry, tokenHandlerFactory, connectivity) {
     'use strict';
 
     var _defaults = {};
@@ -49,6 +50,7 @@ define([
         var tokenHandler    = tokenHandlerFactory();
         var middlewares     = {};
         var initialized     = false;
+        var onlineStatus    = connectivity.isOnline();
         var proxy, delegateProxy, communicator, communicatorPromise;
 
         /**
@@ -154,10 +156,10 @@ define([
             /**
              * Add a middleware
              * @param {String} [command] The command queue in which add the middleware (default: 'all')
-             * @param {Function} callback A middleware callback. Must accept 3 parameters: request, response, next.
+             * @param {Function...} callback - A middleware callback. Must accept 3 parameters: request, response, next.
              * @returns {proxy}
              */
-            use: function use(command, callback) {
+            use: function use(command) {
                 var queue = command && _.isString(command) ? command : 'all';
                 var list = middlewares[queue] || [];
                 middlewares[queue] = list;
@@ -231,6 +233,60 @@ define([
             },
 
             /**
+             * Set the proxy as online
+             * @returns {proxy} chains
+             * @fires {proxy#reconnect}
+             */
+            setOnline : function setOnline(){
+                if(this.isOffline()){
+                    onlineStatus = true;
+                    this.trigger('reconnect');
+                }
+                return this;
+            },
+
+            /**
+             * Set the proxy as offline
+             * @param {String} [source] - source of the connectivity change
+             * @returns {proxy} chains
+             * @fires {proxy#disconnect}
+             */
+            setOffline : function setOffline(source){
+                if(this.isOnline()){
+                    onlineStatus = false;
+                    this.trigger('disconnect', source);
+                }
+                return this;
+            },
+
+            /**
+             * Are we online ?
+             * @returns {Boolean}
+             */
+            isOnline : function isOnline(){
+                return onlineStatus;
+            },
+
+            /**
+             * Are we offline
+             * @returns {Boolean}
+             */
+            isOffline : function isOffline(){
+                return !onlineStatus;
+            },
+
+            /**
+             * For the proxy a connection error is an error object with
+             * source 'network', a 0 code and a false sent attribute.
+             *
+             * @param {Error|Object} err - the error to verify
+             * @returns {Boolean} true if a connection error.
+             */
+            isConnectivityError : function isConnectivityError(err){
+                return _.isObject(err) && err.source === 'network' && err.code === 0 && err.sent === false;
+            },
+
+            /**
              * Gets the security token handler
              * @returns {tokenHandler}
              */
@@ -261,10 +317,16 @@ define([
                             communicator = proxyAdapter.loadCommunicator.call(self);
                             if (communicator) {
                                 communicator
-                                    .on('error', function(error) {
-                                        self.trigger('error', error);
+                                    .before('error', function(e, err){
+                                        if(self.isConnectivityError(err)){
+                                            self.setOffline('communicator');
+                                        }
+                                    })
+                                    .on('error', function(err) {
+                                        self.trigger('error', err);
                                     })
                                     .on('receive', function(response) {
+                                        self.setOnline();
                                         self.trigger('receive', response, 'communicator');
                                     })
                                     .init()
@@ -494,6 +556,15 @@ define([
             }
         });
 
+        //listen for connectivty changes
+        connectivity
+            .on('offline', function(){
+                proxy.setOffline('device');
+            })
+            .on('online', function(){
+                proxy.setOnline();
+            });
+
         // catch platform messages that come outside of the communicator component, then each is dispatched to the right channel
         proxy
             .on('message', function (channel, message) {
@@ -509,6 +580,15 @@ define([
                             proxy.trigger('message', 'malformed', msg);
                         }
                     });
+                }
+                next();
+            })
+            //detect failing request and change the online status
+            .use(function(request, response, next){
+                if(response.status === 'error' && self.isConnectivityError(response.data)){
+                    proxy.setOffline('request');
+                } else if (response.data && response.data.sent === true){
+                    proxy.setOnline();
                 }
                 next();
             });
