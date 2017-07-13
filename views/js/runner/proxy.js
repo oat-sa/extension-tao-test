@@ -585,7 +585,7 @@ define([
             })
             //detect failing request and change the online status
             .use(function(request, response, next){
-                if(response.status === 'error' && self.isConnectivityError(response.data)){
+                if(proxy.isConnectivityError(response.data)){
                     proxy.setOffline('request');
                 } else if (response.data && response.data.sent === true){
                     proxy.setOnline();
