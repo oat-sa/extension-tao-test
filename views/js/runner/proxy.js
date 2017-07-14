@@ -124,7 +124,7 @@ define([
          */
         function delegate(fnName) {
             var request = {command: fnName, params: _slice.call(arguments, 1)};
-            if (!initialized && fnName !== 'init') {
+            if (!initialized && !_.contains(['install', 'init'], fnName)) {
                 return Promise.reject(new Error('Proxy is not properly initialized or has been destroyed!'));
             }
             return delegateProxy.apply(null, arguments)
@@ -170,6 +170,15 @@ define([
                     }
                 });
                 return this;
+            },
+
+            /**
+             * Install the proxy. Optionnal.
+             * This step let's attach some features before the proxy reallys starts (before init).
+             * @returns {*}
+             */
+            install: function install() {
+                return delegate('install');
             },
 
             /**
