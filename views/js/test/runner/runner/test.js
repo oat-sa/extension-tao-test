@@ -771,10 +771,10 @@ define([
     });
 
     QUnit.asyncTest('proxy', function(assert) {
-        QUnit.expect(6);
 
         var expectedProxy = eventifier({
-            init: function(){},
+            init: _.noop,
+            install : _.noop,
             destroy: function() {
                 assert.ok(true, 'The proxy.destroy method has been called');
                 return Promise.resolve();
@@ -782,6 +782,8 @@ define([
         });
 
         var expectedError = "an error";
+
+        QUnit.expect(6);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker : function(){
@@ -805,12 +807,12 @@ define([
                         assert.ok(true, 'The runner is destroying');
                         QUnit.start();
                     })
-                    .getProxy().trigger('error', expectedError);
+                    .getProxy()
+                    .trigger('error', expectedError);
             }
         });
 
-        runnerFactory('foo')
-            .init();
+        runnerFactory('foo').init();
     });
 
     QUnit.test('probeOverseer', function(assert) {
