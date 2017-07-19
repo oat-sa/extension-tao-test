@@ -430,6 +430,8 @@ define([
                     proxy.on('error', function (error) {
                         self.trigger('error', error);
                     });
+
+                    proxy.install();
                 }
                 return proxy;
             },
