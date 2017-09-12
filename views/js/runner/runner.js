@@ -117,7 +117,7 @@ define([
             var args = [].slice.call(arguments, 1);
             return new Promise(function(resolve){
                 if(!_.isFunction(provider[method])){
-                   return resolve();
+                    return resolve();
                 }
                 return resolve(provider[method].apply(runner, args));
             });
@@ -184,8 +184,11 @@ define([
                     .then(_.partial(pluginRun, 'init'))
                     .then(function() {
                         self.setState('init', true)
-                            .trigger('init')
-                            .render();
+                            .off('init.internal')
+                            .after('init.internal', function initDone(){
+                                this.render();
+                            })
+                            .trigger('init');
                     })
                     .catch(reportError);
 
@@ -227,8 +230,11 @@ define([
 
                 providerRun('loadItem', itemRef).then(function(itemData){
                     self.setItemState(itemRef, 'loaded', true)
-                        .trigger('loaditem', itemRef, itemData)
-                        .renderItem(itemRef, itemData);
+                        .off('loaditem.internal')
+                        .after('loaditem.internal', function loadItemDone(){
+                            this.renderItem(itemRef, itemData);
+                        })
+                        .trigger('loaditem', itemRef, itemData);
                 }).catch(reportError);
                 return this;
             },
@@ -484,11 +490,10 @@ define([
              * @returns {Boolean} if active, false if not set
              */
             getPersistentState : function getPersistentState(name) {
-                var getPersistentState = provider.getPersistentState;
                 var state;
 
-                if(_.isFunction(getPersistentState)){
-                    state = getPersistentState.call(runner, name);
+                if(_.isFunction(provider.getPersistentState)){
+                    state = provider.getPersistentState.call(runner, name);
                 }
 
                 return !!state;
@@ -727,6 +732,6 @@ define([
         if(!_.isFunction(provider.loadAreaBroker)){
             throw new TypeError('The runner provider MUST have a method that returns an areaBroker');
         }
-       return true;
+        return true;
     });
 });
