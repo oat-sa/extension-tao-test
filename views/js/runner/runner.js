@@ -184,7 +184,8 @@ define([
                     .then(_.partial(pluginRun, 'init'))
                     .then(function() {
                         self.setState('init', true)
-                            .after('init', function initDone(){
+                            .off('init.internal')
+                            .after('init.internal', function initDone(){
                                 this.render();
                             })
                             .trigger('init');
@@ -229,7 +230,8 @@ define([
 
                 providerRun('loadItem', itemRef).then(function(itemData){
                     self.setItemState(itemRef, 'loaded', true)
-                        .after('loaditem', function loadItemDone(){
+                        .off('loaditem.internal')
+                        .after('loaditem.internal', function loadItemDone(){
                             this.renderItem(itemRef, itemData);
                         })
                         .trigger('loaditem', itemRef, itemData);
