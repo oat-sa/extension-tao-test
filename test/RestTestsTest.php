@@ -32,7 +32,7 @@ class RestTestsTest extends RestTestCase
 {
     public function serviceProvider(){
         return array(
-            array('taoTests/RestTests',TaoOntology::TEST_CLASS )
+            array('taoTests/RestTests',TaoOntology::TEST_CLASS_URI )
         );
     }
 }

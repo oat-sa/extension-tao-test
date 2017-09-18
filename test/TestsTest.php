@@ -74,7 +74,7 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
     public function testTests() {
         $tests = $this->testsService->getRootclass();
         $this->assertIsA($tests, 'core_kernel_classes_Class');
-        $this->assertEquals(TaoOntology::TEST_CLASS , $tests->getUri());
+        $this->assertEquals(TaoOntology::TEST_CLASS_URI , $tests->getUri());
 
         return $tests;
     }

@@ -67,7 +67,7 @@ class taoTests_models_classes_TestsService
 
 		parent::__construct();
 
-		$this->testClass = new core_kernel_classes_Class(TaoOntology::TEST_CLASS );
+		$this->testClass = new core_kernel_classes_Class(TaoOntology::TEST_CLASS_URI );
 
 
         return $returnValue;
