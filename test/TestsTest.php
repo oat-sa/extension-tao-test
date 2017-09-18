@@ -88,7 +88,7 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
      */
     public function modelsProvider(){
         \common_ext_ExtensionsManager::singleton()->getExtensionById('taoTests');
-        $testModelClass = new core_kernel_classes_Class(TestService::CLASS_TESTMODEL);
+        $testModelClass = new core_kernel_classes_Class(TestService::PROPERTY_CLASS_TEST_MODEL);
         $models = $testModelClass->getInstances();
         
         return array(
