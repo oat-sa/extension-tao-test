@@ -55,6 +55,7 @@ define(['lodash', 'core/promise', 'core/eventifier', 'taoTests/runner/proxy'], f
     });
 
     var proxyApi = [
+        { name : 'install', title : 'install' },
         { name : 'init', title : 'init' },
         { name : 'destroy', title : 'destroy' },
         { name : 'getTokenHandler', title : 'getTokenHandler' },
@@ -69,7 +70,12 @@ define(['lodash', 'core/promise', 'core/eventifier', 'taoTests/runner/proxy'], f
         { name : 'callTestAction', title : 'callTestAction' },
         { name : 'getItem', title : 'getItem' },
         { name : 'submitItem', title : 'submitItem' },
-        { name : 'callItemAction', title : 'callItemAction' }
+        { name : 'callItemAction', title : 'callItemAction' },
+        { name : 'isOnline', title : 'isOnline' },
+        { name : 'isOffline',title : 'isOffline'},
+        { name : 'setOnline', title : 'setOnline'},
+        { name : 'setOffline',  title : 'setOffline'},
+        { name : 'isConnectivityError',  title : 'isConnectivityError'}
     ];
 
     QUnit
@@ -144,6 +150,31 @@ define(['lodash', 'core/promise', 'core/eventifier', 'taoTests/runner/proxy'], f
         assert.ok(result instanceof Promise, 'The proxyFactory.init method has returned a promise');
     });
 
+    QUnit.asyncTest('proxyFactory.install', function(assert) {
+        var proxy;
+        QUnit.expect(2);
+
+        proxyFactory.registerProvider('default', {
+            install : function(){
+                this.foo = 12;
+                this.bar = function(){
+                    return this.foo;
+                };
+            },
+            init : function() {
+                assert.equal(this.foo, 12, 'The foo member if available and correct');
+                assert.equal(this.bar(), 12, 'The bar member if available and correct');
+                return Promise.resolve();
+            }
+        });
+
+        proxy = proxyFactory('default');
+        proxy.install();
+
+        proxy.init().then(function() {
+            QUnit.start();
+        });
+    });
 
     QUnit.asyncTest('proxyFactory.destroy', function(assert) {
         QUnit.expect(5);
@@ -370,28 +401,35 @@ define(['lodash', 'core/promise', 'core/eventifier', 'taoTests/runner/proxy'], f
 
 
     QUnit.asyncTest('proxyFactory.getItem', function(assert) {
-        var expectedUri = 'http://tao.dev#item123';
+        var proxy;
+        var expectedUri    = 'http://tao.dev#item123';
+        var expectedParams = {
+            itemIdentifier : 'Item-123'
+        };
 
-        QUnit.expect(7);
+        QUnit.expect(8);
         QUnit.stop();
 
         proxyFactory.registerProvider('default', _.defaults({
-            getItem : function(uri) {
+            getItem : function(uri, params) {
                 assert.ok(true, 'The proxyFactory has delegated the call to getItem');
                 assert.equal(uri, expectedUri, 'The proxyFactory has provided the URI to the getItem method');
+                assert.deepEqual(params, expectedParams, 'The given parameters are corrects');
+
                 QUnit.start();
                 return Promise.resolve();
             }
         }, defaultProxy));
 
-        var proxy = proxyFactory('default').on('getItem', function(promise, uri) {
+        proxy = proxyFactory('default').on('getItem', function(promise, uri) {
             assert.ok(true, 'The proxyFactory has fired the "getItem" event');
             assert.ok(promise instanceof Promise, 'The proxyFactory has provided the promise through the "getItem" event');
             assert.equal(uri, expectedUri, 'The proxyFactory has provided the URI through the "getItem" event');
+
             QUnit.start();
         });
 
-        proxy.getItem(expectedUri)
+        proxy.getItem(expectedUri, expectedParams)
             .then(function() {
                 assert.ok(false, 'The proxy must be initialized');
             })
@@ -400,7 +438,7 @@ define(['lodash', 'core/promise', 'core/eventifier', 'taoTests/runner/proxy'], f
             });
 
         proxy.init().then(function () {
-            var result = proxy.getItem(expectedUri);
+            var result = proxy.getItem(expectedUri, expectedParams);
 
             assert.ok(result instanceof Promise, 'The proxyFactory.getItem method has returned a promise');
         });
@@ -658,6 +696,9 @@ define(['lodash', 'core/promise', 'core/eventifier', 'taoTests/runner/proxy'], f
             on: function() {
                 return this;
             },
+            before : function(){
+                return this;
+            },
             init: function() {
                 assert.ok(true, 'The communicator is initialized');
                 return Promise.resolve();
@@ -709,6 +750,9 @@ define(['lodash', 'core/promise', 'core/eventifier', 'taoTests/runner/proxy'], f
 
         var expectedCommunicator = {
             on: function() {
+                return this;
+            },
+            before : function(){
                 return this;
             },
             init: function() {
@@ -766,6 +810,9 @@ define(['lodash', 'core/promise', 'core/eventifier', 'taoTests/runner/proxy'], f
 
         var expectedCommunicator = {
             on: function() {
+                return this;
+            },
+            before : function(){
                 return this;
             },
             init: function() {
@@ -900,6 +947,9 @@ define(['lodash', 'core/promise', 'core/eventifier', 'taoTests/runner/proxy'], f
             on: function() {
                 return this;
             },
+            before: function() {
+                return this;
+            },
             init: function() {
                 assert.ok(true, 'The communicator is initialized');
                 return Promise.resolve();
@@ -938,6 +988,9 @@ define(['lodash', 'core/promise', 'core/eventifier', 'taoTests/runner/proxy'], f
 
         var expectedCommunicator = {
             on: function() {
+                return this;
+            },
+            before: function() {
                 return this;
             },
             init: function() {
@@ -1050,5 +1103,68 @@ define(['lodash', 'core/promise', 'core/eventifier', 'taoTests/runner/proxy'], f
             .init().catch(function () {
                 QUnit.start();
             });
+    });
+
+    QUnit.test('proxyFactory online/offline', function (assert) {
+        var proxy;
+        proxyFactory.registerProvider('default', defaultProxy);
+
+        QUnit.expect(6);
+
+        proxy = proxyFactory('default');
+
+        assert.ok(proxy.isOnline(), 'We start online');
+        assert.ok(!proxy.isOffline(), 'If we are online, we are not offline');
+
+        proxy.setOffline();
+
+        assert.ok(proxy.isOffline(), 'We are offline');
+        assert.ok(!proxy.isOnline(), 'If we are offline, we are not online');
+
+        proxy.setOnline();
+
+        assert.ok(proxy.isOnline(), 'We are online');
+        assert.ok(!proxy.isOffline(), 'If we are online, we are not offline');
+    });
+
+    QUnit.cases([{
+        title : 'null',
+        err   : null,
+        expected : false
+    }, {
+        title : 'empty object',
+        err   : {},
+        expected : false
+    }, {
+        title : 'server error',
+        err   : {
+            source : 'network',
+            code   : 500
+        },
+        expected : false
+    }, {
+        title : 'not found error',
+        err   : {
+            source : 'network',
+            code   : 404,
+            sent   : true
+        },
+        expected : false
+    }, {
+        title : 'connectivity error',
+        err   : {
+            source : 'network',
+            code   : 0,
+            sent   : false
+        },
+        expected : true
+    }]).test('proxyFactory.isConnectivityError', function (data, assert) {
+        var proxy;
+        proxyFactory.registerProvider('default', defaultProxy);
+
+        QUnit.expect(1);
+
+        proxy = proxyFactory('default');
+        assert.equal(proxy.isConnectivityError(data.err), data.expected);
     });
 });
