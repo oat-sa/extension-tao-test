@@ -22,6 +22,9 @@
 use oat\oatbox\event\EventManagerAwareTrait;
 use oat\tao\model\lock\LockManager;
 use oat\taoTests\models\event\TestUpdatedEvent;
+use oat\oatbox\task\Queue;
+use oat\oatbox\task\Task;
+use oat\generis\model\OntologyAwareTrait;
 
 /**
  * Tests Controller provide actions performed from url resolution
@@ -34,6 +37,7 @@ use oat\taoTests\models\event\TestUpdatedEvent;
  */
 class taoTests_actions_Tests extends tao_actions_SaSModule {
     use EventManagerAwareTrait;
+    use OntologyAwareTrait;
 
 	protected function getClassService() {
 		return taoTests_models_classes_TestsService::singleton();
@@ -72,7 +76,13 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 	            $this->setData('lockDate', $lock->getCreationTime());
 	            $this->setData('id', $lock->getResource()->getUri());
 	        }
-	        
+
+	        $queueService = $this->getServiceManager()->get(Queue::SERVICE_ID);
+	        $taskResource = $queueService->getTaskResource($test);
+	        if ($taskResource !== null) {
+	            return $this->returnReport($queueService->getReportByLinkedResource($test));
+            }
+
     		$clazz = $this->getCurrentClass();
     		$formContainer = new tao_actions_form_Instance($clazz, $test);
     		$myForm = $formContainer->getForm();
