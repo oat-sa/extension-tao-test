@@ -78,7 +78,8 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 	        }
 
 	        $queueService = $this->getServiceManager()->get(Queue::SERVICE_ID);
-	        if ($queueService->isTaskPlaceholder($test)) {
+	        $taskResource = $queueService->getTaskResource($test);
+	        if ($taskResource !== null) {
 	            return $this->returnReport($queueService->getReportByLinkedResource($test));
             }
 
