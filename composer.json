@@ -49,8 +49,7 @@
         "tao-extension-name": "taoTests"
     },
     "require": {
-        "oat-sa/oatbox-extension-installer": "dev-master",
-        "paragonie/random_compat": "^2.0"
+        "oat-sa/oatbox-extension-installer": "dev-master"
 
     },
     "autoload": {
