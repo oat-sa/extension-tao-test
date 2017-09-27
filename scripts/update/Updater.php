@@ -88,6 +88,6 @@ class Updater extends \common_ext_ExtensionUpdater
             $this->setVersion('6.0.1');
         }
 
-        $this->skip('6.0.1', '6.4.1');
+        $this->skip('6.0.1', '6.5.0');
 	}
 }
