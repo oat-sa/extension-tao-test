@@ -43,6 +43,8 @@ define([
      * @returns {proxy} - The proxy instance, bound to the selected proxy adapter
      */
     function proxyFactory(proxyName, config) {
+        var proxy, delegateProxy, communicator, communicatorPromise;
+        var holder;
 
         var extraCallParams = {};
         var proxyAdapter    = proxyFactory.getProvider(proxyName);
@@ -51,7 +53,7 @@ define([
         var middlewares     = {};
         var initialized     = false;
         var onlineStatus    = connectivity.isOnline();
-        var proxy, delegateProxy, communicator, communicatorPromise;
+
 
         /**
          * Gets parameters merged with extra parameters
@@ -173,11 +175,16 @@ define([
             },
 
             /**
-             * Install the proxy. Optionnal.
+             * Install the proxy.
              * This step let's attach some features before the proxy reallys starts (before init).
+             *
+             * @param {Map} holder - the test runner data holder
              * @returns {*}
              */
-            install: function install() {
+            install: function install(dataHolder) {
+                if(dataHolder){
+                    holder = dataHolder;
+                }
                 return delegate('install');
             },
 
@@ -239,6 +246,14 @@ define([
                         });
                     }
                 });
+            },
+
+            /**
+             * Get the map that holds the test data
+             * @returns {Map|Object} the dataHolder
+             */
+            getDataHolder : function getDataHolder(){
+                return holder;
             },
 
             /**
