@@ -31,7 +31,8 @@ define([
 
     var mockProvider = {
         init : _.noop,
-        loadAreaBroker  : _.noop
+        loadAreaBroker  : _.noop,
+        loadProxy : _.noop
     };
 
     var items = {
@@ -75,9 +76,8 @@ define([
         {name : 'getItemState', title : 'getItemState'},
         {name : 'setItemState', title : 'setItemState'},
         {name : 'getTestData', title : 'getTestData'},
-        {name : 'setTestData', title : 'setTestData'},
         {name : 'getTestContext', title : 'getTestContext'},
-        {name : 'setTestContext', title : 'setTestContext'},
+        {name : 'getTestMap', title : 'getTestMap'},
         {name : 'getAreaBroker', title : 'getAreaBroker'},
         {name : 'getProxy', title : 'getProxy'},
         {name : 'getProbeOverseer', title : 'getProbeOverseer'},
@@ -519,7 +519,7 @@ define([
             map: {}
         };
 
-        QUnit.expect(10);
+        QUnit.expect(12);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker : _.noop,
@@ -532,6 +532,10 @@ define([
         });
 
         runnerFactory('foo')
+            .on('error', function(err){
+                assert.ok(false, err);
+                QUnit.start();
+            })
             .on('init', function(){
 
                 var context = this.getTestContext();
@@ -550,11 +554,14 @@ define([
             .on('destroy', function(){
                 var context = this.getTestContext();
                 var data    = this.getTestData();
+                var map     = this.getTestMap();
 
                 assert.equal(typeof context, 'object', 'The test context is an object');
                 assert.equal(typeof data, 'object', 'The test data is an object');
+                assert.equal(typeof map, 'object', 'The test map is an object');
                 assert.deepEqual(data, testData, 'The test data is correct');
                 assert.equal(typeof context.best, 'undefined', 'The context is now empty');
+                assert.equal(typeof map.jumps, 'undefined', 'The map is now empty');
 
                 QUnit.start();
             })
