@@ -46,7 +46,7 @@ class taoTests_actions_TestImport extends tao_actions_Import {
 	protected function getAvailableImportHandlers() {
 		$returnValue = parent::getAvailableImportHandlers();
 
-		$testModelClass = new core_kernel_classes_Class(TestService::PROPERTY_CLASS_TEST_MODEL);
+		$testModelClass = new core_kernel_classes_Class(TestService::CLASS_TEST_MODEL);
 		foreach ($testModelClass->getInstances() as $model) {
 			$impl = taoTests_models_classes_TestsService::singleton()->getTestModelImplementation($model);
 			if (in_array('tao_models_classes_import_ImportProvider', class_implements($impl))) {

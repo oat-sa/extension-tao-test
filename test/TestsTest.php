@@ -88,7 +88,7 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
      */
     public function modelsProvider(){
         \common_ext_ExtensionsManager::singleton()->getExtensionById('taoTests');
-        $testModelClass = new core_kernel_classes_Class(TestService::PROPERTY_CLASS_TEST_MODEL);
+        $testModelClass = new core_kernel_classes_Class(TestService::CLASS_TEST_MODEL);
         $models = $testModelClass->getInstances();
         
         return array(
@@ -119,7 +119,7 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
      */
     public function testGetTestModelImplementationBackwardCompatibleFakeClass(){
         $testModelProphecy = $this->prophesize('\core_kernel_classes_Resource');
-        $testModelProphecy->getOnePropertyValue(new core_kernel_classes_Property(TestService::PROPERTY_TESTMODEL_IMPLEMENTATION))->willReturn('FakeTestModelClass');
+        $testModelProphecy->getOnePropertyValue(new core_kernel_classes_Property(TestService::PROPERTY_TEST_MODEL_IMPLEMENTATION))->willReturn('FakeTestModelClass');
 
         $this->testsService->getTestModelImplementation($testModelProphecy->reveal());
 
@@ -127,7 +127,7 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
 
     public function testGetTestModelImplementationBackwardCompatible(){
         $testModelProphecy = $this->prophesize('\core_kernel_classes_Resource');
-        $testModelProphecy->getOnePropertyValue(new core_kernel_classes_Property(TestService::PROPERTY_TESTMODEL_IMPLEMENTATION))->willReturn('oat\\taoTests\\test\\TestModelUnit');
+        $testModelProphecy->getOnePropertyValue(new core_kernel_classes_Property(TestService::PROPERTY_TEST_MODEL_IMPLEMENTATION))->willReturn('oat\\taoTests\\test\\TestModelUnit');
 
         $testModelImp = $this->testsService->getTestModelImplementation($testModelProphecy->reveal());
 
@@ -141,7 +141,7 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
      */
     public function testGetTestModelImplementationNullTestModelImplementation(){
         $testModelProphecy = $this->prophesize('\core_kernel_classes_Resource');
-        $testModelProphecy->getOnePropertyValue(new core_kernel_classes_Property(TestService::PROPERTY_TESTMODEL_IMPLEMENTATION))->willReturn('');
+        $testModelProphecy->getOnePropertyValue(new core_kernel_classes_Property(TestService::PROPERTY_TEST_MODEL_IMPLEMENTATION))->willReturn('');
         $testModelProphecy->getUri()->willReturn('testModelUri');
         $testModelProphecy->getUri()->should(new CallTimesPrediction(1));
 
@@ -162,7 +162,7 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
             ->method('getServiceManager')
             ->willReturn($serviceManagerProphecy->reveal());
         $testModelProphecy = $this->prophesize('\core_kernel_classes_Resource');
-        $testModelProphecy->getOnePropertyValue(new core_kernel_classes_Property(TestService::PROPERTY_TESTMODEL_IMPLEMENTATION))->willReturn('testModelServiceId');
+        $testModelProphecy->getOnePropertyValue(new core_kernel_classes_Property(TestService::PROPERTY_TEST_MODEL_IMPLEMENTATION))->willReturn('testModelServiceId');
 
 
         $testModelImp = $testServiceMock->getTestModelImplementation($testModelProphecy->reveal());
