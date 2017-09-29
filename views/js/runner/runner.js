@@ -28,7 +28,7 @@ define([
     'core/logger',
     'core/providerRegistry',
     'taoTests/runner/dataHolder'
-], function ($, _, __, eventifier, Promise, logger, providerRegistry, dataHolder){
+], function ($, _, __, eventifier, Promise, logger, providerRegistry, dataHolderFactory){
     'use strict';
 
     /**
@@ -50,7 +50,7 @@ define([
         /**
          * @type {Map} Contains the test runner data
          */
-        var holder = dataHolder();
+        var dataHolder = dataHolderFactory();
 
         /**
          * @type {Object} the registered plugins
@@ -430,7 +430,7 @@ define([
                         self.trigger('error', error);
                     });
 
-                    proxy.install(holder);
+                    proxy.install(dataHolder);
                 }
                 return proxy;
             },
@@ -562,7 +562,7 @@ define([
              * @returns {Object} the test data
              */
             getTestData : function getTestData(){
-                return holder && holder.get('testData');
+                return dataHolder && dataHolder.get('testData');
             },
 
             /**
@@ -571,8 +571,8 @@ define([
              * @returns {runner} chains
              */
             setTestData : function setTestData(testData){
-                if(holder && _.isPlainObject(testData)){
-                    holder.set('testData', testData);
+                if(dataHolder && _.isPlainObject(testData)){
+                    dataHolder.set('testData', testData);
                 }
                 return this;
             },
@@ -582,7 +582,7 @@ define([
              * @returns {Object} the test context
              */
             getTestContext : function getTestContext(){
-                return holder && holder.get('testContext');
+                return dataHolder && dataHolder.get('testContext');
             },
 
             /**
@@ -591,8 +591,8 @@ define([
              * @returns {runner} chains
              */
             setTestContext : function setTestContext(testContext){
-                if(holder && _.isPlainObject(testContext)){
-                    holder.set('testContext', testContext);
+                if(dataHolder && _.isPlainObject(testContext)){
+                    dataHolder.set('testContext', testContext);
                 }
                 return this;
             },
@@ -602,7 +602,7 @@ define([
              * @returns {Object} the test map
              */
             getTestMap : function getTestMap(){
-                return holder && holder.get('testMap');
+                return dataHolder && dataHolder.get('testMap');
             },
 
             /**
@@ -611,8 +611,8 @@ define([
              * @returns {runner} chains
              */
             setTestMap : function setTestMap(testMap){
-                if(holder && _.isPlainObject(testMap)){
-                    holder.set('testMap', testMap);
+                if(dataHolder && _.isPlainObject(testMap)){
+                    dataHolder.set('testMap', testMap);
                 }
                 return this;
             },

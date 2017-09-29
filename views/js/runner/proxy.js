@@ -44,7 +44,7 @@ define([
      */
     function proxyFactory(proxyName, config) {
         var proxy, delegateProxy, communicator, communicatorPromise;
-        var holder;
+        var testDataHolder;
 
         var extraCallParams = {};
         var proxyAdapter    = proxyFactory.getProvider(proxyName);
@@ -178,12 +178,12 @@ define([
              * Install the proxy.
              * This step let's attach some features before the proxy reallys starts (before init).
              *
-             * @param {Map} holder - the test runner data holder
+             * @param {Map} dataHolder - the test runner data holder
              * @returns {*}
              */
             install: function install(dataHolder) {
                 if(dataHolder){
-                    holder = dataHolder;
+                    testDataHolder = dataHolder;
                 }
                 return delegate('install');
             },
@@ -253,7 +253,7 @@ define([
              * @returns {Map|Object} the dataHolder
              */
             getDataHolder : function getDataHolder(){
-                return holder;
+                return testDataHolder;
             },
 
             /**
