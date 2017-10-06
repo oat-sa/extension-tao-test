@@ -19,6 +19,8 @@
  *               2009-2012 (update and modification) Public Research Centre Henri Tudor (under the project TAO-SUSTAIN & TAO-DEV);
  * 
  */
+
+use oat\generis\model\OntologyRdf;
 use oat\taoTests\models\event\TestCreatedEvent;
 use oat\taoTests\models\event\TestDuplicatedEvent;
 use oat\taoTests\models\event\TestRemovedEvent;
@@ -230,7 +232,7 @@ class taoTests_models_classes_TestsService
 		if(!is_null($clone)){
 			$noCloningProperties = array(
 				self::TEST_TESTCONTENT_PROP,
-				RDF_TYPE
+				OntologyRdf::RDF_TYPE
 			);
 
 			foreach($clazz->getProperties(true) as $property){
