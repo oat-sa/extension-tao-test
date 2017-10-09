@@ -18,14 +18,14 @@
 /**
  * @author Jean-Sébastien Conan <jean-sebastien.conan@vesperiagroup.com>
  */
-define(['lodash', 'core/promise', 'core/eventifier', 'taoTests/runner/proxy'], function(_, Promise, eventifier, proxyFactory) {
+define([
+    'lodash',
+    'core/promise',
+    'core/eventifier',
+    'core/collections',
+    'taoTests/runner/proxy'
+], function(_, Promise, eventifier, collections, proxyFactory) {
     'use strict';
-
-    QUnit.module('proxyFactory', {
-        setup: function () {
-            proxyFactory.clearProviders();
-        }
-    });
 
     var defaultProxy = {
         init : _.noop,
@@ -40,6 +40,11 @@ define(['lodash', 'core/promise', 'core/eventifier', 'taoTests/runner/proxy'], f
         telemetry : _.noop
     };
 
+    QUnit.module('proxyFactory', {
+        setup: function () {
+            proxyFactory.clearProviders();
+        }
+    });
 
     QUnit.test('module', function(assert) {
         QUnit.expect(5);
@@ -54,7 +59,7 @@ define(['lodash', 'core/promise', 'core/eventifier', 'taoTests/runner/proxy'], f
         assert.notStrictEqual(proxyFactory(), proxyFactory(), "The proxyFactory factory provides a different object on each call");
     });
 
-    var proxyApi = [
+    QUnit.cases([
         { name : 'install', title : 'install' },
         { name : 'init', title : 'init' },
         { name : 'destroy', title : 'destroy' },
@@ -71,21 +76,20 @@ define(['lodash', 'core/promise', 'core/eventifier', 'taoTests/runner/proxy'], f
         { name : 'getItem', title : 'getItem' },
         { name : 'submitItem', title : 'submitItem' },
         { name : 'callItemAction', title : 'callItemAction' },
+        { name : 'getDataHolder', title : 'getDataHolder' },
         { name : 'isOnline', title : 'isOnline' },
         { name : 'isOffline',title : 'isOffline'},
         { name : 'setOnline', title : 'setOnline'},
         { name : 'setOffline',  title : 'setOffline'},
         { name : 'isConnectivityError',  title : 'isConnectivityError'}
-    ];
+    ]).test('instance API ', function(data, assert) {
+        var instance;
 
-    QUnit
-        .cases(proxyApi)
-        .test('instance API ', function(data, assert) {
-            proxyFactory.registerProvider('default', defaultProxy);
-            var instance = proxyFactory('default');
-            QUnit.expect(1);
-            assert.equal(typeof instance[data.name], 'function', 'The proxyFactory instance exposes a "' + data.title + '" function');
-        });
+        proxyFactory.registerProvider('default', defaultProxy);
+        instance = proxyFactory('default');
+        QUnit.expect(1);
+        assert.equal(typeof instance[data.name], 'function', 'The proxyFactory instance exposes a "' + data.title + '" function');
+    });
 
 
     QUnit.asyncTest('proxyFactory.init', function(assert) {
@@ -174,6 +178,39 @@ define(['lodash', 'core/promise', 'core/eventifier', 'taoTests/runner/proxy'], f
         proxy.init().then(function() {
             QUnit.start();
         });
+    });
+
+    QUnit.asyncTest('get data', function(assert) {
+        var proxy;
+        var dataHolderMock = new collections.Map();
+        dataHolderMock.set('testContext', {
+            foo : true
+        });
+
+        QUnit.expect(3);
+
+        proxyFactory.registerProvider('default', {
+            init: function init(){
+                assert.equal(typeof proxy.getDataHolder(), 'object', 'The dataHolder is now available');
+                assert.ok(proxy.getDataHolder().get('testContext').foo, 'test context is set');
+            }
+        });
+
+        proxy = proxyFactory('default');
+
+        assert.equal(typeof proxy.getDataHolder(), 'undefined', 'The dataHolder is not yet available');
+
+        proxy.install(dataHolderMock)
+            .then(function(){
+                return proxy.init();
+            })
+            .then(function(){
+                QUnit.start();
+            })
+            .catch(function(err){
+                assert.ok(false, err);
+                QUnit.start();
+            });
     });
 
     QUnit.asyncTest('proxyFactory.destroy', function(assert) {
