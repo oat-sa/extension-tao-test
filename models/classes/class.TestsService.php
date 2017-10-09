@@ -42,6 +42,9 @@ class taoTests_models_classes_TestsService
 
     const PROPERTY_TEST_TESTMODEL = 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestTestModel';
 
+    /** @deprecated  */
+    const TEST_TESTCONTENT_PROP = 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestContent';
+
     const PROPERTY_TEST_CONTENT = 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestContent';
     // --- ASSOCIATIONS ---
 
