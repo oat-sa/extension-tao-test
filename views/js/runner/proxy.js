@@ -470,9 +470,9 @@ define([
             /**
              * Sends the test variables
              * @param {Object} variables
+             * @param {Boolean} deferred whether action can be scheduled (put into queue) to be sent in a bunch of actions later (default: false).
              * @returns {Promise} - Returns a promise. The result of the request will be provided on resolve.
              *                      Any error will be provided if rejected.
-             * @param {Boolean} deferred whether action can be scheduled (put into queue) to be sent in a bunch of actions later.
              * @fires sendVariables
              */
             sendVariables: function sendVariables(variables, deferred) {
