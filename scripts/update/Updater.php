@@ -88,22 +88,6 @@ class Updater extends \common_ext_ExtensionUpdater
             $this->setVersion('6.0.1');
         }
 
-        $this->skip('6.0.1', '6.5.0');
-
-        if ($this->isVersion('6.5.0')) {
-            $ext = common_ext_ExtensionsManager::singleton()->getExtensionById('taoTests');
-            $ext->setConfig('bundle', array(
-                array(
-                    'name' => 'taotestsbundle',
-                    'path' => ROOT_URL . 'taoTests/views/dist/controllers.min',
-                    'modules' => array(
-                        'taoTests/controller/routes',
-                        'taoTests/controller/tests/editTest',
-                    ),
-                ),
-            ));
-
-            $this->setVersion('6.6.0');
-        }
+        $this->skip('6.0.1', '6.5.1');
 	}
 }

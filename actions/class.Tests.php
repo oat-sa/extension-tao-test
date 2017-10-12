@@ -103,7 +103,7 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
     			}
     		}
     
-    		$myForm->removeElement(tao_helpers_Uri::encode(taoTests_models_classes_TestsService::TEST_TESTCONTENT_PROP));
+    		$myForm->removeElement(tao_helpers_Uri::encode(taoTests_models_classes_TestsService::PROPERTY_TEST_CONTENT));
     
     		$this->setData('uri', tao_helpers_Uri::encode($test->getUri()));
     		$this->setData('classUri', tao_helpers_Uri::encode($clazz->getUri()));
