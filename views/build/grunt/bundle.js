@@ -19,15 +19,10 @@ module.exports = function (grunt) {
      */
     requirejs.taotestsbundle = {
         options: {
-            baseUrl : '../js',
-            dir : out,
-            mainConfigFile : './config/requirejs.build.js',
-            paths : { 'taoTests' : root + '/taoTests/views/js' },
-            modules : [{
-                name: 'taoTests/controller/routes',
-                include : ext.getExtensionsControllers(['taoTests']),
-                exclude : ['mathJax'].concat(libs)
-            }]
+            exclude: ['mathJax'].concat(libs),
+            include: ext.getExtensionsControllers(['taoTests']),
+            out: out + '/taoTests/bundle.js',
+            paths: { 'taoTests' : root + '/taoTests/views/js' },
         }
     };
 
@@ -36,8 +31,8 @@ module.exports = function (grunt) {
      */
     copy.taotestsbundle = {
         files: [
-            { src: [out + '/taoTests/controller/routes.js'],     dest: root + '/taoTests/views/js/controllers.min.js' },
-            { src: [out + '/taoTests/controller/routes.js.map'], dest: root + '/taoTests/views/js/controllers.min.js.map' }
+            { src: [out + '/taoTests/bundle.js'],     dest: root + '/taoTests/views/dist/controllers.min.js' },
+            { src: [out + '/taoTests/bundle.js.map'], dest: root + '/taoTests/views/dist/controllers.min.js.map' }
         ]
     };
 
