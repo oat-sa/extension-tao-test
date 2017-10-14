@@ -94,7 +94,7 @@ class Updater extends \common_ext_ExtensionUpdater
             $ext = common_ext_ExtensionsManager::singleton()->getExtensionById('taoTests');
             $ext->setConfig('bundle', array(
                 array(
-                    'name' => 'taotestsbundle',
+                    'name' => 'taotests_bundle',
                     'path' => ROOT_URL . 'taoTests/views/dist/controllers.min',
                     'modules' => array(
                         'taoTests/controller/routes',

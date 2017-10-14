@@ -14,7 +14,7 @@ module.exports = function (grunt) {
     /**
      * Compile tao files into a bundle
      */
-    requirejs.taotestsbundle = {
+    requirejs.taotests_bundle = {
         options: {
             exclude: ['mathJax'].concat(libs),
             include: ext.getExtensionsControllers(['taoTests']),
@@ -26,7 +26,7 @@ module.exports = function (grunt) {
     /**
      * copy the bundles to the right place
      */
-    copy.taotestsbundle = {
+    copy.taotests_bundle = {
         files: [
             { src: [out + '/taoTests/bundle.js'],     dest: root + '/taoTests/views/dist/controllers.min.js' },
             { src: [out + '/taoTests/bundle.js.map'], dest: root + '/taoTests/views/dist/controllers.min.js.map' }
@@ -38,5 +38,5 @@ module.exports = function (grunt) {
     grunt.config('copy', copy);
 
     // bundle task
-    grunt.registerTask('taotestsbundle', ['clean:bundle', 'requirejs:taotestsbundle', 'copy:taotestsbundle']);
+    grunt.registerTask('taotestsbundle', ['clean:bundle', 'requirejs:taotests_bundle', 'copy:taotests_bundle']);
 };
