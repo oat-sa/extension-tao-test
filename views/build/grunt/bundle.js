@@ -1,18 +1,15 @@
 module.exports = function (grunt) {
     'use strict';
 
-    var requirejs = grunt.config('requirejs') || {};
     var clean     = grunt.config('clean') || {};
     var copy      = grunt.config('copy') || {};
-    var root      = grunt.option('root');
+    var ext;
     var libs      = grunt.option('mainlibs');
-    var ext       = require(root + '/tao/views/build/tasks/helpers/extensions')(grunt, root);
     var out       = 'output';
+    var requirejs = grunt.config('requirejs') || {};
+    var root      = grunt.option('root');
 
-    /**
-     * Remove bundled and bundling files
-     */
-    clean.taotestsbundle = [out];
+    ext = require(root + '/tao/views/build/tasks/helpers/extensions')(grunt, root);
 
     /**
      * Compile tao files into a bundle
@@ -41,5 +38,5 @@ module.exports = function (grunt) {
     grunt.config('copy', copy);
 
     // bundle task
-    grunt.registerTask('taotestsbundle', ['clean:taotestsbundle', 'requirejs:taotestsbundle', 'copy:taotestsbundle']);
+    grunt.registerTask('taotestsbundle', ['clean:bundle', 'requirejs:taotestsbundle', 'copy:taotestsbundle']);
 };
