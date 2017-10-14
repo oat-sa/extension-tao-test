@@ -1,43 +1,35 @@
-module.exports = function(grunt) { 
+module.exports = function (grunt) {
+    'use strict';
 
-    var requirejs   = grunt.config('requirejs') || {};
-    var clean       = grunt.config('clean') || {};
-    var copy        = grunt.config('copy') || {};
+    var clean     = grunt.config('clean') || {};
+    var copy      = grunt.config('copy') || {};
+    var ext;
+    var libs      = grunt.option('mainlibs');
+    var out       = 'output';
+    var requirejs = grunt.config('requirejs') || {};
+    var root      = grunt.option('root');
 
-    var root        = grunt.option('root');
-    var libs        = grunt.option('mainlibs');
-    var ext         = require(root + '/tao/views/build/tasks/helpers/extensions')(grunt, root);
-    var out         = 'output';
+    ext = require(root + '/tao/views/build/tasks/helpers/extensions')(grunt, root);
 
     /**
-     * Remove bundled and bundling files
+     * Compile tao files into a bundle
      */
-    clean.taotestsbundle = [out];
-    
-    /**
-     * Compile tao files into a bundle 
-     */
-    requirejs.taotestsbundle = {
+    requirejs.taotests_bundle = {
         options: {
-            baseUrl : '../js',
-            dir : out,
-            mainConfigFile : './config/requirejs.build.js',
-            paths : { 'taoTests' : root + '/taoTests/views/js' },
-            modules : [{
-                name: 'taoTests/controller/routes',
-                include : ext.getExtensionsControllers(['taoTests']),
-                exclude : ['mathJax'].concat(libs)
-            }]
+            exclude: ['mathJax'].concat(libs),
+            include: ext.getExtensionsControllers(['taoTests']),
+            out: out + '/taoTests/controllers.min.js',
+            paths: { 'taoTests' : root + '/taoTests/views/js' },
         }
     };
 
     /**
      * copy the bundles to the right place
      */
-    copy.taotestsbundle = {
+    copy.taotests_bundle = {
         files: [
-            { src: [out + '/taoTests/controller/routes.js'],  dest: root + '/taoTests/views/js/controllers.min.js' },
-            { src: [out + '/taoTests/controller/routes.js.map'],  dest: root + '/taoTests/views/js/controllers.min.js.map' }
+            { src: [out + '/taoTests/controllers.min.js'],     dest: root + '/taoTests/views/dist/controllers.min.js' },
+            { src: [out + '/taoTests/controllers.min.js.map'], dest: root + '/taoTests/views/dist/controllers.min.js.map' }
         ]
     };
 
@@ -46,5 +38,5 @@ module.exports = function(grunt) {
     grunt.config('copy', copy);
 
     // bundle task
-    grunt.registerTask('taotestsbundle', ['clean:taotestsbundle', 'requirejs:taotestsbundle', 'copy:taotestsbundle']);
+    grunt.registerTask('taotestsbundle', ['clean:bundle', 'requirejs:taotests_bundle', 'copy:taotests_bundle']);
 };
