@@ -18,7 +18,7 @@ module.exports = function (grunt) {
         options: {
             exclude: ['mathJax'].concat(libs),
             include: ext.getExtensionsControllers(['taoTests']),
-            out: out + '/taoTests/bundle.js',
+            out: out + '/taoTests/controllers.min.js',
             paths: { 'taoTests' : root + '/taoTests/views/js' },
         }
     };
@@ -28,8 +28,8 @@ module.exports = function (grunt) {
      */
     copy.taotests_bundle = {
         files: [
-            { src: [out + '/taoTests/bundle.js'],     dest: root + '/taoTests/views/dist/controllers.min.js' },
-            { src: [out + '/taoTests/bundle.js.map'], dest: root + '/taoTests/views/dist/controllers.min.js.map' }
+            { src: [out + '/taoTests/controllers.min.js'],     dest: root + '/taoTests/views/dist/controllers.min.js' },
+            { src: [out + '/taoTests/controllers.min.js.map'], dest: root + '/taoTests/views/dist/controllers.min.js.map' }
         ]
     };
 
