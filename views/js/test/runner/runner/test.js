@@ -81,6 +81,7 @@ define([
         {name : 'getAreaBroker', title : 'getAreaBroker'},
         {name : 'getProxy', title : 'getProxy'},
         {name : 'getProbeOverseer', title : 'getProbeOverseer'},
+        {name : 'getDataHolder', title : 'getDataHolder'},
 
         {name : 'next', title : 'next'},
         {name : 'previous', title : 'previous'},
@@ -828,6 +829,23 @@ define([
                 init :  _.noop
             });
         }, 'An exception is thrown when the loadAreaBroker() is missing');
+    });
+
+    QUnit.test('getDataHolder', function(assert) {
+        var dataHolder;
+
+        QUnit.expect(6);
+
+        runnerFactory.registerProvider('foo', mockProvider);
+
+        dataHolder = runnerFactory('foo').getDataHolder();
+
+        assert.equal(typeof dataHolder, 'object', 'The runner exposes the data holder');
+        assert.equal(typeof dataHolder.get, 'function', 'The data holder has the get method');
+        assert.equal(typeof dataHolder.set, 'function', 'The data holder has the set method');
+        assert.equal(typeof dataHolder.get('testData'), 'object', 'The data holder holds the correct data');
+        assert.equal(typeof dataHolder.get('testContext'), 'object', 'The data holder holds the correct data');
+        assert.equal(typeof dataHolder.get('testMap'), 'object', 'The data holder holds the correct data');
     });
 
 
