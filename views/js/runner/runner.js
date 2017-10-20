@@ -618,6 +618,14 @@ define([
             },
 
             /**
+             * Get the data holder
+             * @returns {dataHolder}
+             */
+            getDataHolder : function getDataHolder(){
+                return dataHolder;
+            },
+
+            /**
              * Move next alias
              * @param {String|*} [scope] - the movement scope
              * @fires runner#move
