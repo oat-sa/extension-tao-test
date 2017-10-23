@@ -23,6 +23,7 @@ namespace oat\taoTests\test;
 
 use oat;
 use oat\generis\model\OntologyRdfs;
+use oat\tao\model\TaoOntology;
 use oat\tao\test\TaoPhpUnitTestRunner;
 use Prophecy\Prediction\CallTimesPrediction;
 use \taoTests_models_classes_TestsService;
@@ -72,10 +73,9 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
      * @return \core_kernel_classes_Class|null
      */
     public function testTests() {
-        $this->assertTrue(defined('TAO_TEST_CLASS'));
         $tests = $this->testsService->getRootclass();
         $this->assertIsA($tests, 'core_kernel_classes_Class');
-        $this->assertEquals(TAO_TEST_CLASS, $tests->getUri());
+        $this->assertEquals(TaoOntology::TEST_CLASS_URI , $tests->getUri());
 
         return $tests;
     }

@@ -19,8 +19,8 @@
  *               2009-2012 (update and modification) Public Research Centre Henri Tudor (under the project TAO-SUSTAIN & TAO-DEV);
  * 
  */
-
 use oat\generis\model\OntologyRdf;
+use oat\tao\model\TaoOntology;
 use oat\taoTests\models\event\TestCreatedEvent;
 use oat\taoTests\models\event\TestDuplicatedEvent;
 use oat\taoTests\models\event\TestRemovedEvent;
@@ -68,7 +68,7 @@ class taoTests_models_classes_TestsService
 
 		parent::__construct();
 
-		$this->testClass = new core_kernel_classes_Class(TAO_TEST_CLASS);
+		$this->testClass = new core_kernel_classes_Class(TaoOntology::TEST_CLASS_URI );
 
 
         return $returnValue;
