@@ -280,11 +280,11 @@ define([
              * @param {Object} entry - the time entry
              */
             push : function push(entry){
-                immutableQueue.push(entry);
                 getStorage().then(function(storage){
                     //ensure the queue is pushed to the store consistently and atomically
                     writing = writing.then(function(){
                         queue.push(entry);
+                        immutableQueue.push(entry);
                         return storage.setItem('queue', queue);
                     });
                 });
