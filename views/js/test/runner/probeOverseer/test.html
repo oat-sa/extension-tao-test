@@ -17,6 +17,13 @@
             //load the config
             require(['/tao/ClientConfig/config'], function(){
 
+                //mock storage, from tao-core extension
+                requirejs.config({
+                    "paths": {
+                        "core/store" : "test/core/cachedStore/storeMock"
+                    }
+                });
+
                 //load the test
                 require(['taoTests/test/runner/probeOverseer/test'], function(){
 
