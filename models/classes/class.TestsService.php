@@ -37,8 +37,16 @@ class taoTests_models_classes_TestsService
     extends tao_models_classes_ClassService
 {
 
+    const CLASS_TEST_MODEL ='http://www.tao.lu/Ontologies/TAOTest.rdf#TestModel';
+
+    const PROPERTY_TEST_MODEL_IMPLEMENTATION ='http://www.tao.lu/Ontologies/TAOTest.rdf#TestModelImplementation';
+
     const PROPERTY_TEST_TESTMODEL = 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestTestModel';
+
+    /** @deprecated  */
     const TEST_TESTCONTENT_PROP = 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestContent';
+
+    const PROPERTY_TEST_CONTENT = 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestContent';
     // --- ASSOCIATIONS ---
 
 
@@ -231,7 +239,7 @@ class taoTests_models_classes_TestsService
 
 		if(!is_null($clone)){
 			$noCloningProperties = array(
-				self::TEST_TESTCONTENT_PROP,
+				self::PROPERTY_TEST_CONTENT,
 				OntologyRdf::RDF_TYPE
 			);
 
@@ -271,7 +279,7 @@ class taoTests_models_classes_TestsService
      */
     protected function setDefaultModel($test)
     {
-        $testModelClass = new core_kernel_classes_Class(CLASS_TESTMODEL);
+        $testModelClass = new core_kernel_classes_Class(self::CLASS_TEST_MODEL);
         $models = $testModelClass->getInstances();
         if (count($models) > 0) {
             $this->setTestModel($test, current($models));
@@ -370,7 +378,7 @@ class taoTests_models_classes_TestsService
      */
     public function getTestModelImplementation(core_kernel_classes_Resource $testModel) {
 
-		$serviceId = (string)$testModel->getOnePropertyValue(new core_kernel_classes_Property(PROPERTY_TESTMODEL_IMPLEMENTATION));
+		$serviceId = (string)$testModel->getOnePropertyValue(new core_kernel_classes_Property(self::PROPERTY_TEST_MODEL_IMPLEMENTATION));
 		if (empty($serviceId)) {
 			throw new common_exception_NoImplementation('No implementation found for testmodel '.$testModel->getUri());
 		}

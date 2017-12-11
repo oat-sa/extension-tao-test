@@ -39,7 +39,7 @@ define([
     /**
      * Create the overseer intance
      * @param {String} testIdentifier - a unique id for a test execution
-     * @param {runner} runner - a insance of a test runner
+     * @param {runner} runner - a instance of a test runner
      * @returns {probeOverseer} the new probe overseer
      * @throws TypeError if something goes wrong
      */
@@ -60,10 +60,12 @@ define([
         /**
          * @type {Storage} to store the collected events
          */
-        var storage;
+        var queueStorage;
 
-        //writing promises array
-        var writing = [];
+        /**
+         * @type {Promise} Promises chain to avoid write collisions
+         */
+        var writing = Promise.resolve();
 
         //is the overseer started
         var started = false;
@@ -165,12 +167,12 @@ define([
          * @returns {Promise} that resolves with the storage
          */
         var getStorage = function getStorage(){
-            if(storage){
-                return Promise.resolve(storage);
+            if(queueStorage){
+                return Promise.resolve(queueStorage);
             }
             return store('test-probe-' + testIdentifier).then(function(newStorage){
-                storage = newStorage;
-                return Promise.resolve(storage);
+                queueStorage = newStorage;
+                return Promise.resolve(queueStorage);
             });
         };
 
@@ -178,7 +180,7 @@ define([
          * Unset the storage instance
          */
         var resetStorage = function resetStorage() {
-            storage = null;
+            queueStorage = null;
         };
 
         //argument validation
@@ -274,16 +276,16 @@ define([
             },
 
             /**
-             * Push an time entry to the queue
+             * Push a time entry to the queue
              * @param {Object} entry - the time entry
              */
             push : function push(entry){
-                queue.push(entry);
-                immutableQueue.push(entry);
-                //ensure the queue is pushed to the store consistently and atomically
-                Promise.all(writing).then(function(){
-                    getStorage().then(function(storage){
-                        writing.push(storage.setItem('queue', queue));
+                getStorage().then(function(storage){
+                    //ensure the queue is pushed to the store consistently and atomically
+                    writing = writing.then(function(){
+                        queue.push(entry);
+                        immutableQueue.push(entry);
+                        return storage.setItem('queue', queue);
                     });
                 });
             },
@@ -293,11 +295,10 @@ define([
              * @returns {Promise} with the data in parameter
              */
             flush: function flush(){
-                return getStorage().then(function(storage){
-                    return new Promise(function(resolve){
-                        Promise.all(writing).then(function () {
-                            writing = [];
-                            storage.getItem('queue').then(function(flushed){
+                return new Promise(function(resolve){
+                    getStorage().then(function(storage){
+                        writing = writing.then(function () {
+                            return storage.getItem('queue').then(function(flushed){
                                 queue = [];
                                 return storage.setItem('queue', queue).then(function(){
                                     resolve(flushed);

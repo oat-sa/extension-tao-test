@@ -26,8 +26,9 @@ define([
     'core/eventifier',
     'core/promise',
     'core/logger',
-    'core/providerRegistry'
-], function ($, _, __, eventifier, Promise, logger, providerRegistry){
+    'core/providerRegistry',
+    'taoTests/runner/dataHolder'
+], function ($, _, __, eventifier, Promise, logger, providerRegistry, dataHolderFactory){
     'use strict';
 
     /**
@@ -47,24 +48,14 @@ define([
         var runner;
 
         /**
-         * @type {Object} the test definition data
+         * @type {Map} Contains the test runner data
          */
-        var testData       = {};
-
-        /**
-         * @type {Object} contextual test data (the state of the test)
-         */
-        var testContext    = {};
-
-        /**
-         * @type {Object} contextual test map (the map of accessible items)
-         */
-        var testMap        = {};
+        var dataHolder = dataHolderFactory();
 
         /**
          * @type {Object} the registered plugins
          */
-        var plugins        = {};
+        var plugins = {};
 
         /**
          * @type {Object} the test of the runner
@@ -178,7 +169,8 @@ define([
                     plugins[plugin.getName()] = plugin;
                 });
 
-                providerRun('loadPersistentStates')
+                providerRun('install')
+                    .then(_.partial(providerRun, 'loadPersistentStates'))
                     .then(_.partial(pluginRun, 'install'))
                     .then(_.partial(providerRun, 'init'))
                     .then(_.partial(pluginRun, 'init'))
@@ -373,8 +365,9 @@ define([
                         }
 
                         return destroyed.then(function() {
-                            testContext = {};
-                            self.setState('destroy', true)
+                            self.setTestContext({})
+                                .setTestMap({})
+                                .setState('destroy', true)
                                 .trigger('destroy');
                         });
                     }).catch(reportError);
@@ -437,7 +430,7 @@ define([
                         self.trigger('error', error);
                     });
 
-                    proxy.install();
+                    proxy.install(dataHolder);
                 }
                 return proxy;
             },
@@ -569,17 +562,18 @@ define([
              * @returns {Object} the test data
              */
             getTestData : function getTestData(){
-                return testData;
+                return dataHolder && dataHolder.get('testData');
             },
 
             /**
              * Set the test data/definition
-             * @param {Object} data - the test data
+             * @param {Object} testData - the test data
              * @returns {runner} chains
              */
-            setTestData : function setTestData(data){
-                testData  = data;
-
+            setTestData : function setTestData(testData){
+                if(dataHolder && _.isPlainObject(testData)){
+                    dataHolder.set('testData', testData);
+                }
                 return this;
             },
 
@@ -588,17 +582,17 @@ define([
              * @returns {Object} the test context
              */
             getTestContext : function getTestContext(){
-                return testContext;
+                return dataHolder && dataHolder.get('testContext');
             },
 
             /**
              * Set the test context/state
-             * @param {Object} context - the context to set
+             * @param {Object} testContext - the context to set
              * @returns {runner} chains
              */
-            setTestContext : function setTestContext(context){
-                if(_.isPlainObject(context)){
-                    testContext = context;
+            setTestContext : function setTestContext(testContext){
+                if(dataHolder && _.isPlainObject(testContext)){
+                    dataHolder.set('testContext', testContext);
                 }
                 return this;
             },
@@ -608,19 +602,27 @@ define([
              * @returns {Object} the test map
              */
             getTestMap : function getTestMap(){
-                return testMap;
+                return dataHolder && dataHolder.get('testMap');
             },
 
             /**
              * Set the test items map
-             * @param {Object} map - the map to set
+             * @param {Object} testMap - the map to set
              * @returns {runner} chains
              */
-            setTestMap : function setTestMap(map){
-                if(_.isPlainObject(map)){
-                    testMap = map;
+            setTestMap : function setTestMap(testMap){
+                if(dataHolder && _.isPlainObject(testMap)){
+                    dataHolder.set('testMap', testMap);
                 }
                 return this;
+            },
+
+            /**
+             * Get the data holder
+             * @returns {dataHolder}
+             */
+            getDataHolder : function getDataHolder(){
+                return dataHolder;
             },
 
             /**

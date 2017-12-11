@@ -43,6 +43,8 @@ define([
      * @returns {proxy} - The proxy instance, bound to the selected proxy adapter
      */
     function proxyFactory(proxyName, config) {
+        var proxy, delegateProxy, communicator, communicatorPromise;
+        var testDataHolder;
 
         var extraCallParams = {};
         var proxyAdapter    = proxyFactory.getProvider(proxyName);
@@ -51,7 +53,7 @@ define([
         var middlewares     = {};
         var initialized     = false;
         var onlineStatus    = connectivity.isOnline();
-        var proxy, delegateProxy, communicator, communicatorPromise;
+
 
         /**
          * Gets parameters merged with extra parameters
@@ -173,11 +175,16 @@ define([
             },
 
             /**
-             * Install the proxy. Optionnal.
+             * Install the proxy.
              * This step let's attach some features before the proxy reallys starts (before init).
+             *
+             * @param {Map} dataHolder - the test runner data holder
              * @returns {*}
              */
-            install: function install() {
+            install: function install(dataHolder) {
+                if(dataHolder){
+                    testDataHolder = dataHolder;
+                }
                 return delegate('install');
             },
 
@@ -239,6 +246,14 @@ define([
                         });
                     }
                 });
+            },
+
+            /**
+             * Get the map that holds the test data
+             * @returns {Map|Object} the dataHolder
+             */
+            getDataHolder : function getDataHolder(){
+                return testDataHolder;
             },
 
             /**
@@ -455,34 +470,36 @@ define([
             /**
              * Sends the test variables
              * @param {Object} variables
+             * @param {Boolean} deferred whether action can be scheduled (put into queue) to be sent in a bunch of actions later (default: false).
              * @returns {Promise} - Returns a promise. The result of the request will be provided on resolve.
              *                      Any error will be provided if rejected.
              * @fires sendVariables
              */
-            sendVariables: function sendVariables(variables) {
+            sendVariables: function sendVariables(variables, deferred) {
                 /**
                  * @event proxy#sendVariables
                  * @param {Promise} promise
                  */
-                return delegate('sendVariables', variables);
+                return delegate('sendVariables', variables, deferred);
             },
 
             /**
              * Calls an action related to the test
              * @param {String} action - The name of the action to call
              * @param {Object} [params] - Some optional parameters to join to the call
+             * @param {Boolean} deferred whether action can be scheduled (put into queue) to be sent in a bunch of actions later.
              * @returns {Promise} - Returns a promise. The result of the request will be provided on resolve.
              *                      Any error will be provided if rejected.
              * @fires callTestAction
              */
-            callTestAction: function callTestAction(action, params) {
+            callTestAction: function callTestAction(action, params, deferred) {
                 /**
                  * @event proxy#callTestAction
                  * @param {Promise} promise
                  * @param {String} action
                  * @param {Object} params
                  */
-                return delegate('callTestAction', action, getParams(params));
+                return delegate('callTestAction', action, getParams(params), deferred);
             },
 
             /**
@@ -529,11 +546,12 @@ define([
              * @param {String} uri - The URI of the item for which call the action
              * @param {String} action - The name of the action to call
              * @param {Object} [params] - Some optional parameters to join to the call
+             * @param {Boolean} deferred whether action can be scheduled (put into queue) to be sent in a bunch of actions later.
              * @returns {Promise} - Returns a promise. The result of the request will be provided on resolve.
              *                      Any error will be provided if rejected.
              * @fires callItemAction
              */
-            callItemAction: function callItemAction(uri, action, params) {
+            callItemAction: function callItemAction(uri, action, params, deferred) {
                 /**
                  * @event proxy#callItemAction
                  * @param {Promise} promise
@@ -541,7 +559,7 @@ define([
                  * @param {String} action
                  * @param {Object} params
                  */
-                return delegate('callItemAction', uri, action, getParams(params));
+                return delegate('callItemAction', uri, action, getParams(params), deferred);
             },
 
             /**
