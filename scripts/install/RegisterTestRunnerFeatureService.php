@@ -21,6 +21,7 @@
 
 namespace oat\taoTests\scripts\install;
 
+use oat\oatbox\extension\InstallAction;
 use oat\taoTests\models\runner\features\TestRunnerFeatureService;
 
 /**
@@ -28,7 +29,7 @@ use oat\taoTests\models\runner\features\TestRunnerFeatureService;
  *
  * @author Christophe Noël <christophe@taotesting.com>
  */
-class RegisterTestRunnerFeatureService extends \common_ext_action_InstallAction
+class RegisterTestRunnerFeatureService extends InstallAction
 {
     /**
      * @param $params

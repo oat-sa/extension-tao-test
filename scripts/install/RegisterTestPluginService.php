@@ -21,6 +21,7 @@
 
 namespace oat\taoTests\scripts\install;
 
+use oat\oatbox\extension\InstallAction;
 use oat\taoTests\models\runner\plugins\TestPluginService;
 
 /**
@@ -28,7 +29,7 @@ use oat\taoTests\models\runner\plugins\TestPluginService;
  *
  * @author Bertrand Chevrier <bertrand@taotesting.com>
  */
-class RegisterTestPluginService extends \common_ext_action_InstallAction
+class RegisterTestPluginService extends InstallAction
 {
     /**
      * @param $params

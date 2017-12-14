@@ -19,6 +19,7 @@
 
 namespace oat\taoTests\scripts\install;
 
+use oat\oatbox\extension\InstallAction;
 use oat\taoTests\models\runner\providers\TestProviderService;
 
 /**
@@ -26,7 +27,7 @@ use oat\taoTests\models\runner\providers\TestProviderService;
  *
  * @author Jean-Sébastien Conan <jean-sebastien@taotesting.com>
  */
-class RegisterTestProviderService extends \common_ext_action_InstallAction
+class RegisterTestProviderService extends InstallAction
 {
     /**
      * @param $params
