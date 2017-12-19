@@ -22,6 +22,7 @@
 namespace oat\taoTests\test;
 
 use oat;
+use oat\generis\model\OntologyRdfs;
 use oat\tao\model\TaoOntology;
 use oat\tao\test\TaoPhpUnitTestRunner;
 use Prophecy\Prediction\CallTimesPrediction;
@@ -283,8 +284,7 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
     public function testSubTestInstance($subTest) {
 		$subTestInstanceLabel = 'subTest instance';
 		$subTestInstance = $this->testsService->createInstance($subTest);
-		$this->assertTrue(defined('RDFS_LABEL'));
-		$subTestInstance->removePropertyValues(new core_kernel_classes_Property(RDFS_LABEL));
+		$subTestInstance->removePropertyValues(new core_kernel_classes_Property(OntologyRdfs::RDFS_LABEL));
 		$subTestInstance->setLabel($subTestInstanceLabel);
 		$this->assertIsA($subTestInstance, 'core_kernel_classes_Resource');
 		$this->assertEquals($subTestInstanceLabel, $subTestInstance->getLabel());
