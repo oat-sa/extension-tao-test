@@ -185,7 +185,7 @@ define([
                 if(dataHolder){
                     testDataHolder = dataHolder;
                 }
-                return delegate('install');
+                return delegate('install', initConfig);
             },
 
             /**
