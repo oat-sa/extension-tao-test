@@ -20,7 +20,7 @@
 namespace oat\taoTests\models\runner\providers;
 
 use common_ext_ExtensionsManager;
-use oat\tao\model\providers\AbstractProviderRegistry;
+use oat\tao\model\modules\AbstractModuleRegistry;
 
 /**
  * Store the <b>available</b> test runner providers, even if not activated,
@@ -29,7 +29,7 @@ use oat\tao\model\providers\AbstractProviderRegistry;
  * @author Bertrand Chevrier <bertrand@taotesting.com>
  * @author Jean-Sébastien Conan <jean-sebastien@taotesting.com>
  */
-class ProviderRegistry extends AbstractProviderRegistry
+class ProviderRegistry extends AbstractModuleRegistry
 {
     /**
      * @see \oat\oatbox\AbstractRegistry::getConfigId()
