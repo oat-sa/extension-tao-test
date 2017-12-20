@@ -38,7 +38,6 @@ class RegisterTestProviderService extends InstallAction
     {
         $serviceManager = $this->getServiceManager();
         $testProviderService = new TestProviderService();
-        $serviceManager->propagate($testProviderService);
         $serviceManager->register(TestProviderService::SERVICE_ID, $testProviderService);
     }
 }

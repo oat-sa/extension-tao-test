@@ -40,7 +40,6 @@ class RegisterTestRunnerFeatureService extends InstallAction
     {
         $serviceManager = $this->getServiceManager();
         $testRunnerFeatureService = new TestRunnerFeatureService();
-        $serviceManager->propagate($testRunnerFeatureService);
         $serviceManager->register(TestRunnerFeatureService::SERVICE_ID, $testRunnerFeatureService);
     }
 }

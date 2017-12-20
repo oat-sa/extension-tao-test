@@ -40,7 +40,6 @@ class RegisterTestPluginService extends InstallAction
     {
         $serviceManager = $this->getServiceManager();
         $testPluginService = new TestPluginService();
-        $serviceManager->propagate($testPluginService);
         $serviceManager->register(TestPluginService::SERVICE_ID, $testPluginService);
     }
 }

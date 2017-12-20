@@ -96,7 +96,6 @@ class Updater extends \common_ext_ExtensionUpdater
             //register test plugin service
             $serviceManager = $this->getServiceManager();
             $testProviderService = new TestProviderService();
-            $serviceManager->propagate($testProviderService);
             $serviceManager->register(TestProviderService::SERVICE_ID, $testProviderService);
 
             $this->setVersion('6.9.0');
