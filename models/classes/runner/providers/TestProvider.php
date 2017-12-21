@@ -14,33 +14,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2016 (original work) Open Assessment Technologies SA;
- *
- *
+ * Copyright (c) 2017 (original work) Open Assessment Technologies SA;
  */
 
-namespace oat\taoTests\scripts\install;
+namespace oat\taoTests\models\runner\providers;
 
-use oat\oatbox\extension\InstallAction;
-use oat\taoTests\models\runner\plugins\TestPluginService;
+use oat\tao\model\providers\ProviderModule;
 
 /**
- * Installation action that registers the TestPluginService
+ * A pojo that represents a test runner provider.
  *
  * @author Bertrand Chevrier <bertrand@taotesting.com>
+ * @author Jean-Sébastien Conan <jean-sebastien@taotesting.com>
  */
-class RegisterTestPluginService extends InstallAction
+class TestProvider extends ProviderModule
 {
-    /**
-     * @param $params
-     * @throws \common_Exception
-     * @throws \common_exception_Error
-     */
-    public function __invoke($params)
-    {
-        $serviceManager = $this->getServiceManager();
-        $testPluginService = new TestPluginService();
-        $serviceManager->register(TestPluginService::SERVICE_ID, $testPluginService);
-    }
+    // simple override, just to keep compatibility
 }
-
