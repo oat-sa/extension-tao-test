@@ -22,6 +22,7 @@
 use oat\oatbox\event\EventManagerAwareTrait;
 use oat\tao\model\lock\LockManager;
 use oat\taoTests\models\event\TestUpdatedEvent;
+use oat\tao\model\resources\ResourceWatcher;
 
 /**
  * Tests Controller provide actions performed from url resolution
@@ -104,7 +105,8 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
     		}
     
     		$myForm->removeElement(tao_helpers_Uri::encode(taoTests_models_classes_TestsService::PROPERTY_TEST_CONTENT));
-    
+            $updatedAt = $this->getServiceManager()->get(ResourceWatcher::SERVICE_ID)->getUpdatedAt($test);
+            $this->setData('updatedAt', $updatedAt);
     		$this->setData('uri', tao_helpers_Uri::encode($test->getUri()));
     		$this->setData('classUri', tao_helpers_Uri::encode($clazz->getUri()));
     		$this->setData('formTitle', __('Test properties'));

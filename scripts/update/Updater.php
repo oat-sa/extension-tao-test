@@ -89,16 +89,16 @@ class Updater extends \common_ext_ExtensionUpdater
             $this->setVersion('6.0.1');
         }
 
-        $this->skip('6.0.1', '6.8.0');
+        $this->skip('6.0.1', '6.10.0');
 
-        if ($this->isVersion('6.8.0')){
+        if ($this->isVersion('6.10.0')){
 
             //register test plugin service
             $serviceManager = $this->getServiceManager();
             $testProviderService = new TestProviderService();
             $serviceManager->register(TestProviderService::SERVICE_ID, $testProviderService);
 
-            $this->setVersion('6.9.0');
+            $this->setVersion('6.11.0');
         }
     }
 }
