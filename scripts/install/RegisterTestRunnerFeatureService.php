@@ -21,7 +21,7 @@
 
 namespace oat\taoTests\scripts\install;
 
-use oat\oatbox\service\ServiceManager;
+use oat\oatbox\extension\InstallAction;
 use oat\taoTests\models\runner\features\TestRunnerFeatureService;
 
 /**
@@ -29,17 +29,17 @@ use oat\taoTests\models\runner\features\TestRunnerFeatureService;
  *
  * @author Christophe Noël <christophe@taotesting.com>
  */
-class RegisterTestRunnerFeatureService extends \common_ext_action_InstallAction
+class RegisterTestRunnerFeatureService extends InstallAction
 {
     /**
      * @param $params
+     * @throws \common_Exception
+     * @throws \common_exception_Error
      */
     public function __invoke($params)
     {
-        $serviceManager = ServiceManager::getServiceManager();
-
+        $serviceManager = $this->getServiceManager();
         $testRunnerFeatureService = new TestRunnerFeatureService();
-        $testRunnerFeatureService->setServiceManager($serviceManager);
         $serviceManager->register(TestRunnerFeatureService::SERVICE_ID, $testRunnerFeatureService);
     }
 }

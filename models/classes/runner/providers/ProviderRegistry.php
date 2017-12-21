@@ -14,33 +14,36 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2016 (original work) Open Assessment Technologies SA;
- *
- *
+ * Copyright (c) 2017 (original work) Open Assessment Technologies SA;
  */
 
-namespace oat\taoTests\scripts\install;
+namespace oat\taoTests\models\runner\providers;
 
-use oat\oatbox\extension\InstallAction;
-use oat\taoTests\models\runner\plugins\TestPluginService;
+use common_ext_ExtensionsManager;
+use oat\tao\model\modules\AbstractModuleRegistry;
 
 /**
- * Installation action that registers the TestPluginService
+ * Store the <b>available</b> test runner providers, even if not activated,
+ * providers have to be registered.
  *
  * @author Bertrand Chevrier <bertrand@taotesting.com>
+ * @author Jean-Sébastien Conan <jean-sebastien@taotesting.com>
  */
-class RegisterTestPluginService extends InstallAction
+class ProviderRegistry extends AbstractModuleRegistry
 {
     /**
-     * @param $params
-     * @throws \common_Exception
-     * @throws \common_exception_Error
+     * @see \oat\oatbox\AbstractRegistry::getConfigId()
      */
-    public function __invoke($params)
+    protected function getConfigId()
     {
-        $serviceManager = $this->getServiceManager();
-        $testPluginService = new TestPluginService();
-        $serviceManager->register(TestPluginService::SERVICE_ID, $testPluginService);
+        return 'test_runner_provider_registry';
+    }
+
+    /**
+     * @see \oat\oatbox\AbstractRegistry::getExtension()
+     */
+    protected function getExtension()
+    {
+        return common_ext_ExtensionsManager::singleton()->getExtensionById('taoTests');
     }
 }
-
