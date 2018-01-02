@@ -13,7 +13,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2017 (original work) Open Assessment Technologies SA ;
+ * Copyright (c) 2017-2018 (original work) Open Assessment Technologies SA ;
  */
 
 /**
@@ -73,41 +73,21 @@ define([
 
     /**
      * Wraps a test runner into a component
+     * @param {jQuery|HTMLElement|String} [container] - The container in which renders the component
      * @param {Object}   config - The testRunner options
      * @param {String}   config.provider - The provider to use
      * @param {Object[]} [config.plugins] - A collection of plugins to load
      * @param {Object[]} [config.providers] - A collection of providers to load
-     * @param {jQuery|HTMLElement|String} [config.renderTo] - An optional container in which renders the component
      * @param {Boolean} [config.replace] - When the component is appended to its container, clears the place before
      * @param {Number|String} [config.width] - The width in pixels, or 'auto' to use the container's width
      * @param {Number|String} [config.height] - The height in pixels, or 'auto' to use the container's height
-     * @param {Function} [template] - an optional template for the component
+     * @param {Function} [template] - An optional template for the component
      * @returns {runnerComponent}
      */
-    return function runnerComponentFactory(config, template) {
-        var runner, resolver;
-
-        // the runner promise is built aside for architecture reason
-        // otherwise the errors that may be raised from the init() method wouldn't be properly managed
-        var runnerPromise = new Promise(function (resolve, reject) {
-            resolver = {
-                resolve: resolve,
-                reject: reject
-            };
-        });
-
-        var componentTemplate = template || runnerComponentTpl;
+    return function runnerComponentFactory(container, config, template) {
+        var runner, runnerPromise, runnerComponent;
 
         var runnerComponentApi = {
-            /**
-             * Does the option exists ?
-             * @param {String} name - the option key
-             * @returns {Boolean}
-             */
-            hasOption: function hasOption(name) {
-                return typeof this.config[name] !== 'undefined';
-            },
-
             /**
              * Gets the option's value
              * @param {String} name - the option key
@@ -118,89 +98,40 @@ define([
             },
 
             /**
-             * Gets the options values
-             * @returns {Object}
-             */
-            getConfig: function getConfig() {
-                return this.config;
-            },
-
-            /**
              * Gets the test runner
-             * @returns {runner}
+             * @returns {Promise}
              */
             getRunner: function getRunner() {
-                return runner;
-            },
-
-            /**
-             * Apply an action when the runner is ready
-             * @param {Function} [callback]
-             * @returns {Promise}
-             */
-            whenReady: function whenReady(callback) {
-                var when = runnerPromise;
-                if (_.isFunction(callback)) {
-                    when = when.then(callback);
-                }
-                return when;
-            },
-
-            /**
-             * Loads an item
-             * @param itemRef
-             * @returns {Promise}
-             */
-            loadItem: function loadItem(itemRef) {
-                return this.whenReady(function () {
-                    return new Promise(function (resolve) {
-                        runner.after('renderitem.runnerComponent', function () {
-                            runner.off('renderitem.runnerComponent');
-                            resolve();
-                        });
-                        runner.loadItem(itemRef);
-                    });
-                });
+                return runnerPromise;
             }
         };
+
+        // ensure the required config has been provided
+        config = _.omit(_.defaults(config || {}, defaults), ['renderTo']);
+        _.forEach(requiredOptions, function (name) {
+            if (typeof config[name] === 'undefined') {
+                throw new TypeError('Missing required option ' + name);
+            }
+        });
 
         /**
          * @typedef {runner} runnerComponent
          */
-        var runnerComponent = component(runnerComponentApi, defaults)
-            .setTemplate(componentTemplate)
+        runnerComponent = component(runnerComponentApi)
+            .setTemplate(template || runnerComponentTpl)
             .on('init', function () {
-                var self = this;
-                _.forEach(requiredOptions, function (name) {
-                    if (!self.hasOption(name)) {
-                        throw new TypeError('Missing required option ' + name);
-                    }
-                });
-            })
-            .on('destroy', function () {
-                if (runner) {
-                    runner.destroy();
-                }
-            })
-            .after('destroy', function () {
-                this.removeAllListeners();
-                runner = null;
-            })
-            .on('render', function () {
                 var self = this;
                 var plugins = [];
                 var initPromises = [];
 
-                self.hide();
-
-                if (self.hasOption('providers')) {
+                if (self.getOption('providers')) {
                     initPromises.push(
                         loadModules(providerLoaderFactory, self.getOption('providers'))
                             .then(registerProviders)
                     );
                 }
 
-                if (self.hasOption('plugins')) {
+                if (self.getOption('plugins')) {
                     initPromises.push(
                         loadModules(pluginLoaderFactory, self.getOption('plugins'))
                             .then(function (loadedPlugins) {
@@ -210,40 +141,52 @@ define([
                 }
 
                 Promise.all(initPromises).then(function () {
-                    var runnerConfig = _.omit(self.config, ['plugins', 'providers']);
-                    runnerConfig.renderTo = self.getElement();
-
-                    runner = runnerFactory(runnerConfig.provider, plugins, runnerConfig)
-                        .on('error', function (err) {
-                            self.trigger('error', err);
-                        })
-                        .on('ready', function () {
-                            _.defer(function () {
-                                self.show();
-                                self.setState('ready');
-                                self.trigger('ready');
-
-                                resolver.resolve(runner);
+                    self
+                        .on('render.runnerComponent', function () {
+                            var runnerConfig = _.assign(_.omit(self.config, ['plugins', 'providers']), {
+                                renderTo: self.getElement()
                             });
+                            self.off('render.runnerComponent');
+
+                            runner = runnerFactory(runnerConfig.provider, plugins, runnerConfig)
+                                .on('error', function (err) {
+                                    self.trigger('error', err);
+                                })
+                                .on('ready', function () {
+                                    _.defer(function () {
+                                        self
+                                            .show()
+                                            .setState('ready')
+                                            .trigger('ready', runner);
+                                    });
+                                })
+                                .after('destroy', function () {
+                                    this.removeAllListeners();
+                                })
+                                .init();
                         })
-                        .after('destroy', function () {
-                            this.removeAllListeners();
-                        });
-
-                    self.trigger('runner', runner);
-
-                    runner.init();
+                        .render(container)
+                        .hide();
                 });
+            })
+            .on('destroy', function () {
+                runnerPromise = Promise.reject();
+                if (runner) {
+                    return runner.destroy();
+                }
+            })
+            .after('destroy', function () {
+                this.removeAllListeners();
+                runner = null;
             });
 
-        try {
-            runnerComponent.init(config);
-        } catch(err) {
-            // ensure the runner promise is rejected as the init failed
-            resolver.reject(err);
-            throw err;
-        }
 
-        return runnerComponent;
+        runnerPromise = new Promise(function (resolve) {
+            runnerComponent.on('ready', function (runnerInstance) {
+                resolve(runnerInstance);
+            });
+        });
+
+        return runnerComponent.init(config);
     };
 });
