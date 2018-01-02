@@ -220,7 +220,7 @@ define([
         var $container = $("#fixture-get");
         var instance;
 
-        QUnit.expect(6);
+        QUnit.expect(7);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker: _.noop,
@@ -237,23 +237,14 @@ define([
                 assert.ok(true, 'The runner is ready');
                 assert.equal(typeof runner, 'object', 'The runner instance is provided');
 
-                instance.getRunner().then(function (resolvedRunner) {
-                    assert.equal(runner, resolvedRunner, 'The runner is reachable');
-                    instance.destroy();
-                }).catch(function (err) {
-                    assert.ok(false, 'No error should be thrown!');
-                    console.error(err);
-                    QUnit.start();
-                });
+                assert.equal(runner, instance.getRunner(), 'The runner is reachable');
+                instance.destroy();
             })
             .on('destroy', function() {
-                instance.getRunner().then(function () {
-                    assert.ok(false, 'An error should be thrown!');
-                    QUnit.start();
-                }).catch(function () {
-                    assert.ok(true, 'The runner has been destroyed and is not accessible');
-                    QUnit.start();
-                });
+                assert.equal(instance.getRunner(), null, 'The runner has been destroyed');
+                QUnit.start();
             });
+
+        assert.equal(instance.getRunner(), null, 'The runner is not ready at this time');
     });
 });

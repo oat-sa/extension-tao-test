@@ -85,7 +85,8 @@ define([
      * @returns {runnerComponent}
      */
     return function runnerComponentFactory(container, config, template) {
-        var runner, runnerPromise, runnerComponent;
+        var runner = null;
+        var runnerComponent;
 
         var runnerComponentApi = {
             /**
@@ -99,10 +100,10 @@ define([
 
             /**
              * Gets the test runner
-             * @returns {Promise}
+             * @returns {runner}
              */
             getRunner: function getRunner() {
-                return runnerPromise;
+                return runner;
             }
         };
 
@@ -170,22 +171,13 @@ define([
                 });
             })
             .on('destroy', function () {
-                runnerPromise = Promise.reject();
-                if (runner) {
-                    return runner.destroy();
-                }
+                var destroying = runner && runner.destroy();
+                runner = null;
+                return destroying;
             })
             .after('destroy', function () {
                 this.removeAllListeners();
-                runner = null;
             });
-
-
-        runnerPromise = new Promise(function (resolve) {
-            runnerComponent.on('ready', function (runnerInstance) {
-                resolve(runnerInstance);
-            });
-        });
 
         return runnerComponent.init(config);
     };
