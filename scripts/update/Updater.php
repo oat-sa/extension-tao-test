@@ -21,8 +21,12 @@
 
 namespace oat\taoTests\scripts\update;
 
+use oat\oatbox\service\ConfigurableService;
 use oat\tao\scripts\update\OntologyUpdater;
+use oat\taoTaskQueue\model\TaskLogInterface;
 use oat\taoTests\models\runner\providers\TestProviderService;
+use oat\taoTests\models\task\ExportTestByHandler;
+use oat\taoTests\models\task\ImportTestByHandler;
 use oat\taoTests\scripts\install\RegisterTestPluginService;
 use oat\taoTests\scripts\install\RegisterTestRunnerFeatureService;
 use oat\tao\model\accessControl\func\AclProxy;
@@ -99,6 +103,18 @@ class Updater extends \common_ext_ExtensionUpdater
             $serviceManager->register(TestProviderService::SERVICE_ID, $testProviderService);
 
             $this->setVersion('6.11.0');
+        }
+
+        if ($this->isVersion('6.11.0')) {
+            /** @var TaskLogInterface|ConfigurableService $taskLogService */
+            $taskLogService = $this->getServiceManager()->get(TaskLogInterface::SERVICE_ID);
+
+            $taskLogService->linkTaskToCategory(ImportTestByHandler::class, TaskLogInterface::CATEGORY_IMPORT);
+            $taskLogService->linkTaskToCategory(ExportTestByHandler::class, TaskLogInterface::CATEGORY_EXPORT);
+
+            $this->getServiceManager()->register(TaskLogInterface::SERVICE_ID, $taskLogService);
+
+            $this->setVersion('6.12.0');
         }
     }
 }
