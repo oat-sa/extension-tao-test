@@ -21,6 +21,7 @@
 namespace oat\taoTests\models\task;
 
 use common_report_Report as Report;
+use oat\oatbox\event\EventManager;
 use oat\taoItems\model\task\ImportItemByHandler;
 use oat\taoTests\models\event\TestImportEvent;
 
@@ -37,7 +38,7 @@ class ImportTestByHandler extends ImportItemByHandler
     protected function onAfterImport(Report $report)
     {
         if (Report::TYPE_SUCCESS == $report->getType()) {
-            $this->getEventManager()->trigger(new TestImportEvent($report));
+            $this->getServiceLocator()->get(EventManager::SERVICE_ID)->trigger(new TestImportEvent($report));
         }
     }
 }

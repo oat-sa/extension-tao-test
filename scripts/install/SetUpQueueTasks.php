@@ -23,6 +23,7 @@ use oat\oatbox\extension\InstallAction;
 use oat\oatbox\service\ConfigurableService;
 use oat\taoItems\model\task\ImportItemByHandler;
 use oat\taoTaskQueue\model\TaskLogInterface;
+use oat\taoTests\models\task\ExportTestByHandler;
 use oat\taoTests\models\task\ImportTestByHandler;
 
 /**
@@ -38,6 +39,7 @@ class SetUpQueueTasks extends InstallAction
         $taskLogService = $this->getServiceManager()->get(TaskLogInterface::SERVICE_ID);
 
         $taskLogService->linkTaskToCategory(ImportTestByHandler::class, TaskLogInterface::CATEGORY_IMPORT);
+        $taskLogService->linkTaskToCategory(ExportTestByHandler::class, TaskLogInterface::CATEGORY_EXPORT);
 
         $this->registerService(TaskLogInterface::SERVICE_ID, $taskLogService);
 
