@@ -46,7 +46,8 @@ define([
         }
     });
 
-    QUnit.test('module', 5, function(assert){
+    QUnit.test('module', function(assert){
+        QUnit.expect(5);
         runnerFactory.registerProvider('mock', mockProvider);
 
         assert.equal(typeof runnerFactory, 'function', "The runner module exposes a function");
