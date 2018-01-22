@@ -76,7 +76,7 @@ define([
             if(queueStorage){
                 return Promise.resolve(queueStorage);
             }
-            return runner.getTestStore().getStore('test-probes').then(function(newStorage){
+            return runner.getTestStore().getStore('test-probe').then(function(newStorage){
                 queueStorage = newStorage;
                 return Promise.resolve(queueStorage);
             });

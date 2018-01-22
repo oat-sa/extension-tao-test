@@ -160,7 +160,6 @@ define([
                 'duration-123456',
                 'duration-abcde',
                 'duration-foobar',
-                'test-states-123456',
                 'timer-abcde'
             ].filter(validate);
         };
@@ -197,7 +196,6 @@ define([
                 'duration-123456',
                 'duration-abcde',
                 'duration-foobar',
-                'test-states-123456',
                 'timer-abcde'
             ].filter(validate);
         };
