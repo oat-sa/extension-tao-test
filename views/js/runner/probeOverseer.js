@@ -343,7 +343,7 @@ define([
                 queue = [];
                 immutableQueue = [];
                 return getStorage().then(function(storage){
-                    return storage.removeStore().then(resetStorage);
+                    return storage.removeItem('queue').then(resetStorage);
                 });
             }
         };
