@@ -46,7 +46,7 @@ define([
      * @type {String[]}
      */
     var legacyPrefixes = [
-        'actions-', 'duration-', 'test-states-', 'test-probes', 'timer-'
+        'actions-', 'duration-', 'test-probes', 'timer-'
     ];
     /**
      * Check and select the store mode.
