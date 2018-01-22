@@ -89,7 +89,6 @@ define([
                 unifiedStore = !!result;
 
                 logger.debug('Test store mode ' + (unifiedStore ? 'unified' : 'multiple (legacy)') + ' for ' + testId);
-                console.log('Test store mode ' + (unifiedStore ? 'unified' : 'multiple (legacy)') + ' for ' + testId);
             });
         }
 
@@ -236,6 +235,7 @@ define([
                         if (!_.isEmpty(storeId) && !_.isEmpty(savedStoreId) &&
                             savedStoreId !== storeId ){
 
+                            logger.info('Storage change detected (' + savedStoreId + ' != ' + storeId + ') => volatiles data wipe out !');
                             shouldClear = true;
                         }
                         return shouldClear;
