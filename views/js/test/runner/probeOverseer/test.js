@@ -47,9 +47,13 @@ define([
                         }, 10);
                     });
                 },
-                removeStore : function removeStore(){
-                    mockedData = {};
-                    return Promise.resolve(true);
+                removeItem : function removeItem(key){
+                    return new Promise(function(resolve){
+                        setTimeout(function(){
+                            delete mockedData[key];
+                            resolve(true);
+                        }, 5);
+                    });
                 }
             });
         }
