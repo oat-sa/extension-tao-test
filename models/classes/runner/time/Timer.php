@@ -128,4 +128,10 @@ interface Timer
      * @throws \Exception if any error occurs
      */
     public function load();
+
+    /**
+     * @return mixed
+     * @throws \Exception
+     */
+    public function delete();
 }

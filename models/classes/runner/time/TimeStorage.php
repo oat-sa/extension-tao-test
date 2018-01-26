@@ -35,14 +35,20 @@ interface TimeStorage
      * Stores the timer data
      * @param string $data
      * @return TimeStorage
-     * @throws Exception
+     * @throws \Exception
      */
     public function store($data);
 
     /**
      * Loads the timer data from the storage
      * @return string
-     * @throws Exception
+     * @throws \Exception
      */
     public function load();
+
+    /**
+     * @return bool
+     * @throws \Exception
+     */
+    public function delete();
 }
