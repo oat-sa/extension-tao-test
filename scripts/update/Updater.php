@@ -105,7 +105,9 @@ class Updater extends \common_ext_ExtensionUpdater
             $this->setVersion('6.11.0');
         }
 
-        if ($this->isVersion('6.11.0')) {
+        $this->skip('6.11.0', '7.0.1');
+
+        if ($this->isVersion('7.0.1')) {
             /** @var TaskLogInterface|ConfigurableService $taskLogService */
             $taskLogService = $this->getServiceManager()->get(TaskLogInterface::SERVICE_ID);
 
@@ -114,7 +116,7 @@ class Updater extends \common_ext_ExtensionUpdater
 
             $this->getServiceManager()->register(TaskLogInterface::SERVICE_ID, $taskLogService);
 
-            $this->setVersion('6.12.0');
+            $this->setVersion('7.1.0');
         }
     }
 }
