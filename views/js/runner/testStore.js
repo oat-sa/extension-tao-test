@@ -41,20 +41,29 @@ define([
 
     /**
      * Database name prefix (suffixed by the test identifier)
-     * to check if we use the legacy mode (multiple dbs)
-     * or the new mode (one db per test).
+     * to check if we use the fragmented mode
+     * or the unified mode.
      * @type {String[]}
      */
     var legacyPrefixes = [
         'actions-', 'duration-', 'test-probe', 'timer-'
     ];
+
+    /**
+     * List the available modes
+     */
+    var modes = {
+        unified    : 'unified',         //one db per test, new mode
+        fragmented : 'fragmented'       //mutliple dbs per test, legacy mode
+    };
+
     /**
      * Check and select the store mode.
-     * If any of the "legacyPrefixes" store is found, we used the "multiple/legacy" mode
-     * otherwise we use the unified mode.
+     * If any of the "legacyPrefixes" store is found, we used the fragmented mode
+     * otherwise we'll use the unified mode.
      * @param {String} testId
      * @param {Object} [preselectedBackend] - the storage backend
-     * @returns {Promise<Boolean>} true means unified
+     * @returns {Promise<String>} resolves with the mode of the current test
      */
     var selectStoreMode = function selectStoreMode(testId, preselectedBackend){
         return store
@@ -64,7 +73,10 @@ define([
                 });
             }, preselectedBackend)
             .then(function(foundStores){
-                return _.isArray(foundStores) && foundStores.length === 0;
+                if(_.isArray(foundStores) && foundStores.length > 0 ){
+                    return modes.fragmented;
+                }
+                return modes.unified;
             });
     };
 
@@ -75,22 +87,34 @@ define([
      * @param {String} testId - unique test instance id
      * @returns {testStore} a 'wrapped' store instance
      * @param {Object} [preselectedBackend] - the storage backend (automatically selected by default)
-     * @throws {TypeError} with no testId
+     * @throws {TypeError} without a testId
      */
     return function testStoreLoader(testId, preselectedBackend){
 
         var storeNames = [];
         var volatiles = [];
-        var unifiedStore;
+        var testMode;
 
-        var getMode = Promise.resolve();
-        if(_.isUndefined(unifiedStore)){
-            getMode = selectStoreMode(testId, preselectedBackend).then(function(result){
-                unifiedStore = !!result;
+        /**
+         * Is the test using a unified store mode ?
+         * @returns {Promise<Boolean>} true if unified
+         */
+        var isStoreModeUnified = function isStoreModeUnified(){
+            if(_.isUndefined(testMode)){
+                return selectStoreMode(testId, preselectedBackend).then(function(result){
+                    if(result && typeof modes[result] !== 'undefined'){
+                        testMode = result;
+                    } else {
+                        //use the unified mode by default
+                        testMode = modes.unified;
+                    }
 
-                logger.debug('Test store mode ' + (unifiedStore ? 'unified' : 'multiple (legacy)') + ' for ' + testId);
-            });
-        }
+                    logger.debug('Test store mode ' + result + ' for ' + testId);
+                    return result === modes.unified;
+                });
+            }
+            return Promise.resolve(testMode === modes.unified);
+        };
 
         if(_.isEmpty(testId)){
             throw new TypeError('The store must be identified with a unique test identifier');
@@ -116,94 +140,95 @@ define([
                 if(!_.contains(storeNames, storeName)){
                     storeNames.push(storeName);
                 }
-                return getMode.then(function(){
-                    if (unifiedStore) {
-                        return store(testId, preselectedBackend);
+                return isStoreModeUnified().then(function(isUnified){
+                    var loadStore;
+                    if (isUnified) {
+                        loadStore = store(testId, preselectedBackend);
                     } else {
-
-                        return store(storeName + '-' + testId, preselectedBackend);
+                        loadStore = store(storeName + '-' + testId, preselectedBackend);
                     }
-                })
-                .then(function(loadedStore){
-                    var keyPattern = new RegExp('^' + storeName + '__');
-                    var storeKey = function storeKey(key){
-                        return unifiedStore ? storeName + '__' + key : key;
-                    };
 
-                    /**
-                     * The wrapped storage
-                     * @type {Object}
-                     */
-                    return {
-
+                    return loadStore.then(function(loadedStore){
+                        var keyPattern = new RegExp('^' + storeName + '__');
+                        var storeKey = function storeKey(key){
+                            return isUnified ? storeName + '__' + key : key;
+                        };
 
                         /**
-                         * Get an item with the given key
-                         * @param {String} key
-                         * @returns {Promise<*>} with the result in resolve, undefined if nothing
-                         */
-                        getItem : function getItem(key){
-                            return loadedStore.getItem(storeKey(key));
-                        },
+                        * The wrapped storage
+                        * @type {Object}
+                        */
+                        return {
 
-                        /**
-                         * Get all store items
-                         * @returns {Promise<Object>} with a collection of items
-                         */
-                        getItems : function getItems(){
-                            if(unifiedStore){
-                                return loadedStore.getItems().then(function(entries){
-                                    return _.transform(entries, function(acc, entry, key){
-                                        if(keyPattern.test(key)){
-                                            acc[key.replace(keyPattern, '')] = entry;
-                                        }
-                                        return acc;
-                                    }, {});
-                                });
-                            } else {
-                                return loadedStore.getItems();
-                            }
-                        },
 
-                        /**
-                         * Set an item with the given key
-                         * @param {String} key - the item key
-                         * @param {*} value - the item value
-                         * @returns {Promise<Boolean>} with true in resolve if added/updated
-                         */
-                        setItem : function setItem(key, value){
-                            return loadedStore.setItem(storeKey(key), value);
-                        },
+                            /**
+                            * Get an item with the given key
+                            * @param {String} key
+                            * @returns {Promise<*>} with the result in resolve, undefined if nothing
+                            */
+                            getItem : function getItem(key){
+                                return loadedStore.getItem(storeKey(key));
+                            },
 
-                        /**
-                         * Remove an item with the given key
-                         * @param {String} key - the item key
-                         * @returns {Promise<Boolean>} with true in resolve if removed
-                         */
-
-                        removeItem : function removeItem(key){
-                            return loadedStore.removeItem(storeKey(key));
-                        },
-
-                        /**
-                         * Clear the current store
-                         * @returns {Promise<Boolean>} with true in resolve once cleared
-                         */
-                        clear : function clear(){
-                            if(unifiedStore){
-                                return loadedStore.getItems()
-                                    .then(function(entries){
-                                        _.forEach(entries, function(entry, key){
+                            /**
+                            * Get all store items
+                            * @returns {Promise<Object>} with a collection of items
+                            */
+                            getItems : function getItems(){
+                                if(isUnified){
+                                    return loadedStore.getItems().then(function(entries){
+                                        return _.transform(entries, function(acc, entry, key){
                                             if(keyPattern.test(key)){
-                                                loadedStore.removeItem(key);
+                                                acc[key.replace(keyPattern, '')] = entry;
                                             }
-                                        });
+                                            return acc;
+                                        }, {});
                                     });
-                            } else {
-                                return loadedStore.clear();
+                                } else {
+                                    return loadedStore.getItems();
+                                }
+                            },
+
+                            /**
+                            * Set an item with the given key
+                            * @param {String} key - the item key
+                            * @param {*} value - the item value
+                            * @returns {Promise<Boolean>} with true in resolve if added/updated
+                            */
+                            setItem : function setItem(key, value){
+                                return loadedStore.setItem(storeKey(key), value);
+                            },
+
+                            /**
+                            * Remove an item with the given key
+                            * @param {String} key - the item key
+                            * @returns {Promise<Boolean>} with true in resolve if removed
+                            */
+
+                            removeItem : function removeItem(key){
+                                return loadedStore.removeItem(storeKey(key));
+                            },
+
+                            /**
+                            * Clear the current store
+                            * @returns {Promise<Boolean>} with true in resolve once cleared
+                            */
+                            clear : function clear(){
+                                if(isUnified){
+                                    return loadedStore.getItems()
+                                        .then(function(entries){
+                                            _.forEach(entries, function(entry, key){
+                                                if(keyPattern.test(key)){
+                                                    loadedStore.removeItem(key);
+                                                }
+                                            });
+                                        });
+                                } else {
+                                    return loadedStore.clear();
+                                }
                             }
-                        }
-                    };
+                        };
+                    });
                 });
             },
 
@@ -227,7 +252,7 @@ define([
              * @param {String} storeId - the id to check
              * @returns {Promise<Boolean>} true if cleared
              */
-            clearVolatileOnStoreChange : function clearVolatileOnStoreChange(storeId){
+            clearVolatileIfStoreChange : function clearVolatileIfStoreChange(storeId){
                 var self = this;
                 var shouldClear = false;
                 return store.getIdentifier(preselectedBackend)
@@ -271,8 +296,8 @@ define([
              */
             remove : function remove(){
                 var legacyStoreExp = new RegExp('-' + testId + '$');
-                return getMode.then(function(){
-                    if(unifiedStore){
+                return isStoreModeUnified().then(function(isUnified){
+                    if(isUnified){
                         return store(testId, preselectedBackend).then(function(storeInstance){
                             return storeInstance.removeStore();
                         });

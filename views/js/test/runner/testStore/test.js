@@ -100,7 +100,7 @@ define([
     }, {
         title: 'setVolatile'
     }, {
-        title: 'clearVolatileOnStoreChange'
+        title: 'clearVolatileIfStoreChange'
     }, {
         title: 'clearVolatileStores'
     }, {
@@ -447,7 +447,7 @@ define([
         testStore.setVolatile('store-1');
         testStore.setVolatile('store-2');
 
-        testStore.clearVolatileOnStoreChange('unit-test')
+        testStore.clearVolatileIfStoreChange('unit-test')
             .then(function(){
                 assert.deepEqual(mockedData, {
                     '1234' : {
@@ -465,7 +465,7 @@ define([
                     }
                 }, 'Data marked as volatile should not be removed, no store change');
 
-                return testStore.clearVolatileOnStoreChange('ABCDE');
+                return testStore.clearVolatileIfStoreChange('ABCDE');
             })
             .then(function(){
                 assert.deepEqual(mockedData, {
