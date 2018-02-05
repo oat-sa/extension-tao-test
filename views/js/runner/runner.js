@@ -27,8 +27,8 @@ define([
     'core/promise',
     'core/logger',
     'core/providerRegistry',
-    'taoTests/runner/dataHolder'
-], function ($, _, __, eventifier, Promise, logger, providerRegistry, dataHolderFactory){
+    'taoTests/runner/dataHolder',
+], function ($, _, __, eventifier, Promise, logger, providerRegistry, dataHolderFactory) {
     'use strict';
 
     /**
@@ -96,6 +96,12 @@ define([
          * @see taoTests/runner/probeOverseer
          */
         var probeOverseer;
+
+        /**
+         * Keep the instance of a testStore
+         * @see taoTests/runner/testStore
+         */
+        var testStore;
 
         /**
          * Run a method of the provider (by delegation)
@@ -447,6 +453,35 @@ define([
 
                 return probeOverseer;
             },
+
+            /**
+             * Get the testStore, and load it if not present
+             *
+             * @returns {testStore} the testStore instance
+             */
+            getTestStore : function getTestStore(){
+
+                if(!testStore && _.isFunction(provider.loadTestStore)){
+                    testStore = provider.loadTestStore.call(this);
+                }
+                return testStore;
+            },
+
+            /**
+             * Get a plugin store.
+             * It's a convenience method that calls testStore.getStore
+             * @param {String} name - the name of store, usually the plugin name.
+             *
+             * @returns {Promise<storage>} the plugin store
+             */
+            getPluginStore : function getPluginStore(name){
+                var loadedStore = this.getTestStore();
+                if(!loadedStore || !_.isFunction(loadedStore.getStore)){
+                    return Promise.reject(new Error('Please configure a testStore via loadTestStore to be able to get a plugin store'));
+                }
+                return this.getTestStore().getStore(name);
+            },
+
 
             /**
              * Check a runner state
