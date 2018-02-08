@@ -22,46 +22,72 @@
 define([
     'jquery',
     'lodash',
+    'core/promise',
     'taoTests/runner/runner',
     'taoTests/runner/probeOverseer'
-], function($, _, runnerFactory, probeOverseer) {
+], function($, _, Promise, runnerFactory, probeOverseer) {
     'use strict';
+
+    var mockedData = {};
+    var mockTestStore = {
+        getStore : function(){
+            return Promise.resolve({
+                getItem : function getItem(key){
+                    return new Promise(function(resolve){
+                        setTimeout(function(){
+                            resolve(mockedData[key]);
+                        }, 2);
+                    });
+                },
+                setItem : function setItem(key, value){
+                    return new Promise(function(resolve){
+                        setTimeout(function(){
+                            mockedData[key] = value;
+                            resolve(true);
+                        }, 10);
+                    });
+                },
+                removeItem : function removeItem(key){
+                    return new Promise(function(resolve){
+                        setTimeout(function(){
+                            delete mockedData[key];
+                            resolve(true);
+                        }, 5);
+                    });
+                }
+            });
+        }
+    };
 
     var mockRunner = {
         init: _.noop,
-        on: _.noop
+        on: _.noop,
+        getTestStore : mockTestStore
     };
-
 
     QUnit.module('API');
 
     QUnit.test('module factory', function(assert) {
-        var testId = 'test-1';
 
-        QUnit.expect(6);
+        QUnit.expect(5);
 
         assert.equal(typeof probeOverseer, 'function', "The module exposes a function");
 
         assert.throws(function() {
             probeOverseer();
-        }, TypeError, "The factory needs a test id");
-
-        assert.throws(function() {
-            probeOverseer(testId);
         }, TypeError, "The factory needs a runner");
 
         assert.throws(function() {
-            probeOverseer(testId, {});
+            probeOverseer({});
         }, TypeError, "The factory needs a valid runner");
 
-        assert.equal(typeof probeOverseer(testId, mockRunner), 'object', "The module is a factory");
-        assert.notEqual(probeOverseer(testId, mockRunner), probeOverseer(testId, mockRunner), "The factory creates different instances");
+        assert.equal(typeof probeOverseer(mockRunner), 'object', "The module is a factory");
+        assert.notEqual(probeOverseer(mockRunner), probeOverseer(mockRunner), "The factory creates different instances");
     });
 
 
     QUnit.test('own api', function(assert) {
-        var testId = 'test-2';
-        var probes = probeOverseer(testId, mockRunner);
+        var probes = probeOverseer(mockRunner);
 
         QUnit.expect(7);
 
@@ -74,11 +100,14 @@ define([
         assert.equal(typeof probes.stop, 'function', "The module as the stop method");
     });
 
-    QUnit.module('probes');
+    QUnit.module('probes', {
+        teardown : function(){
+            mockedData = {};
+        }
+    });
 
     QUnit.test('normal validation', function(assert) {
-        var testId = 'test-3';
-        var probes = probeOverseer(testId, mockRunner);
+        var probes = probeOverseer(mockRunner);
 
         QUnit.expect(5);
 
@@ -117,8 +146,7 @@ define([
     });
 
     QUnit.test('latency validation', function(assert) {
-        var testId = 'test-4';
-        var probes = probeOverseer(testId, mockRunner);
+        var probes = probeOverseer(mockRunner);
 
         QUnit.expect(4);
 
@@ -159,8 +187,7 @@ define([
     });
 
     QUnit.test('add and get', function(assert) {
-        var testId = 'test-5';
-        var probes = probeOverseer(testId, mockRunner);
+        var probes = probeOverseer(mockRunner);
         var p1 = {
             name: 'foo',
             latency: true,
@@ -180,8 +207,7 @@ define([
     });
 
     QUnit.test('reformat events', function(assert) {
-        var testId = 'test-6';
-        var probes = probeOverseer(testId, mockRunner);
+        var probes = probeOverseer(mockRunner);
         var p1 = {
             name: 'foo',
             latency: true,
@@ -206,23 +232,28 @@ define([
     QUnit.module('collection', {
         setup: function() {
             runnerFactory.clearProviders();
+        },
+        teardown : function(){
+            mockedData = {};
         }
     });
 
     QUnit.asyncTest('simple', function(assert) {
-        var testId = 'test-7';
         var runner, probes;
 
         QUnit.expect(14);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker: _.noop,
+            loadTestStore : function(){
+                return mockTestStore;
+            },
             init: _.noop
         });
 
         runner = runnerFactory('foo');
 
-        probes = probeOverseer(testId, runner);
+        probes = probeOverseer(runner);
 
         probes.add({
             name: 'test-ready',
@@ -277,19 +308,21 @@ define([
     });
 
     QUnit.asyncTest('simple(param)', function(assert) {
-        var testId = 'test-8';
         var runner, probes;
 
         QUnit.expect(15);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker: _.noop,
+            loadTestStore : function(){
+                return mockTestStore;
+            },
             init: _.noop
         });
 
         runner = runnerFactory('foo');
 
-        probes = probeOverseer(testId, runner);
+        probes = probeOverseer(runner);
 
         probes.add({
             name: 'test-param',
@@ -346,19 +379,21 @@ define([
     });
 
     QUnit.asyncTest('latency', function(assert) {
-        var testId = 'test-9';
         var runner, probes;
 
         QUnit.expect(20);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker: _.noop,
+            loadTestStore : function(){
+                return mockTestStore;
+            },
             init: _.noop
         });
 
         runner = runnerFactory('foo');
 
-        probes = probeOverseer(testId, runner);
+        probes = probeOverseer(runner);
 
         probes.add({
             name: 'test-latency',
@@ -428,19 +463,21 @@ define([
     });
 
     QUnit.asyncTest('latency(param)', function(assert) {
-        var testId = 'test-10';
         var runner, probes;
 
         QUnit.expect(22);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker: _.noop,
+            loadTestStore : function(){
+                return mockTestStore;
+            },
             init: _.noop
         });
 
         runner = runnerFactory('foo');
 
-        probes = probeOverseer(testId, runner);
+        probes = probeOverseer(runner);
 
         probes.add({
             name: 'test-latency',
@@ -512,19 +549,21 @@ define([
     });
 
     QUnit.asyncTest('flush', function(assert) {
-        var testId = 'test-11';
         var runner, probes;
 
         QUnit.expect(3);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker: _.noop,
+            loadTestStore : function(){
+                return mockTestStore;
+            },
             init: _.noop
         });
 
         runner = runnerFactory('foo');
 
-        probes = probeOverseer(testId, runner);
+        probes = probeOverseer(runner);
 
         probes.add({
             name: 'foo',
@@ -571,19 +610,21 @@ define([
     });
 
     QUnit.asyncTest('stop', function(assert) {
-        var testId = 'test-12';
         var runner, probes;
 
         QUnit.expect(2);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker: _.noop,
+            loadTestStore : function(){
+                return mockTestStore;
+            },
             init: _.noop
         });
 
         runner = runnerFactory('foo');
 
-        probes = probeOverseer(testId, runner);
+        probes = probeOverseer(runner);
 
         probes.add({
             name: 'foo',
@@ -624,19 +665,21 @@ define([
     });
 
     QUnit.asyncTest('concurrency', function(assert) {
-        var testId = 'test-13';
         var runner, probes;
 
         QUnit.expect(3);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker: _.noop,
+            loadTestStore : function(){
+                return mockTestStore;
+            },
             init: _.noop
         });
 
         runner = runnerFactory('foo');
 
-        probes = probeOverseer(testId, runner);
+        probes = probeOverseer(runner);
 
         probes.start()
             .then(function(){
@@ -654,8 +697,7 @@ define([
                 return flushPromise;
             })
             .catch(function(e) {
-                assert.ok(false, 'An error occurred');
-                console.error(e);
+                assert.ok(false, 'An error occurred : ' + e.message);
                 QUnit.start();
             });
     });
