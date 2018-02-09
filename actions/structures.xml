@@ -48,11 +48,11 @@
                     <action id="test-duplicate" name="Duplicate" js="duplicateNode" url="/taoTests/Tests/cloneInstance" context="instance" group="tree">
                         <icon id="icon-copy"/>
                     </action>
-                    <action id="test-new" name="New test" url="/taoTests/Tests/addInstance" context="resource" group="tree" binding="instanciate">
-                        <icon id="icon-test"/>
-                    </action>
                     <action id="test-copy-to" name="Copy To" url="/taoTests/Tests/copyInstance" context="instance" group="tree" binding="copyTo">
                         <icon id="icon-copy"/>
+                    </action>
+                    <action id="test-new" name="New test" url="/taoTests/Tests/addInstance" context="resource" group="tree" binding="instanciate">
+                        <icon id="icon-test"/>
                     </action>
                 </actions>
             </section>
