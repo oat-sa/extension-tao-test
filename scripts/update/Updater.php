@@ -104,6 +104,13 @@ class Updater extends \common_ext_ExtensionUpdater
         $this->skip('6.11.0', '7.3.0');
 
         if ($this->isVersion('7.3.0')) {
+            AclProxy::revokeRule(new AccessRule('grant', 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole', array('ext'=>'taoTests')));
+
+            AclProxy::applyRule(new AccessRule('grant', 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole', array('ext'=>'taoTests', 'mod' => 'SaSTests')));
+            AclProxy::applyRule(new AccessRule('grant', 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole', array('ext'=>'taoTests', 'mod' => 'TestExport')));
+            AclProxy::applyRule(new AccessRule('grant', 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole', array('ext'=>'taoTests', 'mod' => 'TestImport')));
+            AclProxy::applyRule(new AccessRule('grant', 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole', array('ext'=>'taoTests', 'mod' => 'Tests')));
+
             AclProxy::applyRule(new AccessRule('grant', TaoRoles::REST_PUBLISHER, array('ext'=>'taoTests', 'mod' => 'RestTests')));
             $this->setVersion('7.4.0');
         }
