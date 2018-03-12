@@ -102,5 +102,10 @@ class Updater extends \common_ext_ExtensionUpdater
         }
 
         $this->skip('6.11.0', '7.3.0');
+
+        if ($this->isVersion('7.3.0')) {
+            AclProxy::applyRule(new AccessRule('grant', TaoRoles::REST_PUBLISHER, array('ext'=>'taoTests', 'mod' => 'RestTests')));
+            $this->setVersion('7.4.0');
+        }
     }
 }
