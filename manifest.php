@@ -57,10 +57,7 @@ return array(
 	'update' => "oat\\taoTests\\scripts\\update\\Updater",
 	'managementRole' => 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole',
     'acl' => array(
-        array('grant', 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole', array('ext'=>'taoTests', 'mod' => 'SaSTests')),
-        array('grant', 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole', array('ext'=>'taoTests', 'mod' => 'TestExport')),
-        array('grant', 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole', array('ext'=>'taoTests', 'mod' => 'TestImport')),
-        array('grant', 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole', array('ext'=>'taoTests', 'mod' => 'Tests')),
+        array('grant', 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole', array('ext'=>'taoTests')),
         array('grant', \oat\tao\model\user\TaoRoles::REST_PUBLISHER, array('ext'=>'taoTests', 'mod' => 'RestTests')),
     ),
 	'optimizableClasses' => array(
