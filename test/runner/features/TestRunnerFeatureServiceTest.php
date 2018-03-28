@@ -28,6 +28,7 @@ use oat\taoTests\models\runner\plugins\TestPluginService;
 use oat\taoTests\test\runner\features\samples\TestFeature;
 use Prophecy\Prophet;
 use Psr\Log\LogLevel;
+use oat\oatbox\service\ServiceManager;
 
 /**
  * Test of TestRunnerFeatureServiceTest
@@ -172,5 +173,25 @@ class TestRunnerFeatureServiceTest extends TaoPhpUnitTestRunner
 
         $this->assertTrue($testLogger->has(LogLevel::WARNING, 'Cannot unregister inexistant feature idontexist'));
     }
-}
 
+    public function testUpdateFeaturesByPluginCategories()
+    {
+        $config = new \common_persistence_KeyValuePersistence([], new \common_persistence_InMemoryKvDriver());
+        $serviceManager = new ServiceManager($config);
+        $testPluginService = $this->getTestPluginService();
+        $serviceManager->register(TestPluginService::SERVICE_ID, $testPluginService);
+        $testRunnerFeatureService = new TestRunnerFeatureService();
+        $testRunnerFeatureService->setLogger(new TestLogger());
+        $testRunnerFeatureService->setServiceLocator($serviceManager);
+        $this->assertTrue(empty($testRunnerFeatureService->getAll()));
+
+        $testRunnerFeatureService->updateFeaturesByPluginCategories();
+
+        $features = $testRunnerFeatureService->getAll();
+        $this->assertEquals(2, count($features));
+
+        $this->assertEquals(1, count($features['test']->getPluginsIds()));
+        $this->assertEquals(2, count($features['controls']->getPluginsIds()));
+    }
+
+}

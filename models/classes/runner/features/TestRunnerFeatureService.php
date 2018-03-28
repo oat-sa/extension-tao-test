@@ -22,6 +22,7 @@ namespace oat\taoTests\models\runner\features;
 use oat\oatbox\log\LoggerAwareTrait;
 use oat\oatbox\service\ConfigurableService;
 use Psr\Log\LoggerAwareInterface;
+use oat\taoTests\models\runner\plugins\TestPluginService;
 
 /**
  * A service to register Test Runner Features
@@ -89,4 +90,35 @@ class TestRunnerFeatureService extends ConfigurableService implements LoggerAwar
         return empty($option) ? [] : $option;
     }
 
+    /**
+     * Add features with plugins grouped by registered plugins categories.
+     *
+     * @throws \common_exception_InconsistentData
+     * @throws \oat\oatbox\service\exception\InvalidServiceManagerException
+     */
+    public function updateFeaturesByPluginCategories()
+    {
+        $pluginsByCategories = [];
+        $testPluginService = $this->getServiceManager()->get(TestPluginService::class);
+        foreach ($testPluginService->getAllPlugins() as $plugin) {
+            $pluginsByCategories[$plugin->getCategory()][] = $plugin;
+        }
+
+        foreach ($pluginsByCategories as $id => $pluginsByCategory) {
+            $pluginIds = array_map(
+                function ($plugin) {
+                    return $plugin->getId();
+                },
+                $pluginsByCategory
+            );
+            $feature = new BaseTestRunnerFeature(
+                $id,
+                $pluginIds,
+                true,
+                $pluginsByCategory
+            );
+            $this->unregister($feature->getId());
+            $this->register($feature);
+        }
+    }
 }
