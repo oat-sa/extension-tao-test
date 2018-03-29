@@ -22,6 +22,7 @@ namespace oat\taoTests\models\runner\features;
 use oat\oatbox\log\LoggerAwareTrait;
 use oat\oatbox\service\ConfigurableService;
 use Psr\Log\LoggerAwareInterface;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
 
 /**
  * A service to register Test Runner Features
@@ -86,7 +87,11 @@ class TestRunnerFeatureService extends ConfigurableService implements LoggerAwar
     public function getAll()
     {
         $option = $this->getOption(self::OPTION_AVAILABLE);
+        foreach ($option as $feature) {
+            if ($feature instanceof ServiceLocatorAwareInterface) {
+                $feature->setServiceLocator($this->getServiceLocator());
+            }
+        }
         return empty($option) ? [] : $option;
     }
-
 }
