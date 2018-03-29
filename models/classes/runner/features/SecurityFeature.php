@@ -32,11 +32,13 @@ use Zend\ServiceManager\ServiceLocatorAwareTrait;
 class SecurityFeature extends TestRunnerFeature implements ServiceLocatorAwareInterface
 {
 
+    const FEATURE_ID = 'security';
+
     use ServiceLocatorAwareTrait;
 
     public function __construct()
     {
-        $this->id = 'security';
+        $this->id = self::FEATURE_ID;
         $this->isEnabledByDefault = true;
     }
 
