@@ -23,6 +23,7 @@ namespace oat\taoTests\scripts\install;
 
 use oat\oatbox\extension\InstallAction;
 use oat\taoTests\models\runner\features\TestRunnerFeatureService;
+use oat\taoTests\models\runner\features\SecurityFeature;
 
 /**
  * Installation action that registers the TestPluginService
@@ -40,6 +41,7 @@ class RegisterTestRunnerFeatureService extends InstallAction
     {
         $serviceManager = $this->getServiceManager();
         $testRunnerFeatureService = new TestRunnerFeatureService();
+        $testRunnerFeatureService->register(new SecurityFeature());
         $serviceManager->register(TestRunnerFeatureService::SERVICE_ID, $testRunnerFeatureService);
     }
 }
