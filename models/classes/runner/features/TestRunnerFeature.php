@@ -39,17 +39,17 @@ abstract class TestRunnerFeature implements PhpSerializable, LoggerAwareInterfac
     /**
      * @var string
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string[] must match active test runner plugins Ids
      */
-    private $pluginsIds;
+    protected $pluginsIds;
 
     /**
      * @var bool Determine if the feature will be automatically enabled upon delivery creation
      */
-    private $isEnabledByDefault;
+    protected $isEnabledByDefault;
 
     /**
      * @var TestPlugin[] Used to check the existence of plugins Ids

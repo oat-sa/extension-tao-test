@@ -28,6 +28,8 @@ use oat\taoTests\scripts\install\RegisterTestRunnerFeatureService;
 use oat\tao\model\accessControl\func\AclProxy;
 use oat\tao\model\accessControl\func\AccessRule;
 use oat\tao\model\user\TaoRoles;
+use oat\taoTests\models\runner\features\TestRunnerFeatureService;
+use oat\taoTests\models\runner\features\SecurityFeature;
 
 class Updater extends \common_ext_ExtensionUpdater
 {
@@ -109,5 +111,12 @@ class Updater extends \common_ext_ExtensionUpdater
         }
 
         $this->skip('7.4.0', '7.5.0');
+
+        if ($this->isVersion('7.5.0')) {
+            $featureService = $this->getServiceManager()->get(TestRunnerFeatureService::class);
+            $featureService->register(new SecurityFeature());
+            $this->getServiceManager()->register(TestRunnerFeatureService::SERVICE_ID, $featureService);
+            $this->setVersion('7.6.0');
+        }
     }
 }
