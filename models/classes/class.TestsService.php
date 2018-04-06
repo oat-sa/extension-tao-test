@@ -25,6 +25,7 @@ use oat\taoTests\models\event\TestCreatedEvent;
 use oat\taoTests\models\event\TestDuplicatedEvent;
 use oat\taoTests\models\event\TestRemovedEvent;
 use oat\generis\model\fileReference\FileReferenceSerializer;
+
 /**
  * Service methods to manage the Tests business models using the RDF API.
  *
@@ -76,7 +77,7 @@ class taoTests_models_classes_TestsService
 
 		parent::__construct();
 
-		$this->testClass = new core_kernel_classes_Class(TaoOntology::TEST_CLASS_URI );
+		$this->testClass = new core_kernel_classes_Class(TaoOntology::CLASS_URI_TEST );
 
 
         return $returnValue;
@@ -193,7 +194,7 @@ class taoTests_models_classes_TestsService
         $returnValue = array();
 
 
-		$itemClazz = new core_kernel_classes_Class(TAO_ITEM_CLASS);
+		$itemClazz = new core_kernel_classes_Class(TaoOntology::CLASS_URI_ITEM);
 		foreach($itemClazz->getInstances(true) as $instance){
 			$returnValue[$instance->getUri()] = $instance->getLabel();
 		}

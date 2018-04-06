@@ -24,7 +24,6 @@ use oat\tao\test\TaoPhpUnitTestRunner;
 use oat\taoTests\models\runner\plugins\PluginRegistry;
 use oat\taoTests\models\runner\plugins\TestPluginService;
 use oat\taoTests\models\runner\features\SecurityFeature;
-use oat\oatbox\service\ServiceManager;
 use Prophecy\Prophet;
 
 class SecurityFeatureTest extends TaoPhpUnitTestRunner
@@ -32,8 +31,7 @@ class SecurityFeatureTest extends TaoPhpUnitTestRunner
 
     public function testGetPluginsIds()
     {
-        $config = new \common_persistence_KeyValuePersistence([], new \common_persistence_InMemoryKvDriver());
-        $serviceManager = new ServiceManager($config);
+        $serviceManager = $this->getServiceManagerProphecy();
         $serviceManager->register(TestPluginService::SERVICE_ID, $this->getTestPluginService());
         $feature = new SecurityFeature();
         $feature->setServiceLocator($serviceManager);
