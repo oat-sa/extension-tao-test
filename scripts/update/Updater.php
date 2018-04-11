@@ -118,5 +118,12 @@ class Updater extends \common_ext_ExtensionUpdater
             $this->getServiceManager()->register(TestRunnerFeatureService::SERVICE_ID, $featureService);
             $this->setVersion('7.6.0');
         }
+
+        if ($this->isVersion('7.6.0')) {
+            $featureService = $this->getServiceManager()->get(TestRunnerFeatureService::class);
+            $featureService->unregister(SecurityFeature::FEATURE_ID);
+            $this->getServiceManager()->unregister(TestRunnerFeatureService::SERVICE_ID, $featureService);
+            $this->setVersion('7.7.0');
+        }
     }
 }
