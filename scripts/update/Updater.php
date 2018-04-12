@@ -70,8 +70,8 @@ class Updater extends \common_ext_ExtensionUpdater
         if ($this->isVersion('3.4.1')){
 
             //register test runner feature service
-            $registerService = new RegisterTestRunnerFeatureService();
-            $registerService([]);
+            //$registerService = new RegisterTestRunnerFeatureService();
+            //$registerService([]);
 
             $this->setVersion('3.5.0');
         }
@@ -124,6 +124,18 @@ class Updater extends \common_ext_ExtensionUpdater
             $featureService->unregister(SecurityFeature::FEATURE_ID);
             $this->getServiceManager()->register(TestRunnerFeatureService::SERVICE_ID, $featureService);
             $this->setVersion('7.7.0');
+        }
+
+        $this->skip('7.7.0', '7.7.1');
+
+        if ($this->isVersion('7.7.1')) {
+            if (!$this->getServiceManager()->has(TestRunnerFeatureService::SERVICE_ID)) {
+                $featureService = new TestRunnerFeatureService([
+                    TestRunnerFeatureService::OPTION_AVAILABLE => []
+                ]);
+                $this->getServiceManager()->register(TestRunnerFeatureService::SERVICE_ID, $featureService);
+            }
+            $this->setVersion('7.7.2');
         }
     }
 }
