@@ -70,8 +70,8 @@ class Updater extends \common_ext_ExtensionUpdater
         if ($this->isVersion('3.4.1')){
 
             //register test runner feature service
-            $registerService = new RegisterTestRunnerFeatureService();
-            $registerService([]);
+            //$registerService = new RegisterTestRunnerFeatureService();
+            //$registerService([]);
 
             $this->setVersion('3.5.0');
         }
@@ -125,5 +125,7 @@ class Updater extends \common_ext_ExtensionUpdater
             $this->getServiceManager()->register(TestRunnerFeatureService::SERVICE_ID, $featureService);
             $this->setVersion('7.7.0');
         }
+
+        $this->skip('7.7.0', '7.7.1');
     }
 }
