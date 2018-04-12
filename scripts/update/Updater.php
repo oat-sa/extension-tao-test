@@ -127,5 +127,15 @@ class Updater extends \common_ext_ExtensionUpdater
         }
 
         $this->skip('7.7.0', '7.7.1');
+
+        if ($this->isVersion('7.7.1')) {
+            if (!$this->getServiceManager()->has(TestRunnerFeatureService::SERVICE_ID)) {
+                $featureService = new TestRunnerFeatureService([
+                    TestRunnerFeatureService::OPTION_AVAILABLE => []
+                ]);
+                $this->getServiceManager()->register(TestRunnerFeatureService::SERVICE_ID, $featureService);
+            }
+            $this->setVersion('7.7.2');
+        }
     }
 }
