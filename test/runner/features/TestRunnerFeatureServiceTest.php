@@ -92,9 +92,18 @@ class TestRunnerFeatureServiceTest extends TaoPhpUnitTestRunner
             $this->getTestPluginService()->getAllPlugins()
         );
 
+        $feature3 = new TestFeature(
+            'myId3',
+            ['title', 'timer'],
+            false,
+            $this->getTestPluginService()->getAllPlugins(),
+            false
+        );
+
         $testRunnerFeatureService = new TestRunnerFeatureService();
         $testRunnerFeatureService->register($feature1);
         $testRunnerFeatureService->register($feature2);
+        $testRunnerFeatureService->register($feature3);
 
         $registeredFeatures = $testRunnerFeatureService->getAll();
 

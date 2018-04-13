@@ -180,14 +180,15 @@ class TestProviderTest extends TaoPhpUnitTestRunner
      */
     public function testJsonSerialize()
     {
-        $expected = '{"id":"bar","module":"bar\/bar","bundle":"providers\/bundle.min","name":"Bar","description":"The best bar ever","category":"dummy","active":false,"tags":["dummy","goofy"]}';
+        $expected = '{"id":"bar","module":"bar\/bar","bundle":"providers\/bundle.min","position":1,"name":"Bar","description":"The best bar ever","category":"dummy","active":false,"tags":["dummy","goofy"]}';
 
         $testProvider = new TestProvider('bar', 'bar/bar', 'dummy', [
             'name' => 'Bar',
             'description' => 'The best bar ever',
             'active' => false,
             'bundle' => 'providers/bundle.min',
-            'tags' => ['dummy', 'goofy']
+            'tags' => ['dummy', 'goofy'],
+            'position' => 1,
         ]);
 
         $serialized = json_encode($testProvider);

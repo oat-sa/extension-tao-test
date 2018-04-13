@@ -86,12 +86,17 @@ class TestRunnerFeatureService extends ConfigurableService implements LoggerAwar
      */
     public function getAll()
     {
-        $option = $this->getOption(self::OPTION_AVAILABLE);
-        foreach ($option as $feature) {
+        $result = [];
+        /** @var TestRunnerFeatureInterface[] $features */
+        $features = $this->getOption(self::OPTION_AVAILABLE);
+        foreach ($features as $id => $feature) {
             if ($feature instanceof ServiceLocatorAwareInterface) {
                 $feature->setServiceLocator($this->getServiceLocator());
             }
+            if ($feature->isActive()) {
+                $result[$id] = $feature;
+            }
         }
-        return empty($option) ? [] : $option;
+        return $result;
     }
 }

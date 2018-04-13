@@ -20,7 +20,6 @@
 
 namespace oat\taoTests\models\runner\features;
 
-use oat\oatbox\PhpSerializable;
 use oat\taoTests\models\runner\plugins\TestPlugin;
 use Psr\Log\LoggerAwareInterface;
 use oat\oatbox\log\LoggerAwareTrait;
@@ -32,7 +31,7 @@ use oat\oatbox\log\LoggerAwareTrait;
  * @author Christophe Noël <christophe@taotesting.com>
  */
 
-abstract class TestRunnerFeature implements PhpSerializable, LoggerAwareInterface
+abstract class TestRunnerFeature implements TestRunnerFeatureInterface, LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
@@ -54,7 +53,12 @@ abstract class TestRunnerFeature implements PhpSerializable, LoggerAwareInterfac
     /**
      * @var TestPlugin[] Used to check the existence of plugins Ids
      */
-    private $allPlugins;
+    protected $allPlugins;
+
+    /**
+     * @var boolean
+     */
+    protected $active;
 
     /**
      * @param string        $id
@@ -67,7 +71,8 @@ abstract class TestRunnerFeature implements PhpSerializable, LoggerAwareInterfac
         $id,
         $pluginsIds,
         $isEnabledByDefault,
-        $allPlugins)
+        $allPlugins,
+        $active = true)
     {
         if(! is_string($id) || empty($id)) {
             throw new \common_exception_InconsistentData('id should be a valid string');
@@ -89,6 +94,7 @@ abstract class TestRunnerFeature implements PhpSerializable, LoggerAwareInterfac
         $this->pluginsIds = $pluginsIds;
         $this->isEnabledByDefault = $isEnabledByDefault;
         $this->allPlugins = $allPlugins;
+        $this->active = $active;
 
         $this->checkPluginsIds();
 
@@ -151,10 +157,27 @@ abstract class TestRunnerFeature implements PhpSerializable, LoggerAwareInterfac
     }
 
     /**
+     * Is feature activated
+     * @return boolean
+     */
+    public function isActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param boolean $active
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+    }
+
+    /**
      * User-friendly localized label for the feature
      * @return string
      */
-    abstract function getLabel();
+    abstract public function getLabel();
 
     /**
      * User-friendly localized description for the feature
@@ -170,5 +193,4 @@ abstract class TestRunnerFeature implements PhpSerializable, LoggerAwareInterfac
     {
         return 'new '.get_class($this).'()';
     }
-
 }
