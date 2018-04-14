@@ -21,9 +21,7 @@
 namespace oat\taoTests\test\runner\features;
 
 use oat\tao\test\TaoPhpUnitTestRunner;
-use Prophecy\Prophet;
 use oat\taoTests\models\runner\features\ManageableFeature;
-use oat\taoTests\models\runner\features\TestRunnerFeatureService;
 
 class ManageableFeatureTest extends TaoPhpUnitTestRunner
 {
@@ -84,7 +82,7 @@ class ManageableFeatureTest extends TaoPhpUnitTestRunner
     {
         $feature = new ManageableFeature($this->defaultData);
         $code = $feature->__toPhpCode();
-        eval('$unserializedFeature ='.$code);
+        eval('$unserializedFeature ='.$code.';');
         $this->assertEquals($feature, $unserializedFeature);
     }
 
