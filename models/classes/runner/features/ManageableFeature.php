@@ -20,19 +20,17 @@
 
 namespace oat\taoTests\models\runner\features;
 
-use oat\taoTests\models\runner\plugins\TestPluginService;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
-
 /**
  * Class ManageableFeature
+ *
+ * NOTE: Feature configuration stored in the config file and changing of it's configuration using interface requires
+ *       synchronization of configs in case of multi server configuration.
+ *
  * @package oat\taoTests\models\runner\features
  * @author Aleh Hutnikau, <hutnikau@1pt.com>
  */
-class ManageableFeature extends TestRunnerFeature implements ServiceLocatorAwareInterface
+class ManageableFeature extends TestRunnerFeature
 {
-
-    use ServiceLocatorAwareTrait;
 
     /** @var string */
     protected $label;

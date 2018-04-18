@@ -104,6 +104,7 @@ class TestRunnerFeatureServiceTest extends TaoPhpUnitTestRunner
         $testRunnerFeatureService->register($feature1);
         $testRunnerFeatureService->register($feature2);
         $testRunnerFeatureService->register($feature3);
+        $testRunnerFeatureService->setServiceLocator($this->getServiceManagerProphecy());
 
         $registeredFeatures = $testRunnerFeatureService->getAll();
 
@@ -152,6 +153,7 @@ class TestRunnerFeatureServiceTest extends TaoPhpUnitTestRunner
         $testRunnerFeatureService = new TestRunnerFeatureService();
         $testRunnerFeatureService->register($feature1);
         $testRunnerFeatureService->register($feature2);
+        $testRunnerFeatureService->setServiceLocator($this->getServiceManagerProphecy());
 
         $registeredFeatures = $testRunnerFeatureService->getAll();
 
@@ -182,4 +184,3 @@ class TestRunnerFeatureServiceTest extends TaoPhpUnitTestRunner
         $this->assertTrue($testLogger->has(LogLevel::WARNING, 'Cannot unregister inexistant feature idontexist'));
     }
 }
-

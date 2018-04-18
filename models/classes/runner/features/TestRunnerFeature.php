@@ -23,6 +23,8 @@ namespace oat\taoTests\models\runner\features;
 use oat\taoTests\models\runner\plugins\TestPlugin;
 use Psr\Log\LoggerAwareInterface;
 use oat\oatbox\log\LoggerAwareTrait;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
 /**
  * A test runner feature is a user feature that can be expressed by one or more test runner plugins.
@@ -31,9 +33,10 @@ use oat\oatbox\log\LoggerAwareTrait;
  * @author Christophe Noël <christophe@taotesting.com>
  */
 
-abstract class TestRunnerFeature implements TestRunnerFeatureInterface, LoggerAwareInterface
+abstract class TestRunnerFeature implements TestRunnerFeatureInterface, LoggerAwareInterface, ServiceLocatorAwareInterface
 {
     use LoggerAwareTrait;
+    use ServiceLocatorAwareTrait;
 
     /**
      * @var string
@@ -172,18 +175,6 @@ abstract class TestRunnerFeature implements TestRunnerFeatureInterface, LoggerAw
     {
         $this->active = $active;
     }
-
-    /**
-     * User-friendly localized label for the feature
-     * @return string
-     */
-    abstract public function getLabel();
-
-    /**
-     * User-friendly localized description for the feature
-     * @return mixed
-     */
-    abstract public function getDescription();
 
     /**
      * (non-PHPdoc)

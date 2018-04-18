@@ -69,10 +69,4 @@ interface TestRunnerFeatureInterface extends PhpSerializable
      * @param boolean $active
      */
     public function setActive($active);
-
-    /**
-     * (non-PHPdoc)
-     * @see \oat\oatbox\PhpSerializable::__toPhpCode()
-     */
-    public function __toPhpCode();
 }
