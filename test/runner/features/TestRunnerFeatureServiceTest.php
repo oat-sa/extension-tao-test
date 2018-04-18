@@ -111,6 +111,9 @@ class TestRunnerFeatureServiceTest extends TaoPhpUnitTestRunner
         $this->assertEquals(2, count($registeredFeatures));
         $this->assertEquals('myId1', $registeredFeatures['myId1']->getId());
         $this->assertEquals('myId2', $registeredFeatures['myId2']->getId());
+
+        $registeredFeatures = $testRunnerFeatureService->getAll(false);
+        $this->assertEquals(3, count($registeredFeatures));
     }
 
     /**
