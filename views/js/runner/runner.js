@@ -755,9 +755,16 @@ define([
             }
         });
 
-        runner.on('move', function move(type){
-            this.trigger.apply(this, [type].concat([].slice.call(arguments, 1)));
-        });
+        runner
+            .on('move', function move(type){
+                this.trigger.apply(this, [type].concat([].slice.call(arguments, 1)));
+            })
+            .after('destroy', function destroyCleanUp(){
+                areaBroker = null;
+                proxy = null;
+                probeOverseer = null;
+                testStore = null;
+            });
 
         return runner;
     }
