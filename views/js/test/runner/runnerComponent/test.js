@@ -23,8 +23,10 @@ define([
     'lodash',
     'core/promise',
     'taoTests/runner/runner',
-    'taoTests/runner/runnerComponent'
-], function ($, _, Promise, runnerFactory, runnerComponentFactory) {
+    'taoTests/runner/runnerComponent',
+    'taoTests/test/runner/runnerComponent/mockProvider',
+    'taoTests/test/runner/runnerComponent/mockPlugin'
+], function ($, _, Promise, runnerFactory, runnerComponentFactory, mockProvider, mockPlugin) {
     'use strict';
 
     QUnit.module('factory');
@@ -118,6 +120,70 @@ define([
         assert.throws(function () {
             runnerComponentFactory();
         }, 'An error should be thrown if the provider is not set');
+    });
+
+
+    QUnit.asyncTest('preloaded providers', function (assert) {
+        var $container = $("#fixture-providers");
+
+        QUnit.expect(3);
+        QUnit.stop(1);
+
+        runnerComponentFactory($container, {
+            provider: 'mock',
+            loadedProviders: {
+                mock: [
+                    mockProvider
+                ]
+            }
+        })
+            .on('ready', function (runner) {
+                assert.ok(true, 'The runner is ready');
+                assert.equal(typeof runner, 'object', 'The runner instance is provided');
+                runner.on('mock-provider-loaded', function () {
+                    assert.ok(true, 'The right provider has been loaded');
+                    QUnit.start();
+                });
+
+                QUnit.start();
+            });
+    });
+
+
+    QUnit.asyncTest('preloaded plugins', function (assert) {
+        var $container = $("#fixture-plugins");
+
+        QUnit.expect(5);
+        QUnit.stop(1);
+
+        runnerFactory.registerProvider('bar', {
+            loadAreaBroker: _.noop,
+            init: function () {
+                assert.ok(true, 'The init method has been called');
+            },
+            render: function () {
+                assert.ok(true, 'The render method has been called');
+            }
+        });
+
+        runnerComponentFactory($container, {
+            provider: 'bar',
+            loadedPlugins: {
+                mock: [
+                    mockPlugin
+                ]
+            }
+        })
+            .on('ready', function (runner) {
+                assert.ok(true, 'The runner is ready');
+                assert.equal(typeof runner, 'object', 'The runner instance is provided');
+                runner.on('plugin-loaded.mock', function () {
+                    assert.ok(true, 'The right plugin has been loaded');
+                    QUnit.start();
+                });
+
+                QUnit.start();
+            });
     });
 
 

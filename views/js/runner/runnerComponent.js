@@ -52,10 +52,11 @@ define([
      * Loads the modules dynamically
      * @param {Function} loader - the loader factory
      * @param {Object[]} modules - the collection of modules to load
+     * @param {Object} preloaded - the collection of preloaded modules
      * @returns {Promise} resolves with the list of loaded modules
      */
-    function loadModules(loader, modules) {
-        return loader()
+    function loadModules(loader, modules, preloaded) {
+        return loader(preloaded)
             .addList(modules)
             .load(context.bundle);
     }
@@ -78,6 +79,8 @@ define([
      * @param {String}   config.provider - The provider to use
      * @param {Object[]} [config.plugins] - A collection of plugins to load
      * @param {Object[]} [config.providers] - A collection of providers to load
+     * @param {Object} [config.loadedPlugins] - A collection of preloaded plugins, where the key is the category and the value are an array of loaded modules
+     * @param {Object} [config.loadedProviders] - A collection of preloaded providers, where the key is the category and the value are an array of loaded modules
      * @param {Boolean} [config.replace] - When the component is appended to its container, clears the place before
      * @param {Number|String} [config.width] - The width in pixels, or 'auto' to use the container's width
      * @param {Number|String} [config.height] - The height in pixels, or 'auto' to use the container's height
@@ -125,16 +128,16 @@ define([
                 var plugins = [];
                 var initPromises = [];
 
-                if (self.getOption('providers')) {
+                if (self.getOption('providers') || self.getOption('loadedProviders')) {
                     initPromises.push(
-                        loadModules(providerLoaderFactory, self.getOption('providers'))
+                        loadModules(providerLoaderFactory, self.getOption('providers'), self.getOption('loadedProviders'))
                             .then(registerProviders)
                     );
                 }
 
-                if (self.getOption('plugins')) {
+                if (self.getOption('plugins') || self.getOption('loadedPlugins')) {
                     initPromises.push(
-                        loadModules(pluginLoaderFactory, self.getOption('plugins'))
+                        loadModules(pluginLoaderFactory, self.getOption('plugins'), self.getOption('loadedPlugins'))
                             .then(function (loadedPlugins) {
                                 plugins = loadedPlugins;
                             })
