@@ -81,8 +81,10 @@ class ManageableFeatureTest extends TaoPhpUnitTestRunner
     public function testToPhpCode()
     {
         $feature = new ManageableFeature($this->defaultData);
+        $feature->setServiceLocator($this->getServiceManagerProphecy());
         $code = $feature->__toPhpCode();
         eval('$unserializedFeature ='.$code.';');
+        $unserializedFeature->setServiceLocator($this->getServiceManagerProphecy());
         $this->assertEquals($feature, $unserializedFeature);
     }
 
