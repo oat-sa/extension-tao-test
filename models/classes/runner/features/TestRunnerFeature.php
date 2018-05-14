@@ -99,8 +99,6 @@ abstract class TestRunnerFeature implements TestRunnerFeatureInterface, LoggerAw
         $this->allPlugins = $allPlugins;
         $this->active = $active;
 
-        $this->checkPluginsIds();
-
         // also check that abstract methods have been implemented correctly
         if(! is_string($this->getLabel()) || empty($this->getLabel())) {
             throw new \common_exception_InconsistentData('The test runner feature needs a label');
@@ -145,9 +143,11 @@ abstract class TestRunnerFeature implements TestRunnerFeatureInterface, LoggerAw
 
     /**
      * @return string[]
+     * @throws \common_exception_InconsistentData
      */
     public function getPluginsIds()
     {
+        $this->checkPluginsIds();
         return $this->pluginsIds;
     }
 
