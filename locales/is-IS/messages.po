@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.1.0-sprint15\n"
-"PO-Revision-Date: 2015-12-23T13:38:13\n"
+"Project-Id-Version: TAO 3.3.0-sprint76\n"
+"PO-Revision-Date: 2018-05-14T15:17:37\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: is-IS\n"
@@ -22,6 +22,10 @@ msgid "Combine a selection of items into tests."
 msgstr "Sameina safn atriða í próf."
 
 #, tao-public
+msgid "Copy To"
+msgstr ""
+
+#, tao-public
 msgid "Delete"
 msgstr "Eyða"
 
@@ -34,12 +38,15 @@ msgid "Export"
 msgstr "Flytja út"
 
 #, tao-public
-msgid "Filter"
-msgstr "Sía"
-
-#, tao-public
 msgid "Import"
 msgstr "Flytja inn"
+
+msgid "Last updated on %2s"
+msgstr ""
+
+#, tao-public
+msgid "Manage Schema"
+msgstr ""
 
 #, tao-public
 msgid "Manage tests"
@@ -61,9 +68,11 @@ msgstr "Nýtt próf"
 msgid "Properties"
 msgstr "Stillingar"
 
-#, tao-public
-msgid "Search"
-msgstr "Leita"
+msgid "Security plugins"
+msgstr ""
+
+msgid "Set of plugins with \'security\' category"
+msgstr ""
 
 msgid "Test properties"
 msgstr "Prófstillingar"

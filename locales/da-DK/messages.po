@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.1.0-sprint15\n"
-"PO-Revision-Date: 2015-12-23T13:38:13\n"
+"Project-Id-Version: TAO 3.3.0-sprint76\n"
+"PO-Revision-Date: 2018-05-14T15:17:27\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: da-DK\n"
@@ -22,6 +22,10 @@ msgid "Combine a selection of items into tests."
 msgstr "Kombinerer et udvalg af items til tests."
 
 #, tao-public
+msgid "Copy To"
+msgstr ""
+
+#, tao-public
 msgid "Delete"
 msgstr "Slet"
 
@@ -34,12 +38,15 @@ msgid "Export"
 msgstr "Eksport"
 
 #, tao-public
-msgid "Filter"
+msgid "Import"
+msgstr "Importere"
+
+msgid "Last updated on %2s"
 msgstr ""
 
 #, tao-public
-msgid "Import"
-msgstr "Importere"
+msgid "Manage Schema"
+msgstr ""
 
 #, tao-public
 msgid "Manage tests"
@@ -61,8 +68,10 @@ msgstr "Ny klasse"
 msgid "Properties"
 msgstr ""
 
-#, tao-public
-msgid "Search"
+msgid "Security plugins"
+msgstr ""
+
+msgid "Set of plugins with \'security\' category"
 msgstr ""
 
 msgid "Test properties"
