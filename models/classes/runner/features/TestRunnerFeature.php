@@ -117,7 +117,7 @@ abstract class TestRunnerFeature implements TestRunnerFeatureInterface, LoggerAw
         $allPluginIds = [];
         $inactivePluginsIds = [];
 
-        foreach ($this->allPlugins as $plugin) {
+        foreach ($this->getAllPlugins() as $plugin) {
             $allPluginIds[] = $plugin->getId();
             if ($plugin->isActive() === false) {
                 $inactivePluginsIds[] = $plugin->getId();
@@ -174,6 +174,14 @@ abstract class TestRunnerFeature implements TestRunnerFeatureInterface, LoggerAw
     public function setActive($active)
     {
         $this->active = $active;
+    }
+
+    /**
+     * @return TestPlugin[]
+     */
+    protected function getAllPlugins()
+    {
+        return $this->allPlugins;
     }
 
     /**

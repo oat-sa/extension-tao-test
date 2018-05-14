@@ -20,6 +20,9 @@
 
 namespace oat\taoTests\models\runner\features;
 
+use oat\taoTests\models\runner\plugins\TestPluginService;
+use oat\taoTests\models\runner\plugins\TestPlugin;
+
 /**
  * Class ManageableFeature
  *
@@ -85,6 +88,15 @@ class ManageableFeature extends TestRunnerFeature
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * @return TestPlugin[]
+     */
+    protected function getAllPlugins()
+    {
+        $pluginService = $this->getServiceLocator()->get(TestPluginService::SERVICE_ID);
+        return $pluginService->getAllPlugins();
     }
 
     /**
