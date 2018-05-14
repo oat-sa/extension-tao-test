@@ -130,28 +130,28 @@ class TestRunnerFeatureTest extends TaoPhpUnitTestRunner
     public function testConstructPluginsIdNotInRegistry()
     {
         $testLogger = new TestLogger();
-        new TestFeatureWithCustomLogger(
+        $feature = new TestFeatureWithCustomLogger(
             'myId',
             ['iDontExist'],
             true,
             $this->getTestPluginService()->getAllPlugins(),
             $testLogger
         );
-
+        $feature->getPluginsIds();
         $this->assertTrue($testLogger->has(LogLevel::WARNING, 'Invalid plugin Id iDontExist for test runner feature myId'));
     }
 
     public function testConstructPluginsInactive()
     {
         $testLogger = new TestLogger();
-        new TestFeatureWithCustomLogger(
+        $feature = new TestFeatureWithCustomLogger(
             'myId',
             ['inactive'],
             true,
             $this->getTestPluginService()->getAllPlugins(),
             $testLogger
         );
-
+        $feature->getPluginsIds();
         $this->assertTrue($testLogger->has(LogLevel::WARNING, 'Cannot include inactive plugin inactive in test runner feature myId'));
     }
 
