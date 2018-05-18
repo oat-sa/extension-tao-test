@@ -20,10 +20,11 @@
 
 namespace oat\taoTests\models\runner\features;
 
-use oat\oatbox\PhpSerializable;
 use oat\taoTests\models\runner\plugins\TestPlugin;
 use Psr\Log\LoggerAwareInterface;
 use oat\oatbox\log\LoggerAwareTrait;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
 /**
  * A test runner feature is a user feature that can be expressed by one or more test runner plugins.
@@ -32,9 +33,10 @@ use oat\oatbox\log\LoggerAwareTrait;
  * @author Christophe Noël <christophe@taotesting.com>
  */
 
-abstract class TestRunnerFeature implements PhpSerializable, LoggerAwareInterface
+abstract class TestRunnerFeature implements TestRunnerFeatureInterface, LoggerAwareInterface, ServiceLocatorAwareInterface
 {
     use LoggerAwareTrait;
+    use ServiceLocatorAwareTrait;
 
     /**
      * @var string
@@ -54,7 +56,12 @@ abstract class TestRunnerFeature implements PhpSerializable, LoggerAwareInterfac
     /**
      * @var TestPlugin[] Used to check the existence of plugins Ids
      */
-    private $allPlugins;
+    protected $allPlugins;
+
+    /**
+     * @var boolean
+     */
+    protected $active;
 
     /**
      * @param string        $id
@@ -67,7 +74,8 @@ abstract class TestRunnerFeature implements PhpSerializable, LoggerAwareInterfac
         $id,
         $pluginsIds,
         $isEnabledByDefault,
-        $allPlugins)
+        $allPlugins,
+        $active = true)
     {
         if(! is_string($id) || empty($id)) {
             throw new \common_exception_InconsistentData('id should be a valid string');
@@ -89,8 +97,7 @@ abstract class TestRunnerFeature implements PhpSerializable, LoggerAwareInterfac
         $this->pluginsIds = $pluginsIds;
         $this->isEnabledByDefault = $isEnabledByDefault;
         $this->allPlugins = $allPlugins;
-
-        $this->checkPluginsIds();
+        $this->active = $active;
 
         // also check that abstract methods have been implemented correctly
         if(! is_string($this->getLabel()) || empty($this->getLabel())) {
@@ -110,7 +117,7 @@ abstract class TestRunnerFeature implements PhpSerializable, LoggerAwareInterfac
         $allPluginIds = [];
         $inactivePluginsIds = [];
 
-        foreach ($this->allPlugins as $plugin) {
+        foreach ($this->getAllPlugins() as $plugin) {
             $allPluginIds[] = $plugin->getId();
             if ($plugin->isActive() === false) {
                 $inactivePluginsIds[] = $plugin->getId();
@@ -136,9 +143,11 @@ abstract class TestRunnerFeature implements PhpSerializable, LoggerAwareInterfac
 
     /**
      * @return string[]
+     * @throws \common_exception_InconsistentData
      */
     public function getPluginsIds()
     {
+        $this->checkPluginsIds();
         return $this->pluginsIds;
     }
 
@@ -151,16 +160,29 @@ abstract class TestRunnerFeature implements PhpSerializable, LoggerAwareInterfac
     }
 
     /**
-     * User-friendly localized label for the feature
-     * @return string
+     * Is feature activated
+     * @return boolean
      */
-    abstract function getLabel();
+    public function isActive()
+    {
+        return $this->active;
+    }
 
     /**
-     * User-friendly localized description for the feature
-     * @return mixed
+     * @param boolean $active
      */
-    abstract public function getDescription();
+    public function setActive($active)
+    {
+        $this->active = $active;
+    }
+
+    /**
+     * @return TestPlugin[]
+     */
+    protected function getAllPlugins()
+    {
+        return $this->allPlugins;
+    }
 
     /**
      * (non-PHPdoc)
@@ -170,5 +192,4 @@ abstract class TestRunnerFeature implements PhpSerializable, LoggerAwareInterfac
     {
         return 'new '.get_class($this).'()';
     }
-
 }

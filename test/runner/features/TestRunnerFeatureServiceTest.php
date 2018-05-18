@@ -92,15 +92,28 @@ class TestRunnerFeatureServiceTest extends TaoPhpUnitTestRunner
             $this->getTestPluginService()->getAllPlugins()
         );
 
+        $feature3 = new TestFeature(
+            'myId3',
+            ['title', 'timer'],
+            false,
+            $this->getTestPluginService()->getAllPlugins(),
+            false
+        );
+
         $testRunnerFeatureService = new TestRunnerFeatureService();
         $testRunnerFeatureService->register($feature1);
         $testRunnerFeatureService->register($feature2);
+        $testRunnerFeatureService->register($feature3);
+        $testRunnerFeatureService->setServiceLocator($this->getServiceManagerProphecy());
 
         $registeredFeatures = $testRunnerFeatureService->getAll();
 
         $this->assertEquals(2, count($registeredFeatures));
         $this->assertEquals('myId1', $registeredFeatures['myId1']->getId());
         $this->assertEquals('myId2', $registeredFeatures['myId2']->getId());
+
+        $registeredFeatures = $testRunnerFeatureService->getAll(false);
+        $this->assertEquals(3, count($registeredFeatures));
     }
 
     /**
@@ -143,6 +156,7 @@ class TestRunnerFeatureServiceTest extends TaoPhpUnitTestRunner
         $testRunnerFeatureService = new TestRunnerFeatureService();
         $testRunnerFeatureService->register($feature1);
         $testRunnerFeatureService->register($feature2);
+        $testRunnerFeatureService->setServiceLocator($this->getServiceManagerProphecy());
 
         $registeredFeatures = $testRunnerFeatureService->getAll();
 
@@ -173,4 +187,3 @@ class TestRunnerFeatureServiceTest extends TaoPhpUnitTestRunner
         $this->assertTrue($testLogger->has(LogLevel::WARNING, 'Cannot unregister inexistant feature idontexist'));
     }
 }
-
