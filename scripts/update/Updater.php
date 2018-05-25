@@ -144,6 +144,6 @@ class Updater extends \common_ext_ExtensionUpdater
             $this->setVersion('7.7.2');
         }
 
-        $this->skip('7.7.2', '7.7.3');
+        $this->skip('7.7.2', '7.8.0');
     }
 }
