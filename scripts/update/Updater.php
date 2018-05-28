@@ -144,6 +144,18 @@ class Updater extends \common_ext_ExtensionUpdater
             $this->setVersion('7.7.2');
         }
 
-        $this->skip('7.7.2', '7.8.0');
+        $this->skip('7.7.2', '7.7.3');
+
+        if ($this->isVersion('7.7.3')) {
+            $featureService = $this->getServiceManager()->get(TestRunnerFeatureService::class);
+            $features = $featureService->getAll(false);
+            if (isset($features[SecurityFeature::FEATURE_ID]) && get_class($features[SecurityFeature::FEATURE_ID]) === SecurityFeature::class) {
+                $featureService->unregister(SecurityFeature::FEATURE_ID);
+                $this->getServiceManager()->register(TestRunnerFeatureService::SERVICE_ID, $featureService);
+            }
+            $this->setVersion('7.8.0');
+        }
+        
+        $this->skip('7.8.0', '7.9.0');
     }
 }

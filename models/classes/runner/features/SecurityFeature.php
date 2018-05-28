@@ -28,6 +28,7 @@ use Zend\ServiceManager\ServiceLocatorAwareTrait;
  * Class SecurityFeature
  * @package oat\taoTests\models\runner\features
  * @author Aleh Hutnikau, <hutnikau@1pt.com>
+ * @deprecated
  */
 class SecurityFeature extends TestRunnerFeature implements ServiceLocatorAwareInterface
 {
