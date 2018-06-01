@@ -73,7 +73,7 @@ define([
 
     /**
      * Wraps a test runner into a component
-     * @param {jQuery|HTMLElement|String} [container] - The container in which renders the component
+     * @param {jQuery|HTMLElement|String} container - The container in which renders the component
      * @param {Object}   config - The testRunner options
      * @param {String}   config.provider - The provider to use
      * @param {Object[]} [config.plugins] - A collection of plugins to load
