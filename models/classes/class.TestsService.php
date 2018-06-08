@@ -25,6 +25,8 @@ use oat\taoTests\models\event\TestCreatedEvent;
 use oat\taoTests\models\event\TestDuplicatedEvent;
 use oat\taoTests\models\event\TestRemovedEvent;
 use oat\generis\model\fileReference\FileReferenceSerializer;
+use oat\tao\model\service\ServiceFileStorage;
+use oat\taoTests\models\TestModel;
 
 /**
  * Service methods to manage the Tests business models using the RDF API.
@@ -57,7 +59,7 @@ class taoTests_models_classes_TestsService
      * The RDFS top level test class
      *
      * @access protected
-     * @var Class
+     * @var core_kernel_classes_Class
      */
     protected $testClass = null;
 
@@ -68,19 +70,11 @@ class taoTests_models_classes_TestsService
      *
      * @access public
      * @author Joel Bout, <joel.bout@tudor.lu>
-     * @return core_view_classes_
      */
     protected function __construct()
     {
-        $returnValue = null;
-
-
 		parent::__construct();
-
 		$this->testClass = new core_kernel_classes_Class(TaoOntology::CLASS_URI_TEST );
-
-
-        return $returnValue;
     }
 
     /**
@@ -333,7 +327,7 @@ class taoTests_models_classes_TestsService
      * @param core_kernel_classes_Resource $testModel
      */
     public function setTestModel(core_kernel_classes_Resource $test, core_kernel_classes_Resource $testModel) {
-		$current = $this->getTestModel($test);
+        $current = $test->getOnePropertyValue($this->getProperty(self::PROPERTY_TEST_TESTMODEL));
 		// did the model change?
 		if (is_null($current) || !$current->equals($testModel)) {
 			$items = array();
@@ -344,7 +338,7 @@ class taoTests_models_classes_TestsService
 					$former->deleteContent($test);
 				}	
 			}
-			$test->editPropertyValues(new core_kernel_classes_Property(self::PROPERTY_TEST_TESTMODEL), $testModel);
+			$test->editPropertyValues($this->getProperty(self::PROPERTY_TEST_TESTMODEL), $testModel);
 			$newImpl = $this->getTestModelImplementation($testModel);
 			if (!empty($newImpl)) {
 				$newImpl->prepareContent($test, $items);
@@ -352,11 +346,26 @@ class taoTests_models_classes_TestsService
 		}
     }
 
+    /**
+     * Returns a compiler instance for a given test
+     * @param core_kernel_classes_Resource $test
+     * @param ServiceFileStorage $storage
+     * @return tao_models_classes_Compiler
+     */
+    public function getCompiler(core_kernel_classes_Resource $test, ServiceFileStorage $storage) {
+        $testModel = $this->getTestModelImplementation($this->getTestModel($test));
+        if ($testModel instanceof TestModel) {
+            $compiler = $testModel->getCompiler($test, $storage);
+        } else {
+            $testCompilerClass = $testModel->getCompilerClass();
+            $compiler = new $testCompilerClass($test, $storage);
+            $compiler->setServiceLocator($storage->getServiceLocator());
+        }
+        return $compiler;
+    }
+
     public function getCompilerClass(core_kernel_classes_Resource $test) {
         $testModel = $this->getTestModel($test);
-        if (is_null($testModel)) {
-            throw new common_exception_Error('undefined testmodel for test '.$test->getUri());
-        }
         return $this->getTestModelImplementation($testModel)->getCompilerClass();
     }
     
@@ -364,11 +373,14 @@ class taoTests_models_classes_TestsService
      * Returns the model of the current test
      * 
      * @param core_kernel_classes_Resource $test
-     * @return core_kernel_classes_Container
+     * @return core_kernel_classes_Resource
      */
     public function getTestModel(core_kernel_classes_Resource $test) {
 		$testModel = $test->getOnePropertyValue(new core_kernel_classes_Property(self::PROPERTY_TEST_TESTMODEL));
-		return $testModel instanceof core_kernel_classes_Resource ? $testModel : null;
+		if (is_null($testModel)) {
+		    throw new common_exception_Error('undefined testmodel for test '.$test->getUri());
+		}
+		return $testModel;
     }
 
     /**
