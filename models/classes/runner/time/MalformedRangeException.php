@@ -31,7 +31,7 @@ namespace oat\taoTests\models\runner\time;
  */
 class MalformedRangeException extends TimeException
 {
-    public function __construct($message = null, $code = 0, Exception $previous = null)
+    public function __construct($message = null, $code = 0, \Exception $previous = null)
     {
         if (!$message) {
             $message = 'A time range must be defined by a START and a END TimePoint!';
