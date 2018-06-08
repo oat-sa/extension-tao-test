@@ -17,17 +17,14 @@
  * Copyright (c) 2002-2008 (original work) Public Research Centre Henri Tudor & University of Luxembourg (under the project TAO & TAO2);
  *               2008-2010 (update and modification) Deutsche Institut für Internationale Pädagogische Forschung (under the project TAO-TRANSFER);
  *               2009-2012 (update and modification) Public Research Centre Henri Tudor (under the project TAO-SUSTAIN & TAO-DEV);
- *
+ *               2013-     (update and modification) Open Assessment Technologies SA;
  */
-?>
-<?php
 /*
  * @author CRP Henri Tudor - TAO Team - {@link http://www.tao.lu}
  * @license GPLv2  http://www.opensource.org/licenses/gpl-2.0.php
  *
  */
-$extpath = dirname(__FILE__).DIRECTORY_SEPARATOR;
-$taopath = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'tao'.DIRECTORY_SEPARATOR;
+$extpath = __DIR__.DIRECTORY_SEPARATOR;
 
 return array(
     'name' => 'taoTests',
@@ -47,7 +44,7 @@ return array(
     ),
 	'install' => array(
 		'rdf' => array(
-				dirname(__FILE__). '/models/ontology/taotest.rdf'
+            __DIR__. '/models/ontology/taotest.rdf'
 		),
             'php' => [
                 'oat\\taoTests\\scripts\\install\\RegisterTestPluginService',
