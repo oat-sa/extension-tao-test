@@ -60,7 +60,7 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
 	/**
 	 * Test the user service implementation
 	 * @see \tao_models_classes_ServiceFactory::get
-	 * @see taoTests_models_classes_TestsService::__construct
+	 * @see \taoTests_models_classes_TestsService::__construct
 	 */
 	public function testService(){
 		
