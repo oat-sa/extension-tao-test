@@ -21,7 +21,6 @@
  */
 namespace oat\taoTests\test;
 
-use oat;
 use oat\generis\model\OntologyRdfs;
 use oat\tao\model\TaoOntology;
 use oat\tao\test\TaoPhpUnitTestRunner;
@@ -30,7 +29,6 @@ use \taoTests_models_classes_TestsService;
 use \core_kernel_classes_Class;
 use \core_kernel_classes_Resource;
 use \core_kernel_classes_Property;
-use Prophecy\Prophet;
 use taoTests_models_classes_TestsService as TestService;
 
 
@@ -61,8 +59,8 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
 
 	/**
 	 * Test the user service implementation
-	 * @see tao_models_classes_ServiceFactory::get
-	 * @see taoTests_models_classes_TestsService::__construct
+	 * @see \tao_models_classes_ServiceFactory::get
+	 * @see \taoTests_models_classes_TestsService::__construct
 	 */
 	public function testService(){
 		
