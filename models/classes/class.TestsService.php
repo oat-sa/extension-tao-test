@@ -27,6 +27,7 @@ use oat\taoTests\models\event\TestRemovedEvent;
 use oat\generis\model\fileReference\FileReferenceSerializer;
 use oat\tao\model\service\ServiceFileStorage;
 use oat\taoTests\models\TestModel;
+use oat\taoTests\models\MissingTestmodelException;
 
 /**
  * Service methods to manage the Tests business models using the RDF API.
@@ -88,22 +89,18 @@ class taoTests_models_classes_TestsService
     public function deleteTest( core_kernel_classes_Resource $test)
     {
         $returnValue = (bool) false;
-
-
-		if(!is_null($test)){
-			//delete the associated process:
-			$model = $this->getTestModel($test);
-			if (!is_null($model)) {
-				$impl = $this->getTestModelImplementation($model);
-				$impl->deleteContent($test);
-			}
-
-			$returnValue = $test->delete();
+        if(!is_null($test)){
+            try {
+		        //delete the associated content
+                $model = $this->getTestModel($test);
+                $impl = $this->getTestModelImplementation($model);
+                $impl->deleteContent($test);
+            } catch (MissingTestmodelException $e) {
+                // no content present, skip
+            }
+            $returnValue = $test->delete();
             $this->getEventManager()->trigger(new TestRemovedEvent($test->getUri()));
-		}
-
-
-
+        }
         return (bool) $returnValue;
     }
 
@@ -310,12 +307,12 @@ class taoTests_models_classes_TestsService
      */
     public function getTestItems( core_kernel_classes_Resource $test)
     {
-    	$returnValue = array();
-    	$model = $this->getTestModel($test);
-    	if (!is_null($model) && $model instanceof core_kernel_classes_Resource) {
-    		$returnValue = $this->getTestModelImplementation($model)->getItems($test);
-    	}
-
+        try {
+            $model = $this->getTestModel($test);
+            $returnValue = $this->getTestModelImplementation($model)->getItems($test);
+        } catch (MissingTestmodelException $e) {
+            $returnValue = array();
+        }
         return (array) $returnValue;
     }
     
@@ -364,6 +361,12 @@ class taoTests_models_classes_TestsService
         return $compiler;
     }
 
+    /**
+     * Returns the class of the compiler
+     * @param core_kernel_classes_Resource $test
+     * @return string
+     * @deprecated
+     */
     public function getCompilerClass(core_kernel_classes_Resource $test) {
         $testModel = $this->getTestModel($test);
         return $this->getTestModelImplementation($testModel)->getCompilerClass();
@@ -374,11 +377,12 @@ class taoTests_models_classes_TestsService
      * 
      * @param core_kernel_classes_Resource $test
      * @return core_kernel_classes_Resource
+     * @throws MissingTestmodelException::
      */
     public function getTestModel(core_kernel_classes_Resource $test) {
 		$testModel = $test->getOnePropertyValue(new core_kernel_classes_Property(self::PROPERTY_TEST_TESTMODEL));
 		if (is_null($testModel)) {
-		    throw new common_exception_Error('undefined testmodel for test '.$test->getUri());
+		    throw new MissingTestmodelException('Undefined testmodel for test '.$test->getUri());
 		}
 		return $testModel;
     }

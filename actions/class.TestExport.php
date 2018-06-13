@@ -21,6 +21,7 @@
  */
 use oat\oatbox\event\EventManagerAwareTrait;
 use oat\taoTests\models\event\TestExportEvent;
+use oat\taoTests\models\MissingTestmodelException;
 
 /**
  * This controller provide the actions to export tests 
@@ -50,12 +51,14 @@ class taoTests_actions_TestExport extends tao_actions_Export {
 		
 		$resources = $this->getResourcesToExport();
 		$testModels = array();
-		foreach ($resources as $resource) {
-			$model = taoTests_models_classes_TestsService::singleton()->getTestModel($resource);
-			if (!is_null($model)) {
-				$testModels[$model->getUri()] = $model;
-			}
-		}
+        foreach ($resources as $resource) {
+            try {
+                $model = taoTests_models_classes_TestsService::singleton()->getTestModel($resource);
+                $testModels[$model->getUri()] = $model;
+            } catch (MissingTestmodelException $e) {
+                // no model found, skip exporter retrieval
+            }
+        }
 		foreach ($testModels as $model) {
 			$impl = taoTests_models_classes_TestsService::singleton()->getTestModelImplementation($model);
 			if (in_array('tao_models_classes_export_ExportProvider', class_implements($impl))) {
