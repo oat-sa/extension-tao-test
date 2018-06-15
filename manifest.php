@@ -34,13 +34,13 @@ return array(
     'label' => 'Test core extension',
     'description' => 'TAO Tests extension contains the abstraction of the test-runners, but requires an implementation in order to be able to run tests',
     'license' => 'GPL-2.0',
-    'version' => '7.8.1',
+    'version' => '7.9.0',
     'author' => 'Open Assessment Technologies, CRP Henri Tudor',
     'requires' => array(
         'generis' => '>=7.1.0',
         'taoItems' => '>=2.20.1',
         'taoBackOffice' => '>=1.3.0',
-        'tao' => '>=17.9.0'
+        'tao' => '>=19.11.0'
     ),
     'models' => array(
         'http://www.tao.lu/Ontologies/TAOTest.rdf',
