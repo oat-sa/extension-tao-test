@@ -32,7 +32,7 @@ namespace oat\taoTests\models\runner\time;
  */
 class InconsistentRangeException extends TimeException
 {
-    public function __construct($message = null, $code = 0, Exception $previous = null)
+    public function __construct($message = null, $code = 0, \Exception $previous = null)
     {
         if (!$message) {
             $message = 'A time range must be defined by two TimePoint with the same target and the START cannot be after the END!';

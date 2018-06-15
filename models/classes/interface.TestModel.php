@@ -16,8 +16,10 @@
  *
  * Copyright (c) 2008-2010 (original work) Deutsche Institut für Internationale Pädagogische Forschung (under the project TAO-TRANSFER);
  *               2009-2012 (update and modification) Public Research Centre Henri Tudor (under the project TAO-SUSTAIN & TAO-DEV);
+ *               2013- (update and modification) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  */
+use oat\taoTests\models\pack\Packable;
 
 /**
  * Interface to implement by test models
@@ -86,10 +88,7 @@ interface taoTests_models_classes_TestModel
      * data needed to run a test where the compiler creates a stand alone
      * test.
 	 *
-	 * @return oat\taoTests\model\pack\Packable the packer class to instantiate
+	 * @return Packable the packer class to instantiate
 	 */
     public function getPackerClass();
-    
-    // onChangeTestLabel removed in favour of eventmanager
-    
 }

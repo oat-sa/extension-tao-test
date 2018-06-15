@@ -14,29 +14,25 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2016 (original work) Open Assessment Technologies SA ;
- */
-/**
- * @author Jean-Sébastien Conan <jean-sebastien.conan@vesperiagroup.com>
- */
-
-namespace oat\taoTests\models\runner\time;
-
-/**
- * Class ExceptionIncompleteRange
+ * Copyright (c) 2018 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
- * Thrown when a time range is incomplete
- *
- * @package oat\taoTests\models\runner\time
  */
-class IncompleteRangeException extends TimeException
+namespace oat\taoTests\models;
+
+use oat\tao\model\service\ServiceFileStorage;
+/**
+ * Interface to implement by test models
+ *
+ * @package taoTests
+ * @author Joel Bout <joel@taotesting.com>
+ */
+interface TestModel extends \taoTests_models_classes_TestModel
 {
-    public function __construct($message = null, $code = 0, \Exception $previous = null)
-    {
-        if (!$message) {
-            $message = 'A time range is built from two TimePoint!';
-        }
-
-        parent::__construct($message, $code, $previous);
-    }
+    /**
+     * Returns a compiler instance for a given test
+     * @param \core_kernel_classes_Resource $test
+     * @param ServiceFileStorage $storage
+     * @return \tao_models_classes_Compiler
+     */
+    public function getCompiler(\core_kernel_classes_Resource $test, ServiceFileStorage $storage);
 }
