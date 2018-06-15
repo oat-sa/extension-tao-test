@@ -32,8 +32,7 @@
     }],
     "description": "extension to manage tests",
     "support": {
-        "forum": "http://forum.taotesting.com",
-        "issues": "http://forge.taotesting.com"
+        "forum": "https://forum.taocloud.org/"
     },
     "homepage": "http://www.taotesting.com",
     "license": [
