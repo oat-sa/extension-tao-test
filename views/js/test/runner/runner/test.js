@@ -660,8 +660,11 @@ define([
     QUnit.asyncTest('timeout', function(assert){
         var expectedScope = 'assessmentSection';
         var expectedRef = 'assessmentSection-1';
+        var expectedTimer = {
+            time: 30
+        };
 
-        QUnit.expect(4);
+        QUnit.expect(5);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker : _.noop,
@@ -669,13 +672,14 @@ define([
 
                 this.on('init', function(){
                     assert.ok(true, 'we can listen for init in providers init');
-                    this.timeout(expectedScope, expectedRef);
+                    this.timeout(expectedScope, expectedRef, expectedTimer);
                 })
-                .on('timeout', function(scope, ref){
+                .on('timeout', function(scope, ref, timer){
                     assert.ok(true, 'The timeout event has been triggered');
 
                     assert.equal(scope, expectedScope, 'The timeout scope is provided');
                     assert.equal(ref, expectedRef, 'The timeout ref is provided');
+                    assert.equal(timer, expectedTimer, 'The timer is provided');
 
                     QUnit.start();
                 });
