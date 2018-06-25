@@ -25,7 +25,6 @@ use \core_kernel_classes_Resource;
 use \taoTests_models_classes_TestsService;
 use \common_exception_NoImplementation;
 use \ReflectionClass;
-use \ReflectionException;
 use \common_Exception;
 use \Exception;
 
@@ -47,7 +46,7 @@ class Packer
 
     /**
      * The test service
-     * @var taoTests_models_classes_TestService
+     * @var \taoTests_models_classes_TestsService
      */
     private $testService;
 

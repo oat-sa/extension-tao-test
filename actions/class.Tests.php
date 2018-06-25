@@ -157,14 +157,12 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
         $test = new core_kernel_classes_Resource($this->getRequestParameter('id'));
         if (!$this->isLocked($test)) {
             $testModel = $this->service->getTestModel($test);
-            if(!is_null($testModel)){
-                $testModelImpl = $this->service->getTestModelImplementation($testModel);
-                $authoringUrl = $testModelImpl->getAuthoringUrl($test);
-                if(!empty($authoringUrl)){
-                    $userId = common_session_SessionManager::getSession()->getUser()->getIdentifier();
-                    LockManager::getImplementation()->setLock($test, $userId);
-                    return $this->forwardUrl($authoringUrl);
-                }
+            $testModelImpl = $this->service->getTestModelImplementation($testModel);
+            $authoringUrl = $testModelImpl->getAuthoringUrl($test);
+            if(!empty($authoringUrl)){
+                $userId = common_session_SessionManager::getSession()->getUser()->getIdentifier();
+                LockManager::getImplementation()->setLock($test, $userId);
+                return $this->forwardUrl($authoringUrl);
             }
             throw new common_exception_NoImplementation();
         }

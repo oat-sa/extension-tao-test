@@ -22,7 +22,6 @@ namespace oat\taoTests\models\runner\features;
 use oat\oatbox\log\LoggerAwareTrait;
 use oat\oatbox\service\ConfigurableService;
 use Psr\Log\LoggerAwareInterface;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
 
 /**
  * A service to register Test Runner Features

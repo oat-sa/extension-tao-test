@@ -17,37 +17,34 @@
  * Copyright (c) 2002-2008 (original work) Public Research Centre Henri Tudor & University of Luxembourg (under the project TAO & TAO2);
  *               2008-2010 (update and modification) Deutsche Institut für Internationale Pädagogische Forschung (under the project TAO-TRANSFER);
  *               2009-2012 (update and modification) Public Research Centre Henri Tudor (under the project TAO-SUSTAIN & TAO-DEV);
- *
+ *               2013-     (update and modification) Open Assessment Technologies SA;
  */
-?>
-<?php
 /*
  * @author CRP Henri Tudor - TAO Team - {@link http://www.tao.lu}
  * @license GPLv2  http://www.opensource.org/licenses/gpl-2.0.php
  *
  */
-$extpath = dirname(__FILE__).DIRECTORY_SEPARATOR;
-$taopath = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'tao'.DIRECTORY_SEPARATOR;
+$extpath = __DIR__.DIRECTORY_SEPARATOR;
 
 return array(
     'name' => 'taoTests',
     'label' => 'Test core extension',
     'description' => 'TAO Tests extension contains the abstraction of the test-runners, but requires an implementation in order to be able to run tests',
     'license' => 'GPL-2.0',
-    'version' => '7.8.2',
+    'version' => '7.9.1',
     'author' => 'Open Assessment Technologies, CRP Henri Tudor',
     'requires' => array(
         'generis' => '>=7.1.0',
         'taoItems' => '>=2.20.1',
         'taoBackOffice' => '>=1.3.0',
-        'tao' => '>=17.9.0'
+        'tao' => '>=19.7.0'
     ),
     'models' => array(
         'http://www.tao.lu/Ontologies/TAOTest.rdf',
     ),
 	'install' => array(
 		'rdf' => array(
-				dirname(__FILE__). '/models/ontology/taotest.rdf'
+            __DIR__. '/models/ontology/taotest.rdf'
 		),
             'php' => [
                 'oat\\taoTests\\scripts\\install\\RegisterTestPluginService',
