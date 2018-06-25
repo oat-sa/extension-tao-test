@@ -23,13 +23,13 @@ namespace oat\taoTests\scripts\update;
 
 use oat\tao\scripts\update\OntologyUpdater;
 use oat\taoTests\models\runner\providers\TestProviderService;
-use oat\taoTests\scripts\install\RegisterTestPluginService;
-use oat\taoTests\scripts\install\RegisterTestRunnerFeatureService;
 use oat\tao\model\accessControl\func\AclProxy;
 use oat\tao\model\accessControl\func\AccessRule;
 use oat\tao\model\user\TaoRoles;
 use oat\taoTests\models\runner\features\TestRunnerFeatureService;
 use oat\taoTests\models\runner\features\SecurityFeature;
+use oat\taoTests\models\runner\plugins\TestPluginService;
+use oat\tao\model\plugins\AbstractPluginService;
 
 class Updater extends \common_ext_ExtensionUpdater
 {
@@ -59,8 +59,11 @@ class Updater extends \common_ext_ExtensionUpdater
         if ($this->isVersion('2.23.0')){
 
             //register test plugin service
-            $registerService = new RegisterTestPluginService();
-            $registerService([]);
+            $service = $this->safeLoadService(TestPluginService::SERVICE_ID);
+            if (!$service instanceof AbstractPluginService) {
+                $testPluginService = new TestPluginService();
+                $this->getServiceManager()->register(TestPluginService::SERVICE_ID, $testPluginService);
+            }
 
             $this->setVersion('3.0.0');
         }
@@ -70,8 +73,11 @@ class Updater extends \common_ext_ExtensionUpdater
         if ($this->isVersion('3.4.1')){
 
             //register test runner feature service
-            //$registerService = new RegisterTestRunnerFeatureService();
-            //$registerService([]);
+            $service = $this->safeLoadService(TestRunnerFeatureService::SERVICE_ID);
+            if (!$service instanceof TestRunnerFeatureService) {
+                $testRunnerFeatureService = new TestRunnerFeatureService();
+                $this->getServiceManager()->register(TestRunnerFeatureService::SERVICE_ID, $testRunnerFeatureService);
+            }
 
             $this->setVersion('3.5.0');
         }
