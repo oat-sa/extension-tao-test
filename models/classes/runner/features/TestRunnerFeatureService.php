@@ -88,6 +88,9 @@ class TestRunnerFeatureService extends ConfigurableService implements LoggerAwar
         $result = [];
         /** @var TestRunnerFeatureInterface[] $features */
         $features = $this->getOption(self::OPTION_AVAILABLE);
+        if (!$features) {
+            $features = [];
+        }
         foreach ($features as $id => $feature) {
             $feature->setServiceLocator($this->getServiceLocator());
             $this->propagate($feature);
