@@ -744,13 +744,14 @@ define([
 
             /**
              * Notify a test timeout
-             * @param {String} scope
-             * @param {String} ref
+             * @param {String} scope - The scope where the timeout occurred
+             * @param {String} ref - The reference to the place where the timeout occurred
+             * @param {Object} [timer] - The timer's descriptor, if any
              * @fires runner#timeout
              * @returns {runner} chains
              */
-            timeout : function timeout(scope, ref){
-                this.trigger('timeout', scope, ref);
+            timeout : function timeout(scope, ref, timer){
+                this.trigger('timeout', scope, ref, timer);
                 return this;
             }
         });

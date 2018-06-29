@@ -19,34 +19,32 @@
  *               2009-2012 (update and modification) Public Research Centre Henri Tudor (under the project TAO-SUSTAIN & TAO-DEV);
  * 
  */
-use oat\oatbox\event\EventManagerAwareTrait;
-use oat\taoTests\models\event\TestExportEvent;
+
 use oat\taoTests\models\MissingTestmodelException;
 
 /**
- * This controller provide the actions to export tests 
- * 
- * @author CRP Henri Tudor - TAO Team - {@link http://www.tao.lu}
+ * This controller provide the actions to export tests
+ *
+ * @author  CRP Henri Tudor - TAO Team - {@link http://www.tao.lu}
  * @license GPLv2  http://www.opensource.org/licenses/gpl-2.0.php
  * @package taoTests
- 
  *
  */
-class taoTests_actions_TestExport extends tao_actions_Export {
-
-    use EventManagerAwareTrait;
+class taoTests_actions_TestExport extends tao_actions_Export
+{
     /**
      * overwrite the parent index to add the requiresRight for Tests
      *
      * @requiresRight id READ
-     * @see tao_actions_Export::index()
+     * @see           tao_actions_Export::index()
      */
     public function index()
     {
         parent::index();
     }
     
-	protected function getAvailableExportHandlers() {
+	protected function getAvailableExportHandlers()
+    {
 		$returnValue = parent::getAvailableExportHandlers();
 		
 		$resources = $this->getResourcesToExport();
@@ -70,13 +68,4 @@ class taoTests_actions_TestExport extends tao_actions_Export {
 		
 		return $returnValue;
     }
-
-    protected function sendFileToClient($file, $test)
-    {
-        $this->getEventManager()->trigger(new TestExportEvent($test->getUri()));
-
-        parent::sendFileToClient($file, $test);
-    }
-
-
 }
