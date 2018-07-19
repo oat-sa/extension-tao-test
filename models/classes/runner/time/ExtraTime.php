@@ -56,13 +56,4 @@ interface ExtraTime
      * @return float
      */
     public function getRemainingExtraTime();
-
-    /**
-     * Consumes an amount of extra time.
-     * If tags are provided, assign them to the consumed time.
-     * @param float $time
-     * @param string|array $tags A tag or a list of tags to assign
-     * @return ExtraTime
-     */
-    public function consumeExtraTime($time, $tags = null);
 }
