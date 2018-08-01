@@ -17,7 +17,7 @@
  * Copyright (c) 2016 (original work) Open Assessment Technologies SA;
  *
  */
-namespace oat\taoTests\test\runner\plugins;
+namespace oat\taoTests\test\unit\runner\plugins;
 
 use common_exception_InconsistentData;
 use oat\taoTests\models\runner\plugins\PluginRegistry;

@@ -17,7 +17,7 @@
  * Copyright (c) 2016 (original work) Open Assessment Technologies SA;
  *
  */
-namespace oat\taoTests\test\runner\features\samples;
+namespace oat\taoTests\test\integration\runner\features\samples;
 
 use oat\taoTests\models\runner\features\TestRunnerFeature;
 
@@ -26,7 +26,7 @@ use oat\taoTests\models\runner\features\TestRunnerFeature;
  *
  * @author Christophe Noël <christophe@taotesting.com>
  */
-class TestFeatureEmptyDescription extends TestRunnerFeature
+class TestFeature extends TestRunnerFeature
 {
     public function getLabel()
     {
@@ -35,6 +35,6 @@ class TestFeatureEmptyDescription extends TestRunnerFeature
 
     public function getDescription()
     {
-        return '';
+        return __('A simple feature used for unit testing');
     }
 }

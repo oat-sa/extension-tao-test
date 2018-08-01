@@ -20,7 +20,7 @@
  * @author Jean-Sébastien Conan <jean-sebastien.conan@vesperiagroup.com>
  */
 
-namespace oat\taoTests\test;
+namespace oat\taoTests\test\integration;
 
 use oat\tao\test\TaoPhpUnitTestRunner;
 use oat\taoTests\models\runner\time\TimePoint;

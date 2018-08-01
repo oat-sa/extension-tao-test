@@ -17,21 +17,23 @@
  * Copyright (c) 2016 (original work) Open Assessment Technologies SA;
  *
  */
-namespace oat\taoTests\test\runner\features;
+namespace oat\taoTests\test\integration\runner\features;
 
 use common_exception_InconsistentData;
-use oat\generis\test\oatbox\log\TestLogger;
+use oat\generis\test\unit\oatbox\log\TestLogger;
 use oat\tao\test\TaoPhpUnitTestRunner;
 use oat\taoTests\models\runner\plugins\PluginRegistry;
 use oat\taoTests\models\runner\plugins\TestPlugin;
 use oat\taoTests\models\runner\plugins\TestPluginService;
-use oat\taoTests\test\runner\features\samples\TestFeature;
-use oat\taoTests\test\runner\features\samples\TestFeatureEmptyDescription;
-use oat\taoTests\test\runner\features\samples\TestFeatureEmptyLabel;
+use oat\taoTests\test\integration\runner\features\samples\TestFeature;
+use oat\taoTests\test\integration\runner\features\samples\TestFeatureEmptyDescription;
+use oat\taoTests\test\integration\runner\features\samples\TestFeatureEmptyLabel;
 use Prophecy\Prophet;
 use Psr\Log\LogLevel;
 
 /**
+ * @todo this one is really a unit test, but placed here as it has common samples with integration tests
+ *
  * Test of TestRunnerFeatureTest abstract class. Test implementations are in samples folder.
  *
  * @author Christophe Noël <christophe@taotesting.com>
@@ -211,7 +213,7 @@ class TestRunnerFeatureTest extends TaoPhpUnitTestRunner
         $feature = $this->getTestFeature();
 
         $this->assertEquals(
-            'new oat\taoTests\test\runner\features\samples\TestFeature()',
+            'new oat\taoTests\test\integration\runner\features\samples\TestFeature()',
             $feature->__toPhpCode()
         );
     }
