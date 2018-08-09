@@ -21,14 +21,14 @@
 namespace oat\taoTests\test\integration;
 
 use oat\tao\model\TaoOntology;
-use oat\tao\test\RestTestCase;
+use oat\tao\test\integration\RestTestCase;
 
 /**
  * connects as a client agent on the rest controller
  * @author patrick
  * @package taoTestTaker
  */
-class RestTestsTest extends RestTestCase 
+class RestTestsTest extends RestTestCase
 {
     public function serviceProvider(){
         return array(
