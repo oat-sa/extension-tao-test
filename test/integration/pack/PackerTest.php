@@ -17,7 +17,7 @@
  * Copyright (c) 2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  */
-namespace oat\taoTests\test\pack;
+namespace oat\taoTests\test\integration\pack;
 
 use \core_kernel_classes_Resource;
 use oat\taoTests\models\pack\Packer;

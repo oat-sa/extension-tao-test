@@ -17,7 +17,7 @@
  * Copyright (c) 2015 (original work) Open Assessment Technologies SA;
  *
  */
-namespace oat\taoTests\test\pack;
+namespace oat\taoTests\test\unit\pack;
 
 use oat\taoTests\models\pack\TestPack;
 use oat\tao\test\TaoPhpUnitTestRunner;

@@ -19,7 +19,7 @@
  *               2014 (update and modification) Open Assessment Technologies SA
  *               
  */
-namespace oat\taoTests\test;
+namespace oat\taoTests\test\integration;
 
 use oat\generis\model\OntologyRdfs;
 use oat\tao\model\TaoOntology;

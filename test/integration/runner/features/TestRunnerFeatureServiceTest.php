@@ -17,15 +17,15 @@
  * Copyright (c) 2016 (original work) Open Assessment Technologies SA;
  *
  */
-namespace oat\taoTests\test\runner\features;
+namespace oat\taoTests\test\integration\runner\features;
 
 use common_exception_InconsistentData;
-use oat\generis\test\oatbox\log\TestLogger;
+use oat\generis\test\unit\oatbox\log\TestLogger;
 use oat\tao\test\TaoPhpUnitTestRunner;
 use oat\taoTests\models\runner\features\TestRunnerFeatureService;
 use oat\taoTests\models\runner\plugins\PluginRegistry;
 use oat\taoTests\models\runner\plugins\TestPluginService;
-use oat\taoTests\test\runner\features\samples\TestFeature;
+use oat\taoTests\test\integration\runner\features\samples\TestFeature;
 use Prophecy\Prophet;
 use Psr\Log\LogLevel;
 
