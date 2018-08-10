@@ -18,7 +18,7 @@
  *
  */
 
-namespace oat\taoTests\test\runner\providers;
+namespace oat\taoTests\test\unit\runner\providers;
 
 use oat\oatbox\service\ConfigurableService;
 use oat\tao\test\TaoPhpUnitTestRunner;

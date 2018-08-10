@@ -13,28 +13,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *
- * Copyright (c) 2016 (original work) Open Assessment Technologies SA;
+ * 
+ * Copyright (c) 2014 (original work) Open Assessment Technologies SA
  *
  */
-namespace oat\taoTests\test\runner\features\samples;
 
-use oat\taoTests\models\runner\features\TestRunnerFeature;
+namespace oat\taoTests\test\integration;
+
+use oat\tao\model\TaoOntology;
+use oat\tao\test\integration\RestTestCase;
 
 /**
- * A test implementation of a test runner feature
- *
- * @author Christophe Noël <christophe@taotesting.com>
+ * connects as a client agent on the rest controller
+ * @author patrick
+ * @package taoTestTaker
  */
-class TestFeature extends TestRunnerFeature
+class RestTestsTest extends RestTestCase
 {
-    public function getLabel()
-    {
-        return __('testFeature');
-    }
-
-    public function getDescription()
-    {
-        return __('A simple feature used for unit testing');
+    public function serviceProvider(){
+        return array(
+            array('taoTests/RestTests',TaoOntology::TEST_CLASS_URI )
+        );
     }
 }
+

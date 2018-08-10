@@ -17,7 +17,7 @@
  * Copyright (c) 2017 (original work) Open Assessment Technologies SA;
  */
 
-namespace oat\taoTests\test\runner\providers;
+namespace oat\taoTests\test\unit\runner\providers;
 
 use common_exception_InconsistentData;
 use oat\taoTests\models\runner\providers\TestProvider;

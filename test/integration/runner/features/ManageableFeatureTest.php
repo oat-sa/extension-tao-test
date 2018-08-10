@@ -18,7 +18,7 @@
  *
  */
 
-namespace oat\taoTests\test\runner\features;
+namespace oat\taoTests\test\integration\runner\features;
 
 use oat\tao\test\TaoPhpUnitTestRunner;
 use oat\taoTests\models\runner\features\ManageableFeature;
