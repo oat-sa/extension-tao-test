@@ -113,7 +113,14 @@ class Updater extends \common_ext_ExtensionUpdater
         $this->skip('7.4.0', '7.5.0');
 
         if ($this->isVersion('7.5.0')) {
-            $featureService = $this->getServiceManager()->get(TestRunnerFeatureService::class);
+            if (!$this->getServiceManager()->has(TestRunnerFeatureService::SERVICE_ID)) {
+                $featureService = new TestRunnerFeatureService([
+                    TestRunnerFeatureService::OPTION_AVAILABLE => []
+                ]);
+                $this->getServiceManager()->register(TestRunnerFeatureService::SERVICE_ID, $featureService);
+            } else {
+                $featureService = $this->getServiceManager()->get(TestRunnerFeatureService::class);
+            }
 
             if (!isset($featureService->getAll()[SecurityFeature::FEATURE_ID])) {
                 $featureService->register(new SecurityFeature());
@@ -156,6 +163,6 @@ class Updater extends \common_ext_ExtensionUpdater
             $this->setVersion('7.8.0');
         }
         
-        $this->skip('7.8.0', '7.11.3');
+        $this->skip('7.8.0', '7.11.4');
     }
 }
