@@ -60,6 +60,7 @@ class Updater extends \common_ext_ExtensionUpdater
 
             //register test plugin service
             $registerService = new RegisterTestPluginService();
+            $registerService->setServiceLocator($this->getServiceManager());
             $registerService([]);
 
             $this->setVersion('3.0.0');
