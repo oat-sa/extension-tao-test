@@ -31,6 +31,8 @@ use \core_kernel_classes_Resource;
 use \core_kernel_classes_Property;
 use taoTests_models_classes_TestsService as TestService;
 
+include_once dirname(__FILE__) . '/../../includes/raw_start.php';
+
 
 /**
  *
@@ -126,11 +128,11 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
 
     public function testGetTestModelImplementationBackwardCompatible(){
         $testModelProphecy = $this->prophesize('\core_kernel_classes_Resource');
-        $testModelProphecy->getOnePropertyValue(new core_kernel_classes_Property(TestService::PROPERTY_TEST_MODEL_IMPLEMENTATION))->willReturn('oat\\taoTests\\test\\TestModelUnit');
+        $testModelProphecy->getOnePropertyValue(new core_kernel_classes_Property(TestService::PROPERTY_TEST_MODEL_IMPLEMENTATION))->willReturn(TestModelUnit::class);
 
         $testModelImp = $this->testsService->getTestModelImplementation($testModelProphecy->reveal());
 
-        $this->assertInstanceOf('oat\\taoTests\\test\\TestModelUnit', $testModelImp);
+        $this->assertInstanceOf(TestModelUnit::class, $testModelImp);
     }
 
 
@@ -166,7 +168,7 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
 
         $testModelImp = $testServiceMock->getTestModelImplementation($testModelProphecy->reveal());
 
-        $this->assertInstanceOf('oat\\taoTests\\test\\TestModelUnit', $testModelImp);
+        $this->assertInstanceOf(TestModelUnit::class, $testModelImp);
 
     }
     
