@@ -114,28 +114,24 @@ class Updater extends \common_ext_ExtensionUpdater
         $this->skip('7.4.0', '7.5.0');
 
         if ($this->isVersion('7.5.0')) {
-            if (!$this->getServiceManager()->has(TestRunnerFeatureService::SERVICE_ID)) {
-                $featureService = new TestRunnerFeatureService([
-                    TestRunnerFeatureService::OPTION_AVAILABLE => []
-                ]);
-                $this->getServiceManager()->register(TestRunnerFeatureService::SERVICE_ID, $featureService);
-            } else {
+            if ($this->getServiceManager()->has(TestRunnerFeatureService::SERVICE_ID)) {
                 $featureService = $this->getServiceManager()->get(TestRunnerFeatureService::class);
-            }
-
-            if (!isset($featureService->getAll()[SecurityFeature::FEATURE_ID])) {
-                $featureService->register(new SecurityFeature());
-                $this->getServiceManager()->register(TestRunnerFeatureService::SERVICE_ID, $featureService);
+                if (!isset($featureService->getAll()[SecurityFeature::FEATURE_ID])) {
+                    $featureService->register(new SecurityFeature());
+                    $this->getServiceManager()->register(TestRunnerFeatureService::SERVICE_ID, $featureService);
+                }
             }
             $this->setVersion('7.6.0');
         }
 
         if ($this->isVersion('7.6.0')) {
-            $featureService = $this->getServiceManager()->get(TestRunnerFeatureService::class);
-            $features = $featureService->getAll();
-            if (isset($features[SecurityFeature::FEATURE_ID]) && get_class($features[SecurityFeature::FEATURE_ID]) === SecurityFeature::class) {
-                $featureService->unregister(SecurityFeature::FEATURE_ID);
-                $this->getServiceManager()->register(TestRunnerFeatureService::SERVICE_ID, $featureService);
+            if ($this->getServiceManager()->has(TestRunnerFeatureService::SERVICE_ID)) {
+                $featureService = $this->getServiceManager()->get(TestRunnerFeatureService::class);
+                $features = $featureService->getAll();
+                if (isset($features[SecurityFeature::FEATURE_ID]) && get_class($features[SecurityFeature::FEATURE_ID]) === SecurityFeature::class) {
+                    $featureService->unregister(SecurityFeature::FEATURE_ID);
+                    $this->getServiceManager()->register(TestRunnerFeatureService::SERVICE_ID, $featureService);
+                }
             }
             $this->setVersion('7.7.0');
         }
