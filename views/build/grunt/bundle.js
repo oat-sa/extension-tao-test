@@ -31,7 +31,12 @@ module.exports = function(grunt) {
                     outputDir : 'loader',
                     bundles : [{
                         name : 'taoTests',
-                        default : true
+                        default : true,
+                    }, {
+                        name : 'taoTestsRunner',
+                        include : [
+                            'taoTests/runner/**/*'
+                        ]
                     }]
                 }
             }
