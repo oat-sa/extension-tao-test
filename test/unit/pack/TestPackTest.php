@@ -19,8 +19,9 @@
  */
 namespace oat\taoTests\test\unit\pack;
 
+use oat\generis\test\TestCase;
 use oat\taoTests\models\pack\TestPack;
-use oat\tao\test\TaoPhpUnitTestRunner;
+use InvalidArgumentException;
 
 /**
  * Test the class {@link TestPack}
@@ -28,7 +29,7 @@ use oat\tao\test\TaoPhpUnitTestRunner;
  * @author Bertrand Chevrier, <taosupport@tudor.lu>
  * @package taoTests
  */
-class TestPackTest extends TaoPhpUnitTestRunner
+class TestPackTest extends TestCase
 {
 
     /**
@@ -40,7 +41,7 @@ class TestPackTest extends TaoPhpUnitTestRunner
         $items= array();
 
         $pack = new TestPack($type, $data, $items);
-        $this->assertInstanceOf('oat\taoTests\models\pack\TestPack', $pack);
+        $this->assertInstanceOf(TestPack::class, $pack);
         $this->assertEquals($type, $pack->getType());
         $this->assertEquals($data, $pack->getData());
         $this->assertEquals($items, $pack->getItems());
@@ -49,25 +50,28 @@ class TestPackTest extends TaoPhpUnitTestRunner
 
     /**
      * Test the constructor with an empty type
-     * @expectedException InvalidArgumentException
      */
     public function testWrongTypeConstructor(){
+        $this->expectException(InvalidArgumentException::class);
+
         new TestPack(null, array(), array());
     }
 
     /**
      * Test the constructor with invalid data
-     * @expectedException InvalidArgumentException
      */
     public function testWrongDataConstructor(){
+        $this->expectException(InvalidArgumentException::class);
+
         new TestPack('qti', '{"foo":"bar"}', array());
     }
 
     /**
      * Test the constructor with invalid data
-     * @expectedException InvalidArgumentException
      */
     public function testWrongItemsConstructor(){
+        $this->expectException(InvalidArgumentException::class);
+
         new TestPack('qti', array(), 'foo');
     }
 
@@ -93,7 +97,7 @@ class TestPackTest extends TaoPhpUnitTestRunner
 
        $expected = '{"type":"qti","data":{"foo":"bar"},"items":["foo","bar"]}';
 
-       $this->assertInstanceOf('oat\taoTests\models\pack\TestPack', $testPack);
+       $this->assertInstanceOf(TestPack::class, $testPack);
        $this->assertTrue(is_string($expected));
        $this->assertEquals($expected, json_encode($testPack));
     }

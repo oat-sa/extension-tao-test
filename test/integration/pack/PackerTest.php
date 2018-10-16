@@ -19,11 +19,13 @@
  */
 namespace oat\taoTests\test\integration\pack;
 
-use \core_kernel_classes_Resource;
+use taoTests_models_classes_TestsService;
+use taoTests_models_classes_TestModel;
+use core_kernel_classes_Resource;
+use oat\generis\test\GenerisPhpUnitTestRunner;
 use oat\taoTests\models\pack\Packer;
 use oat\taoTests\models\pack\Packable;
 use oat\taoTests\models\pack\TestPack;
-use oat\tao\test\TaoPhpUnitTestRunner;
 
 
 /**
@@ -32,7 +34,7 @@ use oat\tao\test\TaoPhpUnitTestRunner;
  * @author Bertrand Chevrier, <taosupport@tudor.lu>
  * @package taoTests
  */
-class PackerTest extends TaoPhpUnitTestRunner
+class PackerTest extends GenerisPhpUnitTestRunner
 {
 
     public function setUp()
@@ -46,7 +48,7 @@ class PackerTest extends TaoPhpUnitTestRunner
     public function testConstructor(){
         $test = new core_kernel_classes_Resource('toto');
         $packer = new Packer($test);
-        $this->assertInstanceOf('oat\taoTests\models\pack\Packer', $packer);
+        $this->assertInstanceOf(Packer::class, $packer);
     }
 
     /**
@@ -57,12 +59,12 @@ class PackerTest extends TaoPhpUnitTestRunner
         $model = new core_kernel_classes_Resource('fooModel');
 
         $serviceMock = $this
-                        ->getMockBuilder('\taoTests_models_classes_TestsService')
+                        ->getMockBuilder(taoTests_models_classes_TestsService::class)
                         ->disableOriginalConstructor()
                         ->getMock();
 
         $modelMock = $this
-                        ->getMockBuilder('\taoTests_models_classes_TestModel')
+                        ->getMockBuilder(taoTests_models_classes_TestModel::class)
                         ->getMock();
 
 
@@ -88,13 +90,13 @@ class PackerTest extends TaoPhpUnitTestRunner
 
         $packer = new Packer($test);
 
-        $prop = new \ReflectionProperty('oat\taoTests\models\pack\Packer', 'testService');
+        $prop = new \ReflectionProperty(Packer::class, 'testService');
         $prop->setAccessible(true);
         $prop->setValue($packer, $serviceMock);
 
 
         $result = $packer->pack();
-        $this->assertInstanceOf('oat\taoTests\models\pack\TestPack', $result);
+        $this->assertInstanceOf(TestPack::class, $result);
         $this->assertEquals('qti', $result->getType());
         $this->assertEquals(array('uri' => $test->getUri()), $result->getData());
 
@@ -109,7 +111,7 @@ class PackerTest extends TaoPhpUnitTestRunner
         $test = new core_kernel_classes_Resource('foo');
 
         $serviceMock = $this
-                        ->getMockBuilder('\taoTests_models_classes_TestsService')
+                        ->getMockBuilder(taoTests_models_classes_TestsService::class)
                         ->disableOriginalConstructor()
                         ->getMock();
 
@@ -124,7 +126,7 @@ class PackerTest extends TaoPhpUnitTestRunner
 
         $packer = new Packer($test);
 
-        $prop = new \ReflectionProperty('oat\taoTests\models\pack\Packer', 'testService');
+        $prop = new \ReflectionProperty(Packer::class, 'testService');
         $prop->setAccessible(true);
         $prop->setValue($packer, $serviceMock);
 
@@ -141,7 +143,7 @@ class PackerTest extends TaoPhpUnitTestRunner
         $model = new core_kernel_classes_Resource('fooModel');
 
         $serviceMock = $this
-                        ->getMockBuilder('\taoTests_models_classes_TestsService')
+                        ->getMockBuilder(taoTests_models_classes_TestsService::class)
                         ->disableOriginalConstructor()
                         ->getMock();
 
@@ -161,7 +163,7 @@ class PackerTest extends TaoPhpUnitTestRunner
 
         $packer = new Packer($test);
 
-        $prop = new \ReflectionProperty('oat\taoTests\models\pack\Packer', 'testService');
+        $prop = new \ReflectionProperty(Packer::class, 'testService');
         $prop->setAccessible(true);
         $prop->setValue($packer, $serviceMock);
 
@@ -178,12 +180,12 @@ class PackerTest extends TaoPhpUnitTestRunner
         $test = new core_kernel_classes_Resource('foo');
 
         $serviceMock = $this
-                        ->getMockBuilder('\taoTests_models_classes_TestsService')
+                        ->getMockBuilder(taoTests_models_classes_TestsService::class)
                         ->disableOriginalConstructor()
                         ->getMock();
 
         $modelMock = $this
-                        ->getMockBuilder('\taoTests_models_classes_testModel')
+                        ->getMockBuilder(taoTests_models_classes_testModel::class)
                         ->getMock();
 
 
@@ -206,7 +208,7 @@ class PackerTest extends TaoPhpUnitTestRunner
 
         $packer = new Packer($test);
 
-        $prop = new \ReflectionProperty('oat\taoTests\models\pack\Packer', 'testService');
+        $prop = new \ReflectionProperty(Packer::class, 'testService');
         $prop->setAccessible(true);
         $prop->setValue($packer, $serviceMock);
 
@@ -223,12 +225,12 @@ class PackerTest extends TaoPhpUnitTestRunner
         $test = new core_kernel_classes_Resource('foo');
 
         $serviceMock = $this
-                        ->getMockBuilder('\taoTests_models_classes_TestsService')
+                        ->getMockBuilder(taoTests_models_classes_TestsService::class)
                         ->disableOriginalConstructor()
                         ->getMock();
 
         $modelMock = $this
-                        ->getMockBuilder('\taoTests_models_classes_testModel')
+                        ->getMockBuilder(taoTests_models_classes_testModel::class)
                         ->getMock();
 
         $modelMock
@@ -250,7 +252,7 @@ class PackerTest extends TaoPhpUnitTestRunner
 
         $packer = new Packer($test);
 
-        $prop = new \ReflectionProperty('oat\taoTests\models\pack\Packer', 'testService');
+        $prop = new \ReflectionProperty(Packer::class, 'testService');
         $prop->setAccessible(true);
         $prop->setValue($packer, $serviceMock);
 

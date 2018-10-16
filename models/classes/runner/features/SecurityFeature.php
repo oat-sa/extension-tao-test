@@ -49,7 +49,7 @@ class SecurityFeature extends TestRunnerFeature implements ServiceLocatorAwareIn
     public function getPluginsIds()
     {
         if ($this->pluginsIds === null) {
-            $testPluginService = $this->getServiceLocator()->get(TestPluginService::class);
+            $testPluginService = $this->getServiceLocator()->get(TestPluginService::SERVICE_ID);
             $this->pluginsIds = [];
             foreach ($testPluginService->getAllPlugins() as $plugin) {
                 if ($plugin->getCategory() === 'security') {
