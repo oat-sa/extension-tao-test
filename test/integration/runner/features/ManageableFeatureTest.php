@@ -20,10 +20,13 @@
 
 namespace oat\taoTests\test\integration\runner\features;
 
-use oat\tao\test\TaoPhpUnitTestRunner;
+use oat\generis\test\GenerisPhpUnitTestRunner;
+use oat\oatbox\log\LoggerService;
 use oat\taoTests\models\runner\features\ManageableFeature;
+use oat\taoTests\models\runner\plugins\TestPlugin;
+use oat\taoTests\models\runner\plugins\TestPluginService;
 
-class ManageableFeatureTest extends TaoPhpUnitTestRunner
+class ManageableFeatureTest extends GenerisPhpUnitTestRunner
 {
 
     protected $defaultData = [
@@ -80,11 +83,36 @@ class ManageableFeatureTest extends TaoPhpUnitTestRunner
 
     public function testToPhpCode()
     {
+        $testPluginMock = $this->getMockBuilder(TestPlugin::class)
+            ->setMethods(['getId', 'isActive'])
+            ->disableOriginalConstructor()
+            ->getMock();
+        $testPluginMock->expects($this->once())
+            ->method('getId')
+            ->willReturn('PLUGIN_ID');
+        $testPluginMock->expects($this->once())
+            ->method('isActive')
+            ->willReturn(true);
+
+        $testPluginServiceMock = $this->getMockBuilder(TestPluginService::class)
+            ->setMethods(['getAllPlugins'])
+            ->disableOriginalConstructor()
+            ->getMock();
+        $testPluginServiceMock->expects($this->once())
+            ->method('getAllPlugins')
+            ->willReturn([$testPluginMock]);
+        $loggerMock = $this->prophesize(LoggerService::class)->reveal();
+
+        $serviceLocatorMock = $this->getServiceLocatorMock([
+            TestPluginService::SERVICE_ID => $testPluginServiceMock,
+            LoggerService::SERVICE_ID => $loggerMock
+        ]);
+
         $feature = new ManageableFeature($this->defaultData);
-        $feature->setServiceLocator($this->getServiceManagerProphecy());
+        $feature->setServiceLocator($serviceLocatorMock);
         $code = $feature->__toPhpCode();
         eval('$unserializedFeature ='.$code.';');
-        $unserializedFeature->setServiceLocator($this->getServiceManagerProphecy());
+        $unserializedFeature->setServiceLocator($serviceLocatorMock);
         $this->assertEquals($feature, $unserializedFeature);
     }
 

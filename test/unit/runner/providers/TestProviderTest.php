@@ -20,8 +20,8 @@
 namespace oat\taoTests\test\unit\runner\providers;
 
 use common_exception_InconsistentData;
+use oat\generis\test\TestCase;
 use oat\taoTests\models\runner\providers\TestProvider;
-use oat\tao\test\TaoPhpUnitTestRunner;
 
 /**
  * Test the TestProvider pojo
@@ -29,7 +29,7 @@ use oat\tao\test\TaoPhpUnitTestRunner;
  * @author Bertrand Chevrier <bertrand@taotesting.com>
  * @author Jean-Sébastien Conan <jean-sebastien@taotesting.com>
  */
-class TestProviderTest extends TaoPhpUnitTestRunner
+class TestProviderTest extends TestCase
 {
 
     /**
