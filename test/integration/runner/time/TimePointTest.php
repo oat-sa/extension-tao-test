@@ -22,10 +22,10 @@
 
 namespace oat\taoTests\test\integration;
 
-use oat\tao\test\TaoPhpUnitTestRunner;
+use oat\generis\test\GenerisPhpUnitTestRunner;
 use oat\taoTests\models\runner\time\TimePoint;
 
-class TimePointTest extends TaoPhpUnitTestRunner
+class TimePointTest extends GenerisPhpUnitTestRunner
 {
     /**
      * tests initialization
@@ -33,7 +33,7 @@ class TimePointTest extends TaoPhpUnitTestRunner
     public function setUp()
     {
         parent::setUp();
-        TaoPhpUnitTestRunner::initTest();
+        parent::initTest();
     }
 
     /**

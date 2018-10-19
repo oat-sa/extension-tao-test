@@ -20,8 +20,8 @@
 
 namespace oat\taoTests\test\unit\runner\providers;
 
+use oat\generis\test\TestCase;
 use oat\oatbox\service\ConfigurableService;
-use oat\tao\test\TaoPhpUnitTestRunner;
 use oat\taoTests\models\runner\providers\ProviderRegistry;
 use oat\taoTests\models\runner\providers\TestProvider;
 use oat\taoTests\models\runner\providers\TestProviderService;
@@ -33,7 +33,7 @@ use Prophecy\Prophet;
  * @author Bertrand Chevrier <bertrand@taotesting.com>
  * @author Jean-Sébastien Conan <jean-sebastien@taotesting.com>
  */
-class TestProviderServiceTest extends TaoPhpUnitTestRunner
+class TestProviderServiceTest extends TestCase
 {
 
     //data to stub the regiitry content

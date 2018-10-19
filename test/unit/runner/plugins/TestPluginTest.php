@@ -20,15 +20,15 @@
 namespace oat\taoTests\test\unit\runner\plugins;
 
 use common_exception_InconsistentData;
+use oat\generis\test\TestCase;
 use oat\taoTests\models\runner\plugins\TestPlugin;
-use oat\tao\test\TaoPhpUnitTestRunner;
 
 /**
  * Test the TestPlugin pojo
  *
  * @author Bertrand Chevrier <bertrand@taotesting.com>
  */
-class TestPluginTest extends TaoPhpUnitTestRunner
+class TestPluginTest extends TestCase
 {
 
     /**
