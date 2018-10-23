@@ -21,18 +21,17 @@
  */
 namespace oat\taoTests\test\integration;
 
+use tao_models_classes_Service;
 use oat\generis\model\OntologyRdfs;
+use oat\generis\test\GenerisPhpUnitTestRunner;
 use oat\tao\model\TaoOntology;
-use oat\tao\test\TaoPhpUnitTestRunner;
 use Prophecy\Prediction\CallTimesPrediction;
-use \taoTests_models_classes_TestsService;
-use \core_kernel_classes_Class;
-use \core_kernel_classes_Resource;
-use \core_kernel_classes_Property;
+use taoTests_models_classes_TestsService;
+use taoTests_models_classes_TestCompiler;
+use core_kernel_classes_Class;
+use core_kernel_classes_Resource;
+use core_kernel_classes_Property;
 use taoTests_models_classes_TestsService as TestService;
-
-include_once dirname(__FILE__) . '/../../includes/raw_start.php';
-
 
 /**
  *
@@ -40,7 +39,7 @@ include_once dirname(__FILE__) . '/../../includes/raw_start.php';
  * @package taoTests
  
  */
-class TestsTestCase extends TaoPhpUnitTestRunner {
+class TestsTest extends GenerisPhpUnitTestRunner {
 
 	/**
 	 * 
@@ -48,14 +47,11 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
 	 */
 	protected $testsService = null;
 
-	
-	
 	/**
 	 * tests initialization
 	 */
 	public function setUp(){
-	     
-		TaoPhpUnitTestRunner::initTest();		
+	    parent::setUp();
 		$this->testsService = taoTests_models_classes_TestsService::singleton();
 	}
 
@@ -66,8 +62,8 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
 	 */
 	public function testService(){
 		
-		$this->assertIsA($this->testsService , 'tao_models_classes_Service');
-		$this->assertIsA($this->testsService , 'taoTests_models_classes_TestsService');
+		$this->assertIsA($this->testsService , tao_models_classes_Service::class);
+		$this->assertIsA($this->testsService , taoTests_models_classes_TestsService::class);
 	}
 
     /**
@@ -75,7 +71,7 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
      */
     public function testTests() {
         $tests = $this->testsService->getRootclass();
-        $this->assertIsA($tests, 'core_kernel_classes_Class');
+        $this->assertIsA($tests, core_kernel_classes_Class::class);
         $this->assertEquals(TaoOntology::TEST_CLASS_URI , $tests->getUri());
 
         return $tests;
@@ -87,47 +83,36 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
      * @author Lionel Lecaque, lionel@taotesting.com
      * @return array
      */
-    public function modelsProvider(){
-        \common_ext_ExtensionsManager::singleton()->getExtensionById('taoTests');
+    public function getTestModels(){
         $testModelClass = new core_kernel_classes_Class(TestService::CLASS_TEST_MODEL);
-        $models = $testModelClass->getInstances();
-        
-        return array(
-            array($models)
-        );
-        
+
+        return $testModelClass->getInstances();
     }
 
-    
+
     /**
-     * 
-     * @dataProvider modelsProvider
-     * @param $models
-     * @return void
+     * @throws \oat\taoTests\models\MissingTestmodelException
      */
-    public function testSetTestModel($models) {
+    public function testSetTestModel() {
         $test = $this->testsService->getRootclass();
+        $models = $this->getTestModels();
         foreach ($models as $uri => $model){
-            $this->testsService->setTestModel($test, $model);        
+            $this->testsService->setTestModel($test, $model);
             $this->assertEquals($this->testsService->getTestModel($test)->getUri(),$uri);
         }
     }
-    
-    
-    /**
-     * @expectedException \common_exception_Error
-     * @expectedExceptionMessage Test model service FakeTestModelClass not found
-     */
+
     public function testGetTestModelImplementationBackwardCompatibleFakeClass(){
-        $testModelProphecy = $this->prophesize('\core_kernel_classes_Resource');
+        $this->expectException(\common_exception_Error::class);
+
+        $testModelProphecy = $this->prophesize(core_kernel_classes_Resource::class);
         $testModelProphecy->getOnePropertyValue(new core_kernel_classes_Property(TestService::PROPERTY_TEST_MODEL_IMPLEMENTATION))->willReturn('FakeTestModelClass');
 
         $this->testsService->getTestModelImplementation($testModelProphecy->reveal());
-
     }
 
     public function testGetTestModelImplementationBackwardCompatible(){
-        $testModelProphecy = $this->prophesize('\core_kernel_classes_Resource');
+        $testModelProphecy = $this->prophesize(core_kernel_classes_Resource::class);
         $testModelProphecy->getOnePropertyValue(new core_kernel_classes_Property(TestService::PROPERTY_TEST_MODEL_IMPLEMENTATION))->willReturn(TestModelUnit::class);
 
         $testModelImp = $this->testsService->getTestModelImplementation($testModelProphecy->reveal());
@@ -135,13 +120,10 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
         $this->assertInstanceOf(TestModelUnit::class, $testModelImp);
     }
 
-
-    /**
-     * @expectedException \common_exception_NoImplementation
-     * @expectedExceptionMessage No implementation found for testmodel testModelUri
-     */
     public function testGetTestModelImplementationNullTestModelImplementation(){
-        $testModelProphecy = $this->prophesize('\core_kernel_classes_Resource');
+        $this->expectException(\common_exception_NoImplementation::class);
+
+        $testModelProphecy = $this->prophesize(core_kernel_classes_Resource::class);
         $testModelProphecy->getOnePropertyValue(new core_kernel_classes_Property(TestService::PROPERTY_TEST_MODEL_IMPLEMENTATION))->willReturn('');
         $testModelProphecy->getUri()->willReturn('testModelUri');
         $testModelProphecy->getUri()->should(new CallTimesPrediction(1));
@@ -150,42 +132,40 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
     }
 
     public function testGetTestModelImplementationService(){
-        $serviceManagerProphecy = $this->prophesize('oat\\oatbox\\service\\ServiceManager');
-        $serviceManagerProphecy->get('testModelServiceId')->willReturn(new TestModelUnit());
+        $serviceLocatorMock = $this->getServiceLocatorMock([
+            'testModelServiceId' => new TestModelUnit()
+        ]);
 
-
-        $testServiceMock = $this->getMockBuilder('taoTests_models_classes_TestsService')
+        $testServiceMock = $this->getMockBuilder(taoTests_models_classes_TestsService::class)
             ->disableOriginalConstructor()
             ->setMethods(array('getServiceManager'))
             ->getMock();
 
         $testServiceMock->expects($this->once())
             ->method('getServiceManager')
-            ->willReturn($serviceManagerProphecy->reveal());
-        $testModelProphecy = $this->prophesize('\core_kernel_classes_Resource');
-        $testModelProphecy->getOnePropertyValue(new core_kernel_classes_Property(TestService::PROPERTY_TEST_MODEL_IMPLEMENTATION))->willReturn('testModelServiceId');
-
+            ->willReturn($serviceLocatorMock);
+        $testModelProphecy = $this->prophesize(core_kernel_classes_Resource::class);
+        $testModelProphecy->getOnePropertyValue(new core_kernel_classes_Property(TestService::PROPERTY_TEST_MODEL_IMPLEMENTATION))
+            ->willReturn('testModelServiceId');
 
         $testModelImp = $testServiceMock->getTestModelImplementation($testModelProphecy->reveal());
 
         $this->assertInstanceOf(TestModelUnit::class, $testModelImp);
 
     }
-    
-    
+
     /**
-     *
-     * @dataProvider modelsProvider
-     * @param $models
-     * @return void
+     * @throws \ReflectionException
      */
-    public function testGetCompilerClass($models) {
+    public function testGetCompilerClass() {
         $test = $this->testsService->getRootclass();
+
+        $models = $this->getTestModels();
         foreach ($models as $uri => $model){
             $this->testsService->setTestModel($test, $model);
             $compilerName = $this->testsService->getCompilerClass($test);
             $compilerClass = new \ReflectionClass($compilerName);
-            $this->assertTrue($compilerClass->isSubclassOf('taoTests_models_classes_TestCompiler'));
+            $this->assertTrue($compilerClass->isSubclassOf(taoTests_models_classes_TestCompiler::class));
         }
     }
 
@@ -209,7 +189,7 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
     public function testSubTest($tests) {
 		$subTestClassLabel = 'subTest class';
 		$subTest = $this->testsService->createSubClass($tests, $subTestClassLabel);
-		$this->assertIsA($subTest, 'core_kernel_classes_Class');
+		$this->assertIsA($subTest, core_kernel_classes_Class::class);
 		$this->assertEquals($subTestClassLabel, $subTest->getLabel());
 		$this->assertTrue($this->testsService->isTestClass($subTest));
 		$this->assertTrue($this->testsService->isTestClass($tests));
@@ -224,7 +204,7 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
     public function testTestInstance($tests) {
 		$testInstanceLabel = 'test instance bis';
 		$testInstance = $this->testsService->createInstance($tests, $testInstanceLabel);
-		$this->assertIsA($testInstance, 'core_kernel_classes_Resource');
+		$this->assertIsA($testInstance, core_kernel_classes_Resource::class);
 		$this->assertEquals($testInstanceLabel, $testInstance->getLabel());
 
         return $testInstance;
@@ -286,7 +266,7 @@ class TestsTestCase extends TaoPhpUnitTestRunner {
 		$subTestInstance = $this->testsService->createInstance($subTest);
 		$subTestInstance->removePropertyValues(new core_kernel_classes_Property(OntologyRdfs::RDFS_LABEL));
 		$subTestInstance->setLabel($subTestInstanceLabel);
-		$this->assertIsA($subTestInstance, 'core_kernel_classes_Resource');
+		$this->assertIsA($subTestInstance, core_kernel_classes_Resource::class);
 		$this->assertEquals($subTestInstanceLabel, $subTestInstance->getLabel());
 
         return $subTestInstance;
@@ -406,4 +386,3 @@ class TestModelUnit implements \taoTests_models_classes_TestModel{
     }
 
 }
-?>

@@ -20,7 +20,9 @@
 namespace oat\taoTests\test\integration\runner\features;
 
 use common_exception_InconsistentData;
+use oat\generis\test\TestCase;
 use oat\generis\test\unit\oatbox\log\TestLogger;
+use oat\oatbox\log\LoggerService;
 use oat\tao\test\TaoPhpUnitTestRunner;
 use oat\taoTests\models\runner\plugins\PluginRegistry;
 use oat\taoTests\models\runner\plugins\TestPlugin;
@@ -32,13 +34,11 @@ use Prophecy\Prophet;
 use Psr\Log\LogLevel;
 
 /**
- * @todo this one is really a unit test, but placed here as it has common samples with integration tests
- *
  * Test of TestRunnerFeatureTest abstract class. Test implementations are in samples folder.
  *
  * @author Christophe Noël <christophe@taotesting.com>
  */
-class TestRunnerFeatureTest extends TaoPhpUnitTestRunner
+class TestRunnerFeatureTest extends TestCase
 {
     //data to stub the registry content
     private static $pluginData =  [
@@ -74,13 +74,10 @@ class TestRunnerFeatureTest extends TaoPhpUnitTestRunner
      */
     protected function getTestPluginService()
     {
-        $testPluginService = new TestPluginService();
-
-        $prophet = new Prophet();
-        $prophecy = $prophet->prophesize();
-        $prophecy->willExtend(PluginRegistry::class);
+        $prophecy = $this->prophesize(PluginRegistry::class);
         $prophecy->getMap()->willReturn(self::$pluginData);
 
+        $testPluginService = new TestPluginService();
         $testPluginService->setRegistry($prophecy->reveal());
 
         return $testPluginService;
@@ -131,28 +128,38 @@ class TestRunnerFeatureTest extends TaoPhpUnitTestRunner
 
     public function testConstructPluginsIdNotInRegistry()
     {
-        $testLogger = new TestLogger();
-        $feature = new TestFeatureWithCustomLogger(
+        $feature = new TestFeature(
             'myId',
             ['iDontExist'],
             true,
-            $this->getTestPluginService()->getAllPlugins(),
-            $testLogger
+            $this->getTestPluginService()->getAllPlugins()
         );
+
+        $testLogger = new TestLogger();
+        $serviceLocatorMock = $this->getServiceLocatorMock([
+            LoggerService::SERVICE_ID => $testLogger
+        ]);
+        $feature->setServiceLocator($serviceLocatorMock);
+
         $feature->getPluginsIds();
         $this->assertTrue($testLogger->has(LogLevel::WARNING, 'Invalid plugin Id iDontExist for test runner feature myId'));
     }
 
     public function testConstructPluginsInactive()
     {
-        $testLogger = new TestLogger();
-        $feature = new TestFeatureWithCustomLogger(
+        $feature = new TestFeature(
             'myId',
             ['inactive'],
             true,
-            $this->getTestPluginService()->getAllPlugins(),
-            $testLogger
+            $this->getTestPluginService()->getAllPlugins()
         );
+
+        $testLogger = new TestLogger();
+        $serviceLocatorMock = $this->getServiceLocatorMock([
+            LoggerService::SERVICE_ID => $testLogger
+        ]);
+        $feature->setServiceLocator($serviceLocatorMock);
+
         $feature->getPluginsIds();
         $this->assertTrue($testLogger->has(LogLevel::WARNING, 'Cannot include inactive plugin inactive in test runner feature myId'));
     }
@@ -216,14 +223,5 @@ class TestRunnerFeatureTest extends TaoPhpUnitTestRunner
             'new oat\taoTests\test\integration\runner\features\samples\TestFeature()',
             $feature->__toPhpCode()
         );
-    }
-}
-
-
-class TestFeatureWithCustomLogger extends TestFeature {
-    public function __construct($id, array $pluginsIds, $isEnabledByDefault, array $allPlugins, $customLogger)
-    {
-        $this->setLogger($customLogger);
-        parent::__construct($id, $pluginsIds, $isEnabledByDefault, $allPlugins);
     }
 }
