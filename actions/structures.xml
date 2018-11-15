@@ -54,6 +54,12 @@
                     <action id="test-copy-to" name="Copy To" url="/taoTests/Tests/copyInstance" context="instance" group="tree" binding="copyTo">
                         <icon id="icon-copy"/>
                     </action>
+                    <action id="test-move-to" name="Move To" url="/taoTests/Tests/moveResource" context="resource" group="tree" binding="moveTo">
+                        <icon id="icon-move-item"/>
+                    </action>
+                    <action id="test-move-all" name="Move To" url="/taoTests/Tests/moveAll" context="resource" multiple="true" group="tree" binding="moveTo">
+                        <icon id="icon-move-item"/>
+                    </action>
                     <action id="test-new" name="New test" url="/taoTests/Tests/addInstance" context="resource" group="tree" binding="instanciate">
                         <icon id="icon-test"/>
                     </action>
