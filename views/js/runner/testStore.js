@@ -92,7 +92,8 @@ define([
     return function testStoreLoader(testId, preselectedBackend){
 
         var storeNames = [];
-        var volatiles = [];
+        var volatiles  = [];
+        var changes = {};
         var testMode;
 
         /**
@@ -133,6 +134,15 @@ define([
              * @returns {Promise<storage>}
              */
             getStore : function getStore(storeName) {
+
+                //call when the current storge has been changed
+                //only if the store is set to track changes
+                var trackChange = function trackChange(){
+                    if(_.isBoolean(changes[storeName])){
+                        changes[storeName] = true;
+                    }
+                };
+
                 if(_.isEmpty(storeName)){
                     throw new TypeError('A store name must be provided to get the store');
                 }
@@ -155,25 +165,25 @@ define([
                         };
 
                         /**
-                        * The wrapped storage
-                        * @type {Object}
-                        */
+                         * The wrapped storage
+                         * @type {Object}
+                         */
                         return {
 
 
                             /**
-                            * Get an item with the given key
-                            * @param {String} key
-                            * @returns {Promise<*>} with the result in resolve, undefined if nothing
-                            */
+                             * Get an item with the given key
+                             * @param {String} key
+                             * @returns {Promise<*>} with the result in resolve, undefined if nothing
+                             */
                             getItem : function getItem(key){
                                 return loadedStore.getItem(storeKey(key));
                             },
 
                             /**
-                            * Get all store items
-                            * @returns {Promise<Object>} with a collection of items
-                            */
+                             * Get all store items
+                             * @returns {Promise<Object>} with a collection of items
+                             */
                             getItems : function getItems(){
                                 if(isUnified){
                                     return loadedStore.getItems().then(function(entries){
@@ -190,30 +200,32 @@ define([
                             },
 
                             /**
-                            * Set an item with the given key
-                            * @param {String} key - the item key
-                            * @param {*} value - the item value
-                            * @returns {Promise<Boolean>} with true in resolve if added/updated
-                            */
+                             * Set an item with the given key
+                             * @param {String} key - the item key
+                             * @param {*} value - the item value
+                             * @returns {Promise<Boolean>} with true in resolve if added/updated
+                             */
                             setItem : function setItem(key, value){
+                                trackChange();
                                 return loadedStore.setItem(storeKey(key), value);
                             },
 
                             /**
-                            * Remove an item with the given key
-                            * @param {String} key - the item key
-                            * @returns {Promise<Boolean>} with true in resolve if removed
-                            */
-
+                             * Remove an item with the given key
+                             * @param {String} key - the item key
+                             * @returns {Promise<Boolean>} with true in resolve if removed
+                             */
                             removeItem : function removeItem(key){
+                                trackChange();
                                 return loadedStore.removeItem(storeKey(key));
                             },
 
                             /**
-                            * Clear the current store
-                            * @returns {Promise<Boolean>} with true in resolve once cleared
-                            */
+                             * Clear the current store
+                             * @returns {Promise<Boolean>} with true in resolve once cleared
+                             */
                             clear : function clear(){
+                                trackChange();
                                 if(isUnified){
                                     return loadedStore.getItems()
                                         .then(function(entries){
@@ -288,6 +300,38 @@ define([
                 return Promise.all(clearing).then(function(results){
                     return results && results.length === volatiles.length;
                 });
+            },
+
+            /**
+             * Observe changes on the given store
+             *
+             * @param {String} storeName - the name of the store to observe
+             * @returns {testStore} chains
+             */
+            trackChanges : function trackChanges(storeName){
+                changes[storeName] = false;
+                return this;
+            },
+
+            /**
+             * Has the store some changes
+             *
+             * @param {String} storeName - the name of the store to set as volatile
+             * @returns {Boolean} true if the given store has some changes
+             */
+            hasChanges : function hasChanges(storeName){
+                return changes[storeName] === true;
+            },
+
+            /**
+             * Reset the change listening
+             *
+             * @param {String} storeName - the name of the store
+             * @returns {testStore} chains
+             */
+            resetChanges : function resetChanges(storeName){
+                changes[storeName] = false;
+                return this;
             },
 
             /**
