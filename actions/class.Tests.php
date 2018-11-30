@@ -120,12 +120,13 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
      * called via ajax
      * @return void
      * @throws Exception
+     * @throws common_exception_BadRequest
      * @requiresRight id WRITE
      */
     public function delete()
     {
         if (!tao_helpers_Request::isAjax()) {
-            throw new Exception("wrong request mode");
+            throw new common_exception_BadRequest('wrong request mode');
         }
 
         $deleted = false;
