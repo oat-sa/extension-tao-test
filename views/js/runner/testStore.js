@@ -93,7 +93,7 @@ define([
 
         var storeNames = [];
         var volatiles  = [];
-        var changes = {};
+        var changeTracking = {};
         var testMode;
 
         /**
@@ -138,8 +138,8 @@ define([
                 //call when the current storge has been changed
                 //only if the store is set to track changes
                 var trackChange = function trackChange(){
-                    if(_.isBoolean(changes[storeName])){
-                        changes[storeName] = true;
+                    if(_.isBoolean(changeTracking[storeName])){
+                        changeTracking[storeName] = true;
                     }
                 };
 
@@ -308,8 +308,8 @@ define([
              * @param {String} storeName - the name of the store to observe
              * @returns {testStore} chains
              */
-            trackChanges : function trackChanges(storeName){
-                changes[storeName] = false;
+            startChangeTracking : function startChangeTracking(storeName){
+                changeTracking[storeName] = false;
                 return this;
             },
 
@@ -320,7 +320,7 @@ define([
              * @returns {Boolean} true if the given store has some changes
              */
             hasChanges : function hasChanges(storeName){
-                return changes[storeName] === true;
+                return changeTracking[storeName] === true;
             },
 
             /**
@@ -330,7 +330,9 @@ define([
              * @returns {testStore} chains
              */
             resetChanges : function resetChanges(storeName){
-                changes[storeName] = false;
+                if(_.isBoolean(changeTracking[storeName])){
+                    changeTracking[storeName] = false;
+                }
                 return this;
             },
 
