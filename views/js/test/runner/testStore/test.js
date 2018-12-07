@@ -106,7 +106,7 @@ define([
     }, {
         title: 'remove'
     }, {
-        title: 'trackChanges'
+        title: 'startChangeTracking'
     }, {
         title: 'hasChanges'
     }, {
@@ -634,8 +634,8 @@ define([
         QUnit.expect(10);
 
         testStore = testStoreLoader('789456', mockBackend);
-        testStore.trackChanges('store-A');
-        testStore.trackChanges('store-B');
+        testStore.startChangeTracking('store-A');
+        testStore.startChangeTracking('store-B');
 
         assert.equal(testStore.hasChanges('store-A'), false, 'The store-A has no changes');
         assert.equal(testStore.hasChanges('store-B'), false, 'The store-B has no changes');
