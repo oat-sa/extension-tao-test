@@ -105,6 +105,12 @@ define([
         title: 'clearVolatileStores'
     }, {
         title: 'remove'
+    }, {
+        title: 'startChangeTracking'
+    }, {
+        title: 'hasChanges'
+    }, {
+        title: 'resetChanges'
     }])
     .test('testStore API ', function(data, assert) {
         QUnit.expect(1);
@@ -604,6 +610,68 @@ define([
                 assert.equal(typeof mockedData['123456'], 'undefined', 'The store is removed');
             })
             .then(function(){
+                QUnit.start();
+            })
+            .catch(function(err){
+                assert.ok(false, err.message);
+                QUnit.start();
+            });
+    });
+
+
+    QUnit.module('Changes', {
+        teardown: function(){
+            mockedData = {};
+            mockBackend.getAll = function(){
+                return [];
+            };
+        }
+    });
+
+    QUnit.asyncTest('track changes', function(assert){
+        var testStore;
+
+        QUnit.expect(10);
+
+        testStore = testStoreLoader('789456', mockBackend);
+        testStore.startChangeTracking('store-A');
+        testStore.startChangeTracking('store-B');
+
+        assert.equal(testStore.hasChanges('store-A'), false, 'The store-A has no changes');
+        assert.equal(testStore.hasChanges('store-B'), false, 'The store-B has no changes');
+
+        testStore.getStore('store-A')
+            .then(function(storeA){
+                return storeA.setItem('foo', 123);
+            })
+            .then(function(){
+
+                assert.equal(testStore.hasChanges('store-A'), true, 'The store-A has some changes');
+                assert.equal(testStore.hasChanges('store-B'), false, 'The store-B has no changes');
+
+                testStore.resetChanges('store-A');
+
+                assert.equal(testStore.hasChanges('store-A'), false, 'The store-A has no changes anymore');
+                assert.equal(testStore.hasChanges('store-B'), false, 'The store-B has no changes');
+
+                return testStore.getStore('store-A');
+            })
+            .then(function(storeA){
+                return storeA.getItem('elapsed', 124);
+            })
+            .then(function(){
+                assert.equal(testStore.hasChanges('store-A'), false, 'The store-A still has no changes');
+                assert.equal(testStore.hasChanges('store-B'), false, 'The store-B has no changes');
+
+                return testStore.getStore('store-A');
+            })
+            .then(function(storeA){
+                return storeA.removeItem('foo');
+            })
+            .then(function(){
+                assert.equal(testStore.hasChanges('store-A'), true, 'The store-A has some changes');
+                assert.equal(testStore.hasChanges('store-B'), false, 'The store-B has no changes');
+
                 QUnit.start();
             })
             .catch(function(err){
