@@ -20,6 +20,7 @@
  *
  */
 use oat\oatbox\event\EventManagerAwareTrait;
+use oat\tao\model\controller\SignedFormInstance;
 use oat\tao\model\lock\LockManager;
 use oat\taoTests\models\event\TestUpdatedEvent;
 use oat\tao\model\resources\ResourceWatcher;
@@ -75,10 +76,12 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
             }
 
             $clazz = $this->getCurrentClass();
-            $formContainer = new tao_actions_form_Instance($clazz, $test);
+            $formContainer = new SignedFormInstance($clazz, $test);
             $myForm = $formContainer->getForm();
             if($myForm->isSubmited()){
                     if($myForm->isValid()){
+                            $this->validateInstanceRoot($test->getUri());
+
                             $propertyValues = $myForm->getValues();
 
                             // don't hande the testmodel via bindProperties
@@ -129,7 +132,10 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
         }
 
         $deleted = false;
-        if ($this->getRequestParameter('uri')) {
+
+        $uri = $this->getRequestParameter('uri');
+        if ($uri) {
+            $this->validateInstanceRoot($uri);
 
             $instance = $this->getCurrentInstance();
 
@@ -142,7 +148,7 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 
             $deleted = $this->service->deleteTest($instance);
         } else {
-                return $this->forward('deleteClass', null, null, (array('id' => $this->getRequestParameter('id'))));
+            return $this->forward('deleteClass', null, null, (array('id' => $this->getRequestParameter('id'))));
         }
 
         echo json_encode(array('deleted' => $deleted));
