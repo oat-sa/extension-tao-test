@@ -106,7 +106,6 @@ define([
                     }
 
                     if (err) {
-                        proxy.trigger('error', err);
                         reject(err);
                     } else {
                         proxy.trigger('receive', response.data, 'proxy');
