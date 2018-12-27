@@ -19,11 +19,10 @@
  */
 namespace oat\taoTests\test\unit\runner\plugins;
 
-use common_exception_InconsistentData;
+use oat\generis\test\TestCase;
 use oat\taoTests\models\runner\plugins\PluginRegistry;
 use oat\taoTests\models\runner\plugins\TestPlugin;
 use oat\taoTests\models\runner\plugins\TestPluginService;
-use oat\tao\test\TaoPhpUnitTestRunner;
 use Prophecy\Prophet;
 use oat\oatbox\service\ConfigurableService;
 
@@ -32,7 +31,7 @@ use oat\oatbox\service\ConfigurableService;
  *
  * @author Bertrand Chevrier <bertrand@taotesting.com>
  */
-class TestPluginServiceTest extends TaoPhpUnitTestRunner
+class TestPluginServiceTest extends TestCase
 {
 
     //data to stub the regsitry content

@@ -20,6 +20,7 @@
 namespace oat\taoTests\test\integration\runner\features;
 
 use common_exception_InconsistentData;
+use oat\generis\test\GenerisPhpUnitTestRunner;
 use oat\generis\test\unit\oatbox\log\TestLogger;
 use oat\tao\test\TaoPhpUnitTestRunner;
 use oat\taoTests\models\runner\features\TestRunnerFeatureService;
@@ -34,7 +35,7 @@ use Psr\Log\LogLevel;
  *
  * @author Christophe Noël <christophe@taotesting.com>
  */
-class TestRunnerFeatureServiceTest extends TaoPhpUnitTestRunner
+class TestRunnerFeatureServiceTest extends GenerisPhpUnitTestRunner
 {
     //data to stub the registry content
     private static $pluginData =  [
@@ -66,12 +67,10 @@ class TestRunnerFeatureServiceTest extends TaoPhpUnitTestRunner
     {
         $testPluginService = new TestPluginService();
 
-        $prophet = new Prophet();
-        $prophecy = $prophet->prophesize();
-        $prophecy->willExtend(PluginRegistry::class);
-        $prophecy->getMap()->willReturn(self::$pluginData);
+        $pluginRegistryProphecy = $this->prophesize(PluginRegistry::class);
+        $pluginRegistryProphecy->getMap()->willReturn(self::$pluginData);
 
-        $testPluginService->setRegistry($prophecy->reveal());
+        $testPluginService->setRegistry($pluginRegistryProphecy->reveal());
 
         return $testPluginService;
     }
@@ -104,7 +103,7 @@ class TestRunnerFeatureServiceTest extends TaoPhpUnitTestRunner
         $testRunnerFeatureService->register($feature1);
         $testRunnerFeatureService->register($feature2);
         $testRunnerFeatureService->register($feature3);
-        $testRunnerFeatureService->setServiceLocator($this->getServiceManagerProphecy());
+        $testRunnerFeatureService->setServiceLocator($this->getServiceLocatorMock([]));
 
         $registeredFeatures = $testRunnerFeatureService->getAll();
 
@@ -156,7 +155,7 @@ class TestRunnerFeatureServiceTest extends TaoPhpUnitTestRunner
         $testRunnerFeatureService = new TestRunnerFeatureService();
         $testRunnerFeatureService->register($feature1);
         $testRunnerFeatureService->register($feature2);
-        $testRunnerFeatureService->setServiceLocator($this->getServiceManagerProphecy());
+        $testRunnerFeatureService->setServiceLocator($this->getServiceLocatorMock([]));
 
         $registeredFeatures = $testRunnerFeatureService->getAll();
 

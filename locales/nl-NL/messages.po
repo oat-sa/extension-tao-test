@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.1.0-sprint15\n"
-"PO-Revision-Date: 2015-12-23T13:38:13\n"
+"Project-Id-Version: TAO 3.3.0-sprint91\n"
+"PO-Revision-Date: 2018-12-14T15:26:27\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: nl-NL\n"
@@ -13,78 +13,97 @@ msgstr ""
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#, tao-public
-msgid "Authoring"
+msgid " . \common_Utils::toPHPVariableString($this->getDescription()) . "
+msgstr ""
+
+msgid " . \common_Utils::toPHPVariableString($this->getLabel()) . "
 msgstr ""
 
 #, tao-public
+msgid "Authoring"
+msgstr "Construeren"
+
+#, tao-public
 msgid "Combine a selection of items into tests."
+msgstr "Combineer een selectie van items in toetsen"
+
+#, tao-public
+msgid "Copy To"
 msgstr ""
 
 #, tao-public
 msgid "Delete"
-msgstr ""
+msgstr "Verwijderen"
 
 #, tao-public
 msgid "Duplicate"
-msgstr ""
+msgstr "Dupliceer"
 
 #, tao-public
 msgid "Export"
-msgstr ""
-
-#, tao-public
-msgid "Filter"
-msgstr ""
+msgstr "Exporteer"
 
 #, tao-public
 msgid "Import"
+msgstr "Importeer"
+
+msgid "Last updated on %2s"
+msgstr ""
+
+#, tao-public
+msgid "Manage Schema"
 msgstr ""
 
 #, tao-public
 msgid "Manage tests"
-msgstr ""
+msgstr "Beheer toetsen"
 
 #, tao-public
 msgid "Move"
+msgstr "Verplaatsen"
+
+#, tao-public
+msgid "Move To"
 msgstr ""
 
 #, tao-public
 msgid "New class"
-msgstr ""
+msgstr "Nieuw klasse"
 
 #, tao-public
 msgid "New test"
-msgstr ""
+msgstr "Nieuwe toets"
 
 #, tao-public
 msgid "Properties"
+msgstr "Eigenschappen"
+
+msgid "Security plugins"
 msgstr ""
 
-#, tao-public
-msgid "Search"
+msgid "Set of plugins with \'security\' category"
 msgstr ""
 
 msgid "Test properties"
-msgstr ""
+msgstr "Toets eigenschappen"
 
 msgid "Test saved"
-msgstr ""
+msgstr "Toets opgeslagen"
 
 #, tao-public
 msgid "Tests"
-msgstr ""
+msgstr "Toets"
 
 #, tao-public
 msgid "Tests library"
-msgstr ""
+msgstr "Toets bank "
 
 msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
-msgstr ""
+msgstr "De toets modus (volgorde, score, verzamelen, enz.) en lay-out worden ook hier geconfigureerd."
 
 msgid "The Tests module allows to combine a selection of Items to a Test."
-msgstr ""
+msgstr "The toets module laat u een toets maken door een selectie van items te combineren."
 
 msgid "You checked out this test %2s ago"
-msgstr ""
+msgstr "U heeft zich %2s geleden uit deze toets gecheckt."
 

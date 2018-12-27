@@ -20,21 +20,22 @@
 
 namespace oat\taoTests\test\integration\runner\features;
 
-use oat\tao\test\TaoPhpUnitTestRunner;
+use oat\generis\test\GenerisPhpUnitTestRunner;
 use oat\taoTests\models\runner\plugins\PluginRegistry;
 use oat\taoTests\models\runner\plugins\TestPluginService;
 use oat\taoTests\models\runner\features\SecurityFeature;
-use Prophecy\Prophet;
 
-class SecurityFeatureTest extends TaoPhpUnitTestRunner
+class SecurityFeatureTest extends GenerisPhpUnitTestRunner
 {
 
     public function testGetPluginsIds()
     {
-        $serviceManager = $this->getServiceManagerProphecy();
-        $serviceManager->register(TestPluginService::SERVICE_ID, $this->getTestPluginService());
+        $serviceLocatorMock = $this->getServiceLocatorMock([
+            TestPluginService::SERVICE_ID => $this->getTestPluginService()
+        ]);
+
         $feature = new SecurityFeature();
-        $feature->setServiceLocator($serviceManager);
+        $feature->setServiceLocator($serviceLocatorMock);
         $plugins = $feature->getPluginsIds();
         sort($plugins);
         $this->assertEquals(['secure1', 'secure2'], $plugins);
@@ -73,13 +74,10 @@ class SecurityFeatureTest extends TaoPhpUnitTestRunner
      */
     protected function getTestPluginService()
     {
-        $testPluginService = new TestPluginService();
-
-        $prophet = new Prophet();
-        $prophecy = $prophet->prophesize();
-        $prophecy->willExtend(PluginRegistry::class);
+        $prophecy = $this->prophesize(PluginRegistry::class);
         $prophecy->getMap()->willReturn(self::$pluginData);
 
+        $testPluginService = new TestPluginService();
         $testPluginService->setRegistry($prophecy->reveal());
 
         return $testPluginService;
