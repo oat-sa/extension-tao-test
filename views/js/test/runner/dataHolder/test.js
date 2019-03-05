@@ -21,39 +21,36 @@
  *
  * @author Bertrand Chevrier <bertrand@taotesting.com>
  */
-define([
-    'core/collections',
-    'taoTests/runner/dataHolder',
-], function (collections, dataHolderFactory){
+define( [  'core/collections', 'taoTests/runner/dataHolder' ], function(  collections, dataHolderFactory ) {
     'use strict';
 
-    QUnit.module('API');
+    QUnit.module( 'API' );
 
-    QUnit.test('module', function (assert){
-        QUnit.expect(1);
+    QUnit.test( 'module', function( assert ) {
+        assert.expect( 1 );
 
-        assert.equal(typeof dataHolderFactory, 'function', "The module exposes a function");
-    });
+        assert.equal( typeof dataHolderFactory, 'function', 'The module exposes a function' );
+    } );
 
-    QUnit.test('factory', function (assert){
+    QUnit.test( 'factory', function( assert ) {
         var holder;
-        QUnit.expect(2);
+        assert.expect( 2 );
 
         holder =  dataHolderFactory();
 
-        assert.equal(typeof holder, 'object', 'The factory creates an object');
-        assert.ok(holder instanceof collections.Map, 'The holder is a common Map');
-    });
+        assert.equal( typeof holder, 'object', 'The factory creates an object' );
+        assert.ok( holder instanceof collections.Map, 'The holder is a common Map' );
+    } );
 
-    QUnit.test('defaults', function (assert){
+    QUnit.test( 'defaults', function( assert ) {
         var holder;
-        QUnit.expect(4);
+        assert.expect( 4 );
 
         holder =  dataHolderFactory();
 
-        assert.equal(typeof holder.get('testFoo'), 'undefined', 'testFoo is not a default');
-        assert.equal(typeof holder.get('testData'), 'object', 'testData is a default');
-        assert.equal(typeof holder.get('testContext'), 'object', 'testContext is a default');
-        assert.equal(typeof holder.get('testMap'), 'object', 'testMap is a default');
-    });
-});
+        assert.equal( typeof holder.get( 'testFoo' ), 'undefined', 'testFoo is not a default' );
+        assert.equal( typeof holder.get( 'testData' ), 'object', 'testData is a default' );
+        assert.equal( typeof holder.get( 'testContext' ), 'object', 'testContext is a default' );
+        assert.equal( typeof holder.get( 'testMap' ), 'object', 'testMap is a default' );
+    } );
+} );

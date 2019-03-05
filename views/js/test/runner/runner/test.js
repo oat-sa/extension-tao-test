@@ -19,499 +19,511 @@
  * @author Jean-Sébastien Conan <jean-sebastien.conan@vesperiagroup.com>
  * @author Sam <sam@taotesting.com>
  */
-define([
+define( [
+    
     'jquery',
     'lodash',
     'core/promise',
     'core/eventifier',
     'taoTests/runner/runner',
     'taoTests/runner/plugin'
-], function($, _, Promise, eventifier, runnerFactory, pluginFactory){
+], function(  $, _, Promise, eventifier, runnerFactory, pluginFactory ) {
     'use strict';
 
     var mockProvider = {
-        init : _.noop,
-        loadAreaBroker  : _.noop,
-        loadProxy : _.noop
+        init: _.noop,
+        loadAreaBroker: _.noop,
+        loadProxy: _.noop
     };
 
     var items = {
-        'aaa' : 'AAA',
-        'zzz' : 'ZZZ'
+        'aaa': 'AAA',
+        'zzz': 'ZZZ'
     };
 
-    QUnit.module('factory', {
-        teardown: function() {
+    QUnit.module( 'factory', {
+        afterEach: function( assert ) {
             runnerFactory.clearProviders();
         }
-    });
+    } );
 
-    QUnit.test('module', function(assert){
-        QUnit.expect(5);
-        runnerFactory.registerProvider('mock', mockProvider);
+    QUnit.test( 'module', function( assert ) {
+        assert.expect( 5 );
+        runnerFactory.registerProvider( 'mock', mockProvider );
 
-        assert.equal(typeof runnerFactory, 'function', "The runner module exposes a function");
-        assert.equal(typeof runnerFactory('mock'), 'object', "The runner factory produces an object");
-        assert.notStrictEqual(runnerFactory('mock'), runnerFactory('mock'), "The runner factory provides a different object on each call");
-        assert.equal(typeof runnerFactory.registerProvider, 'function', "The runner module exposes a function registerProvider()");
-        assert.equal(typeof runnerFactory.getProvider, 'function', "The runner module exposes a function getProvider()");
-    });
+        assert.equal( typeof runnerFactory, 'function', 'The runner module exposes a function' );
+        assert.equal( typeof runnerFactory( 'mock' ), 'object', 'The runner factory produces an object' );
+        assert.notStrictEqual( runnerFactory( 'mock' ), runnerFactory( 'mock' ), 'The runner factory provides a different object on each call' );
+        assert.equal( typeof runnerFactory.registerProvider, 'function', 'The runner module exposes a function registerProvider()' );
+        assert.equal( typeof runnerFactory.getProvider, 'function', 'The runner module exposes a function getProvider()' );
+    } );
 
-    QUnit.cases([
-        {name : 'init', title : 'init'},
-        {name : 'render', title : 'render'},
-        {name : 'finish', title : 'finish'},
-        {name : 'flush', title : 'flush'},
-        {name : 'destroy', title : 'destroy'},
-        {name : 'loadItem', title : 'loadItem'},
-        {name : 'renderItem', title : 'renderItem'},
-        {name : 'unloadItem', title : 'unloadItem'},
-        {name : 'disableItem', title : 'disableItem'},
-        {name : 'enableItem', title : 'enableItem'},
+    QUnit.cases.init( [
+        { name: 'init', title: 'init' },
+        { name: 'render', title: 'render' },
+        { name: 'finish', title: 'finish' },
+        { name: 'flush', title: 'flush' },
+        { name: 'destroy', title: 'destroy' },
+        { name: 'loadItem', title: 'loadItem' },
+        { name: 'renderItem', title: 'renderItem' },
+        { name: 'unloadItem', title: 'unloadItem' },
+        { name: 'disableItem', title: 'disableItem' },
+        { name: 'enableItem', title: 'enableItem' },
 
-        {name : 'getPlugins', title : 'getPlugins'},
-        {name : 'getPlugin', title : 'getPlugin'},
-        {name : 'getConfig', title : 'getConfig'},
-        {name : 'getState', title : 'getState'},
-        {name : 'setState', title : 'setState'},
-        {name : 'getItemState', title : 'getItemState'},
-        {name : 'setItemState', title : 'setItemState'},
-        {name : 'getTestData', title : 'getTestData'},
-        {name : 'getTestContext', title : 'getTestContext'},
-        {name : 'getTestMap', title : 'getTestMap'},
-        {name : 'getAreaBroker', title : 'getAreaBroker'},
-        {name : 'getProxy', title : 'getProxy'},
-        {name : 'getProbeOverseer', title : 'getProbeOverseer'},
-        {name : 'getDataHolder', title : 'getDataHolder'},
+        { name: 'getPlugins', title: 'getPlugins' },
+        { name: 'getPlugin', title: 'getPlugin' },
+        { name: 'getConfig', title: 'getConfig' },
+        { name: 'getState', title: 'getState' },
+        { name: 'setState', title: 'setState' },
+        { name: 'getItemState', title: 'getItemState' },
+        { name: 'setItemState', title: 'setItemState' },
+        { name: 'getTestData', title: 'getTestData' },
+        { name: 'getTestContext', title: 'getTestContext' },
+        { name: 'getTestMap', title: 'getTestMap' },
+        { name: 'getAreaBroker', title: 'getAreaBroker' },
+        { name: 'getProxy', title: 'getProxy' },
+        { name: 'getProbeOverseer', title: 'getProbeOverseer' },
+        { name: 'getDataHolder', title: 'getDataHolder' },
 
-        {name : 'next', title : 'next'},
-        {name : 'previous', title : 'previous'},
-        {name : 'jump', title : 'jump'},
-        {name : 'skip', title : 'skip'},
-        {name : 'exit', title : 'exit'},
-        {name : 'pause', title : 'pause'},
-        {name : 'resume', title : 'resume'},
-        {name : 'timeout', title : 'timeout'},
+        { name: 'next', title: 'next' },
+        { name: 'previous', title: 'previous' },
+        { name: 'jump', title: 'jump' },
+        { name: 'skip', title: 'skip' },
+        { name: 'exit', title: 'exit' },
+        { name: 'pause', title: 'pause' },
+        { name: 'resume', title: 'resume' },
+        { name: 'timeout', title: 'timeout' },
 
-        {name : 'trigger', title : 'trigger'},
-        {name : 'before', title : 'before'},
-        {name : 'on', title : 'on'},
-        {name : 'after', title : 'after'}
-    ]).test('api', function(data, assert){
+        { name: 'trigger', title: 'trigger' },
+        { name: 'before', title: 'before' },
+        { name: 'on', title: 'on' },
+        { name: 'after', title: 'after' }
+    ] ).test( 'api', function( data, assert ) {
         var runner;
-        runnerFactory.registerProvider('mock', mockProvider);
+        runnerFactory.registerProvider( 'mock', mockProvider );
         runner = runnerFactory();
-        assert.equal(typeof runner[data.name], 'function', 'The runner instance exposes a "' + data.title + '" function');
-    });
+        assert.equal( typeof runner[ data.name ], 'function', 'The runner instance exposes a "' + data.title + '" function' );
+    } );
 
-
-    QUnit.module('provider', {
-        teardown: function(){
+    QUnit.module( 'provider', {
+        afterEach: function( assert ) {
             runnerFactory.clearProviders();
         }
-    });
+    } );
 
-    QUnit.asyncTest('init', function(assert){
+    QUnit.test( 'init', function( assert ) {
+        var ready = assert.async();
         var runner;
 
-        QUnit.expect(1);
+        assert.expect( 1 );
 
-        runnerFactory.registerProvider('foo', {
-            loadAreaBroker : _.noop,
-            init : function(){
-                assert.equal(this.bar, 'baz', 'The provider is executed on the runner context');
-                QUnit.start();
+        runnerFactory.registerProvider( 'foo', {
+            loadAreaBroker: _.noop,
+            init: function() {
+                assert.equal( this.bar, 'baz', 'The provider is executed on the runner context' );
+                ready();
             }
-        });
+        } );
 
-        runner = runnerFactory('foo');
+        runner = runnerFactory( 'foo' );
         runner.bar = 'baz';
         runner.init();
-    });
+    } );
 
-    QUnit.asyncTest('get config', function(assert){
+    QUnit.test( 'get config', function( assert ) {
+        var ready = assert.async();
         var config = {
-            'moo' : 'norz'
+            'moo': 'norz'
         };
-        QUnit.expect(1);
+        assert.expect( 1 );
 
-        runnerFactory.registerProvider('foo', {
-            loadAreaBroker : _.noop,
-            init : function(){
+        runnerFactory.registerProvider( 'foo', {
+            loadAreaBroker: _.noop,
+            init: function() {
                 var myConfig = this.getConfig();
-                assert.deepEqual(myConfig, config, 'The retrieved config is the right one');
-                QUnit.start();
+                assert.deepEqual( myConfig, config, 'The retrieved config is the right one' );
+                ready();
             }
-        });
+        } );
 
-        runnerFactory('foo', {}, config).init();
-    });
+        runnerFactory( 'foo', {}, config ).init();
+    } );
 
-    QUnit.asyncTest('render after async init', function(assert){
+    QUnit.test( 'render after async init', function( assert ) {
+        var ready = assert.async();
         var runner;
         var resolved = false;
 
-        QUnit.expect(4);
+        assert.expect( 4 );
 
-        runnerFactory.registerProvider('foo', {
-            loadAreaBroker : _.noop,
-            init : function(){
-                var p = new Promise(function(resolve){
-                    setTimeout(function(){
+        runnerFactory.registerProvider( 'foo', {
+            loadAreaBroker: _.noop,
+            init: function() {
+                var p = new Promise( function( resolve ) {
+                    setTimeout( function() {
                         resolved = true;
                         resolve();
-                    }, 50);
-                });
-                assert.equal(resolved, false, 'Init is not yet resolved');
+                    }, 50 );
+                } );
+                assert.equal( resolved, false, 'Init is not yet resolved' );
                 return p;
             },
-            render : function(){
-                assert.equal(resolved, true, 'Render is called only when init is resolved');
+            render: function() {
+                assert.equal( resolved, true, 'Render is called only when init is resolved' );
             }
-        });
+        } );
 
-        runner = runnerFactory('foo');
+        runner = runnerFactory( 'foo' );
 
-        assert.equal(resolved, false, 'Init is not yet resolved');
+        assert.equal( resolved, false, 'Init is not yet resolved' );
         runner
-           .on('ready', function(){
-               assert.equal(resolved, true, 'Ready is triggered only when init is resolved');
-               QUnit.start();
-           })
+           .on( 'ready', function() {
+               assert.equal( resolved, true, 'Ready is triggered only when init is resolved' );
+               ready();
+           } )
            .init();
-    });
+    } );
 
-    QUnit.asyncTest('states', function(assert){
+    QUnit.test( 'states', function( assert ) {
+        var ready = assert.async();
         var runner;
-        QUnit.expect(31);
+        assert.expect( 31 );
 
-        runnerFactory.registerProvider('foo', {
-            loadAreaBroker : _.noop,
+        runnerFactory.registerProvider( 'foo', {
+            loadAreaBroker: _.noop,
             init: _.noop
-        });
-        runner = runnerFactory('foo');
+        } );
+        runner = runnerFactory( 'foo' );
 
-        assert.throws(function(){
-            runner.setState({ custom : true });
-        }, TypeError, 'A state must have a name');
+        assert.throws( function() {
+            runner.setState( { custom: true } );
+        }, TypeError, 'A state must have a name' );
 
         runner
-            .setState('custom', true)
-            .on('init', function(){
+            .setState( 'custom', true )
+            .on( 'init', function() {
 
-                assert.equal(this.getState('custom'), true, 'The runner has the custom state');
-                assert.equal(this.getState('init'), true, 'The runner is initialized');
-                assert.equal(this.getState('ready'), false, 'The runner is not rendered');
-                assert.equal(this.getState('finish'), false, 'The runner is not  finished');
-                assert.equal(this.getState('flush'), false, 'The runner is not flushed');
-                assert.equal(this.getState('destroy'), false, 'The runner is not destroyed');
-            })
-            .on('ready', function(){
-                assert.equal(this.getState('init'), true, 'The runner is initialized');
-                assert.equal(this.getState('ready'), true, 'The runner is rendered');
-                assert.equal(this.getState('finish'), false, 'The runner is not finished');
-                assert.equal(this.getState('flush'), false, 'The runner is not flushed');
-                assert.equal(this.getState('destroy'), false, 'The runner is not destroyed');
+                assert.equal( this.getState( 'custom' ), true, 'The runner has the custom state' );
+                assert.equal( this.getState( 'init' ), true, 'The runner is initialized' );
+                assert.equal( this.getState( 'ready' ), false, 'The runner is not rendered' );
+                assert.equal( this.getState( 'finish' ), false, 'The runner is not  finished' );
+                assert.equal( this.getState( 'flush' ), false, 'The runner is not flushed' );
+                assert.equal( this.getState( 'destroy' ), false, 'The runner is not destroyed' );
+            } )
+            .on( 'ready', function() {
+                assert.equal( this.getState( 'init' ), true, 'The runner is initialized' );
+                assert.equal( this.getState( 'ready' ), true, 'The runner is rendered' );
+                assert.equal( this.getState( 'finish' ), false, 'The runner is not finished' );
+                assert.equal( this.getState( 'flush' ), false, 'The runner is not flushed' );
+                assert.equal( this.getState( 'destroy' ), false, 'The runner is not destroyed' );
 
                 this.finish();
-            })
-            .on('finish', function(){
-                assert.equal(this.getState('init'), true, 'The runner is initialized');
-                assert.equal(this.getState('ready'), true, 'The runner is rendered');
-                assert.equal(this.getState('finish'), true, 'The runner is finished');
-                assert.equal(this.getState('flush'), false, 'The runner is not flushed');
-                assert.equal(this.getState('destroy'), false, 'The runner is not destroyed');
+            } )
+            .on( 'finish', function() {
+                assert.equal( this.getState( 'init' ), true, 'The runner is initialized' );
+                assert.equal( this.getState( 'ready' ), true, 'The runner is rendered' );
+                assert.equal( this.getState( 'finish' ), true, 'The runner is finished' );
+                assert.equal( this.getState( 'flush' ), false, 'The runner is not flushed' );
+                assert.equal( this.getState( 'destroy' ), false, 'The runner is not destroyed' );
 
                 this.flush();
-            })
-            .on('flush', function(){
-                assert.equal(this.getState('init'), true, 'The runner is initialized');
-                assert.equal(this.getState('ready'), true, 'The runner is rendered');
-                assert.equal(this.getState('finish'), true, 'The runner is finished');
-                assert.equal(this.getState('flush'), true, 'The runner is flushed');
-                assert.equal(this.getState('destroy'), false, 'The runner is not destroyed');
+            } )
+            .on( 'flush', function() {
+                assert.equal( this.getState( 'init' ), true, 'The runner is initialized' );
+                assert.equal( this.getState( 'ready' ), true, 'The runner is rendered' );
+                assert.equal( this.getState( 'finish' ), true, 'The runner is finished' );
+                assert.equal( this.getState( 'flush' ), true, 'The runner is flushed' );
+                assert.equal( this.getState( 'destroy' ), false, 'The runner is not destroyed' );
 
                 this.destroy();
-            })
-            .on('destroy', function(){
+            } )
+            .on( 'destroy', function() {
 
-                assert.equal(this.getState('init'), true, 'The runner is initialized');
-                assert.equal(this.getState('ready'), true, 'The runner is rendered');
-                assert.equal(this.getState('finish'), true, 'The runner is finished');
-                assert.equal(this.getState('flush'), true, 'The runner is flushed');
-                assert.equal(this.getState('destroy'), true, 'The runner is destroyed');
-                QUnit.start();
-            })
+                assert.equal( this.getState( 'init' ), true, 'The runner is initialized' );
+                assert.equal( this.getState( 'ready' ), true, 'The runner is rendered' );
+                assert.equal( this.getState( 'finish' ), true, 'The runner is finished' );
+                assert.equal( this.getState( 'flush' ), true, 'The runner is flushed' );
+                assert.equal( this.getState( 'destroy' ), true, 'The runner is destroyed' );
+                ready();
+            } )
             .init();
 
-        assert.throws(function() {
-            runner.getItemState('', '');
-        }, 'getItemState needs an itemRef');
+        assert.throws( function() {
+            runner.getItemState( '', '' );
+        }, 'getItemState needs an itemRef' );
 
-        assert.throws(function() {
-            runner.getItemState('123', '');
-        }, 'getItemState needs a state name');
+        assert.throws( function() {
+            runner.getItemState( '123', '' );
+        }, 'getItemState needs a state name' );
 
-        assert.throws(function() {
-            runner.setItemState('', '');
-        }, 'setItemState needs an itemRef');
+        assert.throws( function() {
+            runner.setItemState( '', '' );
+        }, 'setItemState needs an itemRef' );
 
-        assert.throws(function() {
-            runner.setItemState('123', '');
-        }, 'setItemState needs a state name');
-    });
+        assert.throws( function() {
+            runner.setItemState( '123', '' );
+        }, 'setItemState needs a state name' );
+    } );
 
-    QUnit.asyncTest('load and render item', function(assert){
-        QUnit.expect(2);
+    QUnit.test( 'load and render item', function( assert ) {
+        var ready = assert.async();
+        assert.expect( 2 );
 
-        runnerFactory.registerProvider('foo', {
-            loadAreaBroker : _.noop,
-            init : _.noop,
-            loadItem : function(itemRef){
-                return items[itemRef];
+        runnerFactory.registerProvider( 'foo', {
+            loadAreaBroker: _.noop,
+            init: _.noop,
+            loadItem: function( itemRef ) {
+                return items[ itemRef ];
             },
-            renderItem : function(itemRef, itemData){
-                assert.equal(itemRef, 'zzz', 'The rendered item is correct');
-                assert.equal(itemData, 'ZZZ', 'The rendered item is correct');
-                QUnit.start();
+            renderItem: function( itemRef, itemData ) {
+                assert.equal( itemRef, 'zzz', 'The rendered item is correct' );
+                assert.equal( itemData, 'ZZZ', 'The rendered item is correct' );
+                ready();
             }
-        });
+        } );
 
-        runnerFactory('foo')
-            .on('ready', function(){
-                this.loadItem('zzz');
-            })
+        runnerFactory( 'foo' )
+            .on( 'ready', function() {
+                this.loadItem( 'zzz' );
+            } )
             .init();
-    });
+    } );
 
-    QUnit.asyncTest('load async and render item', function(assert){
+    QUnit.test( 'load async and render item', function( assert ) {
+        var ready = assert.async();
         var resolved = false;
 
-        QUnit.expect(4);
+        assert.expect( 4 );
 
-        runnerFactory.registerProvider('foo', {
-            loadAreaBroker : _.noop,
-            init : _.noop,
-            loadItem : function(itemRef){
-                var p = new Promise(function(resolve){
-                    setTimeout(function(){
+        runnerFactory.registerProvider( 'foo', {
+            loadAreaBroker: _.noop,
+            init: _.noop,
+            loadItem: function( itemRef ) {
+                var p = new Promise( function( resolve ) {
+                    setTimeout( function() {
                         resolved = true;
-                        resolve(items[itemRef]);
-                    }, 50);
-                });
-                assert.equal(resolved, false, 'Item loading is not yet resolved');
+                        resolve( items[ itemRef ] );
+                    }, 50 );
+                } );
+                assert.equal( resolved, false, 'Item loading is not yet resolved' );
                 return p;
             },
-            renderItem : function(itemRef, itemData){
+            renderItem: function( itemRef, itemData ) {
 
-                assert.equal(resolved, true, 'Item loading is resolved');
-                assert.equal(itemRef, 'zzz', 'The rendered item is correct');
-                assert.equal(itemData, 'ZZZ', 'The rendered item is correct');
-                QUnit.start();
+                assert.equal( resolved, true, 'Item loading is resolved' );
+                assert.equal( itemRef, 'zzz', 'The rendered item is correct' );
+                assert.equal( itemData, 'ZZZ', 'The rendered item is correct' );
+                ready();
             }
-        });
+        } );
 
-        runnerFactory('foo')
-            .on('ready', function(){
-                this.loadItem('zzz');
-            })
+        runnerFactory( 'foo' )
+            .on( 'ready', function() {
+                this.loadItem( 'zzz' );
+            } )
             .init();
-    });
+    } );
 
-    QUnit.asyncTest('block render item', function(assert){
-        QUnit.expect();
+    QUnit.test( 'block render item', function( assert ) {
+        var ready = assert.async();
+        assert.expect();
 
-        runnerFactory.registerProvider('foo', {
-            loadAreaBroker : _.noop,
-            init : _.noop,
-            loadItem : function(itemRef){
-                var p = new Promise(function(resolve){
-                    setTimeout(function(){
-                        resolve(items[itemRef]);
-                    }, 50);
-                });
+        runnerFactory.registerProvider( 'foo', {
+            loadAreaBroker: _.noop,
+            init: _.noop,
+            loadItem: function( itemRef ) {
+                var p = new Promise( function( resolve ) {
+                    setTimeout( function() {
+                        resolve( items[ itemRef ] );
+                    }, 50 );
+                } );
                 return p;
             },
-            renderItem : function(){
-                assert.ok(false, 'renderItem should not be called');
-                QUnit.start();
+            renderItem: function() {
+                assert.ok( false, 'renderItem should not be called' );
+                ready();
             }
-        });
+        } );
 
-        runnerFactory('foo')
-            .on('loaditem', function(itemRef, itemData){
-                assert.equal(itemRef, 'zzz', 'The rendered item is correct');
-                assert.equal(itemData, 'ZZZ', 'The rendered item is correct');
+        runnerFactory( 'foo' )
+            .on( 'loaditem', function( itemRef, itemData ) {
+                assert.equal( itemRef, 'zzz', 'The rendered item is correct' );
+                assert.equal( itemData, 'ZZZ', 'The rendered item is correct' );
                 return Promise.reject();
-            })
-            .on('ready', function(){
-                this.loadItem('zzz');
-                setTimeout(function(){
-                    assert.ok(true, 'renderItem has been blocked');
-                    QUnit.start();
-                }, 100);
-            })
+            } )
+            .on( 'ready', function() {
+                this.loadItem( 'zzz' );
+                setTimeout( function() {
+                    assert.ok( true, 'renderItem has been blocked' );
+                    ready();
+                }, 100 );
+            } )
             .init();
-    });
+    } );
 
-    QUnit.asyncTest('unload item async', function(assert){
+    QUnit.test( 'unload item async', function( assert ) {
+        var ready = assert.async();
         var loaded = true;
 
-        QUnit.expect(4);
+        assert.expect( 4 );
 
-        runnerFactory.registerProvider('foo', {
-            loadAreaBroker : _.noop,
-            init : _.noop,
-            unloadItem : function(itemRef){
-                assert.equal(itemRef, 'zzz', 'The provider is called with the correct reference');
-                assert.equal(loaded, true, 'The item is not yet unloaded');
+        runnerFactory.registerProvider( 'foo', {
+            loadAreaBroker: _.noop,
+            init: _.noop,
+            unloadItem: function( itemRef ) {
+                assert.equal( itemRef, 'zzz', 'The provider is called with the correct reference' );
+                assert.equal( loaded, true, 'The item is not yet unloaded' );
 
-                return new Promise(function(resolve){
-                    setTimeout(function(){
+                return new Promise( function( resolve ) {
+                    setTimeout( function() {
                         loaded = false;
                         resolve();
-                    }, 50);
-                });
+                    }, 50 );
+                } );
             }
-        });
+        } );
 
-        runnerFactory('foo')
-            .on('ready', function(){
-                this.unloadItem('zzz');
-            })
-            .on('unloaditem', function(itemRef){
-                assert.equal(itemRef, 'zzz', 'The provider is called with the correct reference');
-                assert.equal(loaded, false, 'The item is now unloaded');
-                QUnit.start();
-            })
+        runnerFactory( 'foo' )
+            .on( 'ready', function() {
+                this.unloadItem( 'zzz' );
+            } )
+            .on( 'unloaditem', function( itemRef ) {
+                assert.equal( itemRef, 'zzz', 'The provider is called with the correct reference' );
+                assert.equal( loaded, false, 'The item is now unloaded' );
+                ready();
+            } )
             .init();
-    });
+    } );
 
-    QUnit.asyncTest('item state', function(assert){
-        QUnit.expect(17);
+    QUnit.test( 'item state', function( assert ) {
+        var ready = assert.async();
+        assert.expect( 17 );
 
-        runnerFactory.registerProvider('foo', {
-            loadAreaBroker : _.noop,
-            init : _.noop,
-            loadItem : function(itemRef){
-                return items[itemRef];
+        runnerFactory.registerProvider( 'foo', {
+            loadAreaBroker: _.noop,
+            init: _.noop,
+            loadItem: function( itemRef ) {
+                return items[ itemRef ];
             }
-        });
+        } );
 
-        runnerFactory('foo')
-            .on('init', function(){
+        runnerFactory( 'foo' )
+            .on( 'init', function() {
 
-                assert.throws(function(){
+                assert.throws( function() {
                     this.getItemState();
-                }, TypeError, 'The item state should have an itemRef');
+                }, TypeError, 'The item state should have an itemRef' );
 
-                assert.throws(function(){
-                    this.getItemState('zzz');
-                }, TypeError, 'The item state should have an itemRef and a name');
+                assert.throws( function() {
+                    this.getItemState( 'zzz' );
+                }, TypeError, 'The item state should have an itemRef and a name' );
 
-                assert.throws(function(){
+                assert.throws( function() {
                     this.setItemState();
-                }, TypeError, 'The item state should have an itemRef');
+                }, TypeError, 'The item state should have an itemRef' );
 
-                assert.throws(function(){
-                    this.setItemState('zzz');
-                }, TypeError, 'The item state should have an itemRef and a name');
+                assert.throws( function() {
+                    this.setItemState( 'zzz' );
+                }, TypeError, 'The item state should have an itemRef and a name' );
 
-                assert.equal(this.getItemState('zzz', 'loaded'), false, 'The item is not loaded');
-                assert.equal(this.getItemState('zzz', 'ready'), false, 'The item is not ready');
-                assert.equal(this.getItemState('zzz', 'foo'), false, 'The item is not foo');
-            })
-            .on('ready', function(){
-                this.loadItem('zzz');
-            })
-            .on('loaditem', function(itemRef, itemData){
+                assert.equal( this.getItemState( 'zzz', 'loaded' ), false, 'The item is not loaded' );
+                assert.equal( this.getItemState( 'zzz', 'ready' ), false, 'The item is not ready' );
+                assert.equal( this.getItemState( 'zzz', 'foo' ), false, 'The item is not foo' );
+            } )
+            .on( 'ready', function() {
+                this.loadItem( 'zzz' );
+            } )
+            .on( 'loaditem', function( itemRef, itemData ) {
 
-                assert.equal(itemRef, 'zzz', 'The loaded item is correct');
-                assert.equal(itemData, 'ZZZ', 'The loaded item data is correct');
-                assert.equal(this.getItemState('zzz', 'loaded'), true, 'The item is loaded');
-                assert.equal(this.getItemState('zzz', 'ready'), false, 'The item is not ready');
+                assert.equal( itemRef, 'zzz', 'The loaded item is correct' );
+                assert.equal( itemData, 'ZZZ', 'The loaded item data is correct' );
+                assert.equal( this.getItemState( 'zzz', 'loaded' ), true, 'The item is loaded' );
+                assert.equal( this.getItemState( 'zzz', 'ready' ), false, 'The item is not ready' );
 
-                this.setItemState('zzz', 'foo', true);
-                assert.equal(this.getItemState('zzz', 'foo'), true, 'The item is foo');
-            })
-            .on('renderitem', function(itemRef, itemData){
+                this.setItemState( 'zzz', 'foo', true );
+                assert.equal( this.getItemState( 'zzz', 'foo' ), true, 'The item is foo' );
+            } )
+            .on( 'renderitem', function( itemRef, itemData ) {
 
-                assert.equal(itemRef, 'zzz', 'The rendered item is correct');
-                assert.equal(itemData, 'ZZZ', 'The rendered item data is correct');
-                assert.equal(this.getItemState('zzz', 'loaded'), true, 'The item is loaded');
-                assert.equal(this.getItemState('zzz', 'ready'), true, 'The item is ready');
-                assert.equal(this.getItemState('zzz', 'foo'), true, 'The item is foo');
+                assert.equal( itemRef, 'zzz', 'The rendered item is correct' );
+                assert.equal( itemData, 'ZZZ', 'The rendered item data is correct' );
+                assert.equal( this.getItemState( 'zzz', 'loaded' ), true, 'The item is loaded' );
+                assert.equal( this.getItemState( 'zzz', 'ready' ), true, 'The item is ready' );
+                assert.equal( this.getItemState( 'zzz', 'foo' ), true, 'The item is foo' );
 
-                QUnit.start();
-            })
+                ready();
+            } )
             .init();
-    });
+    } );
 
-    QUnit.asyncTest('disable items', function(assert){
-        QUnit.expect(6);
+    QUnit.test( 'disable items', function( assert ) {
+        var ready = assert.async();
+        assert.expect( 6 );
 
-        runnerFactory.registerProvider('foo', {
-            loadAreaBroker : _.noop,
-            init : _.noop,
-            loadItem : function(itemRef){
-                return items[itemRef];
+        runnerFactory.registerProvider( 'foo', {
+            loadAreaBroker: _.noop,
+            init: _.noop,
+            loadItem: function( itemRef ) {
+                return items[ itemRef ];
             },
-            renderItem : function(itemRef){
+            renderItem: function( itemRef ) {
                 var self = this;
-                this.disableItem(itemRef);
-                setTimeout(function(){
-                    self.enableItem(itemRef);
-                }, 50);
+                this.disableItem( itemRef );
+                setTimeout( function() {
+                    self.enableItem( itemRef );
+                }, 50 );
             }
-        });
+        } );
 
-        runnerFactory('foo')
-            .on('ready', function(){
-                this.loadItem('zzz');
-            })
-            .on('loaditem', function(itemRef){
-                assert.equal(itemRef, 'zzz', 'The provider is called with the correct reference');
-                assert.equal(this.getItemState('zzz', 'disabled'), false, 'The item is not disabled');
-            })
-            .on('disableitem', function(itemRef){
-                assert.equal(itemRef, 'zzz', 'The provider is called with the correct reference');
-                assert.equal(this.getItemState('zzz', 'disabled'), true, 'The item is now disabled');
-            })
-            .on('enableitem', function(itemRef){
-                assert.equal(itemRef, 'zzz', 'The provider is called with the correct reference');
-                assert.equal(this.getItemState('zzz', 'disabled'), false, 'The item is not disabled anymore');
+        runnerFactory( 'foo' )
+            .on( 'ready', function() {
+                this.loadItem( 'zzz' );
+            } )
+            .on( 'loaditem', function( itemRef ) {
+                assert.equal( itemRef, 'zzz', 'The provider is called with the correct reference' );
+                assert.equal( this.getItemState( 'zzz', 'disabled' ), false, 'The item is not disabled' );
+            } )
+            .on( 'disableitem', function( itemRef ) {
+                assert.equal( itemRef, 'zzz', 'The provider is called with the correct reference' );
+                assert.equal( this.getItemState( 'zzz', 'disabled' ), true, 'The item is now disabled' );
+            } )
+            .on( 'enableitem', function( itemRef ) {
+                assert.equal( itemRef, 'zzz', 'The provider is called with the correct reference' );
+                assert.equal( this.getItemState( 'zzz', 'disabled' ), false, 'The item is not disabled anymore' );
 
-                QUnit.start();
-            })
+                ready();
+            } )
             .init();
-    });
+    } );
 
-    QUnit.asyncTest('init error', function(assert){
-        QUnit.expect(2);
+    QUnit.test( 'init error', function( assert ) {
+        var ready = assert.async();
+        assert.expect( 2 );
 
-        runnerFactory.registerProvider('foo', {
-            loadAreaBroker : _.noop,
-            init : function(){
-                return new Promise(function(resolve, reject){
-                    reject(new Error('test'));
-                });
+        runnerFactory.registerProvider( 'foo', {
+            loadAreaBroker: _.noop,
+            init: function() {
+                return new Promise( function( resolve, reject ) {
+                    reject( new Error( 'test' ) );
+                } );
             }
-        });
+        } );
 
-        runnerFactory('foo')
-            .on('error', function(err){
-                assert.ok(err instanceof Error, 'The parameter is an error');
-                assert.equal(err.message, 'test', 'The error message is correct');
-                QUnit.start();
-            })
+        runnerFactory( 'foo' )
+            .on( 'error', function( err ) {
+                assert.ok( err instanceof Error, 'The parameter is an error' );
+                assert.equal( err.message, 'test', 'The error message is correct' );
+                ready();
+            } )
             .init();
-    });
+    } );
 
-    QUnit.asyncTest('context and data', function(assert){
+    QUnit.test( 'context and data', function( assert ) {
+        var ready = assert.async();
         var testData = {
-            items : {
-                'lemmy' : 'kilmister',
-                'david' : 'bowie'
+            items: {
+                'lemmy': 'kilmister',
+                'david': 'bowie'
             }
         };
 
@@ -521,432 +533,439 @@ define([
             map: {}
         };
 
-        QUnit.expect(12);
+        assert.expect( 12 );
 
-        runnerFactory.registerProvider('foo', {
-            loadAreaBroker : _.noop,
-            init : function(){
+        runnerFactory.registerProvider( 'foo', {
+            loadAreaBroker: _.noop,
+            init: function() {
 
-                this.setTestData(testData);
-                this.setTestContext({ best : testData.items.lemmy });
-                this.setTestMap(testMap);
+                this.setTestData( testData );
+                this.setTestContext( { best: testData.items.lemmy } );
+                this.setTestMap( testMap );
             }
-        });
+        } );
 
-        runnerFactory('foo')
-            .on('error', function(err){
-                assert.ok(false, err);
-                QUnit.start();
-            })
-            .on('init', function(){
+        runnerFactory( 'foo' )
+            .on( 'error', function( err ) {
+                assert.ok( false, err );
+                ready();
+            } )
+            .on( 'init', function() {
 
                 var context = this.getTestContext();
                 var data    = this.getTestData();
                 var map    = this.getTestMap();
 
-                assert.equal(typeof context, 'object', 'The test context is an object');
-                assert.equal(typeof data, 'object', 'The test data is an object');
-                assert.equal(typeof map, 'object', 'The test map is an object');
-                assert.deepEqual(data, testData, 'The test data is correct');
-                assert.equal(context.best, 'kilmister', 'The context gives you the best');
-                assert.equal(map, testMap, 'The map is correct');
+                assert.equal( typeof context, 'object', 'The test context is an object' );
+                assert.equal( typeof data, 'object', 'The test data is an object' );
+                assert.equal( typeof map, 'object', 'The test map is an object' );
+                assert.deepEqual( data, testData, 'The test data is correct' );
+                assert.equal( context.best, 'kilmister', 'The context gives you the best' );
+                assert.equal( map, testMap, 'The map is correct' );
 
                 this.destroy();
-            })
-            .on('destroy', function(){
+            } )
+            .on( 'destroy', function() {
                 var context = this.getTestContext();
                 var data    = this.getTestData();
                 var map     = this.getTestMap();
 
-                assert.equal(typeof context, 'object', 'The test context is an object');
-                assert.equal(typeof data, 'object', 'The test data is an object');
-                assert.equal(typeof map, 'object', 'The test map is an object');
-                assert.deepEqual(data, testData, 'The test data is correct');
-                assert.equal(typeof context.best, 'undefined', 'The context is now empty');
-                assert.equal(typeof map.jumps, 'undefined', 'The map is now empty');
+                assert.equal( typeof context, 'object', 'The test context is an object' );
+                assert.equal( typeof data, 'object', 'The test data is an object' );
+                assert.equal( typeof map, 'object', 'The test map is an object' );
+                assert.deepEqual( data, testData, 'The test data is correct' );
+                assert.equal( typeof context.best, 'undefined', 'The context is now empty' );
+                assert.equal( typeof map.jumps, 'undefined', 'The map is now empty' );
 
-                QUnit.start();
-            })
+                ready();
+            } )
             .init();
-    });
+    } );
 
-    QUnit.asyncTest('move next', function(assert){
-        QUnit.expect(2);
+    QUnit.test( 'move next', function( assert ) {
+        var ready = assert.async();
+        assert.expect( 2 );
 
-        runnerFactory.registerProvider('foo', {
-            loadAreaBroker : _.noop,
-            init : function init(){
-                this.on('init', function(){
-                    assert.ok(true, 'we can listen for init in providers init');
+        runnerFactory.registerProvider( 'foo', {
+            loadAreaBroker: _.noop,
+            init: function init() {
+                this.on( 'init', function() {
+                    assert.ok( true, 'we can listen for init in providers init' );
                     this.next();
-                })
-                .on('move', function(type){
-                    assert.equal(type, 'next', 'The sub event is correct');
-                    QUnit.start();
-                });
+                } )
+                .on( 'move', function( type ) {
+                    assert.equal( type, 'next', 'The sub event is correct' );
+                    ready();
+                } );
             }
-        });
+        } );
 
-        runnerFactory('foo').init();
-    });
+        runnerFactory( 'foo' ).init();
+    } );
 
-    QUnit.asyncTest('move previous', function(assert){
-        QUnit.expect(2);
+    QUnit.test( 'move previous', function( assert ) {
+        var ready = assert.async();
+        assert.expect( 2 );
 
-        runnerFactory.registerProvider('foo', {
-            loadAreaBroker : _.noop,
-            init : function init(){
-                this.on('init', function(){
-                    assert.ok(true, 'we can listen for init in providers init');
+        runnerFactory.registerProvider( 'foo', {
+            loadAreaBroker: _.noop,
+            init: function init() {
+                this.on( 'init', function() {
+                    assert.ok( true, 'we can listen for init in providers init' );
                     this.previous();
-                })
-                .on('move', function(type){
-                    assert.equal(type, 'previous', 'The sub event is correct');
-                    QUnit.start();
-                });
+                } )
+                .on( 'move', function( type ) {
+                    assert.equal( type, 'previous', 'The sub event is correct' );
+                    ready();
+                } );
             }
-        });
+        } );
 
-        runnerFactory('foo').init();
-    });
+        runnerFactory( 'foo' ).init();
+    } );
 
-    QUnit.asyncTest('jump', function(assert){
-        var expectedScope = "section";
+    QUnit.test( 'jump', function( assert ) {
+        var ready = assert.async();
+        var expectedScope = 'section';
         var expectedPosition = 3;
 
-        QUnit.expect(4);
+        assert.expect( 4 );
 
-        runnerFactory.registerProvider('foo', {
-            loadAreaBroker : _.noop,
-            init : function init(){
+        runnerFactory.registerProvider( 'foo', {
+            loadAreaBroker: _.noop,
+            init: function init() {
 
-                this.on('init', function(){
-                    assert.ok(true, 'we can listen for init in providers init');
-                    this.jump(expectedPosition, expectedScope);
-                })
-                .on('move', function(type, scope, position){
-                    assert.equal(type, 'jump', 'The sub event is correct');
-                    assert.equal(scope, expectedScope, 'The scope is correct');
-                    assert.equal(position, expectedPosition, 'The position is correct');
+                this.on( 'init', function() {
+                    assert.ok( true, 'we can listen for init in providers init' );
+                    this.jump( expectedPosition, expectedScope );
+                } )
+                .on( 'move', function( type, scope, position ) {
+                    assert.equal( type, 'jump', 'The sub event is correct' );
+                    assert.equal( scope, expectedScope, 'The scope is correct' );
+                    assert.equal( position, expectedPosition, 'The position is correct' );
 
-                    QUnit.start();
-                });
+                    ready();
+                } );
             }
-        });
+        } );
 
-        runnerFactory('foo').init();
-    });
+        runnerFactory( 'foo' ).init();
+    } );
 
-    QUnit.asyncTest('skip', function(assert){
-        QUnit.expect(2);
+    QUnit.test( 'skip', function( assert ) {
+        var ready = assert.async();
+        assert.expect( 2 );
 
-        runnerFactory.registerProvider('mock', mockProvider);
+        runnerFactory.registerProvider( 'mock', mockProvider );
 
-        runnerFactory('mock')
-            .on('ready', function(){
-                assert.ok(true, 'The runner is ready');
-                this.skip('section');
-            })
-            .on('move', function(){
-                assert.ok(false, 'Skip is not a move');
-            })
-            .on('skip', function(scope){
-                assert.equal(scope, 'section', 'The scope is correct');
-                QUnit.start();
-            })
+        runnerFactory( 'mock' )
+            .on( 'ready', function() {
+                assert.ok( true, 'The runner is ready' );
+                this.skip( 'section' );
+            } )
+            .on( 'move', function() {
+                assert.ok( false, 'Skip is not a move' );
+            } )
+            .on( 'skip', function( scope ) {
+                assert.equal( scope, 'section', 'The scope is correct' );
+                ready();
+            } )
             .init();
-    });
+    } );
 
-    QUnit.asyncTest('timeout', function(assert){
+    QUnit.test( 'timeout', function( assert ) {
+        var ready = assert.async();
         var expectedScope = 'assessmentSection';
         var expectedRef = 'assessmentSection-1';
         var expectedTimer = {
             time: 30
         };
 
-        QUnit.expect(5);
+        assert.expect( 5 );
 
-        runnerFactory.registerProvider('foo', {
-            loadAreaBroker : _.noop,
-            init : function init(){
+        runnerFactory.registerProvider( 'foo', {
+            loadAreaBroker: _.noop,
+            init: function init() {
 
-                this.on('init', function(){
-                    assert.ok(true, 'we can listen for init in providers init');
-                    this.timeout(expectedScope, expectedRef, expectedTimer);
-                })
-                .on('timeout', function(scope, ref, timer){
-                    assert.ok(true, 'The timeout event has been triggered');
+                this.on( 'init', function() {
+                    assert.ok( true, 'we can listen for init in providers init' );
+                    this.timeout( expectedScope, expectedRef, expectedTimer );
+                } )
+                .on( 'timeout', function( scope, ref, timer ) {
+                    assert.ok( true, 'The timeout event has been triggered' );
 
-                    assert.equal(scope, expectedScope, 'The timeout scope is provided');
-                    assert.equal(ref, expectedRef, 'The timeout ref is provided');
-                    assert.equal(timer, expectedTimer, 'The timer is provided');
+                    assert.equal( scope, expectedScope, 'The timeout scope is provided' );
+                    assert.equal( ref, expectedRef, 'The timeout ref is provided' );
+                    assert.equal( timer, expectedTimer, 'The timer is provided' );
 
-                    QUnit.start();
-                });
+                    ready();
+                } );
             }
-        });
+        } );
 
-        runnerFactory('foo')
+        runnerFactory( 'foo' )
             .init();
-    });
+    } );
 
-
-    QUnit.asyncTest('exit', function(assert) {
+    QUnit.test( 'exit', function( assert ) {
+        var ready = assert.async();
         var expectedReason = 'the reason why';
 
-        QUnit.expect(3);
+        assert.expect( 3 );
 
-        runnerFactory.registerProvider('foo', {
-            loadAreaBroker : _.noop,
-            init : function init(){
+        runnerFactory.registerProvider( 'foo', {
+            loadAreaBroker: _.noop,
+            init: function init() {
 
                 this
-                    .on('init', function(){
-                        assert.ok(true, 'we can listen for init in providers init');
-                        this.exit(expectedReason);
-                    })
-                    .on('exit', function(why){
-                        assert.ok(true, 'The exit event has been triggered');
+                    .on( 'init', function() {
+                        assert.ok( true, 'we can listen for init in providers init' );
+                        this.exit( expectedReason );
+                    } )
+                    .on( 'exit', function( why ) {
+                        assert.ok( true, 'The exit event has been triggered' );
 
-                        assert.equal(why, expectedReason, 'The exit reason is provided');
+                        assert.equal( why, expectedReason, 'The exit reason is provided' );
 
-                        QUnit.start();
-                    });
+                        ready();
+                    } );
             }
-        });
+        } );
 
-        runnerFactory('foo').init();
-    });
+        runnerFactory( 'foo' ).init();
+    } );
 
+    QUnit.test( 'pause and resume', function( assert ) {
+        var ready = assert.async();
+        assert.expect( 5 );
 
-    QUnit.asyncTest('pause and resume', function(assert) {
-        QUnit.expect(5);
-
-        runnerFactory.registerProvider('foo', {
-            loadAreaBroker : _.noop,
-            init : function init(){
+        runnerFactory.registerProvider( 'foo', {
+            loadAreaBroker: _.noop,
+            init: function init() {
 
                 this
-                    .on('init', function(){
-                        assert.ok(true, 'we can listen for init in providers init');
+                    .on( 'init', function() {
+                        assert.ok( true, 'we can listen for init in providers init' );
 
                         this.pause();
-                    })
-                    .on('pause', function(){
-                        assert.ok(true, 'The pause event has been triggered');
-                        assert.ok(this.getState('pause'), 'The runner is paused');
+                    } )
+                    .on( 'pause', function() {
+                        assert.ok( true, 'The pause event has been triggered' );
+                        assert.ok( this.getState( 'pause' ), 'The runner is paused' );
 
                         this.resume();
-                    })
-                    .on('resume', function(){
-                        assert.ok(true, 'The resume event has been triggered');
-                        assert.ok(!this.getState('resume'), 'The runner is resumed');
+                    } )
+                    .on( 'resume', function() {
+                        assert.ok( true, 'The resume event has been triggered' );
+                        assert.ok( !this.getState( 'resume' ), 'The runner is resumed' );
 
-                        QUnit.start();
-                    });
+                        ready();
+                    } );
             }
-        });
+        } );
 
-        runnerFactory('foo').init();
-    });
+        runnerFactory( 'foo' ).init();
+    } );
 
-    QUnit.asyncTest('proxy', function(assert) {
+    QUnit.test( 'proxy', function( assert ) {
+        var ready = assert.async();
 
-        var expectedProxy = eventifier({
+        var expectedProxy = eventifier( {
             init: _.noop,
-            install : _.noop,
+            install: _.noop,
             destroy: function() {
-                assert.ok(true, 'The proxy.destroy method has been called');
+                assert.ok( true, 'The proxy.destroy method has been called' );
                 return Promise.resolve();
             }
-        });
+        } );
 
-        var expectedError = "an error";
+        var expectedError = 'an error';
 
-        QUnit.expect(6);
+        assert.expect( 6 );
 
-        runnerFactory.registerProvider('foo', {
-            loadAreaBroker : _.noop,
+        runnerFactory.registerProvider( 'foo', {
+            loadAreaBroker: _.noop,
             loadProxy: function() {
-                assert.ok(true, 'The loadProxy method has been called');
+                assert.ok( true, 'The loadProxy method has been called' );
                 return expectedProxy;
             },
-            init : function init(){
+            init: function init() {
                 this
-                    .on('init', function(){
-                        assert.ok(true, 'we can listen for init in providers init');
+                    .on( 'init', function() {
+                        assert.ok( true, 'we can listen for init in providers init' );
                         this.destroy();
-                    })
-                    .on('error', function(error) {
-                        assert.ok(true, 'The error event has been triggered');
-                        assert.equal(error, expectedError, 'The right error is provided');
-                    })
-                    .on('destroy', function() {
-                        assert.ok(true, 'The runner is destroying');
-                        QUnit.start();
-                    })
+                    } )
+                    .on( 'error', function( error ) {
+                        assert.ok( true, 'The error event has been triggered' );
+                        assert.equal( error, expectedError, 'The right error is provided' );
+                    } )
+                    .on( 'destroy', function() {
+                        assert.ok( true, 'The runner is destroying' );
+                        ready();
+                    } )
                     .getProxy()
-                    .trigger('error', expectedError);
+                    .trigger( 'error', expectedError );
             }
-        });
+        } );
 
-        runnerFactory('foo').init();
-    });
+        runnerFactory( 'foo' ).init();
+    } );
 
-    QUnit.test('probeOverseer', function(assert) {
+    QUnit.test( 'probeOverseer', function( assert ) {
         var probeOverseer;
         var expectedProbeOverseer = {
-            init: function(){},
+            init: function() {},
             destroy: function() {}
         };
 
-        QUnit.expect(2);
+        assert.expect( 2 );
 
-        runnerFactory.registerProvider('foo', {
-            loadAreaBroker : _.noop,
-            init : _.noop,
+        runnerFactory.registerProvider( 'foo', {
+            loadAreaBroker: _.noop,
+            init: _.noop,
             loadProbeOverseer: function() {
-                assert.ok(true, 'The loadProbeOverseer method has been called');
+                assert.ok( true, 'The loadProbeOverseer method has been called' );
                 return expectedProbeOverseer;
             }
-        });
+        } );
 
-        probeOverseer = runnerFactory('foo').getProbeOverseer();
+        probeOverseer = runnerFactory( 'foo' ).getProbeOverseer();
 
-        assert.equal(probeOverseer, expectedProbeOverseer, 'The right probeOverseer has been provided');
-    });
+        assert.equal( probeOverseer, expectedProbeOverseer, 'The right probeOverseer has been provided' );
+    } );
 
-    QUnit.test('no loadProxy', function(assert) {
-        QUnit.expect(1);
+    QUnit.test( 'no loadProxy', function( assert ) {
+        assert.expect( 1 );
 
-        runnerFactory.registerProvider('foo', mockProvider);
+        runnerFactory.registerProvider( 'foo', mockProvider );
 
-        assert.throws(function() {
-            runnerFactory('foo').getProxy();
-        }, 'An exception is thrown when the loadAreaBroker() is missing');
-    });
+        assert.throws( function() {
+            runnerFactory( 'foo' ).getProxy();
+        }, 'An exception is thrown when the loadAreaBroker() is missing' );
+    } );
 
-    QUnit.test('no loadAreaBroker', function(assert) {
-        QUnit.expect(1);
+    QUnit.test( 'no loadAreaBroker', function( assert ) {
+        assert.expect( 1 );
 
-        assert.throws(function() {
-            runnerFactory.registerProvider('foo', {
-                init :  _.noop
-            });
-        }, 'An exception is thrown when the loadAreaBroker() is missing');
-    });
+        assert.throws( function() {
+            runnerFactory.registerProvider( 'foo', {
+                init:  _.noop
+            } );
+        }, 'An exception is thrown when the loadAreaBroker() is missing' );
+    } );
 
-    QUnit.test('getDataHolder', function(assert) {
+    QUnit.test( 'getDataHolder', function( assert ) {
         var dataHolder;
 
-        QUnit.expect(6);
+        assert.expect( 6 );
 
-        runnerFactory.registerProvider('foo', mockProvider);
+        runnerFactory.registerProvider( 'foo', mockProvider );
 
-        dataHolder = runnerFactory('foo').getDataHolder();
+        dataHolder = runnerFactory( 'foo' ).getDataHolder();
 
-        assert.equal(typeof dataHolder, 'object', 'The runner exposes the data holder');
-        assert.equal(typeof dataHolder.get, 'function', 'The data holder has the get method');
-        assert.equal(typeof dataHolder.set, 'function', 'The data holder has the set method');
-        assert.equal(typeof dataHolder.get('testData'), 'object', 'The data holder holds the correct data');
-        assert.equal(typeof dataHolder.get('testContext'), 'object', 'The data holder holds the correct data');
-        assert.equal(typeof dataHolder.get('testMap'), 'object', 'The data holder holds the correct data');
-    });
+        assert.equal( typeof dataHolder, 'object', 'The runner exposes the data holder' );
+        assert.equal( typeof dataHolder.get, 'function', 'The data holder has the get method' );
+        assert.equal( typeof dataHolder.set, 'function', 'The data holder has the set method' );
+        assert.equal( typeof dataHolder.get( 'testData' ), 'object', 'The data holder holds the correct data' );
+        assert.equal( typeof dataHolder.get( 'testContext' ), 'object', 'The data holder holds the correct data' );
+        assert.equal( typeof dataHolder.get( 'testMap' ), 'object', 'The data holder holds the correct data' );
+    } );
 
-
-    QUnit.module('plugins', {
-        setup: function(){
+    QUnit.module( 'plugins', {
+        beforeEach: function( assert ) {
             runnerFactory.clearProviders();
         }
-    });
+    } );
 
-    QUnit.asyncTest('initialize', function(assert){
+    QUnit.test( 'initialize', function( assert ) {
+        var ready = assert.async();
 
-        var boo = pluginFactory({
-            name : 'boo',
-            init : function init(){
-                assert.ok(true, 'the plugin is initializing');
+        var boo = pluginFactory( {
+            name: 'boo',
+            init: function init() {
+                assert.ok( true, 'the plugin is initializing' );
             }
-        });
+        } );
 
-        QUnit.expect(6);
+        assert.expect( 6 );
 
-        runnerFactory.registerProvider('foo', {
-            loadAreaBroker : _.noop,
-            init : function init(){
+        runnerFactory.registerProvider( 'foo', {
+            loadAreaBroker: _.noop,
+            init: function init() {
 
-                this.on('plugin-init.boo', function(plugin){
-                    assert.equal(plugin, this.getPlugin('boo'), 'The event has a plugin in parameter');
-                    assert.equal(typeof plugin, 'object', 'The event has a plugin in parameter');
-                    assert.ok(plugin.getState('init'), 'The plugin is initialized');
-                    QUnit.start();
-                });
+                this.on( 'plugin-init.boo', function( plugin ) {
+                    assert.equal( plugin, this.getPlugin( 'boo' ), 'The event has a plugin in parameter' );
+                    assert.equal( typeof plugin, 'object', 'The event has a plugin in parameter' );
+                    assert.ok( plugin.getState( 'init' ), 'The plugin is initialized' );
+                    ready();
+                } );
             }
-        });
+        } );
 
-        runnerFactory('foo', {
+        runnerFactory( 'foo', {
             boo: boo
-        })
-        .on('ready', function(){
-            assert.equal(typeof this.getPlugin('moo'), 'undefined', 'The moo plugin does not exist');
-            assert.equal(typeof this.getPlugin('boo'), 'object', 'The boo plugin exists');
-        })
+        } )
+        .on( 'ready', function() {
+            assert.equal( typeof this.getPlugin( 'moo' ), 'undefined', 'The moo plugin does not exist' );
+            assert.equal( typeof this.getPlugin( 'boo' ), 'object', 'The boo plugin exists' );
+        } )
         .init();
-    });
+    } );
 
-
-    QUnit.asyncTest('persistent state', function(assert) {
+    QUnit.test( 'persistent state', function( assert ) {
+        var ready2 = assert.async();
+        var ready1 = assert.async();
         var states = {};
 
         var expectedName = 'pause';
         var expectedValue = true;
 
-        QUnit.expect(9);
-        QUnit.stop(2);
+        assert.expect( 9 );
+        var ready = assert.async();
 
-        runnerFactory.registerProvider('foo', {
-            loadAreaBroker : _.noop,
-            init : _.noop,
-            getPersistentState : function(name) {
-                assert.equal(name, expectedName, 'The getPersistentState() method has been delegated to the provider with the right name');
-                return states[name];
+        runnerFactory.registerProvider( 'foo', {
+            loadAreaBroker: _.noop,
+            init: _.noop,
+            getPersistentState: function( name ) {
+                assert.equal( name, expectedName, 'The getPersistentState() method has been delegated to the provider with the right name' );
+                return states[ name ];
             },
-            setPersistentState : function(name, value) {
-                assert.equal(name, expectedName, 'The setPersistentState() method has been delegated to the provider with the right name');
-                assert.equal(value, expectedValue, 'The setPersistentState() method has been delegated to the provider with the right value');
-                states[name] = value;
+            setPersistentState: function( name, value ) {
+                assert.equal( name, expectedName, 'The setPersistentState() method has been delegated to the provider with the right name' );
+                assert.equal( value, expectedValue, 'The setPersistentState() method has been delegated to the provider with the right value' );
+                states[ name ] = value;
             }
-        });
+        } );
 
-        runnerFactory('foo')
-            .on('ready', function(){
+        runnerFactory( 'foo' )
+            .on( 'ready', function() {
                 var self = this;
-                this.setPersistentState(expectedName, 1).then(function() {
-                    assert.ok(true, 'The setPersistentState() method has returned a promise that has been resolved');
+                this.setPersistentState( expectedName, 1 ).then( function() {
+                    assert.ok( true, 'The setPersistentState() method has returned a promise that has been resolved' );
 
-                    assert.equal(self.getPersistentState(expectedName), expectedValue, 'The getPersistentState() method has returned the expected value');
+                    assert.equal( self.getPersistentState( expectedName ), expectedValue, 'The getPersistentState() method has returned the expected value' );
 
-                    runnerFactory('foo')
-                        .on('ready', function(){
-                            assert.equal(this.getPersistentState(expectedName), expectedValue, 'The state has persisted between runner instances');
+                    runnerFactory( 'foo' )
+                        .on( 'ready', function() {
+                            assert.equal( this.getPersistentState( expectedName ), expectedValue, 'The state has persisted between runner instances' );
 
-                            QUnit.start();
-                        })
+                            ready();
+                        } )
                         .init();
-                });
+                } );
 
-                this.setPersistentState().catch(function() {
-                    assert.ok(true, 'The setPersistentState() method has returned a promise that has been rejected due to missing name');
+                this.setPersistentState().catch( function() {
+                    assert.ok( true, 'The setPersistentState() method has returned a promise that has been rejected due to missing name' );
 
-                    QUnit.start();
-                });
+                    ready1();
+                } );
 
-                this.setPersistentState('').catch(function() {
-                    assert.ok(true, 'The setPersistentState() method has returned a promise that has been rejected due to empty name');
+                this.setPersistentState( '' ).catch( function() {
+                    assert.ok( true, 'The setPersistentState() method has returned a promise that has been rejected due to empty name' );
 
-                    QUnit.start();
-                });
-            })
+                    ready2();
+                } );
+            } )
             .init();
-    });
-});
+    } );
+} );

@@ -21,200 +21,194 @@
  *
  * @author Bertrand Chevrier <bertrand@taotesting.com>
  */
-define([
-    'jquery',
-    'taoTests/runner/areaBroker',
-], function ($, areaBroker){
+define( [  'jquery', 'taoTests/runner/areaBroker' ], function(  $, areaBroker ) {
     'use strict';
 
     var fixture = '#qunit-fixture';
 
+    QUnit.module( 'API' );
 
-    QUnit.module('API');
+    QUnit.test( 'module', function( assert ) {
+        assert.expect( 1 );
 
-    QUnit.test('module', function (assert){
-        QUnit.expect(1);
+        assert.equal( typeof areaBroker, 'function', 'The module exposes a function' );
+    } );
 
-        assert.equal(typeof areaBroker, 'function', "The module exposes a function");
-    });
-
-    QUnit.test('factory', function (assert){
-        QUnit.expect(7);
-        var $fixture = $(fixture);
-        var $container = $('.test-runner', $fixture);
-        var $content    = $('.content', $container);
-        var $toolbox    = $('.toolbox', $container);
-        var $navigation = $('.navigation', $container);
-        var $control    = $('.control', $container);
-        var $panel      = $('.panel', $container);
-        var $header     = $('.header', $container);
+    QUnit.test( 'factory', function( assert ) {
+        assert.expect( 7 );
+        var $fixture = $( fixture );
+        var $container = $( '.test-runner', $fixture );
+        var $content    = $( '.content', $container );
+        var $toolbox    = $( '.toolbox', $container );
+        var $navigation = $( '.navigation', $container );
+        var $control    = $( '.control', $container );
+        var $panel      = $( '.panel', $container );
+        var $header     = $( '.header', $container );
         var mapping    = {
-            'content'    : $content,
-            'toolbox'    : $toolbox,
-            'navigation' : $navigation,
-            'control'    : $control,
-            'header'     : $header,
-            'panel'      : $panel
+            'content': $content,
+            'toolbox': $toolbox,
+            'navigation': $navigation,
+            'control': $control,
+            'header': $header,
+            'panel': $panel
         };
 
-        assert.ok($container.length,  "The container exists");
+        assert.ok( $container.length,  'The container exists' );
 
-        assert.throws(function(){
+        assert.throws( function() {
             areaBroker();
-        }, TypeError, 'A broker must be created with a container');
+        }, TypeError, 'A broker must be created with a container' );
 
-        assert.throws(function(){
-            areaBroker('foo');
-        }, TypeError, 'A broker must be created with an existing container');
+        assert.throws( function() {
+            areaBroker( 'foo' );
+        }, TypeError, 'A broker must be created with an existing container' );
 
-        assert.throws(function(){
-            areaBroker($container);
-        }, TypeError, 'A broker must be created with an area mapping');
+        assert.throws( function() {
+            areaBroker( $container );
+        }, TypeError, 'A broker must be created with an area mapping' );
 
-        assert.throws(function(){
-            areaBroker($container, {
-                content : $content
-            });
-        }, TypeError, 'A broker must be created with an full area mapping');
+        assert.throws( function() {
+            areaBroker( $container, {
+                content: $content
+            } );
+        }, TypeError, 'A broker must be created with an full area mapping' );
 
+        assert.equal( typeof areaBroker( $container, mapping ), 'object', 'The factory creates an object' );
+        assert.notEqual( areaBroker( $container, mapping ), areaBroker( $container, mapping ), 'The factory creates new instances' );
+    } );
 
-        assert.equal(typeof areaBroker($container, mapping), 'object', "The factory creates an object");
-        assert.notEqual(areaBroker($container, mapping), areaBroker($container, mapping), "The factory creates new instances");
-    });
-
-    QUnit.test('broker api', function (assert){
-        QUnit.expect(4);
-        var $fixture = $(fixture);
-        var $container = $('.test-runner', $fixture);
-        var $content    = $('.content', $container);
-        var $toolbox    = $('.toolbox', $container);
-        var $navigation = $('.navigation', $container);
-        var $control    = $('.control', $container);
-        var $panel      = $('.panel', $container);
-        var $header     = $('.header', $container);
+    QUnit.test( 'broker api', function( assert ) {
+        assert.expect( 4 );
+        var $fixture = $( fixture );
+        var $container = $( '.test-runner', $fixture );
+        var $content    = $( '.content', $container );
+        var $toolbox    = $( '.toolbox', $container );
+        var $navigation = $( '.navigation', $container );
+        var $control    = $( '.control', $container );
+        var $panel      = $( '.panel', $container );
+        var $header     = $( '.header', $container );
         var mapping    = {
-            'content'    : $content,
-            'toolbox'    : $toolbox,
-            'navigation' : $navigation,
-            'control'    : $control,
-            'header'     : $header,
-            'panel'      : $panel
+            'content': $content,
+            'toolbox': $toolbox,
+            'navigation': $navigation,
+            'control': $control,
+            'header': $header,
+            'panel': $panel
         };
 
-        assert.ok($container.length,  "The container exists");
+        assert.ok( $container.length,  'The container exists' );
 
-        var broker = areaBroker($container, mapping);
-        assert.equal(typeof broker.defineAreas, 'function', 'The broker has a defineAreas function');
-        assert.equal(typeof broker.getContainer, 'function', 'The broker has a getContainer function');
-        assert.equal(typeof broker.getArea, 'function', 'The broker has a getArea function');
-    });
+        var broker = areaBroker( $container, mapping );
+        assert.equal( typeof broker.defineAreas, 'function', 'The broker has a defineAreas function' );
+        assert.equal( typeof broker.getContainer, 'function', 'The broker has a getContainer function' );
+        assert.equal( typeof broker.getArea, 'function', 'The broker has a getArea function' );
+    } );
 
-    QUnit.module('Area mapping');
+    QUnit.module( 'Area mapping' );
 
-    QUnit.test('define mapping', function (assert){
-        QUnit.expect(9);
-        var $fixture = $(fixture);
-        var $container = $('.test-runner', $fixture);
+    QUnit.test( 'define mapping', function( assert ) {
+        assert.expect( 9 );
+        var $fixture = $( fixture );
+        var $container = $( '.test-runner', $fixture );
 
-        assert.ok($container.length,  "The container exists");
+        assert.ok( $container.length,  'The container exists' );
 
-        var $content    = $('.content', $container);
-        var $toolbox    = $('.toolbox', $container);
-        var $navigation = $('.navigation', $container);
-        var $control    = $('.control', $container);
-        var $panel      = $('.panel', $container);
-        var $header     = $('.header', $container);
+        var $content    = $( '.content', $container );
+        var $toolbox    = $( '.toolbox', $container );
+        var $navigation = $( '.navigation', $container );
+        var $control    = $( '.control', $container );
+        var $panel      = $( '.panel', $container );
+        var $header     = $( '.header', $container );
         var mapping    = {
-            'content'    : $content,
-            'toolbox'    : $toolbox,
-            'navigation' : $navigation,
-            'control'    : $control,
-            'header'     : $header,
-            'panel'      : $panel
+            'content': $content,
+            'toolbox': $toolbox,
+            'navigation': $navigation,
+            'control': $control,
+            'header': $header,
+            'panel': $panel
         };
 
-        var broker = areaBroker($container, mapping);
+        var broker = areaBroker( $container, mapping );
 
-        assert.throws(function(){
+        assert.throws( function() {
             broker.defineAreas();
-        }, TypeError, 'requires a mapping object');
+        }, TypeError, 'requires a mapping object' );
 
-        assert.throws(function(){
-            broker.defineAreas({});
-        }, TypeError, 'required mapping missing');
+        assert.throws( function() {
+            broker.defineAreas( {} );
+        }, TypeError, 'required mapping missing' );
 
-        assert.throws(function(){
-            broker.defineAreas({
+        assert.throws( function() {
+            broker.defineAreas( {
                 'content': $content,
-                'navigation' : $navigation
-            });
-        }, TypeError, 'required mapping incomplete');
+                'navigation': $navigation
+            } );
+        }, TypeError, 'required mapping incomplete' );
 
-        broker.defineAreas(mapping);
+        broker.defineAreas( mapping );
 
-        assert.deepEqual(broker.getArea('content'), $content, 'The area match');
-        assert.deepEqual(broker.getArea('toolbox'), $toolbox, 'The area match');
-        assert.deepEqual(broker.getArea('navigation'), $navigation, 'The area match');
-        assert.deepEqual(broker.getArea('control'), $control, 'The area match');
-        assert.deepEqual(broker.getArea('panel'), $panel, 'The area match');
-    });
+        assert.deepEqual( broker.getArea( 'content' ), $content, 'The area match' );
+        assert.deepEqual( broker.getArea( 'toolbox' ), $toolbox, 'The area match' );
+        assert.deepEqual( broker.getArea( 'navigation' ), $navigation, 'The area match' );
+        assert.deepEqual( broker.getArea( 'control' ), $control, 'The area match' );
+        assert.deepEqual( broker.getArea( 'panel' ), $panel, 'The area match' );
+    } );
 
-    QUnit.test('aliases', function (assert){
-        QUnit.expect(6);
-        var $fixture = $(fixture);
-        var $container = $('.test-runner', $fixture);
+    QUnit.test( 'aliases', function( assert ) {
+        assert.expect( 6 );
+        var $fixture = $( fixture );
+        var $container = $( '.test-runner', $fixture );
 
-        assert.ok($container.length,  "The container exists");
+        assert.ok( $container.length,  'The container exists' );
 
-        var $content    = $('.content', $container);
-        var $toolbox    = $('.toolbox', $container);
-        var $navigation = $('.navigation', $container);
-        var $control    = $('.control', $container);
-        var $panel      = $('.panel', $container);
-        var $header     = $('.header', $container);
+        var $content    = $( '.content', $container );
+        var $toolbox    = $( '.toolbox', $container );
+        var $navigation = $( '.navigation', $container );
+        var $control    = $( '.control', $container );
+        var $panel      = $( '.panel', $container );
+        var $header     = $( '.header', $container );
         var mapping    = {
-            'content'    : $content,
-            'toolbox'    : $toolbox,
-            'navigation' : $navigation,
-            'control'    : $control,
-            'header'     : $header,
-            'panel'      : $panel
+            'content': $content,
+            'toolbox': $toolbox,
+            'navigation': $navigation,
+            'control': $control,
+            'header': $header,
+            'panel': $panel
         };
-        var broker = areaBroker($container, mapping);
+        var broker = areaBroker( $container, mapping );
 
-        assert.deepEqual(broker.getContentArea(), $content, 'The area match');
-        assert.deepEqual(broker.getToolboxArea(), $toolbox, 'The area match');
-        assert.deepEqual(broker.getNavigationArea(), $navigation, 'The area match');
-        assert.deepEqual(broker.getControlArea(), $control, 'The area match');
-        assert.deepEqual(broker.getPanelArea(), $panel, 'The area match');
-    });
+        assert.deepEqual( broker.getContentArea(), $content, 'The area match' );
+        assert.deepEqual( broker.getToolboxArea(), $toolbox, 'The area match' );
+        assert.deepEqual( broker.getNavigationArea(), $navigation, 'The area match' );
+        assert.deepEqual( broker.getControlArea(), $control, 'The area match' );
+        assert.deepEqual( broker.getPanelArea(), $panel, 'The area match' );
+    } );
 
+    QUnit.module( 'container' );
 
-    QUnit.module('container');
-
-    QUnit.test('retrieve', function (assert){
-        QUnit.expect(2);
-        var $fixture = $(fixture);
-        var $container = $('.test-runner', $fixture);
-        var $content    = $('.content', $container);
-        var $toolbox    = $('.toolbox', $container);
-        var $navigation = $('.navigation', $container);
-        var $control    = $('.control', $container);
-        var $panel      = $('.panel', $container);
-        var $header     = $('.header', $container);
+    QUnit.test( 'retrieve', function( assert ) {
+        assert.expect( 2 );
+        var $fixture = $( fixture );
+        var $container = $( '.test-runner', $fixture );
+        var $content    = $( '.content', $container );
+        var $toolbox    = $( '.toolbox', $container );
+        var $navigation = $( '.navigation', $container );
+        var $control    = $( '.control', $container );
+        var $panel      = $( '.panel', $container );
+        var $header     = $( '.header', $container );
         var mapping    = {
-            'content'    : $content,
-            'toolbox'    : $toolbox,
-            'navigation' : $navigation,
-            'control'    : $control,
-            'header'     : $header,
-            'panel'      : $panel
+            'content': $content,
+            'toolbox': $toolbox,
+            'navigation': $navigation,
+            'control': $control,
+            'header': $header,
+            'panel': $panel
         };
 
-        assert.ok($container.length,  "The container exists");
+        assert.ok( $container.length,  'The container exists' );
 
-        var broker = areaBroker($container, mapping);
+        var broker = areaBroker( $container, mapping );
 
-        assert.deepEqual(broker.getContainer(), $container, 'The container match');
-    });
-});
+        assert.deepEqual( broker.getContainer(), $container, 'The container match' );
+    } );
+} );
