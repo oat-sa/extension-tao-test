@@ -43,6 +43,7 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 
     /**
      * constructor: initialize the service and the default data
+     * @\oat\tao\model\routing\AnnotationReader\security("hide")
      */
     public function __construct()
     {

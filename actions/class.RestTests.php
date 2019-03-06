@@ -22,6 +22,10 @@
  */
 class taoTests_actions_RestTests extends tao_actions_CommonRestModule {
 
+    /**
+     * taoTests_actions_RestTests constructor.
+     * @\oat\tao\model\routing\AnnotationReader\security("hide")
+     */
 	public function __construct()
 	{
 		parent::__construct();
