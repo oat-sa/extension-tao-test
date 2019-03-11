@@ -37,6 +37,9 @@ use oat\tao\model\routing\AnnotationReader\security;
  */
 class taoTests_actions_Tests extends tao_actions_SaSModule {
 
+    /**
+     * @return EventManager
+     */
     protected function getEventManager()
     {
         return $this->getServiceLocator()->get(EventManager::SERVICE_ID);
