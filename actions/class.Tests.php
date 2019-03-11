@@ -120,40 +120,37 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
     }
 
    /**
-     * delete a test or a test class
-     * called via ajax
-     * @return void
-     * @throws Exception
-     * @throws common_exception_BadRequest
-     * @requiresRight id WRITE
-     */
+    * delete a test or a test class
+    * called via ajax
+    * @return void
+    * @throws Exception
+    * @throws common_exception_BadRequest
+    * @requiresRight id WRITE
+    */
     public function delete()
     {
         if (!tao_helpers_Request::isAjax()) {
             throw new common_exception_BadRequest('wrong request mode');
         }
 
-        $deleted = false;
+        $uri = $this->getRequestParameter('id');
 
-        $uri = $this->getRequestParameter('uri');
-        if ($uri) {
-            $this->validateInstanceRoot($uri);
+        $this->validateInstanceRoot($uri);
 
-            $instance = $this->getCurrentInstance();
+        $instance = $this->getCurrentInstance('id');
 
-            $lockManager = LockManager::getImplementation();
-            $userId = common_session_SessionManager::getSession()->getUser()->getIdentifier();
+        $lockManager = LockManager::getImplementation();
+        $userId = common_session_SessionManager::getSession()->getUser()->getIdentifier();
 
-            if ($lockManager->isLocked($instance)) {
-                    $lockManager->releaseLock($instance, $userId);
-            }
-
-            $deleted = $this->service->deleteTest($instance);
-        } else {
-            return $this->forward('deleteClass', null, null, (array('id' => $this->getRequestParameter('id'))));
+        if ($lockManager->isLocked($instance)) {
+            $lockManager->releaseLock($instance, $userId);
         }
 
-        echo json_encode(array('deleted' => $deleted));
+        echo json_encode(
+            [
+                'deleted' => $this->service->deleteTest($instance)
+            ]
+        );
     }
 
     /**
