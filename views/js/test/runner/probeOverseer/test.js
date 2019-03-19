@@ -20,6 +20,7 @@
  * @author Sam <sam@taotesting.com>
  */
 define([
+
     'jquery',
     'lodash',
     'core/promise',
@@ -30,26 +31,26 @@ define([
 
     var mockedData = {};
     var mockTestStore = {
-        getStore : function(){
+        getStore: function() {
             return Promise.resolve({
-                getItem : function getItem(key){
-                    return new Promise(function(resolve){
-                        setTimeout(function(){
+                getItem: function getItem(key) {
+                    return new Promise(function(resolve) {
+                        setTimeout(function() {
                             resolve(mockedData[key]);
                         }, 2);
                     });
                 },
-                setItem : function setItem(key, value){
-                    return new Promise(function(resolve){
-                        setTimeout(function(){
+                setItem: function setItem(key, value) {
+                    return new Promise(function(resolve) {
+                        setTimeout(function() {
                             mockedData[key] = value;
                             resolve(true);
                         }, 10);
                     });
                 },
-                removeItem : function removeItem(key){
-                    return new Promise(function(resolve){
-                        setTimeout(function(){
+                removeItem: function removeItem(key) {
+                    return new Promise(function(resolve) {
+                        setTimeout(function() {
                             delete mockedData[key];
                             resolve(true);
                         }, 5);
@@ -62,46 +63,45 @@ define([
     var mockRunner = {
         init: _.noop,
         on: _.noop,
-        getTestStore : mockTestStore
+        getTestStore: mockTestStore
     };
 
     QUnit.module('API');
 
     QUnit.test('module factory', function(assert) {
 
-        QUnit.expect(5);
+        assert.expect(5);
 
-        assert.equal(typeof probeOverseer, 'function', "The module exposes a function");
+        assert.equal(typeof probeOverseer, 'function', 'The module exposes a function');
 
         assert.throws(function() {
             probeOverseer();
-        }, TypeError, "The factory needs a runner");
+        }, TypeError, 'The factory needs a runner');
 
         assert.throws(function() {
             probeOverseer({});
-        }, TypeError, "The factory needs a valid runner");
+        }, TypeError, 'The factory needs a valid runner');
 
-        assert.equal(typeof probeOverseer(mockRunner), 'object', "The module is a factory");
-        assert.notEqual(probeOverseer(mockRunner), probeOverseer(mockRunner), "The factory creates different instances");
+        assert.equal(typeof probeOverseer(mockRunner), 'object', 'The module is a factory');
+        assert.notEqual(probeOverseer(mockRunner), probeOverseer(mockRunner), 'The factory creates different instances');
     });
-
 
     QUnit.test('own api', function(assert) {
         var probes = probeOverseer(mockRunner);
 
-        QUnit.expect(7);
+        assert.expect(7);
 
-        assert.equal(typeof probes.add, 'function', "The module as the add method");
-        assert.equal(typeof probes.getProbes, 'function', "The module as the getProbes method");
-        assert.equal(typeof probes.getQueue, 'function', "The module as the getQueue method");
-        assert.equal(typeof probes.push, 'function', "The module as the push method");
-        assert.equal(typeof probes.flush, 'function', "The module as the flush method");
-        assert.equal(typeof probes.start, 'function', "The module as the start method");
-        assert.equal(typeof probes.stop, 'function', "The module as the stop method");
+        assert.equal(typeof probes.add, 'function', 'The module as the add method');
+        assert.equal(typeof probes.getProbes, 'function', 'The module as the getProbes method');
+        assert.equal(typeof probes.getQueue, 'function', 'The module as the getQueue method');
+        assert.equal(typeof probes.push, 'function', 'The module as the push method');
+        assert.equal(typeof probes.flush, 'function', 'The module as the flush method');
+        assert.equal(typeof probes.start, 'function', 'The module as the start method');
+        assert.equal(typeof probes.stop, 'function', 'The module as the stop method');
     });
 
     QUnit.module('probes', {
-        teardown : function(){
+        afterEach: function(assert) {
             mockedData = {};
         }
     });
@@ -109,27 +109,27 @@ define([
     QUnit.test('normal validation', function(assert) {
         var probes = probeOverseer(mockRunner);
 
-        QUnit.expect(5);
+        assert.expect(5);
 
         assert.throws(function() {
             probes.add();
-        }, TypeError, "A probe is an object");
+        }, TypeError, 'A probe is an object');
 
         assert.throws(function() {
             probes.add({});
-        }, TypeError, "A probe is an object with a predefined format");
+        }, TypeError, 'A probe is an object with a predefined format');
 
         assert.throws(function() {
             probes.add({
                 name: true
             });
-        }, TypeError, "A probe is an object with a valid name");
+        }, TypeError, 'A probe is an object with a valid name');
 
         assert.throws(function() {
             probes.add({
                 name: 'foo'
             });
-        }, TypeError, "A probe is an object with events");
+        }, TypeError, 'A probe is an object with events');
 
         probes.add({
             name: 'foo',
@@ -141,25 +141,25 @@ define([
                 name: 'foo',
                 events: ['bar']
             });
-        }, TypeError, "A probe cannot be added twice");
+        }, TypeError, 'A probe cannot be added twice');
 
     });
 
     QUnit.test('latency validation', function(assert) {
         var probes = probeOverseer(mockRunner);
 
-        QUnit.expect(4);
+        assert.expect(4);
 
         assert.throws(function() {
             probes.add({});
-        }, TypeError, "A probe is an object with a predefined format");
+        }, TypeError, 'A probe is an object with a predefined format');
 
         assert.throws(function() {
             probes.add({
                 name: 'foo',
                 latency: true
             });
-        }, TypeError, "A latency probe must have events");
+        }, TypeError, 'A latency probe must have events');
 
         assert.throws(function() {
             probes.add({
@@ -167,7 +167,7 @@ define([
                 latency: true,
                 events: ['bar']
             });
-        }, TypeError, "A latency probe must have start and stop events");
+        }, TypeError, 'A latency probe must have start and stop events');
 
         assert.throws(function() {
             probes.add({
@@ -176,7 +176,7 @@ define([
                 startEvents: [],
                 stopEvents: []
             });
-        }, TypeError, "A latency probe must have start and stop events defined");
+        }, TypeError, 'A latency probe must have start and stop events defined');
 
         probes.add({
             name: 'foo',
@@ -199,7 +199,7 @@ define([
             events: ['ready']
         };
 
-        QUnit.expect(3);
+        assert.expect(3);
 
         assert.deepEqual(probes.add(p1), probes, 'The add method chains');
         assert.deepEqual(probes.add(p2), probes, 'The add method chains');
@@ -219,7 +219,7 @@ define([
             events: 'ready'
         };
 
-        QUnit.expect(3);
+        assert.expect(3);
 
         probes.add(p1)
             .add(p2);
@@ -230,22 +230,23 @@ define([
     });
 
     QUnit.module('collection', {
-        setup: function() {
+        beforeEach: function(assert) {
             runnerFactory.clearProviders();
         },
-        teardown : function(){
+        afterEach: function(assert) {
             mockedData = {};
         }
     });
 
-    QUnit.asyncTest('simple', function(assert) {
+    QUnit.test('simple', function(assert) {
+        var ready = assert.async();
         var runner, probes;
 
-        QUnit.expect(14);
+        assert.expect(14);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker: _.noop,
-            loadTestStore : function(){
+            loadTestStore: function() {
                 return mockTestStore;
             },
             init: _.noop
@@ -268,7 +269,7 @@ define([
                 };
             }
         });
-        probes.start().then(function(){
+        probes.start().then(function() {
 
             var creation = Date.now() / 1000;
             var init;
@@ -287,7 +288,7 @@ define([
                             assert.ok(queue[0].timestamp >= creation && creation > 0, 'The timestamp is superior to the test creation');
                             assert.ok(queue[0].timestamp >= init && init > 0, 'The timestamp is superior or equal to the test init');
                             assert.equal(typeof queue[0].timezone, 'string', 'The queue entry contains a timezone');
-                            assert.ok( new RegExp('^[+-]{1}[0-9]{2}:[0-9]{2}$').test(queue[0].timezone) , 'The timezone is formatted correclty');
+                            assert.ok(new RegExp('^[+-]{1}[0-9]{2}:[0-9]{2}$').test(queue[0].timezone), 'The timezone is formatted correclty');
                             assert.equal(queue[0].type, 'test-ready', 'The entry type is correct');
                             assert.deepEqual(queue[0].context, {
                                 foo: 'bar'
@@ -295,26 +296,27 @@ define([
 
                             probes.stop();
 
-                            QUnit.start();
+                            ready();
 
                         }).catch(function(err) {
                             assert.ok(false, err);
-                            QUnit.start();
+                            ready();
                         });
-                    }, 200); //time to write in the db
+                    }, 200); //Time to write in the db
                 })
                 .init();
         });
     });
 
-    QUnit.asyncTest('simple(param)', function(assert) {
+    QUnit.test('simple(param)', function(assert) {
+        var ready = assert.async();
         var runner, probes;
 
-        QUnit.expect(15);
+        assert.expect(15);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker: _.noop,
-            loadTestStore : function(){
+            loadTestStore: function() {
                 return mockTestStore;
             },
             init: _.noop
@@ -338,7 +340,7 @@ define([
                 };
             }
         });
-        probes.start().then(function(){
+        probes.start().then(function() {
 
             var creation = Date.now() / 1000;
             var init;
@@ -358,7 +360,7 @@ define([
                             assert.ok(queue[0].timestamp >= creation && creation > 0, 'The timestamp is superior to the test creation');
                             assert.ok(queue[0].timestamp >= init && init > 0, 'The timestamp is superior or equal to the test init');
                             assert.equal(typeof queue[0].timezone, 'string', 'The queue entry contains a timezone');
-                            assert.ok( new RegExp('^[+-]{1}[0-9]{2}:[0-9]{2}$').test(queue[0].timezone) , 'The timezone is formatted correclty');
+                            assert.ok(new RegExp('^[+-]{1}[0-9]{2}:[0-9]{2}$').test(queue[0].timezone), 'The timezone is formatted correclty');
                             assert.equal(queue[0].type, 'test-param', 'The entry type is correct');
                             assert.deepEqual(queue[0].context, {
                                 foo: 'bar'
@@ -366,26 +368,27 @@ define([
 
                             probes.stop();
 
-                            QUnit.start();
+                            ready();
 
                         }).catch(function(err) {
                             assert.ok(false, err);
-                            QUnit.start();
+                            ready();
                         });
-                    }, 200); //time to write in the db
+                    }, 200); //Time to write in the db
                 })
                 .init();
         });
     });
 
-    QUnit.asyncTest('latency', function(assert) {
+    QUnit.test('latency', function(assert) {
+        var ready = assert.async();
         var runner, probes;
 
-        QUnit.expect(20);
+        assert.expect(20);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker: _.noop,
-            loadTestStore : function(){
+            loadTestStore: function() {
                 return mockTestStore;
             },
             init: _.noop
@@ -410,7 +413,7 @@ define([
                 };
             }
         });
-        probes.start().then(function(){
+        probes.start().then(function() {
 
             var creation = Date.now() / 1000;
             var init;
@@ -449,27 +452,28 @@ define([
 
                             probes.stop();
 
-                            QUnit.start();
+                            ready();
 
                         }).catch(function(err) {
                             assert.ok(false, err);
 
-                            QUnit.start();
+                            ready();
                         });
-                    }, 200); //time to write in the db
+                    }, 200); //Time to write in the db
                 })
                 .init();
         });
     });
 
-    QUnit.asyncTest('latency(param)', function(assert) {
+    QUnit.test('latency(param)', function(assert) {
+        var ready = assert.async();
         var runner, probes;
 
-        QUnit.expect(22);
+        assert.expect(22);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker: _.noop,
-            loadTestStore : function(){
+            loadTestStore: function() {
                 return mockTestStore;
             },
             init: _.noop
@@ -495,7 +499,7 @@ define([
                 };
             }
         });
-        probes.start().then(function(){
+        probes.start().then(function() {
 
             var creation = Date.now() / 1000;
             var init;
@@ -535,27 +539,28 @@ define([
 
                             probes.stop();
 
-                            QUnit.start();
+                            ready();
 
                         }).catch(function(err) {
                             assert.ok(false, err);
 
-                            QUnit.start();
+                            ready();
                         });
-                    }, 200); //time to write in the db
+                    }, 200); //Time to write in the db
                 })
                 .init();
         });
     });
 
-    QUnit.asyncTest('flush', function(assert) {
+    QUnit.test('flush', function(assert) {
+        var ready = assert.async();
         var runner, probes;
 
-        QUnit.expect(3);
+        assert.expect(3);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker: _.noop,
-            loadTestStore : function(){
+            loadTestStore: function() {
                 return mockTestStore;
             },
             init: _.noop
@@ -569,7 +574,7 @@ define([
             name: 'foo',
             events: 'foo'
         });
-        probes.start().then(function(){
+        probes.start().then(function() {
 
             runner
                 .on('ready', function() {
@@ -578,7 +583,6 @@ define([
                         .trigger('foo');
                 })
                 .after('ready', function() {
-
 
                     setTimeout(function() {
                         probes.getQueue()
@@ -597,26 +601,27 @@ define([
                             })
                             .then(function() {
                                 probes.stop();
-                                QUnit.start();
+                                ready();
                             }).catch(function(err) {
                                 assert.ok(false, err);
 
-                                QUnit.start();
+                                ready();
                             });
-                    }, 200); //time to write in the db
+                    }, 200); //Time to write in the db
                 })
                 .init();
         });
     });
 
-    QUnit.asyncTest('stop', function(assert) {
+    QUnit.test('stop', function(assert) {
+        var ready = assert.async();
         var runner, probes;
 
-        QUnit.expect(2);
+        assert.expect(2);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker: _.noop,
-            loadTestStore : function(){
+            loadTestStore: function() {
                 return mockTestStore;
             },
             init: _.noop
@@ -630,7 +635,7 @@ define([
             name: 'foo',
             events: 'foo'
         });
-        probes.start().then(function(){
+        probes.start().then(function() {
 
             runner
                 .on('ready', function() {
@@ -646,7 +651,7 @@ define([
                                 assert.equal(queue.length, 3, 'The queue contains 3 entries');
                             })
                             .then(function() {
-                                return probes.stop().then(function(){
+                                return probes.stop().then(function() {
                                     runner.trigger('foo');
                                 });
                             })
@@ -654,7 +659,7 @@ define([
                                 setTimeout(function() {
                                     probes.getQueue().then(function(queue) {
                                         assert.equal(queue, null, 'The queue is not there');
-                                        QUnit.start();
+                                        ready();
                                     });
                                 }, 150);
                             });
@@ -664,14 +669,15 @@ define([
         });
     });
 
-    QUnit.asyncTest('concurrency', function(assert) {
+    QUnit.test('concurrency', function(assert) {
+        var ready = assert.async();
         var runner, probes;
 
-        QUnit.expect(3);
+        assert.expect(3);
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker: _.noop,
-            loadTestStore : function(){
+            loadTestStore: function() {
                 return mockTestStore;
             },
             init: _.noop
@@ -682,7 +688,7 @@ define([
         probes = probeOverseer(runner);
 
         probes.start()
-            .then(function(){
+            .then(function() {
                 var flushPromise;
 
                 probes.push({i: 1});
@@ -690,15 +696,17 @@ define([
                 flushPromise = probes.flush().then(function(queue) {
                     assert.equal(_.isArray(queue), true, 'The queue is an array');
                     assert.equal(queue.length, 2, 'The queue has 2 items');
-                    assert.equal(_.reduce(queue, function(sum, item) {return sum + item.i;}, 0), 3, 'The queue should contains the expected elements');
-                    QUnit.start();
+                    assert.equal(_.reduce(queue, function(sum, item) {
+                        return sum + item.i;
+                    }, 0), 3, 'The queue should contains the expected elements');
+                    ready();
                 });
 
                 return flushPromise;
             })
             .catch(function(e) {
                 assert.ok(false, 'An error occurred : ' + e.message);
-                QUnit.start();
+                ready();
             });
     });
 });

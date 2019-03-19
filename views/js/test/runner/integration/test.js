@@ -19,6 +19,7 @@
  * @author Sam <sam@taotesting.com>
  */
 define([
+
     'jquery',
     'lodash',
     'taoTests/runner/runner',
@@ -26,36 +27,47 @@ define([
     'taoTests/test/runner/sample/plugin/nextButton',
     'taoTests/test/runner/sample/plugin/previousButton',
     'taoTests/test/runner/sample/plugin/pauseButton',
-    'taoTests/test/runner/sample/plugin/timer',
-], function($, _, runner, minimalisticProvider, nextButton, previousButton, pauseButton, timer){
+    'taoTests/test/runner/sample/plugin/timer'
+], function(
+
+    $,
+    _,
+    runner,
+    minimalisticProvider,
+    nextButton,
+    previousButton,
+    pauseButton,
+    timer
+) {
     'use strict';
 
     runner.registerProvider(minimalisticProvider.name, minimalisticProvider);
 
-    QUnit.test('provider regsitration', function(assert){
-        QUnit.expect(1);
+    QUnit.test('provider regsitration', function(assert) {
+        assert.expect(1);
 
         assert.deepEqual(runner.getProvider(minimalisticProvider.name), minimalisticProvider, 'The provider is regsitered');
     });
 
-    QUnit.asyncTest('dom integration', function(assert){
-        QUnit.expect(12);
+    QUnit.test('dom integration', function(assert) {
+        var ready = assert.async();
+        assert.expect(12);
 
         var $container = $('#qunit-fixture');
 
         runner(minimalisticProvider.name, {
-            previousButtonh : previousButton,
-            next : nextButton,
-            pause : pauseButton,
+            previousButtonh: previousButton,
+            next: nextButton,
+            pause: pauseButton,
             timer: timer
         }, {
-            url : '/taoTests/views/js/test/runner/sample/minimalisticTest.json',
-            renderTo : $container
+            url: '/taoTests/views/js/test/runner/sample/minimalisticTest.json',
+            renderTo: $container
         })
-        .on('error', function(err){
+        .on('error', function(err) {
             throw err;
         })
-        .on('ready', function(){
+        .on('ready', function() {
 
             assert.equal($('.test-runner', $container).length, 1, 'The test runner container is attached');
             assert.equal($('.test-runner .content', $container).length, 1, 'The content area is attached');
@@ -68,47 +80,44 @@ define([
             assert.equal($('.next', $container).prop('disabled'), false, 'The next button is enabled');
             assert.equal($('.previous', $container).prop('disabled'), false, 'The previous button is enabled');
 
-
             assert.equal($('.content', $container).text(), '', 'The content is empty');
 
         })
-        .after('renderitem', function(){
+        .after('renderitem', function() {
 
             assert.equal($('.next', $container).prop('disabled'), false, 'The next button is enabled');
             assert.equal($('.previous', $container).prop('disabled'), true, 'The previous button is disabled');
 
             assert.ok($('.content', $container).text().length > 0, 'The content is set');
 
-
-            QUnit.start();
+            ready();
         })
         .init();
     });
 
-
-    QUnit.asyncTest('visual integration', function(assert){
-        QUnit.expect(1);
+    QUnit.test('visual integration', function(assert) {
+        var ready = assert.async();
+        assert.expect(1);
 
         var $container = $('#external');
 
         runner(minimalisticProvider.name, {
-            previousButtonh : previousButton,
-            next : nextButton,
-            pause : pauseButton,
+            previousButtonh: previousButton,
+            next: nextButton,
+            pause: pauseButton,
             timer: timer
         }, {
-            url : '/taoTests/views/js/test/runner/sample/minimalisticTest.json',
-            renderTo : $container
+            url: '/taoTests/views/js/test/runner/sample/minimalisticTest.json',
+            renderTo: $container
         })
-        .on('error', function(err){
+        .on('error', function(err) {
             throw err;
         })
-        .on('ready', function(){
+        .on('ready', function() {
 
             assert.ok(true, 'the test is ready');
 
-
-            QUnit.start();
+            ready();
         })
         .init();
     });
