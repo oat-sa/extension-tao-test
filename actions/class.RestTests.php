@@ -16,12 +16,18 @@
  *
  */
 
+use \oat\tao\model\routing\AnnotationReader\security;
+
 /**
  *
  * @author plichart
  */
 class taoTests_actions_RestTests extends tao_actions_CommonRestModule {
 
+    /**
+     * taoTests_actions_RestTests constructor.
+     * @security("hide")
+     */
 	public function __construct()
 	{
 		parent::__construct();

@@ -20,11 +20,12 @@
  *
  */
 
-use oat\oatbox\event\EventManagerAwareTrait;
+use oat\oatbox\event\EventManager;
 use oat\tao\model\controller\SignedFormInstance;
 use oat\tao\model\lock\LockManager;
 use oat\tao\model\resources\ResourceWatcher;
 use oat\taoTests\models\event\TestUpdatedEvent;
+use oat\tao\model\routing\AnnotationReader\security;
 
 /**
  * Tests Controller provide actions performed from url resolution
@@ -36,7 +37,14 @@ use oat\taoTests\models\event\TestUpdatedEvent;
  *
  */
 class taoTests_actions_Tests extends tao_actions_SaSModule {
-    use EventManagerAwareTrait;
+
+    /**
+     * @return EventManager
+     */
+    protected function getEventManager()
+    {
+        return $this->getServiceLocator()->get(EventManager::SERVICE_ID);
+    }
 
     protected function getClassService()
     {
@@ -45,6 +53,7 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 
     /**
      * constructor: initialize the service and the default data
+     * @security("hide")
      */
     public function __construct()
     {
