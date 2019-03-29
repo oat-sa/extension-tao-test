@@ -19,29 +19,32 @@
  * @author Jean-Sébastien Conan <jean-sebastien@taotesting.com>
  */
 define([
+
     'jquery',
     'lodash',
     'core/promise',
     'taoTests/runner/runner',
     'taoTests/runner/runnerComponent'
-], function ($, _, Promise, runnerFactory, runnerComponentFactory) {
+], function($, _, Promise, runnerFactory, runnerComponentFactory) {
     'use strict';
 
     QUnit.module('factory');
 
-
-    QUnit.test('module', function (assert) {
+    QUnit.test('module', function(assert) {
         var $container = $('#fixture-module');
 
-        QUnit.expect(3);
-
-        assert.equal(typeof runnerComponentFactory, 'function', "The runnerComponent module exposes a function");
-        assert.equal(typeof runnerComponentFactory($container, {provider: 'mock'}), 'object', "The runnerComponent factory produces an object");
-        assert.notStrictEqual(runnerComponentFactory($container, {provider: 'mock'}), runnerComponentFactory($container, {provider: 'mock'}), "The runnerComponent factory provides a different object on each call");
+        assert.expect(3);
+        runnerFactory.registerProvider('mock', {
+            loadAreaBroker: _.noop,
+            init: function() {
+            }
+        });
+        assert.equal(typeof runnerComponentFactory, 'function', 'The runnerComponent module exposes a function');
+        assert.equal(typeof runnerComponentFactory($container, {provider: 'mock'}), 'object', 'The runnerComponent factory produces an object');
+        assert.notStrictEqual(runnerComponentFactory($container, {provider: 'mock'}), runnerComponentFactory($container, {provider: 'mock'}), 'The runnerComponent factory provides a different object on each call');
     });
 
-
-    QUnit.cases([
+    QUnit.cases.init([
         {title: 'init'},
         {title: 'destroy'},
         {title: 'show'},
@@ -52,24 +55,17 @@ define([
         {title: 'before'},
         {title: 'after'},
         {title: 'trigger'}
-    ]).test('api ', function (data, assert) {
+    ]).test('api ', function(data, assert) {
         var $container = $('#fixture-method');
         var instance = runnerComponentFactory($container, {provider: 'mock'});
 
-        QUnit.expect(1);
+        assert.expect(1);
 
         assert.equal(typeof instance[data.title], 'function', 'The runnerComponent instance exposes a "' + data.title + '" function');
     });
 
-
-    QUnit.module('provider', {
-        teardown: function () {
-            runnerFactory.clearProviders();
-        }
-    });
-
-
-    QUnit.asyncTest('init', function (assert) {
+    QUnit.test('init', function(assert) {
+        var ready = assert.async();
         var $container = $('#fixture-init');
         var instance;
 
@@ -78,30 +74,30 @@ define([
             return '<div id="foo-runner"></div>';
         }
 
-        QUnit.expect(10);
+        assert.expect(10);
 
         runnerFactory.registerProvider('mock-init', {
             loadAreaBroker: _.noop,
-            init: function () {
+            init: function() {
                 assert.ok(true, 'The init method has been called');
             },
-            render: function () {
+            render: function() {
                 assert.ok(true, 'The render method has been called');
             },
-            destroy: function () {
+            destroy: function() {
                 assert.ok(true, 'The destroy method has been called');
 
-                _.delay(function () {
+                _.delay(function() {
                     assert.equal($container.children().length, 0, 'The component has been destroyed');
 
-                    QUnit.start();
+                    ready();
                 }, 200);
             }
         });
 
         assert.equal($container.children().length, 0, 'The runner is not rendered');
 
-        instance = runnerComponentFactory($container, {provider: 'mock-init'}, mockTpl).on('ready', function () {
+        instance = runnerComponentFactory($container, {provider: 'mock-init'}, mockTpl).on('ready', function() {
             assert.ok(true, 'The runner is ready');
             assert.equal($container.children().length, 1, 'The runner is rendered');
             assert.equal($container.find('#foo-runner').length, 1, 'The right template is used');
@@ -111,21 +107,20 @@ define([
         assert.equal(instance.getOption('provider'), 'mock-init', 'The right provider is set in the config');
     });
 
+    QUnit.test('init error', function(assert) {
+        assert.expect(1);
 
-    QUnit.test('init error', function (assert) {
-        QUnit.expect(1);
-
-        assert.throws(function () {
+        assert.throws(function() {
             runnerComponentFactory();
         }, 'An error should be thrown if the provider is not set');
     });
 
+    QUnit.test('dynamic providers', function(assert) {
+        var ready1 = assert.async();
+        var $container = $('#fixture-providers');
 
-    QUnit.asyncTest('dynamic providers', function (assert) {
-        var $container = $("#fixture-providers");
-
-        QUnit.expect(3);
-        QUnit.stop(1);
+        assert.expect(3);
+        var ready = assert.async();
 
         runnerComponentFactory($container, {
             provider: 'mock',
@@ -135,31 +130,32 @@ define([
                 category: 'mock'
             }]
         })
-            .on('ready', function (runner) {
+            .on('ready', function(runner) {
                 assert.ok(true, 'The runner is ready');
                 assert.equal(typeof runner, 'object', 'The runner instance is provided');
-                runner.on('mock-provider-loaded', function () {
+                runner.on('mock-provider-loaded', function() {
                     assert.ok(true, 'The right provider has been loaded');
-                    QUnit.start();
+                    ready();
+
                 });
 
-                QUnit.start();
+                ready1();
             });
     });
 
+    QUnit.test('dynamic plugins', function(assert) {
+        var ready1 = assert.async();
+        var $container = $('#fixture-plugins');
 
-    QUnit.asyncTest('dynamic plugins', function (assert) {
-        var $container = $("#fixture-plugins");
-
-        QUnit.expect(5);
-        QUnit.stop(1);
+        var ready = assert.async();
+        assert.expect(5);
 
         runnerFactory.registerProvider('bar', {
             loadAreaBroker: _.noop,
-            init: function () {
+            init: function() {
                 assert.ok(true, 'The init method has been called');
             },
-            render: function () {
+            render: function() {
                 assert.ok(true, 'The render method has been called');
             }
         });
@@ -172,68 +168,72 @@ define([
                 category: 'mock'
             }]
         })
-            .on('ready', function (runner) {
+            .on('ready', function(runner) {
                 assert.ok(true, 'The runner is ready');
                 assert.equal(typeof runner, 'object', 'The runner instance is provided');
-                runner.on('plugin-loaded.mock', function () {
+                runner.on('plugin-loaded.mock', function() {
                     assert.ok(true, 'The right plugin has been loaded');
-                    QUnit.start();
+                    ready();
                 });
 
-                QUnit.start();
+                ready1();
             });
     });
 
-
-    QUnit.asyncTest('error event', function (assert) {
-        var $container = $("#fixture-error");
+    QUnit.test('error event', function(assert) {
+        var ready = assert.async();
+        var $container = $('#fixture-error');
         var error = 'oops!';
 
-        QUnit.expect(5);
+        assert.expect(5);
+        runnerFactory.clearProviders();
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker: _.noop,
-            init: function () {
+            init: function() {
                 assert.ok(true, 'The init method has been called');
             },
-            render: function () {
+            render: function() {
                 assert.ok(true, 'The render method has been called');
             }
         });
 
         runnerComponentFactory($container, {provider: 'foo'})
-            .on('error', function (err) {
+            .on('error', function(err) {
                 assert.equal(err, error, 'The error has been forwarded');
             })
-            .on('ready', function (runner) {
+            .on('ready', function(runner) {
                 assert.ok(true, 'The runner is ready');
                 assert.equal(typeof runner, 'object', 'The runner instance is provided');
 
                 runner.trigger('error', error);
+                runnerFactory.clearProviders();
 
-                QUnit.start();
+
+                ready();
             });
     });
 
-
-    QUnit.asyncTest('getRunner', function (assert) {
-        var $container = $("#fixture-get");
+    QUnit.test('getRunner', function(assert) {
+        var ready = assert.async();
+        var $container = $('#fixture-get');
         var instance;
 
-        QUnit.expect(7);
+        assert.expect(7);
+        runnerFactory.clearProviders();
 
         runnerFactory.registerProvider('foo', {
             loadAreaBroker: _.noop,
-            init: function () {
+            init: function() {
                 assert.ok(true, 'The init method has been called');
             },
-            render: function () {
+            render: function() {
                 assert.ok(true, 'The render method has been called');
             }
         });
 
         instance = runnerComponentFactory($container, {provider: 'foo'})
-            .on('ready', function (runner) {
+            .on('ready', function(runner) {
                 assert.ok(true, 'The runner is ready');
                 assert.equal(typeof runner, 'object', 'The runner instance is provided');
 
@@ -242,7 +242,7 @@ define([
             })
             .on('destroy', function() {
                 assert.equal(instance.getRunner(), null, 'The runner has been destroyed');
-                QUnit.start();
+                ready();
             });
 
         assert.equal(instance.getRunner(), null, 'The runner is not ready at this time');

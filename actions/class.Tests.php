@@ -21,9 +21,10 @@
  */
 
 use oat\oatbox\event\EventManager;
+use oat\tao\model\controller\SignedFormInstance;
 use oat\tao\model\lock\LockManager;
-use oat\taoTests\models\event\TestUpdatedEvent;
 use oat\tao\model\resources\ResourceWatcher;
+use oat\taoTests\models\event\TestUpdatedEvent;
 use oat\tao\model\routing\AnnotationReader\security;
 
 /**
@@ -76,47 +77,49 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
     {
         $test = new core_kernel_classes_Resource($this->getRequestParameter('id'));
         if (!$this->isLocked($test)) {
-
             // my lock
             $lock = LockManager::getImplementation()->getLockData($test);
-            if (!is_null($lock) && $lock->getOwnerId() == common_session_SessionManager::getSession()->getUser()->getIdentifier()) {
+            $sessionIdentifier = common_session_SessionManager::getSession()->getUser()->getIdentifier();
+
+            if (!is_null($lock) && $lock->getOwnerId() === $sessionIdentifier) {
                 $this->setData('lockDate', $lock->getCreationTime());
                 $this->setData('id', $lock->getResource()->getUri());
             }
 
             $clazz = $this->getCurrentClass();
-            $formContainer = new tao_actions_form_Instance($clazz, $test);
+            $formContainer = new SignedFormInstance($clazz, $test);
             $myForm = $formContainer->getForm();
-            if($myForm->isSubmited()){
-                    if($myForm->isValid()){
-                            $propertyValues = $myForm->getValues();
+            if ($myForm->isSubmited() && $myForm->isValid()) {
+                $this->validateInstanceRoot($test->getUri());
 
-                            // don't hande the testmodel via bindProperties
-                            if(array_key_exists(taoTests_models_classes_TestsService::PROPERTY_TEST_TESTMODEL, $propertyValues)){
-                                    $modelUri = $propertyValues[taoTests_models_classes_TestsService::PROPERTY_TEST_TESTMODEL];
-                                    unset($propertyValues[taoTests_models_classes_TestsService::PROPERTY_TEST_TESTMODEL]);
-                                    if (!empty($modelUri)) {
-                                            $testModel = new core_kernel_classes_Resource($modelUri);
-                                            $this->service->setTestModel($test, $testModel);
-                                    }
-                            } else {
-                                    common_Logger::w('No testmodel on test form', 'taoTests');
-                            }
+                $propertyValues = $myForm->getValues();
 
-                            //then save the property values as usual
-                            $binder = new tao_models_classes_dataBinding_GenerisFormDataBinder($test);
-                            $test = $binder->bind($propertyValues);
+                // don't hande the testmodel via bindProperties
+                if (array_key_exists(taoTests_models_classes_TestsService::PROPERTY_TEST_TESTMODEL,
+                    $propertyValues)) {
+                    $modelUri = $propertyValues[taoTests_models_classes_TestsService::PROPERTY_TEST_TESTMODEL];
+                    unset($propertyValues[taoTests_models_classes_TestsService::PROPERTY_TEST_TESTMODEL]);
+                    if (!empty($modelUri)) {
+                        $testModel = new core_kernel_classes_Resource($modelUri);
+                        $this->service->setTestModel($test, $testModel);
+                    }
+                } else {
+                    common_Logger::w('No testmodel on test form', 'taoTests');
+                }
+
+                //then save the property values as usual
+                $binder = new tao_models_classes_dataBinding_GenerisFormDataBinder($test);
+                $test = $binder->bind($propertyValues);
                 $this->getEventManager()->trigger(new TestUpdatedEvent($test->getUri(), $propertyValues));
 
                 $this->setData("selectNode", tao_helpers_Uri::encode($test->getUri()));
-                            $this->setData('message', __('Test saved'));
-                            $this->setData('reload', true);
-                    }
+                $this->setData('message', __('Test saved'));
+                $this->setData('reload', true);
             }
 
             $myForm->removeElement(tao_helpers_Uri::encode(taoTests_models_classes_TestsService::PROPERTY_TEST_CONTENT));
-        $updatedAt = $this->getServiceManager()->get(ResourceWatcher::SERVICE_ID)->getUpdatedAt($test);
-        $this->setData('updatedAt', $updatedAt);
+            $updatedAt = $this->getServiceManager()->get(ResourceWatcher::SERVICE_ID)->getUpdatedAt($test);
+            $this->setData('updatedAt', $updatedAt);
             $this->setData('uri', tao_helpers_Uri::encode($test->getUri()));
             $this->setData('classUri', tao_helpers_Uri::encode($clazz->getUri()));
             $this->setData('formTitle', __('Test properties'));
@@ -126,37 +129,37 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
     }
 
    /**
-     * delete a test or a test class
-     * called via ajax
-     * @return void
-     * @throws Exception
-     * @throws common_exception_BadRequest
-     * @requiresRight id WRITE
-     */
+    * delete a test or a test class
+    * called via ajax
+    * @return void
+    * @throws Exception
+    * @throws common_exception_BadRequest
+    * @requiresRight id WRITE
+    */
     public function delete()
     {
         if (!tao_helpers_Request::isAjax()) {
             throw new common_exception_BadRequest('wrong request mode');
         }
 
-        $deleted = false;
-        if ($this->getRequestParameter('uri')) {
+        $uri = $this->getRequestParameter('id');
 
-            $instance = $this->getCurrentInstance();
+        $this->validateInstanceRoot($uri);
 
-            $lockManager = LockManager::getImplementation();
-            $userId = common_session_SessionManager::getSession()->getUser()->getIdentifier();
+        $instance = $this->getCurrentInstance('id');
 
-            if ($lockManager->isLocked($instance)) {
-                    $lockManager->releaseLock($instance, $userId);
-            }
+        $lockManager = LockManager::getImplementation();
+        $userId = common_session_SessionManager::getSession()->getUser()->getIdentifier();
 
-            $deleted = $this->service->deleteTest($instance);
-        } else {
-                return $this->forward('deleteClass', null, null, (array('id' => $this->getRequestParameter('id'))));
+        if ($lockManager->isLocked($instance)) {
+            $lockManager->releaseLock($instance, $userId);
         }
 
-        echo json_encode(array('deleted' => $deleted));
+        echo json_encode(
+            [
+                'deleted' => $this->service->deleteTest($instance)
+            ]
+        );
     }
 
     /**
