@@ -89,7 +89,9 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
             $clazz = $this->getCurrentClass();
             $formContainer = new SignedFormInstance($clazz, $test);
             $myForm = $formContainer->getForm();
+            $myForm->addCsrfTokenProtection();
             if ($myForm->isSubmited() && $myForm->isValid()) {
+                $this->validateCsrf();
                 $this->validateInstanceRoot($test->getUri());
 
                 $propertyValues = $myForm->getValues();
