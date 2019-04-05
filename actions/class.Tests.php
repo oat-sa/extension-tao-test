@@ -114,9 +114,15 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
                 $test = $binder->bind($propertyValues);
                 $this->getEventManager()->trigger(new TestUpdatedEvent($test->getUri(), $propertyValues));
 
-                $this->setData("selectNode", tao_helpers_Uri::encode($test->getUri()));
+                $this->setData('selectNode', tao_helpers_Uri::encode($test->getUri()));
                 $this->setData('message', __('Test saved'));
                 $this->setData('reload', true);
+
+                $this->returnJson([
+                    'success' => true,
+                    'message' => __('Test saved')
+                ]);
+                return;
             }
 
             $myForm->removeElement(tao_helpers_Uri::encode(taoTests_models_classes_TestsService::PROPERTY_TEST_CONTENT));
