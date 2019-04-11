@@ -90,15 +90,13 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
             $formContainer = new SignedFormInstance($clazz, $test);
             $myForm = $formContainer->getForm();
             $myForm->addCsrfTokenProtection();
-            if ($myForm->isSubmited() && $myForm->isValid()) {
-                $this->validateCsrf();
+            if ($myForm->isSubmited() && !$myForm->isValid()) {
                 $this->validateInstanceRoot($test->getUri());
 
                 $propertyValues = $myForm->getValues();
 
                 // don't hande the testmodel via bindProperties
-                if (array_key_exists(taoTests_models_classes_TestsService::PROPERTY_TEST_TESTMODEL,
-                    $propertyValues)) {
+                if (array_key_exists(taoTests_models_classes_TestsService::PROPERTY_TEST_TESTMODEL, $propertyValues)) {
                     $modelUri = $propertyValues[taoTests_models_classes_TestsService::PROPERTY_TEST_TESTMODEL];
                     unset($propertyValues[taoTests_models_classes_TestsService::PROPERTY_TEST_TESTMODEL]);
                     if (!empty($modelUri)) {
@@ -117,16 +115,12 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
                 $this->setData('selectNode', tao_helpers_Uri::encode($test->getUri()));
                 $this->setData('message', __('Test saved'));
                 $this->setData('reload', true);
-
-                $this->returnJson([
-                    'success' => true,
-                    'message' => __('Test saved')
-                ]);
-                return;
             }
 
-            $myForm->removeElement(tao_helpers_Uri::encode(taoTests_models_classes_TestsService::PROPERTY_TEST_CONTENT));
-            $updatedAt = $this->getServiceManager()->get(ResourceWatcher::SERVICE_ID)->getUpdatedAt($test);
+            $myForm->removeElement(tao_helpers_Uri::encode(
+                taoTests_models_classes_TestsService::PROPERTY_TEST_CONTENT
+            ));
+            $updatedAt = $this->getServiceLocator()->get(ResourceWatcher::SERVICE_ID)->getUpdatedAt($test);
             $this->setData('updatedAt', $updatedAt);
             $this->setData('uri', tao_helpers_Uri::encode($test->getUri()));
             $this->setData('classUri', tao_helpers_Uri::encode($clazz->getUri()));
