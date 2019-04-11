@@ -140,6 +140,7 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
     */
     public function delete()
     {
+        $this->validateCsrf();
         if (!tao_helpers_Request::isAjax()) {
             throw new common_exception_BadRequest('wrong request mode');
         }
@@ -157,11 +158,19 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
             $lockManager->releaseLock($instance, $userId);
         }
 
-        echo json_encode(
-            [
-                'deleted' => $this->service->deleteTest($instance)
-            ]
-        );
+        if ($this->service->deleteTest($instance)) {
+            $success = true;
+            $message = __('Test was successfully deleted.');
+        } else {
+            $success = false;
+            $message = __('Unable to delete test.');
+        }
+
+        echo json_encode([
+            'success' => $success,
+            'message' => $message,
+            'deleted' => $success
+        ]);
     }
 
     /**
