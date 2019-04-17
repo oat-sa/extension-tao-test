@@ -26,6 +26,7 @@ use oat\tao\model\lock\LockManager;
 use oat\tao\model\resources\ResourceWatcher;
 use oat\taoTests\models\event\TestUpdatedEvent;
 use oat\tao\model\routing\AnnotationReader\security;
+use tao_helpers_form_FormContainer as FormContainer;
 
 /**
  * Tests Controller provide actions performed from url resolution
@@ -87,9 +88,8 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
             }
 
             $clazz = $this->getCurrentClass();
-            $formContainer = new SignedFormInstance($clazz, $test);
+            $formContainer = new SignedFormInstance($clazz, $test, [FormContainer::CSRF_PROTECTION_OPTION => true]);
             $myForm = $formContainer->getForm();
-            $myForm->addCsrfTokenProtection();
             if ($myForm->isSubmited() && !$myForm->isValid()) {
                 $this->validateInstanceRoot($test->getUri());
 
