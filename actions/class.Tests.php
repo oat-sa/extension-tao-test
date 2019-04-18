@@ -131,16 +131,20 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
     }
 
    /**
-    * delete a test or a test class
-    * called via ajax
-    * @return void
+    * delete a test or a test class. called via ajax
+    *
     * @throws Exception
     * @throws common_exception_BadRequest
     * @requiresRight id WRITE
     */
     public function delete()
     {
-        $this->validateCsrf();
+        try {
+            $this->validateCsrf();
+        } catch (common_exception_Unauthorized $e) {
+            $this->response = $this->getPsrResponse()->withStatus('412', _('CSRF validation failed'));
+            return;
+        }
         if (!tao_helpers_Request::isAjax()) {
             throw new common_exception_BadRequest('wrong request mode');
         }
@@ -166,7 +170,7 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
             $message = __('Unable to delete test.');
         }
 
-        echo json_encode([
+        $this->returnJson([
             'success' => $success,
             'message' => $message,
             'deleted' => $success
