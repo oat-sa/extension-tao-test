@@ -1,0 +1,109 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TAO 3.3.0-sprint96\n"
+"PO-Revision-Date: 2019-04-25T01:15:19\n"
+"Last-Translator: TAO Translation Team <translation@tao.lu>\n"
+"MIME-Version: 1.0\n"
+"Language: pt-BR\n"
+"sourceLanguage: en-US\n"
+"targetLanguage: pt-BR\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Basepath: ../../\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-SearchPath-0: .\n"
+
+msgid " . \common_Utils::toPHPVariableString($this->getDescription()) . "
+msgstr ""
+
+msgid " . \common_Utils::toPHPVariableString($this->getLabel()) . "
+msgstr ""
+
+#, tao-public
+msgid "Authoring"
+msgstr "Elaboração"
+
+#, tao-public
+msgid "Combine a selection of items into tests."
+msgstr "Combinar uma seleção de itens em testes."
+
+#, tao-public
+msgid "Copy To"
+msgstr ""
+
+#, tao-public
+msgid "Delete"
+msgstr "Excluir"
+
+#, tao-public
+msgid "Duplicate"
+msgstr "Duplicar"
+
+#, tao-public
+msgid "Export"
+msgstr "Exportar"
+
+#, tao-public
+msgid "Import"
+msgstr "Importar"
+
+msgid "Last updated on %2s"
+msgstr ""
+
+#, tao-public
+msgid "Manage Schema"
+msgstr ""
+
+#, tao-public
+msgid "Manage tests"
+msgstr "Gerenciar testes"
+
+#, tao-public
+msgid "Move"
+msgstr "Mover"
+
+#, tao-public
+msgid "Move To"
+msgstr ""
+
+#, tao-public
+msgid "New class"
+msgstr "Nova disciplina"
+
+#, tao-public
+msgid "New test"
+msgstr "Novo teste"
+
+#, tao-public
+msgid "Properties"
+msgstr "Propriedades"
+
+msgid "Security plugins"
+msgstr ""
+
+msgid "Set of plugins with \'security\' category"
+msgstr ""
+
+msgid "Test properties"
+msgstr "Propriedades do teste"
+
+msgid "Test saved"
+msgstr "Teste salvo"
+
+#, tao-public
+msgid "Tests"
+msgstr "Testes"
+
+#, tao-public
+msgid "Tests library"
+msgstr "Biblioteca de testes"
+
+msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
+msgstr "O modo de teste (sequenciamento, pontuação, acumulação, etc.) e leiaute também são configurados aqui."
+
+msgid "The Tests module allows to combine a selection of Items to a Test."
+msgstr "O módulo de testes permite combinar uma seleção de itens para um teste."
+
+msgid "You checked out this test %2s ago"
+msgstr "Você verificou este teste %2s atrás"
+

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.3.0-sprint94\n"
-"PO-Revision-Date: 2019-02-01T09:31:09\n"
+"Project-Id-Version: TAO 3.3.0-sprint96\n"
+"PO-Revision-Date: 2019-04-25T01:04:22\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: it-IT\n"
@@ -21,11 +21,11 @@ msgstr ""
 
 #, tao-public
 msgid "Authoring"
-msgstr "Authoring"
+msgstr "Creazione"
 
 #, tao-public
 msgid "Combine a selection of items into tests."
-msgstr "Combina una selezione di item nel test"
+msgstr "Combina una selezione di elementi nei test."
 
 #, tao-public
 msgid "Copy To"
@@ -92,18 +92,18 @@ msgstr "Test salvato"
 
 #, tao-public
 msgid "Tests"
-msgstr "Test"
+msgstr "Tests"
 
 #, tao-public
 msgid "Tests library"
-msgstr "Biblioteca di test"
+msgstr "Biblioteca Test"
 
 msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
 msgstr "La modalita' test (sequenza, punteggio, cumulo, ecc.) e il layout sono anche configurati qui."
 
 msgid "The Tests module allows to combine a selection of Items to a Test."
-msgstr "La modalita' test ti consente di mettere insieme una selezione di item nel test"
+msgstr "Il modulo Tests consente di mettere insieme una selezione di elementi nel Test"
 
 msgid "You checked out this test %2s ago"
-msgstr "Hai controllato questo test %2s "
+msgstr "Hai controllato questo test %2s fa"
 

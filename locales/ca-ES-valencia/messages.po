@@ -1,0 +1,109 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TAO 3.3.0-sprint96\n"
+"PO-Revision-Date: 2019-04-25T01:10:54\n"
+"Last-Translator: TAO Translation Team <translation@tao.lu>\n"
+"MIME-Version: 1.0\n"
+"Language: ca-ES-valencia\n"
+"sourceLanguage: en-US\n"
+"targetLanguage: ca-ES-valencia\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Basepath: ../../\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-SearchPath-0: .\n"
+
+msgid " . \common_Utils::toPHPVariableString($this->getDescription()) . "
+msgstr ""
+
+msgid " . \common_Utils::toPHPVariableString($this->getLabel()) . "
+msgstr ""
+
+#, tao-public
+msgid "Authoring"
+msgstr "Autoria"
+
+#, tao-public
+msgid "Combine a selection of items into tests."
+msgstr "Combina una selecció d'elements en proves"
+
+#, tao-public
+msgid "Copy To"
+msgstr ""
+
+#, tao-public
+msgid "Delete"
+msgstr "Elimina"
+
+#, tao-public
+msgid "Duplicate"
+msgstr "Duplica"
+
+#, tao-public
+msgid "Export"
+msgstr "Exporta"
+
+#, tao-public
+msgid "Import"
+msgstr "Importa"
+
+msgid "Last updated on %2s"
+msgstr ""
+
+#, tao-public
+msgid "Manage Schema"
+msgstr ""
+
+#, tao-public
+msgid "Manage tests"
+msgstr "Gestiona les proves"
+
+#, tao-public
+msgid "Move"
+msgstr "Mou"
+
+#, tao-public
+msgid "Move To"
+msgstr ""
+
+#, tao-public
+msgid "New class"
+msgstr "Classe nova"
+
+#, tao-public
+msgid "New test"
+msgstr "Prova nova"
+
+#, tao-public
+msgid "Properties"
+msgstr "Propietats"
+
+msgid "Security plugins"
+msgstr ""
+
+msgid "Set of plugins with \'security\' category"
+msgstr ""
+
+msgid "Test properties"
+msgstr "Propietats de la prova"
+
+msgid "Test saved"
+msgstr "Prova guardada"
+
+#, tao-public
+msgid "Tests"
+msgstr "Proves"
+
+#, tao-public
+msgid "Tests library"
+msgstr "Biblioteca de proves"
+
+msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
+msgstr "El mode de prova (seqüenciació, puntuació, valor acumulat, etc.) i la disposició també es configuren ací."
+
+msgid "The Tests module allows to combine a selection of Items to a Test."
+msgstr "El mòdul de proves permet combinar una selecció d'elements en una prova."
+
+msgid "You checked out this test %2s ago"
+msgstr "Vau comprovar aquesta prova fa %2s"
+

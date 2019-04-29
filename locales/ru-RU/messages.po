@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.3.0-sprint94\n"
-"PO-Revision-Date: 2019-02-01T09:31:11\n"
+"Project-Id-Version: TAO 3.3.0-sprint96\n"
+"PO-Revision-Date: 2019-04-25T01:12:42\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: ru-RU\n"
@@ -21,11 +21,11 @@ msgstr ""
 
 #, tao-public
 msgid "Authoring"
-msgstr ""
+msgstr "Редактирование"
 
 #, tao-public
 msgid "Combine a selection of items into tests."
-msgstr ""
+msgstr "Объедините выбранные элементы в тест"
 
 #, tao-public
 msgid "Copy To"
@@ -33,19 +33,19 @@ msgstr ""
 
 #, tao-public
 msgid "Delete"
-msgstr ""
+msgstr "Удалить"
 
 #, tao-public
 msgid "Duplicate"
-msgstr ""
+msgstr "Создать копию"
 
 #, tao-public
 msgid "Export"
-msgstr ""
+msgstr "Экспортировать"
 
 #, tao-public
 msgid "Import"
-msgstr ""
+msgstr "Импортировать"
 
 msgid "Last updated on %2s"
 msgstr ""
@@ -56,11 +56,11 @@ msgstr ""
 
 #, tao-public
 msgid "Manage tests"
-msgstr ""
+msgstr "Управлять тестами"
 
 #, tao-public
 msgid "Move"
-msgstr ""
+msgstr "Переместить"
 
 #, tao-public
 msgid "Move To"
@@ -68,15 +68,15 @@ msgstr ""
 
 #, tao-public
 msgid "New class"
-msgstr ""
+msgstr "Новый класс"
 
 #, tao-public
 msgid "New test"
-msgstr ""
+msgstr "Новый тест"
 
 #, tao-public
 msgid "Properties"
-msgstr ""
+msgstr "Свойства"
 
 msgid "Security plugins"
 msgstr ""
@@ -85,25 +85,25 @@ msgid "Set of plugins with \'security\' category"
 msgstr ""
 
 msgid "Test properties"
-msgstr ""
+msgstr "Свойства теста"
 
 msgid "Test saved"
-msgstr ""
+msgstr "Тест сохранен"
 
 #, tao-public
 msgid "Tests"
-msgstr ""
+msgstr "Тесты"
 
 #, tao-public
 msgid "Tests library"
-msgstr ""
+msgstr "Библиотека тестов"
 
 msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
-msgstr ""
+msgstr "Режим теста (упорядочивание, оценка, накопление и т.д.) и шаблон также могут быть сконфигурированы тут."
 
 msgid "The Tests module allows to combine a selection of Items to a Test."
-msgstr ""
+msgstr "Модуль Тесты позволяет собирать выбранные задания в тест."
 
 msgid "You checked out this test %2s ago"
-msgstr ""
+msgstr "Вы прошли этот тест %2s назад"
 

@@ -1,0 +1,109 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TAO 3.3.0-sprint96\n"
+"PO-Revision-Date: 2019-04-25T01:07:38\n"
+"Last-Translator: TAO Translation Team <translation@tao.lu>\n"
+"MIME-Version: 1.0\n"
+"Language: vi-VN\n"
+"sourceLanguage: en-US\n"
+"targetLanguage: vi-VN\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Basepath: ../../\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-SearchPath-0: .\n"
+
+msgid " . \common_Utils::toPHPVariableString($this->getDescription()) . "
+msgstr ""
+
+msgid " . \common_Utils::toPHPVariableString($this->getLabel()) . "
+msgstr ""
+
+#, tao-public
+msgid "Authoring"
+msgstr "Tác giả"
+
+#, tao-public
+msgid "Combine a selection of items into tests."
+msgstr "Kết hợp một sự lựa chọn của các mục vào bài kiểm tra."
+
+#, tao-public
+msgid "Copy To"
+msgstr ""
+
+#, tao-public
+msgid "Delete"
+msgstr "Xóa"
+
+#, tao-public
+msgid "Duplicate"
+msgstr "Bản sao"
+
+#, tao-public
+msgid "Export"
+msgstr "Xuất ra"
+
+#, tao-public
+msgid "Import"
+msgstr "Nhập vào"
+
+msgid "Last updated on %2s"
+msgstr ""
+
+#, tao-public
+msgid "Manage Schema"
+msgstr ""
+
+#, tao-public
+msgid "Manage tests"
+msgstr "Quản lý bài kiểm tra"
+
+#, tao-public
+msgid "Move"
+msgstr "Di chuyển"
+
+#, tao-public
+msgid "Move To"
+msgstr ""
+
+#, tao-public
+msgid "New class"
+msgstr "Lớp mới"
+
+#, tao-public
+msgid "New test"
+msgstr "Kiểm tra mới"
+
+#, tao-public
+msgid "Properties"
+msgstr "Thuộc tính"
+
+msgid "Security plugins"
+msgstr ""
+
+msgid "Set of plugins with \'security\' category"
+msgstr ""
+
+msgid "Test properties"
+msgstr "Thuộc tính kiểm tra"
+
+msgid "Test saved"
+msgstr "Lưu kiểm tra"
+
+#, tao-public
+msgid "Tests"
+msgstr ""
+
+#, tao-public
+msgid "Tests library"
+msgstr "Thư viện kiểm tra"
+
+msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
+msgstr ""
+
+msgid "The Tests module allows to combine a selection of Items to a Test."
+msgstr "Các mô-đun Thử nghiệm cho phép kết hợp một lựa chọn của Mục để kiểm tra một."
+
+msgid "You checked out this test %2s ago"
+msgstr ""
+

@@ -1,0 +1,109 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TAO 3.3.0-sprint96\n"
+"PO-Revision-Date: 2019-04-25T01:14:01\n"
+"Last-Translator: TAO Translation Team <translation@tao.lu>\n"
+"MIME-Version: 1.0\n"
+"Language: lt-LT\n"
+"sourceLanguage: en-US\n"
+"targetLanguage: lt-LT\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Basepath: ../../\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-SearchPath-0: .\n"
+
+msgid " . \common_Utils::toPHPVariableString($this->getDescription()) . "
+msgstr ""
+
+msgid " . \common_Utils::toPHPVariableString($this->getLabel()) . "
+msgstr ""
+
+#, tao-public
+msgid "Authoring"
+msgstr "Tvarkymas"
+
+#, tao-public
+msgid "Combine a selection of items into tests."
+msgstr "Apjunkite pasirinktus klausimus į testus."
+
+#, tao-public
+msgid "Copy To"
+msgstr ""
+
+#, tao-public
+msgid "Delete"
+msgstr "Ištrinti"
+
+#, tao-public
+msgid "Duplicate"
+msgstr "Kurti kopiją"
+
+#, tao-public
+msgid "Export"
+msgstr "Eksportuoti"
+
+#, tao-public
+msgid "Import"
+msgstr "Importuoti"
+
+msgid "Last updated on %2s"
+msgstr ""
+
+#, tao-public
+msgid "Manage Schema"
+msgstr ""
+
+#, tao-public
+msgid "Manage tests"
+msgstr "Tvarkyti testus"
+
+#, tao-public
+msgid "Move"
+msgstr "Perkelti"
+
+#, tao-public
+msgid "Move To"
+msgstr ""
+
+#, tao-public
+msgid "New class"
+msgstr "Nauja klasė"
+
+#, tao-public
+msgid "New test"
+msgstr "Naujas testas"
+
+#, tao-public
+msgid "Properties"
+msgstr "Savybės"
+
+msgid "Security plugins"
+msgstr ""
+
+msgid "Set of plugins with \'security\' category"
+msgstr ""
+
+msgid "Test properties"
+msgstr "Testo savybės"
+
+msgid "Test saved"
+msgstr "Testas išsaugotas"
+
+#, tao-public
+msgid "Tests"
+msgstr "Testai"
+
+#, tao-public
+msgid "Tests library"
+msgstr "Testų biblioteka"
+
+msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
+msgstr "Čia taip pat konfigūruojami testo režimas (klausimų eiliškumas, vertinimas, taškų sumavimas) ir testo išdėstymas."
+
+msgid "The Tests module allows to combine a selection of Items to a Test."
+msgstr "Testo modulis leidžia apjunkti pasirinktus klausimus į testus."
+
+msgid "You checked out this test %2s ago"
+msgstr "Jūs peržiūrėjote šį testą prieš %2s"
+

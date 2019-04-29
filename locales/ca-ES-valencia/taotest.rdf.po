@@ -1,0 +1,72 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TAO 3.3.0-sprint96\n"
+"PO-Revision-Date: 2019-04-25T01:10:54\n"
+"Last-Translator: TAO Translation Team <translation@tao.lu>\n"
+"MIME-Version: 1.0\n"
+"Language: ca-ES-valencia\n"
+"sourceLanguage: en-US\n"
+"targetLanguage: ca-ES-valencia\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# http://www.tao.lu/Ontologies/TAOTest.rdf#Test
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Test"
+msgstr "Prova"
+
+# http://www.tao.lu/Ontologies/TAOTest.rdf#Test
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "Test"
+msgstr "Prova"
+
+# http://www.tao.lu/Ontologies/TAOTest.rdf#TestContent
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Test Content"
+msgstr "Contingut de la prova"
+
+# http://www.tao.lu/Ontologies/TAOTest.rdf#TestContent
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "Test Content"
+msgstr "Contingut de la prova"
+
+# http://www.tao.lu/Ontologies/TAOTest.rdf#TestTestModel
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Test Model"
+msgstr "Model de prova"
+
+# http://www.tao.lu/Ontologies/TAOTest.rdf#TestTestModel
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "Test Model"
+msgstr "Model de prova"
+
+# http://www.tao.lu/Ontologies/TAOTest.rdf#TestModelImplementation
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Testmodel implementation"
+msgstr "Implementació del model de prova"
+
+# http://www.tao.lu/Ontologies/TAOTest.rdf#TestModelImplementation
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "Implementation of the test model"
+msgstr "Implementació del model de prova"
+
+# http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Tests Manager"
+msgstr "Gestor de proves"
+
+# http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "The Tests Manager Role"
+msgstr "Rol de gestor de proves"
+
+# http://www.tao.lu/Ontologies/TAOItem.rdf#TestAuthor
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Test Author"
+msgstr "Autor de la prova"
+
+# http://www.tao.lu/Ontologies/TAOItem.rdf#TestAuthor
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "The Test Author Role"
+msgstr "Rol d'autor de la prova"
+
