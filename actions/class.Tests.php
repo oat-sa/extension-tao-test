@@ -26,6 +26,7 @@ use oat\tao\model\lock\LockManager;
 use oat\tao\model\resources\ResourceWatcher;
 use oat\taoTests\models\event\TestUpdatedEvent;
 use oat\tao\model\routing\AnnotationReader\security;
+use tao_helpers_form_FormContainer as FormContainer;
 
 /**
  * Tests Controller provide actions performed from url resolution
@@ -87,7 +88,7 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
             }
 
             $clazz = $this->getCurrentClass();
-            $formContainer = new SignedFormInstance($clazz, $test);
+            $formContainer = new SignedFormInstance($clazz, $test, [FormContainer::CSRF_PROTECTION_OPTION => true]);
             $myForm = $formContainer->getForm();
             if ($myForm->isSubmited() && $myForm->isValid()) {
                 $this->validateInstanceRoot($test->getUri());
@@ -95,8 +96,7 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
                 $propertyValues = $myForm->getValues();
 
                 // don't hande the testmodel via bindProperties
-                if (array_key_exists(taoTests_models_classes_TestsService::PROPERTY_TEST_TESTMODEL,
-                    $propertyValues)) {
+                if (array_key_exists(taoTests_models_classes_TestsService::PROPERTY_TEST_TESTMODEL, $propertyValues)) {
                     $modelUri = $propertyValues[taoTests_models_classes_TestsService::PROPERTY_TEST_TESTMODEL];
                     unset($propertyValues[taoTests_models_classes_TestsService::PROPERTY_TEST_TESTMODEL]);
                     if (!empty($modelUri)) {
@@ -112,13 +112,15 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
                 $test = $binder->bind($propertyValues);
                 $this->getEventManager()->trigger(new TestUpdatedEvent($test->getUri(), $propertyValues));
 
-                $this->setData("selectNode", tao_helpers_Uri::encode($test->getUri()));
+                $this->setData('selectNode', tao_helpers_Uri::encode($test->getUri()));
                 $this->setData('message', __('Test saved'));
                 $this->setData('reload', true);
             }
 
-            $myForm->removeElement(tao_helpers_Uri::encode(taoTests_models_classes_TestsService::PROPERTY_TEST_CONTENT));
-            $updatedAt = $this->getServiceManager()->get(ResourceWatcher::SERVICE_ID)->getUpdatedAt($test);
+            $myForm->removeElement(tao_helpers_Uri::encode(
+                taoTests_models_classes_TestsService::PROPERTY_TEST_CONTENT
+            ));
+            $updatedAt = $this->getServiceLocator()->get(ResourceWatcher::SERVICE_ID)->getUpdatedAt($test);
             $this->setData('updatedAt', $updatedAt);
             $this->setData('uri', tao_helpers_Uri::encode($test->getUri()));
             $this->setData('classUri', tao_helpers_Uri::encode($clazz->getUri()));
@@ -129,15 +131,20 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
     }
 
    /**
-    * delete a test or a test class
-    * called via ajax
-    * @return void
+    * delete a test or a test class. called via ajax
+    *
     * @throws Exception
     * @throws common_exception_BadRequest
     * @requiresRight id WRITE
     */
     public function delete()
     {
+        try {
+            $this->validateCsrf();
+        } catch (common_exception_Unauthorized $e) {
+            $this->response = $this->getPsrResponse()->withStatus(403, __('Unable to process your request'));
+            return;
+        }
         if (!tao_helpers_Request::isAjax()) {
             throw new common_exception_BadRequest('wrong request mode');
         }
@@ -155,11 +162,19 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
             $lockManager->releaseLock($instance, $userId);
         }
 
-        echo json_encode(
-            [
-                'deleted' => $this->service->deleteTest($instance)
-            ]
-        );
+        if ($this->service->deleteTest($instance)) {
+            $success = true;
+            $message = __('Test was successfully deleted.');
+        } else {
+            $success = false;
+            $message = __('Unable to delete test.');
+        }
+
+        $this->returnJson([
+            'success' => $success,
+            'message' => $message,
+            'deleted' => $success
+        ]);
     }
 
     /**
