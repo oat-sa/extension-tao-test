@@ -19,6 +19,8 @@
 /**
  * configure the extension bundles
  * @author Bertrand Chevrier <bertrand@taotesting.com>
+ *
+ * @param {Object} grunt - the grunt object (by convention)
  */
 module.exports = function(grunt) {
     'use strict';
@@ -32,8 +34,10 @@ module.exports = function(grunt) {
                     bundles : [{
                         name : 'taoTests',
                         default : true,
+                        babel : true
                     }, {
                         name : 'taoTestsRunner',
+                        babel : true,
                         include : [
                             'taoTests/runner/**/*'
                         ]
