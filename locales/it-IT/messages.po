@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.3.0-sprint98\n"
-"PO-Revision-Date: 2019-03-29T10:22:56\n"
+"Project-Id-Version: TAO 3.3.0-sprint104\n"
+"PO-Revision-Date: 2019-06-07T09:21:14\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: it-IT\n"
@@ -90,6 +90,9 @@ msgstr "Proprietà testo"
 msgid "Test saved"
 msgstr "Test salvato"
 
+msgid "Test was successfully deleted."
+msgstr ""
+
 #, tao-public
 msgid "Tests"
 msgstr "Test"
@@ -103,6 +106,12 @@ msgstr "La modalita' test (sequenza, punteggio, cumulo, ecc.) e il layout sono a
 
 msgid "The Tests module allows to combine a selection of Items to a Test."
 msgstr "La modalita' test ti consente di mettere insieme una selezione di item nel test"
+
+msgid "Unable to delete test."
+msgstr ""
+
+msgid "Unable to process your request"
+msgstr ""
 
 msgid "You checked out this test %2s ago"
 msgstr "Hai controllato questo test %2s "
