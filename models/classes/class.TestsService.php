@@ -51,32 +51,8 @@ class taoTests_models_classes_TestsService
     const TEST_TESTCONTENT_PROP = 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestContent';
 
     const PROPERTY_TEST_CONTENT = 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestContent';
-    // --- ASSOCIATIONS ---
-
-
-    // --- ATTRIBUTES ---
-
-    /**
-     * The RDFS top level test class
-     *
-     * @access protected
-     * @var core_kernel_classes_Class
-     */
-    protected $testClass = null;
 
     // --- OPERATIONS ---
-
-    /**
-     * Short description of method __construct
-     *
-     * @access public
-     * @author Joel Bout, <joel.bout@tudor.lu>
-     */
-    protected function __construct()
-    {
-		parent::__construct();
-		$this->testClass = new core_kernel_classes_Class(TaoOntology::CLASS_URI_TEST );
-    }
 
     /**
      * delete a test instance
@@ -118,7 +94,7 @@ class taoTests_models_classes_TestsService
      */
     public function getRootclass()
     {
-		return $this->testClass;
+        return $this->getClass(TaoOntology::CLASS_URI_TEST);
     }
 
     /**
