@@ -13,88 +13,72 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2017-2018 (original work) Open Assessment Technologies SA ;
+ * Copyright (c) 2017-2019 (original work) Open Assessment Technologies SA ;
  */
 
 /**
- * Test runner component
+ * A component that loads and instantiate a test runner inside an element
  *
+ * @author Bertrand Chevrier <bertrand@taotesting.com>
  * @author Jean-Sébastien Conan <jean-sebastien@taotesting.com>
  */
 define([
     'jquery',
     'lodash',
-    'context',
-    'core/promise',
-    'core/pluginLoader',
-    'core/providerLoader',
     'ui/component',
     'taoTests/runner/runner',
+    'taoTests/runner/providerLoader',
     'tpl!taoTests/template/runnerComponent'
-], function ($, _, context, Promise, pluginLoaderFactory, providerLoaderFactory, component, runnerFactory, runnerComponentTpl) {
+], function ($, _, component, runnerFactory, providerLoader, runnerComponentTpl) {
     'use strict';
 
     /**
-     * List of options required by the runner
-     * @type {String[]}
+     * Validate required options from the configuration
+     * @param {Object} config
+     * @returns {Boolean} true if valid
+     * @throws {TypeError} in case of validation failure
      */
-    var requiredOptions = [
-        'provider'
-    ];
+    function validateTestRunnerConfiguration(config = {}){
+        const requiredProperties = ['providers', 'options', 'serviceCallId'];
+        if (typeof config !== 'object') {
+            throw new TypeError(`The runner configuration must be an object, '${typeof config}' received`);
+        }
+        if (_.some(requiredProperties, property => (typeof config[property] === 'undefined'))) {
 
-    /**
-     * Some defaults options
-     * @type {Object}
-     */
-    var defaults = {};
-
-    /**
-     * Loads the modules dynamically
-     * @param {Function} loader - the loader factory
-     * @param {Object[]} modules - the collection of modules to load
-     * @returns {Promise} resolves with the list of loaded modules
-     */
-    function loadModules(loader, modules) {
-        return loader()
-            .addList(modules)
-            .load(context.bundle);
-    }
-
-    /**
-     * Registers a list of loaded providers
-     * @param providers
-     */
-    function registerProviders(providers) {
-        _.forEach(providers, function (provider) {
-            runnerFactory.registerProvider(provider.name, provider);
-        });
-        return providers;
+            throw new TypeError(`The runner configuration must contains at least the following properties : ${requiredProperties.join(',')}`);
+        }
+        return true;
     }
 
     /**
      * Wraps a test runner into a component
      * @param {jQuery|HTMLElement|String} container - The container in which renders the component
-     * @param {Object}   config - The testRunner options
-     * @param {String}   config.provider - The provider to use
-     * @param {Object[]} [config.plugins] - A collection of plugins to load
-     * @param {Object[]} [config.providers] - A collection of providers to load
+     * @param {Object} config - The component configuration options
+     * @param {String} config.serviceCallId - The identifier of the test session
+     * @param {Object} config.providers - The component conf
+     * @param {Object} config.options - The
      * @param {Boolean} [config.replace] - When the component is appended to its container, clears the place before
      * @param {Number|String} [config.width] - The width in pixels, or 'auto' to use the container's width
      * @param {Number|String} [config.height] - The height in pixels, or 'auto' to use the container's height
      * @param {Function} [template] - An optional template for the component
      * @returns {runnerComponent}
      */
-    return function runnerComponentFactory(container, config, template) {
-        var runner = null;
-        var runnerComponent;
+    return function runnerComponentFactory(container, config = {}, template = runnerComponentTpl) {
+        let runner = null;
 
-        var runnerComponentApi = {
+        validateTestRunnerConfiguration(config);
+
+        /**
+         * @typedef {runner} runnerComponent
+         */
+        const runnerComponent = component({
+
             /**
              * Gets the option's value
              * @param {String} name - the option key
              * @returns {*}
              */
-            getOption: function getOption(name) {
+            getOption(name) {
                 return this.config[name];
             },
 
@@ -102,82 +86,53 @@ define([
              * Gets the test runner
              * @returns {runner}
              */
-            getRunner: function getRunner() {
+            getRunner() {
                 return runner;
             }
-        };
+        })
+        .setTemplate(template)
+        .on('init', function () {
 
-        // ensure the required config has been provided
-        config = _.omit(_.defaults(config || {}, defaults), ['renderTo']);
-        _.forEach(requiredOptions, function (name) {
-            if (typeof config[name] === 'undefined') {
-                throw new TypeError('Missing required option ' + name);
-            }
-        });
+            //load the defined providers for the runner, the proxy, the communicator, the plugins, etc.
+            return providerLoader(config.providers, config.loadFromBundle)
+                .then( results => {
+                    if(!results || !results.runner || !results.plugins) {
+                        throw new Error(`The loaded providers doesn't contain the runner provider nor the plugins`);
+                    }
+                    this.loadedProviders = results;
 
-        /**
-         * @typedef {runner} runnerComponent
-         */
-        runnerComponent = component(runnerComponentApi)
-            .setTemplate(template || runnerComponentTpl)
-            .on('init', function () {
-                var self = this;
-                var plugins = [];
-                var initPromises = [];
+                    this.render(container);
+                    this.hide();
+                })
+                .catch( err => this.trigger('error', err));
+        })
+        .on('render', function() {
 
-                if (self.getOption('providers')) {
-                    initPromises.push(
-                        loadModules(providerLoaderFactory, self.getOption('providers'))
-                            .then(registerProviders)
-                    );
-                }
-
-                if (self.getOption('plugins')) {
-                    initPromises.push(
-                        loadModules(pluginLoaderFactory, self.getOption('plugins'))
-                            .then(function (loadedPlugins) {
-                                plugins = loadedPlugins;
-                            })
-                    );
-                }
-
-                Promise.all(initPromises).then(function () {
-                    self
-                        .on('render.runnerComponent', function () {
-                            var runnerConfig = _.assign(_.omit(self.config, ['plugins', 'providers']), {
-                                renderTo: self.getElement()
-                            });
-                            self.off('render.runnerComponent');
-
-                            runner = runnerFactory(runnerConfig.provider, plugins, runnerConfig)
-                                .on('error', function (err) {
-                                    self.trigger('error', err);
-                                })
-                                .on('ready', function () {
-                                    _.defer(function () {
-                                        self
-                                            .show()
-                                            .setState('ready')
-                                            .trigger('ready', runner);
-                                    });
-                                })
-                                .after('destroy', function () {
-                                    this.removeAllListeners();
-                                })
-                                .init();
-                        })
-                        .render(container)
-                        .hide();
-                });
-            })
-            .on('destroy', function () {
-                var destroying = runner && runner.destroy();
-                runner = null;
-                return destroying;
-            })
-            .after('destroy', function () {
-                this.removeAllListeners();
+            const runnerConfig = Object.assign(_.omit(this.config, ['providers']), {
+                renderTo: this.getElement()
             });
+
+            runner = runnerFactory(this.loadedProviders.runner.id, this.loadedProviders.plugins, runnerConfig)
+                .on('error', err => this.trigger('error', err) )
+                .on('ready', () => {
+                    _.defer( () => {
+                        this
+                            .setState('ready')
+                            .trigger('ready', runner)
+                            .show();
+                    });
+                })
+                .after('destroy', () => runner.removeAllListeners() )
+                .init();
+        })
+        .on('destroy', function () {
+            var destroying = runner && runner.destroy();
+            runner = null;
+            return destroying;
+        })
+        .after('destroy', function () {
+            this.removeAllListeners();
+        });
 
         return runnerComponent.init(config);
     };

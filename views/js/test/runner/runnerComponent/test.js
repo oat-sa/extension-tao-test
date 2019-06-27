@@ -13,35 +13,28 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2017-2018 (original work) Open Assessment Technologies SA ;
+ * Copyright (c) 2017-2019 (original work) Open Assessment Technologies SA ;
  */
 /**
  * @author Jean-Sébastien Conan <jean-sebastien@taotesting.com>
  */
 define([
-
-    'jquery',
-    'lodash',
-    'core/promise',
-    'taoTests/runner/runner',
-    'taoTests/runner/runnerComponent'
-], function($, _, Promise, runnerFactory, runnerComponentFactory) {
+    'taoTests/runner/runnerComponent',
+    'json!taoTests/test/runner/runnerComponent/config.json'
+], function(runnerComponentFactory, sampleConfig) {
     'use strict';
+
 
     QUnit.module('factory');
 
-    QUnit.test('module', function(assert) {
-        var $container = $('#fixture-module');
+    QUnit.test('module', assert => {
+        const container = document.getElementById('fixture-module');
 
         assert.expect(3);
-        runnerFactory.registerProvider('mock', {
-            loadAreaBroker: _.noop,
-            init: function() {
-            }
-        });
+
         assert.equal(typeof runnerComponentFactory, 'function', 'The runnerComponent module exposes a function');
-        assert.equal(typeof runnerComponentFactory($container, {provider: 'mock'}), 'object', 'The runnerComponent factory produces an object');
-        assert.notStrictEqual(runnerComponentFactory($container, {provider: 'mock'}), runnerComponentFactory($container, {provider: 'mock'}), 'The runnerComponent factory provides a different object on each call');
+        assert.equal(typeof runnerComponentFactory(container, sampleConfig), 'object', 'The runnerComponent factory produces an object');
+        assert.notStrictEqual(runnerComponentFactory(container, sampleConfig), runnerComponentFactory(container, sampleConfig), 'The runnerComponent factory provides a different object on each call');
     });
 
     QUnit.cases.init([
@@ -55,16 +48,52 @@ define([
         {title: 'before'},
         {title: 'after'},
         {title: 'trigger'}
-    ]).test('api ', function(data, assert) {
-        var $container = $('#fixture-method');
-        var instance = runnerComponentFactory($container, {provider: 'mock'});
+    ]).test('API ', (data, assert) => {
+        const container = document.getElementById('fixture-module');
 
         assert.expect(1);
 
-        assert.equal(typeof instance[data.title], 'function', 'The runnerComponent instance exposes a "' + data.title + '" function');
+        assert.equal(
+            typeof runnerComponentFactory(container, sampleConfig)[data.title],
+            'function',
+            `The runnerComponent instance exposes a "${data.title}" function`
+        );
     });
 
-    QUnit.test('init', function(assert) {
+
+    QUnit.module('Configuration');
+
+    QUnit.test('configure the test runner component', assert => {
+        const ready = assert.async();
+        const container = document.getElementById('playground');
+
+        runnerComponentFactory(container, sampleConfig)
+            .on('init', function() {
+
+        })
+        .on('render', function() {
+
+        })
+        .on('ready', function() {
+            assert.ok(true, 'The runner is ready');
+
+            //assert.equal($container.children().length, 1, 'The runner is rendered');
+            //assert.equal($container.find('#foo-runner').length, 1, 'The right template is used');
+
+            //this.destroy();
+            ready();
+        })
+        .on('error', err => {
+            debugger;
+            assert.ok(false, err.message);
+            ready();
+        })
+        .on('destroy', ready);
+
+
+    });
+
+   /* QUnit.test('init', function(assert) {
         var ready = assert.async();
         var $container = $('#fixture-init');
         var instance;
@@ -246,5 +275,5 @@ define([
             });
 
         assert.equal(instance.getRunner(), null, 'The runner is not ready at this time');
-    });
+    });*/
 });
