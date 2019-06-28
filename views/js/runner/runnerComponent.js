@@ -51,20 +51,50 @@ define([
     }
 
     /**
+     * Get the selected provider if set or infer it from the providers list
+     * @param {String} type - the type of provider (runner, communicator, proxy, etc.)
+     * @param {Object} config
+     * @returns {String} the selected provider for the given type
+     */
+    function getSelectedProvider(type = 'runner', config = {}) {
+
+        if (config.provider && config.provider[type]) {
+            return config.provider[type];
+        }
+
+        if (config.providers && config.providers[type]) {
+            const typeProviders = config.providers[type];
+            if (typeof typeProviders === 'object' && (typeProviders.id || typeProviders.name)) {
+                return typeProviders.id || typeProviders.name;
+            }
+            if (Array.isArray(typeProviders) && typeProviders.length > 0) {
+                return typeProviders[0].id || typeProviders[0].name;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Wraps a test runner into a component
      * @param {jQuery|HTMLElement|String} container - The container in which renders the component
      * @param {Object} config - The component configuration options
      * @param {String} config.serviceCallId - The identifier of the test session
-     * @param {Object} config.providers - The component conf
-     * @param {Object} config.options - The
+     * @param {Object} config.providers
+     * @param {Object} config.options
+     * @param {Boolean} [config.loadFromBundle=false] - do we load the modules from the bundles
      * @param {Boolean} [config.replace] - When the component is appended to its container, clears the place before
      * @param {Number|String} [config.width] - The width in pixels, or 'auto' to use the container's width
      * @param {Number|String} [config.height] - The height in pixels, or 'auto' to use the container's height
      * @param {Function} [template] - An optional template for the component
      * @returns {runnerComponent}
      */
-    return function runnerComponentFactory(container, config = {}, template = runnerComponentTpl) {
+    return function runnerComponentFactory(container = null, config = {}, template = runnerComponentTpl) {
         let runner = null;
+        let plugins = [];
+
+        if (!container) {
+            throw new TypeError('A container element must be defined to contain the runnerComponent');
+        }
 
         validateTestRunnerConfiguration(config);
 
@@ -79,7 +109,7 @@ define([
              * @returns {*}
              */
             getOption(name) {
-                return this.config[name];
+                return this.config.options[name];
             },
 
             /**
@@ -96,10 +126,9 @@ define([
             //load the defined providers for the runner, the proxy, the communicator, the plugins, etc.
             return providerLoader(config.providers, config.loadFromBundle)
                 .then( results => {
-                    if(!results || !results.runner || !results.plugins) {
-                        throw new Error(`The loaded providers doesn't contain the runner provider nor the plugins`);
+                    if(results && results.plugins) {
+                        plugins = results.plugins;
                     }
-                    this.loadedProviders = results;
 
                     this.render(container);
                     this.hide();
@@ -111,9 +140,9 @@ define([
             const runnerConfig = Object.assign(_.omit(this.config, ['providers']), {
                 renderTo: this.getElement()
             });
+            const runnerProviderId = getSelectedProvider('runner', this.config);
 
-            runner = runnerFactory(this.loadedProviders.runner.id, this.loadedProviders.plugins, runnerConfig)
-                .on('error', err => this.trigger('error', err) )
+            runner = runnerFactory(runnerProviderId, plugins, runnerConfig)
                 .on('ready', () => {
                     _.defer( () => {
                         this
@@ -122,16 +151,13 @@ define([
                             .show();
                     });
                 })
-                .after('destroy', () => runner.removeAllListeners() )
+                .spread(this, 'error')
                 .init();
         })
         .on('destroy', function () {
             var destroying = runner && runner.destroy();
             runner = null;
             return destroying;
-        })
-        .after('destroy', function () {
-            this.removeAllListeners();
         });
 
         return runnerComponent.init(config);

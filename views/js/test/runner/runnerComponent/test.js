@@ -20,8 +20,9 @@
  */
 define([
     'taoTests/runner/runnerComponent',
-    'json!taoTests/test/runner/runnerComponent/config.json'
-], function(runnerComponentFactory, sampleConfig) {
+    'taoTests/runner/runner',
+    'json!taoTests/test/runner/mocks/config.json'
+], function(runnerComponent, runner, sampleConfig) {
     'use strict';
 
 
@@ -32,9 +33,14 @@ define([
 
         assert.expect(3);
 
-        assert.equal(typeof runnerComponentFactory, 'function', 'The runnerComponent module exposes a function');
-        assert.equal(typeof runnerComponentFactory(container, sampleConfig), 'object', 'The runnerComponent factory produces an object');
-        assert.notStrictEqual(runnerComponentFactory(container, sampleConfig), runnerComponentFactory(container, sampleConfig), 'The runnerComponent factory provides a different object on each call');
+        assert.equal(typeof runnerComponent, 'function', 'The runnerComponent module exposes a function');
+        assert.equal(typeof runnerComponent(container, sampleConfig), 'object', 'The runnerComponent factory produces an object');
+
+        assert.notStrictEqual(
+            runnerComponent(container, sampleConfig),
+            runnerComponent(container, sampleConfig),
+            'The runnerComponent factory provides a different object on each call'
+        );
     });
 
     QUnit.cases.init([
@@ -54,59 +60,67 @@ define([
         assert.expect(1);
 
         assert.equal(
-            typeof runnerComponentFactory(container, sampleConfig)[data.title],
+            typeof runnerComponent(container, sampleConfig)[data.title],
             'function',
             `The runnerComponent instance exposes a "${data.title}" function`
         );
     });
 
 
-    QUnit.module('Configuration');
-
-    QUnit.test('configure the test runner component', assert => {
-        const ready = assert.async();
-        const container = document.getElementById('playground');
-
-        runnerComponentFactory(container, sampleConfig)
-            .on('init', function() {
-
-        })
-        .on('render', function() {
-
-        })
-        .on('ready', function() {
-            assert.ok(true, 'The runner is ready');
-
-            //assert.equal($container.children().length, 1, 'The runner is rendered');
-            //assert.equal($container.find('#foo-runner').length, 1, 'The right template is used');
-
-            //this.destroy();
-            ready();
-        })
-        .on('error', err => {
-            debugger;
-            assert.ok(false, err.message);
-            ready();
-        })
-        .on('destroy', ready);
-
-
+    QUnit.module('Component configuration', {
+        beforeEach(){
+            runner.clearProviders();
+        }
     });
 
-   /* QUnit.test('init', function(assert) {
-        var ready = assert.async();
-        var $container = $('#fixture-init');
-        var instance;
+    QUnit.test('Wrong configuration', assert => {
+        assert.expect(3);
+
+        const container = document.getElementById('fixture-module');
+
+        assert.throws(
+            () => runnerComponent(),
+            /A container element must be defined to contain the runnerComponent/
+        );
+
+        assert.throws(
+            () => runnerComponent(container),
+            /the following properties : providers,options,serviceCallId/
+        );
+
+        assert.throws(
+            () => runnerComponent(container, { serviceCallId : 'foo', options : {} }),
+            /the following properties : providers,options,serviceCallId/
+        );
+    });
+
+    QUnit.module('Component lifecycle', {
+        beforeEach(){
+            runner.clearProviders();
+        }
+    });
+
+    QUnit.test('Initialize from a registered provider', assert => {
+        const ready = assert.async();
+        const container = document.getElementById('fixture-init');
+        const config = {
+            serviceCallId : 'foo',
+            provider: {
+                runner : 'mock-init'
+            },
+            providers: {},
+            options: {}
+        };
 
         function mockTpl() {
             assert.ok(true, 'The provided template is used');
             return '<div id="foo-runner"></div>';
         }
 
-        assert.expect(10);
+        assert.expect(9);
 
-        runnerFactory.registerProvider('mock-init', {
-            loadAreaBroker: _.noop,
+        runner.registerProvider('mock-init', {
+            loadAreaBroker: () => {},
             init: function() {
                 assert.ok(true, 'The init method has been called');
             },
@@ -116,164 +130,104 @@ define([
             destroy: function() {
                 assert.ok(true, 'The destroy method has been called');
 
-                _.delay(function() {
-                    assert.equal($container.children().length, 0, 'The component has been destroyed');
+                setTimeout(() => {
+                    assert.equal(container.childNodes.length, 0, 'The component has been destroyed');
 
                     ready();
                 }, 200);
             }
         });
 
-        assert.equal($container.children().length, 0, 'The runner is not rendered');
+        assert.equal(container.childNodes.length, 0, 'The runner is not rendered');
 
-        instance = runnerComponentFactory($container, {provider: 'mock-init'}, mockTpl).on('ready', function() {
-            assert.ok(true, 'The runner is ready');
-            assert.equal($container.children().length, 1, 'The runner is rendered');
-            assert.equal($container.find('#foo-runner').length, 1, 'The right template is used');
+        runnerComponent(container, config, mockTpl)
+            .on('error', err => assert.ok(false, err.message) )
+            .on('ready', function() {
+                assert.ok(true, 'The runner is ready');
+                assert.equal(container.childNodes.length, 1, 'The runner is rendered');
+                assert.equal(container.querySelectorAll('#foo-runner').length, 1, 'The right template is used');
 
-            instance.destroy();
-        });
-        assert.equal(instance.getOption('provider'), 'mock-init', 'The right provider is set in the config');
+                this.destroy();
+            });
     });
 
-    QUnit.test('init error', function(assert) {
-        assert.expect(1);
-
-        assert.throws(function() {
-            runnerComponentFactory();
-        }, 'An error should be thrown if the provider is not set');
-    });
-
-    QUnit.test('dynamic providers', function(assert) {
-        var ready1 = assert.async();
-        var $container = $('#fixture-providers');
+    QUnit.test('Initialize from providers to load', assert => {
+        const ready = assert.async();
+        const container = document.getElementById('fixture-init');
 
         assert.expect(3);
-        var ready = assert.async();
 
-        runnerComponentFactory($container, {
-            provider: 'mock',
-            providers: [{
-                module: 'taoTests/test/runner/runnerComponent/mockProvider',
-                bundle: 'taoTests/test/runner/runnerComponent/mockBundle.min',
-                category: 'mock'
-            }]
-        })
-            .on('ready', function(runner) {
-                assert.ok(true, 'The runner is ready');
-                assert.equal(typeof runner, 'object', 'The runner instance is provided');
-                runner.on('mock-provider-loaded', function() {
-                    assert.ok(true, 'The right provider has been loaded');
-                    ready();
+        assert.deepEqual(runner.getAvailableProviders(), [], 'No providers are registered');
 
+        runnerComponent(container, sampleConfig)
+            .on('error', err => assert.ok(false, err.message) )
+            .on('render', function() {
+                assert.deepEqual(runner.getAvailableProviders(), ['mock-runner'], 'The correct provider is loaded');
+                this.getRunner().on('mock-runner-loaded', () => {
+
+                    assert.ok(true, 'The mock provider has triggered and event');
+
+                    this.destroy();
                 });
-
-                ready1();
-            });
+            })
+            .on('destroy', ready);
     });
 
-    QUnit.test('dynamic plugins', function(assert) {
-        var ready1 = assert.async();
-        var $container = $('#fixture-plugins');
 
-        var ready = assert.async();
-        assert.expect(5);
+    QUnit.test('spread error event from test runner', function(assert) {
+        const ready = assert.async();
+        const container = document.getElementById('fixture-error');
+        const error = 'oops!';
 
-        runnerFactory.registerProvider('bar', {
-            loadAreaBroker: _.noop,
-            init: function() {
-                assert.ok(true, 'The init method has been called');
-            },
-            render: function() {
-                assert.ok(true, 'The render method has been called');
-            }
-        });
+        assert.expect(2);
 
-        runnerComponentFactory($container, {
-            provider: 'bar',
-            plugins: [{
-                module: 'taoTests/test/runner/runnerComponent/mockPlugin',
-                bundle: 'taoTests/test/runner/runnerComponent/mockBundle.min',
-                category: 'mock'
-            }]
-        })
-            .on('ready', function(runner) {
-                assert.ok(true, 'The runner is ready');
-                assert.equal(typeof runner, 'object', 'The runner instance is provided');
-                runner.on('plugin-loaded.mock', function() {
-                    assert.ok(true, 'The right plugin has been loaded');
-                    ready();
-                });
-
-                ready1();
-            });
-    });
-
-    QUnit.test('error event', function(assert) {
-        var ready = assert.async();
-        var $container = $('#fixture-error');
-        var error = 'oops!';
-
-        assert.expect(5);
-        runnerFactory.clearProviders();
-
-        runnerFactory.registerProvider('foo', {
-            loadAreaBroker: _.noop,
-            init: function() {
-                assert.ok(true, 'The init method has been called');
-            },
-            render: function() {
-                assert.ok(true, 'The render method has been called');
-            }
-        });
-
-        runnerComponentFactory($container, {provider: 'foo'})
+        runnerComponent(container, sampleConfig)
             .on('error', function(err) {
                 assert.equal(err, error, 'The error has been forwarded');
-            })
-            .on('ready', function(runner) {
-                assert.ok(true, 'The runner is ready');
-                assert.equal(typeof runner, 'object', 'The runner instance is provided');
-
-                runner.trigger('error', error);
-                runnerFactory.clearProviders();
-
-
                 ready();
+            })
+            .on('ready', function(testRunner) {
+                assert.equal(typeof testRunner, 'object', 'The runner instance is provided');
+
+                testRunner.trigger('error', error);
+            });
+    });
+
+    QUnit.test('spread error event from test runner', function(assert) {
+        const ready = assert.async();
+        const container = document.getElementById('fixture-error');
+        const error = 'oops!';
+
+        assert.expect(2);
+
+        runnerComponent(container, sampleConfig)
+            .on('error', function(err) {
+                assert.equal(err, error, 'The error has been forwarded');
+                ready();
+            })
+            .on('ready', function(testRunner) {
+                assert.equal(typeof testRunner, 'object', 'The runner instance is provided');
+
+                testRunner.trigger('error', error);
             });
     });
 
     QUnit.test('getRunner', function(assert) {
-        var ready = assert.async();
-        var $container = $('#fixture-get');
-        var instance;
+        const ready = assert.async();
+        const container = document.getElementById('fixture-get');
 
-        assert.expect(7);
-        runnerFactory.clearProviders();
+        assert.expect(3);
 
-        runnerFactory.registerProvider('foo', {
-            loadAreaBroker: _.noop,
-            init: function() {
-                assert.ok(true, 'The init method has been called');
-            },
-            render: function() {
-                assert.ok(true, 'The render method has been called');
-            }
-        });
+        runnerComponent(container, sampleConfig)
+            .on('ready', function(testRunner) {
+                assert.equal(typeof testRunner, 'object', 'The runner instance is provided');
 
-        instance = runnerComponentFactory($container, {provider: 'foo'})
-            .on('ready', function(runner) {
-                assert.ok(true, 'The runner is ready');
-                assert.equal(typeof runner, 'object', 'The runner instance is provided');
-
-                assert.equal(runner, instance.getRunner(), 'The runner is reachable');
-                instance.destroy();
+                assert.equal(testRunner, this.getRunner(), 'The runner is reachable');
+                this.destroy();
             })
             .on('destroy', function() {
-                assert.equal(instance.getRunner(), null, 'The runner has been destroyed');
+                assert.equal(this.getRunner(), null, 'The runner has been destroyed');
                 ready();
             });
-
-        assert.equal(instance.getRunner(), null, 'The runner is not ready at this time');
-    });*/
+    });
 });

@@ -55,7 +55,7 @@ define([
 
         assert.deepEqual(runner.getAvailableProviders(), [], 'No provider registered');
 
-        providerLoader({ runner : sampleConfig.providers.runner })
+        providerLoader({ runner : sampleConfig.providers.runner }, false)
             .then( result => {
                 assert.deepEqual(result.runner, runner, 'The provider target is returned');
                 assert.deepEqual(runner.getAvailableProviders(), ['mock-runner'], 'The expected provider is registered');
@@ -82,10 +82,32 @@ define([
                 "bundle": "taoTests/test/runner/mocks/mockBundle.min",
                 "category": "testrunner"
             }]
-        })
+        }, false)
         .then( result => {
             assert.deepEqual(result.runner, runner, 'The provider target is returned');
             assert.deepEqual(runner.getAvailableProviders(), ['mock-runner', 'mock-alt-runner'], 'The expected provider is registered');
+        })
+        .catch(err => assert.ok(false, err.message) )
+        .then( ready );
+    });
+
+    QUnit.test('Load from bundle', assert => {
+        const ready = assert.async();
+        assert.expect(3);
+
+        assert.deepEqual(runner.getAvailableProviders(), [], 'No provider registered');
+
+        providerLoader({
+            "runner": [{
+                "id": "mock-runner-from-bundle",
+                "module": "taoTests/test/runner/mocks/bundledMockRunnerProvider",
+                "bundle": "taoTests/test/runner/mocks/mockBundle.min",
+                "category": "testrunner"
+            }]
+        }, true)
+        .then( result => {
+            assert.deepEqual(result.runner, runner, 'The provider target is returned');
+            assert.deepEqual(runner.getAvailableProviders(), ['mock-runner-from-bundle'], 'The expected provider is registered');
         })
         .catch(err => assert.ok(false, err.message) )
         .then( ready );
