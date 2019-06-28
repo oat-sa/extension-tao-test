@@ -5,14 +5,14 @@
   "providers": {
     "runner": {
       "id": "mock-runner",
-      "module": "taoTests/test/runner/runnerComponent/mockRunnerProvider",
-      "bundle": "taoTests/test/runner/runnerComponent/mockBundle.min",
+      "module": "taoTests/test/runner/mocks/mockRunnerProvider",
+      "bundle": "taoTests/test/runner/mocks/mockBundle.min",
       "category": "testrunner"
     },
     "proxy": {
       "id": "mock-proxy",
-      "module": "taoTests/test/runner/runnerComponent/mockProxyProvider",
-      "bundle": "taoTests/test/runner/runnerComponent/mockBundle.min",
+      "module": "taoTests/test/runner/mocks/mockProxyProvider",
+      "bundle": "taoTests/test/runner/mocks/mockBundle.min",
       "category": "online"
     },
     "communicator": {
@@ -23,13 +23,13 @@
     },
     "plugins": [{
       "id": "fooglin",
-      "module": "taoTests/test/runner/runnerComponent/mockPlugin1",
-      "bundle": "taoTests/test/runner/runnerComponent/mockBundle.min",
+      "module": "taoTests/test/runner/mocks/mockPlugin1",
+      "bundle": "taoTests/test/runner/mocks/mockBundle.min",
       "category": "content"
     }, {
       "id": "barglin",
-      "module": "taoTests/test/runner/runnerComponent/mockPlugin2",
-      "bundle": "taoTests/test/runner/runnerComponent/mockBundle.min",
+      "module": "taoTests/test/runner/mocks/mockPlugin2",
+      "bundle": "taoTests/test/runner/mocks/mockBundle.min",
       "category": "tools"
     }]
   },
@@ -39,14 +39,6 @@
     "lastName": "Doe"
   },
   "locale": "en-US",
-  "bootstrap": {
-    "serviceExtension": "taoQtiTest",
-    "serviceController": "Runner",
-    "timeout": 0,
-    "communication": {
-      "enabled": false
-    }
-  },
   "options": {
     "fullScreen": false,
     "fullPage": false,
@@ -54,6 +46,12 @@
     "proctored": false,
     "timer": "client",
     "themes": {},
-    "plugins": {}
+    "plugins": {},
+    "bootstrap": {
+      "timeout": 0,
+      "communication": {
+        "enabled": false
+      }
+    }
   }
 }

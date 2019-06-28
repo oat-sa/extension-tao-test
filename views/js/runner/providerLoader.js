@@ -20,6 +20,45 @@
  * Loads all the required providers and the underlying modules
  * required by the test runner.
  *
+ *
+ * @example
+ * providerLoader({
+ *    "runner": {
+ *      "id": "mock-runner",
+ *      "module": "taoTests/test/runner/mocks/mockRunnerProvider",
+ *      "bundle": "taoTests/test/runner/mocks/mockBundle.min",
+ *      "category": "testrunner"
+ *    },
+ *    "proxy": {
+ *      "id": "mock-proxy",
+ *      "module": "taoTests/test/runner/mocks/mockProxyProvider",
+ *      "bundle": "taoTests/test/runner/mocks/mockBundle.min",
+ *      "category": "online"
+ *    },
+ *    "communicator": {
+ *      "id": "request",
+ *      "module": "core/communicator/request",
+ *      "bundle": "loader/vendor.min",
+ *      "category": "request"
+ *    },
+ *    "plugins": [{
+ *      "id": "fooglin",
+ *      "module": "taoTests/test/runner/mocks/mockPlugin1",
+ *      "bundle": "taoTests/test/runner/mocks/mockBundle.min",
+ *      "category": "content"
+ *    }, {
+ *      "id": "barglin",
+ *      "module": "taoTests/test/runner/mocks/mockPlugin2",
+ *      "bundle": "taoTests/test/runner/mocks/mockBundle.min",
+ *      "category": "tools"
+ *    }]
+ *  }, false)
+ *  .then( ({ runnerProvider, plugins }) => {
+ *      //...
+ *  })
+ *  .catch( err => console.error(err) );
+ *
+ *
  * @author Bertrand Chevrier <bertrand@taotesting.com>
  */
 define([
@@ -36,10 +75,23 @@ define([
 
     /**
      * Load the providers that match the registration
-     *
+     * @param {Object} providers
+     * @param {Object|Object[]} providers.runner
+     * @param {Object|Object[]} [providers.proxy]
+     * @param {Object|Object[]} [providers.communicator]
+     * @param {Object|Object[]} [providers.plugins]
+     * @param {Boolean} loadFromBundle - does the loader load the modules from the sources (dev mode) or the bundles
+     * @returns {Promise<Object>} resolves with the loaded providers per provider type
      */
     return function loadTestRunnerProviders(providers = {}, loadFromBundle = false) {
 
+        /**
+         * Default way to load the modules and register the providers
+         * @param {Object[]} providersToLoad - the list of providers
+         * @param {Object} target - a provider target (an object that use the providers), it needs to expose registerProvider
+         * @returns {Promise<Object>} resolves with the target
+         * @throws {TypeError} if the target is not a provider target
+         */
         const loadAndRegisterProvider = (providersToLoad = [], target) => {
             if(!target || typeof target.registerProvider !== 'function'){
                 throw new TypeError('Trying to register providers on a target that is not a provider API');
@@ -47,9 +99,15 @@ define([
             return providerLoader()
                     .addList(providersToLoad)
                     .load(loadFromBundle)
-                    .then( loadedProviders => loadedProviders.map( provider => target.registerProvider(provider.name, provider) ) );
+                    .then( loadedProviders => {
+                        loadedProviders.forEach( provider => target.registerProvider(provider.name, provider));
+                        return target;
+                    });
         };
 
+        /**
+         * Available provider registration
+         */
         const registration = {
             runner(runnerProviders = []){
                 return loadAndRegisterProvider(runnerProviders, runner);

@@ -20,17 +20,146 @@
  */
 define([
     'taoTests/runner/providerLoader',
-    'json!taoTests/test/runner/providerLoader/config.json'
-], function(providerLoader, sampleConfig) {
+    'taoTests/runner/runner',
+    'json!taoTests/test/runner/mocks/config.json'
+], function(providerLoader, runner, sampleConfig) {
     'use strict';
 
-    QUnit.test('Load providers', assert => {
-        const ready = assert.async();
-        const container = document.getElementById('playground');
+    QUnit.module('API');
 
-        providerLoader(sampleConfig.providers);
+    QUnit.test('module', assert => {
+        assert.expect(1);
 
-
+        assert.equal(typeof providerLoader, 'function', 'The providerLoader module is a function');
     });
 
+    QUnit.module('Load and register', {
+        beforeEach(){
+            runner.clearProviders();
+        }
+    });
+
+    QUnit.test('Nothing to load', assert => {
+        const ready = assert.async();
+        assert.expect(1);
+
+        providerLoader()
+            .then( result => assert.deepEqual(result, {}, 'Nothing to load, nothing loaded') )
+            .catch(err => assert.ok(false, err.message) )
+            .then( ready );
+    });
+
+    QUnit.test('Load one runner provider', assert => {
+        const ready = assert.async();
+        assert.expect(3);
+
+        assert.deepEqual(runner.getAvailableProviders(), [], 'No provider registered');
+
+        providerLoader({ runner : sampleConfig.providers.runner })
+            .then( result => {
+                assert.deepEqual(result.runner, runner, 'The provider target is returned');
+                assert.deepEqual(runner.getAvailableProviders(), ['mock-runner'], 'The expected provider is registered');
+            })
+            .catch(err => assert.ok(false, err.message) )
+            .then( ready );
+    });
+
+    QUnit.test('Load multiple runner providers', assert => {
+        const ready = assert.async();
+        assert.expect(3);
+
+        assert.deepEqual(runner.getAvailableProviders(), [], 'No provider registered');
+
+        providerLoader({
+            "runner": [{
+                "id": "mock-runner",
+                "module": "taoTests/test/runner/mocks/mockRunnerProvider",
+                "bundle": "taoTests/test/runner/mocks/mockBundle.min",
+                "category": "testrunner"
+            }, {
+                "id": "mock-alt-runner",
+                "module": "taoTests/test/runner/mocks/mockAltRunnerProvider",
+                "bundle": "taoTests/test/runner/mocks/mockBundle.min",
+                "category": "testrunner"
+            }]
+        })
+        .then( result => {
+            assert.deepEqual(result.runner, runner, 'The provider target is returned');
+            assert.deepEqual(runner.getAvailableProviders(), ['mock-runner', 'mock-alt-runner'], 'The expected provider is registered');
+        })
+        .catch(err => assert.ok(false, err.message) )
+        .then( ready );
+    });
+
+    QUnit.test('Invalid provider configuration', assert => {
+        assert.expect(3);
+
+        assert.throws( () => {
+            providerLoader({
+                "runner": { }
+            });
+        }, TypeError);
+
+        assert.throws( () => {
+            providerLoader({
+                "runner": {
+                    "module": "taoTests/test/runner/mocks/mockRunnerProvider",
+                }
+            });
+        }, TypeError);
+
+        assert.throws( () => {
+            providerLoader({
+                "runner": {
+                    "category": "foo",
+                }
+            });
+        }, TypeError);
+    });
+
+    QUnit.test('Load wrong module', assert => {
+        assert.expect(1);
+
+        assert.rejects(
+            providerLoader({
+                "runner": {
+                    "id": "mock-runner",
+                    "module": "taoFoo/test/runner/mocks/mockRunnerProvider",
+                    "bundle": "taoTests/test/runner/mocks/mockBundle.min",
+                    "category": "testrunner"
+                }
+            }),
+            /Script error for "taoFoo/
+        );
+    });
+
+    QUnit.test('Load an invalid module', assert => {
+        assert.expect(1);
+
+        assert.rejects(
+            providerLoader({
+                "runner": {
+                    "id": "mock-runner",
+                    "module": "taoTests/test/runner/mocks/mockInvalidRunnerProvider",
+                    "bundle": "taoTests/test/runner/mocks/mockBundle.min",
+                    "category": "testrunner"
+                }
+            }),
+            `The module 'taoTests/test/runner/mocks/mockInvalidRunnerProvider' is not valid`
+        );
+    });
+
+    QUnit.test('Load plugins', assert => {
+        const ready = assert.async();
+        assert.expect(3);
+
+        providerLoader({ plugins: sampleConfig.providers.plugins })
+            .then( result => {
+                assert.equal(result.plugins.length, 2, '2 plugins have been loaded');
+                assert.equal(typeof result.plugins[0], 'function', 'The plugin factory is exposed');
+                assert.equal(typeof result.plugins[1], 'function', 'The plugin factory is exposed');
+            })
+            .catch(err => assert.ok(false, err.message) )
+            .then( ready );
+    });
 });
