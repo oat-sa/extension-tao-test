@@ -152,12 +152,16 @@ define([
                     });
                 })
                 .spread(this, 'error')
+                .after('destroy', () => runner.removeAllListeners())
                 .init();
         })
         .on('destroy', function () {
             var destroying = runner && runner.destroy();
             runner = null;
             return destroying;
+        })
+        .after('destroy', function(){
+            this.removeAllListeners();
         });
 
         return runnerComponent.init(config);
