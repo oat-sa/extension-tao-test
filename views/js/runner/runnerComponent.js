@@ -152,7 +152,6 @@ define([
                     });
                 })
                 .spread(this, 'error')
-                .after('destroy', () => runner.removeAllListeners())
                 .init();
         })
         .on('destroy', function () {
