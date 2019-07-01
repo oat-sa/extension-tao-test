@@ -74,12 +74,19 @@ define([
     const logger = loggerFactory('taoTests/runner/loader');
 
     /**
+    * @typedef {Object} provider - A provider is an object exposing a list of methods with respect to the API managed by the target.
+    * @property {String} name - The name of the provider. It should be unique among all.
+    * @property {Function} init - Each provider much expose at least a method `init()`
+    * @property {Function} ... - Any other method the target is expecting
+    */
+
+    /**
      * Load the providers that match the registration
      * @param {Object} providers
-     * @param {Object|Object[]} providers.runner
-     * @param {Object|Object[]} [providers.proxy]
-     * @param {Object|Object[]} [providers.communicator]
-     * @param {Object|Object[]} [providers.plugins]
+     * @param {provider|provider[]} providers.runner
+     * @param {provider|provider[]} [providers.proxy]
+     * @param {provider|provider[]} [providers.communicator]
+     * @param {provider|provider[]} [providers.plugins]
      * @param {Boolean} loadFromBundle - does the loader load the modules from the sources (dev mode) or the bundles
      * @returns {Promise<Object>} resolves with the loaded providers per provider type
      */
