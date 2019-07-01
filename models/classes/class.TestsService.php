@@ -75,7 +75,6 @@ class taoTests_models_classes_TestsService
     protected function __construct()
     {
 		parent::__construct();
-		$this->testClass = new core_kernel_classes_Class(TaoOntology::CLASS_URI_TEST );
     }
 
     /**
@@ -118,7 +117,7 @@ class taoTests_models_classes_TestsService
      */
     public function getRootclass()
     {
-		return $this->testClass;
+		return $this->getClass(TaoOntology::CLASS_URI_TEST);
     }
 
     /**
@@ -134,11 +133,11 @@ class taoTests_models_classes_TestsService
         $returnValue = (bool) false;
 
 
-		if($clazz->getUri() == $this->testClass->getUri()){
+		if($clazz->getUri() == $this->getClass(TaoOntology::CLASS_URI_TEST)->getUri()){
 			$returnValue = true;
 		}
 		else{
-			foreach($this->testClass->getSubClasses(true) as $subclass){
+			foreach($this->getClass(TaoOntology::CLASS_URI_TEST)->getSubClasses(true) as $subclass){
 				if($clazz->getUri() == $subclass->getUri()){
 					$returnValue = true;
 					break;
@@ -164,7 +163,7 @@ class taoTests_models_classes_TestsService
 
 
 		if(!is_null($clazz)){
-			if($this->isTestClass($clazz) && $clazz->getUri() != $this->testClass->getUri()){
+			if($this->isTestClass($clazz) && $clazz->getUri() != $this->getClass(TaoOntology::CLASS_URI_TEST)->getUri()){
 				$returnValue = $clazz->delete();
 			}
 		}
@@ -185,7 +184,7 @@ class taoTests_models_classes_TestsService
         $returnValue = array();
 
 
-		$itemClazz = new core_kernel_classes_Class(TaoOntology::CLASS_URI_ITEM);
+		$itemClazz = $this->getClass(TaoOntology::CLASS_URI_ITEM);
 		foreach($itemClazz->getInstances(true) as $instance){
 			$returnValue[$instance->getUri()] = $instance->getLabel();
 		}
@@ -271,7 +270,7 @@ class taoTests_models_classes_TestsService
      */
     protected function setDefaultModel($test)
     {
-        $testModelClass = new core_kernel_classes_Class(self::CLASS_TEST_MODEL);
+        $testModelClass = $this->getClass(self::CLASS_TEST_MODEL);
         $models = $testModelClass->getInstances();
         if (count($models) > 0) {
             $this->setTestModel($test, current($models));
