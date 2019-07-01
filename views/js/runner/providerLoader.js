@@ -134,7 +134,7 @@ define([
 
                 if (typeof registration[providerType] === 'function') {
 
-                    logger.debug(`Start to load and registrer the '${providerType}' providers`);
+                    logger.debug(`Start to load and register the '${providerType}' providers`);
 
                     const providersToLoad = Array.isArray(providers[providerType]) ? providers[providerType] : [providers[providerType]];
 

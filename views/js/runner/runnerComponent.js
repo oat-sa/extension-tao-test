@@ -43,7 +43,7 @@ define([
         if (typeof config !== 'object') {
             throw new TypeError(`The runner configuration must be an object, '${typeof config}' received`);
         }
-        if (_.some(requiredProperties, property => (typeof config[property] === 'undefined'))) {
+        if (requiredProperties.some(property => (typeof config[property] === 'undefined'))) {
 
             throw new TypeError(`The runner configuration must contains at least the following properties : ${requiredProperties.join(',')}`);
         }
