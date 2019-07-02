@@ -8,20 +8,18 @@
         <script type="text/javascript" src="js/lib/qunit/qunit.js"></script>
         <script type="text/javascript" src="js/lib/require.js"></script>
         <script type="text/javascript" src="js/lib/qunit/qunit-parameterize.js"></script>
-        <script type="text/javascript" src="js/lib/blanket/blanket.min.js"  data-cover-flag="branchTracking"  data-cover-only="runnerComponent.js"></script>
+        <script type="text/javascript" src="js/lib/blanket/blanket.min.js"  data-cover-flag="branchTracking"  data-cover-only="runner/providerLoader.js"></script>
 
         <script  type="text/javascript">
 
              //don't start the test now
             QUnit.config.autostart = false;
-            QUnit.config.notrycatch = true;
-            QUnit.config.reorder = false;
 
             //load the config
             require(['/tao/ClientConfig/config'], function(){
 
                 //load the test
-                require(['taoTests/test/runner/runnerComponent/test'], function(){
+                require(['taoTests/test/runner/providerLoader/test'], function(){
 
                     //Tests loaded, run tests
                     QUnit.start();
@@ -31,16 +29,6 @@
     </head>
     <body>
         <div id="qunit"></div>
-        <div id="qunit-fixture">
-            <div id="fixture-module"></div>
-            <div id="fixture-config"></div>
-            <div id="fixture-method"></div>
-            <div id="fixture-init"></div>
-            <div id="fixture-providers"></div>
-            <div id="fixture-plugins"></div>
-            <div id="fixture-error"></div>
-            <div id="fixture-get"></div>
-        </div>
-        <div id="playground"></div>
+        <div id="qunit-fixture"></div>
     </body>
 </html>

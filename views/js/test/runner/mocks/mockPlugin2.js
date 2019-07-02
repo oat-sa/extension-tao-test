@@ -1,16 +1,13 @@
-define([], function () {
+define(['taoTests/runner/plugin'], function (pluginFactory) {
     'use strict';
 
-    return {
+    return pluginFactory({
         name: 'mock',
         init: function () {
             var self = this;
             setTimeout(function() {
-                self.trigger('mock-provider-loaded');
+                self.trigger('loaded');
             }, 250);
-        },
-        loadAreaBroker : function() {
-
         }
-    };
+    });
 });
