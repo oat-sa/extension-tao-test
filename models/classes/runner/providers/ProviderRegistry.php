@@ -54,14 +54,14 @@ class ProviderRegistry extends AbstractModuleRegistry
      */
     public function getByCategory($category = null)
     {
-        if (is_null($category)) {
+        if ( $category === null) {
             return [];
         }
 
         return array_filter(
             $this->getMap(),
             function($provider) use ($category) {
-                return isset($provider['category']) && $provider['category'] == $category;
+                return isset($provider['category']) && $provider['category'] === $category;
             }
         );
     }
@@ -73,7 +73,7 @@ class ProviderRegistry extends AbstractModuleRegistry
     public function removeByCategory($category = null)
     {
         $providers = $this->getByCategory($category);
-        foreach ($providers as  $provider) {
+        foreach ($providers as $provider) {
             if (isset($provider['module'])) {
                 $this->remove($provider['module']);
             }

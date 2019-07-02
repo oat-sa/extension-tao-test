@@ -19,7 +19,6 @@
 
 namespace oat\taoTests\test\unit\runner\providers;
 
-use common_exception_InconsistentData;
 use oat\generis\test\TestCase;
 use oat\taoTests\models\runner\providers\ProviderRegistry;
 
@@ -28,7 +27,7 @@ use oat\taoTests\models\runner\providers\ProviderRegistry;
  *
  * @author Bertrand Chevrier <bertrand@taotesting.com>
  */
-class TestProviderTest extends TestCase
+class ProviderRegistryTest extends TestCase
 {
 
     private static $map = [
@@ -91,12 +90,12 @@ class TestProviderTest extends TestCase
     public function categoryFindingProvider()
     {
         return [
-            [ null, 0 ],
-            [ '', 0 ],
-            [ 'foo', 0 ],
-            [ 'runner', 2 ],
-            [ 'communicator', 3 ],
-            [ 'proxy', 1 ],
+            [ null, [] ],
+            [ '', [] ],
+            [ 'foo', [] ],
+            [ 'runner', [self::$map[0], self::$map[1]] ],
+            [ 'communicator', [self::$map[2], self::$map[3],self::$map[4]]  ],
+            [ 'proxy', [self::$map[5]] ],
         ];
     }
 
@@ -104,16 +103,16 @@ class TestProviderTest extends TestCase
      * Test getting providers by category
      * @dataProvider categoryFindingProvider
      */
-    public function testGetByCategory($category, $expectedProviderCount)
+    public function testGetByCategory($category, $expectedProviders)
     {
         $registry = $this->getMockBuilder(ProviderRegistry::class)
-                ->setMethods(['getMap', '__construct'])
+                ->setMethods(['getMap', 'setConfig'])
                 ->disableOriginalConstructor()
                 ->getMock();
         $registry->method('getMap')->willReturn(self::$map);
 
         $providers = $registry->getByCategory($category);
-        $this->assertEquals(count($providers), $expectedProviderCount);
+        $this->assertEquals(array_values($providers), $expectedProviders);
     }
 
     /**
@@ -123,13 +122,36 @@ class TestProviderTest extends TestCase
     {
         $map = self::$map;
         $registry = $this->getMockBuilder(ProviderRegistry::class)
-                ->setMethods(['getMap', '__construct','remove'])
+                ->setMethods(['getMap', 'setConfig','remove'])
                 ->disableOriginalConstructor()
                 ->getMock();
+
         $registry->method('getMap')->willReturn($map);
+
         $registry->expects($this->once())
              ->method('remove')
              ->with('taoQtiTest/runner/proxy/qtiServiceProxy');
+
         $registry->removeByCategory('proxy');
+    }
+
+    /**
+     * Test removoing providers from a wrong category
+     */
+    public function testRemoveByWrongCategory()
+    {
+        $map = self::$map;
+        $registry = $this->getMockBuilder(ProviderRegistry::class)
+                ->setMethods(['getMap', 'setConfig','remove'])
+                ->disableOriginalConstructor()
+                ->getMock();
+
+        $registry->method('getMap')->willReturn($map);
+
+        $registry->expects($this->never())
+             ->method('remove')
+             ->with($this->any());
+
+        $registry->removeByCategory('foo');
     }
 }
