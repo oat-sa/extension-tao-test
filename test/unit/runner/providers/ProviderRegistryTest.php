@@ -116,13 +116,13 @@ class ProviderRegistryTest extends TestCase
     }
 
     /**
-     * Test removoing providers from a category
+     * Test removing providers from a category
      */
     public function testRemoveByCategory()
     {
         $map = self::$map;
         $registry = $this->getMockBuilder(ProviderRegistry::class)
-                ->setMethods(['getMap', 'setConfig','remove'])
+                ->setMethods(['getMap', 'setConfig', 'remove'])
                 ->disableOriginalConstructor()
                 ->getMock();
 
@@ -136,13 +136,13 @@ class ProviderRegistryTest extends TestCase
     }
 
     /**
-     * Test removoing providers from a wrong category
+     * Test removing providers from a wrong category
      */
     public function testRemoveByWrongCategory()
     {
         $map = self::$map;
         $registry = $this->getMockBuilder(ProviderRegistry::class)
-                ->setMethods(['getMap', 'setConfig','remove'])
+                ->setMethods(['getMap', 'setConfig', 'remove'])
                 ->disableOriginalConstructor()
                 ->getMock();
 
