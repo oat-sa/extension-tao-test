@@ -72,8 +72,7 @@ class ProviderRegistry extends AbstractModuleRegistry
      */
     public function removeByCategory($category = null)
     {
-        $providers = $this->getByCategory($category);
-        foreach ($providers as $provider) {
+        foreach ($this->getByCategory($category) as $provider) {
             if (isset($provider['module'])) {
                 $this->remove($provider['module']);
             }
