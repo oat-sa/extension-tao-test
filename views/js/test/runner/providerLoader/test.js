@@ -58,7 +58,11 @@ define([
         providerLoader({ runner : sampleConfig.providers.runner }, false)
             .then( result => {
                 assert.deepEqual(result.runner, runner, 'The provider target is returned');
-                assert.deepEqual(runner.getAvailableProviders(), ['mock-runner'], 'The expected provider is registered');
+                assert.deepEqual(
+                    runner.getAvailableProviders(),
+                    [ sampleConfig.providers.runner.id ],
+                    'The expected provider is registered'
+                );
             })
             .catch(err => assert.ok(false, err.message) )
             .then( ready );
