@@ -1,0 +1,3 @@
+{
+    "taoTests/runner": "../../../taoTests/views/node_modules/@oat-sa/tao-test-runner/dist"
+}
