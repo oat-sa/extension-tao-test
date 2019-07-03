@@ -29,7 +29,10 @@ use oat\tao\model\asset\AssetService;
 
 class RegisterFrontendPaths extends InstallAction
 {
-    public function __invoke()
+    /**
+     * @param $params
+     */
+    public function __invoke($params)
     {
         $assetService = $this->getServiceManager()->get(AssetService::SERVICE_ID);
         $taoTestRunnerDir = $assetService->getJsBaseWww('taoTests') . 'node_modules/@oat-sa/tao-test-runner/dist/';
