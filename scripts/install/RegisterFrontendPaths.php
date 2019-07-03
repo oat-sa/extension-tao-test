@@ -27,7 +27,7 @@ use oat\tao\model\asset\AssetService;
  *
  */
 
-class RegisterNpmPaths extends InstallAction
+class RegisterFrontendPaths extends InstallAction
 {
     public function __invoke()
     {
