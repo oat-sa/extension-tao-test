@@ -141,7 +141,7 @@ class Updater extends \common_ext_ExtensionUpdater
 
         if ($this->isVersion('12.0.0')) {
             $assetService = $this->getServiceManager()->get(AssetService::SERVICE_ID);
-            $taoTestRunnerDir = $assetService->getJsBaseWww('taoTests') . 'node_modules/@oat-sa/tao-test-runner/dist/';
+            $taoTestRunnerDir = $assetService->getJsBaseWww('taoTests') . 'node_modules/@oat-sa/tao-test-runner/dist';
             $clientLibRegistry = ClientLibRegistry::getRegistry();
             $clientLibRegistry->register('taoTests/runner', $taoTestRunnerDir);
             $this->setVersion('13.0.0');
