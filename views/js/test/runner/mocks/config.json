@@ -1,0 +1,57 @@
+{
+  "testDefinition": "",
+  "testCompilation": "",
+  "serviceCallId": "",
+  "providers": {
+    "runner": {
+      "id": "mock-runner",
+      "module": "taoTests/test/runner/mocks/mockRunnerProvider",
+      "bundle": "taoTests/test/runner/mocks/mockBundle.min",
+      "category": "testrunner"
+    },
+    "proxy": {
+      "id": "mock-proxy",
+      "module": "taoTests/test/runner/mocks/mockProxyProvider",
+      "bundle": "taoTests/test/runner/mocks/mockBundle.min",
+      "category": "online"
+    },
+    "communicator": {
+      "id": "request",
+      "module": "core/communicator/request",
+      "bundle": "loader/vendor.min",
+      "category": "request"
+    },
+    "plugins": [{
+      "id": "fooglin",
+      "module": "taoTests/test/runner/mocks/mockPlugin1",
+      "bundle": "taoTests/test/runner/mocks/mockBundle.min",
+      "category": "content"
+    }, {
+      "id": "barglin",
+      "module": "taoTests/test/runner/mocks/mockPlugin2",
+      "bundle": "taoTests/test/runner/mocks/mockBundle.min",
+      "category": "tools"
+    }]
+  },
+  "testTaker": {
+    "login": "tt1",
+    "firstName": "John",
+    "lastName": "Doe"
+  },
+  "locale": "en-US",
+  "options": {
+    "fullScreen": false,
+    "fullPage": false,
+    "readOnly": false,
+    "proctored": false,
+    "timer": "client",
+    "themes": {},
+    "plugins": {},
+    "bootstrap": {
+      "timeout": 0,
+      "communication": {
+        "enabled": false
+      }
+    }
+  }
+}
