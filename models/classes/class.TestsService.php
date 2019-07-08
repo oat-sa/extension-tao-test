@@ -41,18 +41,18 @@ use oat\tao\model\OntologyClassService;
 class taoTests_models_classes_TestsService
     extends OntologyClassService
 {
-    
+
     const CLASS_TEST_MODEL ='http://www.tao.lu/Ontologies/TAOTest.rdf#TestModel';
-        
+
     const PROPERTY_TEST_MODEL_IMPLEMENTATION ='http://www.tao.lu/Ontologies/TAOTest.rdf#TestModelImplementation';
-        
+
     const PROPERTY_TEST_TESTMODEL = 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestTestModel';
-        
+
     /** @deprecated  */
     const TEST_TESTCONTENT_PROP = 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestContent';
-        
+
     const PROPERTY_TEST_CONTENT = 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestContent';
-        
+
     /**
      * delete a test instance
      *
@@ -66,7 +66,7 @@ class taoTests_models_classes_TestsService
         $returnValue = (bool) false;
         if(!is_null($test)){
             try {
-		        //delete the associated content
+                //delete the associated content
                 $model = $this->getTestModel($test);
                 $impl = $this->getTestModelImplementation($model);
                 $impl->deleteContent($test);
@@ -78,12 +78,12 @@ class taoTests_models_classes_TestsService
         }
         return (bool) $returnValue;
     }
-        
+
     public function deleteResource(core_kernel_classes_Resource $resource)
     {
         return $this->deleteTest($resource);
     }
-        
+
     /**
      * get the test class
      *
@@ -93,9 +93,9 @@ class taoTests_models_classes_TestsService
      */
     public function getRootclass()
     {
-		return $this->getClass(TaoOntology::CLASS_URI_TEST);
+        return $this->getClass(TaoOntology::CLASS_URI_TEST);
     }
-        
+
     /**
      * Check if the Class in parameter is a subclass of Test
      *
@@ -107,23 +107,23 @@ class taoTests_models_classes_TestsService
     public function isTestClass( core_kernel_classes_Class $clazz)
     {
         $returnValue = (bool) false;
-            
-		if($clazz->getUri() == $this->getClass(TaoOntology::CLASS_URI_TEST)->getUri()){
-			$returnValue = true;
-		}
-		else{
-			foreach($this->getClass(TaoOntology::CLASS_URI_TEST)->getSubClasses(true) as $subclass){
-				if($clazz->getUri() == $subclass->getUri()){
-					$returnValue = true;
-					break;
-				}
-			}
-		}
-                    
-                    
+
+        if($clazz->getUri() == $this->getClass(TaoOntology::CLASS_URI_TEST)->getUri()){
+                $returnValue = true;
+        }
+        else{
+            foreach($this->getClass(TaoOntology::CLASS_URI_TEST)->getSubClasses(true) as $subclass){
+                if($clazz->getUri() == $subclass->getUri()){
+                    $returnValue = true;
+                    break;
+                }
+            }
+        }
+
+
         return (bool) $returnValue;
     }
-        
+
     /**
      * delete a test class or sublcass
      *
@@ -136,15 +136,15 @@ class taoTests_models_classes_TestsService
     {
         $returnValue = (bool) false;
             
-		if(!is_null($clazz)){
-			if($this->isTestClass($clazz) && $clazz->getUri() != $this->getClass(TaoOntology::CLASS_URI_TEST)->getUri()){
-				$returnValue = $clazz->delete();
-			}
-		}
+        if(!is_null($clazz)){
+            if($this->isTestClass($clazz) && $clazz->getUri() != $this->getClass(TaoOntology::CLASS_URI_TEST)->getUri()){
+                $returnValue = $clazz->delete();
+            }
+        }
                     
         return (bool) $returnValue;
     }
-        
+
     /**
      * Get all available items
      *
@@ -155,17 +155,15 @@ class taoTests_models_classes_TestsService
     public function getAllItems()
     {
         $returnValue = array();
-            
-            
-		$itemClazz = $this->getClass(TaoOntology::CLASS_URI_ITEM);
-		foreach($itemClazz->getInstances(true) as $instance){
-			$returnValue[$instance->getUri()] = $instance->getLabel();
-		}
-                    
-                    
+
+        $itemClazz = $this->getClass(TaoOntology::CLASS_URI_ITEM);
+        foreach($itemClazz->getInstances(true) as $instance){
+            $returnValue[$instance->getUri()] = $instance->getLabel();
+        }
+
         return (array) $returnValue;
     }
-        
+
     /**
      * Used to be called whenever the label of the Test changed
      * Deprecated in favor of eventmanager
@@ -181,7 +179,7 @@ class taoTests_models_classes_TestsService
         common_Logger::w('Call to deprecated '.__FUNCTION__);
         return false;
     }
-        
+
     /**
      * Short description of method cloneInstance
      *
@@ -194,48 +192,45 @@ class taoTests_models_classes_TestsService
     public function cloneInstance( core_kernel_classes_Resource $instance,  core_kernel_classes_Class $clazz = null)
     {
         $returnValue = null;
-            
-            
-		//call the parent create instance to prevent useless process test to be created:
-		$label = $instance->getLabel();
-		$cloneLabel = "$label bis";
-		$clone = parent::createInstance($clazz, $cloneLabel);
-                    
-		if(!is_null($clone)){
-			$noCloningProperties = array(
-				self::PROPERTY_TEST_CONTENT,
-				OntologyRdf::RDF_TYPE
-			);
-                            
-			foreach($clazz->getProperties(true) as $property){
-                            
-				if(!in_array($property->getUri(), $noCloningProperties)){
-					//allow clone of every property value but the deliverycontent, which is a process:
-					foreach($instance->getPropertyValues($property) as $propertyValue){
-						$clone->setPropertyValue($property, $propertyValue);
-					}
-				}
-			}
-			//Fix label
-			if(preg_match("/bis/", $label)) {
-				$cloneNumber = (int)preg_replace("/^(.?)*bis/", "", $label);
-				$cloneNumber++;
-				$cloneLabel = preg_replace("/bis(.?)*$/", "", $label)."bis $cloneNumber" ;
-			}
-			$clone->setLabel($cloneLabel);
-                            
-			$impl = $this->getTestModelImplementation($this->getTestModel($instance));
-			$impl->cloneContent($instance, $clone);
-                            
+
+        //call the parent create instance to prevent useless process test to be created:
+        $label = $instance->getLabel();
+        $cloneLabel = "$label bis";
+        $clone = parent::createInstance($clazz, $cloneLabel);
+
+        if(!is_null($clone)){
+            $noCloningProperties = array(
+                self::PROPERTY_TEST_CONTENT,
+                OntologyRdf::RDF_TYPE
+            );
+
+            foreach($clazz->getProperties(true) as $property){
+                if(!in_array($property->getUri(), $noCloningProperties)){
+                    //allow clone of every property value but the deliverycontent, which is a process:
+                    foreach($instance->getPropertyValues($property) as $propertyValue){
+                        $clone->setPropertyValue($property, $propertyValue);
+                    }
+                }
+            }
+            //Fix label
+            if(preg_match("/bis/", $label)) {
+                $cloneNumber = (int)preg_replace("/^(.?)*bis/", "", $label);
+                $cloneNumber++;
+                $cloneLabel = preg_replace("/bis(.?)*$/", "", $label)."bis $cloneNumber" ;
+            }
+            $clone->setLabel($cloneLabel);
+
+            $impl = $this->getTestModelImplementation($this->getTestModel($instance));
+            $impl->cloneContent($instance, $clone);
+
             $this->getEventManager()->trigger(new TestDuplicatedEvent($instance->getUri(), $clone->getUri()));
-                
+
             $returnValue = $clone;
-		}
-                    
-                    
+        }
+
         return $returnValue;
     }
-        
+
     /**
      * 
      * @author Lionel Lecaque, lionel@taotesting.com
@@ -249,7 +244,7 @@ class taoTests_models_classes_TestsService
             $this->setTestModel($test, current($models));
         }
     }
-        
+
     /**
      * Short description of method createInstance
      *
@@ -261,14 +256,14 @@ class taoTests_models_classes_TestsService
      */
     public function createInstance( core_kernel_classes_Class $clazz, $label = '')
     {
-		$test = parent::createInstance($clazz, $label);
+        $test = parent::createInstance($clazz, $label);
         $this->setDefaultModel($test);
-            
+
         $this->getEventManager()->trigger(new TestCreatedEvent($test->getUri()));
-            
+
         return $test;
     }
-        
+
     /**
      * Short description of method getTestItems
      *
@@ -287,7 +282,7 @@ class taoTests_models_classes_TestsService
         }
         return (array) $returnValue;
     }
-        
+
     /**
      * Changes the model of the test, while trying
      * to carry over the items of the test
@@ -297,24 +292,24 @@ class taoTests_models_classes_TestsService
      */
     public function setTestModel(core_kernel_classes_Resource $test, core_kernel_classes_Resource $testModel) {
         $current = $test->getOnePropertyValue($this->getProperty(self::PROPERTY_TEST_TESTMODEL));
-		// did the model change?
-		if (is_null($current) || !$current->equals($testModel)) {
-			$items = array();
-			if (!is_null($current)) {
-				$former = $this->getTestModelImplementation($current);
-				if (!empty($former)) {
-					$items = $former->getItems($test);
-					$former->deleteContent($test);
-				}	
-			}
-			$test->editPropertyValues($this->getProperty(self::PROPERTY_TEST_TESTMODEL), $testModel);
-			$newImpl = $this->getTestModelImplementation($testModel);
-			if (!empty($newImpl)) {
-				$newImpl->prepareContent($test, $items);
-			}
-		}
+        // did the model change?
+        if (is_null($current) || !$current->equals($testModel)) {
+            $items = array();
+            if (!is_null($current)) {
+                $former = $this->getTestModelImplementation($current);
+                if (!empty($former)) {
+                    $items = $former->getItems($test);
+                    $former->deleteContent($test);
+                }	
+            }
+            $test->editPropertyValues($this->getProperty(self::PROPERTY_TEST_TESTMODEL), $testModel);
+            $newImpl = $this->getTestModelImplementation($testModel);
+            if (!empty($newImpl)) {
+                $newImpl->prepareContent($test, $items);
+            }
+        }
     }
-        
+
     /**
      * Returns a compiler instance for a given test
      * @param core_kernel_classes_Resource $test
@@ -332,7 +327,7 @@ class taoTests_models_classes_TestsService
         }
         return $compiler;
     }
-        
+
     /**
      * Returns the class of the compiler
      * @param core_kernel_classes_Resource $test
@@ -343,7 +338,7 @@ class taoTests_models_classes_TestsService
         $testModel = $this->getTestModel($test);
         return $this->getTestModelImplementation($testModel)->getCompilerClass();
     }
-        
+
     /**
      * Returns the model of the current test
      * 
@@ -360,7 +355,7 @@ class taoTests_models_classes_TestsService
 
         return $testModel;
     }
-        
+
     /**
      * Returns the implementation of an items test model
      * 
@@ -384,7 +379,6 @@ class taoTests_models_classes_TestsService
             // for backward compatibility support classname instead of a serviceid
             common_Logger::w('Outdated model definition "'.$serviceId.'", please use test model service');
             $testModelService = new $serviceId();
-                
         }
 
         if (!$testModelService instanceof \taoTests_models_classes_TestModel) {

@@ -28,7 +28,7 @@ class TestServiceTest extends TestCase
     {
         parent::setUp();
     }
-    
+
     private function getServiceTestMock()
     {
         return $this->getMockBuilder(taoTests_models_classes_TestsService::class)
@@ -57,7 +57,7 @@ class TestServiceTest extends TestCase
         $this->assertFalse($testServiceMock->deleteTestClass($coreClassMock));
         $this->assertTrue($testServiceMock->deleteTestClass($coreClassMock1));
     }
-    
+
     public function testGetPropertyByUri()
     {
         $service = new taoTests_models_classes_TestsService();
