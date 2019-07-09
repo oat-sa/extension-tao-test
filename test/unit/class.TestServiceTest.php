@@ -37,7 +37,7 @@ class TestServiceTest extends TestCase
             ->getMock();
     }
 
-    public function testGetDefaultResultServer()
+    public function testDeleteTestClass()
     {
         $testServiceMock = $this->getServiceTestMock();
         $testServiceMock->method('isTestClass')->willReturn(true);
