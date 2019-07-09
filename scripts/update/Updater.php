@@ -137,6 +137,14 @@ class Updater extends \common_ext_ExtensionUpdater
             $this->setVersion('7.8.0');
         }
 
-        $this->skip('7.8.0', '13.0.0');
+        $this->skip('7.8.0', '12.1.0');
+
+        if ($this->isVersion('12.1.0')) {
+            $assetService = $this->getServiceManager()->get(AssetService::SERVICE_ID);
+            $taoTestRunnerDir = $assetService->getJsBaseWww('taoTests') . 'node_modules/@oat-sa/tao-test-runner/dist';
+            $clientLibRegistry = ClientLibRegistry::getRegistry();
+            $clientLibRegistry->register('taoTests/runner', $taoTestRunnerDir);
+            $this->setVersion('13.0.0');
+        }        
     }
 }
