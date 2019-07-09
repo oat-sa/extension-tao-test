@@ -5,6 +5,6 @@
   "keywords": [],
   "license": "GPL-2",
   "dependencies": {
-    "@oat-sa/tao-test-runner": "^0.1.0"
+    "@oat-sa/tao-test-runner": "oat-sa/tao-test-runner-fe#feature/NEX-150_update-code-from-old-repo"
   }
 }
