@@ -145,6 +145,8 @@ class Updater extends \common_ext_ExtensionUpdater
             $clientLibRegistry = ClientLibRegistry::getRegistry();
             $clientLibRegistry->register('taoTests/runner', $taoTestRunnerDir);
             $this->setVersion('13.0.0');
-        }        
+        }
+
+        $this->skip('13.0.0', '13.0.1');
     }
 }
