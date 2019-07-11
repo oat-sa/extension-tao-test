@@ -1,9 +1,13 @@
 {
   "name": "@oat-sa/tao-test",
   "version": "0.1.0",
-  "description": "",
+  "description": "Tao Test",
   "keywords": [],
-  "license": "GPL-2",
+  "license": "GPL-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oat-sa/extension-tao-test.git"
+  },
   "dependencies": {
     "@oat-sa/tao-test-runner": "^0.2.0"
   }
