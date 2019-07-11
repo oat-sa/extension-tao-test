@@ -1,0 +1,10 @@
+{
+  "name": "@oat-sa/tao-test",
+  "version": "0.1.0",
+  "description": "",
+  "keywords": [],
+  "license": "GPL-2",
+  "dependencies": {
+    "@oat-sa/tao-test-runner": "^0.2.0"
+  }
+}
