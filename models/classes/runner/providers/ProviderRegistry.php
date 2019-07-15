@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2017 (original work) Open Assessment Technologies SA;
+ * Copyright (c) 2017-2019 (original work) Open Assessment Technologies SA;
  */
 
 namespace oat\taoTests\models\runner\providers;
@@ -45,5 +45,37 @@ class ProviderRegistry extends AbstractModuleRegistry
     protected function getExtension()
     {
         return common_ext_ExtensionsManager::singleton()->getExtensionById('taoTests');
+    }
+
+    /**
+     * Get all modules that belong to a category
+     * @param string $category - the provider category (runner, proxy,etc.)
+     * @return array the matching providers
+     */
+    public function getByCategory($category = null)
+    {
+        if ( $category === null) {
+            return [];
+        }
+
+        return array_filter(
+            $this->getMap(),
+            function($provider) use ($category) {
+                return isset($provider['category']) && $provider['category'] === $category;
+            }
+        );
+    }
+
+    /**
+     * Unregister all modules that belong to a category
+     * @param string $category - the provider category (runner, proxy,etc.)
+     */
+    public function removeByCategory($category = null)
+    {
+        foreach ($this->getByCategory($category) as $provider) {
+            if (isset($provider['module'])) {
+                $this->remove($provider['module']);
+            }
+        }
     }
 }
