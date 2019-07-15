@@ -19,16 +19,10 @@
  */
 
 use oat\generis\test\TestCase;
-use oat\tao\model\TaoOntology;
 use \taoTests_models_classes_TestsService;
 
 class TestServiceTest extends TestCase
 {
-    protected function setUp()
-    {
-        parent::setUp();
-    }
-
     private function getServiceTestMock()
     {
         return $this->getMockBuilder(taoTests_models_classes_TestsService::class)
@@ -60,7 +54,7 @@ class TestServiceTest extends TestCase
 
     public function testGetPropertyByUri()
     {
-        $service = new taoTests_models_classes_TestsService();
+        $service = taoTests_models_classes_TestsService::singleton();
         $this->assertInstanceOf(
             core_kernel_classes_Property::class,
             $service->getPropertyByUri(taoTests_models_classes_TestsService::PROPERTY_TEST_TESTMODEL)

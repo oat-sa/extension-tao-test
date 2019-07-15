@@ -38,8 +38,7 @@ use oat\tao\model\OntologyClassService;
  * @package taoTests
      
  */
-class taoTests_models_classes_TestsService
-    extends OntologyClassService
+class taoTests_models_classes_TestsService extends OntologyClassService
 {
 
     const CLASS_TEST_MODEL ='http://www.tao.lu/Ontologies/TAOTest.rdf#TestModel';
