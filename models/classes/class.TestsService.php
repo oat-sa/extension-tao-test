@@ -91,7 +91,7 @@ class taoTests_models_classes_TestsService
      * @author Joel Bout, <joel@taotesting.com>
      * @return core_kernel_classes_Class
      */
-    public function getRootclass()
+    public function getRootClass()
     {
         return $this->getClass(TaoOntology::CLASS_URI_TEST);
     }
