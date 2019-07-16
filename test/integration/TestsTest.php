@@ -32,6 +32,7 @@ use core_kernel_classes_Class;
 use core_kernel_classes_Resource;
 use core_kernel_classes_Property;
 use taoTests_models_classes_TestsService as TestService;
+use oat\tao\model\OntologyClassService;
 
 /**
  *
@@ -52,7 +53,7 @@ class TestsTest extends GenerisPhpUnitTestRunner {
 	 */
 	public function setUp(){
 	    parent::setUp();
-		$this->testsService = taoTests_models_classes_TestsService::singleton();
+		$this->testsService = new taoTests_models_classes_TestsService();
 	}
 
 	/**
@@ -62,7 +63,7 @@ class TestsTest extends GenerisPhpUnitTestRunner {
 	 */
 	public function testService(){
 		
-		$this->assertIsA($this->testsService , tao_models_classes_Service::class);
+		$this->assertIsA($this->testsService , OntologyClassService::class);
 		$this->assertIsA($this->testsService , taoTests_models_classes_TestsService::class);
 	}
 
