@@ -20,6 +20,7 @@
 
 use oat\generis\test\TestCase;
 use \taoTests_models_classes_TestsService;
+use \oat\taoTests\models\runner\features\TestRunnerFeatureService;
 
 class TestServiceTest extends TestCase
 {
@@ -54,7 +55,7 @@ class TestServiceTest extends TestCase
 
     public function testGetPropertyByUri()
     {
-        $service = taoTests_models_classes_TestsService::singleton();
+        $service = new taoTests_models_classes_TestsService();
         $this->assertInstanceOf(
             core_kernel_classes_Property::class,
             $service->getPropertyByUri(taoTests_models_classes_TestsService::PROPERTY_TEST_TESTMODEL)

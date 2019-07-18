@@ -36,12 +36,6 @@ use oat\taoTests\models\pack\TestPack;
  */
 class PackerTest extends GenerisPhpUnitTestRunner
 {
-
-    public function setUp()
-    {
-        \common_ext_ExtensionsManager::singleton()->getExtensionById('taoTests');
-    }
-
     /**
      * Test creating an TestPack
      */
