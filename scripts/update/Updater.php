@@ -30,6 +30,8 @@ use oat\tao\model\accessControl\func\AccessRule;
 use oat\tao\model\user\TaoRoles;
 use oat\taoTests\models\runner\features\TestRunnerFeatureService;
 use oat\taoTests\models\runner\features\SecurityFeature;
+use oat\tao\model\ClientLibRegistry;
+use oat\tao\model\asset\AssetService;
 
 class Updater extends \common_ext_ExtensionUpdater
 {
@@ -136,5 +138,15 @@ class Updater extends \common_ext_ExtensionUpdater
         }
 
         $this->skip('7.8.0', '12.1.0');
+
+        if ($this->isVersion('12.1.0')) {
+            $assetService = $this->getServiceManager()->get(AssetService::SERVICE_ID);
+            $taoTestRunnerDir = $assetService->getJsBaseWww('taoTests') . 'node_modules/@oat-sa/tao-test-runner/dist';
+            $clientLibRegistry = ClientLibRegistry::getRegistry();
+            $clientLibRegistry->register('taoTests/runner', $taoTestRunnerDir);
+            $this->setVersion('13.0.0');
+        }
+
+        $this->skip('13.0.0', '13.0.2');
     }
 }
