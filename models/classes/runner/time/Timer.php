@@ -22,6 +22,8 @@
 
 namespace oat\taoTests\models\runner\time;
 
+use oat\taoQtiTest\models\runner\time\TimerStrategyInterface;
+
 /**
  * Interface Timer
  *
@@ -108,6 +110,12 @@ interface Timer
      * @return Timer
      */
     public function setStorage(TimeStorage $storage);
+
+    /**
+     * @param TimerStrategyInterface $strategy
+     * @return Timer
+     */
+    public function setStrategy(TimerStrategyInterface $strategy);
 
     /**
      * Gets the storage used to maintain the data
