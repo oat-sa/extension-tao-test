@@ -19,8 +19,6 @@
  */
 
 use oat\generis\test\TestCase;
-use \taoTests_models_classes_TestsService;
-use \oat\taoTests\models\runner\features\TestRunnerFeatureService;
 
 class TestServiceTest extends TestCase
 {
