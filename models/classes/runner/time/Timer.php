@@ -22,8 +22,6 @@
 
 namespace oat\taoTests\models\runner\time;
 
-use oat\taoQtiTest\models\runner\time\TimerStrategyInterface;
-
 /**
  * Interface Timer
  *
