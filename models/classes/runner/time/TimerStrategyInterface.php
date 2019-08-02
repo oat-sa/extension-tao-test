@@ -36,5 +36,5 @@ interface TimerStrategyInterface
      * @param int $multiplier
      * @return int
      */
-    public function getNewTime($time, $multiplier);
+    public function getMultipliedTime($time, $multiplier);
 }
