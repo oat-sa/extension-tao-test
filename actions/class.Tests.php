@@ -49,7 +49,7 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
 
     protected function getClassService()
     {
-        return taoTests_models_classes_TestsService::singleton();
+        return $this->getServiceLocator()->get(taoTests_models_classes_TestsService::class);
     }
 
     /**
@@ -59,10 +59,6 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
     public function __construct()
     {
         parent::__construct();
-
-        //the service is initialized by default
-        $this->service = taoTests_models_classes_TestsService::singleton();
-        $this->defaultData();
     }
 
 /*
@@ -101,7 +97,7 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
                     unset($propertyValues[taoTests_models_classes_TestsService::PROPERTY_TEST_TESTMODEL]);
                     if (!empty($modelUri)) {
                         $testModel = new core_kernel_classes_Resource($modelUri);
-                        $this->service->setTestModel($test, $testModel);
+                        $this->getClassService()->setTestModel($test, $testModel);
                     }
                 } else {
                     common_Logger::w('No testmodel on test form', 'taoTests');
@@ -162,7 +158,7 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
             $lockManager->releaseLock($instance, $userId);
         }
 
-        if ($this->service->deleteTest($instance)) {
+        if ($this->getClassService()->deleteTest($instance)) {
             $success = true;
             $message = __('Test was successfully deleted.');
         } else {
@@ -183,10 +179,11 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
      */
     public function authoring()
     {
+
         $test = new core_kernel_classes_Resource($this->getRequestParameter('id'));
         if (!$this->isLocked($test)) {
-            $testModel = $this->service->getTestModel($test);
-            $testModelImpl = $this->service->getTestModelImplementation($testModel);
+            $testModel = $this->getClassService()->getTestModel($test);
+            $testModelImpl = $this->getClassService()->getTestModelImplementation($testModel);
             $authoringUrl = $testModelImpl->getAuthoringUrl($test);
             if(!empty($authoringUrl)){
                 $userId = common_session_SessionManager::getSession()->getUser()->getIdentifier();

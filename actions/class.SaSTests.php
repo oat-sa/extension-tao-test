@@ -31,27 +31,24 @@
  */
 class taoTests_actions_SaSTests extends taoTests_actions_Tests {
 
-	protected function getClassService() {
-		return taoTests_models_classes_TestsService::singleton();
-	}
 	/**
 	 * Render the tree and the list to select and order the test related items 
 	 * @return void
 	 */
 	public function selectItems(){
-		
+
 		$this->setData('uri', $this->getRequestParameter('uri'));
 		$this->setData('classUri', $this->getRequestParameter('classUri'));
 		
 		$test = $this->getCurrentInstance();
 		
 		$allItems = array();
-		foreach($this->service->getAllItems() as $itemUri => $itemLabel){
+		foreach($this->getClassService()->getAllItems() as $itemUri => $itemLabel){
 			$allItems['item_'.tao_helpers_Uri::encode($itemUri)] = $itemLabel;
 		}
 		$this->setData('allItems', json_encode($allItems));
 		
-		$relatedItems = tao_helpers_Uri::encodeArray($this->service->getTestItems($test, true), tao_helpers_Uri::ENCODE_ARRAY_VALUES);
+		$relatedItems = tao_helpers_Uri::encodeArray($this->getClassService()->getTestItems($test, true), tao_helpers_Uri::ENCODE_ARRAY_VALUES);
 		$this->setData('relatedItems', json_encode($relatedItems));
 		
 		$itemSequence = array();

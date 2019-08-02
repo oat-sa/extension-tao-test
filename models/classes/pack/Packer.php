@@ -27,6 +27,7 @@ use \common_exception_NoImplementation;
 use \ReflectionClass;
 use \common_Exception;
 use \Exception;
+use oat\oatbox\service\ServiceManager;
 
 /**
  * The Test Packer calls the packable class for the given test
@@ -56,7 +57,7 @@ class Packer
      */
     public function __construct(core_kernel_classes_Resource $test){
         $this->test = $test;
-        $this->testService = taoTests_models_classes_TestsService::singleton();
+        $this->testService = ServiceManager::getServiceManager(taoTests_models_classes_TestsService::class);
     }
 
     /**

@@ -49,7 +49,8 @@ class Updater extends \common_ext_ExtensionUpdater
 		// remove active prop
 		if ($this->isVersion('2.7')){
 		    $deprecatedProperty = new \core_kernel_classes_Property('http://www.tao.lu/Ontologies/TAOTest.rdf#active');
-		    $iterator = new \core_kernel_classes_ResourceIterator(array(\taoTests_models_classes_TestsService::singleton()->getRootClass()));
+		    $testService = $this->getServiceManager()->get(\taoTests_models_classes_TestsService::class);
+		    $iterator = new \core_kernel_classes_ResourceIterator(array($testService->getRootClass()));
 		    foreach ($iterator as $resource) {
 		        $resource->removePropertyValues($deprecatedProperty);
 		    }

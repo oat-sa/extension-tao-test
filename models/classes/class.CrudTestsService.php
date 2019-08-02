@@ -38,7 +38,7 @@ class taoTests_models_classes_CrudTestsService
 	 * @see tao_models_classes_CrudService::getClassService()
 	 */
 	protected function getClassService() {
-		return taoTests_models_classes_TestsService::singleton();
+		return $this->getServiceLocator()->get(taoTests_models_classes_TestsService::class);
 	}
 
     /**

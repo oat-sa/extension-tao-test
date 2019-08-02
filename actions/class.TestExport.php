@@ -49,16 +49,18 @@ class taoTests_actions_TestExport extends tao_actions_Export
 		
 		$resources = $this->getResourcesToExport();
 		$testModels = array();
+		$testService = $this->getServiceLocator()->get(taoTests_models_classes_TestsService::class);
+
         foreach ($resources as $resource) {
             try {
-                $model = taoTests_models_classes_TestsService::singleton()->getTestModel($resource);
+                $model = $testService->getTestModel($resource);
                 $testModels[$model->getUri()] = $model;
             } catch (MissingTestmodelException $e) {
                 // no model found, skip exporter retrieval
             }
         }
 		foreach ($testModels as $model) {
-			$impl = taoTests_models_classes_TestsService::singleton()->getTestModelImplementation($model);
+			$impl = $testService->getTestModelImplementation($model);
 			if (in_array('tao_models_classes_export_ExportProvider', class_implements($impl))) {
 				foreach ($impl->getExportHandlers() as $handler) {
 					array_unshift($returnValue, $handler);
