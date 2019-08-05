@@ -110,6 +110,12 @@ interface Timer
     public function setStorage(TimeStorage $storage);
 
     /**
+     * @param TimerStrategyInterface $strategy
+     * @return Timer
+     */
+    public function setStrategy(TimerStrategyInterface $strategy);
+
+    /**
      * Gets the storage used to maintain the data
      * @return TimeStorage
      */
