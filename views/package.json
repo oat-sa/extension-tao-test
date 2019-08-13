@@ -9,6 +9,6 @@
     "url": "https://github.com/oat-sa/extension-tao-test.git"
   },
   "dependencies": {
-    "@oat-sa/tao-test-runner": "0.4.0"
+    "@oat-sa/tao-test-runner": "github:oat-sa/tao-test-runner-fe#feature/NEX-238_deprecate-test-data"
   }
 }
