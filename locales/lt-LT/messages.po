@@ -13,12 +13,6 @@ msgstr ""
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
 
-msgid " . \common_Utils::toPHPVariableString($this->getDescription()) . "
-msgstr ""
-
-msgid " . \common_Utils::toPHPVariableString($this->getLabel()) . "
-msgstr ""
-
 #, tao-public
 msgid "Authoring"
 msgstr "Tvarkymas"
@@ -81,8 +75,8 @@ msgstr "Savybės"
 msgid "Security plugins"
 msgstr "Saugumo plėtiniai"
 
-msgid "Set of plugins with \'security\' category"
-msgstr ""
+msgid "Set of plugins with 'security' category"
+msgstr "Rinkinys plėtinių su „saugumo“ kategorija"
 
 msgid "Test properties"
 msgstr "Testo savybės"
