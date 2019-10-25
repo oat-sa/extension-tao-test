@@ -85,7 +85,7 @@ msgid "Test saved"
 msgstr "Testas išsaugotas"
 
 msgid "Test was successfully deleted."
-msgstr ""
+msgstr "Testas sėkmingai pašalintas"
 
 #, tao-public
 msgid "Tests"
