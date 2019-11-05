@@ -19,7 +19,7 @@ msgstr "Tvarkymas"
 
 #, tao-public
 msgid "Combine a selection of items into tests."
-msgstr "Apjunkite pasirinktus elementus į testus."
+msgstr "Apjunkite pasirinktus klausimus į testus."
 
 #, tao-public
 msgid "Copy To"
@@ -99,7 +99,7 @@ msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also
 msgstr "Čia taip pat konfigūruojami testo režimas (klausimų eiliškumas, vertinimas, taškų sumavimas) ir testo išdėstymas."
 
 msgid "The Tests module allows to combine a selection of Items to a Test."
-msgstr "Testo modulis leidžia apjungti pasirinktus Elementus į Testą."
+msgstr "Testo modulis leidžia apjunkti pasirinktus klausimus į testus."
 
 msgid "Unable to delete test."
 msgstr ""
