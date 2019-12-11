@@ -29,6 +29,7 @@ use oat\tao\model\service\ServiceFileStorage;
 use oat\taoTests\models\TestModel;
 use oat\taoTests\models\MissingTestmodelException;
 use oat\tao\model\OntologyClassService;
+use oat\oatbox\event\EventManager;
     
 /**
  * Service methods to manage the Tests business models using the RDF API.
@@ -258,7 +259,7 @@ class taoTests_models_classes_TestsService extends OntologyClassService
         $test = parent::createInstance($clazz, $label);
         $this->setDefaultModel($test);
 
-        $this->getEventManager()->trigger(new TestCreatedEvent($test->getUri()));
+        $this->getServiceLocator()->get(EventManager::SERVICE_ID)->trigger(new TestCreatedEvent($test->getUri()));
 
         return $test;
     }
@@ -346,7 +347,7 @@ class taoTests_models_classes_TestsService extends OntologyClassService
      * @throws MissingTestmodelException::
      */
     public function getTestModel(core_kernel_classes_Resource $test) {
-        $testModel = $test->getOnePropertyValue($this->getPropertyByUri(self::PROPERTY_TEST_TESTMODEL));
+        $testModel = $test->getOnePropertyValue($this->getProperty(self::PROPERTY_TEST_TESTMODEL));
 
         if (is_null($testModel)) {
             throw new MissingTestmodelException('Undefined testmodel for test '.$test->getUri());
@@ -363,14 +364,14 @@ class taoTests_models_classes_TestsService extends OntologyClassService
      */
     public function getTestModelImplementation(core_kernel_classes_Resource $testModel)
     {
-        $serviceId = (string)$testModel->getOnePropertyValue($this->getPropertyByUri(self::PROPERTY_TEST_MODEL_IMPLEMENTATION));
+        $serviceId = (string)$testModel->getOnePropertyValue($this->getProperty(self::PROPERTY_TEST_MODEL_IMPLEMENTATION));
 
         if (empty($serviceId)) {
             throw new common_exception_NoImplementation('No implementation found for testmodel '.$testModel->getUri());
         }
 
         try {
-            $testModelService = $this->getServiceManager()->get($serviceId);
+            $testModelService = $this->getServiceLocator()->get($serviceId);
         } catch(\oat\oatbox\service\ServiceNotFoundException $e) {
             if(!class_exists($serviceId)){
                 throw new common_exception_Error('Test model service '.$serviceId.' not found');
@@ -387,11 +388,6 @@ class taoTests_models_classes_TestsService extends OntologyClassService
         return $testModelService;
     }
 
-    public function getPropertyByUri(string $uri)
-    {
-        return new core_kernel_classes_Property($uri);
-    }
-
     /**
      * Get serializer to persist filesystem object
      *
@@ -399,6 +395,6 @@ class taoTests_models_classes_TestsService extends OntologyClassService
      */
     protected function getFileReferenceSerializer()
     {
-        return $this->getServiceManager()->get(FileReferenceSerializer::SERVICE_ID);
+        return $this->getServiceLocator()->get(FileReferenceSerializer::SERVICE_ID);
     }
 }
