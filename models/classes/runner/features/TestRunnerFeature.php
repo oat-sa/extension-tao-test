@@ -127,9 +127,6 @@ abstract class TestRunnerFeature implements TestRunnerFeatureInterface, LoggerAw
             if (! in_array($id, $allPluginIds)) {
                 $this->logWarning('Invalid plugin Id ' . $id . ' for test runner feature ' . $this->id);
             }
-            if (in_array($id, $inactivePluginsIds)) {
-                $this->logWarning('Cannot include inactive plugin ' . $id . ' in test runner feature ' . $this->id);
-            }
         }
     }
 
