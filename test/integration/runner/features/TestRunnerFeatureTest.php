@@ -145,25 +145,6 @@ class TestRunnerFeatureTest extends TestCase
         $this->assertTrue($testLogger->has(LogLevel::WARNING, 'Invalid plugin Id iDontExist for test runner feature myId'));
     }
 
-    public function testConstructPluginsInactive()
-    {
-        $feature = new TestFeature(
-            'myId',
-            ['inactive'],
-            true,
-            $this->getTestPluginService()->getAllPlugins()
-        );
-
-        $testLogger = new TestLogger();
-        $serviceLocatorMock = $this->getServiceLocatorMock([
-            LoggerService::SERVICE_ID => $testLogger
-        ]);
-        $feature->setServiceLocator($serviceLocatorMock);
-
-        $feature->getPluginsIds();
-        $this->assertTrue($testLogger->has(LogLevel::WARNING, 'Cannot include inactive plugin inactive in test runner feature myId'));
-    }
-
     /**
      * @expectedException common_exception_InconsistentData
      */
