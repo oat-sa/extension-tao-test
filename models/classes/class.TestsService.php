@@ -401,4 +401,13 @@ class taoTests_models_classes_TestsService extends OntologyClassService
     {
         return $this->getServiceManager()->get(FileReferenceSerializer::SERVICE_ID);
     }
+
+    /**
+     * @param core_kernel_classes_Resource $test
+     * @return bool
+     */
+    public function hasItems(core_kernel_classes_Resource $test)
+    {
+        return !empty($this->getTestItems($test));
+    }
 }
