@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -16,6 +17,7 @@
  *
  * Copyright (c) 2016 (original work) Open Assessment Technologies SA ;
  */
+
 /**
  * @author Jean-Sébastien Conan <jean-sebastien.conan@vesperiagroup.com>
  */
@@ -26,7 +28,7 @@ namespace oat\taoTests\models\runner\time;
  * Interface ExtraTime
  *
  * Describes the API needed to manage extra time added to a timer.
- * 
+ *
  * @package oat\taoTests\models\runner\time
  */
 interface ExtraTime
@@ -45,7 +47,7 @@ interface ExtraTime
     public function setExtraTime($time);
 
     /**
-     * Gets the amount of already consumed extra time. If tags are provided, only take care of the related time. 
+     * Gets the amount of already consumed extra time. If tags are provided, only take care of the related time.
      * @param string|array $tags A tag or a list of tags to filter
      * @return float
      */

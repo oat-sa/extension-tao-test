@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -35,10 +36,11 @@ class TestPackTest extends TestCase
     /**
      * Test creating an TestPack
      */
-    public function testConstructor(){
+    public function testConstructor()
+    {
         $type = 'qti';
-        $data = array('foo' => 'bar');
-        $items= array();
+        $data = ['foo' => 'bar'];
+        $items = [];
 
         $pack = new TestPack($type, $data, $items);
         $this->assertInstanceOf(TestPack::class, $pack);
@@ -51,37 +53,41 @@ class TestPackTest extends TestCase
     /**
      * Test the constructor with an empty type
      */
-    public function testWrongTypeConstructor(){
+    public function testWrongTypeConstructor()
+    {
         $this->expectException(InvalidArgumentException::class);
 
-        new TestPack(null, array(), array());
+        new TestPack(null, [], []);
     }
 
     /**
      * Test the constructor with invalid data
      */
-    public function testWrongDataConstructor(){
+    public function testWrongDataConstructor()
+    {
         $this->expectException(InvalidArgumentException::class);
 
-        new TestPack('qti', '{"foo":"bar"}', array());
+        new TestPack('qti', '{"foo":"bar"}', []);
     }
 
     /**
      * Test the constructor with invalid data
      */
-    public function testWrongItemsConstructor(){
+    public function testWrongItemsConstructor()
+    {
         $this->expectException(InvalidArgumentException::class);
 
-        new TestPack('qti', array(), 'foo');
+        new TestPack('qti', [], 'foo');
     }
 
     /**
      * Provides data to test the bundle
      * @return array() the data
      */
-    public function jsonSerializableProvider(){
+    public function jsonSerializableProvider()
+    {
 
-        $data = array();
+        $data = [];
 
 
 
@@ -91,15 +97,15 @@ class TestPackTest extends TestCase
     /**
      * Test the testPack serializaion
      */
-    public function testSerialization(){
+    public function testSerialization()
+    {
 
-       $testPack = new TestPack('qti', array('foo' => 'bar'), array('foo', 'bar'));
+        $testPack = new TestPack('qti', ['foo' => 'bar'], ['foo', 'bar']);
 
-       $expected = '{"type":"qti","data":{"foo":"bar"},"items":["foo","bar"]}';
+        $expected = '{"type":"qti","data":{"foo":"bar"},"items":["foo","bar"]}';
 
-       $this->assertInstanceOf(TestPack::class, $testPack);
-       $this->assertTrue(is_string($expected));
-       $this->assertEquals($expected, json_encode($testPack));
+        $this->assertInstanceOf(TestPack::class, $testPack);
+        $this->assertTrue(is_string($expected));
+        $this->assertEquals($expected, json_encode($testPack));
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -17,13 +18,15 @@
  * Copyright (c) 2015 (original work) Open Assessment Technologies SA;
  *
  */
+
 namespace oat\taoTests\models\event;
 
 use oat\oatbox\event\Event;
+
 /**
  * Event fired whenever the state of a test session changes
  * in the context of a delivery execution
- * 
+ *
  * @author Joel Bout <joel@taotesting.com>
  */
 abstract class TestChangedEvent implements Event
@@ -41,7 +44,7 @@ abstract class TestChangedEvent implements Event
     
     /**
      * Returns the service call id of the test session
-     * 
+     *
      * @return string
      */
     abstract public function getServiceCallId();
@@ -49,9 +52,8 @@ abstract class TestChangedEvent implements Event
     /**
      * Returns a human readable description
      * of the test session in progress
-     * 
+     *
      * @return string
      */
     abstract public function getNewStateDescription();
-    
 }

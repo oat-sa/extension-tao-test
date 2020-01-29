@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -17,6 +18,7 @@
  * Copyright (c) 2016 (original work) Open Assessment Technologies SA
  *
  */
+
 namespace oat\taoTests\models\event;
 
 use JsonSerializable;
@@ -29,7 +31,7 @@ use oat\oatbox\event\Event;
 class TestExecutionPausedEvent implements Event, JsonSerializable
 {
 
-    /** 
+    /**
      * @var  string
      */
     protected $testExecutionId;
@@ -44,7 +46,7 @@ class TestExecutionPausedEvent implements Event, JsonSerializable
     
     /**
      * Get the unique identifier of the Test Execution being paused.
-     * 
+     *
      * @return string
      */
     public function getTestExecutionId()
@@ -55,7 +57,7 @@ class TestExecutionPausedEvent implements Event, JsonSerializable
 
     /**
      * Return a unique name for this event.
-     * 
+     *
      * @see \oat\oatbox\event\Event::getName()
      */
     public function getName()
@@ -65,7 +67,7 @@ class TestExecutionPausedEvent implements Event, JsonSerializable
 
     /**
      * Specify data which should be serialized to JSON.
-     * 
+     *
      * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
      * @return mixed data which can be serialized by <b>json_encode</b>,
      * which is a value of any type other than a resource.

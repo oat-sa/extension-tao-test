@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -17,6 +18,7 @@
  * Copyright (c) 2016 (original work) Open Assessment Technologies SA;
  *
  */
+
 namespace oat\taoTests\test\unit\runner\plugins;
 
 use oat\generis\test\TestCase;
@@ -136,5 +138,4 @@ class TestPluginServiceTest extends TestCase
 
         $this->assertTrue($plugin->isActive());
     }
-
 }
