@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -35,31 +36,30 @@ use oat\tao\model\asset\AssetService;
 
 class Updater extends \common_ext_ExtensionUpdater
 {
-	/**
+    /**
      *
      * @param string $initialVersion
      * @return string $versionUpdatedTo
      */
     public function update($initialVersion)
     {
-        if ($this->isBetween('0', '2.7')){
+        if ($this->isBetween('0', '2.7')) {
             $this->setVersion('2.7');
         }
 
-		// remove active prop
-		if ($this->isVersion('2.7')){
-		    $deprecatedProperty = new \core_kernel_classes_Property('http://www.tao.lu/Ontologies/TAOTest.rdf#active');
-		    $iterator = new \core_kernel_classes_ResourceIterator(array(\taoTests_models_classes_TestsService::singleton()->getRootClass()));
-		    foreach ($iterator as $resource) {
-		        $resource->removePropertyValues($deprecatedProperty);
-		    }
-		    $this->setVersion('2.7.1');
-		}
+        // remove active prop
+        if ($this->isVersion('2.7')) {
+            $deprecatedProperty = new \core_kernel_classes_Property('http://www.tao.lu/Ontologies/TAOTest.rdf#active');
+            $iterator = new \core_kernel_classes_ResourceIterator([\taoTests_models_classes_TestsService::singleton()->getRootClass()]);
+            foreach ($iterator as $resource) {
+                $resource->removePropertyValues($deprecatedProperty);
+            }
+            $this->setVersion('2.7.1');
+        }
 
         $this->skip('2.7.1', '2.23.0');
 
-        if ($this->isVersion('2.23.0')){
-
+        if ($this->isVersion('2.23.0')) {
             //register test plugin service
             $registerService = new RegisterTestPluginService();
             $registerService->setServiceLocator($this->getServiceManager());
@@ -70,8 +70,7 @@ class Updater extends \common_ext_ExtensionUpdater
 
         $this->skip('3.0.0', '3.4.1');
 
-        if ($this->isVersion('3.4.1')){
-
+        if ($this->isVersion('3.4.1')) {
             //register test runner feature service
             //$registerService = new RegisterTestRunnerFeatureService();
             //$registerService([]);
@@ -96,8 +95,7 @@ class Updater extends \common_ext_ExtensionUpdater
 
         $this->skip('6.0.1', '6.10.0');
 
-        if ($this->isVersion('6.10.0')){
-
+        if ($this->isVersion('6.10.0')) {
             //register test plugin service
             $serviceManager = $this->getServiceManager();
             $testProviderService = new TestProviderService();
@@ -109,7 +107,7 @@ class Updater extends \common_ext_ExtensionUpdater
         $this->skip('6.11.0', '7.3.0');
 
         if ($this->isVersion('7.3.0')) {
-            AclProxy::applyRule(new AccessRule('grant', TaoRoles::REST_PUBLISHER, array('ext'=>'taoTests', 'mod' => 'RestTests')));
+            AclProxy::applyRule(new AccessRule('grant', TaoRoles::REST_PUBLISHER, ['ext' => 'taoTests', 'mod' => 'RestTests']));
             $this->setVersion('7.4.0');
         }
 

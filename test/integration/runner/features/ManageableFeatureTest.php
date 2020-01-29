@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -111,7 +112,7 @@ class ManageableFeatureTest extends GenerisPhpUnitTestRunner
         $feature = new ManageableFeature($this->defaultData);
         $feature->setServiceLocator($serviceLocatorMock);
         $code = $feature->__toPhpCode();
-        eval('$unserializedFeature ='.$code.';');
+        eval('$unserializedFeature =' . $code . ';');
         $unserializedFeature->setServiceLocator($serviceLocatorMock);
         $this->assertEquals($feature, $unserializedFeature);
     }

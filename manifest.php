@@ -24,60 +24,60 @@
  * @license GPLv2  http://www.opensource.org/licenses/gpl-2.0.php
  *
  */
-$extpath = __DIR__.DIRECTORY_SEPARATOR;
+$extpath = __DIR__ . DIRECTORY_SEPARATOR;
 
-return array(
+return [
     'name' => 'taoTests',
     'label' => 'Test core extension',
     'description' => 'TAO Tests extension contains the abstraction of the test-runners, but requires an implementation in order to be able to run tests',
     'license' => 'GPL-2.0',
     'version' => '13.4.3',
     'author' => 'Open Assessment Technologies, CRP Henri Tudor',
-    'requires' => array(
+    'requires' => [
         'generis' => '>=7.1.0',
         'taoItems' => '>=6.0.0',
         'taoBackOffice' => '>=3.0.0',
         'tao' => '>=38.5.0'
-    ),
-    'models' => array(
+    ],
+    'models' => [
         'http://www.tao.lu/Ontologies/TAOTest.rdf',
-    ),
-	'install' => array(
-		'rdf' => array(
-            __DIR__. '/models/ontology/taotest.rdf'
-		),
+    ],
+    'install' => [
+        'rdf' => [
+            __DIR__ . '/models/ontology/taotest.rdf'
+        ],
             'php' => [
                 'oat\\taoTests\\scripts\\install\\RegisterTestPluginService',
                 'oat\\taoTests\\scripts\\install\\RegisterTestProviderService',
                 'oat\\taoTests\\scripts\\install\\RegisterFrontendPaths'
             ]
-	),
-	'update' => "oat\\taoTests\\scripts\\update\\Updater",
-	'managementRole' => 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole',
-    'acl' => array(
-        array('grant', 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole', array('ext'=>'taoTests')),
-        array('grant', \oat\tao\model\user\TaoRoles::REST_PUBLISHER, array('ext'=>'taoTests', 'mod' => 'RestTests')),
-    ),
-	'optimizableClasses' => array(
-		'http://www.tao.lu/Ontologies/TAOTest.rdf#Test'
-	),
-	'constants' => array(
-		# actions directory
-		"DIR_ACTIONS"			=> $extpath."actions".DIRECTORY_SEPARATOR,
+    ],
+    'update' => "oat\\taoTests\\scripts\\update\\Updater",
+    'managementRole' => 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole',
+    'acl' => [
+        ['grant', 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole', ['ext' => 'taoTests']],
+        ['grant', \oat\tao\model\user\TaoRoles::REST_PUBLISHER, ['ext' => 'taoTests', 'mod' => 'RestTests']],
+    ],
+    'optimizableClasses' => [
+        'http://www.tao.lu/Ontologies/TAOTest.rdf#Test'
+    ],
+    'constants' => [
+        # actions directory
+        "DIR_ACTIONS"           => $extpath . "actions" . DIRECTORY_SEPARATOR,
 
-		# views directory
-		"DIR_VIEWS"				=> $extpath."views".DIRECTORY_SEPARATOR,
+        # views directory
+        "DIR_VIEWS"             => $extpath . "views" . DIRECTORY_SEPARATOR,
 
-		# default module name
-		'DEFAULT_MODULE_NAME'	=> 'Tests',
+        # default module name
+        'DEFAULT_MODULE_NAME'   => 'Tests',
 
-		#default action name
-		'DEFAULT_ACTION_NAME'	=> 'index',
+        #default action name
+        'DEFAULT_ACTION_NAME'   => 'index',
 
-		#BASE PATH: the root path in the file system (usually the document root)
-		'BASE_PATH'				=> $extpath,
+        #BASE PATH: the root path in the file system (usually the document root)
+        'BASE_PATH'             => $extpath,
 
-		#BASE URL (usually the domain root)
-		'BASE_URL'				=> ROOT_URL	.'taoTests/',
-	)
-);
+        #BASE URL (usually the domain root)
+        'BASE_URL'              => ROOT_URL . 'taoTests/',
+    ]
+];

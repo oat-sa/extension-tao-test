@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -75,21 +76,21 @@ abstract class TestRunnerFeature implements TestRunnerFeatureInterface, LoggerAw
         $pluginsIds,
         $isEnabledByDefault,
         $allPlugins,
-        $active = true)
-    {
-        if(! is_string($id) || empty($id)) {
+        $active = true
+    ) {
+        if (! is_string($id) || empty($id)) {
             throw new \common_exception_InconsistentData('id should be a valid string');
         }
 
-        if(! is_array($pluginsIds) || empty($pluginsIds) || ! is_string($pluginsIds[0])) {
+        if (! is_array($pluginsIds) || empty($pluginsIds) || ! is_string($pluginsIds[0])) {
             throw new \common_exception_InconsistentData('pluginsIds should be a array of strings');
         }
 
-        if(! is_bool($isEnabledByDefault)) {
+        if (! is_bool($isEnabledByDefault)) {
             throw new \common_exception_InconsistentData('isEnabledByDefault should be a boolean');
         }
 
-        if(! is_array($allPlugins) || empty($allPlugins) || ! current($allPlugins) instanceof TestPlugin) {
+        if (! is_array($allPlugins) || empty($allPlugins) || ! current($allPlugins) instanceof TestPlugin) {
             throw new \common_exception_InconsistentData('allPlugins should be an array of TestPlugin');
         }
 
@@ -100,11 +101,11 @@ abstract class TestRunnerFeature implements TestRunnerFeatureInterface, LoggerAw
         $this->active = $active;
 
         // also check that abstract methods have been implemented correctly
-        if(! is_string($this->getLabel()) || empty($this->getLabel())) {
+        if (! is_string($this->getLabel()) || empty($this->getLabel())) {
             throw new \common_exception_InconsistentData('The test runner feature needs a label');
         }
 
-        if(! is_string($this->getDescription()) || empty($this->getDescription())) {
+        if (! is_string($this->getDescription()) || empty($this->getDescription())) {
             throw new \common_exception_InconsistentData('The test runner feature needs a description');
         }
     }
@@ -113,7 +114,8 @@ abstract class TestRunnerFeature implements TestRunnerFeatureInterface, LoggerAw
      * Check that the content of $pluginsIds matches existing and active plugin Ids
      * @throws \common_exception_InconsistentData
      */
-    private function checkPluginsIds() {
+    private function checkPluginsIds()
+    {
         $allPluginIds = [];
         $inactivePluginsIds = [];
 
@@ -187,6 +189,6 @@ abstract class TestRunnerFeature implements TestRunnerFeatureInterface, LoggerAw
      */
     public function __toPhpCode()
     {
-        return 'new '.get_class($this).'()';
+        return 'new ' . get_class($this) . '()';
     }
 }

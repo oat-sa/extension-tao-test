@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -27,7 +28,6 @@ use oat\taoTests\models\pack\Packer;
 use oat\taoTests\models\pack\Packable;
 use oat\taoTests\models\pack\TestPack;
 
-
 /**
  * Test the class {@link TestPack}
  *
@@ -45,7 +45,8 @@ class PackerTest extends GenerisPhpUnitTestRunner
     /**
      * Test creating an TestPack
      */
-    public function testConstructor(){
+    public function testConstructor()
+    {
         $test = new core_kernel_classes_Resource('toto');
         $packer = new Packer($test);
         $this->assertInstanceOf(Packer::class, $packer);
@@ -54,7 +55,8 @@ class PackerTest extends GenerisPhpUnitTestRunner
     /**
      * Test assigning assets to a pack
      */
-    public function testPack(){
+    public function testPack()
+    {
         $test = new core_kernel_classes_Resource('foo');
         $model = new core_kernel_classes_Resource('fooModel');
 
@@ -98,8 +100,7 @@ class PackerTest extends GenerisPhpUnitTestRunner
         $result = $packer->pack();
         $this->assertInstanceOf(TestPack::class, $result);
         $this->assertEquals('qti', $result->getType());
-        $this->assertEquals(array('uri' => $test->getUri()), $result->getData());
-
+        $this->assertEquals(['uri' => $test->getUri()], $result->getData());
     }
 
     /**
@@ -107,7 +108,8 @@ class PackerTest extends GenerisPhpUnitTestRunner
      *
      * @expectedException \common_Exception
      */
-    public function testNoTestModel(){
+    public function testNoTestModel()
+    {
         $test = new core_kernel_classes_Resource('foo');
 
         $serviceMock = $this
@@ -138,7 +140,8 @@ class PackerTest extends GenerisPhpUnitTestRunner
      *
      * @expectedException \common_Exception
      */
-    public function testNoModelImplementation(){
+    public function testNoModelImplementation()
+    {
         $test = new core_kernel_classes_Resource('foo');
         $model = new core_kernel_classes_Resource('fooModel');
 
@@ -175,7 +178,8 @@ class PackerTest extends GenerisPhpUnitTestRunner
      *
      * @expectedException \common_Exception
      */
-    public function testNoPackerClass(){
+    public function testNoPackerClass()
+    {
 
         $test = new core_kernel_classes_Resource('foo');
 
@@ -220,7 +224,8 @@ class PackerTest extends GenerisPhpUnitTestRunner
      *
      * @expectedException \common_Exception
      */
-    public function testWrongPackerClass(){
+    public function testWrongPackerClass()
+    {
 
         $test = new core_kernel_classes_Resource('foo');
 
@@ -261,9 +266,10 @@ class PackerTest extends GenerisPhpUnitTestRunner
 }
 
 //use an old school mock as the Packer create it's own instance from the class
-class PackerMock implements Packable{
+class PackerMock implements Packable
+{
     public function packTest(core_kernel_classes_Resource $test)
     {
-        return new TestPack('qti', array('uri' => $test->getUri()), array());
+        return new TestPack('qti', ['uri' => $test->getUri()], []);
     }
 }

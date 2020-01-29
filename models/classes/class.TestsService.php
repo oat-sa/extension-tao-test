@@ -1,23 +1,24 @@
 <?php
-/*  
+
+/*
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; under version 2
  * of the License (non-upgradable).
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * 
+ *
  * Copyright (c) 2002-2008 (original work) Public Research Centre Henri Tudor & University of Luxembourg (under the project TAO & TAO2);
  *               2008-2010 (update and modification) Deutsche Institut für Internationale Pädagogische Forschung (under the project TAO-TRANSFER);
  *               2009-2012 (update and modification) Public Research Centre Henri Tudor (under the project TAO-SUSTAIN & TAO-DEV);
- * 
+ *
  */
 use oat\generis\model\OntologyRdf;
 use oat\tao\model\TaoOntology;
@@ -36,14 +37,14 @@ use oat\tao\model\OntologyClassService;
  * @access public
  * @author Joel Bout, <joel.bout@tudor.lu>
  * @package taoTests
-     
+
  */
 class taoTests_models_classes_TestsService extends OntologyClassService
 {
 
-    const CLASS_TEST_MODEL ='http://www.tao.lu/Ontologies/TAOTest.rdf#TestModel';
+    const CLASS_TEST_MODEL = 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestModel';
 
-    const PROPERTY_TEST_MODEL_IMPLEMENTATION ='http://www.tao.lu/Ontologies/TAOTest.rdf#TestModelImplementation';
+    const PROPERTY_TEST_MODEL_IMPLEMENTATION = 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestModelImplementation';
 
     const PROPERTY_TEST_TESTMODEL = 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestTestModel';
 
@@ -60,10 +61,10 @@ class taoTests_models_classes_TestsService extends OntologyClassService
      * @param  core_kernel_classes_Resource $test
      * @return boolean
      */
-    public function deleteTest( core_kernel_classes_Resource $test)
+    public function deleteTest(core_kernel_classes_Resource $test)
     {
         $returnValue = (bool) false;
-        if(!is_null($test)){
+        if (!is_null($test)) {
             try {
                 //delete the associated content
                 $model = $this->getTestModel($test);
@@ -103,16 +104,15 @@ class taoTests_models_classes_TestsService extends OntologyClassService
      * @param  Class clazz
      * @return boolean
      */
-    public function isTestClass( core_kernel_classes_Class $clazz)
+    public function isTestClass(core_kernel_classes_Class $clazz)
     {
         $returnValue = (bool) false;
 
-        if($clazz->getUri() == $this->getClass(TaoOntology::CLASS_URI_TEST)->getUri()){
+        if ($clazz->getUri() == $this->getClass(TaoOntology::CLASS_URI_TEST)->getUri()) {
                 $returnValue = true;
-        }
-        else{
-            foreach($this->getClass(TaoOntology::CLASS_URI_TEST)->getSubClasses(true) as $subclass){
-                if($clazz->getUri() == $subclass->getUri()){
+        } else {
+            foreach ($this->getClass(TaoOntology::CLASS_URI_TEST)->getSubClasses(true) as $subclass) {
+                if ($clazz->getUri() == $subclass->getUri()) {
                     $returnValue = true;
                     break;
                 }
@@ -131,12 +131,12 @@ class taoTests_models_classes_TestsService extends OntologyClassService
      * @param  Class clazz
      * @return boolean
      */
-    public function deleteTestClass( core_kernel_classes_Class $clazz)
+    public function deleteTestClass(core_kernel_classes_Class $clazz)
     {
         $returnValue = (bool) false;
             
-        if(!is_null($clazz)){
-            if($this->isTestClass($clazz) && $clazz->getUri() != $this->getClass(TaoOntology::CLASS_URI_TEST)->getUri()){
+        if (!is_null($clazz)) {
+            if ($this->isTestClass($clazz) && $clazz->getUri() != $this->getClass(TaoOntology::CLASS_URI_TEST)->getUri()) {
                 $returnValue = $clazz->delete();
             }
         }
@@ -153,10 +153,10 @@ class taoTests_models_classes_TestsService extends OntologyClassService
      */
     public function getAllItems()
     {
-        $returnValue = array();
+        $returnValue = [];
 
         $itemClazz = $this->getClass(TaoOntology::CLASS_URI_ITEM);
-        foreach($itemClazz->getInstances(true) as $instance){
+        foreach ($itemClazz->getInstances(true) as $instance) {
             $returnValue[$instance->getUri()] = $instance->getLabel();
         }
 
@@ -173,9 +173,9 @@ class taoTests_models_classes_TestsService extends OntologyClassService
      * @return boolean
      * @deprecated
      */
-    public function onChangeTestLabel( core_kernel_classes_Resource $test = null)
+    public function onChangeTestLabel(core_kernel_classes_Resource $test = null)
     {
-        common_Logger::w('Call to deprecated '.__FUNCTION__);
+        common_Logger::w('Call to deprecated ' . __FUNCTION__);
         return false;
     }
 
@@ -188,7 +188,7 @@ class taoTests_models_classes_TestsService extends OntologyClassService
      * @param  core_kernel_classes_Class $clazz
      * @return core_kernel_classes_Resource
      */
-    public function cloneInstance( core_kernel_classes_Resource $instance,  core_kernel_classes_Class $clazz = null)
+    public function cloneInstance(core_kernel_classes_Resource $instance, core_kernel_classes_Class $clazz = null)
     {
         $returnValue = null;
 
@@ -197,25 +197,25 @@ class taoTests_models_classes_TestsService extends OntologyClassService
         $cloneLabel = "$label bis";
         $clone = parent::createInstance($clazz, $cloneLabel);
 
-        if(!is_null($clone)){
-            $noCloningProperties = array(
+        if (!is_null($clone)) {
+            $noCloningProperties = [
                 self::PROPERTY_TEST_CONTENT,
                 OntologyRdf::RDF_TYPE
-            );
+            ];
 
-            foreach($clazz->getProperties(true) as $property){
-                if(!in_array($property->getUri(), $noCloningProperties)){
+            foreach ($clazz->getProperties(true) as $property) {
+                if (!in_array($property->getUri(), $noCloningProperties)) {
                     //allow clone of every property value but the deliverycontent, which is a process:
-                    foreach($instance->getPropertyValues($property) as $propertyValue){
+                    foreach ($instance->getPropertyValues($property) as $propertyValue) {
                         $clone->setPropertyValue($property, $propertyValue);
                     }
                 }
             }
             //Fix label
-            if(preg_match("/bis/", $label)) {
+            if (preg_match("/bis/", $label)) {
                 $cloneNumber = (int)preg_replace("/^(.?)*bis/", "", $label);
                 $cloneNumber++;
-                $cloneLabel = preg_replace("/bis(.?)*$/", "", $label)."bis $cloneNumber" ;
+                $cloneLabel = preg_replace("/bis(.?)*$/", "", $label) . "bis $cloneNumber" ;
             }
             $clone->setLabel($cloneLabel);
 
@@ -231,7 +231,7 @@ class taoTests_models_classes_TestsService extends OntologyClassService
     }
 
     /**
-     * 
+     *
      * @author Lionel Lecaque, lionel@taotesting.com
      * @param core_kernel_classes_Resource $test
      */
@@ -253,7 +253,7 @@ class taoTests_models_classes_TestsService extends OntologyClassService
      * @param  string $label
      * @return core_kernel_classes_Resource
      */
-    public function createInstance( core_kernel_classes_Class $clazz, $label = '')
+    public function createInstance(core_kernel_classes_Class $clazz, $label = '')
     {
         $test = parent::createInstance($clazz, $label);
         $this->setDefaultModel($test);
@@ -271,13 +271,13 @@ class taoTests_models_classes_TestsService extends OntologyClassService
      * @param  Resource test
      * @return array
      */
-    public function getTestItems( core_kernel_classes_Resource $test)
+    public function getTestItems(core_kernel_classes_Resource $test)
     {
         try {
             $model = $this->getTestModel($test);
             $returnValue = $this->getTestModelImplementation($model)->getItems($test);
         } catch (MissingTestmodelException $e) {
-            $returnValue = array();
+            $returnValue = [];
         }
         return (array) $returnValue;
     }
@@ -285,21 +285,22 @@ class taoTests_models_classes_TestsService extends OntologyClassService
     /**
      * Changes the model of the test, while trying
      * to carry over the items of the test
-     * 
+     *
      * @param core_kernel_classes_Resource $test
      * @param core_kernel_classes_Resource $testModel
      */
-    public function setTestModel(core_kernel_classes_Resource $test, core_kernel_classes_Resource $testModel) {
+    public function setTestModel(core_kernel_classes_Resource $test, core_kernel_classes_Resource $testModel)
+    {
         $current = $test->getOnePropertyValue($this->getProperty(self::PROPERTY_TEST_TESTMODEL));
         // did the model change?
         if (is_null($current) || !$current->equals($testModel)) {
-            $items = array();
+            $items = [];
             if (!is_null($current)) {
                 $former = $this->getTestModelImplementation($current);
                 if (!empty($former)) {
                     $items = $former->getItems($test);
                     $former->deleteContent($test);
-                }	
+                }
             }
             $test->editPropertyValues($this->getProperty(self::PROPERTY_TEST_TESTMODEL), $testModel);
             $newImpl = $this->getTestModelImplementation($testModel);
@@ -315,7 +316,8 @@ class taoTests_models_classes_TestsService extends OntologyClassService
      * @param ServiceFileStorage $storage
      * @return tao_models_classes_Compiler
      */
-    public function getCompiler(core_kernel_classes_Resource $test, ServiceFileStorage $storage) {
+    public function getCompiler(core_kernel_classes_Resource $test, ServiceFileStorage $storage)
+    {
         $testModel = $this->getTestModelImplementation($this->getTestModel($test));
         if ($testModel instanceof TestModel) {
             $compiler = $testModel->getCompiler($test, $storage);
@@ -333,23 +335,25 @@ class taoTests_models_classes_TestsService extends OntologyClassService
      * @return string
      * @deprecated
      */
-    public function getCompilerClass(core_kernel_classes_Resource $test) {
+    public function getCompilerClass(core_kernel_classes_Resource $test)
+    {
         $testModel = $this->getTestModel($test);
         return $this->getTestModelImplementation($testModel)->getCompilerClass();
     }
 
     /**
      * Returns the model of the current test
-     * 
+     *
      * @param core_kernel_classes_Resource $test
      * @return core_kernel_classes_Resource
      * @throws MissingTestmodelException::
      */
-    public function getTestModel(core_kernel_classes_Resource $test) {
+    public function getTestModel(core_kernel_classes_Resource $test)
+    {
         $testModel = $test->getOnePropertyValue($this->getPropertyByUri(self::PROPERTY_TEST_TESTMODEL));
 
         if (is_null($testModel)) {
-            throw new MissingTestmodelException('Undefined testmodel for test '.$test->getUri());
+            throw new MissingTestmodelException('Undefined testmodel for test ' . $test->getUri());
         }
 
         return $testModel;
@@ -357,7 +361,7 @@ class taoTests_models_classes_TestsService extends OntologyClassService
 
     /**
      * Returns the implementation of an items test model
-     * 
+     *
      * @param core_kernel_classes_Resource $test
      * @return taoTests_models_classes_TestModel
      */
@@ -366,22 +370,22 @@ class taoTests_models_classes_TestsService extends OntologyClassService
         $serviceId = (string)$testModel->getOnePropertyValue($this->getPropertyByUri(self::PROPERTY_TEST_MODEL_IMPLEMENTATION));
 
         if (empty($serviceId)) {
-            throw new common_exception_NoImplementation('No implementation found for testmodel '.$testModel->getUri());
+            throw new common_exception_NoImplementation('No implementation found for testmodel ' . $testModel->getUri());
         }
 
         try {
             $testModelService = $this->getServiceManager()->get($serviceId);
-        } catch(\oat\oatbox\service\ServiceNotFoundException $e) {
-            if(!class_exists($serviceId)){
-                throw new common_exception_Error('Test model service '.$serviceId.' not found');
+        } catch (\oat\oatbox\service\ServiceNotFoundException $e) {
+            if (!class_exists($serviceId)) {
+                throw new common_exception_Error('Test model service ' . $serviceId . ' not found');
             }
             // for backward compatibility support classname instead of a serviceid
-            common_Logger::w('Outdated model definition "'.$serviceId.'", please use test model service');
+            common_Logger::w('Outdated model definition "' . $serviceId . '", please use test model service');
             $testModelService = new $serviceId();
         }
 
         if (!$testModelService instanceof \taoTests_models_classes_TestModel) {
-            throw new common_exception_Error('Test model service '.get_class($testModelService).' not compatible for test model '.$testModel->getUri());
+            throw new common_exception_Error('Test model service ' . get_class($testModelService) . ' not compatible for test model ' . $testModel->getUri());
         }
 
         return $testModelService;

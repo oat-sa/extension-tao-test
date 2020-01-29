@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -19,6 +20,7 @@
  *               2013- (update and modification) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  */
+
 use oat\taoTests\models\pack\Packable;
 
 /**
@@ -39,14 +41,14 @@ interface taoTests_models_classes_TestModel
      * @param core_kernel_classes_Resource $test
      * @param array $items an array of item resources
      */
-    public function prepareContent( core_kernel_classes_Resource $test, $items = array());
+    public function prepareContent(core_kernel_classes_Resource $test, $items = []);
 
     /**
      * Delete the content of the test
      *
      * @param Resource $test
      */
-    public function deleteContent( core_kernel_classes_Resource $test);
+    public function deleteContent(core_kernel_classes_Resource $test);
 
     /**
      * Returns all the items potenially used within the test
@@ -54,7 +56,7 @@ interface taoTests_models_classes_TestModel
      * @param Resource $test
      * @return array an array of item resources
      */
-    public function getItems( core_kernel_classes_Resource $test);
+    public function getItems(core_kernel_classes_Resource $test);
 
     /**
      * returns the test authoring url
@@ -62,7 +64,7 @@ interface taoTests_models_classes_TestModel
      * @param core_kernel_classes_Resource $test the test instance
      * @return string the authoring url
      */
-    public function getAuthoringUrl( core_kernel_classes_Resource $test);
+    public function getAuthoringUrl(core_kernel_classes_Resource $test);
 
     /**
      * Clones the content of one test to another test,
@@ -73,7 +75,7 @@ interface taoTests_models_classes_TestModel
      * @param core_kernel_classes_Resource $source
      * @param core_kernel_classes_Resource $destination
      */
-    public function cloneContent( core_kernel_classes_Resource $source, core_kernel_classes_Resource $destination);
+    public function cloneContent(core_kernel_classes_Resource $source, core_kernel_classes_Resource $destination);
 
     /**
      * Returns the compiler class of the test
@@ -82,13 +84,13 @@ interface taoTests_models_classes_TestModel
      */
     public function getCompilerClass();
 
-	/**
-	 * Return the Packable implementation for the given test model.
+    /**
+     * Return the Packable implementation for the given test model.
      * Packing is an alternative to Compilation. A Packer generates the
      * data needed to run a test where the compiler creates a stand alone
      * test.
-	 *
-	 * @return Packable the packer class to instantiate
-	 */
+     *
+     * @return Packable the packer class to instantiate
+     */
     public function getPackerClass();
 }
