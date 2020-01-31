@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -17,6 +18,7 @@
  * Copyright (c) 2016 (original work) Open Assessment Technologies SA;
  *
  */
+
 namespace oat\taoTests\test\integration\runner\features;
 
 use common_exception_InconsistentData;
@@ -86,7 +88,8 @@ class TestRunnerFeatureTest extends TestCase
     /**
      *
      */
-    public function provideBadConstructorParameters() {
+    public function provideBadConstructorParameters()
+    {
         return [
             // bad id
             [ '',     ['myPlugin'], true,   $this->getTestPluginService()->getAllPlugins() ],
@@ -117,7 +120,8 @@ class TestRunnerFeatureTest extends TestCase
      * @dataProvider provideBadConstructorParameters
      * @expectedException common_exception_InconsistentData
      */
-    public function testBadConstructorParameters($id, $pluginsIds, $isEnabledByDefault, $allPlugins) {
+    public function testBadConstructorParameters($id, $pluginsIds, $isEnabledByDefault, $allPlugins)
+    {
         new TestFeature(
             $id,
             $pluginsIds,
@@ -177,7 +181,8 @@ class TestRunnerFeatureTest extends TestCase
         'isEnabledByDefault' => false
     ];
 
-    public function getTestFeature() {
+    public function getTestFeature()
+    {
         return new TestFeature(
             self::$featureData['id'],
             self::$featureData['pluginsIds'],
@@ -190,14 +195,15 @@ class TestRunnerFeatureTest extends TestCase
     {
         $feature = $this->getTestFeature();
 
-        $this->assertEquals(self::$featureData['id'],                 $feature->getId());
-        $this->assertEquals(self::$featureData['pluginsIds'],         $feature->getPluginsIds());
+        $this->assertEquals(self::$featureData['id'], $feature->getId());
+        $this->assertEquals(self::$featureData['pluginsIds'], $feature->getPluginsIds());
         $this->assertEquals(self::$featureData['isEnabledByDefault'], $feature->isEnabledByDefault());
-        $this->assertEquals('testFeature',                            $feature->getLabel());
+        $this->assertEquals('testFeature', $feature->getLabel());
         $this->assertEquals('A simple feature used for unit testing', $feature->getDescription());
     }
 
-    public function testPhpSerialize() {
+    public function testPhpSerialize()
+    {
         $feature = $this->getTestFeature();
 
         $this->assertEquals(

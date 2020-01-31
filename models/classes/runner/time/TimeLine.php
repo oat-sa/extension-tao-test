@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -16,6 +17,7 @@
  *
  * Copyright (c) 2016 (original work) Open Assessment Technologies SA ;
  */
+
 /**
  * @author Jean-Sébastien Conan <jean-sebastien.conan@vesperiagroup.com>
  */
@@ -24,12 +26,12 @@ namespace oat\taoTests\models\runner\time;
 
 /**
  * Interface TimeLine
- * 
+ *
  * Describes the API needed to build and manage a time line.
  * A TimeLine is represented by a list of TimePoint.
  * These TimePoint represents the bounds of time ranges.
  * Each time range must be represented by two TimePoint: START and END.
- * 
+ *
  * @package oat\taoTests\models\runner\time
  */
 interface TimeLine

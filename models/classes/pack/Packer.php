@@ -54,7 +54,8 @@ class Packer
      * Create a packer for a test
      * @param core_kernel_classes_Resource $test
      */
-    public function __construct(core_kernel_classes_Resource $test){
+    public function __construct(core_kernel_classes_Resource $test)
+    {
         $this->test = $test;
         $this->testService = taoTests_models_classes_TestsService::singleton();
     }
@@ -65,23 +66,24 @@ class Packer
      * @return Packable the test packer implementation
      * @throws common_exception_NoImplementation
      */
-    private function getTestPacker(){
+    private function getTestPacker()
+    {
 
         //look at the item model
         $testModel = $this->testService->getTestModel($this->test);
-        if(is_null($testModel)){
-            throw new common_exception_NoImplementation('No test model for test '.$this->test->getUri());
+        if (is_null($testModel)) {
+            throw new common_exception_NoImplementation('No test model for test ' . $this->test->getUri());
         }
 
         //get the testModel implementation for this model
         $impl = $this->testService->getTestModelImplementation($testModel);
-        if(is_null($impl)){
-            throw new common_exception_NoImplementation('No implementation for model '.$testModel->getUri());
+        if (is_null($impl)) {
+            throw new common_exception_NoImplementation('No implementation for model ' . $testModel->getUri());
         }
 
         //then retrieve the packer class and instantiate it
         $packerClass = new ReflectionClass($impl->getPackerClass());
-        if(is_null($packerClass) || !$packerClass->implementsInterface('oat\taoTests\models\pack\Packable')){
+        if (is_null($packerClass) || !$packerClass->implementsInterface('oat\taoTests\models\pack\Packable')) {
             throw new common_exception_NoImplementation('The packer class seems to be not implemented');
         }
 
@@ -94,20 +96,19 @@ class Packer
      * @return TestPack of the test. It can be serialized directly.
      * @throws common_Exception
      */
-    public function pack(){
+    public function pack()
+    {
 
-        try{
+        try {
             //call the factory to get the itemPacker implementation
             $testPacker = $this->getTestPacker();
 
             //then create the pack
             $testPack = $testPacker->packTest($this->test);
-
-        } catch(Exception $e){
-            throw new common_Exception('The test '. $this->test->getUri() .' cannot be packed : ' . $e->getMessage());
+        } catch (Exception $e) {
+            throw new common_Exception('The test ' . $this->test->getUri() . ' cannot be packed : ' . $e->getMessage());
         }
 
         return $testPack;
     }
 }
-?>

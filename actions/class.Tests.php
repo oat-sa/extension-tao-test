@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -37,7 +38,8 @@ use tao_helpers_form_FormContainer as FormContainer;
  * @license GPLv2  http://www.opensource.org/licenses/gpl-2.0.php
  *
  */
-class taoTests_actions_Tests extends tao_actions_SaSModule {
+class taoTests_actions_Tests extends tao_actions_SaSModule
+{
 
     /**
      * @return EventManager
@@ -65,9 +67,9 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
         $this->defaultData();
     }
 
-/*
- * controller actions
- */
+    /*
+    * controller actions
+    */
 
 
     /**
@@ -130,13 +132,13 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
         }
     }
 
-   /**
-    * delete a test or a test class. called via ajax
-    *
-    * @throws Exception
-    * @throws common_exception_BadRequest
-    * @requiresRight id WRITE
-    */
+    /**
+     * delete a test or a test class. called via ajax
+     *
+     * @throws Exception
+     * @throws common_exception_BadRequest
+     * @requiresRight id WRITE
+     */
     public function delete()
     {
         try {
@@ -188,7 +190,7 @@ class taoTests_actions_Tests extends tao_actions_SaSModule {
             $testModel = $this->service->getTestModel($test);
             $testModelImpl = $this->service->getTestModelImplementation($testModel);
             $authoringUrl = $testModelImpl->getAuthoringUrl($test);
-            if(!empty($authoringUrl)){
+            if (!empty($authoringUrl)) {
                 $userId = common_session_SessionManager::getSession()->getUser()->getIdentifier();
                 LockManager::getImplementation()->setLock($test, $userId);
                 return $this->forwardUrl($authoringUrl);
