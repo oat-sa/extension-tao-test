@@ -19,7 +19,7 @@
     <rdfs:label xml:lang="en-US"><![CDATA[Test Content]]></rdfs:label>
     <rdfs:comment xml:lang="en-US"><![CDATA[Test Content]]></rdfs:comment>
     <rdfs:domain rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#Test"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/>
+    <rdfs:range rdf:resource="http://www.tao.lu/Ontologies/generis.rdf#File"/>
     <tao:TAOGUIOrder><![CDATA[20]]></tao:TAOGUIOrder>
   </rdf:Description>
   
