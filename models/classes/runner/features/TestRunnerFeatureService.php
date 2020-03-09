@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -17,6 +18,7 @@
  * Copyright (c) 2016 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  */
+
 namespace oat\taoTests\models\runner\features;
 
 use oat\oatbox\log\LoggerAwareTrait;
@@ -28,8 +30,8 @@ use Psr\Log\LoggerAwareInterface;
  *
  * @author Christophe Noël <christophe@taotesting.com>
  */
-class TestRunnerFeatureService extends ConfigurableService implements LoggerAwareInterface {
-
+class TestRunnerFeatureService extends ConfigurableService implements LoggerAwareInterface
+{
     use LoggerAwareTrait;
 
     const SERVICE_ID = 'taoTests/testRunnerFeature';
@@ -68,7 +70,8 @@ class TestRunnerFeatureService extends ConfigurableService implements LoggerAwar
      * @param string $featureId
      * @throws \common_exception_InconsistentData
      */
-    public function unregister($featureId) {
+    public function unregister($featureId)
+    {
         $registeredFeatures = $this->getOption(self::OPTION_AVAILABLE);
         if (is_array($registeredFeatures) && array_key_exists($featureId, $registeredFeatures)) {
             unset($registeredFeatures[$featureId]);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -17,6 +18,7 @@
  * Copyright (c) 2016 (original work) Open Assessment Technologies SA;
  *
  */
+
 namespace oat\taoTests\test\integration\runner\features;
 
 use common_exception_InconsistentData;
@@ -118,7 +120,8 @@ class TestRunnerFeatureServiceTest extends GenerisPhpUnitTestRunner
     /**
      * @expectedException common_exception_InconsistentData
      */
-    public function testCannotRegisterTwoFeaturesWithTheSameId() {
+    public function testCannotRegisterTwoFeaturesWithTheSameId()
+    {
         $feature1 = new TestFeature(
             'myId1',
             ['myPlugin'],
@@ -136,7 +139,8 @@ class TestRunnerFeatureServiceTest extends GenerisPhpUnitTestRunner
         $testRunnerFeatureService->register($feature2);
     }
 
-    public function testUnregisterFeature() {
+    public function testUnregisterFeature()
+    {
         // first we register 2 features
         $feature1 = new TestFeature(
             'myId1',
@@ -176,7 +180,8 @@ class TestRunnerFeatureServiceTest extends GenerisPhpUnitTestRunner
         $this->assertEquals(0, count($registeredFeatures));
     }
 
-    public function testUnregisterBadId() {
+    public function testUnregisterBadId()
+    {
         $testLogger = new TestLogger();
 
         $testRunnerFeatureService = new TestRunnerFeatureService();

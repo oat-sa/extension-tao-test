@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -54,13 +55,13 @@ class ProviderRegistry extends AbstractModuleRegistry
      */
     public function getByCategory($category = null)
     {
-        if ( $category === null) {
+        if ($category === null) {
             return [];
         }
 
         return array_filter(
             $this->getMap(),
-            function($provider) use ($category) {
+            function ($provider) use ($category) {
                 return isset($provider['category']) && $provider['category'] === $category;
             }
         );

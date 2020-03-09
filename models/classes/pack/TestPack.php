@@ -42,13 +42,13 @@ class TestPack implements JsonSerializable
      * The item data as arrays. Can be anything, just be careful of cyclic refs.
      * @var array
      */
-    private $data = array();
+    private $data = [];
 
     /**
      * The test item's data
      * @var array
      */
-    private $items = array();
+    private $items = [];
 
     /**
      * Creates an TestPack with the required data.
@@ -60,13 +60,13 @@ class TestPack implements JsonSerializable
      */
     public function __construct($type, $data, $items)
     {
-        if(empty($type)){
+        if (empty($type)) {
             throw new InvalidArgumentException('Please provide a test type');
         }
-        if(!is_array($data)){
+        if (!is_array($data)) {
             throw new InvalidArgumentException('Please provide the test data as an array');
         }
-        if(!is_array($items)){
+        if (!is_array($items)) {
             throw new InvalidArgumentException('Please provide the items as an array');
         }
         $this->type = $type;
@@ -106,11 +106,10 @@ class TestPack implements JsonSerializable
      */
     public function JsonSerialize()
     {
-        return array(
+        return [
             'type'      => $this->type,
             'data'      => $this->data,
             'items'     => $this->items
-        );
+        ];
     }
 }
-?>

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -16,6 +17,7 @@
  *
  * Copyright (c) 2016 (original work) Open Assessment Technologies SA ;
  */
+
 /**
  * @author Jean-Sébastien Conan <jean-sebastien.conan@vesperiagroup.com>
  */
@@ -24,12 +26,12 @@ namespace oat\taoTests\models\runner\time;
 
 /**
  * Class TimePoint
- * 
+ *
  * Describes a temporal point by storing a timestamp with microseconds and some flags.
  * A TimePoint can describe a START or a END temporal point used to define a time range.
  * Each TimePoint can be related to a target (CLIENT or SERVER).
  * A list of tags can be attached to a TimePoint to explain its role or its context.
- * 
+ *
  * @package oat\taoTests\models\runner\time
  */
 class TimePoint implements ArraySerializable, \Serializable, \JsonSerializable
@@ -380,10 +382,10 @@ class TimePoint implements ArraySerializable, \Serializable, \JsonSerializable
      * - target
      * - timestamp
      * - type
-     * 
-     * CAUTION!: The result order is not based on chronological order. 
+     *
+     * CAUTION!: The result order is not based on chronological order.
      * Its goal is to gather TimePoint by reference and target, then sort by type and timestamp.
-     * 
+     *
      * @param TimePoint $point
      * @return int
      */
@@ -407,8 +409,9 @@ class TimePoint implements ArraySerializable, \Serializable, \JsonSerializable
      * @param array $range
      * @return array
      */
-    public static function sort(array &$range) {
-        usort($range, function(TimePoint $a, TimePoint $b) {
+    public static function sort(array &$range)
+    {
+        usort($range, function (TimePoint $a, TimePoint $b) {
             return $a->compare($b);
         });
         return $range;
