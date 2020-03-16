@@ -32,7 +32,7 @@ class TimePointTest extends GenerisPhpUnitTestRunner
     /**
      * tests initialization
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         parent::initTest();
@@ -49,14 +49,14 @@ class TimePointTest extends GenerisPhpUnitTestRunner
     {
         $timePoint = new TimePoint($tags, $timestamp, $type, $target);
         $data = $timePoint->jsonSerialize();
-        
+
         $this->assertEquals($timePoint->getTimestamp(), $data['ts']);
         $this->assertEquals($timePoint->getTarget(), $data['target']);
         $this->assertEquals($timePoint->getTags(), $data['tags']);
         $this->assertEquals($timePoint->getType(), $data['type']);
         $this->assertEquals(json_encode($data), json_encode($timePoint));
     }
-    
+
     /**
      * @dataProvider testSerializeProvider
      * @param $tags
@@ -68,7 +68,7 @@ class TimePointTest extends GenerisPhpUnitTestRunner
     {
         $timePoint = new TimePoint($tags, $timestamp, $type, $target);
         $data = $timePoint->toArray();
-        
+
         $this->assertEquals($timePoint->getTimestamp(), $data['ts']);
         $this->assertEquals($timePoint->getTarget(), $data['target']);
         $this->assertEquals($timePoint->getTags(), $data['tags']);
@@ -91,7 +91,7 @@ class TimePointTest extends GenerisPhpUnitTestRunner
             'target' => $target,
             'tags' => $tags,
         ]);
-        
+
         $expected = [
             'ts' => $timestamp,
             'type' => $type,
@@ -104,7 +104,7 @@ class TimePointTest extends GenerisPhpUnitTestRunner
         $this->assertEquals($expected['tags'], $timePoint->getTags());
         $this->assertEquals($expected['type'], $timePoint->getType());
     }
-    
+
     /**
      * @dataProvider testSerializeProvider
      * @param $tags
@@ -352,7 +352,7 @@ class TimePointTest extends GenerisPhpUnitTestRunner
             10 => new TimePoint(['item-2', 'item-2#0'], 1459335330, TimePoint::TYPE_END, TimePoint::TARGET_CLIENT),
             11 => new TimePoint(['item-1', 'item-1#1'], 1459335350, TimePoint::TYPE_END, TimePoint::TARGET_CLIENT),
         ];
-        
+
         $points3 = [
             0 => new TimePoint(['item-1', 'item-1#0'], 1460116638.5226, TimePoint::TYPE_START, TimePoint::TARGET_SERVER),
             1 => new TimePoint(['item-1', 'item-1#0'], 1460116645.4868, TimePoint::TYPE_END, TimePoint::TARGET_SERVER),

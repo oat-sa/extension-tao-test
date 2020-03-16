@@ -54,7 +54,7 @@ class TestsTest extends GenerisPhpUnitTestRunner
     /**
      * tests initialization
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->testsService = new taoTests_models_classes_TestsService();
@@ -67,7 +67,7 @@ class TestsTest extends GenerisPhpUnitTestRunner
      */
     public function testService()
     {
-        
+
         $this->assertIsA($this->testsService, OntologyClassService::class);
         $this->assertIsA($this->testsService, taoTests_models_classes_TestsService::class);
     }
@@ -182,8 +182,8 @@ class TestsTest extends GenerisPhpUnitTestRunner
         }
     }
 
-    
-    
+
+
     /**
      * @depends testTests
      * @param $test
@@ -192,7 +192,7 @@ class TestsTest extends GenerisPhpUnitTestRunner
     public function testGetTestItems($test)
     {
         $result = $this->testsService->getTestItems($test);
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray( $result);
     }
 
     /**
@@ -259,7 +259,7 @@ class TestsTest extends GenerisPhpUnitTestRunner
     public function testGetAllItems()
     {
         $allItems = $this->testsService->getAllItems();
-        $this->assertInternalType('array', $allItems);
+        $this->assertIsArray( $allItems);
     }
 
     /**

@@ -21,6 +21,7 @@
 
 namespace oat\taoTests\test\integration\runner\features;
 
+use common_exception_InconsistentData;
 use oat\generis\test\GenerisPhpUnitTestRunner;
 use oat\oatbox\log\LoggerService;
 use oat\taoTests\models\runner\features\ManageableFeature;
@@ -75,10 +76,10 @@ class ManageableFeatureTest extends GenerisPhpUnitTestRunner
 
     /**
      * @dataProvider testConstructExceptionProvider
-     * @expectedException \common_exception_InconsistentData
      */
     public function testConstructException($data)
     {
+        $this->expectException(common_exception_InconsistentData::class);
         new ManageableFeature($data);
     }
 

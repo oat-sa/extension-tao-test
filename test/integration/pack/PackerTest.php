@@ -20,6 +20,7 @@
  */
 namespace oat\taoTests\test\integration\pack;
 
+use common_Exception;
 use taoTests_models_classes_TestsService;
 use taoTests_models_classes_TestModel;
 use core_kernel_classes_Resource;
@@ -37,7 +38,7 @@ use oat\taoTests\models\pack\TestPack;
 class PackerTest extends GenerisPhpUnitTestRunner
 {
 
-    public function setUp()
+    public function setUp(): void
     {
         \common_ext_ExtensionsManager::singleton()->getExtensionById('taoTests');
     }
@@ -105,11 +106,10 @@ class PackerTest extends GenerisPhpUnitTestRunner
 
     /**
      * Test the exception chain when the test has no model
-     *
-     * @expectedException \common_Exception
      */
     public function testNoTestModel()
     {
+        $this->expectException(common_Exception::class);
         $test = new core_kernel_classes_Resource('foo');
 
         $serviceMock = $this
@@ -138,10 +138,10 @@ class PackerTest extends GenerisPhpUnitTestRunner
     /**
      * Test the exception chain when there is no implementations for a model
      *
-     * @expectedException \common_Exception
      */
     public function testNoModelImplementation()
     {
+        $this->expectException(common_Exception::class);
         $test = new core_kernel_classes_Resource('foo');
         $model = new core_kernel_classes_Resource('fooModel');
 
@@ -176,11 +176,10 @@ class PackerTest extends GenerisPhpUnitTestRunner
     /**
      * Test the exception chain when the model does not return a correct packer class
      *
-     * @expectedException \common_Exception
      */
     public function testNoPackerClass()
     {
-
+        $this->expectException(common_Exception::class);
         $test = new core_kernel_classes_Resource('foo');
 
         $serviceMock = $this
@@ -222,10 +221,10 @@ class PackerTest extends GenerisPhpUnitTestRunner
     /**
      * Test the exception chain when the model returns a wrong packer class
      *
-     * @expectedException \common_Exception
      */
     public function testWrongPackerClass()
     {
+        $this->expectException(common_Exception::class);
 
         $test = new core_kernel_classes_Resource('foo');
 
