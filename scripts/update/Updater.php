@@ -151,5 +151,6 @@ class Updater extends \common_ext_ExtensionUpdater
             OntologyUpdater::syncModels();
             $this->setVersion('13.4.5');
         }
+        $this->skip('13.4.5', '13.5.0');
     }
 }
