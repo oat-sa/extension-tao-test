@@ -39,7 +39,7 @@ class TimePointTest extends GenerisPhpUnitTestRunner
     }
 
     /**
-     * @dataProvider testSerializeProvider
+     * @dataProvider taoTestSerializeProvider
      * @param $tags
      * @param $timestamp
      * @param $type
@@ -58,7 +58,7 @@ class TimePointTest extends GenerisPhpUnitTestRunner
     }
 
     /**
-     * @dataProvider testSerializeProvider
+     * @dataProvider taoTestSerializeProvider
      * @param $tags
      * @param $timestamp
      * @param $type
@@ -76,7 +76,7 @@ class TimePointTest extends GenerisPhpUnitTestRunner
     }
 
     /**
-     * @dataProvider testSerializeProvider
+     * @dataProvider taoTestSerializeProvider
      * @param $tags
      * @param $timestamp
      * @param $type
@@ -106,7 +106,7 @@ class TimePointTest extends GenerisPhpUnitTestRunner
     }
 
     /**
-     * @dataProvider testSerializeProvider
+     * @dataProvider taoTestSerializeProvider
      * @param $tags
      * @param $timestamp
      * @param $type
@@ -125,7 +125,7 @@ class TimePointTest extends GenerisPhpUnitTestRunner
     }
 
     /**
-     * @dataProvider testSerializeProvider
+     * @dataProvider taoTestSerializeProvider
      * @param $tags
      * @param $timestamp
      * @param $type
@@ -238,7 +238,7 @@ class TimePointTest extends GenerisPhpUnitTestRunner
 
     /**
      * Test TimePoint::compare() method
-     * @dataProvider testCompareProvider
+     * @dataProvider taoTestCompareProvider
      */
     public function testCompare(TimePoint $firstPoint, TimePoint $secondPoint, $expectedResult)
     {
@@ -247,7 +247,7 @@ class TimePointTest extends GenerisPhpUnitTestRunner
 
     /**
      * Test TimePoint::sort() method
-     * @dataProvider testSortProvider
+     * @dataProvider taoTestSortProvider
      */
     public function testSort(array $range, array $expectedResult)
     {
@@ -257,7 +257,7 @@ class TimePointTest extends GenerisPhpUnitTestRunner
     /**
      * @return array
      */
-    public function testSerializeProvider()
+    public function taoTestSerializeProvider()
     {
         return [
             [
@@ -284,7 +284,7 @@ class TimePointTest extends GenerisPhpUnitTestRunner
     /**
      * @return array
      */
-    public function testCompareProvider()
+    public function taoTestCompareProvider()
     {
         return [
             [
@@ -323,7 +323,7 @@ class TimePointTest extends GenerisPhpUnitTestRunner
     /**
      * @return array
      */
-    public function testSortProvider()
+    public function taoTestSortProvider()
     {
         $points1 = [
             0 => new TimePoint(['item-1', 'item-1#0'], 1459335300, TimePoint::TYPE_START, TimePoint::TARGET_SERVER),

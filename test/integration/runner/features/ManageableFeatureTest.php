@@ -75,7 +75,7 @@ class ManageableFeatureTest extends GenerisPhpUnitTestRunner
     }
 
     /**
-     * @dataProvider testConstructExceptionProvider
+     * @dataProvider taoTestConstructExceptionProvider
      */
     public function testConstructException($data)
     {
@@ -118,7 +118,7 @@ class ManageableFeatureTest extends GenerisPhpUnitTestRunner
         $this->assertEquals($feature, $unserializedFeature);
     }
 
-    public function testConstructExceptionProvider()
+    public function taoTestConstructExceptionProvider()
     {
         return [
             [[
