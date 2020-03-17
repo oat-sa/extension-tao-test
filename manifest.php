@@ -34,7 +34,7 @@ return [
     'version' => '13.5.0',
     'author' => 'Open Assessment Technologies, CRP Henri Tudor',
     'requires' => [
-        'generis' => '>=7.1.0',
+        'generis' => '>=12.15.0',
         'taoItems' => '>=6.0.0',
         'taoBackOffice' => '>=3.0.0',
         'tao' => '>=38.5.0'
