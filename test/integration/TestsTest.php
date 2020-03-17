@@ -192,7 +192,7 @@ class TestsTest extends GenerisPhpUnitTestRunner
     public function testGetTestItems($test)
     {
         $result = $this->testsService->getTestItems($test);
-        $this->assertIsArray( $result);
+        $this->assertisarray($result);
     }
 
     /**
@@ -259,7 +259,7 @@ class TestsTest extends GenerisPhpUnitTestRunner
     public function testGetAllItems()
     {
         $allItems = $this->testsService->getAllItems();
-        $this->assertIsArray( $allItems);
+        $this->assertisarray($allItems);
     }
 
     /**
