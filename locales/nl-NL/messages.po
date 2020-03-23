@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.3.0-sprint104\n"
-"PO-Revision-Date: 2019-06-07T09:21:14\n"
+"Project-Id-Version: TAO 3.4.0-sprint124\n"
+"PO-Revision-Date: 2020-03-20T11:16:56\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: nl-NL\n"
@@ -29,7 +29,7 @@ msgstr "Combineer een selectie van items in toetsen"
 
 #, tao-public
 msgid "Copy To"
-msgstr ""
+msgstr "Kopiëren naar"
 
 #, tao-public
 msgid "Delete"
@@ -48,11 +48,11 @@ msgid "Import"
 msgstr "Importeer"
 
 msgid "Last updated on %2s"
-msgstr ""
+msgstr "Laatst geupdated op %2s"
 
 #, tao-public
 msgid "Manage Schema"
-msgstr ""
+msgstr "Schema Beheren"
 
 #, tao-public
 msgid "Manage tests"
@@ -64,7 +64,7 @@ msgstr "Verplaatsen"
 
 #, tao-public
 msgid "Move To"
-msgstr ""
+msgstr "Verplaatsen naar"
 
 #, tao-public
 msgid "New class"
@@ -79,7 +79,7 @@ msgid "Properties"
 msgstr "Eigenschappen"
 
 msgid "Security plugins"
-msgstr ""
+msgstr "Veiligheidsplugins"
 
 msgid "Set of plugins with \'security\' category"
 msgstr ""
