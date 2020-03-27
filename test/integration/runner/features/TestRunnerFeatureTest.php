@@ -118,10 +118,10 @@ class TestRunnerFeatureTest extends TestCase
      * @param TestPlugin[]  $allPlugins
      *
      * @dataProvider provideBadConstructorParameters
-     * @expectedException common_exception_InconsistentData
      */
     public function testBadConstructorParameters($id, $pluginsIds, $isEnabledByDefault, $allPlugins)
     {
+        $this->expectException(common_exception_InconsistentData::class);
         new TestFeature(
             $id,
             $pluginsIds,
@@ -149,11 +149,9 @@ class TestRunnerFeatureTest extends TestCase
         $this->assertTrue($testLogger->has(LogLevel::WARNING, 'Invalid plugin Id iDontExist for test runner feature myId'));
     }
 
-    /**
-     * @expectedException common_exception_InconsistentData
-     */
     public function testConstructEmptyLabel()
     {
+        $this->expectException(common_exception_InconsistentData::class);
         new TestFeatureEmptyLabel(
             'myId',
             ['myPlugin'],
@@ -162,11 +160,9 @@ class TestRunnerFeatureTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException common_exception_InconsistentData
-     */
     public function testConstructEmptyDescription()
     {
+        $this->expectException(common_exception_InconsistentData::class);
         new TestFeatureEmptyDescription(
             'myId',
             ['myPlugin'],

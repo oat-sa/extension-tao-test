@@ -117,11 +117,9 @@ class TestRunnerFeatureServiceTest extends GenerisPhpUnitTestRunner
         $this->assertEquals(3, count($registeredFeatures));
     }
 
-    /**
-     * @expectedException common_exception_InconsistentData
-     */
     public function testCannotRegisterTwoFeaturesWithTheSameId()
     {
+        $this->expectException(common_exception_InconsistentData::class);
         $feature1 = new TestFeature(
             'myId1',
             ['myPlugin'],
