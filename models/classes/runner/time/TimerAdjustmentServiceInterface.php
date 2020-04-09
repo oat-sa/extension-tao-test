@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -39,7 +39,11 @@ interface TimerAdjustmentServiceInterface
      * @param QtiIdentifiable $source
      * @return bool
      */
-    public function increase($deliveryExecution, $seconds, $source = null);
+    public function increase(
+        DeliveryExecutionInterface $deliveryExecution,
+        int $seconds,
+        QtiIdentifiable $source = null
+    ): bool;
 
     /**
      * Decreases allotted time by supplied amount of seconds
@@ -48,5 +52,9 @@ interface TimerAdjustmentServiceInterface
      * @param QtiIdentifiable $source
      * @return bool
      */
-    public function decrease($deliveryExecution, $seconds, $source = null);
+    public function decrease(
+        DeliveryExecutionInterface $deliveryExecution,
+        int $seconds,
+        QtiIdentifiable $source = null
+    ): bool;
 }

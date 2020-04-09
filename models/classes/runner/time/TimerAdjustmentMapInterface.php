@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -39,25 +39,25 @@ interface TimerAdjustmentMapInterface
      * @param int $seconds
      * @return TimerAdjustmentMapInterface
      */
-    public function put($sourceId, $action, $seconds);
+    public function put(string $sourceId, string $action, int $seconds): TimerAdjustmentMapInterface;
 
     /**
      * Gets the calculated adjustment in seconds
      * @param string $sourceId
      * @return int
      */
-    public function get($sourceId);
+    public function get(string $sourceId): int;
 
     /**
      * Removes an entry specified by $sourceId
      * @param string $sourceId
      * @return TimerAdjustmentMapInterface
      */
-    public function remove($sourceId);
+    public function remove(string $sourceId): TimerAdjustmentMapInterface;
 
     /**
      * Clears the map of all entries
      * @return TimerAdjustmentMapInterface
      */
-    public function clear();
+    public function clear(): TimerAdjustmentMapInterface;
 }
