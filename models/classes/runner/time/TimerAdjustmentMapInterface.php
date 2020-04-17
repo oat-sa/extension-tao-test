@@ -56,10 +56,4 @@ interface TimerAdjustmentMapInterface
      * @return TimerAdjustmentMapInterface
      */
     public function remove(string $sourceId): TimerAdjustmentMapInterface;
-
-    /**
-     * Clears the map of all entries
-     * @return TimerAdjustmentMapInterface
-     */
-    public function clear(): TimerAdjustmentMapInterface;
 }
