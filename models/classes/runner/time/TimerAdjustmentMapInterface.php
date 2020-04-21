@@ -31,17 +31,21 @@ namespace oat\taoTests\models\runner\time;
  */
 interface TimerAdjustmentMapInterface
 {
-    public const ACTION_INCREASE = 'increase';
-    public const ACTION_DECREASE = 'decrease';
-
     /**
-     * Puts an entry to the map
+     * Puts an increase to the map
      * @param string $sourceId
-     * @param string $action
      * @param int $seconds
      * @return TimerAdjustmentMapInterface
      */
-    public function put(string $sourceId, string $action, int $seconds): TimerAdjustmentMapInterface;
+    public function increase(string $sourceId, int $seconds): TimerAdjustmentMapInterface;
+
+    /**
+     * Puts an decrease to the map
+     * @param string $sourceId
+     * @param int $seconds
+     * @return TimerAdjustmentMapInterface
+     */
+    public function decrease(string $sourceId, int $seconds): TimerAdjustmentMapInterface;
 
     /**
      * Gets the calculated adjustment in seconds
