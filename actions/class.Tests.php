@@ -21,38 +21,23 @@
  *
  */
 
-use oat\oatbox\event\EventManager;
 use oat\tao\model\controller\SignedFormInstance;
 use oat\tao\model\lock\LockManager;
 use oat\tao\model\resources\ResourceWatcher;
 use oat\taoTests\models\event\TestUpdatedEvent;
-use oat\tao\model\routing\AnnotationReader\security;
 use tao_helpers_form_FormContainer as FormContainer;
+use oat\oatbox\event\EventManagerAwareTrait;
 
 /**
  * Tests Controller provide actions performed from url resolution
  *
  * @author Bertrand Chevrier, <taosupport@tudor.lu>
  * @package taoTests
-
  * @license GPLv2  http://www.opensource.org/licenses/gpl-2.0.php
- *
  */
-class taoTests_actions_Tests extends tao_actions_SaSModule
+class taoTests_actions_Tests extends tao_actions_RdfController
 {
-
-    /**
-     * @return EventManager
-     */
-    protected function getEventManager()
-    {
-        return $this->getServiceLocator()->get(EventManager::SERVICE_ID);
-    }
-
-    protected function getClassService()
-    {
-        return taoTests_models_classes_TestsService::singleton();
-    }
+    use EventManagerAwareTrait;
 
     /**
      * constructor: initialize the service and the default data
@@ -67,18 +52,13 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
         $this->defaultData();
     }
 
-    /*
-    * controller actions
-    */
-
-
     /**
      * edit a test instance
      * @requiresRight id READ
      */
     public function editTest()
     {
-        $test = new core_kernel_classes_Resource($this->getRequestParameter('id'));
+        $test = $this->getResource($this->getPostParameter('id'));
         if (!$this->isLocked($test)) {
             // my lock
             $lock = LockManager::getImplementation()->getLockData($test);
@@ -102,7 +82,7 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
                     $modelUri = $propertyValues[taoTests_models_classes_TestsService::PROPERTY_TEST_TESTMODEL];
                     unset($propertyValues[taoTests_models_classes_TestsService::PROPERTY_TEST_TESTMODEL]);
                     if (!empty($modelUri)) {
-                        $testModel = new core_kernel_classes_Resource($modelUri);
+                        $testModel = $this->getResource($modelUri);
                         $this->service->setTestModel($test, $testModel);
                     }
                 } else {
@@ -147,11 +127,11 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
             $this->response = $this->getPsrResponse()->withStatus(403, __('Unable to process your request'));
             return;
         }
-        if (!tao_helpers_Request::isAjax()) {
+        if (!$this->isXmlHttpRequest()) {
             throw new common_exception_BadRequest('wrong request mode');
         }
 
-        $uri = $this->getRequestParameter('id');
+        $uri = $this->getPostParameter('id');
 
         $this->validateInstanceRoot($uri);
 
@@ -185,7 +165,7 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
      */
     public function authoring()
     {
-        $test = new core_kernel_classes_Resource($this->getRequestParameter('id'));
+        $test = $this->getResource($this->getGetParameter('id'));
         if (!$this->isLocked($test)) {
             $testModel = $this->service->getTestModel($test);
             $testModelImpl = $this->service->getTestModelImplementation($testModel);
@@ -250,5 +230,19 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
     public function deleteAll()
     {
         return parent::deleteAll();
+    }
+
+    /**
+     *
+     * @return \core_kernel_classes_Class
+     */
+    protected function getRootClass()
+    {
+        return $this->getClassService()->getRootClass();
+    }
+
+    protected function getClassService()
+    {
+        return taoTests_models_classes_TestsService::singleton();
     }
 }
