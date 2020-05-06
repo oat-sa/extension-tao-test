@@ -25,7 +25,6 @@ namespace oat\taoTests\scripts\update;
 use oat\tao\scripts\update\OntologyUpdater;
 use oat\taoTests\models\runner\providers\TestProviderService;
 use oat\taoTests\scripts\install\RegisterTestPluginService;
-use oat\taoTests\scripts\install\RegisterTestRunnerFeatureService;
 use oat\tao\model\accessControl\func\AclProxy;
 use oat\tao\model\accessControl\func\AccessRule;
 use oat\tao\model\user\TaoRoles;
@@ -151,6 +150,7 @@ class Updater extends \common_ext_ExtensionUpdater
             OntologyUpdater::syncModels();
             $this->setVersion('13.4.5');
         }
+
         $this->skip('13.4.5', '13.7.0');
     }
 }
