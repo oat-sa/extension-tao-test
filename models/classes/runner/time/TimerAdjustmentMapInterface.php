@@ -50,7 +50,7 @@ interface TimerAdjustmentMapInterface
     public function decrease(string $sourceId, string $type, int $seconds): TimerAdjustmentMapInterface;
 
     /**
-     * Gets the calculated adjustment in seconds
+     * Gets the calculated total adjustments of all types stored for provided source ID in seconds.
      * @param string $sourceId
      * @return int
      */
