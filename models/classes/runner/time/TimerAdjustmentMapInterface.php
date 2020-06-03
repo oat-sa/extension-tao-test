@@ -62,18 +62,4 @@ interface TimerAdjustmentMapInterface
      * @return int
      */
     public function getByType(string $sourceId, string $type): int;
-
-    /**
-     * Removes an entry specified by $sourceId
-     * @param string $sourceId
-     * @return TimerAdjustmentMapInterface
-     */
-    public function remove(string $sourceId): TimerAdjustmentMapInterface;
-
-    /**
-     * @param string $sourceId
-     * @param string $type
-     * @return TimerAdjustmentMapInterface
-     */
-    public function removeForType(string $sourceId, string $type): TimerAdjustmentMapInterface;
 }
