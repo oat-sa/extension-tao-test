@@ -57,6 +57,8 @@ interface TimerAdjustmentMapInterface
     public function get(string $sourceId): int;
 
     /**
+     * Gets the calculated adjustments for provided source ID and adjustment type in seconds.
+     *
      * @param string $sourceId
      * @param string $type
      * @return int
