@@ -34,30 +34,34 @@ interface TimerAdjustmentMapInterface
     /**
      * Puts an increase to the map
      * @param string $sourceId
+     * @param string $type
      * @param int $seconds
      * @return TimerAdjustmentMapInterface
      */
-    public function increase(string $sourceId, int $seconds): TimerAdjustmentMapInterface;
+    public function increase(string $sourceId, string $type, int $seconds): TimerAdjustmentMapInterface;
 
     /**
      * Puts an decrease to the map
      * @param string $sourceId
+     * @param string $type
      * @param int $seconds
      * @return TimerAdjustmentMapInterface
      */
-    public function decrease(string $sourceId, int $seconds): TimerAdjustmentMapInterface;
+    public function decrease(string $sourceId, string $type, int $seconds): TimerAdjustmentMapInterface;
 
     /**
-     * Gets the calculated adjustment in seconds
+     * Gets the calculated total adjustments of all types stored for provided source ID in seconds.
      * @param string $sourceId
      * @return int
      */
     public function get(string $sourceId): int;
 
     /**
-     * Removes an entry specified by $sourceId
+     * Gets the calculated adjustments for provided source ID and adjustment type in seconds.
+     *
      * @param string $sourceId
-     * @return TimerAdjustmentMapInterface
+     * @param string $type
+     * @return int
      */
-    public function remove(string $sourceId): TimerAdjustmentMapInterface;
+    public function getByType(string $sourceId, string $type): int;
 }
