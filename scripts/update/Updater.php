@@ -25,7 +25,6 @@ namespace oat\taoTests\scripts\update;
 use oat\tao\scripts\update\OntologyUpdater;
 use oat\taoTests\models\runner\providers\TestProviderService;
 use oat\taoTests\scripts\install\RegisterTestPluginService;
-use oat\taoTests\scripts\install\RegisterTestRunnerFeatureService;
 use oat\tao\model\accessControl\func\AclProxy;
 use oat\tao\model\accessControl\func\AccessRule;
 use oat\tao\model\user\TaoRoles;
@@ -34,6 +33,9 @@ use oat\taoTests\models\runner\features\SecurityFeature;
 use oat\tao\model\ClientLibRegistry;
 use oat\tao\model\asset\AssetService;
 
+/**
+ * @deprecated use migrations instead. See https://github.com/oat-sa/generis/wiki/Tao-Update-Process
+ */
 class Updater extends \common_ext_ExtensionUpdater
 {
     /**
@@ -152,6 +154,11 @@ class Updater extends \common_ext_ExtensionUpdater
             $this->setVersion('13.4.5');
         }
 
-        $this->skip('13.4.5', '13.5.0');
+        $this->skip('13.4.5', '14.1.1');
+        
+        //Updater files are deprecated. Please use migrations.
+        //See: https://github.com/oat-sa/generis/wiki/Tao-Update-Process
+
+        $this->setVersion($this->getExtension()->getManifest()->getVersion());
     }
 }
