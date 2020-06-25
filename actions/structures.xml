@@ -27,7 +27,7 @@
                     <action id="test-properties"  name="Properties"  url="/taoTests/Tests/editTest" group="content" context="instance">
                         <icon id="icon-edit"/>
                     </action>
-                    <action id="item-preview" name="Preview" url="/taoTests/taoQtiTestPreview/init" context="instance" group="content" binding="testPreview">
+                    <action id="test-preview" name="Preview" url="/taoTests/taoQtiTestPreview/init" context="instance" group="content" binding="testPreview">
                         <icon id="icon-preview"/>
                     </action>
                     <action id="test-authoring" name="Authoring" url="/taoTests/Tests/authoring" group="content" context="instance" binding="launchEditor">
