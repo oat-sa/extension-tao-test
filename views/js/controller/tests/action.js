@@ -19,13 +19,14 @@
 define([
     'lodash',
     'layout/actions/binder',
-    'taoQtiTestPreviewer/previewer/adapter/test/qtiTest'
-], function(_, binder, previewerFactory){
+    'taoQtiTestPreviewer/previewer/adapter/test/qtiTest',
+    'uri'
+], function(_, binder, previewerFactory, uri){
     'use strict';
 
     binder.register('testPreview', function testPreview(actionContext) {
 
-        previewerFactory.init(actionContext.id, {
+        previewerFactory.init(uri.decode(actionContext.uri), {
             readOnly: false,
             fullPage: true
         });
