@@ -1,4 +1,4 @@
-/**
+/*
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; under version 2
@@ -13,18 +13,23 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2014-2020 (original work) Open Assessment Technologies SA
+ * Copyright (c) 2014 - 2020 (original work) Open Assessment Techniologies SA
+ *
  */
-
-//@see http://forge.taotesting.com/projects/tao/wiki/Front_js
-define(function(){
+define([
+    'lodash',
+    'layout/actions/binder',
+    'taoQtiTestPreviewer/previewer/adapter/test/qtiTest',
+    'uri'
+], function(_, binder, previewerFactory, uri){
     'use strict';
-    return {
-        'Tests' : {
-            'deps' : 'controller/tests/action',
-            'actions' : {
-                'editTest' : 'controller/tests/editTest'
-            }
-        }
-    };
+
+    binder.register('testPreview', function testPreview(actionContext) {
+
+        previewerFactory.init(uri.decode(actionContext.uri), {
+            readOnly: false,
+            fullPage: true
+        });
+    });
+
 });
