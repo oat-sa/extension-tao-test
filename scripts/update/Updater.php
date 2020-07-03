@@ -33,6 +33,9 @@ use oat\taoTests\models\runner\features\SecurityFeature;
 use oat\tao\model\ClientLibRegistry;
 use oat\tao\model\asset\AssetService;
 
+/**
+ * @deprecated use migrations instead. See https://github.com/oat-sa/generis/wiki/Tao-Update-Process
+ */
 class Updater extends \common_ext_ExtensionUpdater
 {
     /**
@@ -152,5 +155,10 @@ class Updater extends \common_ext_ExtensionUpdater
         }
 
         $this->skip('13.4.5', '14.1.1');
+        
+        //Updater files are deprecated. Please use migrations.
+        //See: https://github.com/oat-sa/generis/wiki/Tao-Update-Process
+
+        $this->setVersion($this->getExtension()->getManifest()->getVersion());
     }
 }
