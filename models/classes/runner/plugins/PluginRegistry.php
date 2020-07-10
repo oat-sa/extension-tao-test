@@ -20,8 +20,12 @@
 
 namespace oat\taoTests\models\runner\plugins;
 
+use common_ext_Extension;
+use common_ext_ExtensionException;
 use common_ext_ExtensionsManager;
-use oat\tao\model\plugins\AbstractPluginRegistry;
+use InvalidArgumentException;
+use oat\oatbox\service\exception\InvalidServiceManagerException;
+use oat\tao\model\modules\AbstractModuleRegistry;
 
 /**
  * Store the <b>available</b> test runner plugins, even if not activated,
@@ -30,21 +34,56 @@ use oat\tao\model\plugins\AbstractPluginRegistry;
  * @author Bertrand Chevrier <bertrand@taotesting.com>
  * @author Jean-Sébastien Conan <jean-sebastien@taotesting.com>
  */
-class PluginRegistry extends AbstractPluginRegistry
+class PluginRegistry extends AbstractModuleRegistry
 {
+    public const CONFIG_ID = 'test_runner_plugin_registry';
+
     /**
      * @see \oat\oatbox\AbstractRegistry::getConfigId()
      */
-    protected function getConfigId()
+    protected function getConfigId(): string
     {
-        return 'test_runner_plugin_registry';
+        return static::CONFIG_ID;
     }
 
     /**
+     * @return common_ext_Extension
+     * @throws common_ext_ExtensionException
+     * @throws InvalidServiceManagerException
      * @see \oat\oatbox\AbstractRegistry::getExtension()
      */
     protected function getExtension()
     {
-        return common_ext_ExtensionsManager::singleton()->getExtensionById('taoTests');
+        /** @var common_ext_ExtensionsManager $extensionManager */
+        $extensionManager = $this->getServiceManager()->get(common_ext_ExtensionsManager::SERVICE_ID);
+
+        return $extensionManager->getExtensionById('taoTests');
+    }
+
+    public function activate(string $pluginId): void
+    {
+        $definition = $this->getPluginDefinition($pluginId);
+
+        $definition->setActive(true);
+
+        $this->set($pluginId, $definition->toArray());
+    }
+
+    public function deactivate(string $pluginId): void
+    {
+        $definition = $this->getPluginDefinition($pluginId);
+
+        $definition->setActive(false);
+
+        $this->set($pluginId, $definition->toArray());
+    }
+
+    protected function getPluginDefinition(string $pluginId): TestPlugin
+    {
+        if (!$this->isRegistered($pluginId)) {
+            throw new InvalidArgumentException('Requested plugin is not registered');
+        }
+
+        return TestPlugin::fromArray($this->get($pluginId));
     }
 }
