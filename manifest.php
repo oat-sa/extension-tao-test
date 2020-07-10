@@ -24,14 +24,21 @@
  * @license GPLv2  http://www.opensource.org/licenses/gpl-2.0.php
  *
  */
-$extpath = __DIR__ . DIRECTORY_SEPARATOR;
+
+use oat\tao\model\user\TaoRoles;
+use oat\taoTests\scripts\update\Updater;
+use oat\taoTests\scripts\install\RegisterFrontendPaths;
+use oat\taoTests\scripts\install\RegisterTestProviderService;
+use oat\taoTests\scripts\install\RegisterTestPluginService;
+
+$extPath = __DIR__ . DIRECTORY_SEPARATOR;
 
 return [
     'name' => 'taoTests',
     'label' => 'Test core extension',
     'description' => 'TAO Tests extension contains the abstraction of the test-runners, but requires an implementation in order to be able to run tests',
     'license' => 'GPL-2.0',
-    'version' => '14.2.1',
+    'version' => '14.3.0',
     'author' => 'Open Assessment Technologies, CRP Henri Tudor',
     'requires' => [
         'generis' => '>=12.15.0',
@@ -47,26 +54,26 @@ return [
             __DIR__ . '/models/ontology/taotest.rdf'
         ],
             'php' => [
-                'oat\\taoTests\\scripts\\install\\RegisterTestPluginService',
-                'oat\\taoTests\\scripts\\install\\RegisterTestProviderService',
-                'oat\\taoTests\\scripts\\install\\RegisterFrontendPaths'
+                RegisterTestPluginService::class,
+                RegisterTestProviderService::class,
+                RegisterFrontendPaths::class
             ]
     ],
-    'update' => "oat\\taoTests\\scripts\\update\\Updater",
+    'update' => Updater::class,
     'managementRole' => 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole',
     'acl' => [
         ['grant', 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole', ['ext' => 'taoTests']],
-        ['grant', \oat\tao\model\user\TaoRoles::REST_PUBLISHER, ['ext' => 'taoTests', 'mod' => 'RestTests']],
+        ['grant', TaoRoles::REST_PUBLISHER, ['ext' => 'taoTests', 'mod' => 'RestTests']],
     ],
     'optimizableClasses' => [
         'http://www.tao.lu/Ontologies/TAOTest.rdf#Test'
     ],
     'constants' => [
         # actions directory
-        "DIR_ACTIONS"           => $extpath . "actions" . DIRECTORY_SEPARATOR,
+        "DIR_ACTIONS"           => $extPath . "actions" . DIRECTORY_SEPARATOR,
 
         # views directory
-        "DIR_VIEWS"             => $extpath . "views" . DIRECTORY_SEPARATOR,
+        "DIR_VIEWS"             => $extPath . "views" . DIRECTORY_SEPARATOR,
 
         # default module name
         'DEFAULT_MODULE_NAME'   => 'Tests',
@@ -75,7 +82,7 @@ return [
         'DEFAULT_ACTION_NAME'   => 'index',
 
         #BASE PATH: the root path in the file system (usually the document root)
-        'BASE_PATH'             => $extpath,
+        'BASE_PATH'             => $extPath,
 
         #BASE URL (usually the domain root)
         'BASE_URL'              => ROOT_URL . 'taoTests/',
