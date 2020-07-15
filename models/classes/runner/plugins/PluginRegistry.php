@@ -62,20 +62,12 @@ class PluginRegistry extends AbstractModuleRegistry
 
     public function activate(string $pluginId): void
     {
-        $definition = $this->getPluginDefinition($pluginId);
-
-        $definition->setActive(true);
-
-        $this->set($pluginId, $definition->toArray());
+        $this->applyPluginState($pluginId, true);
     }
 
     public function deactivate(string $pluginId): void
     {
-        $definition = $this->getPluginDefinition($pluginId);
-
-        $definition->setActive(false);
-
-        $this->set($pluginId, $definition->toArray());
+        $this->applyPluginState($pluginId, false);
     }
 
     protected function getPluginDefinition(string $pluginId): TestPlugin
@@ -85,5 +77,14 @@ class PluginRegistry extends AbstractModuleRegistry
         }
 
         return TestPlugin::fromArray($this->get($pluginId));
+    }
+
+    private function applyPluginState(string $pluginId, bool $isActive): void
+    {
+        $definition = $this->getPluginDefinition($pluginId);
+
+        $definition->setActive($isActive);
+
+        $this->set($pluginId, $definition->toArray());
     }
 }
