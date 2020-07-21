@@ -22,16 +22,26 @@
  */
 define([
     'jquery',
-    'ui/lock'
-],	function($, lock){
+    'ui/lock',
+    'module',
+    'layout/actions',
+],	function($, lock, module, actions){
     'use strict';
 
     return {
+
 
         /**
          * Controller's entrypoint
          */
         start(){
+
+            const config = module.config();
+            const previewAction = actions.getBy('test-preview')
+            if (previewAction) {
+                previewAction.state.disabled = !config.isPreviewEnabled;
+            }
+
             $('#lock-box').each(function() {
                 lock($(this)).register();
             });
