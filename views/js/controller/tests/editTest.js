@@ -37,9 +37,10 @@ define([
         start(){
 
             const config = module.config();
-            const previewAction = actions.getBy('test-preview')
+            const previewAction = actions.getBy('test-preview');
             if (previewAction) {
                 previewAction.state.disabled = !config.isPreviewEnabled;
+                actions.updateState();
             }
 
             $('#lock-box').each(function() {
