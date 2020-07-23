@@ -80,10 +80,7 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
     {
         $test = new core_kernel_classes_Resource($this->getRequestParameter('id'));
 
-        $this->setData(
-            'isPreviewEnabled',
-            $this->service->hasItems($test) ? true : false
-        );
+        $this->setData('isPreviewEnabled', $this->service->hasItems($test));
 
         if (!$this->isLocked($test)) {
             // my lock
