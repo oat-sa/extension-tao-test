@@ -19,3 +19,13 @@ use oat\tao\helpers\Template;
 </div>
 
 <?php Template::inc('footer.tpl', 'tao'); ?>
+
+<script type="text/javascript">
+    requirejs.config({
+        config: {
+            'taoTests/controller/tests/editTest' : {
+                'isPreviewEnabled' : <?= json_encode(get_data('isPreviewEnabled')) ?>
+            }
+        }
+    });
+</script>
