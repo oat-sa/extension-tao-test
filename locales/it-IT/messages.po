@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.3.0-sprint104\n"
-"PO-Revision-Date: 2019-06-07T09:21:14\n"
+"Project-Id-Version: TAO 3.4.0-sprint121\n"
+"PO-Revision-Date: 2020-07-31T11:00:35\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: it-IT\n"
@@ -13,6 +13,12 @@ msgstr ""
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
 
+msgid " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
+msgstr " . \\common_Utils::toPHPVariableString($this->getDescription()) ."
+
+msgid " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
+msgstr " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
+
 msgid " . \common_Utils::toPHPVariableString($this->getDescription()) . "
 msgstr ""
 
@@ -21,15 +27,15 @@ msgstr ""
 
 #, tao-public
 msgid "Authoring"
-msgstr "Authoring"
+msgstr "Creazione"
 
 #, tao-public
 msgid "Combine a selection of items into tests."
-msgstr "Combina una selezione di item nel test"
+msgstr "Combina una selezione di elementi nei test."
 
 #, tao-public
 msgid "Copy To"
-msgstr ""
+msgstr "Copia in"
 
 #, tao-public
 msgid "Delete"
@@ -48,11 +54,11 @@ msgid "Import"
 msgstr "Importa"
 
 msgid "Last updated on %2s"
-msgstr ""
+msgstr "Ultimo aggiornamento %2s"
 
 #, tao-public
 msgid "Manage Schema"
-msgstr ""
+msgstr "Gestisci Schema"
 
 #, tao-public
 msgid "Manage tests"
@@ -64,7 +70,7 @@ msgstr "Sposta"
 
 #, tao-public
 msgid "Move To"
-msgstr ""
+msgstr "Sposta in"
 
 #, tao-public
 msgid "New class"
@@ -79,10 +85,13 @@ msgid "Properties"
 msgstr "Proprietà"
 
 msgid "Security plugins"
-msgstr ""
+msgstr "Plugin di sicurezza"
 
 msgid "Set of plugins with \'security\' category"
 msgstr ""
+
+msgid "Set of plugins with \\'security\\' category"
+msgstr "Set di plugins con categoria \\'security\\'"
 
 msgid "Test properties"
 msgstr "Proprietà testo"
@@ -95,17 +104,17 @@ msgstr ""
 
 #, tao-public
 msgid "Tests"
-msgstr "Test"
+msgstr "Tests"
 
 #, tao-public
 msgid "Tests library"
-msgstr "Biblioteca di test"
+msgstr "Biblioteca Test"
 
 msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
 msgstr "La modalita' test (sequenza, punteggio, cumulo, ecc.) e il layout sono anche configurati qui."
 
 msgid "The Tests module allows to combine a selection of Items to a Test."
-msgstr "La modalita' test ti consente di mettere insieme una selezione di item nel test"
+msgstr "Il modulo Tests consente di mettere insieme una selezione di elementi nel Test"
 
 msgid "Unable to delete test."
 msgstr ""
@@ -114,5 +123,5 @@ msgid "Unable to process your request"
 msgstr ""
 
 msgid "You checked out this test %2s ago"
-msgstr "Hai controllato questo test %2s "
+msgstr "Hai controllato questo test %2s fa"
 

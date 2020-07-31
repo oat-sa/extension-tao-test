@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.3.0-sprint104\n"
-"PO-Revision-Date: 2019-06-07T09:21:14\n"
+"Project-Id-Version: TAO 3.4.0-sprint121\n"
+"PO-Revision-Date: 2020-07-31T11:00:45\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: uk-UA\n"
@@ -13,6 +13,12 @@ msgstr ""
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
 
+msgid " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
+msgstr ""
+
+msgid " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
+msgstr ""
+
 msgid " . \common_Utils::toPHPVariableString($this->getDescription()) . "
 msgstr ""
 
@@ -21,11 +27,11 @@ msgstr ""
 
 #, tao-public
 msgid "Authoring"
-msgstr ""
+msgstr "Авторинг"
 
 #, tao-public
 msgid "Combine a selection of items into tests."
-msgstr ""
+msgstr "Об'єднати вибір предметів у тести."
 
 #, tao-public
 msgid "Copy To"
@@ -33,19 +39,19 @@ msgstr ""
 
 #, tao-public
 msgid "Delete"
-msgstr ""
+msgstr "Видалити"
 
 #, tao-public
 msgid "Duplicate"
-msgstr ""
+msgstr "Дублювати"
 
 #, tao-public
 msgid "Export"
-msgstr ""
+msgstr "Експорт"
 
 #, tao-public
 msgid "Import"
-msgstr ""
+msgstr "Імпортувати"
 
 msgid "Last updated on %2s"
 msgstr ""
@@ -56,11 +62,11 @@ msgstr ""
 
 #, tao-public
 msgid "Manage tests"
-msgstr ""
+msgstr "Управління тестами"
 
 #, tao-public
 msgid "Move"
-msgstr ""
+msgstr "Перемістити"
 
 #, tao-public
 msgid "Move To"
@@ -68,15 +74,15 @@ msgstr ""
 
 #, tao-public
 msgid "New class"
-msgstr ""
+msgstr "Новий клас"
 
 #, tao-public
 msgid "New test"
-msgstr ""
+msgstr "Новий тест"
 
 #, tao-public
 msgid "Properties"
-msgstr ""
+msgstr "Властивості"
 
 msgid "Security plugins"
 msgstr ""
@@ -84,28 +90,31 @@ msgstr ""
 msgid "Set of plugins with \'security\' category"
 msgstr ""
 
-msgid "Test properties"
+msgid "Set of plugins with \\'security\\' category"
 msgstr ""
 
+msgid "Test properties"
+msgstr "Властивості теста"
+
 msgid "Test saved"
-msgstr ""
+msgstr "Тест збережений"
 
 msgid "Test was successfully deleted."
 msgstr ""
 
 #, tao-public
 msgid "Tests"
-msgstr ""
+msgstr "Тести"
 
 #, tao-public
 msgid "Tests library"
-msgstr ""
+msgstr "Бібліотека тестів"
 
 msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
-msgstr ""
+msgstr "Тут також настроюється режим тестування (послідовність, набрання балів, накопичення тощо) та макет."
 
 msgid "The Tests module allows to combine a selection of Items to a Test."
-msgstr ""
+msgstr "Модуль \"Тести\" дозволяє об'єднати вибір елементів у тест."
 
 msgid "Unable to delete test."
 msgstr ""
@@ -114,5 +123,5 @@ msgid "Unable to process your request"
 msgstr ""
 
 msgid "You checked out this test %2s ago"
-msgstr ""
+msgstr "Ви перевірили цей тест %2s тому"
 

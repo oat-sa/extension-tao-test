@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.3.0-sprint104\n"
-"PO-Revision-Date: 2019-06-07T09:21:13\n"
+"Project-Id-Version: TAO 3.4.0-sprint121\n"
+"PO-Revision-Date: 2020-07-31T11:00:32\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: fr-FR\n"
@@ -13,6 +13,12 @@ msgstr ""
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
 
+msgid " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
+msgstr ". \\common_Utils::toPHPVariableString($this->getDescription()) . "
+
+msgid " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
+msgstr " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
+
 msgid " . \common_Utils::toPHPVariableString($this->getDescription()) . "
 msgstr ""
 
@@ -21,7 +27,7 @@ msgstr ""
 
 #, tao-public
 msgid "Authoring"
-msgstr ""
+msgstr "Édition"
 
 #, tao-public
 msgid "Combine a selection of items into tests."
@@ -29,7 +35,7 @@ msgstr "Combiner une sélection d'items en tests."
 
 #, tao-public
 msgid "Copy To"
-msgstr ""
+msgstr "Copier vers"
 
 #, tao-public
 msgid "Delete"
@@ -48,11 +54,11 @@ msgid "Import"
 msgstr "Importer"
 
 msgid "Last updated on %2s"
-msgstr ""
+msgstr "Dernière mise à jour le %2s"
 
 #, tao-public
 msgid "Manage Schema"
-msgstr ""
+msgstr "Gérer le schéma"
 
 #, tao-public
 msgid "Manage tests"
@@ -64,7 +70,7 @@ msgstr "Déplacer"
 
 #, tao-public
 msgid "Move To"
-msgstr ""
+msgstr "Déplacer vers"
 
 #, tao-public
 msgid "New class"
@@ -76,13 +82,16 @@ msgstr "Créer test"
 
 #, tao-public
 msgid "Properties"
-msgstr ""
+msgstr "Propriétés"
 
 msgid "Security plugins"
-msgstr ""
+msgstr "Plugins de sécurité"
 
 msgid "Set of plugins with \'security\' category"
 msgstr ""
+
+msgid "Set of plugins with \\'security\\' category"
+msgstr "Jeu de plugins avec la catégorie \\'sécurité\\'"
 
 msgid "Test properties"
 msgstr "Propriétés du test"
@@ -105,7 +114,7 @@ msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also
 msgstr "Le mode de test (séquence, notation, cumul, etc.) et les canevas sont également configurés ici."
 
 msgid "The Tests module allows to combine a selection of Items to a Test."
-msgstr "Le module <i>Tests</i> permet de combiner la sélection d'items à un test."
+msgstr "Le module \"Tests\" permet de combiner la sélection d'items à un test."
 
 msgid "Unable to delete test."
 msgstr ""
@@ -114,5 +123,5 @@ msgid "Unable to process your request"
 msgstr ""
 
 msgid "You checked out this test %2s ago"
-msgstr ""
+msgstr "Vous avez quitté ce test il y a %2s."
 

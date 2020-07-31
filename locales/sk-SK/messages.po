@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.3.0-sprint104\n"
-"PO-Revision-Date: 2019-06-07T09:21:14\n"
+"Project-Id-Version: TAO 3.4.0-sprint121\n"
+"PO-Revision-Date: 2020-07-31T11:00:42\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: sk-SK\n"
@@ -13,6 +13,12 @@ msgstr ""
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
 
+msgid " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
+msgstr ""
+
+msgid " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
+msgstr ""
+
 msgid " . \common_Utils::toPHPVariableString($this->getDescription()) . "
 msgstr ""
 
@@ -21,91 +27,94 @@ msgstr ""
 
 #, tao-public
 msgid "Authoring"
-msgstr ""
+msgstr "Autorizácia"
 
 #, tao-public
 msgid "Combine a selection of items into tests."
-msgstr ""
+msgstr "Skombinuj voľbu položiek do testov."
 
 #, tao-public
 msgid "Copy To"
-msgstr ""
+msgstr "Kopíruj do"
 
 #, tao-public
 msgid "Delete"
-msgstr ""
+msgstr "Zmaž"
 
 #, tao-public
 msgid "Duplicate"
-msgstr ""
+msgstr "Duplikuj"
 
 #, tao-public
 msgid "Export"
-msgstr ""
+msgstr "Exportuj"
 
 #, tao-public
 msgid "Import"
-msgstr ""
+msgstr "Importuj"
 
 msgid "Last updated on %2s"
-msgstr ""
+msgstr "Posledne aktualizované na %2s"
 
 #, tao-public
 msgid "Manage Schema"
-msgstr ""
+msgstr "Manažuj schému"
 
 #, tao-public
 msgid "Manage tests"
-msgstr ""
+msgstr "Manažuj testy"
 
 #, tao-public
 msgid "Move"
-msgstr ""
+msgstr "Presuň"
 
 #, tao-public
 msgid "Move To"
-msgstr ""
+msgstr "Presuň do"
 
 #, tao-public
 msgid "New class"
-msgstr ""
+msgstr "Nová trieda"
 
 #, tao-public
 msgid "New test"
-msgstr ""
+msgstr "Nový test"
 
 #, tao-public
 msgid "Properties"
-msgstr ""
+msgstr "Vlastnosti"
 
 msgid "Security plugins"
-msgstr ""
+msgstr "Bezpečnostné pluginy"
 
 msgid "Set of plugins with \'security\' category"
 msgstr ""
 
+msgid "Set of plugins with \\'security\\' category"
+msgstr "Sada pluginov kategórie \\'security\\'"
+
 msgid "Test properties"
-msgstr ""
+msgstr "Test vlastností"
 
 msgid "Test saved"
-msgstr ""
+msgstr "Test uložený"
 
 msgid "Test was successfully deleted."
 msgstr ""
 
 #, tao-public
 msgid "Tests"
-msgstr ""
+msgstr "Testy"
 
 #, tao-public
 msgid "Tests library"
-msgstr ""
+msgstr "Knižnica testov"
 
 msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
-msgstr ""
+msgstr "Testovací režim (sekvencovanie, skóre, kumulácis, atď.) a návrh sú tu konfigurovateľné"
 
 msgid "The Tests module allows to combine a selection of Items to a Test."
-msgstr ""
+msgstr "Testovací modul dovoľuje kombináciu výberu položiek testu"
 
 msgid "Unable to delete test."
 msgstr ""
@@ -114,5 +123,5 @@ msgid "Unable to process your request"
 msgstr ""
 
 msgid "You checked out this test %2s ago"
-msgstr ""
+msgstr "Odhlásili ste sa z tohto testu pred %2s"
 

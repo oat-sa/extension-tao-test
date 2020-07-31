@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.3.0-sprint104\n"
-"PO-Revision-Date: 2019-06-07T09:21:14\n"
+"Project-Id-Version: TAO 3.4.0-sprint121\n"
+"PO-Revision-Date: 2020-07-31T11:00:36\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: ja-JP\n"
@@ -12,6 +12,12 @@ msgstr ""
 "X-Poedit-Basepath: ../../\n"
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
+
+msgid " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
+msgstr ""
+
+msgid " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
+msgstr ""
 
 msgid " . \common_Utils::toPHPVariableString($this->getDescription()) . "
 msgstr ""
@@ -25,11 +31,11 @@ msgstr "オーサリング"
 
 #, tao-public
 msgid "Combine a selection of items into tests."
-msgstr "選択された問題をテストに結合する"
+msgstr "選択された問題アイテムをテストとして構成する"
 
 #, tao-public
 msgid "Copy To"
-msgstr ""
+msgstr "コピー先の選択"
 
 #, tao-public
 msgid "Delete"
@@ -48,11 +54,11 @@ msgid "Import"
 msgstr "インポート"
 
 msgid "Last updated on %2s"
-msgstr ""
+msgstr "最終更新: %2s"
 
 #, tao-public
 msgid "Manage Schema"
-msgstr ""
+msgstr "スキーマの管理"
 
 #, tao-public
 msgid "Manage tests"
@@ -64,11 +70,11 @@ msgstr "移動"
 
 #, tao-public
 msgid "Move To"
-msgstr ""
+msgstr "移動先の選択"
 
 #, tao-public
 msgid "New class"
-msgstr "新規クラス"
+msgstr "新規フォルダー"
 
 #, tao-public
 msgid "New test"
@@ -79,13 +85,16 @@ msgid "Properties"
 msgstr "プロパティ"
 
 msgid "Security plugins"
-msgstr ""
+msgstr "セキュリティプラグイン"
 
 msgid "Set of plugins with \'security\' category"
 msgstr ""
 
+msgid "Set of plugins with \\'security\\' category"
+msgstr ""
+
 msgid "Test properties"
-msgstr "テスト属性"
+msgstr "テスト編集"
 
 msgid "Test saved"
 msgstr "テストは保存されました。"
