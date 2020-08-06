@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.3.0-sprint104\n"
-"PO-Revision-Date: 2019-06-07T09:21:14\n"
+"Project-Id-Version: TAO 3.4.0-sprint121\n"
+"PO-Revision-Date: 2020-07-31T11:00:42\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: ru-RU\n"
@@ -13,6 +13,12 @@ msgstr ""
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
 
+msgid " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
+msgstr " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
+
+msgid " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
+msgstr " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
+
 msgid " . \common_Utils::toPHPVariableString($this->getDescription()) . "
 msgstr ""
 
@@ -21,91 +27,94 @@ msgstr ""
 
 #, tao-public
 msgid "Authoring"
-msgstr ""
+msgstr "Редактирование"
 
 #, tao-public
 msgid "Combine a selection of items into tests."
-msgstr ""
+msgstr "Объедините выбранные элементы в тест"
 
 #, tao-public
 msgid "Copy To"
-msgstr ""
+msgstr "Копировать в"
 
 #, tao-public
 msgid "Delete"
-msgstr ""
+msgstr "Удалить"
 
 #, tao-public
 msgid "Duplicate"
-msgstr ""
+msgstr "Создать копию"
 
 #, tao-public
 msgid "Export"
-msgstr ""
+msgstr "Экспортировать"
 
 #, tao-public
 msgid "Import"
-msgstr ""
+msgstr "Импортировать"
 
 msgid "Last updated on %2s"
-msgstr ""
+msgstr "Последнее обновление %2s"
 
 #, tao-public
 msgid "Manage Schema"
-msgstr ""
+msgstr "Управление схемой"
 
 #, tao-public
 msgid "Manage tests"
-msgstr ""
+msgstr "Управлять тестами"
 
 #, tao-public
 msgid "Move"
-msgstr ""
+msgstr "Переместить"
 
 #, tao-public
 msgid "Move To"
-msgstr ""
+msgstr "Переместить в"
 
 #, tao-public
 msgid "New class"
-msgstr ""
+msgstr "Новый класс"
 
 #, tao-public
 msgid "New test"
-msgstr ""
+msgstr "Новый тест"
 
 #, tao-public
 msgid "Properties"
-msgstr ""
+msgstr "Свойства"
 
 msgid "Security plugins"
-msgstr ""
+msgstr "Плагины безопасности"
 
 msgid "Set of plugins with \'security\' category"
 msgstr ""
 
+msgid "Set of plugins with \\'security\\' category"
+msgstr "Набор плагинов категории \\'безопасность\\'"
+
 msgid "Test properties"
-msgstr ""
+msgstr "Свойства теста"
 
 msgid "Test saved"
-msgstr ""
+msgstr "Тест сохранен"
 
 msgid "Test was successfully deleted."
 msgstr ""
 
 #, tao-public
 msgid "Tests"
-msgstr ""
+msgstr "Тесты"
 
 #, tao-public
 msgid "Tests library"
-msgstr ""
+msgstr "Библиотека тестов"
 
 msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
-msgstr ""
+msgstr "Режим теста (упорядочивание, оценка, накопление и т.д.) и шаблон также могут быть сконфигурированы тут."
 
 msgid "The Tests module allows to combine a selection of Items to a Test."
-msgstr ""
+msgstr "Модуль Тесты позволяет собирать выбранные задания в тест."
 
 msgid "Unable to delete test."
 msgstr ""
@@ -114,5 +123,5 @@ msgid "Unable to process your request"
 msgstr ""
 
 msgid "You checked out this test %2s ago"
-msgstr ""
+msgstr "Вы прошли этот тест %2s назад"
 

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.3.0-sprint104\n"
-"PO-Revision-Date: 2019-06-07T09:21:13\n"
+"Project-Id-Version: TAO 3.4.0-sprint121\n"
+"PO-Revision-Date: 2020-07-31T11:00:27\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: ar-arb\n"
@@ -13,6 +13,12 @@ msgstr ""
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
 
+msgid " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
+msgstr ""
+
+msgid " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
+msgstr ""
+
 msgid " . \common_Utils::toPHPVariableString($this->getDescription()) . "
 msgstr ""
 
@@ -21,11 +27,11 @@ msgstr ""
 
 #, tao-public
 msgid "Authoring"
-msgstr ""
+msgstr "ترخيص"
 
 #, tao-public
 msgid "Combine a selection of items into tests."
-msgstr ""
+msgstr "تضمين مجموعة من الأسئلة فى الامتحانات"
 
 #, tao-public
 msgid "Copy To"
@@ -76,12 +82,15 @@ msgstr "اختبار جديد"
 
 #, tao-public
 msgid "Properties"
-msgstr ""
+msgstr "خصائص"
 
 msgid "Security plugins"
 msgstr ""
 
 msgid "Set of plugins with \'security\' category"
+msgstr ""
+
+msgid "Set of plugins with \\'security\\' category"
 msgstr ""
 
 msgid "Test properties"
@@ -114,5 +123,5 @@ msgid "Unable to process your request"
 msgstr ""
 
 msgid "You checked out this test %2s ago"
-msgstr ""
+msgstr "لقد قمت باستعراض هذا الامتحان منذ %2s ثانية"
 
