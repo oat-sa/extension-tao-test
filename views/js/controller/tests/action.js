@@ -32,11 +32,11 @@ define([
     let previewerFactory = null;
     providerLoaderFactory()
         .addList({
-            previwers: {
+            previewers: {
                 id: 'qtiTests',
                 module: 'taoQtiTestPreviewer/previewer/adapter/test/qtiTest',
                 bundle: 'taoQtiTestPreviewer/loader/qtiPreviewer.min',
-                category: 'previwers'
+                category: 'previewers'
             }
         })
         .load(context.bundle)
