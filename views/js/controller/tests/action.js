@@ -18,18 +18,45 @@
  */
 define([
     'lodash',
+    'context',
     'layout/actions/binder',
-    'taoQtiTestPreviewer/previewer/adapter/test/qtiTest',
-    'uri'
-], function(_, binder, previewerFactory, uri){
+    'core/providerLoader',
+    'uri',
+    'ui/feedback',
+    'core/logger'
+], function(_, context, binder, providerLoaderFactory, uri, feedback, loggerFactory){
     'use strict';
 
-    binder.register('testPreview', function testPreview(actionContext) {
+    const logger = loggerFactory('taoTests/controller/action');
 
-        previewerFactory.init(uri.decode(actionContext.uri), {
-            readOnly: false,
-            fullPage: true
+    let previewerFactory = null;
+    providerLoaderFactory()
+        .addList({
+            previwers: {
+                id: 'qtiTests',
+                module: 'taoQtiTestPreviewer/previewer/adapter/test/qtiTest',
+                bundle: 'taoQtiTestPreviewer/loader/qtiPreviewer.min',
+                category: 'previwers'
+            }
+        })
+        .load(context.bundle)
+        .then(function (providers) {
+            previewerFactory = providers[0];
+        })
+        .catch(err => {
+            logger.error(err);
         });
+
+
+    binder.register('testPreview', function testPreview(actionContext) {
+        if (previewerFactory) {
+            previewerFactory.init(uri.decode(actionContext.uri), {
+                readOnly: false,
+                fullPage: true
+            });
+        } else {
+            feedback().error('Test Preview is not installed, please contact to your administrator.');
+        }
     });
 
 });
