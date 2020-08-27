@@ -18,18 +18,28 @@
  */
 define([
     'lodash',
+    'i18n',
     'layout/actions/binder',
-    'taoQtiTestPreviewer/previewer/adapter/test/qtiTest',
-    'uri'
-], function(_, binder, previewerFactory, uri){
+    'uri',
+    'ui/feedback',
+    'core/logger',
+    'taoTests/previewer/factory'
+], function(_, __, binder, uri, feedback, loggerFactory, previewerFactory){
     'use strict';
 
+    const logger = loggerFactory('taoTests/controller/action');
+
     binder.register('testPreview', function testPreview(actionContext) {
-
-        previewerFactory.init(uri.decode(actionContext.uri), {
-            readOnly: false,
-            fullPage: true
-        });
+        previewerFactory(
+            'qtiTest', // TODO - move to BE configuration
+            uri.decode(actionContext.uri),
+            {
+                readOnly: false,
+                fullPage: true
+            })
+            .catch(err => {
+                logger.error(err);
+                feedback().error(__('Test Preview is not installed, please contact to your administrator.'));
+            });
     });
-
 });
