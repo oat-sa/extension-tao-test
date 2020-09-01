@@ -63,6 +63,14 @@ class TestPluginServiceTest extends TestCase
         ];
 
     /**
+     * @before
+     */
+    public function init(): void
+    {
+        define('CONFIG_PATH', '/');
+    }
+
+    /**
      * Get the service with the stubbed registry
      * @return TestPluginService
      */
@@ -81,7 +89,8 @@ class TestPluginServiceTest extends TestCase
     }
 
     /**
-     * Check the service is a service
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
      */
     public function testApi()
     {
@@ -91,7 +100,8 @@ class TestPluginServiceTest extends TestCase
     }
 
     /**
-     * Test the method TestPluginService::getAllPlugins
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
      */
     public function testGetAllPlugins()
     {
@@ -121,7 +131,8 @@ class TestPluginServiceTest extends TestCase
     }
 
     /**
-     * Test the method TestPluginService::getPlugin
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
      */
     public function testGetOnePlugin()
     {

@@ -62,6 +62,14 @@ class TestProviderServiceTest extends TestCase
     ];
 
     /**
+     * @before
+     */
+    public function init(): void
+    {
+        define('CONFIG_PATH', '/');
+    }
+
+    /**
      * Get the service with the stubbed registry
      * @return TestProviderService
      */
@@ -80,7 +88,8 @@ class TestProviderServiceTest extends TestCase
     }
 
     /**
-     * Check the service is a service
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
      */
     public function testApi()
     {
@@ -90,7 +99,8 @@ class TestProviderServiceTest extends TestCase
     }
 
     /**
-     * Test the method TestProviderService::getAllProviders
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
      */
     public function testGetAllProviders()
     {
@@ -117,7 +127,8 @@ class TestProviderServiceTest extends TestCase
     }
 
     /**
-     * Test the method TestProviderService::getProvider
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
      */
     public function testGetOneProvider()
     {
