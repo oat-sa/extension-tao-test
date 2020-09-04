@@ -1,0 +1,12 @@
+<phpunit
+    bootstrap="./../generis/test/bootstrap.php"
+    convertErrorsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true">
+
+    <testsuites>
+        <testsuite name="Unit">
+            <directory>test/unit</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
