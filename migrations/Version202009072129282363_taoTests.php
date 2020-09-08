@@ -24,7 +24,7 @@ namespace oat\taoTests\migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use common_Exception as Exception;
-use oat\taoTests\models\preview\TestPreviewerService;
+use oat\taoTests\models\preview\TestPreviewerRegistryService;
 use oat\tao\scripts\tools\migrations\AbstractMigration;
 use oat\oatbox\service\exception\InvalidServiceManagerException;
 
@@ -40,7 +40,7 @@ final class Version202009072129282363_taoTests extends AbstractMigration
      */
     public function getDescription(): string
     {
-        return 'Register ' . TestPreviewerService::class;
+        return 'Register ' . TestPreviewerRegistryService::class;
     }
 
     /**
@@ -51,7 +51,7 @@ final class Version202009072129282363_taoTests extends AbstractMigration
      */
     public function up(Schema $schema): void
     {
-        $this->getServiceManager()->register(TestPreviewerService::SERVICE_ID, new TestPreviewerService());
+        $this->getServiceManager()->register(TestPreviewerRegistryService::SERVICE_ID, new TestPreviewerRegistryService());
     }
 
     /**
@@ -61,6 +61,6 @@ final class Version202009072129282363_taoTests extends AbstractMigration
      */
     public function down(Schema $schema): void
     {
-        $this->getServiceManager()->unregister(TestPreviewerService::SERVICE_ID);
+        $this->getServiceManager()->unregister(TestPreviewerRegistryService::SERVICE_ID);
     }
 }
