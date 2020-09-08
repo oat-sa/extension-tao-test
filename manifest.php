@@ -37,7 +37,7 @@ return [
         'generis' => '>=13.3.0',
         'taoItems' => '>=6.0.0',
         'taoBackOffice' => '>=3.0.0',
-        'tao' => '>=38.5.0'
+        'tao' => '>=45.10.0'
     ],
     'models' => [
         'http://www.tao.lu/Ontologies/TAOTest.rdf',
