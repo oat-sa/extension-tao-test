@@ -23,10 +23,12 @@ declare(strict_types=1);
 namespace oat\taoTests\migrations;
 
 use Doctrine\DBAL\Schema\Schema;
-use common_Exception as Exception;
-use oat\taoTests\models\preview\TestPreviewerRegistryService;
+use common_ext_Extension as Extension;
+use common_ext_ExtensionsManager as ExtensionsManager;
 use oat\tao\scripts\tools\migrations\AbstractMigration;
+use oat\taoTests\models\preview\TestPreviewerRegistryService;
 use oat\oatbox\service\exception\InvalidServiceManagerException;
+use oat\taoTests\scripts\install\RegisterTestPreviewerRegistryService;
 
 /**
  * Class Version202009072129282363_taoTests
@@ -45,13 +47,10 @@ final class Version202009072129282363_taoTests extends AbstractMigration
 
     /**
      * @param Schema $schema
-     *
-     * @throws Exception
-     * @throws InvalidServiceManagerException
      */
     public function up(Schema $schema): void
     {
-        $this->getServiceManager()->register(TestPreviewerRegistryService::SERVICE_ID, new TestPreviewerRegistryService());
+        $this->propagate(new RegisterTestPreviewerRegistryService())([]);
     }
 
     /**
@@ -61,6 +60,16 @@ final class Version202009072129282363_taoTests extends AbstractMigration
      */
     public function down(Schema $schema): void
     {
-        $this->getServiceManager()->unregister(TestPreviewerRegistryService::SERVICE_ID);
+        $serviceManager = $this->getServiceManager();
+
+        $serviceManager->unregister(TestPreviewerRegistryService::SERVICE_ID);
+
+        /** @var Extension $extension */
+        $extension = $this->getServiceManager()->get(ExtensionsManager::SERVICE_ID)->getExtensionById('tao');
+
+        $config = $extension->getConfig('client_lib_config_registry');
+        unset($config['taoTests/views/js/controller/tests/action']);
+
+        $extension->setConfig('client_lib_config_registry', $config);
     }
 }
