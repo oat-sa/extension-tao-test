@@ -23,15 +23,16 @@ define([
     'uri',
     'ui/feedback',
     'core/logger',
-    'taoTests/previewer/factory'
-], function(_, __, binder, uri, feedback, loggerFactory, previewerFactory){
+    'taoTests/previewer/factory',
+    'module'
+], function(_, __, binder, uri, feedback, loggerFactory, previewerFactory, module){
     'use strict';
 
     const logger = loggerFactory('taoTests/controller/action');
 
     binder.register('testPreview', function testPreview(actionContext) {
         previewerFactory(
-            'qtiTest', // TODO - move to BE configuration
+            module.config().provider,
             uri.decode(actionContext.uri),
             {
                 readOnly: false,

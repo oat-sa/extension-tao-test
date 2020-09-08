@@ -68,7 +68,7 @@ final class Version202009072129282363_taoTests extends AbstractMigration
         $extension = $this->getServiceManager()->get(ExtensionsManager::SERVICE_ID)->getExtensionById('tao');
 
         $config = $extension->getConfig('client_lib_config_registry');
-        unset($config['taoTests/views/js/controller/tests/action']);
+        unset($config['taoTests/controller/tests/action']);
 
         $extension->setConfig('client_lib_config_registry', $config);
     }

@@ -57,7 +57,7 @@ class RegisterTestPreviewerRegistryService extends InstallAction
         $extension = $serviceManager->get(ExtensionsManager::SERVICE_ID)->getExtensionById('tao');
 
         $config = $extension->getConfig('client_lib_config_registry');
-        $config['taoTests/views/js/controller/tests/action'] = [
+        $config['taoTests/controller/tests/action'] = [
             'provider' => 'qtiTest',
         ];
 
