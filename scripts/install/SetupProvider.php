@@ -20,61 +20,38 @@
 
 declare(strict_types=1);
 
-namespace oat\taoTests\migrations;
+namespace oat\taoTests\scripts\install;
 
-use Doctrine\DBAL\Schema\Schema;
 use common_exception_Error as Error;
-use oat\taoTests\scripts\install\SetupProvider;
+use oat\oatbox\extension\InstallAction;
 use common_ext_ExtensionsManager as ExtensionsManager;
-use oat\tao\scripts\tools\migrations\AbstractMigration;
 use common_ext_ExtensionException as ExtensionException;
 use oat\oatbox\service\exception\InvalidServiceManagerException;
-use oat\taoTests\scripts\install\RegisterTestPreviewerRegistryService;
-use oat\taoTests\models\preview\TestPreviewerRegistryServiceInterface;
 
 /**
- * Class Version202009072129282363_taoTests
+ * Class SetupProvider
  *
- * @package oat\taoTests\migrations
+ * @package oat\taoTests\scripts\install
  */
-final class Version202009072129282363_taoTests extends AbstractMigration
+class SetupProvider extends InstallAction
 {
     /**
-     * @return string
-     */
-    public function getDescription(): string
-    {
-        return 'Register ' . TestPreviewerRegistryServiceInterface::class;
-    }
-
-    /**
-     * @param Schema $schema
-     */
-    public function up(Schema $schema): void
-    {
-        $this->propagate(new RegisterTestPreviewerRegistryService())([]);
-        $this->propagate(new SetupProvider())([]);
-    }
-
-    /**
-     * @param Schema $schema
+     * @param array $params
      *
      * @throws Error
      * @throws InvalidServiceManagerException
      * @throws ExtensionException
      */
-    public function down(Schema $schema): void
+    public function __invoke($params)
     {
-        $serviceManager = $this->getServiceManager();
-
-        $serviceManager->unregister(TestPreviewerRegistryServiceInterface::SERVICE_ID);
-
         /** @var ExtensionsManager $extensionManager */
-        $extensionManager = $serviceManager->get(ExtensionsManager::SERVICE_ID);
+        $extensionManager = $this->getServiceManager()->get(ExtensionsManager::SERVICE_ID);
         $extension = $extensionManager->getExtensionById('tao');
 
         $config = $extension->getConfig('client_lib_config_registry');
-        unset($config['taoTests/controller/tests/action']);
+        $config['taoTests/controller/tests/action'] = [
+            'provider' => 'qtiTest',
+        ];
 
         $extension->setConfig('client_lib_config_registry', $config);
     }

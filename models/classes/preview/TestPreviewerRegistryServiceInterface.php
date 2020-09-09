@@ -22,16 +22,16 @@ declare(strict_types=1);
 
 namespace oat\taoTests\models\preview;
 
-use oat\tao\model\preview\PreviewerRegistryService;
+use oat\tao\model\preview\PreviewerRegistryServiceInterface;
 
 /**
- * Class TestPreviewerRegistryService
+ * Interface TestPreviewerRegistryServiceInterface
  *
  * @package oat\taoTests\models\preview
  */
-class TestPreviewerRegistryService extends PreviewerRegistryService
+interface TestPreviewerRegistryServiceInterface extends PreviewerRegistryServiceInterface
 {
     public const SERVICE_ID = 'taoTests/TestPreviewerRegistryService';
 
-    protected $registryEntryKey = 'taoTests/previewer/factory';
+    public const REGISTRY_ENTRY_KEY = 'taoTests/previewer/factory';
 }

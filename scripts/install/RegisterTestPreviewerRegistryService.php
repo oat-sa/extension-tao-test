@@ -23,12 +23,10 @@ declare(strict_types=1);
 namespace oat\taoTests\scripts\install;
 
 use common_Exception as Exception;
-use common_exception_Error as Error;
-use common_ext_Extension as Extension;
 use oat\oatbox\extension\InstallAction;
-use common_ext_ExtensionsManager as ExtensionsManager;
-use oat\taoTests\models\preview\TestPreviewerRegistryService;
+use oat\tao\model\preview\PreviewerRegistryService;
 use oat\oatbox\service\exception\InvalidServiceManagerException;
+use oat\taoTests\models\preview\TestPreviewerRegistryServiceInterface;
 
 /**
  * Class RegisterTestPreviewerRegistryService
@@ -38,29 +36,18 @@ use oat\oatbox\service\exception\InvalidServiceManagerException;
 class RegisterTestPreviewerRegistryService extends InstallAction
 {
     /**
-     * @param $params
+     * @param array $params
      *
-     * @throws Error
      * @throws Exception
      * @throws InvalidServiceManagerException
      */
     public function __invoke($params)
     {
-        $serviceManager = $this->getServiceManager();
-
-        $serviceManager->register(
-            TestPreviewerRegistryService::SERVICE_ID,
-            new TestPreviewerRegistryService()
+        $this->getServiceManager()->register(
+            TestPreviewerRegistryServiceInterface::SERVICE_ID,
+            new PreviewerRegistryService([
+                PreviewerRegistryService::OPTION_REGISTRY_ENTRY_KEY => TestPreviewerRegistryServiceInterface::REGISTRY_ENTRY_KEY,
+            ])
         );
-
-        /** @var Extension $extension */
-        $extension = $serviceManager->get(ExtensionsManager::SERVICE_ID)->getExtensionById('tao');
-
-        $config = $extension->getConfig('client_lib_config_registry');
-        $config['taoTests/controller/tests/action'] = [
-            'provider' => 'qtiTest',
-        ];
-
-        $extension->setConfig('client_lib_config_registry', $config);
     }
 }

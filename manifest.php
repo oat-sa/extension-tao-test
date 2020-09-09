@@ -19,12 +19,16 @@
  *               2009-2012 (update and modification) Public Research Centre Henri Tudor (under the project TAO-SUSTAIN & TAO-DEV);
  *               2013-     (update and modification) Open Assessment Technologies SA;
  */
+
 /*
  * @author CRP Henri Tudor - TAO Team - {@link http://www.tao.lu}
  * @license GPLv2  http://www.opensource.org/licenses/gpl-2.0.php
  *
  */
 
+use oat\tao\model\user\TaoRoles;
+use oat\taoTests\scripts\update\Updater;
+use oat\taoTests\scripts\install\SetupProvider;
 use oat\taoTests\scripts\install\RegisterFrontendPaths;
 use oat\taoTests\scripts\install\RegisterTestPluginService;
 use oat\taoTests\scripts\install\RegisterTestProviderService;
@@ -57,13 +61,14 @@ return [
             RegisterTestProviderService::class,
             RegisterFrontendPaths::class,
             RegisterTestPreviewerRegistryService::class,
+            SetupProvider::class,
         ],
     ],
-    'update' => "oat\\taoTests\\scripts\\update\\Updater",
+    'update' => Updater::class,
     'managementRole' => 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole',
     'acl' => [
         ['grant', 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole', ['ext' => 'taoTests']],
-        ['grant', \oat\tao\model\user\TaoRoles::REST_PUBLISHER, ['ext' => 'taoTests', 'mod' => 'RestTests']],
+        ['grant', TaoRoles::REST_PUBLISHER, ['ext' => 'taoTests', 'mod' => 'RestTests']],
     ],
     'optimizableClasses' => [
         'http://www.tao.lu/Ontologies/TAOTest.rdf#Test',
