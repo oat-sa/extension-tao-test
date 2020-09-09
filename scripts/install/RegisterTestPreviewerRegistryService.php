@@ -45,9 +45,7 @@ class RegisterTestPreviewerRegistryService extends InstallAction
     {
         $this->getServiceManager()->register(
             TestPreviewerRegistryServiceInterface::SERVICE_ID,
-            new PreviewerRegistryService([
-                PreviewerRegistryService::OPTION_REGISTRY_ENTRY_KEY => TestPreviewerRegistryServiceInterface::REGISTRY_ENTRY_KEY,
-            ])
+            new PreviewerRegistryService(TestPreviewerRegistryServiceInterface::REGISTRY_ENTRY_KEY)
         );
     }
 }
