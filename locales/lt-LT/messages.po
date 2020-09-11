@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.4.0-sprint112\n"
-"PO-Revision-Date: 2019-10-09T09:02:27\n"
+"Project-Id-Version: TAO 3.4.0-sprint137\n"
+"PO-Revision-Date: 2020-09-11T08:31:14\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: lt-LT\n"
@@ -12,6 +12,12 @@ msgstr ""
 "X-Poedit-Basepath: ../../\n"
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
+
+msgid " . \common_Utils::toPHPVariableString($this->getDescription()) . "
+msgstr ""
+
+msgid " . \common_Utils::toPHPVariableString($this->getLabel()) . "
+msgstr ""
 
 #, tao-public
 msgid "Authoring"
@@ -69,14 +75,21 @@ msgid "New test"
 msgstr "Naujas testas"
 
 #, tao-public
+msgid "Preview"
+msgstr ""
+
+#, tao-public
 msgid "Properties"
 msgstr "Savybės"
 
 msgid "Security plugins"
 msgstr "Saugumo plėtiniai"
 
-msgid "Set of plugins with 'security' category"
-msgstr "Rinkinys plėtinių su „saugumo“ kategorija"
+msgid "Set of plugins with \'security\' category"
+msgstr ""
+
+msgid "Test Preview is not installed, please contact to your administrator."
+msgstr ""
 
 msgid "Test properties"
 msgstr "Testo savybės"
