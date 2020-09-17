@@ -9,6 +9,7 @@
     "url": "https://github.com/oat-sa/extension-tao-test.git"
   },
   "dependencies": {
+    "@oat-sa/tao-item-runner": "^0.6.1",
     "@oat-sa/tao-test-runner": "oat-sa/tao-test-runner-fe#feature/NEX-1554/runner-component-set-loaded-plugins"
   }
 }

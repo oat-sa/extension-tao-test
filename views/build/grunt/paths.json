@@ -1,3 +1,5 @@
 {
-    "taoTests/runner": "../../../taoTests/views/node_modules/@oat-sa/tao-test-runner/dist"
+    "taoTests/runner": "../../../taoTests/views/node_modules/@oat-sa/tao-test-runner/dist",
+    "taoItems/runner": "../../../taoTests/views/node_modules/@oat-sa/tao-item-runner/dist/runner",
+    "taoItems/assets": "../../../taoTests/views/node_modules/@oat-sa/tao-item-runner/dist/assets"
 }
