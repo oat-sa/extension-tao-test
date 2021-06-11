@@ -13,23 +13,17 @@ msgstr ""
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
 
-msgid " . \common_Utils::toPHPVariableString($this->getDescription()) . "
-msgstr ""
-
-msgid " . \common_Utils::toPHPVariableString($this->getLabel()) . "
-msgstr ""
-
 #, tao-public
 msgid "Authoring"
 msgstr "オーサリング"
 
 #, tao-public
 msgid "Combine a selection of items into tests."
-msgstr "選択された問題をテストに結合する"
+msgstr "選択されたアイテムをテストとして構成する"
 
 #, tao-public
 msgid "Copy To"
-msgstr ""
+msgstr "指定コピー"
 
 #, tao-public
 msgid "Delete"
@@ -37,7 +31,7 @@ msgstr "削除"
 
 #, tao-public
 msgid "Duplicate"
-msgstr "複製"
+msgstr "コピー"
 
 #, tao-public
 msgid "Export"
@@ -48,15 +42,15 @@ msgid "Import"
 msgstr "インポート"
 
 msgid "Last updated on %2s"
-msgstr ""
+msgstr "最終更新日: %2s"
 
 #, tao-public
 msgid "Manage Schema"
-msgstr ""
+msgstr "スキーマ管理"
 
 #, tao-public
 msgid "Manage tests"
-msgstr "テストの管理"
+msgstr "テスト管理"
 
 #, tao-public
 msgid "Move"
@@ -64,7 +58,7 @@ msgstr "移動"
 
 #, tao-public
 msgid "Move To"
-msgstr ""
+msgstr "移動先の選択"
 
 #, tao-public
 msgid "New class"
@@ -76,29 +70,29 @@ msgstr "新規テスト"
 
 #, tao-public
 msgid "Preview"
-msgstr ""
+msgstr "プレビュー"
 
 #, tao-public
 msgid "Properties"
 msgstr "プロパティ"
 
 msgid "Security plugins"
-msgstr ""
+msgstr "セキュリティプラグイン"
 
 msgid "Set of plugins with \'security\' category"
-msgstr ""
+msgstr " \'security\' カテゴリを持つプラグインセット"
 
 msgid "Test Preview is not installed, please contact to your administrator."
-msgstr ""
+msgstr "テストプレビューはインストールされていません。管理者に問合せてください。"
 
 msgid "Test properties"
-msgstr "テスト属性"
+msgstr "テストプロパティ"
 
 msgid "Test saved"
 msgstr "テストは保存されました。"
 
 msgid "Test was successfully deleted."
-msgstr ""
+msgstr "テストが削除されました"
 
 #, tao-public
 msgid "Tests"
@@ -109,16 +103,16 @@ msgid "Tests library"
 msgstr "テストライブラリ"
 
 msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
-msgstr "テストのモード（順序・得点・集積など）およびレイアウトはここでも設定されます。"
+msgstr "テストのモード（順序・配点・累計など）やレイアウトもここでも設定します"
 
 msgid "The Tests module allows to combine a selection of Items to a Test."
-msgstr "テストモジュールは選択された問題をテストに結合することを許可します"
+msgstr "テストモジュールでは、選択したアイテムをテストにまとめることができます。"
 
 msgid "Unable to delete test."
-msgstr ""
+msgstr "テストを削除できません"
 
 msgid "Unable to process your request"
-msgstr ""
+msgstr "リクエストを処理できません"
 
 msgid "You checked out this test %2s ago"
 msgstr "あなたはこのテストを%2s前にチェックアウトしました"
