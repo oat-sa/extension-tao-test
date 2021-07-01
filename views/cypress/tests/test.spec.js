@@ -43,12 +43,7 @@ describe('Tests', () => {
 
         cy.visit(testsUrl);
 
-        cy.get(selectors.root).then(root => {
-            if (root.find(selectors.nodeWithName(newClassName)).length === 0) {
-                cy.addClass(selectors.testClassForm);
-                cy.renameSelected(selectors.testClassForm, newClassName);
-            }
-        });
+        cy.addClassToRoot(selectors.root, selectors.testClassForm, newClassName);
     });
 
     /**
