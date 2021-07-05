@@ -155,6 +155,7 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
         }
 
         $uri = $this->getRequestParameter('id');
+        $classUri = $this->getRequestParameter('classUri');
 
         $this->validateInstanceRoot($uri);
 
@@ -167,7 +168,14 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
             $lockManager->releaseLock($instance, $userId);
         }
 
-        if ($this->service->deleteTest($instance)) {
+        // If it is a class deletion
+        if ($uri === $classUri) {
+            $class = $this->getClass($classUri);
+            $label = $class->getLabel();
+
+            $success = $this->getClassService()->deleteClass($class);
+            $message = $success ? __('%s has been deleted', $label) : __('Unable to delete %s', $label);
+        } elseif ($this->service->deleteTest($instance)) {
             $success = true;
             $message = __('Test was successfully deleted.');
         } else {
