@@ -22,6 +22,7 @@ import selectors from '../utils/selectors';
 
 describe('Tests', () => {
     const className = 'Test E2E class';
+    const classMovedName = 'Test E2E class Moved';
 
     /**
      * Visit the page
@@ -65,6 +66,28 @@ describe('Tests', () => {
                 selectors.deleteClass,
                 selectors.deleteConfirm,
                 className
+            );
+        });
+
+        it('can delete empty test class', function () {
+            cy.addClassToRoot(selectors.root, selectors.itemClassForm, className);
+            cy.deleteClassFromRoot(
+                selectors.root,
+                selectors.itemClassForm,
+                selectors.deleteClass,
+                selectors.deleteConfirm,
+                className
+            );
+        });
+
+        it('can move test class', function () {
+            cy.moveClassFromRoot(
+                selectors.root,
+                selectors.itemClassForm,
+                selectors.moveClass,
+                selectors.moveConfirmSelector,
+                className,
+                classMovedName
             );
         });
     });
