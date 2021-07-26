@@ -70,10 +70,10 @@ describe('Tests', () => {
         });
 
         it('can delete empty test class', function () {
-            cy.addClassToRoot(selectors.root, selectors.itemClassForm, className);
+            cy.addClassToRoot(selectors.root, selectors.testClassForm, className);
             cy.deleteClassFromRoot(
                 selectors.root,
-                selectors.itemClassForm,
+                selectors.testClassForm,
                 selectors.deleteClass,
                 selectors.deleteConfirm,
                 className
@@ -83,7 +83,7 @@ describe('Tests', () => {
         it('can move test class', function () {
             cy.moveClassFromRoot(
                 selectors.root,
-                selectors.itemClassForm,
+                selectors.testClassForm,
                 selectors.moveClass,
                 selectors.moveConfirmSelector,
                 className,
