@@ -91,4 +91,14 @@ describe('Tests', () => {
             );
         });
     });
+
+    after(() => {
+        cy.deleteClassFromRoot(
+            selectors.root,
+            selectors.assetClassForm,
+            selectors.deleteClass,
+            selectors.deleteConfirm,
+            classMovedName
+        );
+    });
 });
