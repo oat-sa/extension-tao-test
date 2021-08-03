@@ -36,7 +36,7 @@ class taoTests_actions_TestImport extends tao_actions_Import
      * overwrite the parent index to add the requiresRight for Tests
      *
      * @requiresRight id WRITE
-     * @see           tao_actions_Import::index()
+     * @requiresRight classUri WRITE
      */
     public function index()
     {

@@ -167,13 +167,16 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
             $lockManager->releaseLock($instance, $userId);
         }
 
-        if ($this->service->deleteTest($instance)) {
-            $success = true;
-            $message = __('Test was successfully deleted.');
+        $label = $instance->getLabel();
+
+        if ($instance->isClass()) {
+            $class = $this->getClass($instance->getUri());
+            $success = $this->getClassService()->deleteClass($class);
         } else {
-            $success = false;
-            $message = __('Unable to delete test.');
+            $success = $this->getClassService()->deleteTest($instance);
         }
+
+        $message = $success ? __('%s has been deleted.', $label) : __('Unable to delete %s.', $label);
 
         $this->returnJson([
             'success' => $success,
@@ -213,15 +216,6 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
         parent::moveInstance();
     }
 
-    /**
-     * overwrite the parent moveAllInstances to add the requiresRight only in Items
-     * @see tao_actions_TaoModule::moveResource()
-     * @requiresRight classUri WRITE
-     */
-    public function moveResource()
-    {
-        return parent::moveResource();
-    }
     /**
      * overwrite the parent moveAllInstances to add the requiresRight only in Items
      * @see tao_actions_TaoModule::moveAll()
