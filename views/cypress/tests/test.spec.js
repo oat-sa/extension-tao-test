@@ -41,7 +41,7 @@ describe('Tests', () => {
      * Tests
      */
     describe('Test creation, editing and deletion', () => {
-        it.only('can create a new test class', function () {
+        it('can create a new test class', function () {
             cy.addClassToRoot(
                 selectors.root,
                 selectors.testClassForm,
