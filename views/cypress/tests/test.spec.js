@@ -19,7 +19,6 @@
 import urls from '../utils/urls';
 import selectors from '../utils/selectors';
 
-
 describe('Tests', () => {
     const className = 'Test E2E class';
     const classMovedName = 'Test E2E class Moved';
@@ -42,8 +41,14 @@ describe('Tests', () => {
      * Tests
      */
     describe('Test creation, editing and deletion', () => {
-        it('can create a new test class', function () {
-            cy.addClassToRoot(selectors.root, selectors.testClassForm, className);
+        it.only('can create a new test class', function () {
+            cy.addClassToRoot(
+                selectors.root,
+                selectors.testClassForm,
+                className,
+                selectors.editClassLabelUrl,
+                selectors.treeRenderUrl,
+                selectors.addSubClassUrl);
         });
 
         it('can create and rename a new test', function () {
@@ -56,7 +61,13 @@ describe('Tests', () => {
             cy.selectNode(selectors.root, selectors.testClassForm, className)
                 .addNode(selectors.testForm, selectors.addTest)
                 .renameSelected(selectors.testForm, 'Test E2E test 2')
-                .deleteNode(selectors.root, selectors.deleteTest, 'Test E2E test 2');
+                .deleteNode(
+                    selectors.root,
+                    selectors.deleteTest,
+                    'Test E2E test 2',
+                    selectors.treeRenderUrl,
+                    selectors.editItem
+                );
         });
 
         it('can delete test class', function () {
@@ -65,18 +76,29 @@ describe('Tests', () => {
                 selectors.testClassForm,
                 selectors.deleteClass,
                 selectors.deleteConfirm,
-                className
+                className,
+                selectors.treeRenderUrl,
+                selectors.resourceRelations
             );
         });
 
         it('can delete empty test class', function () {
-            cy.addClassToRoot(selectors.root, selectors.testClassForm, className)
+            cy.addClassToRoot(
+                selectors.root,
+                selectors.testClassForm,
+                className,
+                selectors.editClassLabelUrl,
+                selectors.treeRenderUrl,
+                selectors.addSubClassUrl
+            )
                 .deleteClassFromRoot(
                     selectors.root,
                     selectors.testClassForm,
                     selectors.deleteClass,
                     selectors.deleteConfirm,
-                    className
+                    className,
+                    selectors.treeRenderUrl,
+                    selectors.resourceRelations
                 )
         });
 
@@ -89,7 +111,12 @@ describe('Tests', () => {
                 selectors.deleteClass,
                 selectors.deleteConfirm,
                 className,
-                classMovedName
+                classMovedName,
+                selectors.treeRenderUrl,
+                selectors.editClassLabelUrl,
+                selectors.restResourceGetAll,
+                selectors.resourceRelations,
+                selectors.addSubClassUrl
             );
         });
     });
