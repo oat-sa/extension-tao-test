@@ -47,16 +47,16 @@ describe('Tests', () => {
         });
 
         it('can create and rename a new test', function () {
-            cy.selectNode(selectors.root, selectors.testClassForm, className);
-            cy.addNode(selectors.testForm, selectors.addTest);
-            cy.renameSelected(selectors.testForm, 'Test E2E test 1');
+            cy.selectNode(selectors.root, selectors.testClassForm, className)
+                .addNode(selectors.testForm, selectors.addTest)
+                .renameSelected(selectors.testForm, 'Test E2E test 1');
         });
 
         it('can delete test', function () {
-            cy.selectNode(selectors.root, selectors.testClassForm, className);
-            cy.addNode(selectors.testForm, selectors.addTest);
-            cy.renameSelected(selectors.testForm, 'Test E2E test 2');
-            cy.deleteNode(selectors.deleteTest, 'Test E2E test 2');
+            cy.selectNode(selectors.root, selectors.testClassForm, className)
+                .addNode(selectors.testForm, selectors.addTest)
+                .renameSelected(selectors.testForm, 'Test E2E test 2')
+                .deleteNode(selectors.root, selectors.deleteTest, 'Test E2E test 2');
         });
 
         it('can delete test class', function () {
@@ -70,14 +70,14 @@ describe('Tests', () => {
         });
 
         it('can delete empty test class', function () {
-            cy.addClassToRoot(selectors.root, selectors.testClassForm, className);
-            cy.deleteClassFromRoot(
-                selectors.root,
-                selectors.testClassForm,
-                selectors.deleteClass,
-                selectors.deleteConfirm,
-                className
-            );
+            cy.addClassToRoot(selectors.root, selectors.testClassForm, className)
+                .deleteClassFromRoot(
+                    selectors.root,
+                    selectors.testClassForm,
+                    selectors.deleteClass,
+                    selectors.deleteConfirm,
+                    className
+                )
         });
 
         it('can move test class', function () {
@@ -86,19 +86,11 @@ describe('Tests', () => {
                 selectors.testClassForm,
                 selectors.moveClass,
                 selectors.moveConfirmSelector,
+                selectors.deleteClass,
+                selectors.deleteConfirm,
                 className,
                 classMovedName
             );
         });
-    });
-
-    after(() => {
-        cy.deleteClassFromRoot(
-            selectors.root,
-            selectors.testClassForm,
-            selectors.deleteClass,
-            selectors.deleteConfirm,
-            classMovedName
-        );
     });
 });
