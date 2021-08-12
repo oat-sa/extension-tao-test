@@ -19,43 +19,80 @@
 import urls from '../utils/urls';
 import selectors from '../utils/selectors';
 
-
 describe('Tests', () => {
     const className = 'Test E2E class';
+    const classMovedName = 'Test E2E class Moved';
 
     /**
-     * Visit the page
-     */
-    beforeEach(() => {
-        cy.visit(urls.tests);
-    });
-
-    /**
-     * Log in
+     * Log in and wait for render
+     * After @treeRender click root class
      */
     before(() => {
         cy.loginAsAdmin();
+        cy.intercept('GET', `**/${ selectors.treeRenderUrl }/getOntologyData**`).as('treeRender');
+        cy.intercept('POST', `**/${ selectors.editClassLabelUrl }`).as('editClassLabel');
+        cy.visit(urls.tests);
+        cy.wait('@treeRender', { requestTimeout: 10000 });
+        cy.get(`${selectors.root} a`)
+            .first()
+            .click();
+        cy.wait('@editClassLabel', { requestTimeout: 10000 });
     });
 
     /**
      * Tests
      */
-    describe('Test creation, editing and deletion', () => {
+    describe('Test creation and edition', () => {
         it('can create a new test class', function () {
-            cy.addClassToRoot(selectors.root, selectors.testClassForm, className);
+            cy.addClassToRoot(
+                selectors.root,
+                selectors.testClassForm,
+                className,
+                selectors.editClassLabelUrl,
+                selectors.treeRenderUrl,
+                selectors.addSubClassUrl
+            );
         });
 
         it('can create and rename a new test', function () {
-            cy.selectNode(selectors.root, selectors.testClassForm, className);
-            cy.addNode(selectors.testForm, selectors.addTest);
-            cy.renameSelected(selectors.testForm, 'Test E2E test 1');
+            cy.selectNode(selectors.root, selectors.testClassForm, className)
+                .addNode(selectors.testForm, selectors.addTest)
+                .renameSelectedTest(selectors.testForm, selectors.editTestUrl, 'Test E2E test 1');
+        });
+    });
+
+    describe('Moving and deleting', () => {
+        it('can delete test', function () {
+            cy.selectNode(selectors.root, selectors.testClassForm, className)
+                .addNode(selectors.testForm, selectors.addTest)
+                .renameSelectedTest(selectors.testForm, selectors.editTestUrl,'Test E2E test 2')
+                .deleteNode(
+                    selectors.root,
+                    selectors.deleteTest,
+                    selectors.editItemUrl,
+                    'Test E2E test 2',
+                );
         });
 
-        it('can delete test', function () {
-            cy.selectNode(selectors.root, selectors.testClassForm, className);
-            cy.addNode(selectors.testForm, selectors.addTest);
-            cy.renameSelected(selectors.testForm, 'Test E2E test 2');
-            cy.deleteNode(selectors.deleteTest, 'Test E2E test 2');
+        it('can move test class', function () {
+            cy.intercept('POST', `**/${ selectors.editClassLabelUrl }`).as('editClassLabel');
+
+            cy.getSettled(`${selectors.root} a:nth(0)`)
+            .click()
+            .wait('@editClassLabel', { requestTimeout: 10000 })
+            .addClass(selectors.testClassForm, selectors.treeRenderUrl, selectors.addSubClassUrl)
+            .renameSelectedClass(selectors.testClassForm, classMovedName);
+
+            cy.wait('@treeRender', { requestTimeout: 10000 });
+
+            cy.moveClassFromRoot(
+                selectors.root,
+                selectors.moveClass,
+                selectors.moveConfirmSelector,
+                className,
+                classMovedName,
+                selectors.restResourceGetAll,
+            );
         });
 
         it('can delete test class', function () {
@@ -64,7 +101,30 @@ describe('Tests', () => {
                 selectors.testClassForm,
                 selectors.deleteClass,
                 selectors.deleteConfirm,
-                className
+                classMovedName,
+                selectors.deleteTestUrl,
+            );
+        });
+
+        it('can delete empty test class', function () {
+            cy.intercept('POST', `**/${ selectors.editClassLabelUrl }`).as('editClassLabel')
+
+            cy.getSettled(`${selectors.root} a:nth(0)`)
+            .click()
+            .wait('@editClassLabel', { requestTimeout: 10000 })
+            .addClass(selectors.testClassForm, selectors.treeRenderUrl, selectors.addSubClassUrl)
+            .renameSelectedClass(selectors.testClassForm, className);
+
+            cy.wait('@editClassLabel', { requestTimeout: 10000 });
+
+            cy.deleteClassFromRoot(
+                selectors.root,
+                selectors.testClassForm,
+                selectors.deleteClass,
+                selectors.deleteConfirm,
+                className,
+                selectors.deleteTestUrl,
+                false
             );
         });
     });
