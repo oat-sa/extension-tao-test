@@ -42,7 +42,7 @@ describe('Tests', () => {
     /**
      * Tests
      */
-    describe('Test creation, editing and deletion', () => {
+    describe('Test creation and edition', () => {
         it('can create a new test class', function () {
             cy.addClassToRoot(
                 selectors.root,
@@ -59,7 +59,9 @@ describe('Tests', () => {
                 .addNode(selectors.testForm, selectors.addTest)
                 .renameSelectedTest(selectors.testForm, selectors.editTestUrl, 'Test E2E test 1');
         });
+    });
 
+    describe('Moving and deleting', () => {
         it('can delete test', function () {
             cy.selectNode(selectors.root, selectors.testClassForm, className)
                 .addNode(selectors.testForm, selectors.addTest)
