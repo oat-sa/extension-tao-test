@@ -13,5 +13,7 @@ export default {
     treeRenderUrl: 'taoTests/Tests',
     addSubClassUrl: 'taoTests/Tests/addSubClass',
     restResourceGetAll: 'tao/RestResource/getAll',
-    resourceRelations: 'tao/ResourceRelations'
+    resourceRelations: 'tao/ResourceRelations',
+    editTestUrl: 'taoTests/Tests/editTest',
+    deleteTestUrl: 'taoTests/Tests/delete'
 };
