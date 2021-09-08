@@ -248,4 +248,13 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
     {
         return parent::deleteAll();
     }
+
+    /**
+     * Move class to another location
+     * @requiresRight classUri WRITE
+     */
+    public function moveClass()
+    {
+        return parent::moveResource();
+    }
 }
