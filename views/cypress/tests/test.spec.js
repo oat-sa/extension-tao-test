@@ -32,11 +32,11 @@ describe('Tests', () => {
         cy.intercept('GET', `**/${ selectors.treeRenderUrl }/getOntologyData**`).as('treeRender');
         cy.intercept('POST', `**/${ selectors.editClassLabelUrl }`).as('editClassLabel');
         cy.visit(urls.tests);
-        cy.wait('@treeRender', { requestTimeout: 10000 });
+        cy.wait('@treeRender');
         cy.get(`${selectors.root} a`)
             .first()
             .click();
-        cy.wait('@editClassLabel', { requestTimeout: 10000 });
+        cy.wait('@editClassLabel');
     });
 
     /**
@@ -79,11 +79,11 @@ describe('Tests', () => {
 
             cy.getSettled(`${selectors.root} a:nth(0)`)
             .click()
-            .wait('@editClassLabel', { requestTimeout: 10000 })
+            .wait('@editClassLabel')
             .addClass(selectors.testClassForm, selectors.treeRenderUrl, selectors.addSubClassUrl)
             .renameSelectedClass(selectors.testClassForm, classMovedName);
 
-            cy.wait('@treeRender', { requestTimeout: 10000 });
+            cy.wait('@treeRender');
 
             cy.moveClassFromRoot(
                 selectors.root,
@@ -111,11 +111,11 @@ describe('Tests', () => {
 
             cy.getSettled(`${selectors.root} a:nth(0)`)
             .click()
-            .wait('@editClassLabel', { requestTimeout: 10000 })
+            .wait('@editClassLabel')
             .addClass(selectors.testClassForm, selectors.treeRenderUrl, selectors.addSubClassUrl)
             .renameSelectedClass(selectors.testClassForm, className);
 
-            cy.wait('@editClassLabel', { requestTimeout: 10000 });
+            cy.wait('@editClassLabel');
 
             cy.deleteClassFromRoot(
                 selectors.root,
