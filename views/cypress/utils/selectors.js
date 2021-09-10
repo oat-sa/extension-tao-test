@@ -1,7 +1,7 @@
 export default {
     deleteTest: '[data-context="resource"][data-action="removeNode"]',
     deleteClass: '[data-context="resource"][data-action="removeNode"]',
-    moveClass: '[id="test-move-to"][data-context="resource"][data-action="moveTo"]',
+    moveClass: '[id="class-move-to"][data-context="class"][data-action="moveTo"]',
     moveConfirmSelector: 'button[data-control="ok"]',
     addTest: '[data-context="resource"][data-action="instanciate"]',
     testForm: 'form[action="/taoTests/Tests/editTest"]',
