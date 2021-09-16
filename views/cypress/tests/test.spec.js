@@ -57,7 +57,7 @@ describe('Tests', () => {
         it('can create and rename a new test', function () {
             cy.selectNode(selectors.root, selectors.testClassForm, className)
                 .addNode(selectors.testForm, selectors.addTest)
-                .renameSelectedTest(selectors.testForm, selectors.editTestUrl, 'Test E2E test 1');
+                .renameSelectedNode(selectors.testForm, selectors.editTestUrl, 'Test E2E test 1');
         });
     });
 
@@ -65,7 +65,7 @@ describe('Tests', () => {
         it('can delete test', function () {
             cy.selectNode(selectors.root, selectors.testClassForm, className)
                 .addNode(selectors.testForm, selectors.addTest)
-                .renameSelectedTest(selectors.testForm, selectors.editTestUrl,'Test E2E test 2')
+                .renameSelectedNode(selectors.testForm, selectors.editTestUrl,'Test E2E test 2')
                 .deleteNode(
                     selectors.root,
                     selectors.deleteTest,
