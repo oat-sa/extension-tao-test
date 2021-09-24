@@ -28,15 +28,12 @@ describe('Tests', () => {
      * After @treeRender click root class
      */
     before(() => {
-        cy.loginAsAdmin();
-        cy.intercept('GET', `**/${ selectors.treeRenderUrl }/getOntologyData**`).as('treeRender');
-        cy.intercept('POST', `**/${ selectors.editClassLabelUrl }`).as('editClassLabel');
-        cy.visit(urls.tests);
-        cy.wait('@treeRender');
-        cy.get(`${selectors.root} a`)
-            .first()
-            .click();
-        cy.wait('@editClassLabel');
+        cy.setup(
+            selectors.treeRenderUrl,
+            selectors.editClassLabelUrl,
+            urls.tests,
+            selectors.root
+        );
     });
 
     /**
