@@ -80,8 +80,6 @@ describe('Tests', () => {
             .addClass(selectors.testClassForm, selectors.treeRenderUrl, selectors.addSubClassUrl)
             .renameSelectedClass(selectors.testClassForm, classMovedName);
 
-            cy.wait('@treeRender');
-
             cy.moveClassFromRoot(
                 selectors.root,
                 selectors.moveClass,
