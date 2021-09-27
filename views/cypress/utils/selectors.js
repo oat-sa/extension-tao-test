@@ -1,19 +1,23 @@
 export default {
+    addTest: '[data-context="resource"][data-action="instanciate"]',
+    addSubClassUrl: 'taoTests/Tests/addSubClass',
+
     deleteTest: '[data-context="resource"][data-action="removeNode"]',
     deleteClass: '[data-context="resource"][data-action="removeNode"]',
-    moveClass: '[id="class-move-to"][data-context="class"][data-action="moveTo"]',
-    moveConfirmSelector: 'button[data-control="ok"]',
-    addTest: '[data-context="resource"][data-action="instanciate"]',
-    testForm: 'form[action="/taoTests/Tests/editTest"]',
-    testClassForm: 'form[action="/taoTests/Tests/editClassLabel"]',
+    deleteTestUrl: 'taoTests/Tests/delete',
     deleteConfirm: '[data-control="ok"]',
-    root: '[data-uri="http://www.tao.lu/Ontologies/TAOTest.rdf#Test"]',
+
     editClassLabelUrl: 'taoTests/Tests/editClassLabel',
     editItemUrl: 'taoTests/Tests/editTest',
-    treeRenderUrl: 'taoTests/Tests',
-    addSubClassUrl: 'taoTests/Tests/addSubClass',
-    restResourceGetAll: 'tao/RestResource/getAll',
-    resourceRelations: 'tao/ResourceRelations',
     editTestUrl: 'taoTests/Tests/editTest',
-    deleteTestUrl: 'taoTests/Tests/delete'
+
+    moveClass: '[id="class-move-to"][data-context="class"][data-action="moveTo"]',
+    moveConfirmSelector: 'button[data-control="ok"]',
+
+    restResourceGetAll: 'tao/RestResource/getAll',
+    root: '[data-uri="http://www.tao.lu/Ontologies/TAOTest.rdf#Test"]',
+
+    testForm: 'form[action="/taoTests/Tests/editTest"]',
+    testClassForm: 'form[action="/taoTests/Tests/editClassLabel"]',
+    treeRenderUrl: 'taoTests/Tests',
 };
