@@ -22,6 +22,7 @@ import selectors from '../utils/selectors';
 describe('Tests', () => {
     const className = 'Test E2E class';
     const classMovedName = 'Test E2E class Moved';
+    const newPropertyName = 'I am a new property in testing, hi!';
 
     /**
      * Log in and wait for render
@@ -42,7 +43,7 @@ describe('Tests', () => {
     /**
      * Tests
      */
-    describe('Test creation and edition', () => {
+    describe('Test Class creation and editing', () => {
         it('can create a new test class', function () {
             cy.addClassToRoot(
                 selectors.root,
@@ -54,6 +55,19 @@ describe('Tests', () => {
             );
         });
 
+        it('can edit and add new property for the class', function () {
+            cy.addPropertyToClass(
+                className,
+                selectors.editClass,
+                selectors.classOptions,
+                newPropertyName,
+                selectors.propertyEdit,
+                selectors.editClassUrl
+            );
+        });
+    });
+
+    describe('Test creation and edition', () => {
         it('can create and rename a new test', function () {
             cy.selectNode(selectors.root, selectors.testClassForm, className)
                 .addNode(selectors.testForm, selectors.addTest)
@@ -69,7 +83,7 @@ describe('Tests', () => {
                 .deleteNode(
                     selectors.root,
                     selectors.deleteTest,
-                    selectors.editItemUrl,
+                    selectors.editTestUrl,
                     'Test E2E test 2',
                 );
         });
