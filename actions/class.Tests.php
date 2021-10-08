@@ -22,12 +22,14 @@
  */
 
 use oat\oatbox\event\EventManager;
+use oat\oatbox\validator\ValidatorInterface;
 use oat\tao\model\controller\SignedFormInstance;
 use oat\tao\model\lock\LockManager;
 use oat\tao\model\resources\ResourceWatcher;
 use oat\taoTests\models\event\TestUpdatedEvent;
 use oat\tao\model\routing\AnnotationReader\security;
 use tao_helpers_form_FormContainer as FormContainer;
+use oat\tao\model\Lists\Business\Validation\DependsOnPropertyValidator;
 
 /**
  * Tests Controller provide actions performed from url resolution
@@ -93,7 +95,18 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
             }
 
             $clazz = $this->getCurrentClass();
-            $formContainer = new SignedFormInstance($clazz, $test, [FormContainer::CSRF_PROTECTION_OPTION => true]);
+            $formContainer = new SignedFormInstance(
+                $clazz,
+                $test,
+                [
+                    FormContainer::CSRF_PROTECTION_OPTION => true,
+                    FormContainer::ATTRIBUTE_VALIDATORS => [
+                        'data-depends-on-property' => [
+                            $this->getDependsOnPropertyValidator(),
+                        ],
+                    ],
+                ]
+            );
             $myForm = $formContainer->getForm();
             if ($myForm->isSubmited() && $myForm->isValid()) {
                 $this->validateInstanceRoot($test->getUri());
@@ -256,5 +269,10 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
     public function moveClass()
     {
         return parent::moveResource();
+    }
+
+    private function getDependsOnPropertyValidator(): ValidatorInterface
+    {
+        return $this->getPsrContainer()->get(DependsOnPropertyValidator::class);
     }
 }
