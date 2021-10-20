@@ -25,5 +25,9 @@ export default {
     treeRenderUrl: 'taoTests/Tests',
 
     classOptions: '[action="/tao/PropertiesAuthoring/index"]',
-    propertyEdit: 'div[class="form-group property-block regular-property property-edit-container-open"]'
+    propertyEdit: 'div[class="form-group property-block regular-property property-edit-container-open"]',
+
+    authoring: '[data-context="instance"][data-action="launchEditor"]',
+    addSection: '[data-testid="add-section"]',
+    addPart: '[data-testid="add-test-part"]'
 };
