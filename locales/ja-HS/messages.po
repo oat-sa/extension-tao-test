@@ -1,0 +1,125 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TAO 2021.10\n"
+"PO-Revision-Date: 2021-10-14T09:21:16\n"
+"Last-Translator: TAO Translation Team <translation@tao.lu>\n"
+"MIME-Version: 1.0\n"
+"Language: ja-HS\n"
+"sourceLanguage: en-US\n"
+"targetLanguage: ja-HS\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Basepath: ../../\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-SearchPath-0: .\n"
+
+msgid " . \common_Utils::toPHPVariableString($this->getDescription()) . "
+msgstr ""
+
+msgid " . \common_Utils::toPHPVariableString($this->getLabel()) . "
+msgstr ""
+
+msgid "%s has been deleted."
+msgstr ""
+
+#, tao-public
+msgid "Authoring"
+msgstr "オーサリング"
+
+#, tao-public
+msgid "Combine a selection of items into tests."
+msgstr "選択されたアイテムをテストとして構成する"
+
+#, tao-public
+msgid "Copy To"
+msgstr "指定コピー"
+
+#, tao-public
+msgid "Delete"
+msgstr "削除"
+
+#, tao-public
+msgid "Duplicate"
+msgstr "コピー"
+
+#, tao-public
+msgid "Export"
+msgstr "エクスポート"
+
+#, tao-public
+msgid "Import"
+msgstr "インポート"
+
+msgid "Last updated on %2s"
+msgstr "最終更新日: %2s"
+
+#, tao-public
+msgid "Manage Schema"
+msgstr "スキーマ管理"
+
+#, tao-public
+msgid "Manage tests"
+msgstr "テスト管理"
+
+#, tao-public
+msgid "Move"
+msgstr "移動"
+
+#, tao-public
+msgid "Move To"
+msgstr "移動先の選択"
+
+#, tao-public
+msgid "New class"
+msgstr "新規クラス"
+
+#, tao-public
+msgid "New test"
+msgstr "新規テスト"
+
+#, tao-public
+msgid "Preview"
+msgstr "プレビュー"
+
+#, tao-public
+msgid "Properties"
+msgstr "プロパティ"
+
+msgid "Security plugins"
+msgstr "セキュリティプラグイン"
+
+msgid "Set of plugins with \'security\' category"
+msgstr " \'security\' カテゴリを持つプラグインセット"
+
+msgid "Test Preview is not installed, please contact to your administrator."
+msgstr "テストプレビューはインストールされていません。管理者に問合せてください。"
+
+msgid "Test properties"
+msgstr "テストプロパティ"
+
+msgid "Test saved"
+msgstr "テストは保存されました。"
+
+#, tao-public
+msgid "Tests"
+msgstr "テスト"
+
+#, tao-public
+msgid "Tests library"
+msgstr "テストライブラリ"
+
+msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
+msgstr "テストのモード（順序・配点・累計など）やレイアウトもここでも設定します"
+
+msgid "The Tests module allows to combine a selection of Items to a Test."
+msgstr "テストモジュールでは、選択したアイテムをテストにまとめることができます。"
+
+msgid "Unable to delete %s."
+msgstr ""
+
+msgid "Unable to process your request"
+msgstr "リクエストを処理できません"
+
+msgid "You checked out this test %2s ago"
+msgstr "あなたはこのテストを%2s前にチェックアウトしました"
+
