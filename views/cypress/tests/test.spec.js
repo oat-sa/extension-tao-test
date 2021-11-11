@@ -18,10 +18,11 @@
 
 import urls from '../utils/urls';
 import selectors from '../utils/selectors';
+import { getRandomNumber } from '../../../../tao/views/cypress/utils/helpers';
 
 describe('Tests', () => {
-    const className = 'Test E2E class';
-    const classMovedName = 'Test E2E class Moved';
+    const className = `Test E2E class ${getRandomNumber()}`;
+    const classMovedName = `Test E2E class Moved  ${getRandomNumber()}`;
     const newPropertyName = 'I am a new property in testing, hi!';
     const newPropertyAlias = 'testing_property_alias';
     const options = {
@@ -104,7 +105,7 @@ describe('Tests', () => {
                 selectors.moveConfirmSelector,
                 className,
                 classMovedName,
-                selectors.restResourceGetAll,
+                selectors.resourceGetAllUrl,
             );
         });
 
