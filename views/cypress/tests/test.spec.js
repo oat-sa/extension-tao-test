@@ -117,6 +117,7 @@ describe('Tests', () => {
                 selectors.deleteConfirm,
                 classMovedName,
                 selectors.deleteTestUrl,
+                false
             );
         });
 
