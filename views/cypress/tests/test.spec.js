@@ -130,8 +130,6 @@ describe('Tests', () => {
             .addClass(selectors.testClassForm, selectors.treeRenderUrl, selectors.addSubClassUrl)
             .renameSelectedClass(selectors.testClassForm, className);
 
-            cy.wait('@editClassLabel');
-
             cy.deleteClassFromRoot(
                 selectors.root,
                 selectors.testClassForm,
