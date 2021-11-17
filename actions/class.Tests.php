@@ -192,7 +192,7 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
             try {
                 $classDeleter->delete($class);
                 $success = true;
-            } catch (InvalidArgumentException $exception) {
+            } catch (Throwable $exception) {
                 $success = false;
             }
 
