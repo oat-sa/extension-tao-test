@@ -79,8 +79,8 @@ msgstr "プロパティ"
 msgid "Security plugins"
 msgstr "セキュリティプラグイン"
 
-msgid "Set of plugins with \'security\' category"
-msgstr " \'security\' カテゴリを持つプラグインセット"
+msgid "Set of plugins with 'security' category"
+msgstr " 'security' カテゴリを持つプラグインセット"
 
 msgid "Test Preview is not installed, please contact to your administrator."
 msgstr "テストプレビューはインストールされていません。管理者に問合せてください。"

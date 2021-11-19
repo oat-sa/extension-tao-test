@@ -17,7 +17,7 @@ export default {
     moveClass: '[id="class-move-to"][data-context="class"][data-action="moveTo"]',
     moveConfirmSelector: 'button[data-control="ok"]',
 
-    restResourceGetAll: 'tao/RestResource/getAll',
+    resourceGetAllUrl: 'tao/RestResource/getAll',
     root: '[data-uri="http://www.tao.lu/Ontologies/TAOTest.rdf#Test"]',
 
     testForm: 'form[action="/taoTests/Tests/editTest"]',
