@@ -22,15 +22,17 @@
  */
 
 use oat\oatbox\event\EventManager;
-use oat\oatbox\validator\ValidatorInterface;
-use oat\tao\model\controller\SignedFormInstance;
 use oat\tao\model\lock\LockManager;
+use oat\oatbox\validator\ValidatorInterface;
 use oat\tao\model\resources\ResourceWatcher;
 use oat\taoTests\models\event\TestUpdatedEvent;
+use oat\tao\model\controller\SignedFormInstance;
 use oat\tao\model\resources\Service\ClassDeleter;
 use oat\tao\model\routing\AnnotationReader\security;
 use tao_helpers_form_FormContainer as FormContainer;
 use oat\tao\model\resources\Contract\ClassDeleterInterface;
+use oat\tao\model\resources\Exception\ClassDeletionException;
+use oat\tao\model\resources\Exception\PartialClassDeletionException;
 use oat\tao\model\Lists\Business\Validation\DependsOnPropertyValidator;
 
 /**
@@ -190,18 +192,14 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
 
             try {
                 $classDeleter->delete($class);
-                $deleted = $classDeleter->isDeleted($class);
                 $success = true;
-                $message = $deleted
-                    ? __('%s has been deleted', $label)
-                    : __(
-                        'Unable to delete the selected resource because you do not have the required rights to delete part of its content.',
-                        $label
-                    );
-            } catch (Throwable $exception) {
-                $success = false;
+                $deleted = true;
+                $message = __('%s has been deleted', $label);
+            } catch (PartialClassDeletionException | ClassDeletionException $exception) {
+                $success = $exception instanceof PartialClassDeletionException;
                 $deleted = false;
-                $message = $exception->getMessage();
+
+                $message = $exception->getUserMessage();
             }
         } else {
             $success = $this->getClassService()->deleteTest($instance);
@@ -214,7 +212,6 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
         $this->returnJson([
             'success' => $success,
             'message' => $message,
-            'msg' => $message,
             'deleted' => $deleted,
         ]);
     }
