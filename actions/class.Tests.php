@@ -186,29 +186,35 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
 
         if ($instance->isClass()) {
             $class = $this->getClass($instance->getUri());
-
             $classDeleter = $this->getClassDeleter();
 
             try {
                 $classDeleter->delete($class);
+                $deleted = $classDeleter->isDeleted($class);
                 $success = true;
+                $message = $deleted
+                    ? __('%s has been deleted', $label)
+                    : __(
+                        'Unable to delete the selected resource because you do not have the required rights to delete part of its content.',
+                        $label
+                    );
             } catch (Throwable $exception) {
                 $success = false;
+                $deleted = false;
+                $message = $exception->getMessage();
             }
-
-            $deleted = $classDeleter->isDeleted($class);
         } else {
             $success = $this->getClassService()->deleteTest($instance);
             $deleted = $success;
+            $message = $deleted
+                ? __('%s has been deleted.', $label)
+                : __('Unable to delete %s.', $label);
         }
-
-        $message = $deleted
-            ? __('%s has been deleted.', $label)
-            : __('Unable to delete %s.', $label);
 
         $this->returnJson([
             'success' => $success,
             'message' => $message,
+            'msg' => $message,
             'deleted' => $deleted,
         ]);
     }
