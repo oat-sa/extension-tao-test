@@ -22,13 +22,17 @@
  */
 
 use oat\oatbox\event\EventManager;
-use oat\oatbox\validator\ValidatorInterface;
-use oat\tao\model\controller\SignedFormInstance;
 use oat\tao\model\lock\LockManager;
+use oat\oatbox\validator\ValidatorInterface;
 use oat\tao\model\resources\ResourceWatcher;
 use oat\taoTests\models\event\TestUpdatedEvent;
+use oat\tao\model\controller\SignedFormInstance;
+use oat\tao\model\resources\Service\ClassDeleter;
 use oat\tao\model\routing\AnnotationReader\security;
 use tao_helpers_form_FormContainer as FormContainer;
+use oat\tao\model\resources\Contract\ClassDeleterInterface;
+use oat\tao\model\resources\Exception\ClassDeletionException;
+use oat\tao\model\resources\Exception\PartialClassDeletionException;
 use oat\tao\model\Lists\Business\Validation\DependsOnPropertyValidator;
 
 /**
@@ -184,17 +188,31 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
 
         if ($instance->isClass()) {
             $class = $this->getClass($instance->getUri());
-            $success = $this->getClassService()->deleteClass($class);
+            $classDeleter = $this->getClassDeleter();
+
+            try {
+                $classDeleter->delete($class);
+                $success = true;
+                $deleted = true;
+                $message = __('%s has been deleted', $label);
+            } catch (PartialClassDeletionException | ClassDeletionException $exception) {
+                $success = $exception instanceof PartialClassDeletionException;
+                $deleted = false;
+
+                $message = $exception->getUserMessage();
+            }
         } else {
             $success = $this->getClassService()->deleteTest($instance);
+            $deleted = $success;
+            $message = $deleted
+                ? __('%s has been deleted.', $label)
+                : __('Unable to delete %s.', $label);
         }
-
-        $message = $success ? __('%s has been deleted.', $label) : __('Unable to delete %s.', $label);
 
         $this->returnJson([
             'success' => $success,
             'message' => $message,
-            'deleted' => $success
+            'deleted' => $deleted,
         ]);
     }
 
@@ -274,5 +292,10 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
     private function getDependsOnPropertyValidator(): ValidatorInterface
     {
         return $this->getPsrContainer()->get(DependsOnPropertyValidator::class);
+    }
+
+    private function getClassDeleter(): ClassDeleterInterface
+    {
+        return $this->getPsrContainer()->get(ClassDeleter::class);
     }
 }
