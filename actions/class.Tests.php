@@ -30,11 +30,10 @@ use oat\tao\model\controller\SignedFormInstance;
 use oat\tao\model\resources\Service\ClassDeleter;
 use oat\tao\model\routing\AnnotationReader\security;
 use tao_helpers_form_FormContainer as FormContainer;
-use oat\tao\model\resources\Service\ResourceDeleter;
+use oat\generis\model\resource\Service\ResourceDeleter;
 use oat\tao\model\resources\Contract\ClassDeleterInterface;
-use oat\tao\model\resources\Exception\ClassDeletionException;
-use oat\tao\model\resources\Contract\ResourceDeleterInterface;
-use oat\tao\model\resources\Exception\ResourceDeletionException;
+use oat\generis\model\resource\Contract\ResourceDeleterInterface;
+use oat\generis\model\resource\exception\ResourceDeletionException;
 use oat\tao\model\resources\Exception\PartialClassDeletionException;
 use oat\tao\model\Lists\Business\Validation\DependsOnPropertyValidator;
 
