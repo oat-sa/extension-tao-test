@@ -30,8 +30,10 @@ use oat\tao\model\controller\SignedFormInstance;
 use oat\tao\model\resources\Service\ClassDeleter;
 use oat\tao\model\routing\AnnotationReader\security;
 use tao_helpers_form_FormContainer as FormContainer;
+use oat\generis\model\resource\Service\ResourceDeleter;
 use oat\tao\model\resources\Contract\ClassDeleterInterface;
-use oat\tao\model\resources\Exception\ClassDeletionException;
+use oat\generis\model\resource\Contract\ResourceDeleterInterface;
+use oat\generis\model\resource\exception\ResourceDeletionException;
 use oat\tao\model\resources\Exception\PartialClassDeletionException;
 use oat\tao\model\Lists\Business\Validation\DependsOnPropertyValidator;
 
@@ -185,28 +187,23 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
         }
 
         $label = $instance->getLabel();
+        /**
+         * @var ResourceDeleterInterface|ClassDeleterInterface $deleter
+         * @var core_kernel_classes_Resource|core_kernel_classes_Class $instanceToDelete
+         */
+        [$deleter, $instanceToDelete] = $instance->isClass()
+            ? [$this->getClassDeleter(), $this->getClass($instance)]
+            : [$this->getResourceDeleter(), $instance];
 
-        if ($instance->isClass()) {
-            $class = $this->getClass($instance->getUri());
-            $classDeleter = $this->getClassDeleter();
-
-            try {
-                $classDeleter->delete($class);
-                $success = true;
-                $deleted = true;
-                $message = __('%s has been deleted', $label);
-            } catch (PartialClassDeletionException | ClassDeletionException $exception) {
-                $success = $exception instanceof PartialClassDeletionException;
-                $deleted = false;
-
-                $message = $exception->getUserMessage();
-            }
-        } else {
-            $success = $this->getClassService()->deleteTest($instance);
-            $deleted = $success;
-            $message = $deleted
-                ? __('%s has been deleted.', $label)
-                : __('Unable to delete %s.', $label);
+        try {
+            $deleter->delete($instanceToDelete);
+            $success = true;
+            $deleted = true;
+            $message = __('%s has been deleted', $label);
+        } catch (PartialClassDeletionException | ResourceDeletionException $exception) {
+            $success = $exception instanceof PartialClassDeletionException;
+            $deleted = false;
+            $message = $exception->getUserMessage();
         }
 
         $this->returnJson([
@@ -297,5 +294,10 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
     private function getClassDeleter(): ClassDeleterInterface
     {
         return $this->getPsrContainer()->get(ClassDeleter::class);
+    }
+
+    private function getResourceDeleter(): ResourceDeleterInterface
+    {
+        return $this->getPsrContainer()->get(ResourceDeleter::class);
     }
 }
