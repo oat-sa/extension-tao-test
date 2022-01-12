@@ -9,7 +9,7 @@
     "url": "https://github.com/oat-sa/extension-tao-test.git"
   },
   "dependencies": {
-    "@oat-sa/tao-item-runner": "^0.6.1",
-    "@oat-sa/tao-test-runner": "^0.8.0"
+    "@oat-sa/tao-item-runner": "oat-sa/tao-item-runner-fe#fix/TR-3287/update-raphael-and-eve",
+    "@oat-sa/tao-test-runner": "oat-sa/tao-test-runner-fe#fix/TR-3287/remove-source-based-npm-dependencies"
   }
 }
