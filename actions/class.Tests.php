@@ -22,12 +22,20 @@
  */
 
 use oat\oatbox\event\EventManager;
-use oat\tao\model\controller\SignedFormInstance;
 use oat\tao\model\lock\LockManager;
+use oat\oatbox\validator\ValidatorInterface;
 use oat\tao\model\resources\ResourceWatcher;
 use oat\taoTests\models\event\TestUpdatedEvent;
+use oat\tao\model\controller\SignedFormInstance;
+use oat\tao\model\resources\Service\ClassDeleter;
 use oat\tao\model\routing\AnnotationReader\security;
 use tao_helpers_form_FormContainer as FormContainer;
+use oat\generis\model\resource\Service\ResourceDeleter;
+use oat\tao\model\resources\Contract\ClassDeleterInterface;
+use oat\generis\model\resource\Contract\ResourceDeleterInterface;
+use oat\generis\model\resource\exception\ResourceDeletionException;
+use oat\tao\model\resources\Exception\PartialClassDeletionException;
+use oat\tao\model\Lists\Business\Validation\DependsOnPropertyValidator;
 
 /**
  * Tests Controller provide actions performed from url resolution
@@ -93,7 +101,18 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
             }
 
             $clazz = $this->getCurrentClass();
-            $formContainer = new SignedFormInstance($clazz, $test, [FormContainer::CSRF_PROTECTION_OPTION => true]);
+            $formContainer = new SignedFormInstance(
+                $clazz,
+                $test,
+                [
+                    FormContainer::CSRF_PROTECTION_OPTION => true,
+                    FormContainer::ATTRIBUTE_VALIDATORS => [
+                        'data-depends-on-property' => [
+                            $this->getDependsOnPropertyValidator(),
+                        ],
+                    ],
+                ]
+            );
             $myForm = $formContainer->getForm();
             if ($myForm->isSubmited() && $myForm->isValid()) {
                 $this->validateInstanceRoot($test->getUri());
@@ -167,18 +186,30 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
             $lockManager->releaseLock($instance, $userId);
         }
 
-        if ($this->service->deleteTest($instance)) {
+        $label = $instance->getLabel();
+        /**
+         * @var ResourceDeleterInterface|ClassDeleterInterface $deleter
+         * @var core_kernel_classes_Resource|core_kernel_classes_Class $instanceToDelete
+         */
+        [$deleter, $instanceToDelete] = $instance->isClass()
+            ? [$this->getClassDeleter(), $this->getClass($instance)]
+            : [$this->getResourceDeleter(), $instance];
+
+        try {
+            $deleter->delete($instanceToDelete);
             $success = true;
-            $message = __('Test was successfully deleted.');
-        } else {
-            $success = false;
-            $message = __('Unable to delete test.');
+            $deleted = true;
+            $message = __('%s has been deleted', $label);
+        } catch (PartialClassDeletionException | ResourceDeletionException $exception) {
+            $success = $exception instanceof PartialClassDeletionException;
+            $deleted = false;
+            $message = $exception->getUserMessage();
         }
 
         $this->returnJson([
             'success' => $success,
             'message' => $message,
-            'deleted' => $success
+            'deleted' => $deleted,
         ]);
     }
 
@@ -215,15 +246,6 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
 
     /**
      * overwrite the parent moveAllInstances to add the requiresRight only in Items
-     * @see tao_actions_TaoModule::moveResource()
-     * @requiresRight uri WRITE
-     */
-    public function moveResource()
-    {
-        return parent::moveResource();
-    }
-    /**
-     * overwrite the parent moveAllInstances to add the requiresRight only in Items
      * @see tao_actions_TaoModule::moveAll()
      * @requiresRight ids WRITE
      */
@@ -253,5 +275,29 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
     public function deleteAll()
     {
         return parent::deleteAll();
+    }
+
+    /**
+     * Move class to another location
+     * @requiresRight classUri WRITE
+     */
+    public function moveClass()
+    {
+        return parent::moveResource();
+    }
+
+    private function getDependsOnPropertyValidator(): ValidatorInterface
+    {
+        return $this->getPsrContainer()->get(DependsOnPropertyValidator::class);
+    }
+
+    private function getClassDeleter(): ClassDeleterInterface
+    {
+        return $this->getPsrContainer()->get(ClassDeleter::class);
+    }
+
+    private function getResourceDeleter(): ResourceDeleterInterface
+    {
+        return $this->getPsrContainer()->get(ResourceDeleter::class);
     }
 }

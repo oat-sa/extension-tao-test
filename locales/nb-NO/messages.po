@@ -1,0 +1,125 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TAO 2021.10\n"
+"PO-Revision-Date: 2021-10-21T14:43:01\n"
+"Last-Translator: TAO Translation Team <translation@tao.lu>\n"
+"MIME-Version: 1.0\n"
+"Language: nb-NO\n"
+"sourceLanguage: en-US\n"
+"targetLanguage: nb-NO\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Basepath: ../../\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-SearchPath-0: .\n"
+
+msgid " . \common_Utils::toPHPVariableString($this->getDescription()) . "
+msgstr ""
+
+msgid " . \common_Utils::toPHPVariableString($this->getLabel()) . "
+msgstr ""
+
+msgid "%s has been deleted."
+msgstr "%s er slettet."
+
+#, tao-public
+msgid "Authoring"
+msgstr "Forfatter"
+
+#, tao-public
+msgid "Combine a selection of items into tests."
+msgstr "Sett sammen et utvalg av oppgaver til prøver."
+
+#, tao-public
+msgid "Copy To"
+msgstr "Kopier til"
+
+#, tao-public
+msgid "Delete"
+msgstr "Slett"
+
+#, tao-public
+msgid "Duplicate"
+msgstr "Dupliser"
+
+#, tao-public
+msgid "Export"
+msgstr "Eksporter"
+
+#, tao-public
+msgid "Import"
+msgstr "Importer"
+
+msgid "Last updated on %2s"
+msgstr "Sist oppdatert på %2s"
+
+#, tao-public
+msgid "Manage Schema"
+msgstr "Administrer skjema"
+
+#, tao-public
+msgid "Manage tests"
+msgstr "Administrer prøver"
+
+#, tao-public
+msgid "Move"
+msgstr "Gå"
+
+#, tao-public
+msgid "Move To"
+msgstr "Gå til"
+
+#, tao-public
+msgid "New class"
+msgstr "Ny mappe"
+
+#, tao-public
+msgid "New test"
+msgstr "Ny prøve"
+
+#, tao-public
+msgid "Preview"
+msgstr "Forhåndsvisning"
+
+#, tao-public
+msgid "Properties"
+msgstr "Egenskaper"
+
+msgid "Security plugins"
+msgstr "Sikkerhetsplugins"
+
+msgid "Set of plugins with \'security\' category"
+msgstr ""
+
+msgid "Test Preview is not installed, please contact to your administrator."
+msgstr "Forhåndsvisning av prøve er ikke installert. Ta kontakt med administrator."
+
+msgid "Test properties"
+msgstr "Prøveegenskaper"
+
+msgid "Test saved"
+msgstr "Prøven ble lagret"
+
+#, tao-public
+msgid "Tests"
+msgstr "Prøver"
+
+#, tao-public
+msgid "Tests library"
+msgstr "Prøvebibliotek"
+
+msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
+msgstr "Prøvemodus (sekvensering, skåring, kumulering, etc.) og layout er også konfigurert her."
+
+msgid "The Tests module allows to combine a selection of Items to a Test."
+msgstr "Prøvemodulen lar deg kombinere et utvalg av oppgaver til en prøve."
+
+msgid "Unable to delete %s."
+msgstr "Kan ikke slette %s."
+
+msgid "Unable to process your request"
+msgstr "Kan ikke behandle forespørselen din"
+
+msgid "You checked out this test %2s ago"
+msgstr "Du gjennomførte denne prøven for %2s siden"
+
