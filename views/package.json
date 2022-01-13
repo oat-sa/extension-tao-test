@@ -9,7 +9,7 @@
     "url": "https://github.com/oat-sa/extension-tao-test.git"
   },
   "dependencies": {
-    "@oat-sa/tao-item-runner": "^0.7.1",
-    "@oat-sa/tao-test-runner": "^0.8.1"
+    "@oat-sa/tao-item-runner": "0.8.1",
+    "@oat-sa/tao-test-runner": "0.8.2"
   }
 }
