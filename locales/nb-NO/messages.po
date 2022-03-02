@@ -24,7 +24,7 @@ msgstr "%s er slettet."
 
 #, tao-public
 msgid "Authoring"
-msgstr "Forfatter"
+msgstr "Rediger"
 
 #, tao-public
 msgid "Combine a selection of items into tests."
@@ -55,19 +55,19 @@ msgstr "Sist oppdatert på %2s"
 
 #, tao-public
 msgid "Manage Schema"
-msgstr "Administrer skjema"
+msgstr "Administrer egenskaper"
 
 #, tao-public
 msgid "Manage tests"
-msgstr "Administrer prøver"
+msgstr "Administrer oppgavesett"
 
 #, tao-public
 msgid "Move"
-msgstr "Gå"
+msgstr "Flytt"
 
 #, tao-public
 msgid "Move To"
-msgstr "Gå til"
+msgstr "Flytt til"
 
 #, tao-public
 msgid "New class"
@@ -79,7 +79,7 @@ msgstr "Ny prøve"
 
 #, tao-public
 msgid "Preview"
-msgstr "Forhåndsvisning"
+msgstr "Forhåndsvis"
 
 #, tao-public
 msgid "Properties"
@@ -89,20 +89,20 @@ msgid "Security plugins"
 msgstr "Sikkerhetsplugins"
 
 msgid "Set of plugins with \'security\' category"
-msgstr ""
+msgstr "Sett med plugins med kategorien \'sikkerhet\'"
 
 msgid "Test Preview is not installed, please contact to your administrator."
-msgstr "Forhåndsvisning av prøve er ikke installert. Ta kontakt med administrator."
+msgstr "Forhåndsvisning av oppgavesett er ikke installert. Ta kontakt med administrator."
 
 msgid "Test properties"
-msgstr "Prøveegenskaper"
+msgstr "Egenskaper for oppgavesett"
 
 msgid "Test saved"
-msgstr "Prøven ble lagret"
+msgstr "Oppgavesettet ble lagret"
 
 #, tao-public
 msgid "Tests"
-msgstr "Prøver"
+msgstr "Oppgavesett"
 
 #, tao-public
 msgid "Tests library"
