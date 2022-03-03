@@ -30,6 +30,8 @@ use oat\tao\model\controller\SignedFormInstance;
 use oat\tao\model\resources\Service\ClassDeleter;
 use oat\tao\model\routing\AnnotationReader\security;
 use tao_helpers_form_FormContainer as FormContainer;
+use oat\tao\model\featureFlag\FeatureFlagChecker;
+use oat\tao\model\featureFlag\FeatureFlagCheckerInterface;
 use oat\generis\model\resource\Service\ResourceDeleter;
 use oat\tao\model\resources\Contract\ClassDeleterInterface;
 use oat\generis\model\resource\Contract\ResourceDeleterInterface;
@@ -42,12 +44,12 @@ use oat\tao\model\Lists\Business\Validation\DependsOnPropertyValidator;
  *
  * @author Bertrand Chevrier, <taosupport@tudor.lu>
  * @package taoTests
-
  * @license GPLv2  http://www.opensource.org/licenses/gpl-2.0.php
  *
  */
 class taoTests_actions_Tests extends tao_actions_SaSModule
 {
+    public const PROPERTY_ASSESSMENT_PROJECT_ID = 'http://www.tao.lu/Ontologies/TAOTest.rdf#AssessmentProjectId';
 
     /**
      * @return EventManager
@@ -101,18 +103,22 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
             }
 
             $clazz = $this->getCurrentClass();
-            $formContainer = new SignedFormInstance(
-                $clazz,
-                $test,
-                [
-                    FormContainer::CSRF_PROTECTION_OPTION => true,
-                    FormContainer::ATTRIBUTE_VALIDATORS => [
-                        'data-depends-on-property' => [
-                            $this->getDependsOnPropertyValidator(),
-                        ],
+            $options = [
+                FormContainer::CSRF_PROTECTION_OPTION => true,
+                FormContainer::ATTRIBUTE_VALIDATORS => [
+                    'data-depends-on-property' => [
+                        $this->getDependsOnPropertyValidator(),
                     ],
-                ]
-            );
+                ],
+            ];
+
+            if (!$this->getFeatureFlagChecker()->isEnabled(
+                FeatureFlagCheckerInterface::FEATURE_FLAG_REMOTE_PUBLISHING_FROM_TEST
+            )) {
+                $options[tao_actions_form_Instance::EXCLUDED_PROPERTIES][] = self::PROPERTY_ASSESSMENT_PROJECT_ID;
+            }
+
+            $formContainer = new SignedFormInstance($clazz, $test, $options);
             $myForm = $formContainer->getForm();
             if ($myForm->isSubmited() && $myForm->isValid()) {
                 $this->validateInstanceRoot($test->getUri());
@@ -299,5 +305,10 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
     private function getResourceDeleter(): ResourceDeleterInterface
     {
         return $this->getPsrContainer()->get(ResourceDeleter::class);
+    }
+
+    private function getFeatureFlagChecker(): FeatureFlagCheckerInterface
+    {
+        return $this->getPsrContainer()->get(FeatureFlagChecker::class);
     }
 }
