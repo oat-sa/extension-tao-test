@@ -50,6 +50,7 @@ use oat\tao\model\Lists\Business\Validation\DependsOnPropertyValidator;
 class taoTests_actions_Tests extends tao_actions_SaSModule
 {
     public const PROPERTY_ASSESSMENT_PROJECT_ID = 'http://www.tao.lu/Ontologies/TAOTest.rdf#AssessmentProjectId';
+    public const FEATURE_FLAG_REMOTE_PUBLISHING_FROM_TEST = 'FEATURE_FLAG_REMOTE_PUBLISHING_FROM_TEST';
 
     /**
      * @return EventManager
@@ -112,9 +113,7 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
                 ],
             ];
 
-            if (!$this->getFeatureFlagChecker()->isEnabled(
-                FeatureFlagCheckerInterface::FEATURE_FLAG_REMOTE_PUBLISHING_FROM_TEST
-            )) {
+            if (!$this->getFeatureFlagChecker()->isEnabled(self::FEATURE_FLAG_REMOTE_PUBLISHING_FROM_TEST)) {
                 $options[tao_actions_form_Instance::EXCLUDED_PROPERTIES][] = self::PROPERTY_ASSESSMENT_PROJECT_ID;
             }
 
