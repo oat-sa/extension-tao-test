@@ -18,6 +18,7 @@
  * Copyright (c) 2002-2008 (original work) Public Research Centre Henri Tudor & University of Luxembourg (under the project TAO & TAO2);
  *               2008-2010 (update and modification) Deutsche Institut für Internationale Pädagogische Forschung (under the project TAO-TRANSFER);
  *               2009-2012 (update and modification) Public Research Centre Henri Tudor (under the project TAO-SUSTAIN & TAO-DEV);
+ *               2017-2022 (update and modification) Open Assessment Technologies SA.
  *
  */
 
@@ -25,7 +26,7 @@ use oat\oatbox\event\EventManager;
 use oat\tao\model\lock\LockManager;
 use oat\oatbox\validator\ValidatorInterface;
 use oat\tao\model\resources\ResourceWatcher;
-use oat\taoTests\models\classes\services\FeatureFlagFormTestPropertyMapper;
+use oat\taoTests\models\services\FeatureFlagExcludedPropertyMapper;
 use oat\taoTests\models\event\TestUpdatedEvent;
 use oat\tao\model\controller\SignedFormInstance;
 use oat\tao\model\resources\Service\ClassDeleter;
@@ -303,8 +304,8 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
         return $this->getFeatureFlagFormPropertyMapper()->getExcludedProperties();
     }
 
-    private function getFeatureFlagFormPropertyMapper(): FeatureFlagFormTestPropertyMapper
+    private function getFeatureFlagFormPropertyMapper(): FeatureFlagExcludedPropertyMapper
     {
-        return $this->getPsrContainer()->get(FeatureFlagFormTestPropertyMapper::class);
+        return $this->getPsrContainer()->get(FeatureFlagExcludedPropertyMapper::class);
     }
 }

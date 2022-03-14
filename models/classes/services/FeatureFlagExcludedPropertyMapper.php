@@ -15,16 +15,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2020 (original work) Open Assessment Technologies SA;
+ * Copyright (c) 2022 (original work) Open Assessment Technologies SA;
  */
 
 declare(strict_types=1);
 
-namespace oat\taoTests\models\classes\services;
+namespace oat\taoTests\models\services;
 
 use oat\tao\model\featureFlag\FeatureFlagCheckerInterface;
 
-class FeatureFlagFormTestPropertyMapper
+class FeatureFlagExcludedPropertyMapper
 {
     /** @var array */
     private $params;

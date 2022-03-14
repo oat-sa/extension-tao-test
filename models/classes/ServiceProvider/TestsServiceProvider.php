@@ -15,17 +15,17 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2021 (original work) Open Assessment Technologies SA;
+ * Copyright (c) 2022 (original work) Open Assessment Technologies SA;
  */
 
 declare(strict_types=1);
 
-namespace oat\taoTests\models\classes\ServiceProvider;
+namespace oat\taoTests\models\ServiceProvider;
 
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use oat\generis\model\DependencyInjection\ContainerServiceProviderInterface;
 use oat\tao\model\featureFlag\FeatureFlagChecker;
-use oat\taoTests\models\classes\services\FeatureFlagFormTestPropertyMapper;
+use oat\taoTests\models\services\FeatureFlagExcludedPropertyMapper;
 
 use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
@@ -51,7 +51,8 @@ class TestsServiceProvider implements ContainerServiceProviderInterface
         );
 
         $services
-            ->set(FeatureFlagFormTestPropertyMapper::class)
+            ->set(FeatureFlagExcludedPropertyMapper::class)
+            ->public()
             ->args(
                 [
                     param(self::PARAM_FEATURE_FLAG_FORM_FIELDS),
