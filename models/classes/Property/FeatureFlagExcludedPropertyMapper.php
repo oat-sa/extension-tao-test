@@ -50,11 +50,6 @@ class FeatureFlagExcludedPropertyMapper
         return $excludedProperties;
     }
 
-    public function setPropertyIdFeatureFlagsMap(array $map): void
-    {
-        $this->propertyIdFeatureFlagsMap = $map;
-    }
-
     private function isAnyRelatedFeatureFlagDisabled(array $propertyFeatureFlags): bool
     {
         foreach ($propertyFeatureFlags as $featureFlagVariableName) {

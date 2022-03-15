@@ -38,7 +38,6 @@ class QtiPackageStorageTest extends TestCase
     public function setUp(): void
     {
         $this->featureFlagChecker = new FeatureFlagChecker();
-        $this->sut = new FeatureFlagExcludedPropertyMapper([], $this->featureFlagChecker);
     }
 
     /**
@@ -46,7 +45,7 @@ class QtiPackageStorageTest extends TestCase
      */
     public function testGetExcludedProperties(array $mapFlagsToProperty, array $envValues, array $expected): void
     {
-        $this->sut->setPropertyIdFeatureFlagsMap($mapFlagsToProperty);
+        $this->sut = new FeatureFlagExcludedPropertyMapper($mapFlagsToProperty, $this->featureFlagChecker);
         $_ENV = array_merge($_ENV, $envValues);
 
         $actual = $this->sut->getExcludedProperties();
