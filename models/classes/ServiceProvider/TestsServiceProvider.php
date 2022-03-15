@@ -25,7 +25,7 @@ namespace oat\taoTests\models\ServiceProvider;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use oat\generis\model\DependencyInjection\ContainerServiceProviderInterface;
 use oat\tao\model\featureFlag\FeatureFlagChecker;
-use oat\taoTests\models\services\FeatureFlagExcludedPropertyMapper;
+use oat\taoTests\models\Property\FeatureFlagExcludedPropertyMapper;
 
 use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;

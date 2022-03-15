@@ -26,7 +26,7 @@ use oat\oatbox\event\EventManager;
 use oat\tao\model\lock\LockManager;
 use oat\oatbox\validator\ValidatorInterface;
 use oat\tao\model\resources\ResourceWatcher;
-use oat\taoTests\models\services\FeatureFlagExcludedPropertyMapper;
+use oat\taoTests\models\Property\FeatureFlagExcludedPropertyMapper;
 use oat\taoTests\models\event\TestUpdatedEvent;
 use oat\tao\model\controller\SignedFormInstance;
 use oat\tao\model\resources\Service\ClassDeleter;

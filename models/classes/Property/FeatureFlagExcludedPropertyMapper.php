@@ -20,20 +20,20 @@
 
 declare(strict_types=1);
 
-namespace oat\taoTests\models\services;
+namespace oat\taoTests\models\Property;
 
 use oat\tao\model\featureFlag\FeatureFlagCheckerInterface;
 
 class FeatureFlagExcludedPropertyMapper
 {
     /** @var array */
-    private $params;
+    private $propertyIdFeatureFlagsMap;
     /** @var FeatureFlagCheckerInterface  */
     private $featureFlagChecker;
 
-    public function __construct(array $params, FeatureFlagCheckerInterface $featureFlagChecker)
+    public function __construct(array $propertyIdFeatureFlagsMap, FeatureFlagCheckerInterface $featureFlagChecker)
     {
-        $this->params = $params;
+        $this->propertyIdFeatureFlagsMap = $propertyIdFeatureFlagsMap;
         $this->featureFlagChecker = $featureFlagChecker;
     }
 
@@ -41,14 +41,28 @@ class FeatureFlagExcludedPropertyMapper
     {
         $excludedProperties = [];
 
-        foreach ($this->params as $field => $featureFlags) {
-            foreach ($featureFlags as $featureFlag) {
-                if (!$this->featureFlagChecker->isEnabled($featureFlag)) {
-                    $excludedProperties[] = $field;
-                }
+        foreach ($this->propertyIdFeatureFlagsMap as $propertyId => $relatedFeatureFlags) {
+            if ($this->isAnyRelatedFeatureFlagDisabled($relatedFeatureFlags)) {
+                $excludedProperties[] = $propertyId;
             }
         }
 
-        return array_unique($excludedProperties);
+        return $excludedProperties;
+    }
+
+    public function setPropertyIdFeatureFlagsMap(array $map): void
+    {
+        $this->propertyIdFeatureFlagsMap = $map;
+    }
+
+    private function isAnyRelatedFeatureFlagDisabled(array $propertyFeatureFlags): bool
+    {
+        foreach ($propertyFeatureFlags as $featureFlagVariableName) {
+            if (!$this->featureFlagChecker->isEnabled($featureFlagVariableName)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
