@@ -28,6 +28,7 @@ class FeatureFlagExcludedPropertyMapper
 {
     /** @var array */
     private $propertyIdFeatureFlagsMap;
+
     /** @var FeatureFlagCheckerInterface  */
     private $featureFlagChecker;
 
