@@ -18,6 +18,7 @@
  * Copyright (c) 2002-2008 (original work) Public Research Centre Henri Tudor & University of Luxembourg (under the project TAO & TAO2);
  *               2008-2010 (update and modification) Deutsche Institut für Internationale Pädagogische Forschung (under the project TAO-TRANSFER);
  *               2009-2012 (update and modification) Public Research Centre Henri Tudor (under the project TAO-SUSTAIN & TAO-DEV);
+ *               2017-2022 (update and modification) Open Assessment Technologies SA.
  *
  */
 
@@ -25,6 +26,7 @@ use oat\oatbox\event\EventManager;
 use oat\tao\model\lock\LockManager;
 use oat\oatbox\validator\ValidatorInterface;
 use oat\tao\model\resources\ResourceWatcher;
+use oat\taoTests\models\Property\FeatureFlagExcludedPropertyMapper;
 use oat\taoTests\models\event\TestUpdatedEvent;
 use oat\tao\model\controller\SignedFormInstance;
 use oat\tao\model\resources\Service\ClassDeleter;
@@ -42,13 +44,11 @@ use oat\tao\model\Lists\Business\Validation\DependsOnPropertyValidator;
  *
  * @author Bertrand Chevrier, <taosupport@tudor.lu>
  * @package taoTests
-
  * @license GPLv2  http://www.opensource.org/licenses/gpl-2.0.php
  *
  */
 class taoTests_actions_Tests extends tao_actions_SaSModule
 {
-
     /**
      * @return EventManager
      */
@@ -101,18 +101,16 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
             }
 
             $clazz = $this->getCurrentClass();
-            $formContainer = new SignedFormInstance(
-                $clazz,
-                $test,
-                [
-                    FormContainer::CSRF_PROTECTION_OPTION => true,
-                    FormContainer::ATTRIBUTE_VALIDATORS => [
-                        'data-depends-on-property' => [
-                            $this->getDependsOnPropertyValidator(),
-                        ],
+
+            $formContainer = new SignedFormInstance($clazz, $test, [
+                tao_actions_form_Instance::EXCLUDED_PROPERTIES => $this->getExcludedProperties(),
+                FormContainer::CSRF_PROTECTION_OPTION => true,
+                FormContainer::ATTRIBUTE_VALIDATORS => [
+                    'data-depends-on-property' => [
+                        $this->getDependsOnPropertyValidator(),
                     ],
-                ]
-            );
+                ],
+            ]);
             $myForm = $formContainer->getForm();
             if ($myForm->isSubmited() && $myForm->isValid()) {
                 $this->validateInstanceRoot($test->getUri());
@@ -299,5 +297,15 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
     private function getResourceDeleter(): ResourceDeleterInterface
     {
         return $this->getPsrContainer()->get(ResourceDeleter::class);
+    }
+
+    protected function getExcludedProperties(): array
+    {
+        return $this->getFeatureFlagFormPropertyMapper()->getExcludedProperties();
+    }
+
+    private function getFeatureFlagFormPropertyMapper(): FeatureFlagExcludedPropertyMapper
+    {
+        return $this->getPsrContainer()->get(FeatureFlagExcludedPropertyMapper::class);
     }
 }
