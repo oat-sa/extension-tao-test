@@ -31,13 +31,16 @@ define([
     const logger = loggerFactory('taoTests/controller/action');
 
     binder.register('testPreview', function testPreview(actionContext) {
-        previewerFactory(
-            module.config().provider,
+        const config = module.config();
+        const previewerConfig = _.omit({
+            readOnly: false,
+            fullPage: true,
+            pluginsOptions: config.pluginsOptions
+        }, _.isUndefined);
+
+        previewerFactory(config.provider,
             uri.decode(actionContext.uri),
-            {
-                readOnly: false,
-                fullPage: true
-            })
+            previewerConfig)
             .catch(err => {
                 logger.error(err);
                 feedback().error(__('Test Preview is not installed, please contact to your administrator.'));
