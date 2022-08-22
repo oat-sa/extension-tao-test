@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.4.0-sprint138\n"
-"PO-Revision-Date: 2020-09-25T08:32:35\n"
+"Project-Id-Version: TAO 2022.09\n"
+"PO-Revision-Date: 2022-08-12T16:45:51\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: ja-JP\n"
@@ -12,6 +12,9 @@ msgstr ""
 "X-Poedit-Basepath: ../../\n"
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
+
+msgid "%s has been deleted"
+msgstr "%s は削除されました"
 
 #, tao-public
 msgid "Authoring"
@@ -91,9 +94,6 @@ msgstr "テストプロパティ"
 msgid "Test saved"
 msgstr "テストは保存されました。"
 
-msgid "Test was successfully deleted."
-msgstr "テストが削除されました"
-
 #, tao-public
 msgid "Tests"
 msgstr "テスト"
@@ -107,9 +107,6 @@ msgstr "テストのモード（順序・配点・累計など）やレイアウ
 
 msgid "The Tests module allows to combine a selection of Items to a Test."
 msgstr "テストモジュールでは、選択したアイテムをテストにまとめることができます。"
-
-msgid "Unable to delete test."
-msgstr "テストを削除できません"
 
 msgid "Unable to process your request"
 msgstr "リクエストを処理できません"
