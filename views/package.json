@@ -10,6 +10,6 @@
   },
   "dependencies": {
     "@oat-sa/tao-item-runner": "0.8.1",
-    "@oat-sa/tao-test-runner": "0.8.2"
+    "@oat-sa/tao-test-runner": "^0.9.0"
   }
 }
