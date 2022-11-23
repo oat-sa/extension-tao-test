@@ -25,6 +25,7 @@ use oat\oatbox\event\EventManager;
 use oat\tao\model\lock\LockManager;
 use oat\oatbox\validator\ValidatorInterface;
 use oat\tao\model\resources\ResourceWatcher;
+use oat\tao\model\TaoOntology;
 use oat\taoTests\models\event\TestUpdatedEvent;
 use oat\tao\model\controller\SignedFormInstance;
 use oat\tao\model\resources\Service\ClassDeleter;
@@ -114,6 +115,11 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
                 ]
             );
             $myForm = $formContainer->getForm();
+
+            $myForm->setOptions([
+                'resourceType' => TaoOntology::CLASS_URI_TEST
+            ]);
+
             if ($myForm->isSubmited() && $myForm->isValid()) {
                 $this->validateInstanceRoot($test->getUri());
 
