@@ -1,5 +1,6 @@
 <?php
 
+// phpcs:disable Generic.Files.LineLength
 /*
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -20,11 +21,13 @@
  *               2009-2012 (update and modification) Public Research Centre Henri Tudor (under the project TAO-SUSTAIN & TAO-DEV);
  *
  */
+// phpcs:enable
 
 use oat\oatbox\event\EventManager;
 use oat\tao\model\lock\LockManager;
 use oat\oatbox\validator\ValidatorInterface;
 use oat\tao\model\resources\ResourceWatcher;
+use oat\tao\model\TaoOntology;
 use oat\taoTests\models\event\TestUpdatedEvent;
 use oat\tao\model\controller\SignedFormInstance;
 use oat\tao\model\resources\Service\ClassDeleter;
@@ -46,9 +49,9 @@ use oat\tao\model\Lists\Business\Validation\DependsOnPropertyValidator;
  * @license GPLv2  http://www.opensource.org/licenses/gpl-2.0.php
  *
  */
+// phpcs:ignore
 class taoTests_actions_Tests extends tao_actions_SaSModule
 {
-
     /**
      * @return EventManager
      */
@@ -114,6 +117,11 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
                 ]
             );
             $myForm = $formContainer->getForm();
+
+            $myForm->setOptions([
+                'resourceType' => TaoOntology::CLASS_URI_TEST
+            ]);
+
             if ($myForm->isSubmited() && $myForm->isValid()) {
                 $this->validateInstanceRoot($test->getUri());
 
