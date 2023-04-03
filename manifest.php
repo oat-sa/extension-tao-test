@@ -27,6 +27,7 @@
  */
 
 use oat\tao\model\user\TaoRoles;
+use oat\taoTests\models\Copier\CopierServiceProvider;
 use oat\taoTests\scripts\update\Updater;
 use oat\taoTests\scripts\install\SetupProvider;
 use oat\taoTests\scripts\install\RegisterFrontendPaths;
@@ -84,5 +85,8 @@ return [
 
         #BASE URL (usually the domain root)
         'BASE_URL' => ROOT_URL . 'taoTests/',
+    ],
+    'containerServiceProviders' => [
+        CopierServiceProvider::class,
     ],
 ];
