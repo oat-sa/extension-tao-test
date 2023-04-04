@@ -24,6 +24,7 @@ namespace oat\taoTests\models\Copier;
 
 use oat\generis\model\data\Ontology;
 use oat\generis\model\OntologyRdf;
+use oat\generis\model\OntologyRdfs;
 use oat\tao\model\resources\Service\InstanceCopierProxy;
 use oat\tao\model\TaoOntology;
 use oat\oatbox\event\EventManager;
@@ -54,10 +55,12 @@ class CopierServiceProvider implements ContainerServiceProviderInterface
         $services
             ->get(InstanceMetadataCopier::class)
             ->call(
-                'addPropertyUriToBlacklist',
+                'addPropertyUrisToBlacklist',
                 [
-                    taoTests_models_classes_TestsService::PROPERTY_TEST_CONTENT,
-                    OntologyRdf::RDF_TYPE,
+                    [
+                        taoTests_models_classes_TestsService::PROPERTY_TEST_CONTENT,
+                        OntologyRdfs::RDFS_LABEL,
+                    ]
                 ]
             );
 
