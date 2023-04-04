@@ -23,6 +23,7 @@ declare(strict_types=1);
 namespace oat\taoTests\models\Copier;
 
 use oat\generis\model\data\Ontology;
+use oat\generis\model\OntologyRdf;
 use oat\tao\model\resources\Service\InstanceCopierProxy;
 use oat\tao\model\TaoOntology;
 use oat\oatbox\event\EventManager;
@@ -33,7 +34,6 @@ use oat\tao\model\resources\Service\ClassMetadataCopier;
 use oat\tao\model\resources\Service\ClassMetadataMapper;
 use oat\tao\model\resources\Service\InstanceMetadataCopier;
 use oat\tao\model\resources\Service\RootClassesListService;
-use oat\generis\model\fileReference\FileReferenceSerializer;
 use oat\generis\model\DependencyInjection\ContainerServiceProviderInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use taoTests_models_classes_TestsService;
@@ -57,6 +57,7 @@ class CopierServiceProvider implements ContainerServiceProviderInterface
                 'addPropertyUriToBlacklist',
                 [
                     taoTests_models_classes_TestsService::PROPERTY_TEST_CONTENT,
+                    OntologyRdf::RDF_TYPE,
                 ]
             );
 
@@ -64,7 +65,6 @@ class CopierServiceProvider implements ContainerServiceProviderInterface
             ->set(TestContentCopier::class, TestContentCopier::class)
             ->args(
                 [
-                    service(FileReferenceSerializer::SERVICE_ID),
                     service(taoTests_models_classes_TestsService::class),
                     service(EventManager::SERVICE_ID),
                 ]

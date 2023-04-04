@@ -24,22 +24,17 @@ namespace oat\taoTests\models\Copier;
 
 use core_kernel_classes_Resource;
 use oat\oatbox\event\EventManager;
-use oat\generis\model\fileReference\FileReferenceSerializer;
 use oat\tao\model\resources\Contract\InstanceContentCopierInterface;
+use oat\taoTests\models\event\TestDuplicatedEvent;
 use taoTests_models_classes_TestsService;
 
 class TestContentCopier implements InstanceContentCopierInterface
 {
-    private FileReferenceSerializer $fileReferenceSerializer;
     private taoTests_models_classes_TestsService $testsService;
     private EventManager $eventManager;
 
-    public function __construct(
-        FileReferenceSerializer $fileReferenceSerializer,
-        taoTests_models_classes_TestsService $testsService,
-        EventManager $eventManager
-    ) {
-        $this->fileReferenceSerializer = $fileReferenceSerializer;
+    public function __construct(taoTests_models_classes_TestsService $testsService, EventManager $eventManager)
+    {
         $this->testsService = $testsService;
         $this->eventManager = $eventManager;
     }
@@ -48,5 +43,17 @@ class TestContentCopier implements InstanceContentCopierInterface
         core_kernel_classes_Resource $instance,
         core_kernel_classes_Resource $destinationInstance
     ): void {
+        $this->copyModel($instance, $destinationInstance);
+        $this->testsService->cloneContent($instance, $destinationInstance);
+
+        $this->eventManager->trigger(new TestDuplicatedEvent($instance->getUri(), $destinationInstance->getUri()));
+    }
+
+    private function copyModel(core_kernel_classes_Resource $from, core_kernel_classes_Resource $to): void
+    {
+        $modelProperty = $from->getProperty(taoTests_models_classes_TestsService::PROPERTY_TEST_TESTMODEL);
+        $model = $from->getOnePropertyValue($modelProperty);
+
+        $to->editPropertyValues($modelProperty, $model instanceof core_kernel_classes_Resource ? $model : null);
     }
 }

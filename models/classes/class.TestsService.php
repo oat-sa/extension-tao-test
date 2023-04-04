@@ -21,6 +21,7 @@
  *               2012-2021 (original work) Open Assessment Technologies SA;
  */
 use oat\generis\model\OntologyRdf;
+use oat\tao\model\resources\Service\InstanceCopier;
 use oat\tao\model\TaoOntology;
 use oat\taoTests\models\event\TestCreatedEvent;
 use oat\taoTests\models\event\TestDuplicatedEvent;
@@ -142,6 +143,7 @@ class taoTests_models_classes_TestsService extends OntologyClassService
 
     /**
      * @author Joel Bout, <joel.bout@tudor.lu>
+     * @deprecated Use service id 'oat\tao\model\resources\Service\InstanceCopier::TESTS'
      */
     public function cloneInstance(core_kernel_classes_Resource $instance, core_kernel_classes_Class $clazz = null): ?core_kernel_classes_Resource
     {
@@ -174,15 +176,19 @@ class taoTests_models_classes_TestsService extends OntologyClassService
             }
             $clone->setLabel($cloneLabel);
 
-            $impl = $this->getTestModelImplementation($this->getTestModel($instance));
-            $impl->cloneContent($instance, $clone);
-
+            $this->cloneContent($instance, $clone);
             $this->getEventManager()->trigger(new TestDuplicatedEvent($instance->getUri(), $clone->getUri()));
 
             $returnValue = $clone;
         }
 
         return $returnValue;
+    }
+
+    public function cloneContent(core_kernel_classes_Resource $original, core_kernel_classes_Resource $clone): void
+    {
+        $impl = $this->getTestModelImplementation($this->getTestModel($original));
+        $impl->cloneContent($original, $clone);
     }
 
     /**
