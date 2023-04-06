@@ -33,11 +33,10 @@ use oat\tao\model\resources\Contract\ClassCopierInterface;
 
 class TestClassCopier implements ClassCopierInterface, ResourceTransferInterface
 {
-    /** @var ClassCopierInterface|ResourceTransferInterface */
-    private $taoClassCopier;
+    private ResourceTransferInterface $taoClassCopier;
     private Ontology $ontology;
 
-    public function __construct(ClassCopierInterface $taoClassCopier, Ontology $ontology)
+    public function __construct(ResourceTransferInterface $taoClassCopier, Ontology $ontology)
     {
         $this->taoClassCopier = $taoClassCopier;
         $this->ontology = $ontology;
@@ -47,9 +46,16 @@ class TestClassCopier implements ClassCopierInterface, ResourceTransferInterface
         core_kernel_classes_Class $class,
         core_kernel_classes_Class $destinationClass
     ): core_kernel_classes_Class {
-        $this->assertRootClass($class);
+        $result = $this->transfer(
+            new ResourceTransferCommand(
+                $class->getUri(),
+                $destinationClass->getUri(),
+                ResourceTransferCommand::ACL_KEEP_ORIGINAL,
+                ResourceTransferCommand::TRANSFER_MODE_COPY,
+            )
+        );
 
-        return $this->taoClassCopier->copy($class, $destinationClass);
+        return $this->ontology->getClass($result->getDestination());
     }
 
     public function transfer(ResourceTransferCommand $command): ResourceTransferResult
