@@ -22,8 +22,11 @@ declare(strict_types=1);
 
 namespace oat\taoTests\test\unit\models\classes\Copier;
 
+use core_kernel_classes_Property;
+use core_kernel_classes_Resource;
 use oat\oatbox\event\EventManager;
 use oat\taoTests\models\Copier\TestContentCopier;
+use oat\taoTests\models\event\TestDuplicatedEvent;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use taoTests_models_classes_TestsService;
@@ -45,6 +48,41 @@ class TestContentCopierTest extends TestCase
 
     public function testCopy(): void
     {
-        //@TODO finish test
+        $fromInstance = $this->createMock(core_kernel_classes_Resource::class);
+        $toInstance = $this->createMock(core_kernel_classes_Resource::class);
+        $modelProperty = $this->createMock(core_kernel_classes_Property::class);
+        $model = $this->createMock(core_kernel_classes_Resource::class);
+
+        $fromInstance->expects($this->once())
+            ->method('getUri')
+            ->willReturn('fromUri');
+
+        $fromInstance->expects($this->once())
+            ->method('getProperty')
+            ->willReturn($modelProperty);
+
+        $fromInstance->expects($this->once())
+            ->method('getOnePropertyValue')
+            ->willReturn($model);
+
+        $toInstance->expects($this->once())
+            ->method('getUri')
+            ->willReturn('toUri');
+
+        $toInstance->expects($this->once())
+            ->method('editPropertyValues')
+            ->with($modelProperty, $model);
+
+        $this->testsService
+            ->expects($this->once())
+            ->method('cloneContent')
+            ->with($fromInstance, $toInstance);
+
+        $this->eventManager
+            ->expects($this->once())
+            ->method('trigger')
+            ->with(new TestDuplicatedEvent('fromUri', 'toUri'));
+
+        $this->sut->copy($fromInstance, $toInstance);
     }
 }
