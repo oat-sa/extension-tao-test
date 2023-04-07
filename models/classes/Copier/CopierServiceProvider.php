@@ -42,6 +42,9 @@ use taoTests_models_classes_TestsService;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\tagged_iterator;
 
+/**
+ * @codeCoverageIgnore
+ */
 class CopierServiceProvider implements ContainerServiceProviderInterface
 {
     public function __invoke(ContainerConfigurator $configurator): void
