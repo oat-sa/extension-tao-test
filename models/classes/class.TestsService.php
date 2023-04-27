@@ -15,12 +15,17 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2002-2008 (original work) Public Research Centre Henri Tudor & University of Luxembourg (under the project TAO & TAO2);
- *               2008-2010 (update and modification) Deutsche Institut für Internationale Pädagogische Forschung (under the project TAO-TRANSFER);
- *               2009-2012 (update and modification) Public Research Centre Henri Tudor (under the project TAO-SUSTAIN & TAO-DEV);
+ * Copyright (c) 2002-2008 (original work) Public Research Centre Henri Tudor & University of Luxembourg
+ *                         (under the project TAO & TAO2);
+ *               2008-2010 (update and modification) Deutsche Institut für Internationale Pädagogische Forschung
+ *                         (under the project TAO-TRANSFER);
+ *               2009-2012 (update and modification) Public Research Centre Henri Tudor
+ *                         (under the project TAO-SUSTAIN & TAO-DEV);
  *               2012-2021 (original work) Open Assessment Technologies SA;
  */
+
 use oat\generis\model\OntologyRdf;
+use oat\tao\model\resources\Service\InstanceCopier;
 use oat\tao\model\TaoOntology;
 use oat\taoTests\models\event\TestCreatedEvent;
 use oat\taoTests\models\event\TestDuplicatedEvent;
@@ -35,12 +40,14 @@ use oat\tao\model\OntologyClassService;
  * Service methods to manage the Tests business models using the RDF API.
  *
  * @author Joel Bout, <joel.bout@tudor.lu>
+ *
+ * phpcs:disable Squiz.Classes.ValidClassName
  */
 class taoTests_models_classes_TestsService extends OntologyClassService
 {
-
     public const CLASS_TEST_MODEL = 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestModel';
 
+    // phpcs:ignore
     public const PROPERTY_TEST_MODEL_IMPLEMENTATION = 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestModelImplementation';
 
     public const PROPERTY_TEST_TESTMODEL = 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestTestModel';
@@ -142,9 +149,12 @@ class taoTests_models_classes_TestsService extends OntologyClassService
 
     /**
      * @author Joel Bout, <joel.bout@tudor.lu>
+     * @deprecated Use service id 'oat\tao\model\resources\Service\InstanceCopier::TESTS'
      */
-    public function cloneInstance(core_kernel_classes_Resource $instance, core_kernel_classes_Class $clazz = null): ?core_kernel_classes_Resource
-    {
+    public function cloneInstance(
+        core_kernel_classes_Resource $instance,
+        core_kernel_classes_Class $clazz = null
+    ): ?core_kernel_classes_Resource {
         $returnValue = null;
 
         //call the parent create instance to prevent useless process test to be created:
@@ -174,15 +184,19 @@ class taoTests_models_classes_TestsService extends OntologyClassService
             }
             $clone->setLabel($cloneLabel);
 
-            $impl = $this->getTestModelImplementation($this->getTestModel($instance));
-            $impl->cloneContent($instance, $clone);
-
+            $this->cloneContent($instance, $clone);
             $this->getEventManager()->trigger(new TestDuplicatedEvent($instance->getUri(), $clone->getUri()));
 
             $returnValue = $clone;
         }
 
         return $returnValue;
+    }
+
+    public function cloneContent(core_kernel_classes_Resource $original, core_kernel_classes_Resource $clone): void
+    {
+        $impl = $this->getTestModelImplementation($this->getTestModel($original));
+        $impl->cloneContent($original, $clone);
     }
 
     /**
@@ -252,8 +266,10 @@ class taoTests_models_classes_TestsService extends OntologyClassService
     /**
      * Returns a compiler instance for a given test
      */
-    public function getCompiler(core_kernel_classes_Resource $test, ServiceFileStorage $storage): tao_models_classes_Compiler
-    {
+    public function getCompiler(
+        core_kernel_classes_Resource $test,
+        ServiceFileStorage $storage
+    ): tao_models_classes_Compiler {
         $testModel = $this->getTestModelImplementation($this->getTestModel($test));
         if ($testModel instanceof TestModel) {
             $compiler = $testModel->getCompiler($test, $storage);
@@ -294,12 +310,17 @@ class taoTests_models_classes_TestsService extends OntologyClassService
     /**
      * Returns the implementation of an items test model
      */
-    public function getTestModelImplementation(core_kernel_classes_Resource $testModel): taoTests_models_classes_TestModel
-    {
-        $serviceId = (string)$testModel->getOnePropertyValue($this->getPropertyByUri(self::PROPERTY_TEST_MODEL_IMPLEMENTATION));
+    public function getTestModelImplementation(
+        core_kernel_classes_Resource $testModel
+    ): taoTests_models_classes_TestModel {
+        $serviceId = (string) $testModel->getOnePropertyValue(
+            $this->getPropertyByUri(self::PROPERTY_TEST_MODEL_IMPLEMENTATION)
+        );
 
         if (empty($serviceId)) {
-            throw new common_exception_NoImplementation('No implementation found for testmodel ' . $testModel->getUri());
+            throw new common_exception_NoImplementation(
+                'No implementation found for testmodel ' . $testModel->getUri()
+            );
         }
 
         try {
@@ -314,7 +335,13 @@ class taoTests_models_classes_TestsService extends OntologyClassService
         }
 
         if (!$testModelService instanceof \taoTests_models_classes_TestModel) {
-            throw new common_exception_Error('Test model service ' . get_class($testModelService) . ' not compatible for test model ' . $testModel->getUri());
+            throw new common_exception_Error(
+                sprintf(
+                    'Test model service %s not compatible for test model %s',
+                    get_class($testModelService),
+                    $testModel->getUri()
+                )
+            );
         }
 
         return $testModelService;
