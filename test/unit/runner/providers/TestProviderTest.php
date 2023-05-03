@@ -32,7 +32,6 @@ use oat\taoTests\models\runner\providers\TestProvider;
  */
 class TestProviderTest extends TestCase
 {
-
     /**
      * Data provider
      * @return array the data

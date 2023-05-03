@@ -30,7 +30,6 @@ use oat\taoTests\models\runner\plugins\TestPluginService;
 
 class ManageableFeatureTest extends GenerisPhpUnitTestRunner
 {
-
     protected $defaultData = [
         ManageableFeature::OPTION_ID => 'feature id',
         ManageableFeature::OPTION_ACTIVE => true,

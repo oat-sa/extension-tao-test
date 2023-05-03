@@ -32,7 +32,6 @@ use oat\taoTests\models\runner\plugins\TestPlugin;
  */
 class TestPluginTest extends TestCase
 {
-
     /**
      * Data provider
      * @return array the data

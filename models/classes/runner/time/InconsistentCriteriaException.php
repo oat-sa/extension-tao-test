@@ -33,5 +33,4 @@ namespace oat\taoTests\models\runner\time;
  */
 class InconsistentCriteriaException extends TimeException
 {
-    
 }

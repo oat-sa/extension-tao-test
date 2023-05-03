@@ -33,7 +33,6 @@ use oat\taoTests\models\pack\Packable;
  */
 interface taoTests_models_classes_TestModel
 {
-
     /**
      * Prepare the content of the test,
      * using the provided items if possible

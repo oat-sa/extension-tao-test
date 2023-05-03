@@ -44,7 +44,6 @@ use oat\tao\model\OntologyClassService;
  */
 class TestsTest extends GenerisPhpUnitTestRunner
 {
-
     /**
      *
      * @var taoTests_models_classes_TestsService

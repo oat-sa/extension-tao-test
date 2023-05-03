@@ -1,4 +1,5 @@
 <?php
+
 $GLOBALS['__l10n'][" and "] = "和";
 $GLOBALS['__l10n'][" has been deleted successfully"] = "已成功删除";
 $GLOBALS['__l10n'][" has been installed"] = "已安装";

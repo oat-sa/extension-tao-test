@@ -21,8 +21,8 @@
 
 namespace oat\taoTests\models\pack;
 
-use \InvalidArgumentException;
-use \JsonSerializable;
+use InvalidArgumentException;
+use JsonSerializable;
 
 /**
  * The Item Pack represents the item package data produced by the compilation.

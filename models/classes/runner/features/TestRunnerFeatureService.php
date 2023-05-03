@@ -34,9 +34,9 @@ class TestRunnerFeatureService extends ConfigurableService implements LoggerAwar
 {
     use LoggerAwareTrait;
 
-    const SERVICE_ID = 'taoTests/testRunnerFeature';
+    public const SERVICE_ID = 'taoTests/testRunnerFeature';
 
-    const OPTION_AVAILABLE = 'available';
+    public const OPTION_AVAILABLE = 'available';
 
     /**
      * Register a feature

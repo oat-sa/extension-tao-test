@@ -1,4 +1,5 @@
 <?php
+
 $GLOBALS['__l10n'][" has been deleted successfully"] = "Foi eliminado com sucesso";
 $GLOBALS['__l10n'][" has been installed"] = "foi instalado";
 $GLOBALS['__l10n'][" next"] = "próximo";

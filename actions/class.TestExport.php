@@ -43,11 +43,11 @@ class taoTests_actions_TestExport extends tao_actions_Export
     {
         parent::index();
     }
-    
+
     protected function getAvailableExportHandlers()
     {
         $returnValue = parent::getAvailableExportHandlers();
-        
+
         $resources = $this->getResourcesToExport();
         $testModels = [];
         foreach ($resources as $resource) {
@@ -66,7 +66,7 @@ class taoTests_actions_TestExport extends tao_actions_Export
                 }
             }
         }
-        
+
         return $returnValue;
     }
 }

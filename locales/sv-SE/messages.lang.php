@@ -1,4 +1,5 @@
 <?php
+
 $GLOBALS['__l10n']["Access denied. Please renew your authentication!"] = "Åtkomst nekad";
 $GLOBALS['__l10n']["Actions"] = "Funktioner";
 $GLOBALS['__l10n']["Add"] = "Lägg till";

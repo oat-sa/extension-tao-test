@@ -21,6 +21,7 @@
  */
 ?>
 <?php
+
 /**
  * SaSTests Controller provide process services on tests
  *
@@ -31,7 +32,6 @@
  */
 class taoTests_actions_SaSTests extends taoTests_actions_Tests
 {
-
     protected function getClassService()
     {
         return taoTests_models_classes_TestsService::singleton();
@@ -42,21 +42,21 @@ class taoTests_actions_SaSTests extends taoTests_actions_Tests
      */
     public function selectItems()
     {
-        
+
         $this->setData('uri', $this->getRequestParameter('uri'));
         $this->setData('classUri', $this->getRequestParameter('classUri'));
-        
+
         $test = $this->getCurrentInstance();
-        
+
         $allItems = [];
         foreach ($this->service->getAllItems() as $itemUri => $itemLabel) {
             $allItems['item_' . tao_helpers_Uri::encode($itemUri)] = $itemLabel;
         }
         $this->setData('allItems', json_encode($allItems));
-        
+
         $relatedItems = tao_helpers_Uri::encodeArray($this->service->getTestItems($test, true), tao_helpers_Uri::ENCODE_ARRAY_VALUES);
         $this->setData('relatedItems', json_encode($relatedItems));
-        
+
         $itemSequence = [];
         foreach ($relatedItems as $index => $itemUri) {
             $item = new core_kernel_classes_Resource($itemUri);

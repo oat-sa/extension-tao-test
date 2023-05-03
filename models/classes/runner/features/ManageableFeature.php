@@ -35,18 +35,17 @@ use oat\taoTests\models\runner\plugins\TestPlugin;
  */
 class ManageableFeature extends TestRunnerFeature
 {
-
     /** @var string */
     protected $label;
     /** @var string */
     protected $description;
 
-    const OPTION_ID = 'identifier';
-    const OPTION_DESCRIPTION = 'description';
-    const OPTION_ACTIVE = 'active';
-    const OPTION_LABEL = 'label';
-    const OPTION_ENABLED_BY_DEFAULT = 'enabledByDefault';
-    const OPTION_PLUGIN_IDS = 'pluginIds';
+    public const OPTION_ID = 'identifier';
+    public const OPTION_DESCRIPTION = 'description';
+    public const OPTION_ACTIVE = 'active';
+    public const OPTION_LABEL = 'label';
+    public const OPTION_ENABLED_BY_DEFAULT = 'enabledByDefault';
+    public const OPTION_PLUGIN_IDS = 'pluginIds';
 
     /**
      * ManageableFeature constructor.

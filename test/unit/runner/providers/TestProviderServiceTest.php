@@ -36,7 +36,6 @@ use Prophecy\Prophet;
  */
 class TestProviderServiceTest extends TestCase
 {
-
     //data to stub the regiitry content
     private static $providerData = [
         'taoQtiTest/runner/providers/qtiRunner' => [

@@ -31,5 +31,4 @@ use oat\tao\model\import\AbstractImporter;
  */
 abstract class AbstractTestImporter extends AbstractImporter
 {
-
 }

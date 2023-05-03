@@ -33,7 +33,6 @@ use oat\generis\model\OntologyRdfs;
  */
 class taoTests_models_classes_CrudTestsService extends tao_models_classes_CrudService
 {
-
     /** (non-PHPdoc)
      * @see tao_models_classes_CrudService::getClassService()
      */
@@ -60,7 +59,7 @@ class taoTests_models_classes_CrudTestsService extends tao_models_classes_CrudSe
      */
     public function createFromArray(array $propertiesValues)
     {
-    
+
         if (!isset($propertiesValues[OntologyRdfs::RDFS_LABEL])) {
             $propertiesValues[OntologyRdfs::RDFS_LABEL] = "";
         }

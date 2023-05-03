@@ -35,7 +35,6 @@ use oat\oatbox\service\ConfigurableService;
  */
 class TestPluginServiceTest extends TestCase
 {
-
     //data to stub the regsitry content
     private static $pluginData =  [
         'taoQtiTest/runner/plugins/controls/title/title' => [

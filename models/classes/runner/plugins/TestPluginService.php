@@ -31,12 +31,12 @@ use oat\tao\model\plugins\PluginModule;
  */
 class TestPluginService extends AbstractPluginService
 {
-    const SERVICE_ID = 'taoTests/TestPlugin';
+    public const SERVICE_ID = 'taoTests/TestPlugin';
 
     /**
      * @deprecated
      */
-    const CONFIG_ID = self::SERVICE_ID;
+    public const CONFIG_ID = self::SERVICE_ID;
 
     /**
      * TestPluginService constructor.

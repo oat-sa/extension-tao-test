@@ -33,8 +33,8 @@
  */
 $todefine = [
     'TEST_TESTCONTENT_PROP' => 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestContent',
-   
-   
+
+
     'INSTANCE_FORMALPARAM_DELIVERYURI' => 'http://www.tao.lu/Ontologies/TAODelivery.rdf#FormalParamDeliveryUri',
     'INSTANCE_PROCESSVARIABLE_DELIVERY' => 'http://www.tao.lu/Ontologies/TAODelivery.rdf#ProcessVarDelivery',
     'INSTANCE_SERVICEDEFINITION_ITEMRUNNER' => 'http://www.tao.lu/Ontologies/TAODelivery.rdf#ServiceItemRunner',

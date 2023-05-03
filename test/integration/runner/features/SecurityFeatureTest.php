@@ -28,7 +28,6 @@ use oat\taoTests\models\runner\features\SecurityFeature;
 
 class SecurityFeatureTest extends GenerisPhpUnitTestRunner
 {
-
     public function testGetPluginsIds()
     {
         $serviceLocatorMock = $this->getServiceLocatorMock([
