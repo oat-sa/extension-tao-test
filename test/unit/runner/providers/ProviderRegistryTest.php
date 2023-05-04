@@ -30,7 +30,6 @@ use oat\taoTests\models\runner\providers\ProviderRegistry;
  */
 class ProviderRegistryTest extends TestCase
 {
-
     private static $map = [
         [
             'id'          => 'qti',

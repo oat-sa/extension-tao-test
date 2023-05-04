@@ -29,5 +29,4 @@ namespace oat\taoTests\models\runner\time;
  */
 class InvalidTimerStrategyException extends TimeException
 {
-
 }

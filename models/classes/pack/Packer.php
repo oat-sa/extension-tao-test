@@ -21,12 +21,12 @@
 
 namespace oat\taoTests\models\pack;
 
-use \core_kernel_classes_Resource;
-use \taoTests_models_classes_TestsService;
-use \common_exception_NoImplementation;
-use \ReflectionClass;
-use \common_Exception;
-use \Exception;
+use core_kernel_classes_Resource;
+use taoTests_models_classes_TestsService;
+use common_exception_NoImplementation;
+use ReflectionClass;
+use common_Exception;
+use Exception;
 
 /**
  * The Test Packer calls the packable class for the given test
@@ -36,7 +36,6 @@ use \Exception;
  */
 class Packer
 {
-
     /**
      * The test to pack
      * @var core_kernel_classes_Resource

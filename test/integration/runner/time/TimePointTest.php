@@ -354,13 +354,28 @@ class TimePointTest extends GenerisPhpUnitTestRunner
         ];
 
         $points3 = [
-            0 => new TimePoint(['item-1', 'item-1#0'], 1460116638.5226, TimePoint::TYPE_START, TimePoint::TARGET_SERVER),
+            0 => new TimePoint(
+                ['item-1', 'item-1#0'],
+                1460116638.5226,
+                TimePoint::TYPE_START,
+                TimePoint::TARGET_SERVER
+            ),
             1 => new TimePoint(['item-1', 'item-1#0'], 1460116645.4868, TimePoint::TYPE_END, TimePoint::TARGET_SERVER),
 
-            2 => new TimePoint(['item-1', 'item-1#0'], 1460116646.2684, TimePoint::TYPE_START, TimePoint::TARGET_SERVER),
+            2 => new TimePoint(
+                ['item-1', 'item-1#0'],
+                1460116646.2684,
+                TimePoint::TYPE_START,
+                TimePoint::TARGET_SERVER
+            ),
             3 => new TimePoint(['item-1', 'item-1#0'], 1460116653.7042, TimePoint::TYPE_END, TimePoint::TARGET_SERVER),
 
-            4 => new TimePoint(['item-1', 'item-1#0'], 1460116733.6273, TimePoint::TYPE_START, TimePoint::TARGET_SERVER),
+            4 => new TimePoint(
+                ['item-1', 'item-1#0'],
+                1460116733.6273,
+                TimePoint::TYPE_START,
+                TimePoint::TARGET_SERVER
+            ),
             5 => new TimePoint(['item-1', 'item-1#0'], 1460116784.4006, TimePoint::TYPE_END, TimePoint::TARGET_SERVER),
         ];
 

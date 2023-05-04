@@ -26,7 +26,6 @@ use oat\oatbox\event\Event;
 
 class TestCreatedEvent implements Event, JsonSerializable
 {
-
     /** @var  string */
     protected $testUri;
 

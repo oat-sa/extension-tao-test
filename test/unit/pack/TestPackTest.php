@@ -18,6 +18,7 @@
  * Copyright (c) 2015 (original work) Open Assessment Technologies SA;
  *
  */
+
 namespace oat\taoTests\test\unit\pack;
 
 use oat\generis\test\TestCase;
@@ -32,7 +33,6 @@ use InvalidArgumentException;
  */
 class TestPackTest extends TestCase
 {
-
     /**
      * Test creating an TestPack
      */

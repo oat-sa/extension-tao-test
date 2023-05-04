@@ -30,7 +30,6 @@ use oat\oatbox\event\Event;
  */
 class TestExecutionPausedEvent implements Event, JsonSerializable
 {
-
     /**
      * @var  string
      */
@@ -43,7 +42,7 @@ class TestExecutionPausedEvent implements Event, JsonSerializable
     {
         $this->testExecutionId = $testExecutionId;
     }
-    
+
     /**
      * Get the unique identifier of the Test Execution being paused.
      *

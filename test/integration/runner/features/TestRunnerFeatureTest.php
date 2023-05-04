@@ -146,7 +146,12 @@ class TestRunnerFeatureTest extends TestCase
         $feature->setServiceLocator($serviceLocatorMock);
 
         $feature->getPluginsIds();
-        $this->assertTrue($testLogger->has(LogLevel::WARNING, 'Invalid plugin Id iDontExist for test runner feature myId'));
+        $this->assertTrue(
+            $testLogger->has(
+                LogLevel::WARNING,
+                'Invalid plugin Id iDontExist for test runner feature myId'
+            )
+        );
     }
 
     public function testConstructEmptyLabel()

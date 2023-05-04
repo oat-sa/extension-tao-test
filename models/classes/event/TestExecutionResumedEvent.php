@@ -30,7 +30,6 @@ use oat\oatbox\event\Event;
  */
 class TestExecutionResumedEvent implements Event, JsonSerializable
 {
-
     /**
      * @var  string
      */
@@ -43,7 +42,7 @@ class TestExecutionResumedEvent implements Event, JsonSerializable
     {
         $this->testExecutionId = $testExecutionId;
     }
-    
+
     /**
      * Get the unique identifier of the Test Execution being resumed.
      *

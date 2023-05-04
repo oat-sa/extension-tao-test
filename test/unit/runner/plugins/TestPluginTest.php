@@ -32,7 +32,6 @@ use oat\taoTests\models\runner\plugins\TestPlugin;
  */
 class TestPluginTest extends TestCase
 {
-
     /**
      * Data provider
      * @return array the data
@@ -167,7 +166,8 @@ class TestPluginTest extends TestCase
      */
     public function testJsonSerialize()
     {
-        $expected = '{"id":"bar","module":"bar\/bar","bundle":"plugins\/bundle.min","position":12,"name":"Bar","description":"The best bar ever","category":"dummy","active":false,"tags":["dummy","goofy"]}';
+        $expected = '{"id":"bar","module":"bar\/bar","bundle":"plugins\/bundle.min","position":12,"name":"Bar",'
+            . '"description":"The best bar ever","category":"dummy","active":false,"tags":["dummy","goofy"]}';
 
         $testPlugin = new TestPlugin('bar', 'bar/bar', 'dummy', [
             'name' => 'Bar',

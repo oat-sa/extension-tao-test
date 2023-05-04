@@ -34,7 +34,10 @@ use Zend\ServiceManager\ServiceLocatorAwareTrait;
  * @author Christophe Noël <christophe@taotesting.com>
  */
 
-abstract class TestRunnerFeature implements TestRunnerFeatureInterface, LoggerAwareInterface, ServiceLocatorAwareInterface
+abstract class TestRunnerFeature implements
+    TestRunnerFeatureInterface,
+    LoggerAwareInterface,
+    ServiceLocatorAwareInterface
 {
     use LoggerAwareTrait;
     use ServiceLocatorAwareTrait;

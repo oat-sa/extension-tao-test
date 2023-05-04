@@ -21,8 +21,8 @@
 
 namespace oat\taoTests\models\pack;
 
-use \InvalidArgumentException;
-use \JsonSerializable;
+use InvalidArgumentException;
+use JsonSerializable;
 
 /**
  * The Item Pack represents the item package data produced by the compilation.
@@ -103,6 +103,8 @@ class TestPack implements JsonSerializable
 
     /**
      * How to serialize the pack in JSON.
+     *
+     * phpcs:disable PSR1.Methods.CamelCapsMethodName
      */
     public function JsonSerialize()
     {
@@ -112,4 +114,5 @@ class TestPack implements JsonSerializable
             'items'     => $this->items
         ];
     }
+    // phpcs:enable PSR1.Methods.CamelCapsMethodName
 }

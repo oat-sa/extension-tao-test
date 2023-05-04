@@ -35,18 +35,17 @@ use oat\taoTests\models\runner\plugins\TestPlugin;
  */
 class ManageableFeature extends TestRunnerFeature
 {
-
     /** @var string */
     protected $label;
     /** @var string */
     protected $description;
 
-    const OPTION_ID = 'identifier';
-    const OPTION_DESCRIPTION = 'description';
-    const OPTION_ACTIVE = 'active';
-    const OPTION_LABEL = 'label';
-    const OPTION_ENABLED_BY_DEFAULT = 'enabledByDefault';
-    const OPTION_PLUGIN_IDS = 'pluginIds';
+    public const OPTION_ID = 'identifier';
+    public const OPTION_DESCRIPTION = 'description';
+    public const OPTION_ACTIVE = 'active';
+    public const OPTION_LABEL = 'label';
+    public const OPTION_ENABLED_BY_DEFAULT = 'enabledByDefault';
+    public const OPTION_PLUGIN_IDS = 'pluginIds';
 
     /**
      * ManageableFeature constructor.
@@ -103,6 +102,8 @@ class ManageableFeature extends TestRunnerFeature
     /**
      * @return string
      * @throws \common_exception_Error
+     *
+     * phpcs:disable Generic.Files.LineLength
      */
     public function __toPhpCode()
     {
@@ -113,6 +114,7 @@ class ManageableFeature extends TestRunnerFeature
             . '    \'' . self::OPTION_ACTIVE . '\'=>' . \common_Utils::toPHPVariableString($this->isActive()) . ',' . PHP_EOL
             . '    \'' . self::OPTION_ENABLED_BY_DEFAULT . '\'=>' . \common_Utils::toPHPVariableString($this->isEnabledByDefault()) . ',' . PHP_EOL
             . '    \'' . self::OPTION_PLUGIN_IDS . '\'=>' . \common_Utils::toPHPVariableString($this->getPluginsIds()) . ',' . PHP_EOL
-        . '])';
+            . '])';
     }
+    // phpcs:enable Generic.Files.LineLength
 }

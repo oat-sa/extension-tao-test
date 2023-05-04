@@ -39,37 +39,37 @@ class TimePoint implements ArraySerializable, \Serializable, \JsonSerializable
     /**
      * Type of TimePoint: start of range
      */
-    const TYPE_START = 1;
+    public const TYPE_START = 1;
 
     /**
      * Type of TimePoint: end of range
      */
-    const TYPE_END = 2;
+    public const TYPE_END = 2;
 
     /**
      * Represents all types of TimePoint
      */
-    const TYPE_ALL = 3;
+    public const TYPE_ALL = 3;
 
     /**
      * Type of TimePoint target: client side
      */
-    const TARGET_CLIENT = 1;
+    public const TARGET_CLIENT = 1;
 
     /**
      * Type of TimePoint target: server side
      */
-    const TARGET_SERVER = 2;
+    public const TARGET_SERVER = 2;
 
     /**
      * Represents all types of TimePoint targets
      */
-    const TARGET_ALL = 3;
+    public const TARGET_ALL = 3;
 
     /**
      * The decimal precision used to compare timestamps
      */
-    const PRECISION = 10000;
+    public const PRECISION = 10000;
 
     /**
      * The timestamp representing the TimePoint
@@ -367,11 +367,11 @@ class TimePoint implements ArraySerializable, \Serializable, \JsonSerializable
     public function match(array $tags = null, $target = self::TARGET_ALL, $type = self::TYPE_ALL)
     {
         $match = ($this->getType() & $type) && ($this->getTarget() & $target);
-        
+
         if ($match && isset($tags)) {
             $match = (count(array_intersect($tags, $this->getTags())) == count($tags));
         }
-        
+
         return $match;
     }
 

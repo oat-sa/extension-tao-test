@@ -15,10 +15,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2008-2010 (original work) Deutsche Institut für Internationale Pädagogische Forschung (under the project TAO-TRANSFER);
- *               2009-2012 (update and modification) Public Research Centre Henri Tudor (under the project TAO-SUSTAIN & TAO-DEV);
+ * Copyright (c) 2008-2010 (original work) Deutsche Institut für Internationale Pädagogische Forschung
+ *                         (under the project TAO-TRANSFER);
+ *               2009-2012 (update and modification) Public Research Centre Henri Tudor
+ *                         (under the project TAO-SUSTAIN & TAO-DEV);
  *               2014 (update and modification) Open Assessment Technologies SA
- *
  */
 
 namespace oat\taoTests\test\integration;
@@ -44,7 +45,6 @@ use oat\tao\model\OntologyClassService;
  */
 class TestsTest extends GenerisPhpUnitTestRunner
 {
-
     /**
      *
      * @var taoTests_models_classes_TestsService
@@ -116,7 +116,9 @@ class TestsTest extends GenerisPhpUnitTestRunner
         $this->expectException(\common_exception_Error::class);
 
         $testModelProphecy = $this->prophesize(core_kernel_classes_Resource::class);
-        $testModelProphecy->getOnePropertyValue(new core_kernel_classes_Property(TestService::PROPERTY_TEST_MODEL_IMPLEMENTATION))->willReturn('FakeTestModelClass');
+        $testModelProphecy
+            ->getOnePropertyValue(new core_kernel_classes_Property(TestService::PROPERTY_TEST_MODEL_IMPLEMENTATION))
+            ->willReturn('FakeTestModelClass');
 
         $this->testsService->getTestModelImplementation($testModelProphecy->reveal());
     }
@@ -124,7 +126,9 @@ class TestsTest extends GenerisPhpUnitTestRunner
     public function testGetTestModelImplementationBackwardCompatible()
     {
         $testModelProphecy = $this->prophesize(core_kernel_classes_Resource::class);
-        $testModelProphecy->getOnePropertyValue(new core_kernel_classes_Property(TestService::PROPERTY_TEST_MODEL_IMPLEMENTATION))->willReturn(TestModelUnit::class);
+        $testModelProphecy
+            ->getOnePropertyValue(new core_kernel_classes_Property(TestService::PROPERTY_TEST_MODEL_IMPLEMENTATION))
+            ->willReturn(TestModelUnit::class);
 
         $testModelImp = $this->testsService->getTestModelImplementation($testModelProphecy->reveal());
 
@@ -136,7 +140,9 @@ class TestsTest extends GenerisPhpUnitTestRunner
         $this->expectException(\common_exception_NoImplementation::class);
 
         $testModelProphecy = $this->prophesize(core_kernel_classes_Resource::class);
-        $testModelProphecy->getOnePropertyValue(new core_kernel_classes_Property(TestService::PROPERTY_TEST_MODEL_IMPLEMENTATION))->willReturn('');
+        $testModelProphecy
+            ->getOnePropertyValue(new core_kernel_classes_Property(TestService::PROPERTY_TEST_MODEL_IMPLEMENTATION))
+            ->willReturn('');
         $testModelProphecy->getUri()->willReturn('testModelUri');
         $testModelProphecy->getUri()->should(new CallTimesPrediction(1));
 
@@ -158,7 +164,8 @@ class TestsTest extends GenerisPhpUnitTestRunner
             ->method('getServiceManager')
             ->willReturn($serviceLocatorMock);
         $testModelProphecy = $this->prophesize(core_kernel_classes_Resource::class);
-        $testModelProphecy->getOnePropertyValue(new core_kernel_classes_Property(TestService::PROPERTY_TEST_MODEL_IMPLEMENTATION))
+        $testModelProphecy
+            ->getOnePropertyValue(new core_kernel_classes_Property(TestService::PROPERTY_TEST_MODEL_IMPLEMENTATION))
             ->willReturn('testModelServiceId');
 
         $testModelImp = $testServiceMock->getTestModelImplementation($testModelProphecy->reveal());

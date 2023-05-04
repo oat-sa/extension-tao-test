@@ -1,4 +1,7 @@
 <?php
+
+// phpcs:disable Generic.Files.LineLength
+
 $GLOBALS['__l10n']["An error occured during user deletion"] = "Während dem Läschen vum User gouf et e Fehler";
 $GLOBALS['__l10n']["Create"] = "Erstellen";
 $GLOBALS['__l10n']["CSV Options"] = "CSV optiounen";
