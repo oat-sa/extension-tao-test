@@ -63,7 +63,9 @@ class taoTests_models_classes_CrudTestsService extends tao_models_classes_CrudSe
         if (!isset($propertiesValues[OntologyRdfs::RDFS_LABEL])) {
             $propertiesValues[OntologyRdfs::RDFS_LABEL] = "";
         }
-        $type = isset($propertiesValues[OntologyRdf::RDF_TYPE]) ? $propertiesValues[OntologyRdf::RDF_TYPE] : $this->getRootClass();
+        $type = isset($propertiesValues[OntologyRdf::RDF_TYPE])
+            ? $propertiesValues[OntologyRdf::RDF_TYPE]
+            : $this->getRootClass();
         $label = $propertiesValues[OntologyRdfs::RDFS_LABEL];
         //hmmm
         unset($propertiesValues[OntologyRdfs::RDFS_LABEL]);
