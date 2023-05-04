@@ -31,7 +31,7 @@ use oat\tao\model\providers\ProviderModule;
  */
 class TestProviderService extends AbstractProviderService
 {
-    const SERVICE_ID = 'taoTests/TestProvider';
+    public const SERVICE_ID = 'taoTests/TestProvider';
 
     /**
      * TestProviderService constructor.

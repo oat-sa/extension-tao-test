@@ -21,7 +21,7 @@
 
 namespace oat\taoTests\models\pack;
 
-use \core_kernel_classes_Resource;
+use core_kernel_classes_Resource;
 
 /**
  * To allow packing of test. The goal of the packing is to reprensent the data needed

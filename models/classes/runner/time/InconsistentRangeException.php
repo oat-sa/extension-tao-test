@@ -37,7 +37,8 @@ class InconsistentRangeException extends TimeException
     public function __construct($message = null, $code = 0, \Exception $previous = null)
     {
         if (!$message) {
-            $message = 'A time range must be defined by two TimePoint with the same target and the START cannot be after the END!';
+            $message = 'A time range must be defined by two TimePoint with the same target and the START cannot be '
+                . 'after the END!';
         }
 
         parent::__construct($message, $code, $previous);

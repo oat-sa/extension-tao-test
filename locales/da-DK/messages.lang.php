@@ -1,4 +1,7 @@
 <?php
+
+// phpcs:disable Generic.Files.LineLength
+
 $GLOBALS['__l10n'][" has been installed"] = "er blevet installeret";
 $GLOBALS['__l10n'][" next"] = "næste";
 $GLOBALS['__l10n'][" requires a subgrid adapter"] = " kræver en subgrid adapter";

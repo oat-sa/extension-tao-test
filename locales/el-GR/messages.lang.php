@@ -1,4 +1,5 @@
 <?php
+
 $GLOBALS['__l10n'][" and "] = " καί ";
 $GLOBALS['__l10n'][" has been deleted successfully"] = "διαγράφηκαν με επιτυχία";
 $GLOBALS['__l10n'][" has been installed"] = "έχει εγκατασταθεί";

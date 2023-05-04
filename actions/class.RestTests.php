@@ -17,7 +17,7 @@
  *
  */
 
-use \oat\tao\model\routing\AnnotationReader\security;
+use oat\tao\model\routing\AnnotationReader\security;
 
 /**
  *
@@ -25,7 +25,6 @@ use \oat\tao\model\routing\AnnotationReader\security;
  */
 class taoTests_actions_RestTests extends tao_actions_CommonRestModule
 {
-
     /**
      * taoTests_actions_RestTests constructor.
      * @security("hide")
@@ -44,10 +43,10 @@ class taoTests_actions_RestTests extends tao_actions_CommonRestModule
     protected function getParametersAliases()
     {
         return array_merge(parent::getParametersAliases(), [
-           
+
         ]);
     }
-    
+
     /**
      * Optionnal Requirements for parameters to be sent on every service
      *
@@ -61,7 +60,7 @@ class taoTests_actions_RestTests extends tao_actions_CommonRestModule
         * type by default is not required and the root class type is applied
          *    @example :"post"=> array("login", "password")
         */
-        
+
         ];
     }
 }

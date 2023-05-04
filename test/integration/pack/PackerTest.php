@@ -18,6 +18,7 @@
  * Copyright (c) 2015 (original work) Open Assessment Technologies SA (under the project TAO-PRODUCT);
  *
  */
+
 namespace oat\taoTests\test\integration\pack;
 
 use common_Exception;
@@ -37,7 +38,6 @@ use oat\taoTests\models\pack\TestPack;
  */
 class PackerTest extends GenerisPhpUnitTestRunner
 {
-
     public function setUp(): void
     {
         \common_ext_ExtensionsManager::singleton()->getExtensionById('taoTests');

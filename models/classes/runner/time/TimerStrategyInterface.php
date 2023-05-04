@@ -23,7 +23,7 @@ namespace oat\taoTests\models\runner\time;
 
 interface TimerStrategyInterface
 {
-    const SERVICE_ID = 'taoTests/TimerStrategyService';
+    public const SERVICE_ID = 'taoTests/TimerStrategyService';
 
     /**
      * @param int $time

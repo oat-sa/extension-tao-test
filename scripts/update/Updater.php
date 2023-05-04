@@ -52,7 +52,10 @@ class Updater extends \common_ext_ExtensionUpdater
         // remove active prop
         if ($this->isVersion('2.7')) {
             $deprecatedProperty = new \core_kernel_classes_Property('http://www.tao.lu/Ontologies/TAOTest.rdf#active');
-            $iterator = new \core_kernel_classes_ResourceIterator([\taoTests_models_classes_TestsService::singleton()->getRootClass()]);
+            $iterator = new \core_kernel_classes_ResourceIterator([
+                \taoTests_models_classes_TestsService::singleton()->getRootClass(),
+            ]);
+
             foreach ($iterator as $resource) {
                 $resource->removePropertyValues($deprecatedProperty);
             }
@@ -91,7 +94,13 @@ class Updater extends \common_ext_ExtensionUpdater
 
         // remove anonymous access
         if ($this->isVersion('6.0.0')) {
-            AclProxy::revokeRule(new AccessRule(AccessRule::GRANT, TaoRoles::ANONYMOUS, \taoTests_actions_RestTests::class));
+            AclProxy::revokeRule(
+                new AccessRule(
+                    AccessRule::GRANT,
+                    TaoRoles::ANONYMOUS,
+                    \taoTests_actions_RestTests::class
+                )
+            );
             $this->setVersion('6.0.1');
         }
 
@@ -109,7 +118,16 @@ class Updater extends \common_ext_ExtensionUpdater
         $this->skip('6.11.0', '7.3.0');
 
         if ($this->isVersion('7.3.0')) {
-            AclProxy::applyRule(new AccessRule('grant', TaoRoles::REST_PUBLISHER, ['ext' => 'taoTests', 'mod' => 'RestTests']));
+            AclProxy::applyRule(
+                new AccessRule(
+                    'grant',
+                    TaoRoles::REST_PUBLISHER,
+                    [
+                        'ext' => 'taoTests',
+                        'mod' => 'RestTests',
+                    ]
+                )
+            );
             $this->setVersion('7.4.0');
         }
 
@@ -130,7 +148,10 @@ class Updater extends \common_ext_ExtensionUpdater
         if ($this->isVersion('7.7.3')) {
             $featureService = $this->getServiceManager()->get(TestRunnerFeatureService::class);
             $features = $featureService->getAll(false);
-            if (isset($features[SecurityFeature::FEATURE_ID]) && get_class($features[SecurityFeature::FEATURE_ID]) === SecurityFeature::class) {
+            if (
+                isset($features[SecurityFeature::FEATURE_ID])
+                && get_class($features[SecurityFeature::FEATURE_ID]) === SecurityFeature::class
+            ) {
                 $featureService->unregister(SecurityFeature::FEATURE_ID);
                 $this->getServiceManager()->register(TestRunnerFeatureService::SERVICE_ID, $featureService);
             }
@@ -155,7 +176,7 @@ class Updater extends \common_ext_ExtensionUpdater
         }
 
         $this->skip('13.4.5', '14.1.1');
-        
+
         //Updater files are deprecated. Please use migrations.
         //See: https://github.com/oat-sa/generis/wiki/Tao-Update-Process
 

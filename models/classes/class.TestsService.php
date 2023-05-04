@@ -99,7 +99,7 @@ class taoTests_models_classes_TestsService extends OntologyClassService
     public function isTestClass(core_kernel_classes_Class $clazz): bool
     {
         if ($clazz->getUri() == $this->getClass(TaoOntology::CLASS_URI_TEST)->getUri()) {
-                return true;
+            return true;
         }
 
         foreach ($this->getClass(TaoOntology::CLASS_URI_TEST)->getSubClasses(true) as $subclass) {

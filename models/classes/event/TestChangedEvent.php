@@ -31,8 +31,8 @@ use oat\oatbox\event\Event;
  */
 abstract class TestChangedEvent implements Event
 {
-    const EVENT_NAME = __CLASS__;
-    
+    public const EVENT_NAME = __CLASS__;
+
     /**
      * (non-PHPdoc)
      * @see \oat\oatbox\event\Event::getName()
@@ -41,14 +41,14 @@ abstract class TestChangedEvent implements Event
     {
         return self::EVENT_NAME;
     }
-    
+
     /**
      * Returns the service call id of the test session
      *
      * @return string
      */
     abstract public function getServiceCallId();
-    
+
     /**
      * Returns a human readable description
      * of the test session in progress

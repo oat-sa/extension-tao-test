@@ -38,7 +38,7 @@ interface ExtraTime
      * @return float
      */
     public function getExtraTime();
-    
+
     /**
      * Sets the added extra time
      * @param float $time
@@ -52,7 +52,7 @@ interface ExtraTime
      * @return float
      */
     public function getConsumedExtraTime($tags = null);
-    
+
     /**
      * Gets the amount of remaining extra time
      * @return float

@@ -41,7 +41,7 @@ interface TimeLine
      * @return array
      */
     public function getPoints();
-    
+
     /**
      * Adds another TimePoint inside the TimeLine
      * @param TimePoint $point

@@ -1,4 +1,7 @@
 <?php
+
+// phpcs:disable Generic.Files.LineLength
+
 $GLOBALS['__l10n'][" next"] = "التالي";
 $GLOBALS['__l10n'][" requires a subgrid adapter"] = "يحتاج إلى محول subgrid";
 $GLOBALS['__l10n']["(empty)"] = "(فارغ)";

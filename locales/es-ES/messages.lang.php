@@ -1,4 +1,7 @@
 <?php
+
+// phpcs:disable Generic.Files.LineLength
+
 $GLOBALS['__l10n'][" and "] = " y ";
 $GLOBALS['__l10n'][" has been deleted successfully"] = " ha sido borrado exitosamente";
 $GLOBALS['__l10n'][" has been installed"] = " ha sido instalado";
