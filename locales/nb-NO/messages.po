@@ -1,26 +1,30 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 2021.10\n"
-"PO-Revision-Date: 2021-10-21T14:43:01\n"
+"Project-Id-Version: tao-open-source\n"
+"PO-Revision-Date: 2023-06-07 09:22\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
-"Language: nb-NO\n"
+"Language: nb_NO\n"
 "sourceLanguage: en-US\n"
-"targetLanguage: nb-NO\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"targetLanguage: en-US\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Basepath: ../../\n"
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: tao-open-source\n"
+"X-Crowdin-Project-ID: 590867\n"
+"X-Crowdin-Language: nb\n"
+"X-Crowdin-File: /[oat-sa.extension-tao-test] develop/locales/en-US/messages.po\n"
+"X-Crowdin-File-ID: 593\n"
+"Language-Team: Norwegian Bokmal\n"
 
-msgid " . \common_Utils::toPHPVariableString($this->getDescription()) . "
+msgid " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
 msgstr ""
 
-msgid " . \common_Utils::toPHPVariableString($this->getLabel()) . "
+msgid " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
 msgstr ""
-
-msgid "%s has been deleted."
-msgstr "%s er slettet."
 
 #, tao-public
 msgid "Authoring"
@@ -44,7 +48,7 @@ msgstr "Dupliser"
 
 #, tao-public
 msgid "Export"
-msgstr "Eksporter"
+msgstr ""
 
 #, tao-public
 msgid "Import"
@@ -83,13 +87,13 @@ msgstr "Forhåndsvis"
 
 #, tao-public
 msgid "Properties"
-msgstr "Egenskaper"
+msgstr ""
 
 msgid "Security plugins"
 msgstr "Sikkerhetsplugins"
 
-msgid "Set of plugins with \'security\' category"
-msgstr "Sett med plugins med kategorien \'sikkerhet\'"
+msgid "Set of plugins with \\'security\\' category"
+msgstr "Sett med plugins med kategorien \\'sikkerhet\\'"
 
 msgid "Test Preview is not installed, please contact to your administrator."
 msgstr "Forhåndsvisning av oppgavesett er ikke installert. Ta kontakt med administrator."
@@ -99,6 +103,9 @@ msgstr "Egenskaper for oppgavesett"
 
 msgid "Test saved"
 msgstr "Oppgavesettet ble lagret"
+
+msgid "Test was successfully deleted."
+msgstr ""
 
 #, tao-public
 msgid "Tests"
@@ -114,8 +121,8 @@ msgstr "Prøvemodus (sekvensering, skåring, kumulering, etc.) og layout er ogs�
 msgid "The Tests module allows to combine a selection of Items to a Test."
 msgstr "Prøvemodulen lar deg kombinere et utvalg av oppgaver til en prøve."
 
-msgid "Unable to delete %s."
-msgstr "Kan ikke slette %s."
+msgid "Unable to delete test."
+msgstr ""
 
 msgid "Unable to process your request"
 msgstr "Kan ikke behandle forespørselen din"
