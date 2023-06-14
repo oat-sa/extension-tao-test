@@ -31,6 +31,7 @@
 
 use oat\tao\model\user\TaoRoles;
 use oat\taoTests\models\Copier\CopierServiceProvider;
+use oat\taoTests\models\user\TaoTestsRoles;
 use oat\taoTests\scripts\update\Updater;
 use oat\taoTests\scripts\install\SetupProvider;
 use oat\taoTests\scripts\install\RegisterFrontendPaths;
@@ -63,10 +64,12 @@ return [
         ],
     ],
     'update' => Updater::class,
-    'managementRole' => 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole',
+    'managementRole' => TaoTestsRoles::TEST_MANAGER,
     'acl' => [
-        ['grant', 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole', ['ext' => 'taoTests']],
+        ['grant', TaoTestsRoles::TEST_MANAGER, ['ext' => 'taoTests']],
         ['grant', TaoRoles::REST_PUBLISHER, ['ext' => 'taoTests', 'mod' => 'RestTests']],
+        ['grant', TaoTestsRoles::TEST_EXPORTER, ['ext' => 'taoTests', 'mod' => 'TestExport']],
+        ['grant', TaoTestsRoles::TEST_IMPORTER, ['ext' => 'taoTests', 'mod' => 'TestImport']]
     ],
     'optimizableClasses' => [
         'http://www.tao.lu/Ontologies/TAOTest.rdf#Test',
