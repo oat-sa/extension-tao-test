@@ -29,6 +29,7 @@
  * @license GPLv2  http://www.opensource.org/licenses/gpl-2.0.php
  */
 
+use oat\tao\model\accessControl\func\AccessRule;
 use oat\tao\model\user\TaoRoles;
 use oat\taoTests\models\Copier\CopierServiceProvider;
 use oat\taoTests\models\user\TaoTestsRoles;
@@ -66,10 +67,36 @@ return [
     'update' => Updater::class,
     'managementRole' => TaoTestsRoles::TEST_MANAGER,
     'acl' => [
-        ['grant', TaoTestsRoles::TEST_MANAGER, ['ext' => 'taoTests']],
-        ['grant', TaoRoles::REST_PUBLISHER, ['ext' => 'taoTests', 'mod' => 'RestTests']],
-        ['grant', TaoTestsRoles::TEST_EXPORTER, ['ext' => 'taoTests', 'mod' => 'TestExport']],
-        ['grant', TaoTestsRoles::TEST_IMPORTER, ['ext' => 'taoTests', 'mod' => 'TestImport']]
+        [
+            AccessRule::GRANT,
+            TaoTestsRoles::TEST_MANAGER,
+            ['ext' => 'taoTests']
+        ],
+        [
+            AccessRule::GRANT,
+            TaoRoles::REST_PUBLISHER,
+            ['ext' => 'taoTests', 'mod' => 'RestTests']
+        ],
+        [
+            AccessRule::GRANT,
+            TaoTestsRoles::TEST_EXPORTER,
+            ['ext' => 'taoTests', 'mod' => 'TestExport']
+        ],
+        [
+            AccessRule::GRANT,
+            TaoTestsRoles::TEST_IMPORTER,
+            ['ext' => 'taoTests', 'mod' => 'TestImport']
+        ],
+        [
+            AccessRule::GRANT,
+            TaoRoles::REST_PUBLISHER,
+            ['ext' => 'taoTests', 'mod' => 'RestTests']
+        ],
+        [
+            AccessRule::GRANT,
+            TaoTestsRoles::RESTRICTED_TEST_AUTHOR,
+            ['ext' => 'taoTests', 'mod' => 'Tests']
+        ]
     ],
     'optimizableClasses' => [
         'http://www.tao.lu/Ontologies/TAOTest.rdf#Test',

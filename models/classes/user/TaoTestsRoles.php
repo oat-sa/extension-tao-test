@@ -27,4 +27,5 @@ interface TaoTestsRoles
     public const TEST_IMPORTER = 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestImporterRole';
     public const TEST_EXPORTER = 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestExporterRole';
     public const TEST_MANAGER = 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole';
+    public const RESTRICTED_TEST_AUTHOR = 'http://www.tao.lu/Ontologies/TAO.rdf#RestrictedTestAuthor';
 }
