@@ -52,7 +52,14 @@
   	<rdfs:label xml:lang="en-US"><![CDATA[Tests Manager]]></rdfs:label>
     <rdfs:comment xml:lang="en-US"><![CDATA[The Tests Manager Role]]></rdfs:comment>
   </rdf:Description>
-  
+  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAO.rdf#RestrictedTestAuthor">
+  	<rdf:type rdf:resource="http://www.tao.lu/Ontologies/generis.rdf#UserRole"/>
+   	<generis:includesRole rdf:resource="http://www.tao.lu/Ontologies/TAO.rdf#PropertyManagerRole"/>
+   	<generis:includesRole rdf:resource="http://www.tao.lu/Ontologies/generis.rdf#TestXMLEditor"/>
+   	<generis:includesRole rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#TaoQtiManagerRole"/>
+   	<rdfs:label xml:lang="en-US"><![CDATA[Restricted Test Author]]></rdfs:label>
+    <rdfs:comment xml:lang="en-US"><![CDATA[Test Author with limitation for ACL]]></rdfs:comment>
+  </rdf:Description>
   <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOItem.rdf#TestAuthor">
   	<rdf:type rdf:resource="http://www.tao.lu/Ontologies/generis.rdf#UserRole"/>
   	<generis:includesRole rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole"/>

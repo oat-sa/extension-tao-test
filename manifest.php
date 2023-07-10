@@ -29,7 +29,9 @@
  * @license GPLv2  http://www.opensource.org/licenses/gpl-2.0.php
  */
 
+use oat\tao\model\accessControl\func\AccessRule;
 use oat\tao\model\user\TaoRoles;
+use oat\taoTest\models\classes\user\TaoTestRoles;
 use oat\taoTests\models\Copier\CopierServiceProvider;
 use oat\taoTests\scripts\update\Updater;
 use oat\taoTests\scripts\install\SetupProvider;
@@ -65,8 +67,21 @@ return [
     'update' => Updater::class,
     'managementRole' => 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole',
     'acl' => [
-        ['grant', 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole', ['ext' => 'taoTests']],
-        ['grant', TaoRoles::REST_PUBLISHER, ['ext' => 'taoTests', 'mod' => 'RestTests']],
+        [
+            AccessRule::GRANT,
+            TaoTestRoles::TEST_MANAGER,
+            ['ext' => 'taoTests']
+        ],
+        [
+            AccessRule::GRANT,
+            TaoRoles::REST_PUBLISHER,
+            ['ext' => 'taoTests', 'mod' => 'RestTests']
+        ],
+        [
+            AccessRule::GRANT,
+            TaoTestRoles::RESTRICTED_TEST_AUTHOR,
+            ['ext' => 'taoTests', 'mod' => 'Tests']
+        ]
     ],
     'optimizableClasses' => [
         'http://www.tao.lu/Ontologies/TAOTest.rdf#Test',
