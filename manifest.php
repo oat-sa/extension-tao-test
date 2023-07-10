@@ -31,8 +31,8 @@
 
 use oat\tao\model\accessControl\func\AccessRule;
 use oat\tao\model\user\TaoRoles;
-use oat\taoTest\models\classes\user\TaoTestRoles;
 use oat\taoTests\models\Copier\CopierServiceProvider;
+use oat\taoTests\models\user\TaoTestsRoles;
 use oat\taoTests\scripts\update\Updater;
 use oat\taoTests\scripts\install\SetupProvider;
 use oat\taoTests\scripts\install\RegisterFrontendPaths;
@@ -65,11 +65,11 @@ return [
         ],
     ],
     'update' => Updater::class,
-    'managementRole' => 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole',
+    'managementRole' => TaoTestsRoles::TEST_MANAGER,
     'acl' => [
         [
             AccessRule::GRANT,
-            TaoTestRoles::TEST_MANAGER,
+            TaoTestsRoles::TEST_MANAGER,
             ['ext' => 'taoTests']
         ],
         [
@@ -79,7 +79,22 @@ return [
         ],
         [
             AccessRule::GRANT,
-            TaoTestRoles::RESTRICTED_TEST_AUTHOR,
+            TaoTestsRoles::TEST_EXPORTER,
+            ['ext' => 'taoTests', 'mod' => 'TestExport']
+        ],
+        [
+            AccessRule::GRANT,
+            TaoTestsRoles::TEST_IMPORTER,
+            ['ext' => 'taoTests', 'mod' => 'TestImport']
+        ],
+        [
+            AccessRule::GRANT,
+            TaoRoles::REST_PUBLISHER,
+            ['ext' => 'taoTests', 'mod' => 'RestTests']
+        ],
+        [
+            AccessRule::GRANT,
+            TaoTestsRoles::RESTRICTED_TEST_AUTHOR,
             ['ext' => 'taoTests', 'mod' => 'Tests']
         ]
     ],

@@ -9,24 +9,28 @@ use oat\tao\scripts\tools\accessControl\SetRolesAccess;
 use oat\tao\scripts\tools\migrations\AbstractMigration;
 use oat\tao\scripts\update\OntologyUpdater;
 use oat\taoTests\models\user\TaoTestsRoles;
+use taoTests_actions_TestExport;
+use taoTests_actions_TestImport;
 
 /**
  * Auto-generated Migration: Please modify to your needs!
- *
- * phpcs:disable Squiz.Classes.ValidClassName
  */
-final class Version202307100801342363_taoTests extends AbstractMigration
+final class Version202306141424132365_taoTests extends AbstractMigration
 {
     private const CONFIG = [
         SetRolesAccess::CONFIG_RULES => [
-            TaoTestsRoles::RESTRICTED_TEST_AUTHOR => [
-                ['ext' => 'taoTests', 'mod' => 'Tests']
-            ]
+            TaoTestsRoles::TEST_EXPORTER => [
+                ['ext' => 'taoTests', 'mod' => 'TestExport']
+            ],
+            TaoTestsRoles::TEST_IMPORTER => [
+                ['ext' => 'taoTests', 'mod' => 'TestImport']
+            ],
         ],
     ];
+
     public function getDescription(): string
     {
-        return 'Add role access to restricted test author';
+        return 'Add access rules to new roles for tests';
     }
 
     public function up(Schema $schema): void
