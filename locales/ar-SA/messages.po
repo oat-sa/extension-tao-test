@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tao-open-source\n"
-"PO-Revision-Date: 2023-06-07 09:21\n"
+"PO-Revision-Date: 2023-12-04 16:07\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: ar\n"
@@ -21,112 +21,112 @@ msgstr ""
 "Language-Team: Arabic\n"
 
 msgid " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
-msgstr ""
+msgstr " . \\common_Utils::toPHPVariableString($this->getDescription()). "
 
 msgid " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
-msgstr ""
+msgstr "\\common_Utils::toPHPVariableString($this->getLabel()) ."
 
 #, tao-public
 msgid "Authoring"
-msgstr ""
+msgstr "التحرير"
 
 #, tao-public
 msgid "Combine a selection of items into tests."
-msgstr ""
+msgstr "امزج بين مجموعة مختارة من البنود في الروائز."
 
 #, tao-public
 msgid "Copy To"
-msgstr ""
+msgstr "نسخ الى"
 
 #, tao-public
 msgid "Delete"
-msgstr ""
+msgstr "حذف"
 
 #, tao-public
 msgid "Duplicate"
-msgstr ""
+msgstr "انسخ"
 
 #, tao-public
 msgid "Export"
-msgstr ""
+msgstr "تصدير"
 
 #, tao-public
 msgid "Import"
-msgstr ""
+msgstr "استورد"
 
 msgid "Last updated on %2s"
-msgstr ""
+msgstr "آخر تحديث في %2s"
 
 #, tao-public
 msgid "Manage Schema"
-msgstr ""
+msgstr "إدارة الخطاطة"
 
 #, tao-public
 msgid "Manage tests"
-msgstr ""
+msgstr "إدارة الروائز"
 
 #, tao-public
 msgid "Move"
-msgstr ""
+msgstr "حرك"
 
 #, tao-public
 msgid "Move To"
-msgstr ""
+msgstr "حرك نحو"
 
 #, tao-public
 msgid "New class"
-msgstr ""
+msgstr "صنف جديد"
 
 #, tao-public
 msgid "New test"
-msgstr ""
+msgstr "رائز جديد"
 
 #, tao-public
 msgid "Preview"
-msgstr ""
+msgstr "معاينة"
 
 #, tao-public
 msgid "Properties"
-msgstr ""
+msgstr "خصائص"
 
 msgid "Security plugins"
-msgstr ""
+msgstr "المكونات الإضافية للأمان"
 
 msgid "Set of plugins with \\'security\\' category"
-msgstr ""
+msgstr "مجموعة من المكونات الإضافية مع فئة \"الأمان\""
 
 msgid "Test Preview is not installed, please contact to your administrator."
-msgstr ""
+msgstr "معاينة الاختبار غير مثبتة، يرجى الاتصال بالمسؤول."
 
 msgid "Test properties"
-msgstr ""
+msgstr "اختبار الخصائص"
 
 msgid "Test saved"
-msgstr ""
+msgstr "تم حفظ الرائز"
 
 msgid "Test was successfully deleted."
-msgstr ""
+msgstr "تم حذف الاختبار بنجاح."
 
 #, tao-public
 msgid "Tests"
-msgstr ""
+msgstr "روائز"
 
 #, tao-public
 msgid "Tests library"
-msgstr ""
+msgstr "خزينة الروائز"
 
 msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
-msgstr ""
+msgstr "ز (التسلسل ، والتسجيل ، والتراكم، إلخ) والتخطيط وأيضا لتنسيق الصفحات."
 
 msgid "The Tests module allows to combine a selection of Items to a Test."
-msgstr ""
+msgstr "تسمح مجزوءة الروائز بدمج مجموعة مختارة من البنود في الرائز."
 
 msgid "Unable to delete test."
-msgstr ""
+msgstr "تعذر حذف الرائز."
 
 msgid "Unable to process your request"
-msgstr ""
+msgstr "غير قادر على معالجة طلبك"
 
 msgid "You checked out this test %2s ago"
-msgstr ""
+msgstr "لقد سحبت هذا الاختبار منذ  %2s"
 
