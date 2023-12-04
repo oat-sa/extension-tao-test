@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tao-open-source\n"
-"PO-Revision-Date: 2023-06-07 09:22\n"
+"PO-Revision-Date: 2023-12-04 16:07\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: de\n"
@@ -21,10 +21,10 @@ msgstr ""
 "Language-Team: German\n"
 
 msgid " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
-msgstr ""
+msgstr " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
 
 msgid " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
-msgstr ""
+msgstr " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
 
 #, tao-public
 msgid "Authoring"
@@ -36,11 +36,11 @@ msgstr "Eine Auswahl von Elementen zu einem Test kombinieren."
 
 #, tao-public
 msgid "Copy To"
-msgstr ""
+msgstr "Kopieren nach"
 
 #, tao-public
 msgid "Delete"
-msgstr ""
+msgstr "Löschen"
 
 #, tao-public
 msgid "Duplicate"
@@ -48,18 +48,18 @@ msgstr "Duplizieren"
 
 #, tao-public
 msgid "Export"
-msgstr ""
+msgstr "Export"
 
 #, tao-public
 msgid "Import"
-msgstr ""
+msgstr "Importieren"
 
 msgid "Last updated on %2s"
 msgstr "Letztes Update vom %2s"
 
 #, tao-public
 msgid "Manage Schema"
-msgstr ""
+msgstr "Schema verwalten"
 
 #, tao-public
 msgid "Manage tests"
@@ -71,7 +71,7 @@ msgstr "Verschieben"
 
 #, tao-public
 msgid "Move To"
-msgstr ""
+msgstr "Bewegen nach"
 
 #, tao-public
 msgid "New class"
@@ -87,16 +87,16 @@ msgstr "Vorschau"
 
 #, tao-public
 msgid "Properties"
-msgstr ""
+msgstr "Eigenschaften"
 
 msgid "Security plugins"
-msgstr ""
+msgstr "Sicherheits-Plugins"
 
 msgid "Set of plugins with \\'security\\' category"
-msgstr ""
+msgstr "Plugins der Kategorie \\'Sicherheit\\'"
 
 msgid "Test Preview is not installed, please contact to your administrator."
-msgstr ""
+msgstr "Test Preview ist nicht installiert. Bitte wenden Sie sich an Ihren Administrator."
 
 msgid "Test properties"
 msgstr "Testeigenschaften"
@@ -105,11 +105,11 @@ msgid "Test saved"
 msgstr "Test gespeichert"
 
 msgid "Test was successfully deleted."
-msgstr ""
+msgstr "Der Test wurde erfolgreich gelöscht."
 
 #, tao-public
 msgid "Tests"
-msgstr ""
+msgstr "Tests"
 
 #, tao-public
 msgid "Tests library"
@@ -122,10 +122,10 @@ msgid "The Tests module allows to combine a selection of Items to a Test."
 msgstr "Das Test-Modul erlaubt das Zusammenfassen von Items zu Tests."
 
 msgid "Unable to delete test."
-msgstr ""
+msgstr "Der Test konnte nicht gelöscht werden."
 
 msgid "Unable to process your request"
-msgstr ""
+msgstr "Ihre Anfrage konnte nicht verarbeitet werden"
 
 msgid "You checked out this test %2s ago"
 msgstr "Test wurde vor %2s ausgecheckt"
