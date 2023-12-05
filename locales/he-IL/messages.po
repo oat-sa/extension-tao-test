@@ -4,7 +4,7 @@ msgstr ""
 "PO-Revision-Date: 2023-12-04 16:07\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
-"Language: pt\n"
+"Language: he\n"
 "sourceLanguage: en-US\n"
 "targetLanguage: en-US\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -12,13 +12,13 @@ msgstr ""
 "X-Poedit-Basepath: ../../\n"
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3;\n"
 "X-Crowdin-Project: tao-open-source\n"
 "X-Crowdin-Project-ID: 590867\n"
-"X-Crowdin-Language: pt-PT\n"
+"X-Crowdin-Language: he\n"
 "X-Crowdin-File: /[oat-sa.extension-tao-test] develop/locales/en-US/messages.po\n"
 "X-Crowdin-File-ID: 593\n"
-"Language-Team: Portuguese\n"
+"Language-Team: Hebrew\n"
 
 msgid " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
 msgstr ""
@@ -28,11 +28,11 @@ msgstr ""
 
 #, tao-public
 msgid "Authoring"
-msgstr "Criador"
+msgstr ""
 
 #, tao-public
 msgid "Combine a selection of items into tests."
-msgstr "Combine uma selecção de itens para testes."
+msgstr ""
 
 #, tao-public
 msgid "Copy To"
@@ -44,7 +44,7 @@ msgstr ""
 
 #, tao-public
 msgid "Duplicate"
-msgstr "Duplicado"
+msgstr ""
 
 #, tao-public
 msgid "Export"
@@ -63,11 +63,11 @@ msgstr ""
 
 #, tao-public
 msgid "Manage tests"
-msgstr "Gerir testes"
+msgstr ""
 
 #, tao-public
 msgid "Move"
-msgstr "Mover"
+msgstr ""
 
 #, tao-public
 msgid "Move To"
@@ -75,11 +75,11 @@ msgstr ""
 
 #, tao-public
 msgid "New class"
-msgstr "Nova disciplina"
+msgstr ""
 
 #, tao-public
 msgid "New test"
-msgstr "Novo teste"
+msgstr ""
 
 #, tao-public
 msgid "Preview"
@@ -99,10 +99,10 @@ msgid "Test Preview is not installed, please contact to your administrator."
 msgstr ""
 
 msgid "Test properties"
-msgstr "Propriedades do teste"
+msgstr ""
 
 msgid "Test saved"
-msgstr "teste guardado"
+msgstr ""
 
 msgid "Test was successfully deleted."
 msgstr ""
@@ -113,13 +113,13 @@ msgstr ""
 
 #, tao-public
 msgid "Tests library"
-msgstr "Biblioteca de testes"
+msgstr ""
 
 msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
-msgstr "O modo de teste (sequência, pontuação, acumulado, etc) e modelo também são configurados aqui."
+msgstr ""
 
 msgid "The Tests module allows to combine a selection of Items to a Test."
-msgstr "O Modulo de testes permite que combine uma selecção de items para um teste."
+msgstr ""
 
 msgid "Unable to delete test."
 msgstr ""
