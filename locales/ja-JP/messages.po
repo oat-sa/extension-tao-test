@@ -1,20 +1,30 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 2022.09\n"
-"PO-Revision-Date: 2022-08-12T16:45:51\n"
+"Project-Id-Version: tao-open-source\n"
+"PO-Revision-Date: 2023-12-04 16:07\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
-"Language: ja-JP\n"
+"Language: ja\n"
 "sourceLanguage: en-US\n"
-"targetLanguage: ja-JP\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"targetLanguage: en-US\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Basepath: ../../\n"
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Crowdin-Project: tao-open-source\n"
+"X-Crowdin-Project-ID: 590867\n"
+"X-Crowdin-Language: ja\n"
+"X-Crowdin-File: /[oat-sa.extension-tao-test] develop/locales/en-US/messages.po\n"
+"X-Crowdin-File-ID: 593\n"
+"Language-Team: Japanese\n"
 
-msgid "%s has been deleted"
-msgstr "%s は削除されました"
+msgid " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
+msgstr " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
+
+msgid " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
+msgstr " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
 
 #, tao-public
 msgid "Authoring"
@@ -34,7 +44,7 @@ msgstr "削除"
 
 #, tao-public
 msgid "Duplicate"
-msgstr "コピー"
+msgstr "複製"
 
 #, tao-public
 msgid "Export"
@@ -45,11 +55,11 @@ msgid "Import"
 msgstr "インポート"
 
 msgid "Last updated on %2s"
-msgstr "最終更新日: %2s"
+msgstr "最終更新日： %2s"
 
 #, tao-public
 msgid "Manage Schema"
-msgstr "スキーマ管理"
+msgstr "スキーム管理"
 
 #, tao-public
 msgid "Manage tests"
@@ -61,7 +71,7 @@ msgstr "移動"
 
 #, tao-public
 msgid "Move To"
-msgstr "移動先の選択"
+msgstr "移動"
 
 #, tao-public
 msgid "New class"
@@ -82,8 +92,8 @@ msgstr "プロパティ"
 msgid "Security plugins"
 msgstr "セキュリティプラグイン"
 
-msgid "Set of plugins with 'security' category"
-msgstr " 'security' カテゴリを持つプラグインセット"
+msgid "Set of plugins with \\'security\\' category"
+msgstr "\\'セキュリティ\\' カテゴリを持つプラグインのセット"
 
 msgid "Test Preview is not installed, please contact to your administrator."
 msgstr "テストプレビューはインストールされていません。管理者に問合せてください。"
@@ -93,6 +103,9 @@ msgstr "テストプロパティ"
 
 msgid "Test saved"
 msgstr "テストは保存されました。"
+
+msgid "Test was successfully deleted."
+msgstr "テストは正常に削除されました。"
 
 #, tao-public
 msgid "Tests"
@@ -108,8 +121,11 @@ msgstr "テストのモード（順序・配点・累計など）やレイアウ
 msgid "The Tests module allows to combine a selection of Items to a Test."
 msgstr "テストモジュールでは、選択したアイテムをテストにまとめることができます。"
 
+msgid "Unable to delete test."
+msgstr "テストを削除できません。"
+
 msgid "Unable to process your request"
-msgstr "リクエストを処理できません"
+msgstr "リクエストが処理できません"
 
 msgid "You checked out this test %2s ago"
 msgstr "あなたはこのテストを%2s前にチェックアウトしました"

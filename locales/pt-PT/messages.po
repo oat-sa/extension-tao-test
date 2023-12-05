@@ -1,27 +1,34 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.4.0-sprint138\n"
-"PO-Revision-Date: 2020-09-25T08:32:36\n"
+"Project-Id-Version: tao-open-source\n"
+"PO-Revision-Date: 2023-12-04 16:07\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
-"Language: pt-PT\n"
+"Language: pt\n"
 "sourceLanguage: en-US\n"
-"targetLanguage: pt-PT\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"targetLanguage: en-US\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Basepath: ../../\n"
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: tao-open-source\n"
+"X-Crowdin-Project-ID: 590867\n"
+"X-Crowdin-Language: pt-PT\n"
+"X-Crowdin-File: /[oat-sa.extension-tao-test] develop/locales/en-US/messages.po\n"
+"X-Crowdin-File-ID: 593\n"
+"Language-Team: Portuguese\n"
 
-msgid " . \common_Utils::toPHPVariableString($this->getDescription()) . "
+msgid " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
 msgstr ""
 
-msgid " . \common_Utils::toPHPVariableString($this->getLabel()) . "
+msgid " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
 msgstr ""
 
 #, tao-public
 msgid "Authoring"
-msgstr ""
+msgstr "Criador"
 
 #, tao-public
 msgid "Combine a selection of items into tests."
@@ -33,7 +40,7 @@ msgstr ""
 
 #, tao-public
 msgid "Delete"
-msgstr "Eliminar"
+msgstr ""
 
 #, tao-public
 msgid "Duplicate"
@@ -41,11 +48,11 @@ msgstr "Duplicado"
 
 #, tao-public
 msgid "Export"
-msgstr "Exportar"
+msgstr ""
 
 #, tao-public
 msgid "Import"
-msgstr "Importar"
+msgstr ""
 
 msgid "Last updated on %2s"
 msgstr ""
@@ -85,7 +92,7 @@ msgstr ""
 msgid "Security plugins"
 msgstr ""
 
-msgid "Set of plugins with \'security\' category"
+msgid "Set of plugins with \\'security\\' category"
 msgstr ""
 
 msgid "Test Preview is not installed, please contact to your administrator."
@@ -102,7 +109,7 @@ msgstr ""
 
 #, tao-public
 msgid "Tests"
-msgstr "Testes"
+msgstr ""
 
 #, tao-public
 msgid "Tests library"

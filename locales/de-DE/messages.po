@@ -1,23 +1,30 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.4.0-sprint138\n"
-"PO-Revision-Date: 2020-09-25T08:32:35\n"
+"Project-Id-Version: tao-open-source\n"
+"PO-Revision-Date: 2023-12-04 16:07\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
-"Language: de-DE\n"
+"Language: de\n"
 "sourceLanguage: en-US\n"
-"targetLanguage: de-DE\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"targetLanguage: en-US\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Basepath: ../../\n"
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: tao-open-source\n"
+"X-Crowdin-Project-ID: 590867\n"
+"X-Crowdin-Language: de\n"
+"X-Crowdin-File: /[oat-sa.extension-tao-test] develop/locales/en-US/messages.po\n"
+"X-Crowdin-File-ID: 593\n"
+"Language-Team: German\n"
 
-msgid " . \common_Utils::toPHPVariableString($this->getDescription()) . "
-msgstr ""
+msgid " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
+msgstr " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
 
-msgid " . \common_Utils::toPHPVariableString($this->getLabel()) . "
-msgstr ""
+msgid " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
+msgstr " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
 
 #, tao-public
 msgid "Authoring"
@@ -29,7 +36,7 @@ msgstr "Eine Auswahl von Elementen zu einem Test kombinieren."
 
 #, tao-public
 msgid "Copy To"
-msgstr ""
+msgstr "Kopieren nach"
 
 #, tao-public
 msgid "Delete"
@@ -45,14 +52,14 @@ msgstr "Export"
 
 #, tao-public
 msgid "Import"
-msgstr "Import"
+msgstr "Importieren"
 
 msgid "Last updated on %2s"
-msgstr ""
+msgstr "Letztes Update vom %2s"
 
 #, tao-public
 msgid "Manage Schema"
-msgstr ""
+msgstr "Schema verwalten"
 
 #, tao-public
 msgid "Manage tests"
@@ -64,7 +71,7 @@ msgstr "Verschieben"
 
 #, tao-public
 msgid "Move To"
-msgstr ""
+msgstr "Bewegen nach"
 
 #, tao-public
 msgid "New class"
@@ -76,20 +83,20 @@ msgstr "Neuer Test"
 
 #, tao-public
 msgid "Preview"
-msgstr ""
+msgstr "Vorschau"
 
 #, tao-public
 msgid "Properties"
 msgstr "Eigenschaften"
 
 msgid "Security plugins"
-msgstr ""
+msgstr "Sicherheits-Plugins"
 
-msgid "Set of plugins with \'security\' category"
-msgstr ""
+msgid "Set of plugins with \\'security\\' category"
+msgstr "Plugins der Kategorie \\'Sicherheit\\'"
 
 msgid "Test Preview is not installed, please contact to your administrator."
-msgstr ""
+msgstr "Test Preview ist nicht installiert. Bitte wenden Sie sich an Ihren Administrator."
 
 msgid "Test properties"
 msgstr "Testeigenschaften"
@@ -98,7 +105,7 @@ msgid "Test saved"
 msgstr "Test gespeichert"
 
 msgid "Test was successfully deleted."
-msgstr ""
+msgstr "Der Test wurde erfolgreich gelöscht."
 
 #, tao-public
 msgid "Tests"
@@ -115,10 +122,10 @@ msgid "The Tests module allows to combine a selection of Items to a Test."
 msgstr "Das Test-Modul erlaubt das Zusammenfassen von Items zu Tests."
 
 msgid "Unable to delete test."
-msgstr ""
+msgstr "Der Test konnte nicht gelöscht werden."
 
 msgid "Unable to process your request"
-msgstr ""
+msgstr "Ihre Anfrage konnte nicht verarbeitet werden"
 
 msgid "You checked out this test %2s ago"
 msgstr "Test wurde vor %2s ausgecheckt"
