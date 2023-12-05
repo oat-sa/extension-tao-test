@@ -1,27 +1,34 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.4.0-sprint138\n"
-"PO-Revision-Date: 2020-09-25T08:32:35\n"
+"Project-Id-Version: tao-open-source\n"
+"PO-Revision-Date: 2023-06-07 09:22\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
-"Language: it-IT\n"
+"Language: it\n"
 "sourceLanguage: en-US\n"
-"targetLanguage: it-IT\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"targetLanguage: en-US\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Basepath: ../../\n"
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: tao-open-source\n"
+"X-Crowdin-Project-ID: 590867\n"
+"X-Crowdin-Language: it\n"
+"X-Crowdin-File: /[oat-sa.extension-tao-test] develop/locales/en-US/messages.po\n"
+"X-Crowdin-File-ID: 593\n"
+"Language-Team: Italian\n"
 
-msgid " . \common_Utils::toPHPVariableString($this->getDescription()) . "
+msgid " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
 msgstr ""
 
-msgid " . \common_Utils::toPHPVariableString($this->getLabel()) . "
+msgid " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
 msgstr ""
 
 #, tao-public
 msgid "Authoring"
-msgstr "Authoring"
+msgstr "Autore"
 
 #, tao-public
 msgid "Combine a selection of items into tests."
@@ -33,7 +40,7 @@ msgstr ""
 
 #, tao-public
 msgid "Delete"
-msgstr "Cancella"
+msgstr ""
 
 #, tao-public
 msgid "Duplicate"
@@ -41,7 +48,7 @@ msgstr "Duplica"
 
 #, tao-public
 msgid "Export"
-msgstr "Esporta"
+msgstr ""
 
 #, tao-public
 msgid "Import"
@@ -76,16 +83,16 @@ msgstr "Nuovo test"
 
 #, tao-public
 msgid "Preview"
-msgstr ""
+msgstr "Anteprima"
 
 #, tao-public
 msgid "Properties"
-msgstr "Proprietà"
+msgstr ""
 
 msgid "Security plugins"
 msgstr ""
 
-msgid "Set of plugins with \'security\' category"
+msgid "Set of plugins with \\'security\\' category"
 msgstr ""
 
 msgid "Test Preview is not installed, please contact to your administrator."
