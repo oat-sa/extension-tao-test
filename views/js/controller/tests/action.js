@@ -17,7 +17,6 @@
  *
  */
 define([
-    'lodash',
     'i18n',
     'layout/actions/binder',
     'uri',
@@ -25,18 +24,20 @@ define([
     'core/logger',
     'taoTests/previewer/factory',
     'module'
-], function(_, __, binder, uri, feedback, loggerFactory, previewerFactory, module){
+], function(__, binder, uri, feedback, loggerFactory, previewerFactory, module){
     'use strict';
 
     const logger = loggerFactory('taoTests/controller/action');
 
     binder.register('testPreview', function testPreview(actionContext) {
         const config = module.config();
-        const previewerConfig = _.omit({
-            readOnly: false,
-            fullPage: true,
-            pluginsOptions: config.pluginsOptions
-        }, _.isUndefined);
+        const previewerConfig = Object.fromEntries(
+            Object.entries({
+                readOnly: false,
+                fullPage: true,
+                pluginsOptions: config.pluginsOptions
+            }).filter(([key, value]) => value !== undefined)
+        );
 
         previewerFactory(config.provider,
             uri.decode(actionContext.uri),

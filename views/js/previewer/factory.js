@@ -45,12 +45,12 @@ define([
      * @returns {Promise}
      */
     function previewerFactory(type, uri, config) {
-        config = _.defaults(config || {}, module.config());
+        config = Object.assign({}, module.config(), config);
         return providerLoaderFactory()
             .addList(config.previewers)
             .load(context.bundle)
             .then(function (providers) {
-                _.forEach(providers, function (provider) {
+                providers.forEach(function (provider) {
                     previewerFactory.registerProvider(provider.name, provider);
                 });
             })
@@ -63,7 +63,7 @@ define([
     }
 
     return providerRegistry(previewerFactory, function validateProvider(provider) {
-        if (!_.isFunction(provider.init)) {
+        if (typeof provider.init !== 'function') {
             throw new TypeError('The previewer provider MUST have a init() method');
         }
         return true;
