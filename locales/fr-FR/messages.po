@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tao-open-source\n"
-"PO-Revision-Date: 2023-12-04 16:07\n"
+"PO-Revision-Date: 2024-04-09 08:19\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: fr\n"
@@ -21,10 +21,10 @@ msgstr ""
 "Language-Team: French\n"
 
 msgid " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
-msgstr ""
+msgstr " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
 
 msgid " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
-msgstr ""
+msgstr " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
 
 #, tao-public
 msgid "Authoring"
@@ -93,10 +93,10 @@ msgid "Security plugins"
 msgstr "Plugins de sécurité"
 
 msgid "Set of plugins with \\'security\\' category"
-msgstr ""
+msgstr "Ensemble de plugins avec la catégorie \\'security\\'"
 
 msgid "Test Preview is not installed, please contact to your administrator."
-msgstr ""
+msgstr "La prévisualisation de test n’est pas installée, merci de contacter votre administrateur."
 
 msgid "Test properties"
 msgstr "Propriétés du test"
@@ -105,11 +105,11 @@ msgid "Test saved"
 msgstr "Test enregistré"
 
 msgid "Test was successfully deleted."
-msgstr ""
+msgstr "Test supprimé."
 
 #, tao-public
 msgid "Tests"
-msgstr ""
+msgstr "Tests"
 
 #, tao-public
 msgid "Tests library"
@@ -122,10 +122,10 @@ msgid "The Tests module allows to combine a selection of Items to a Test."
 msgstr "Le module \"Tests\" permet de combiner la sélection d'items à un test."
 
 msgid "Unable to delete test."
-msgstr ""
+msgstr "Impossible de supprimer le test."
 
 msgid "Unable to process your request"
-msgstr ""
+msgstr "Votre requête n’a pu aboutir"
 
 msgid "You checked out this test %2s ago"
 msgstr "Vous avez quitté ce test il y a %2s."
