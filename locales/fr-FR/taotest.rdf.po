@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tao-open-source\n"
-"PO-Revision-Date: 2023-12-04 16:07\n"
+"PO-Revision-Date: 2024-04-09 08:19\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: fr\n"
@@ -20,12 +20,12 @@ msgstr ""
 # http://www.tao.lu/Ontologies/TAOTest.rdf#Test
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "Test"
-msgstr ""
+msgstr "Test"
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#Test
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "Test"
-msgstr ""
+msgstr "Test"
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestContent
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
@@ -35,22 +35,22 @@ msgstr "Contenu du test"
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestContent
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "Test Content"
-msgstr ""
+msgstr "Contenu de test"
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestTestModel
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "Test Model"
-msgstr ""
+msgstr "Modèle de test"
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestTestModel
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "Test Model"
-msgstr ""
+msgstr "Modèle de test"
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestModelImplementation
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "Testmodel implementation"
-msgstr ""
+msgstr "Implémentation du modèle de test"
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestModelImplementation
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
