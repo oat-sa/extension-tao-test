@@ -1,20 +1,24 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.4.0-sprint160\n"
-"PO-Revision-Date: 2021-12-28 14:38+0100\n"
+"Project-Id-Version: tao-open-source\n"
+"PO-Revision-Date: 2023-12-04 16:07\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: ar-arb\n"
 "sourceLanguage: en-US\n"
 "targetLanguage: ar-arb\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Basepath: ../..\n"
+"X-Poedit-Basepath: ../../\n"
 "X-Poedit-KeywordsList: __\n"
-"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
-"POT-Creation-Date: \n"
-"X-Generator: Poedit 2.4.3\n"
 "X-Poedit-SearchPath-0: .\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
+"X-Crowdin-Project: tao-open-source\n"
+"X-Crowdin-Project-ID: 590867\n"
+"X-Crowdin-Language: ar\n"
+"X-Crowdin-File: /[oat-sa.extension-tao-test] develop/locales/en-US/messages.po\n"
+"X-Crowdin-File-ID: 593\n"
+"Language-Team: Arabic\n"
 
 msgid " . \common_Utils::toPHPVariableString($this->getDescription()) . "
 msgstr " . \common_Utils::toPHPVariableString($this->getDescription()) . "
@@ -22,51 +26,66 @@ msgstr " . \common_Utils::toPHPVariableString($this->getDescription()) . "
 msgid " . \common_Utils::toPHPVariableString($this->getLabel()) . "
 msgstr "\common_Utils::toPHPVariableString($this->getLabel()) ."
 
+#, tao-public
 msgid "Authoring"
 msgstr "التحرير"
 
+#, tao-public
 msgid "Combine a selection of items into tests."
 msgstr "امزج بين مجموعة مختارة من البنود في الروائز."
 
+#, tao-public
 msgid "Copy To"
 msgstr "نسخ الى"
 
+#, tao-public
 msgid "Delete"
 msgstr "حذف"
 
+#, tao-public
 msgid "Duplicate"
 msgstr "انسخ"
 
+#, tao-public
 msgid "Export"
-msgstr "يصدر"
+msgstr "تصدير"
 
+#, tao-public
 msgid "Import"
-msgstr "استيراد"
+msgstr "استورد"
 
 msgid "Last updated on %2s"
 msgstr "آخر تحديث في %2s"
 
+#, tao-public
 msgid "Manage Schema"
-msgstr "إدارة المخطط"
+msgstr "إدارة الخطاطة"
 
+#, tao-public
 msgid "Manage tests"
 msgstr "إدارة الروائز"
 
+#, tao-public
 msgid "Move"
 msgstr "حرك"
 
+#, tao-public
 msgid "Move To"
-msgstr "حرك إلى"
+msgstr "حرك نحو"
 
+#, tao-public
 msgid "New class"
-msgstr "قسم جديد"
+msgstr "صنف جديد"
 
+#, tao-public
 msgid "New test"
 msgstr "رائز جديد"
 
+#, tao-public
 msgid "Preview"
 msgstr "معاينة"
 
+#, tao-public
 msgid "Properties"
 msgstr "خصائص"
 
@@ -88,9 +107,11 @@ msgstr "تم حفظ الرائز"
 msgid "Test was successfully deleted."
 msgstr "تم حذف الاختبار بنجاح."
 
+#, tao-public
 msgid "Tests"
-msgstr "الروائز"
+msgstr "روائز"
 
+#, tao-public
 msgid "Tests library"
 msgstr "خزينة الروائز"
 
@@ -108,3 +129,4 @@ msgstr "غير قادر على معالجة طلبك"
 
 msgid "You checked out this test %2s ago"
 msgstr "لقد سحبت هذا الاختبار منذ  %2s"
+
