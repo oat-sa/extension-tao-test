@@ -21,16 +21,16 @@
  */
 define([
     'jquery',
-    'taoTests/util/provider/itemProvider',
-    'taoTests/util/form/itemSelectorForm',
+    'taoTests/util/provider/itemClassProvider',
+    'taoTests/util/form/itemClassSelectorForm',
     'css!taoDeliveryRdfCss/delivery-rdf.css'
-], function ($, testsProvider, deliveryFormHelper) {
+], function ($, itemClassProvider, itemClassSelectorForm) {
     'use strict';
 
     return {
         start() {
             const $form = $('#import');
-            deliveryFormHelper.setupTaoLocalForm($form, testsProvider);
+            itemClassSelectorForm.setupTaoLocalForm($form, itemClassProvider);
         }
     };
 });
