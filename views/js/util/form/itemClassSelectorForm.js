@@ -73,7 +73,7 @@ define([
          */
         setupTaoLocalForm($form, providers) {
             const $filterContainer = $('.item-select-container', $form);
-            const $inputElement = $('#item', $form);
+            const $inputElement = $('#itemClassDestination', $form);
 
             // Enhanced selector input for tests:
             this.createSelectorInput({

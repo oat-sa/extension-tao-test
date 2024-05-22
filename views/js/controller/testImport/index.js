@@ -23,7 +23,6 @@ define([
     'jquery',
     'taoTests/util/provider/itemClassProvider',
     'taoTests/util/form/itemClassSelectorForm',
-    'css!taoDeliveryRdfCss/delivery-rdf.css'
 ], function ($, itemClassProvider, itemClassSelectorForm) {
     'use strict';
 
