@@ -36,7 +36,7 @@ define([
             return new Promise(function (resolve, reject) {
                 $.ajax({
                     //Find and setup class list for items
-                    url: urlUtils.route('getItemClasses', 'RestItems', 'taoItems'),
+                    url: urlUtils.route('getItemClasses', 'SaSItems', 'taoItems'),
                     data: {
                         q: data.q,
                         page: data.page
