@@ -13,23 +13,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2014-2020 (original work) Open Assessment Technologies SA
+ * Copyright (c) 2024 (original work) Open Assessment Technologies SA;
+ *
  */
-
-//@see http://forge.taotesting.com/projects/tao/wiki/Front_js
-define(function(){
+define([
+    'jquery',
+    'taoTests/util/provider/itemClassProvider',
+    'taoTests/util/form/itemClassSelectorForm',
+], function ($, itemClassProvider, itemClassSelectorForm) {
     'use strict';
+
     return {
-        'Tests' : {
-            'deps' : 'controller/tests/action',
-            'actions' : {
-                'editTest' : 'controller/tests/editTest'
-            }
-        },
-        'TestImport' : {
-            'actions' : {
-                'index' : 'controller/testImport/index'
-            }
-        },
+        start() {
+            const $form = $('#import');
+            itemClassSelectorForm.setupTaoLocalForm($form, itemClassProvider);
+        }
     };
 });
