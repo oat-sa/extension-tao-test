@@ -1,0 +1,122 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TAO 2024.06\n"
+"PO-Revision-Date: 2024-06-04T13:04:51\n"
+"Last-Translator: TAO Translation Team <translation@tao.lu>\n"
+"MIME-Version: 1.0\n"
+"Language: en-US\n"
+"sourceLanguage: en-US\n"
+"targetLanguage: en-US\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# http://www.tao.lu/Ontologies/TAOTest.rdf#Test
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Test"
+msgstr "Test"
+
+# http://www.tao.lu/Ontologies/TAOTest.rdf#Test
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "Test"
+msgstr "Test"
+
+# http://www.tao.lu/Ontologies/TAOTest.rdf#TestContent
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Test Content"
+msgstr "Test Content"
+
+# http://www.tao.lu/Ontologies/TAOTest.rdf#TestContent
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "Test Content"
+msgstr "Test Content"
+
+# http://www.tao.lu/Ontologies/TAOTest.rdf#TestTestModel
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Test Model"
+msgstr "Test Model"
+
+# http://www.tao.lu/Ontologies/TAOTest.rdf#TestTestModel
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "Test Model"
+msgstr "Test Model"
+
+# http://www.tao.lu/Ontologies/TAOTest.rdf#TestModelImplementation
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Testmodel implementation"
+msgstr "Testmodel implementation"
+
+# http://www.tao.lu/Ontologies/TAOTest.rdf#TestModelImplementation
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "Implementation of the test model"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAOTest.rdf#TestRole
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Test Role"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAOTest.rdf#TestRole
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "Test Role Class"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAOTest.rdf#TestImporterRole
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Tests Importer"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAOTest.rdf#TestImporterRole
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "The Tests Importer Role"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAOTest.rdf#TestExporterRole
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Tests Exporter"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAOTest.rdf#TestExporterRole
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "The Tests Exporter Role"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Tests Manager"
+msgstr "Tests Manager"
+
+# http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "The Tests Manager Role"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAO.rdf#RestrictedTestAuthor
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Restricted Test Author"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAO.rdf#RestrictedTestAuthor
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "Test Author with limitation for ACL"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAOItem.rdf#TestAuthor
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Test Author"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAOItem.rdf#TestAuthor
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "The Test Author Role"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAOTest.rdf#TestModelImplementation
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "Testmodel implementation"
+msgstr "Implementation of the test model"
+
+# http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "Tests Manager"
+msgstr "The Tests Manager Role"
+
