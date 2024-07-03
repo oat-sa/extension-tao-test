@@ -13,7 +13,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2015-2019 (original work) Open Assessment Technologies SA;
+ * Copyright (c) 2015-2024 (original work) Open Assessment Technologies SA;
  */
 
 /**
@@ -29,19 +29,26 @@ define([
     'use strict';
 
     return {
-
-
         /**
          * Controller's entrypoint
          */
         start(){
 
             const config = module.config();
-            const previewAction = actions.getBy('test-preview');
-            if (previewAction) {
-                previewAction.state.disabled = !config.isPreviewEnabled;
-                actions.updateState();
+
+            const getPreviewId = idx => `test-preview${idx ? `-${idx}` : ''}`;
+            const previewActions = []
+            for (let i = 0; i < 10; i++) {
+                const action = actions.getBy(getPreviewId(i));
+                if (!action) {
+                    break;
+                }
+                previewActions.push(action);
             }
+            previewActions.forEach(previewAction => {
+                previewAction.state.disabled = !config.isPreviewEnabled;
+            })
+            actions.updateState();
 
             $('#lock-box').each(function() {
                 lock($(this)).register();
