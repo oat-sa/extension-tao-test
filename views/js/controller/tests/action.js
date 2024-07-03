@@ -39,7 +39,18 @@ define([
             }).filter(([key, value]) => value !== undefined)
         );
 
-        previewerFactory(config.provider,
+        const getProvider = id => {
+            if (!id || !config.providers) {
+                return config.provider
+            }
+            const previewerId = parseInt(`${id}`.split('-').pop(), 10) || 0;
+            if (!config.providers[previewerId]) {
+                return config.provider;
+            }
+            return config.providers[previewerId].id;
+        };
+
+        previewerFactory(getProvider(this.id) || 'qtiTest',
             uri.decode(actionContext.uri),
             previewerConfig)
             .catch(err => {
