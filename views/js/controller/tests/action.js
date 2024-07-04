@@ -13,7 +13,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2014 - 2020 (original work) Open Assessment Techniologies SA
+ * Copyright (c) 2014 - 2020 (original work) Open Assessment Technologies SA
  *
  */
 define([
@@ -24,7 +24,7 @@ define([
     'core/logger',
     'taoTests/previewer/factory',
     'module'
-], function(__, binder, uri, feedback, loggerFactory, previewerFactory, module){
+], function (__, binder, uri, feedback, loggerFactory, previewerFactory, module) {
     'use strict';
 
     const logger = loggerFactory('taoTests/controller/action');
@@ -41,7 +41,7 @@ define([
 
         const getProvider = id => {
             if (!id || !config.providers) {
-                return config.provider
+                return config.provider;
             }
             const previewerId = parseInt(`${id}`.split('-').pop(), 10) || 0;
             if (!config.providers[previewerId]) {
@@ -50,12 +50,11 @@ define([
             return config.providers[previewerId].id;
         };
 
-        previewerFactory(getProvider(this.id) || 'qtiTest',
-            uri.decode(actionContext.uri),
-            previewerConfig)
-            .catch(err => {
+        previewerFactory(getProvider(this.id) || 'qtiTest', uri.decode(actionContext.uri), previewerConfig).catch(
+            err => {
                 logger.error(err);
                 feedback().error(__('Test Preview is not installed, please contact to your administrator.'));
-            });
+            }
+        );
     });
 });

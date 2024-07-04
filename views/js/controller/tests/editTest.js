@@ -20,25 +20,20 @@
  * Test edition controller
  *
  */
-define([
-    'jquery',
-    'ui/lock',
-    'module',
-    'layout/actions',
-],	function($, lock, module, actions){
+define(['jquery', 'ui/lock', 'module', 'layout/actions'], function ($, lock, module, actions) {
     'use strict';
 
     return {
         /**
          * Controller's entrypoint
          */
-        start(){
-
+        start() {
             const config = module.config();
+            const maxButtons = 10; // arbitrary value for the max number of buttons
 
             const getPreviewId = idx => `test-preview${idx ? `-${idx}` : ''}`;
-            const previewActions = []
-            for (let i = 0; i < 10; i++) {
+            const previewActions = [];
+            for (let i = 0; i < maxButtons; i++) {
                 const action = actions.getBy(getPreviewId(i));
                 if (!action) {
                     break;
@@ -47,10 +42,10 @@ define([
             }
             previewActions.forEach(previewAction => {
                 previewAction.state.disabled = !config.isPreviewEnabled;
-            })
+            });
             actions.updateState();
 
-            $('#lock-box').each(function() {
+            $('#lock-box').each(function () {
                 lock($(this)).register();
             });
         }
