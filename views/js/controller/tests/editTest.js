@@ -13,37 +13,39 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2015-2019 (original work) Open Assessment Technologies SA;
+ * Copyright (c) 2015-2024 (original work) Open Assessment Technologies SA;
  */
 
 /**
  * Test edition controller
  *
  */
-define([
-    'jquery',
-    'ui/lock',
-    'module',
-    'layout/actions',
-],	function($, lock, module, actions){
+define(['jquery', 'ui/lock', 'module', 'layout/actions'], function ($, lock, module, actions) {
     'use strict';
 
     return {
-
-
         /**
          * Controller's entrypoint
          */
-        start(){
-
+        start() {
             const config = module.config();
-            const previewAction = actions.getBy('test-preview');
-            if (previewAction) {
-                previewAction.state.disabled = !config.isPreviewEnabled;
-                actions.updateState();
-            }
+            const maxButtons = 10; // arbitrary value for the max number of buttons
 
-            $('#lock-box').each(function() {
+            const getPreviewId = idx => `test-preview${idx ? `-${idx}` : ''}`;
+            const previewActions = [];
+            for (let i = 0; i < maxButtons; i++) {
+                const action = actions.getBy(getPreviewId(i));
+                if (!action) {
+                    break;
+                }
+                previewActions.push(action);
+            }
+            previewActions.forEach(previewAction => {
+                previewAction.state.disabled = !config.isPreviewEnabled;
+            });
+            actions.updateState();
+
+            $('#lock-box').each(function () {
                 lock($(this)).register();
             });
         }
