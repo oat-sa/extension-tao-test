@@ -1,6 +1,7 @@
 <?php
 
-/**
+// phpcs:disable Generic.Files.LineLength
+/*
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; under version 2
@@ -15,18 +16,26 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2023 (original work) Open Assessment Technologies SA;
+ * Copyright (c) 2024 (update and modification) Open Assessment Technologies SA (under the project TAO-PRODUCT)
+ *
  */
 
-declare(strict_types=1);
+// phpcs:enable
 
-namespace oat\taoTests\models\user;
+use oat\tao\model\http\HttpJsonResponseTrait;
 
-interface TaoTestsRoles
+// phpcs:ignore
+class taoTests_actions_Translation extends tao_actions_SaSModule
 {
-    public const TEST_IMPORTER = 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestImporterRole';
-    public const TEST_EXPORTER = 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestExporterRole';
-    public const TEST_MANAGER = 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole';
-    public const RESTRICTED_TEST_AUTHOR = 'http://www.tao.lu/Ontologies/TAO.rdf#RestrictedTestAuthor';
-    public const TEST_TRANSLATOR = 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestTranslator';
+    use HttpJsonResponseTrait;
+
+    /**
+     * @requiresRight id WRITE
+     */
+    public function translate(): void
+    {
+        // @TODO Implement Item translation
+
+        $this->setSuccessJsonResponse([]);
+    }
 }

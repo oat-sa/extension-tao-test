@@ -96,6 +96,14 @@ return [
             AccessRule::GRANT,
             TaoTestsRoles::RESTRICTED_TEST_AUTHOR,
             ['ext' => 'taoTests', 'mod' => 'Tests']
+        ],
+        [
+            AccessRule::GRANT,
+            TaoTestsRoles::TEST_TRANSLATOR,
+            [
+                'ext' => 'taoTests',
+                'mod' => 'Translation'
+            ]
         ]
     ],
     'optimizableClasses' => [

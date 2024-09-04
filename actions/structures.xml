@@ -69,6 +69,9 @@
                     <action id="test-new" name="New test" url="/taoTests/Tests/addInstance" context="resource" group="tree" binding="instanciate">
                         <icon id="icon-test"/>
                     </action>
+                    <action id="test-translate" name="Translate" url="/taoTests/Translation/translate" context="instance" group="tree" binding="translateTest">
+                        <icon id="icon-spell-check"/>
+                    </action>
                 </actions>
             </section>
         </sections>

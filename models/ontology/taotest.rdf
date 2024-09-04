@@ -85,4 +85,10 @@
   	<rdfs:label xml:lang="en-US"><![CDATA[Test Author]]></rdfs:label>
     <rdfs:comment xml:lang="en-US"><![CDATA[The Test Author Role]]></rdfs:comment>
   </rdf:Description>
+  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#TestTranslator">
+  	<rdf:type rdf:resource="http://www.tao.lu/Ontologies/generis.rdf#UserRole"/>
+  	<generis:includesRole rdf:resource="http://www.tao.lu/Ontologies/TAOItem.rdf#TestAuthor"/>
+  	<rdfs:label xml:lang="en-US"><![CDATA[Test Translator]]></rdfs:label>
+    <rdfs:comment xml:lang="en-US"><![CDATA[The Test Translator Role]]></rdfs:comment>
+  </rdf:Description>
 </rdf:RDF>
