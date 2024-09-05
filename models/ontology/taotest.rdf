@@ -91,4 +91,20 @@
   	<rdfs:label xml:lang="en-US"><![CDATA[Test Translator]]></rdfs:label>
     <rdfs:comment xml:lang="en-US"><![CDATA[The Test Translator Role]]></rdfs:comment>
   </rdf:Description>
+
+  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAO.rdf#UniqueIdentifier">
+    <rdfs:domain rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#Test"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAO.rdf#Language">
+    <rdfs:domain rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#Test"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAO.rdf#TranslationType">
+    <rdfs:domain rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#Test"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAO.rdf#TranslationStatus">
+    <rdfs:domain rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#Test"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAO.rdf#TranslationProgress">
+    <rdfs:domain rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#Test"/>
+  </rdf:Description>
 </rdf:RDF>
