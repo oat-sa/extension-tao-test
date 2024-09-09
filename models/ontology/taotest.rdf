@@ -92,18 +92,18 @@
     <rdfs:comment xml:lang="en-US"><![CDATA[The Test Translator Role]]></rdfs:comment>
   </rdf:Description>
 
-  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAO.rdf#TranslationCompletionStatuses">
+  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#TranslationCompletionStatuses">
     <rdfs:label xml:lang="en-US"><![CDATA[Translation Statuses]]></rdfs:label>
     <rdfs:comment xml:lang="en-US"><![CDATA[Translation Statuses]]></rdfs:comment>
     <rdfs:subClassOf rdf:resource="http://www.tao.lu/Ontologies/TAO.rdf#SystemObject"/>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAO.rdf#TranslationCompletionStatusMissingTranslations">
-    <rdf:type rdf:resource="http://www.tao.lu/Ontologies/TAO.rdf#TranslationCompletionStatuses"/>
+  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#TranslationCompletionStatusMissingTranslations">
+    <rdf:type rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#TranslationCompletionStatuses"/>
     <rdfs:label xml:lang="en-US"><![CDATA[Missing Items Translations]]></rdfs:label>
     <rdfs:comment xml:lang="en-US"><![CDATA[Missing Items Translations]]></rdfs:comment>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAO.rdf#TranslationCompletionStatusTranslated">
-    <rdf:type rdf:resource="http://www.tao.lu/Ontologies/TAO.rdf#TranslationCompletionStatuses"/>
+  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#TranslationCompletionStatusTranslated">
+    <rdf:type rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#TranslationCompletionStatuses"/>
     <rdfs:label xml:lang="en-US"><![CDATA[All Items Translated]]></rdfs:label>
     <rdfs:comment xml:lang="en-US"><![CDATA[All Items Translated]]></rdfs:comment>
   </rdf:Description>
@@ -123,12 +123,12 @@
   <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAO.rdf#TranslationProgress">
     <rdfs:domain rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#Test"/>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAO.rdf#TranslationCompletion">
+  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#TranslationCompletion">
     <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
     <rdfs:domain rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#Test"/>
     <rdfs:label xml:lang="en-US"><![CDATA[Translation Completion]]></rdfs:label>
     <rdfs:comment xml:lang="en-US"><![CDATA[Translation Completion]]></rdfs:comment>
-    <rdfs:range rdf:resource="http://www.tao.lu/Ontologies/TAO.rdf#TranslationCompletionStatuses"/>
+    <rdfs:range rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#TranslationCompletionStatuses"/>
     <widget:widget rdf:resource="http://www.tao.lu/datatypes/WidgetDefinitions.rdf#ComboBox"/>
     <tao:TAOGUIOrder><![CDATA[2005]]></tao:TAOGUIOrder>
   </rdf:Description>
