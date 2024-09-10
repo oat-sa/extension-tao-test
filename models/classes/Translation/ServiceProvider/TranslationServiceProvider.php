@@ -23,7 +23,9 @@ declare(strict_types=1);
 namespace oat\taoTests\models\Translation\ServiceProvider;
 
 use oat\generis\model\DependencyInjection\ContainerServiceProviderInterface;
+use oat\tao\model\TaoOntology;
 use oat\tao\model\Translation\Service\ResourceMetadataPopulateService;
+use oat\taoTests\models\TaoTestOntology;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 /**
@@ -38,8 +40,8 @@ class TranslationServiceProvider implements ContainerServiceProviderInterface
             ->call(
                 'addMetadata',
                 [
-                    'http://www.tao.lu/Ontologies/TAOTest.rdf#Test',
-                    'http://www.tao.lu/Ontologies/TAOTest.rdf#TranslationCompletion',
+                    TaoOntology::CLASS_URI_TEST,
+                    TaoTestOntology::PROPERTY_TRANSLATION_COMPLETION,
                 ]
             );
     }
