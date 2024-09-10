@@ -22,11 +22,7 @@ declare(strict_types=1);
 
 namespace oat\taoTests\models\Translation\Form\Modifier;
 
-use oat\tao\model\featureFlag\FeatureFlagCheckerInterface;
 use oat\tao\model\form\Modifier\AbstractFormModifier;
-use oat\taoTests\models\TaoTestOntology;
-use tao_helpers_form_Form as Form;
-use tao_helpers_Uri;
 
 final class TranslationFormModifierProxy extends AbstractFormModifier
 {

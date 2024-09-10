@@ -132,6 +132,5 @@ return [
     'containerServiceProviders' => [
         CopierServiceProvider::class,
         TranslationServiceProvider::class,
-        TranslationServiceProvider::class,
     ],
 ];
