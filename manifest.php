@@ -33,6 +33,7 @@ use oat\tao\model\accessControl\func\AccessRule;
 use oat\tao\model\user\TaoRoles;
 use oat\taoTests\models\Copier\CopierServiceProvider;
 use oat\taoTests\models\Translation\ServiceProvider\TranslationServiceProvider;
+use oat\taoTests\models\Form\ServiceProvider\FormServiceProvider;
 use oat\taoTests\models\user\TaoTestsRoles;
 use oat\taoTests\scripts\update\Updater;
 use oat\taoTests\scripts\install\SetupProvider;
@@ -131,6 +132,7 @@ return [
     ],
     'containerServiceProviders' => [
         CopierServiceProvider::class,
-        TranslationServiceProvider::class
+        TranslationServiceProvider::class,
+        FormServiceProvider::class,
     ],
 ];

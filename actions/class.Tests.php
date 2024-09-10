@@ -115,8 +115,9 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
                         ],
                     ],
                     FormContainer::FORM_MODIFIERS => [
-                        'tao.form_modifier.edit_translation_instance',
-                        'tao_qti_test.form_modifier.edit_translation_instance',
+                        'tao.form_modifier.translation_instance',
+                        'tao_test.form_modifier.translation_instance',
+                        'tao_qti_test.form_modifier.translation_instance',
                     ],
                 ]
             );
