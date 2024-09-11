@@ -38,6 +38,7 @@ use oat\taoTests\scripts\install\RegisterFrontendPaths;
 use oat\taoTests\scripts\install\RegisterTestPluginService;
 use oat\taoTests\scripts\install\RegisterTestPreviewerRegistryService;
 use oat\taoTests\scripts\install\RegisterTestProviderService;
+use oat\taoTests\scripts\install\SetupEventListeners;
 use oat\taoTests\scripts\install\SetupProvider;
 use oat\taoTests\scripts\update\Updater;
 
@@ -63,6 +64,7 @@ return [
             RegisterFrontendPaths::class,
             RegisterTestPreviewerRegistryService::class,
             SetupProvider::class,
+            SetupEventListeners::class,
         ],
     ],
     'update' => Updater::class,
