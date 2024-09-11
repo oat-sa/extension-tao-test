@@ -20,39 +20,26 @@
 
 declare(strict_types=1);
 
-namespace oat\taoTests\models\Form\Modifier;
+namespace oat\taoTests\models\Translation\Form\Modifier;
 
-use oat\generis\model\data\Ontology;
 use oat\tao\model\featureFlag\FeatureFlagCheckerInterface;
 use oat\tao\model\form\Modifier\AbstractFormModifier;
-use oat\tao\model\TaoOntology;
 use oat\taoTests\models\TaoTestOntology;
 use tao_helpers_form_Form as Form;
 use tao_helpers_Uri;
 
-class TranslationInstanceFormModifier extends AbstractFormModifier
+class TranslationFormModifier extends AbstractFormModifier
 {
-    public const ID = 'tao_test.form_modifier.translation_instance';
-
     private FeatureFlagCheckerInterface $featureFlagChecker;
 
-    public function __construct(Ontology $ontology, FeatureFlagCheckerInterface $featureFlagChecker)
+    public function __construct(FeatureFlagCheckerInterface $featureFlagChecker)
     {
-        parent::__construct($ontology);
-
         $this->featureFlagChecker = $featureFlagChecker;
-    }
-
-    public function supports(Form $form, array $options = []): bool
-    {
-        $instance = $this->getInstance($form, $options);
-
-        return $instance !== null && $instance->isInstanceOf($this->ontology->getClass(TaoOntology::CLASS_URI_TEST));
     }
 
     public function modify(Form $form, array $options = []): void
     {
-        if (!$this->featureFlagChecker->isEnabled(FeatureFlagCheckerInterface::FEATURE_TRANSLATION_ENABLED)) {
+        if (!$this->featureFlagChecker->isEnabled('FEATURE_TRANSLATION_ENABLED')) {
             $form->removeElement(tao_helpers_Uri::encode(TaoTestOntology::PROPERTY_TRANSLATION_COMPLETION));
         }
     }
