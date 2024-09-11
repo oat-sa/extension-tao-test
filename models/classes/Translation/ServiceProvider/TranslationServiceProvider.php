@@ -22,7 +22,9 @@ declare(strict_types=1);
 
 namespace oat\taoTests\models\Translation\ServiceProvider;
 
+use oat\generis\model\data\Ontology;
 use oat\generis\model\DependencyInjection\ContainerServiceProviderInterface;
+use oat\oatbox\log\LoggerService;
 use oat\tao\model\TaoOntology;
 use oat\tao\model\featureFlag\FeatureFlagChecker;
 use oat\tao\model\Translation\Form\Modifier\TranslationFormModifier as TaoTranslationFormModifier;
@@ -30,6 +32,7 @@ use oat\tao\model\Translation\Service\ResourceMetadataPopulateService;
 use oat\taoTests\models\TaoTestOntology;
 use oat\taoTests\models\Translation\Form\Modifier\TranslationFormModifier;
 use oat\taoTests\models\Translation\Form\Modifier\TranslationFormModifierProxy;
+use oat\taoTests\models\Translation\Listener\TestCreatedEventListener;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
@@ -76,5 +79,14 @@ class TranslationServiceProvider implements ContainerServiceProviderInterface
                     service(TranslationFormModifier::class),
                 ]
             );
+
+        $services
+            ->set(TestCreatedEventListener::class, TestCreatedEventListener::class)
+            ->public()
+            ->args([
+                service(FeatureFlagChecker::class),
+                service(Ontology::SERVICE_ID),
+                service(LoggerService::SERVICE_ID),
+            ]);
     }
 }
