@@ -29,12 +29,14 @@ use oat\tao\model\TaoOntology;
 use oat\tao\model\featureFlag\FeatureFlagChecker;
 use oat\tao\model\Translation\Form\Modifier\TranslationFormModifier as TaoTranslationFormModifier;
 use oat\tao\model\Translation\Service\ResourceMetadataPopulateService;
+use oat\tao\model\Translation\Service\TranslationCreationService;
 use oat\taoTests\models\TaoTestOntology;
 use oat\taoTests\models\Translation\Form\Modifier\TranslationFormModifier;
 use oat\taoTests\models\Translation\Form\Modifier\TranslationFormModifierProxy;
 use oat\taoTests\models\Translation\Listener\TestCreatedEventListener;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
+use taoTests_models_classes_TestsService;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 /**
@@ -63,10 +65,6 @@ class TranslationServiceProvider implements ContainerServiceProviderInterface
 
         $services
             ->set(TranslationFormModifierProxy::class, TranslationFormModifierProxy::class)
-            ->public();
-
-        $services
-            ->get(TranslationFormModifierProxy::class)
             ->call(
                 'addModifier',
                 [
@@ -78,7 +76,7 @@ class TranslationServiceProvider implements ContainerServiceProviderInterface
                 [
                     service(TranslationFormModifier::class),
                 ]
-            );
+            )->public();
 
         $services
             ->set(TestCreatedEventListener::class, TestCreatedEventListener::class)
@@ -88,5 +86,15 @@ class TranslationServiceProvider implements ContainerServiceProviderInterface
                 service(Ontology::SERVICE_ID),
                 service(LoggerService::SERVICE_ID),
             ]);
+
+        $services
+            ->get(TranslationCreationService::class)
+            ->call(
+                'setOntologyClassService',
+                [
+                    TaoOntology::CLASS_URI_TEST,
+                    service(taoTests_models_classes_TestsService::class)
+                ]
+            );
     }
 }
