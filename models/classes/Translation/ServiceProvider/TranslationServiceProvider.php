@@ -34,6 +34,7 @@ use oat\taoTests\models\TaoTestOntology;
 use oat\taoTests\models\Translation\Form\Modifier\TranslationFormModifier;
 use oat\taoTests\models\Translation\Form\Modifier\TranslationFormModifierProxy;
 use oat\taoTests\models\Translation\Listener\TestCreatedEventListener;
+use oat\taoTests\models\Translation\Service\TranslationPostCreationService;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 use taoTests_models_classes_TestsService;
@@ -88,12 +89,27 @@ class TranslationServiceProvider implements ContainerServiceProviderInterface
             ]);
 
         $services
+            ->set(TranslationPostCreationService::class, TranslationPostCreationService::class)
+            ->args(
+                [
+                    service(LoggerService::SERVICE_ID),
+                ]
+            );
+        
+        $services
             ->get(TranslationCreationService::class)
             ->call(
                 'setOntologyClassService',
                 [
                     TaoOntology::CLASS_URI_TEST,
                     service(taoTests_models_classes_TestsService::class)
+                ]
+            )
+            ->call(
+                'addPostCreation',
+                [
+                    TaoOntology::CLASS_URI_TEST,
+                    service(TranslationPostCreationService::class)
                 ]
             );
     }
