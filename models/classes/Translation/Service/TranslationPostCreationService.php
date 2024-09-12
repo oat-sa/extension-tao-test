@@ -37,8 +37,10 @@ class TranslationPostCreationService
     /**
      * @TODO When time comes, we need to deal set translation items to the test
      */
-    public function __invoke(core_kernel_classes_Resource $resource): void
+    public function __invoke(core_kernel_classes_Resource $resource): core_kernel_classes_Resource
     {
         $this->logger->debug(sprintf('TODO: Deal with post test translation for %s', $resource->getUri()));
+
+        return $resource;
     }
 }
