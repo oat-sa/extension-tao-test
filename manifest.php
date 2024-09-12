@@ -104,7 +104,7 @@ return [
             AccessRule::GRANT,
             TaoTestsRoles::TEST_TRANSLATOR,
             [
-                'ext' => 'taoTests',
+                'ext' => 'tao',
                 'mod' => 'Translation'
             ]
         ]

@@ -16,7 +16,7 @@ use oat\taoTests\models\event\TestCreatedEvent;
 use oat\taoTests\models\Translation\Listener\TestCreatedEventListener;
 use oat\taoTests\models\user\TaoTestsRoles;
 
-final class Version202409050743452141_taoTests extends AbstractMigration
+final class Version202409060743452141_taoTests extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -73,7 +73,7 @@ final class Version202409050743452141_taoTests extends AbstractMigration
             AccessRule::GRANT,
             TaoTestsRoles::TEST_TRANSLATOR,
             [
-                'ext' => 'taoTests',
+                'ext' => 'tao',
                 'mod' => 'Translation'
             ]
         );
