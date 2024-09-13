@@ -99,7 +99,7 @@ class TestCreatedEventListener
 
     private function isPropertySet(core_kernel_classes_Resource $test, core_kernel_classes_Property $property): bool
     {
-        if ($test->getOnePropertyValue($property) === null) {
+        if (empty((string) $test->getOnePropertyValue($property))) {
             return false;
         }
 

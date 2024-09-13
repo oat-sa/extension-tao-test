@@ -16,6 +16,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  * Copyright (c) 2024 (original work) Open Assessment Technologies SA.
+ *
+ * phpcs:disable Generic.Files.LineLength
  */
 
 declare(strict_types=1);
@@ -25,4 +27,6 @@ namespace oat\taoTests\models;
 interface TaoTestOntology
 {
     public const PROPERTY_TRANSLATION_COMPLETION = 'http://www.tao.lu/Ontologies/TAOTest.rdf#TranslationCompletion';
+    public const PROPERTY_VALUE_TRANSLATION_COMPLETION_MISSING_TRANSLATIONS = 'http://www.tao.lu/Ontologies/TAOTest.rdf#TranslationCompletionStatusMissingTranslations';
+    public const PROPERTY_VALUE_TRANSLATION_COMPLETION_TRANSLATED = 'http://www.tao.lu/Ontologies/TAOTest.rdf#TranslationCompletionStatusTranslated';
 }
