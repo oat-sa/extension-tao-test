@@ -24,6 +24,7 @@ namespace oat\taoTests\models\Translation\Form\Modifier;
 
 use oat\tao\model\featureFlag\FeatureFlagCheckerInterface;
 use oat\tao\model\form\Modifier\AbstractFormModifier;
+use oat\tao\model\TaoOntology;
 use oat\taoTests\models\TaoTestOntology;
 use tao_helpers_form_Form as Form;
 use tao_helpers_Uri;
@@ -40,6 +41,15 @@ class TranslationFormModifier extends AbstractFormModifier
     public function modify(Form $form, array $options = []): void
     {
         if (!$this->featureFlagChecker->isEnabled('FEATURE_TRANSLATION_ENABLED')) {
+            $form->removeElement(tao_helpers_Uri::encode(TaoTestOntology::PROPERTY_TRANSLATION_COMPLETION));
+        }
+
+        $translationTypeValue = $form->getValue(tao_helpers_Uri::encode(TaoOntology::PROPERTY_TRANSLATION_TYPE));
+
+        if (
+            empty($translationTypeValue)
+            || $translationTypeValue === TaoOntology::PROPERTY_VALUE_TRANSLATION_TYPE_ORIGINAL
+        ) {
             $form->removeElement(tao_helpers_Uri::encode(TaoTestOntology::PROPERTY_TRANSLATION_COMPLETION));
         }
     }
