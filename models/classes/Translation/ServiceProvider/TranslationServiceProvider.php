@@ -36,8 +36,8 @@ use oat\taoTests\models\Translation\Form\Modifier\TranslationFormModifierProxy;
 use oat\taoTests\models\Translation\Listener\TestCreatedEventListener;
 use oat\taoTests\models\Translation\Service\TranslationPostCreationService;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-
 use taoTests_models_classes_TestsService;
+
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 /**
@@ -95,7 +95,7 @@ class TranslationServiceProvider implements ContainerServiceProviderInterface
                     service(LoggerService::SERVICE_ID),
                 ]
             );
-        
+
         $services
             ->get(TranslationCreationService::class)
             ->call(
