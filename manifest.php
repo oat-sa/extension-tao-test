@@ -32,13 +32,15 @@
 use oat\tao\model\accessControl\func\AccessRule;
 use oat\tao\model\user\TaoRoles;
 use oat\taoTests\models\Copier\CopierServiceProvider;
+use oat\taoTests\models\Translation\ServiceProvider\TranslationServiceProvider;
 use oat\taoTests\models\user\TaoTestsRoles;
-use oat\taoTests\scripts\update\Updater;
-use oat\taoTests\scripts\install\SetupProvider;
 use oat\taoTests\scripts\install\RegisterFrontendPaths;
 use oat\taoTests\scripts\install\RegisterTestPluginService;
-use oat\taoTests\scripts\install\RegisterTestProviderService;
 use oat\taoTests\scripts\install\RegisterTestPreviewerRegistryService;
+use oat\taoTests\scripts\install\RegisterTestProviderService;
+use oat\taoTests\scripts\install\SetupEventListeners;
+use oat\taoTests\scripts\install\SetupProvider;
+use oat\taoTests\scripts\update\Updater;
 
 $extpath = __DIR__ . DIRECTORY_SEPARATOR;
 
@@ -62,6 +64,7 @@ return [
             RegisterFrontendPaths::class,
             RegisterTestPreviewerRegistryService::class,
             SetupProvider::class,
+            SetupEventListeners::class,
         ],
     ],
     'update' => Updater::class,
@@ -96,6 +99,14 @@ return [
             AccessRule::GRANT,
             TaoTestsRoles::RESTRICTED_TEST_AUTHOR,
             ['ext' => 'taoTests', 'mod' => 'Tests']
+        ],
+        [
+            AccessRule::GRANT,
+            TaoTestsRoles::TEST_TRANSLATOR,
+            [
+                'ext' => 'tao',
+                'mod' => 'Translation'
+            ]
         ]
     ],
     'optimizableClasses' => [
@@ -122,5 +133,6 @@ return [
     ],
     'containerServiceProviders' => [
         CopierServiceProvider::class,
+        TranslationServiceProvider::class,
     ],
 ];
