@@ -40,7 +40,7 @@ class TranslationFormModifier extends AbstractFormModifier
 
     public function modify(Form $form, array $options = []): void
     {
-        if (!$this->featureFlagChecker->isEnabled('FEATURE_TRANSLATION_ENABLED')) {
+        if (!$this->featureFlagChecker->isEnabled('FEATURE_FLAG_TRANSLATION_ENABLED')) {
             $form->removeElement(tao_helpers_Uri::encode(TaoTestOntology::PROPERTY_TRANSLATION_COMPLETION));
         }
 
