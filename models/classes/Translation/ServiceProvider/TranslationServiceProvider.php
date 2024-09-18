@@ -63,6 +63,7 @@ class TranslationServiceProvider implements ContainerServiceProviderInterface
             ->set(TranslationFormModifier::class, TranslationFormModifier::class)
             ->args([
                 service(FeatureFlagChecker::class),
+                service(Ontology::SERVICE_ID),
             ]);
 
         $services

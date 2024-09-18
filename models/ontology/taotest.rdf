@@ -117,9 +117,6 @@
   <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAO.rdf#Language">
     <rdfs:domain rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#Test"/>
   </rdf:Description>
-  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAO.rdf#TranslationType">
-    <rdfs:domain rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#Test"/>
-  </rdf:Description>
   <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAO.rdf#TranslationStatus">
     <rdfs:domain rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#Test"/>
   </rdf:Description>
@@ -133,7 +130,7 @@
     <rdfs:label xml:lang="en-US"><![CDATA[Translation Completion]]></rdfs:label>
     <rdfs:comment xml:lang="en-US"><![CDATA[Translation Completion]]></rdfs:comment>
     <rdfs:range rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#TranslationCompletionStatuses"/>
-    <widget:widget rdf:resource="http://www.tao.lu/datatypes/WidgetDefinitions.rdf#ComboBox"/>
+    <widget:widget rdf:resource="http://www.tao.lu/datatypes/WidgetDefinitions.rdf#Readonly"/>
     <tao:TAOGUIOrder><![CDATA[2005]]></tao:TAOGUIOrder>
   </rdf:Description>
 </rdf:RDF>
