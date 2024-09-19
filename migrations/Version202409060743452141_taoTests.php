@@ -55,6 +55,7 @@ final class Version202409060743452141_taoTests extends AbstractMigration
             TestCreatedEvent::class,
             [TestCreatedEventListener::class, 'populateTranslationProperties']
         );
+        $this->getServiceManager()->register(EventManager::SERVICE_ID, $eventManager);
     }
 
     public function down(Schema $schema): void
@@ -67,6 +68,7 @@ final class Version202409060743452141_taoTests extends AbstractMigration
             TestCreatedEvent::class,
             [TestCreatedEventListener::class, 'populateTranslationProperties']
         );
+        $this->getServiceManager()->register(EventManager::SERVICE_ID, $eventManager);
     }
 
     private function getRule(): AccessRule

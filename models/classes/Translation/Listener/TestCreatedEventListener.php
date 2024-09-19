@@ -72,7 +72,7 @@ class TestCreatedEventListener
         }
 
         $defaultLanguage = $this->userLanguageService->getDefaultLanguage();
-        $test->setPropertyValue($translationLanguageProperty, TaoOntology::LANGUAGE_PREFIX . $defaultLanguage);
+        $test->editPropertyValues($translationLanguageProperty, TaoOntology::LANGUAGE_PREFIX . $defaultLanguage);
     }
 
     private function setTranslationType(core_kernel_classes_Resource $test): void
@@ -83,7 +83,7 @@ class TestCreatedEventListener
             return;
         }
 
-        $test->setPropertyValue($translationTypeProperty, TaoOntology::PROPERTY_VALUE_TRANSLATION_TYPE_ORIGINAL);
+        $test->editPropertyValues($translationTypeProperty, TaoOntology::PROPERTY_VALUE_TRANSLATION_TYPE_ORIGINAL);
     }
 
     private function setTranslationStatus(core_kernel_classes_Resource $test): void
@@ -94,7 +94,7 @@ class TestCreatedEventListener
             return;
         }
 
-        $test->setPropertyValue($translationStatusProperty, TaoOntology::PROPERTY_VALUE_TRANSLATION_STATUS_NOT_READY);
+        $test->editPropertyValues($translationStatusProperty, TaoOntology::PROPERTY_VALUE_TRANSLATION_STATUS_NOT_READY);
     }
 
     private function isPropertySet(core_kernel_classes_Resource $test, core_kernel_classes_Property $property): bool
