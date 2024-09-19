@@ -22,7 +22,11 @@ declare(strict_types=1);
 
 namespace oat\taoTests\test\unit\models\classes\Translation\Form\Modifier;
 
+use core_kernel_classes_Property;
+use core_kernel_classes_Resource;
+use oat\generis\model\data\Ontology;
 use oat\tao\model\featureFlag\FeatureFlagCheckerInterface;
+use oat\tao\model\TaoOntology;
 use oat\taoTests\models\TaoTestOntology;
 use oat\taoTests\models\Translation\Form\Modifier\TranslationFormModifier;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -38,16 +42,22 @@ class TranslationFormModifierTest extends TestCase
     /** @var FeatureFlagCheckerInterface|MockObject */
     private FeatureFlagCheckerInterface $featureFlagChecker;
 
+    /** @var Ontology|MockObject */
+    private $ontology;
+
     private TranslationFormModifier $sut;
 
     protected function setUp(): void
     {
         $this->form = $this->createMock(tao_helpers_form_Form::class);
+
         $this->featureFlagChecker = $this->createMock(FeatureFlagCheckerInterface::class);
-        $this->sut = new TranslationFormModifier($this->featureFlagChecker);
+        $this->ontology = $this->createMock(Ontology::class);
+
+        $this->sut = new TranslationFormModifier($this->featureFlagChecker, $this->ontology);
     }
 
-    public function testModifyTranslationEnabled(): void
+    public function testModifyTranslationEnabledNoType(): void
     {
         $this->featureFlagChecker
             ->expects($this->once())
@@ -56,8 +66,95 @@ class TranslationFormModifierTest extends TestCase
             ->willReturn(true);
 
         $this->form
-            ->expects($this->never())
-            ->method('removeElement');
+            ->expects($this->once())
+            ->method('getValue')
+            ->with('uri')
+            ->willReturn('instanceUri');
+
+        $instance = $this->createMock(core_kernel_classes_Resource::class);
+
+        $this->ontology
+            ->expects($this->once())
+            ->method('getResource')
+            ->with('instanceUri')
+            ->willReturn($instance);
+
+        $property = $this->createMock(core_kernel_classes_Property::class);
+
+        $this->ontology
+            ->expects($this->once())
+            ->method('getProperty')
+            ->with(TaoOntology::PROPERTY_TRANSLATION_TYPE)
+            ->willReturn($property);
+
+        $instance
+            ->expects($this->once())
+            ->method('getOnePropertyValue')
+            ->with($property)
+            ->willReturn(null);
+
+        $this->form
+            ->expects($this->once())
+            ->method('removeElement')
+            ->with(tao_helpers_Uri::encode(TaoTestOntology::PROPERTY_TRANSLATION_COMPLETION));
+
+        $this->sut->modify($this->form);
+    }
+
+    /**
+     * @dataProvider translationTypeDataProvider
+     */
+    public function testModifyTranslationEnabledWithType(string $type): void
+    {
+        $this->featureFlagChecker
+            ->expects($this->once())
+            ->method('isEnabled')
+            ->with('FEATURE_FLAG_TRANSLATION_ENABLED')
+            ->willReturn(true);
+
+        $this->form
+            ->expects($this->once())
+            ->method('getValue')
+            ->with('uri')
+            ->willReturn('instanceUri');
+
+        $instance = $this->createMock(core_kernel_classes_Resource::class);
+
+        $this->ontology
+            ->expects($this->once())
+            ->method('getResource')
+            ->with('instanceUri')
+            ->willReturn($instance);
+
+        $property = $this->createMock(core_kernel_classes_Property::class);
+
+        $this->ontology
+            ->expects($this->once())
+            ->method('getProperty')
+            ->with(TaoOntology::PROPERTY_TRANSLATION_TYPE)
+            ->willReturn($property);
+
+        $typeValue = $this->createMock(core_kernel_classes_Resource::class);
+
+        $instance
+            ->expects($this->once())
+            ->method('getOnePropertyValue')
+            ->with($property)
+            ->willReturn($typeValue);
+
+        $typeValue
+            ->expects($this->once())
+            ->method('getUri')
+            ->willReturn($type);
+
+        $this->form
+            ->expects(
+                $type === TaoOntology::PROPERTY_VALUE_TRANSLATION_TYPE_ORIGINAL
+                    ? $this->once()
+                    : $this->never()
+            )
+            ->method('removeElement')
+            ->with(tao_helpers_Uri::encode(TaoTestOntology::PROPERTY_TRANSLATION_COMPLETION));
 
         $this->sut->modify($this->form);
     }
@@ -75,6 +172,22 @@ class TranslationFormModifierTest extends TestCase
             ->method('removeElement')
             ->with(tao_helpers_Uri::encode(TaoTestOntology::PROPERTY_TRANSLATION_COMPLETION));
 
+        $this->ontology
+            ->expects($this->never())
+            ->method($this->anything());
+
         $this->sut->modify($this->form);
+    }
+
+    private function translationTypeDataProvider(): array
+    {
+        return [
+            'Original' => [
+                'type' => TaoOntology::PROPERTY_VALUE_TRANSLATION_TYPE_ORIGINAL,
+            ],
+            'Translation' => [
+                'type' => TaoOntology::PROPERTY_VALUE_TRANSLATION_TYPE_TRANSLATION,
+            ],
+        ];
     }
 }
