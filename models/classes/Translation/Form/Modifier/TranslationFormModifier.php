@@ -22,6 +22,7 @@ declare(strict_types=1);
 
 namespace oat\taoTests\models\Translation\Form\Modifier;
 
+use oat\generis\model\data\Ontology;
 use oat\tao\model\featureFlag\FeatureFlagCheckerInterface;
 use oat\tao\model\form\Modifier\AbstractFormModifier;
 use oat\tao\model\TaoOntology;
@@ -32,10 +33,12 @@ use tao_helpers_Uri;
 class TranslationFormModifier extends AbstractFormModifier
 {
     private FeatureFlagCheckerInterface $featureFlagChecker;
+    private Ontology $ontology;
 
-    public function __construct(FeatureFlagCheckerInterface $featureFlagChecker)
+    public function __construct(FeatureFlagCheckerInterface $featureFlagChecker, Ontology $ontology)
     {
         $this->featureFlagChecker = $featureFlagChecker;
+        $this->ontology = $ontology;
     }
 
     public function modify(Form $form, array $options = []): void
@@ -44,11 +47,15 @@ class TranslationFormModifier extends AbstractFormModifier
             $form->removeElement(tao_helpers_Uri::encode(TaoTestOntology::PROPERTY_TRANSLATION_COMPLETION));
         }
 
-        $translationTypeValue = $form->getValue(tao_helpers_Uri::encode(TaoOntology::PROPERTY_TRANSLATION_TYPE));
+        $instance = $this->ontology->getResource($form->getValue('uri'));
+
+        $translationType = $instance->getOnePropertyValue(
+            $this->ontology->getProperty(TaoOntology::PROPERTY_TRANSLATION_TYPE)
+        );
 
         if (
-            empty($translationTypeValue)
-            || $translationTypeValue === TaoOntology::PROPERTY_VALUE_TRANSLATION_TYPE_ORIGINAL
+            empty($translationType)
+            || $translationType->getUri() === TaoOntology::PROPERTY_VALUE_TRANSLATION_TYPE_ORIGINAL
         ) {
             $form->removeElement(tao_helpers_Uri::encode(TaoTestOntology::PROPERTY_TRANSLATION_COMPLETION));
         }

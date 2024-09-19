@@ -32,6 +32,7 @@ use oat\taoTests\models\event\TestUpdatedEvent;
 use oat\tao\model\controller\SignedFormInstance;
 use oat\tao\model\resources\Service\ClassDeleter;
 use oat\tao\model\routing\AnnotationReader\security;
+use oat\taoTests\models\Form\Modifier\FormModifierProxy;
 use oat\taoTests\models\Translation\Form\Modifier\TranslationFormModifierProxy;
 use tao_helpers_form_FormContainer as FormContainer;
 use oat\generis\model\resource\Service\ResourceDeleter;
@@ -116,6 +117,7 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
                         ],
                     ],
                     FormContainer::FORM_MODIFIERS => [
+                        FormModifierProxy::class,
                         TranslationFormModifierProxy::class,
                     ],
                 ]
