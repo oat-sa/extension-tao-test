@@ -108,6 +108,9 @@
     <rdfs:comment xml:lang="en-US"><![CDATA[All Items Translated]]></rdfs:comment>
   </rdf:Description>
 
+  <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAO.rdf#TranslationType">
+    <rdfs:domain rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#Test"/>
+  </rdf:Description>
   <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAO.rdf#UniqueIdentifier">
     <rdfs:domain rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#Test"/>
   </rdf:Description>
