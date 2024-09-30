@@ -24,7 +24,7 @@ namespace oat\taoTests\scripts\install;
 
 use oat\oatbox\extension\InstallAction;
 use oat\taoItems\model\event\ItemCreatedEvent;
-use oat\taoItems\model\Translation\Listener\ItemCreatedEventListener;
+use oat\taoItems\model\Translation\Listener\TranslationItemEventListener;
 use oat\taoTests\models\event\TestCreatedEvent;
 use oat\taoTests\models\Translation\Listener\TestCreatedEventListener;
 

@@ -25,9 +25,9 @@ namespace oat\taoTests\models\Translation\Listener;
 use core_kernel_classes_Property;
 use core_kernel_classes_Resource;
 use oat\generis\model\data\Ontology;
-use oat\oatbox\user\UserLanguageServiceInterface;
 use oat\tao\model\featureFlag\FeatureFlagCheckerInterface;
 use oat\tao\model\TaoOntology;
+use oat\tao\model\Translation\Service\ResourceLanguageRetriever;
 use oat\taoTests\models\event\TestCreatedEvent;
 use Psr\Log\LoggerInterface;
 
@@ -35,18 +35,18 @@ class TestCreatedEventListener
 {
     private FeatureFlagCheckerInterface $featureFlagChecker;
     private Ontology $ontology;
-    private UserLanguageServiceInterface $userLanguageService;
+    private ResourceLanguageRetriever $resourceLanguageRetriever;
     private LoggerInterface $logger;
 
     public function __construct(
         FeatureFlagCheckerInterface $featureFlagChecker,
         Ontology $ontology,
-        UserLanguageServiceInterface $userLanguageService,
+        ResourceLanguageRetriever $resourceLanguageRetriever,
         LoggerInterface $logger
     ) {
         $this->featureFlagChecker = $featureFlagChecker;
         $this->ontology = $ontology;
-        $this->userLanguageService = $userLanguageService;
+        $this->resourceLanguageRetriever = $resourceLanguageRetriever;
         $this->logger = $logger;
     }
 
@@ -65,36 +65,38 @@ class TestCreatedEventListener
 
     private function setLanguage(core_kernel_classes_Resource $test): void
     {
-        $translationLanguageProperty = $this->ontology->getProperty(TaoOntology::PROPERTY_LANGUAGE);
-
-        if ($this->isPropertySet($test, $translationLanguageProperty)) {
-            return;
-        }
-
-        $defaultLanguage = $this->userLanguageService->getDefaultLanguage();
-        $test->editPropertyValues($translationLanguageProperty, TaoOntology::LANGUAGE_PREFIX . $defaultLanguage);
+        $this->setProperty(
+            $test,
+            TaoOntology::PROPERTY_LANGUAGE,
+            TaoOntology::LANGUAGE_PREFIX . $this->resourceLanguageRetriever->retrieve($test)
+        );
     }
 
     private function setTranslationType(core_kernel_classes_Resource $test): void
     {
-        $translationTypeProperty = $this->ontology->getProperty(TaoOntology::PROPERTY_TRANSLATION_TYPE);
-
-        if ($this->isPropertySet($test, $translationTypeProperty)) {
-            return;
-        }
-
-        $test->editPropertyValues($translationTypeProperty, TaoOntology::PROPERTY_VALUE_TRANSLATION_TYPE_ORIGINAL);
+        $this->setProperty(
+            $test,
+            TaoOntology::PROPERTY_TRANSLATION_TYPE,
+            TaoOntology::PROPERTY_VALUE_TRANSLATION_TYPE_ORIGINAL
+        );
     }
 
     private function setTranslationStatus(core_kernel_classes_Resource $test): void
     {
-        $translationStatusProperty = $this->ontology->getProperty(TaoOntology::PROPERTY_TRANSLATION_STATUS);
+        $this->setProperty(
+            $test,
+            TaoOntology::PROPERTY_TRANSLATION_STATUS,
+            TaoOntology::PROPERTY_VALUE_TRANSLATION_STATUS_NOT_READY
+        );
+    }
 
-        if ($this->isPropertySet($test, $translationStatusProperty)) {
-            return;
+    private function setProperty(core_kernel_classes_Resource $test, string $propertyUri, string $value): void
+    {
+        $property = $this->ontology->getProperty($propertyUri);
+
+        if (!$this->isPropertySet($test, $property)) {
+            $test->editPropertyValues($property, $value);
         }
-
-        $test->editPropertyValues($translationStatusProperty, TaoOntology::PROPERTY_VALUE_TRANSLATION_STATUS_NOT_READY);
     }
 
     private function isPropertySet(core_kernel_classes_Resource $test, core_kernel_classes_Property $property): bool
