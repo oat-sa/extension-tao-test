@@ -59,6 +59,10 @@ class TranslationFormModifier extends AbstractFormModifier
             (string)$translationType :
             $translationType->getUri();
 
+        $translationTypeUri = $translationType instanceof core_kernel_classes_Literal
+            ? (string) $translationType
+            : $translationType->getUri();
+
         if (
             empty($translationType)
             || $translationTypeUri === TaoOntology::PROPERTY_VALUE_TRANSLATION_TYPE_ORIGINAL
