@@ -25,6 +25,7 @@ namespace oat\taoTests\models\Translation\ServiceProvider;
 use oat\generis\model\data\Ontology;
 use oat\generis\model\DependencyInjection\ContainerServiceProviderInterface;
 use oat\oatbox\log\LoggerService;
+use oat\tao\model\resources\Service\InstanceCopier;
 use oat\tao\model\TaoOntology;
 use oat\tao\model\featureFlag\FeatureFlagChecker;
 use oat\tao\model\Translation\Form\Modifier\TranslationFormModifier as TaoTranslationFormModifier;
@@ -37,7 +38,6 @@ use oat\taoTests\models\Translation\Form\Modifier\TranslationFormModifierProxy;
 use oat\taoTests\models\Translation\Listener\TestCreatedEventListener;
 use oat\taoTests\models\Translation\Service\TranslationPostCreationService;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use taoTests_models_classes_TestsService;
 
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
@@ -102,10 +102,10 @@ class TranslationServiceProvider implements ContainerServiceProviderInterface
         $services
             ->get(TranslationCreationService::class)
             ->call(
-                'setOntologyClassService',
+                'setResourceTransfer',
                 [
                     TaoOntology::CLASS_URI_TEST,
-                    service(taoTests_models_classes_TestsService::class)
+                    service(InstanceCopier::class . '::TESTS')
                 ]
             )
             ->call(
