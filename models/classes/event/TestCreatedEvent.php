@@ -47,6 +47,11 @@ class TestCreatedEvent implements Event, JsonSerializable
         return get_class($this);
     }
 
+    public function getTestUri(): string
+    {
+        return $this->testUri;
+    }
+
     /**
      * Specify data which should be serialized to JSON
      * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
