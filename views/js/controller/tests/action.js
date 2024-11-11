@@ -18,16 +18,59 @@
  */
 define([
     'i18n',
-    'layout/actions/binder',
+    'module',
     'uri',
+    'layout/actions',
+    'layout/actions/binder',
+    'layout/section',
+    'form/translation',
+    'services/translation',
     'ui/feedback',
     'core/logger',
-    'taoTests/previewer/factory',
-    'module'
-], function (__, binder, uri, feedback, loggerFactory, previewerFactory, module) {
+    'taoTests/previewer/factory'
+], function (
+    __,
+    module,
+    uri,
+    actionManager,
+    binder,
+    section,
+    translationFormFactory,
+    translationService,
+    feedback,
+    loggerFactory,
+    previewerFactory
+) {
     'use strict';
 
     const logger = loggerFactory('taoTests/controller/action');
+
+    binder.register('translateTest', function (actionContext) {
+        section.current().updateContentBlock('<div class="main-container flex-container-full"></div>');
+        const $container = $('.main-container', section.selected.panel);
+        const { rootClassUri, id: resourceUri } = actionContext;
+        translationFormFactory($container, { rootClassUri, resourceUri, allowDeletion: true })
+            .on('edit', (id, language) => {
+                return actionManager.exec('test-authoring', {
+                    id,
+                    language,
+                    rootClassUri,
+                    originResourceUri: resourceUri,
+                    translation: true,
+                    actionParams: ['originResourceUri', 'language', 'translation']
+                });
+            })
+            .on('delete', function onDelete(id, language) {
+                return translationService.deleteTranslation(resourceUri, language).then(() => {
+                    feedback().success(__('Translation deleted'));
+                    return this.refresh();
+                });
+            })
+            .on('error', error => {
+                logger.error(error);
+                feedback().error(__('An error occurred while processing your request.'));
+            });
+    });
 
     binder.register('testPreview', function testPreview(actionContext) {
         const config = module.config();

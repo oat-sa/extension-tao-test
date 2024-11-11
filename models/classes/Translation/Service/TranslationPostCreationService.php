@@ -15,18 +15,32 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2023 (original work) Open Assessment Technologies SA;
+ * Copyright (c) 2024 (original work) Open Assessment Technologies SA.
  */
 
 declare(strict_types=1);
 
-namespace oat\taoTests\models\user;
+namespace oat\taoTests\models\Translation\Service;
 
-interface TaoTestsRoles
+use core_kernel_classes_Resource;
+use Psr\Log\LoggerInterface;
+
+class TranslationPostCreationService
 {
-    public const TEST_IMPORTER = 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestImporterRole';
-    public const TEST_EXPORTER = 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestExporterRole';
-    public const TEST_MANAGER = 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole';
-    public const RESTRICTED_TEST_AUTHOR = 'http://www.tao.lu/Ontologies/TAO.rdf#RestrictedTestAuthor';
-    public const TEST_TRANSLATOR = 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestTranslator';
+    private LoggerInterface $logger;
+
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
+
+    /**
+     * @TODO When time comes, we need to deal set translation items to the test
+     */
+    public function __invoke(core_kernel_classes_Resource $resource): core_kernel_classes_Resource
+    {
+        $this->logger->debug(sprintf('TODO: Deal with post test translation for %s', $resource->getUri()));
+
+        return $resource;
+    }
 }
