@@ -127,7 +127,7 @@
     <rdfs:domain rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#Test"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#TranslationCompletion">
-    <tao:PropertyAlias><![CDATA[taoTranslationCompletion]]></tao:PropertyAlias>
+    <generis:alias><![CDATA[taoTranslationCompletion]]></generis:alias>
     <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
     <rdfs:domain rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#Test"/>
     <rdfs:label xml:lang="en-US"><![CDATA[Translation Completion]]></rdfs:label>
