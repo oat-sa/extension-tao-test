@@ -179,7 +179,7 @@ class TranslationFormModifierTest extends TestCase
         $this->sut->modify($this->form);
     }
 
-    private function translationTypeDataProvider(): array
+    public function translationTypeDataProvider(): array
     {
         return [
             'Original' => [
