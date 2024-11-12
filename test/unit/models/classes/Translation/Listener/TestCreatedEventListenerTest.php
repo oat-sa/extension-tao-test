@@ -25,9 +25,9 @@ namespace oat\taoTests\test\unit\models\classes\Translation\Listener;
 use core_kernel_classes_Property;
 use core_kernel_classes_Resource;
 use oat\generis\model\data\Ontology;
-use oat\oatbox\user\UserLanguageServiceInterface;
 use oat\tao\model\featureFlag\FeatureFlagCheckerInterface;
 use oat\tao\model\TaoOntology;
+use oat\tao\model\Translation\Service\ResourceLanguageRetriever;
 use oat\taoTests\models\event\TestCreatedEvent;
 use oat\taoTests\models\Translation\Listener\TestCreatedEventListener;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -57,8 +57,8 @@ class TestCreatedEventListenerTest extends TestCase
     /** @var Ontology|MockObject */
     private Ontology $ontology;
 
-    /** @var UserLanguageServiceInterface|MockObject */
-    private $userLanguageService;
+    /** @var ResourceLanguageRetriever|MockObject */
+    private ResourceLanguageRetriever $resourceLanguageRetriever;
 
     /** @var LoggerInterface|MockObject */
     private LoggerInterface $logger;
@@ -75,13 +75,13 @@ class TestCreatedEventListenerTest extends TestCase
 
         $this->featureFlagChecker = $this->createMock(FeatureFlagCheckerInterface::class);
         $this->ontology = $this->createMock(Ontology::class);
-        $this->userLanguageService = $this->createMock(UserLanguageServiceInterface::class);
+        $this->resourceLanguageRetriever = $this->createMock(ResourceLanguageRetriever::class);
         $this->logger = $this->createMock(LoggerInterface::class);
 
         $this->sut = new TestCreatedEventListener(
             $this->featureFlagChecker,
             $this->ontology,
-            $this->userLanguageService,
+            $this->resourceLanguageRetriever,
             $this->logger
         );
     }
@@ -157,9 +157,10 @@ class TestCreatedEventListenerTest extends TestCase
             ->expects($this->never())
             ->method('info');
 
-        $this->userLanguageService
+        $this->resourceLanguageRetriever
             ->expects($this->once())
-            ->method('getDefaultLanguage')
+            ->method('retrieve')
+            ->with($this->test)
             ->willReturn('en-US');
 
         $this->test
@@ -225,9 +226,11 @@ class TestCreatedEventListenerTest extends TestCase
             ->expects($this->exactly(3))
             ->method('info');
 
-        $this->userLanguageService
-            ->expects($this->never())
-            ->method('getDefaultLanguage');
+        $this->resourceLanguageRetriever
+            ->expects($this->once())
+            ->method('retrieve')
+            ->with($this->test)
+            ->willReturn('en-US');
 
         $this->test
             ->expects($this->never())

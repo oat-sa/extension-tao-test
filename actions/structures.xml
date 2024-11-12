@@ -70,7 +70,7 @@
                         <icon id="icon-test"/>
                     </action>
                     <action id="test-translate" name="Translate" url="/tao/Translation/translate" context="instance" group="tree" binding="translateTest">
-                        <icon id="icon-spell-check"/>
+                        <icon id="icon-replace"/>
                     </action>
                 </actions>
             </section>

@@ -22,6 +22,8 @@ declare(strict_types=1);
 
 namespace oat\taoTests\models\Translation\Form\Modifier;
 
+use core_kernel_classes_Literal;
+use core_kernel_classes_Resource;
 use oat\generis\model\data\Ontology;
 use oat\tao\model\featureFlag\FeatureFlagCheckerInterface;
 use oat\tao\model\form\Modifier\AbstractFormModifier;
@@ -54,10 +56,13 @@ class TranslationFormModifier extends AbstractFormModifier
         $translationType = $instance->getOnePropertyValue(
             $this->ontology->getProperty(TaoOntology::PROPERTY_TRANSLATION_TYPE)
         );
+        $translationTypeUri = $translationType instanceof core_kernel_classes_Literal
+            ? (string) $translationType
+            : ($translationType instanceof core_kernel_classes_Resource ? $translationType->getUri() : null);
 
         if (
             empty($translationType)
-            || $translationType->getUri() === TaoOntology::PROPERTY_VALUE_TRANSLATION_TYPE_ORIGINAL
+            || $translationTypeUri === TaoOntology::PROPERTY_VALUE_TRANSLATION_TYPE_ORIGINAL
         ) {
             $form->removeElement(tao_helpers_Uri::encode(TaoTestOntology::PROPERTY_TRANSLATION_COMPLETION));
         }
