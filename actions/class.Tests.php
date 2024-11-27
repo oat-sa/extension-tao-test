@@ -251,6 +251,7 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
                     );
                 }
                 if ($this->getRequestParameter('originResourceUri') !== null) {
+                    $this->getTranslationSyncService()->syncById($this->getRequestParameter('originResourceUri'));
                     $authoringUrl = sprintf(
                         '%s&originResourceUri=%s',
                         $authoringUrl,
