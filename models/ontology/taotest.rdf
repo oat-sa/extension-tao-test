@@ -95,7 +95,7 @@
   <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#TranslationCompletionStatuses">
     <rdfs:label xml:lang="en-US"><![CDATA[Translation Statuses]]></rdfs:label>
     <rdfs:comment xml:lang="en-US"><![CDATA[Translation Statuses]]></rdfs:comment>
-    <rdfs:subClassOf rdf:resource="http://www.tao.lu/Ontologies/TAO.rdf#SystemObject"/>
+    <rdfs:subClassOf rdf:resource="http://www.tao.lu/Ontologies/TAO.rdf#List"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAOTest.rdf#TranslationCompletionStatusMissingTranslations">
     <rdf:type rdf:resource="http://www.tao.lu/Ontologies/TAOTest.rdf#TranslationCompletionStatuses"/>
