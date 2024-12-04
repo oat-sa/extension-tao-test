@@ -41,6 +41,7 @@ use oat\taoTests\scripts\install\RegisterTestPreviewerRegistryService;
 use oat\taoTests\scripts\install\RegisterTestProviderService;
 use oat\taoTests\scripts\install\SetupEventListeners;
 use oat\taoTests\scripts\install\SetupProvider;
+use oat\taoTests\scripts\install\SetupSectionVisibilityFilters;
 use oat\taoTests\scripts\update\Updater;
 
 $extpath = __DIR__ . DIRECTORY_SEPARATOR;
@@ -66,6 +67,7 @@ return [
             RegisterTestPreviewerRegistryService::class,
             SetupProvider::class,
             SetupEventListeners::class,
+            SetupSectionVisibilityFilters::class
         ],
     ],
     'update' => Updater::class,
