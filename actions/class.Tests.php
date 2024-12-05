@@ -41,6 +41,7 @@ use oat\generis\model\resource\Contract\ResourceDeleterInterface;
 use oat\generis\model\resource\exception\ResourceDeletionException;
 use oat\tao\model\resources\Exception\PartialClassDeletionException;
 use oat\tao\model\Lists\Business\Validation\DependsOnPropertyValidator;
+use oat\tao\model\Translation\Service\TranslationSyncService;
 
 /**
  * Tests Controller provide actions performed from url resolution
@@ -251,6 +252,7 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
                     );
                 }
                 if ($this->getRequestParameter('originResourceUri') !== null) {
+                    $this->getTranslationSyncService()->syncById($this->getRequestParameter('originResourceUri'));
                     $authoringUrl = sprintf(
                         '%s&originResourceUri=%s',
                         $authoringUrl,
@@ -330,5 +332,10 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
     private function getResourceDeleter(): ResourceDeleterInterface
     {
         return $this->getPsrContainer()->get(ResourceDeleter::class);
+    }
+
+    private function getTranslationSyncService(): TranslationSyncService
+    {
+        return $this->getPsrContainer()->get(TranslationSyncService::class);
     }
 }
