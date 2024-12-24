@@ -24,6 +24,7 @@ namespace oat\taoTests\models\Translation\ServiceProvider;
 
 use oat\generis\model\data\Ontology;
 use oat\generis\model\DependencyInjection\ContainerServiceProviderInterface;
+use oat\oatbox\event\EventManager;
 use oat\oatbox\log\LoggerService;
 use oat\tao\model\resources\Service\InstanceCopier;
 use oat\tao\model\TaoOntology;
@@ -31,11 +32,13 @@ use oat\tao\model\featureFlag\FeatureFlagChecker;
 use oat\tao\model\Translation\Form\Modifier\TranslationFormModifier as TaoTranslationFormModifier;
 use oat\tao\model\Translation\Service\ResourceLanguageRetriever;
 use oat\tao\model\Translation\Service\ResourceMetadataPopulateService;
+use oat\tao\model\Translation\Service\TranslatedIntoLanguagesSynchronizer;
 use oat\tao\model\Translation\Service\TranslationCreationService;
 use oat\taoTests\models\TaoTestOntology;
 use oat\taoTests\models\Translation\Form\Modifier\TranslationFormModifier;
 use oat\taoTests\models\Translation\Form\Modifier\TranslationFormModifierProxy;
 use oat\taoTests\models\Translation\Listener\TestCreatedEventListener;
+use oat\taoTests\models\Translation\Service\TranslateIntoLanguagesHandler;
 use oat\taoTests\models\Translation\Service\TranslationPostCreationService;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
@@ -100,6 +103,15 @@ class TranslationServiceProvider implements ContainerServiceProviderInterface
             );
 
         $services
+            ->set(TranslateIntoLanguagesHandler::class, TranslateIntoLanguagesHandler::class)
+            ->args(
+                [
+                    service(LoggerService::SERVICE_ID),
+                    service(EventManager::SERVICE_ID),
+                ]
+            );
+
+        $services
             ->get(TranslationCreationService::class)
             ->call(
                 'setResourceTransfer',
@@ -113,6 +125,16 @@ class TranslationServiceProvider implements ContainerServiceProviderInterface
                 [
                     TaoOntology::CLASS_URI_TEST,
                     service(TranslationPostCreationService::class)
+                ]
+            );
+
+        $services
+            ->get(TranslatedIntoLanguagesSynchronizer::class)
+            ->call(
+                'addCallback',
+                [
+                    TaoOntology::CLASS_URI_TEST,
+                    service(TranslateIntoLanguagesHandler::class)
                 ]
             );
     }
