@@ -55,7 +55,7 @@
                         <icon id="icon-copy"/>
                     </action>
                     <action id="test-copy-to" name="Copy To" url="/taoTests/Tests/copyInstance" context="instance" group="tree" binding="copyTo" weight="7">
-                        <icon id="icon-copy"/>
+                        <icon id="icon-copy" alt="icon-copy-to"/>
                     </action>
                     <action id="test-move-to" name="Move To" url="/taoTests/Tests/moveResource" context="instance" group="tree" binding="moveTo" weight="6">
                         <icon id="icon-move-item"/>
