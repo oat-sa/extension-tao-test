@@ -52,7 +52,7 @@
                         <icon id="icon-export"/>
                     </action>
                     <action id="test-duplicate" name="Duplicate" js="duplicateNode" url="/taoTests/Tests/cloneInstance" context="instance" group="tree" weight="8">
-                        <icon id="icon-copy"/>
+                        <icon id="icon-duplicate"/>
                     </action>
                     <action id="test-copy-to" name="Copy To" url="/taoTests/Tests/copyInstance" context="instance" group="tree" binding="copyTo" weight="7">
                         <icon id="icon-copy"/>
