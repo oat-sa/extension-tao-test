@@ -25,10 +25,11 @@
  */
 
 use oat\tao\model\featureFlag\FeatureFlagChecker;
-use oat\taoQtiTest\models\export\Formats\Package3p0\TestPackageExport;
+use oat\taoQtiTest\models\export\Formats\Package3p0\TestPackageExport as Qti3Handler;
 use oat\taoTests\models\MissingTestmodelException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use tao_models_classes_export_ExportHandler as ExportHandlerInterface;
 
 /**
  * This controller provide the actions to export tests
@@ -86,10 +87,10 @@ class taoTests_actions_TestExport extends tao_actions_Export
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    private function isHandlerEnabled(tao_models_classes_export_ExportHandler $handler): bool
+    private function isHandlerEnabled(ExportHandlerInterface $handler): bool
     {
         if (
-            $handler instanceof TestPackageExport
+            $handler instanceof Qti3Handler
             && !$this->getPsrContainer()->get(FeatureFlagChecker::class)->isEnabled(self::FEATURE_FLAG_QTI3_EXPORT)
         ) {
             return false;
