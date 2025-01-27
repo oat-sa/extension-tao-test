@@ -71,10 +71,9 @@ class taoTests_actions_TestExport extends tao_actions_Export
             $impl = taoTests_models_classes_TestsService::singleton()->getTestModelImplementation($model);
             if (in_array('tao_models_classes_export_ExportProvider', class_implements($impl))) {
                 foreach ($impl->getExportHandlers() as $handler) {
-                    if($this->isHandlerEnabled($handler)) {
+                    if ($this->isHandlerEnabled($handler)) {
                         array_unshift($returnValue, $handler);
                     }
-
                 }
             }
         }
@@ -89,7 +88,8 @@ class taoTests_actions_TestExport extends tao_actions_Export
      */
     private function isHandlerEnabled(tao_models_classes_export_ExportHandler $handler): bool
     {
-        if ($handler instanceof TestPackageExport
+        if (
+            $handler instanceof TestPackageExport
             && !$this->getPsrContainer()->get(FeatureFlagChecker::class)->isEnabled(self::FEATURE_FLAG_QTI3_EXPORT)
         ) {
             return false;
