@@ -40,8 +40,6 @@ use tao_models_classes_export_ExportHandler as ExportHandlerInterface;
  */
 class taoTests_actions_TestExport extends tao_actions_Export
 {
-    //TODO: This was created only to temporary handle QTI3 Export feature. Will be removed.
-    private const QTI3_TEST_HANDLER = 'oat\taoQtiTest\models\export\Formats\Package3p0\TestPackageExport';
     private const FEATURE_FLAG_QTI3_EXPORT = 'FEATURE_FLAG_QTI3_EXPORT';
 
     /**
@@ -91,8 +89,8 @@ class taoTests_actions_TestExport extends tao_actions_Export
     private function isHandlerEnabled(ExportHandlerInterface $handler): bool
     {
         if (
-            $handler instanceof self::QTI3_TEST_HANDLER
-            && !$this->getPsrContainer()->get(FeatureFlagChecker::class)->isEnabled(self::FEATURE_FLAG_QTI3_EXPORT)
+            !$this->getPsrContainer()->get(FeatureFlagChecker::class)->isEnabled(self::FEATURE_FLAG_QTI3_EXPORT)
+            && $handler instanceof oat\taoQtiTest\models\export\Formats\Package3p0\TestPackageExport
         ) {
             return false;
         }
