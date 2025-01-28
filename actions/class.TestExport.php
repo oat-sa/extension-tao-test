@@ -89,8 +89,8 @@ class taoTests_actions_TestExport extends tao_actions_Export
     private function isHandlerEnabled(ExportHandlerInterface $handler): bool
     {
         if (
-            $handler instanceof oat\taoQtiTest\models\export\Formats\Package3p0\TestPackageExport
-            && !$this->getPsrContainer()->get(FeatureFlagChecker::class)->isEnabled(self::FEATURE_FLAG_QTI3_EXPORT)
+            !$this->getPsrContainer()->get(FeatureFlagChecker::class)->isEnabled(self::FEATURE_FLAG_QTI3_EXPORT)
+            && $handler instanceof oat\taoQtiTest\models\export\Formats\Package3p0\TestPackageExport
         ) {
             return false;
         }
