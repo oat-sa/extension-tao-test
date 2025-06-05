@@ -14,7 +14,7 @@ final class Version202506050743452143_taoTests extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'Add new Test Manager Role to access tests preview';
+        return sprintf('Give role %s access tests preview', TaoTestsRoles::TEST_AUTHOR);
     }
 
     public function up(Schema $schema): void
