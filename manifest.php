@@ -85,6 +85,11 @@ return [
         ],
         [
             AccessRule::GRANT,
+            TaoTestsRoles::TEST_AUTHOR,
+            ['ext' => 'taoTests', 'mod' => 'Tests', 'act' => 'preview'],
+        ],
+        [
+            AccessRule::GRANT,
             TaoTestsRoles::TEST_EXPORTER,
             ['ext' => 'taoTests', 'mod' => 'TestExport']
         ],

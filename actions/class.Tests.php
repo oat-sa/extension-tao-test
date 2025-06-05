@@ -85,6 +85,13 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
     * controller actions
     */
 
+    /**
+     * @requiresRight id READ
+     */
+    public function preview(): void
+    {
+        $this->index();
+    }
 
     /**
      * edit a test instance
