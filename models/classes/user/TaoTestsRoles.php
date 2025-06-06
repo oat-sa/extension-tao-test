@@ -29,4 +29,5 @@ interface TaoTestsRoles
     public const TEST_MANAGER = 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole';
     public const RESTRICTED_TEST_AUTHOR = 'http://www.tao.lu/Ontologies/TAO.rdf#RestrictedTestAuthor';
     public const TEST_TRANSLATOR = 'http://www.tao.lu/Ontologies/TAOTest.rdf#TestTranslator';
+    public const TEST_AUTHOR = 'http://www.tao.lu/Ontologies/TAOItem.rdf#TestAuthor';
 }
