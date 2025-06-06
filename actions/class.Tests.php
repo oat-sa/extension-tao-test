@@ -26,6 +26,7 @@
 use oat\oatbox\event\EventManager;
 use oat\tao\model\lock\LockManager;
 use oat\oatbox\validator\ValidatorInterface;
+use oat\tao\model\accessControl\Context;
 use oat\tao\model\resources\ResourceWatcher;
 use oat\tao\model\TaoOntology;
 use oat\taoTests\models\event\TestUpdatedEvent;
@@ -85,6 +86,13 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
     * controller actions
     */
 
+    /**
+     * @requiresRight id READ
+     */
+    public function preview(): void
+    {
+        $this->index();
+    }
 
     /**
      * edit a test instance
@@ -106,11 +114,20 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
                 $this->setData('id', $lock->getResource()->getUri());
             }
 
+            $context = new Context(
+                [
+                    Context::PARAM_CONTROLLER => self::class,
+                    Context::PARAM_ACTION => __FUNCTION__,
+                ]
+            );
+            $hasWriteAccess = $this->hasWriteAccess($test->getUri()) && $this->hasWriteAccessByContext($context);
+
             $clazz = $this->getCurrentClass();
             $formContainer = new SignedFormInstance(
                 $clazz,
                 $test,
                 [
+                    FormContainer::IS_DISABLED => !$hasWriteAccess,
                     FormContainer::CSRF_PROTECTION_OPTION => true,
                     FormContainer::ATTRIBUTE_VALIDATORS => [
                         'data-depends-on-property' => [
@@ -129,31 +146,40 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
                 'resourceType' => TaoOntology::CLASS_URI_TEST
             ]);
 
-            if ($myForm->isSubmited() && $myForm->isValid()) {
-                $this->validateInstanceRoot($test->getUri());
+            if ($hasWriteAccess) {
+                if ($myForm->isSubmited() && $myForm->isValid()) {
+                    $this->validateInstanceRoot($test->getUri());
 
-                $propertyValues = $myForm->getValues();
+                    $propertyValues = $myForm->getValues();
 
-                // don't hande the testmodel via bindProperties
-                if (array_key_exists(taoTests_models_classes_TestsService::PROPERTY_TEST_TESTMODEL, $propertyValues)) {
-                    $modelUri = $propertyValues[taoTests_models_classes_TestsService::PROPERTY_TEST_TESTMODEL];
-                    unset($propertyValues[taoTests_models_classes_TestsService::PROPERTY_TEST_TESTMODEL]);
-                    if (!empty($modelUri)) {
-                        $testModel = new core_kernel_classes_Resource($modelUri);
-                        $this->service->setTestModel($test, $testModel);
+                    // don't hande the testmodel via bindProperties
+                    if (
+                        array_key_exists(
+                            taoTests_models_classes_TestsService::PROPERTY_TEST_TESTMODEL,
+                            $propertyValues
+                        )
+                    ) {
+                        $modelUri = $propertyValues[taoTests_models_classes_TestsService::PROPERTY_TEST_TESTMODEL];
+                        unset($propertyValues[taoTests_models_classes_TestsService::PROPERTY_TEST_TESTMODEL]);
+                        if (!empty($modelUri)) {
+                            $testModel = new core_kernel_classes_Resource($modelUri);
+                            $this->service->setTestModel($test, $testModel);
+                        }
+                    } else {
+                        common_Logger::w('No testmodel on test form', 'taoTests');
                     }
-                } else {
-                    common_Logger::w('No testmodel on test form', 'taoTests');
+
+                    //then save the property values as usual
+                    $binder = new tao_models_classes_dataBinding_GenerisFormDataBinder($test);
+                    $test = $binder->bind($propertyValues);
+                    $this->getEventManager()->trigger(new TestUpdatedEvent($test->getUri(), $propertyValues));
+
+                    $this->setData('selectNode', tao_helpers_Uri::encode($test->getUri()));
+                    $this->setData('message', __('Test saved'));
+                    $this->setData('reload', true);
                 }
-
-                //then save the property values as usual
-                $binder = new tao_models_classes_dataBinding_GenerisFormDataBinder($test);
-                $test = $binder->bind($propertyValues);
-                $this->getEventManager()->trigger(new TestUpdatedEvent($test->getUri(), $propertyValues));
-
-                $this->setData('selectNode', tao_helpers_Uri::encode($test->getUri()));
-                $this->setData('message', __('Test saved'));
-                $this->setData('reload', true);
+            } else {
+                $myForm->setActions([]);
             }
 
             $myForm->removeElement(tao_helpers_Uri::encode(
