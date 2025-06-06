@@ -149,11 +149,16 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
             if ($hasWriteAccess) {
                 if ($myForm->isSubmited() && $myForm->isValid()) {
                     $this->validateInstanceRoot($test->getUri());
-    
+
                     $propertyValues = $myForm->getValues();
-    
+
                     // don't hande the testmodel via bindProperties
-                    if (array_key_exists(taoTests_models_classes_TestsService::PROPERTY_TEST_TESTMODEL, $propertyValues)) {
+                    if (
+                        array_key_exists(
+                            taoTests_models_classes_TestsService::PROPERTY_TEST_TESTMODEL,
+                            $propertyValues
+                        )
+                    ) {
                         $modelUri = $propertyValues[taoTests_models_classes_TestsService::PROPERTY_TEST_TESTMODEL];
                         unset($propertyValues[taoTests_models_classes_TestsService::PROPERTY_TEST_TESTMODEL]);
                         if (!empty($modelUri)) {
@@ -163,12 +168,12 @@ class taoTests_actions_Tests extends tao_actions_SaSModule
                     } else {
                         common_Logger::w('No testmodel on test form', 'taoTests');
                     }
-    
+
                     //then save the property values as usual
                     $binder = new tao_models_classes_dataBinding_GenerisFormDataBinder($test);
                     $test = $binder->bind($propertyValues);
                     $this->getEventManager()->trigger(new TestUpdatedEvent($test->getUri(), $propertyValues));
-    
+
                     $this->setData('selectNode', tao_helpers_Uri::encode($test->getUri()));
                     $this->setData('message', __('Test saved'));
                     $this->setData('reload', true);
