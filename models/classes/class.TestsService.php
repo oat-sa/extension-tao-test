@@ -165,7 +165,8 @@ class taoTests_models_classes_TestsService extends OntologyClassService
         if (!is_null($clone)) {
             $noCloningProperties = [
                 self::PROPERTY_TEST_CONTENT,
-                OntologyRdf::RDF_TYPE
+                OntologyRdf::RDF_TYPE,
+                TaoOntology::PROPERTY_TRANSLATED_INTO_LANGUAGES
             ];
 
             foreach ($clazz->getProperties(true) as $property) {
