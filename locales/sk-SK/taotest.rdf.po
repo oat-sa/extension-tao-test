@@ -1,14 +1,21 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.4.0-sprint138\n"
-"PO-Revision-Date: 2020-09-25T08:32:36\n"
+"Project-Id-Version: tao-open-source\n"
+"PO-Revision-Date: 2025-12-05 09:02\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
-"Language: sk-SK\n"
+"Language: sk\n"
 "sourceLanguage: en-US\n"
-"targetLanguage: sk-SK\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"targetLanguage: en-US\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 3;\n"
+"X-Crowdin-Project: tao-open-source\n"
+"X-Crowdin-Project-ID: 590867\n"
+"X-Crowdin-Language: sk\n"
+"X-Crowdin-File: /[oat-sa.extension-tao-test] develop/locales/en-US/taotest.rdf.po\n"
+"X-Crowdin-File-ID: 964\n"
+"Language-Team: Slovak\n"
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#Test
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
@@ -23,60 +30,60 @@ msgstr "Test"
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestContent
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "Test Content"
-msgstr "Test Content"
+msgstr "Testovací obsah"
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestContent
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "Test Content"
-msgstr "Test Content"
+msgstr "Testovací obsah"
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestTestModel
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "Test Model"
-msgstr "Test Model"
+msgstr "Testovací model"
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestTestModel
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "Test Model"
-msgstr "Test Model"
+msgstr "Testovací model"
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestModelImplementation
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "Testmodel implementation"
-msgstr "Testmodel implementation"
+msgstr "Implementácia testovacieho modelu"
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestModelImplementation
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "Implementation of the test model"
-msgstr ""
+msgstr "Implementácia testovacieho modelu"
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "Tests Manager"
-msgstr "Tests Manager"
+msgstr "Manažér testov"
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "The Tests Manager Role"
-msgstr ""
+msgstr "Rola manažéra testov"
 
 # http://www.tao.lu/Ontologies/TAOItem.rdf#TestAuthor
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "Test Author"
-msgstr ""
+msgstr "Autor testu"
 
 # http://www.tao.lu/Ontologies/TAOItem.rdf#TestAuthor
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "The Test Author Role"
-msgstr ""
+msgstr "Rola autora testu"
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestModelImplementation
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "Testmodel implementation"
-msgstr "Implementation of the test model"
+msgstr "Implementácia testovacieho modelu"
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "Tests Manager"
-msgstr "The Tests Manager Role"
+msgstr "Manažér testov"
 
