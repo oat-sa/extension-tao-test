@@ -4,7 +4,7 @@ msgstr ""
 "PO-Revision-Date: 2025-12-05 09:02\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
-"Language: pt\n"
+"Language: ar\n"
 "sourceLanguage: en-US\n"
 "targetLanguage: en-US\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -12,121 +12,121 @@ msgstr ""
 "X-Poedit-Basepath: ../../\n"
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
 "X-Crowdin-Project: tao-open-source\n"
 "X-Crowdin-Project-ID: 590867\n"
-"X-Crowdin-Language: pt-BR\n"
+"X-Crowdin-Language: ar\n"
 "X-Crowdin-File: /[oat-sa.extension-tao-test] develop/locales/en-US/messages.po\n"
 "X-Crowdin-File-ID: 593\n"
-"Language-Team: Portuguese, Brazilian\n"
+"Language-Team: Arabic\n"
 
 msgid " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
-msgstr " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
+msgstr " . \\common_Utils::toPHPVariableString($this->getDescription()). "
 
 msgid " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
-msgstr " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
+msgstr "\\common_Utils::toPHPVariableString($this->getLabel()) ."
 
 #, tao-public
 msgid "Authoring"
-msgstr "Autoria"
+msgstr "التحرير"
 
 #, tao-public
 msgid "Combine a selection of items into tests."
-msgstr "Combinar uma seleção de itens em testes."
+msgstr "امزج بين مجموعة مختارة من البنود في الروائز."
 
 #, tao-public
 msgid "Copy To"
-msgstr "Copiar Para"
+msgstr "نسخ الى"
 
 #, tao-public
 msgid "Delete"
-msgstr "excluir"
+msgstr "حذف"
 
 #, tao-public
 msgid "Duplicate"
-msgstr "Duplicar"
+msgstr "انسخ"
 
 #, tao-public
 msgid "Export"
-msgstr "Exportar"
+msgstr "تصدير"
 
 #, tao-public
 msgid "Import"
-msgstr "Importar"
+msgstr "استورد"
 
 msgid "Last updated on %2s"
-msgstr "Última atualização em %2s"
+msgstr "آخر تحديث في %2s"
 
 #, tao-public
 msgid "Manage Schema"
-msgstr "Gerenciar esquema"
+msgstr "إدارة الخطاطة"
 
 #, tao-public
 msgid "Manage tests"
-msgstr "Gerenciar testes"
+msgstr "إدارة الروائز"
 
 #, tao-public
 msgid "Move"
-msgstr "Mover"
+msgstr "حرك"
 
 #, tao-public
 msgid "Move To"
-msgstr "Mover para"
+msgstr "حرك نحو"
 
 #, tao-public
 msgid "New class"
-msgstr "Nova pasta"
+msgstr "صنف جديد"
 
 #, tao-public
 msgid "New test"
-msgstr "Novo teste"
+msgstr "رائز جديد"
 
 #, tao-public
 msgid "Preview"
-msgstr "Pré-visualizar"
+msgstr "معاينة"
 
 #, tao-public
 msgid "Properties"
-msgstr "propriedades"
+msgstr "خصائص"
 
 msgid "Security plugins"
-msgstr "Plugins de segurança"
+msgstr "المكونات الإضافية للأمان"
 
 msgid "Set of plugins with \\'security\\' category"
-msgstr "Conjunto de plugins com \\'security\\'"
+msgstr "مجموعة من المكونات الإضافية مع فئة \"الأمان\""
 
 msgid "Test Preview is not installed, please contact to your administrator."
-msgstr "Pré-visualização de teste não está instalada, por favor, contate o administrador."
+msgstr "معاينة الاختبار غير مثبتة، يرجى الاتصال بالمسؤول."
 
 msgid "Test properties"
-msgstr "Propriedades de teste"
+msgstr "اختبار الخصائص"
 
 msgid "Test saved"
-msgstr "Teste salvo"
+msgstr "تم حفظ الرائز"
 
 msgid "Test was successfully deleted."
-msgstr "O teste foi removido com sucesso."
+msgstr "تم حذف الاختبار بنجاح."
 
 #, tao-public
 msgid "Tests"
-msgstr "Testes"
+msgstr "روائز"
 
 #, tao-public
 msgid "Tests library"
-msgstr "Biblioteca de testes"
+msgstr "خزينة الروائز"
 
 msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
-msgstr "O modo de teste (sequenciamento, pontuação, acumulação, etc.) e layout também estão configurados aqui."
+msgstr "ز (التسلسل ، والتسجيل ، والتراكم، إلخ) والتخطيط وأيضا لتنسيق الصفحات."
 
 msgid "The Tests module allows to combine a selection of Items to a Test."
-msgstr "O módulo de testes permite combinar uma seleção de itens para um teste."
+msgstr "تسمح مجزوءة الروائز بدمج مجموعة مختارة من البنود في الرائز."
 
 msgid "Unable to delete test."
-msgstr "Não foi possível remover o teste."
+msgstr "تعذر حذف الرائز."
 
 msgid "Unable to process your request"
-msgstr "Não foi possível processar sua solicitação"
+msgstr "غير قادر على معالجة طلبك"
 
 msgid "You checked out this test %2s ago"
-msgstr "Você fez check-out deste teste %2s atrás"
+msgstr "لقد سحبت هذا الاختبار منذ  %2s"
 
