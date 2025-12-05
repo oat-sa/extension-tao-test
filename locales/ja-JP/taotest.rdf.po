@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tao-open-source\n"
-"PO-Revision-Date: 2023-12-04 16:08\n"
+"PO-Revision-Date: 2025-12-05 09:02\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: ja\n"
@@ -80,10 +80,10 @@ msgstr "テスト作成者ロール"
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestModelImplementation
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "Testmodel implementation"
-msgstr ""
+msgstr "テストモデルの実装"
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "Tests Manager"
-msgstr ""
+msgstr "テストマネージャー"
 

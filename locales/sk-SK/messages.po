@@ -1,125 +1,132 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.4.0-sprint138\n"
-"PO-Revision-Date: 2020-09-25T08:32:36\n"
+"Project-Id-Version: tao-open-source\n"
+"PO-Revision-Date: 2025-12-05 09:02\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
-"Language: sk-SK\n"
+"Language: sk\n"
 "sourceLanguage: en-US\n"
-"targetLanguage: sk-SK\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"targetLanguage: en-US\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Basepath: ../../\n"
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
+"Plural-Forms: nplurals=4; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 3;\n"
+"X-Crowdin-Project: tao-open-source\n"
+"X-Crowdin-Project-ID: 590867\n"
+"X-Crowdin-Language: sk\n"
+"X-Crowdin-File: /[oat-sa.extension-tao-test] develop/locales/en-US/messages.po\n"
+"X-Crowdin-File-ID: 593\n"
+"Language-Team: Slovak\n"
 
-msgid " . \common_Utils::toPHPVariableString($this->getDescription()) . "
-msgstr ""
+msgid " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
+msgstr " \\common_Utils::toPHPVariableString($this->getDescription()) . "
 
-msgid " . \common_Utils::toPHPVariableString($this->getLabel()) . "
-msgstr ""
+msgid " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
+msgstr " \\common_Utils::toPHPVariableString($this->getLabel()) . "
 
 #, tao-public
 msgid "Authoring"
-msgstr ""
+msgstr "Autorstvo"
 
 #, tao-public
 msgid "Combine a selection of items into tests."
-msgstr ""
+msgstr "Skombinujte výber položiek do testov."
 
 #, tao-public
 msgid "Copy To"
-msgstr ""
+msgstr "Kopírovať do"
 
 #, tao-public
 msgid "Delete"
-msgstr ""
+msgstr "Odstrániť"
 
 #, tao-public
 msgid "Duplicate"
-msgstr ""
+msgstr "Duplikát"
 
 #, tao-public
 msgid "Export"
-msgstr ""
+msgstr "Export"
 
 #, tao-public
 msgid "Import"
-msgstr ""
+msgstr "Importovať"
 
 msgid "Last updated on %2s"
-msgstr ""
+msgstr "Naposledy aktualizované %2s"
 
 #, tao-public
 msgid "Manage Schema"
-msgstr ""
+msgstr "Spravovať schému"
 
 #, tao-public
 msgid "Manage tests"
-msgstr ""
+msgstr "Spravovať testy"
 
 #, tao-public
 msgid "Move"
-msgstr ""
+msgstr "Presunúť"
 
 #, tao-public
 msgid "Move To"
-msgstr ""
+msgstr "Presunúť do"
 
 #, tao-public
 msgid "New class"
-msgstr ""
+msgstr "Nová trieda"
 
 #, tao-public
 msgid "New test"
-msgstr ""
+msgstr "Nový test"
 
 #, tao-public
 msgid "Preview"
-msgstr ""
+msgstr "Náhľad"
 
 #, tao-public
 msgid "Properties"
-msgstr ""
+msgstr "Nehnuteľnosti"
 
 msgid "Security plugins"
-msgstr ""
+msgstr "Bezpečnostné pluginy"
 
-msgid "Set of plugins with \'security\' category"
-msgstr ""
+msgid "Set of plugins with \\'security\\' category"
+msgstr "Sada pluginov s kategóriou „zabezpečenie“"
 
 msgid "Test Preview is not installed, please contact to your administrator."
-msgstr ""
+msgstr "Testovacia ukážka nie je nainštalovaná, kontaktujte, prosím, svojho administrátora."
 
 msgid "Test properties"
-msgstr ""
+msgstr "Vlastnosti testu"
 
 msgid "Test saved"
-msgstr ""
+msgstr "Test uložený"
 
 msgid "Test was successfully deleted."
-msgstr ""
+msgstr "Test bol úspešne odstránený."
 
 #, tao-public
 msgid "Tests"
-msgstr ""
+msgstr "Testy"
 
 #, tao-public
 msgid "Tests library"
-msgstr ""
+msgstr "Knižnica testov"
 
 msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
-msgstr ""
+msgstr "Tu sa tiež konfiguruje testovací režim (sekvenovanie, hodnotenie, kumulácia atď.) a rozloženie."
 
 msgid "The Tests module allows to combine a selection of Items to a Test."
-msgstr ""
+msgstr "Modul Testy umožňuje kombinovať výber položiek do testu."
 
 msgid "Unable to delete test."
-msgstr ""
+msgstr "Test sa nepodarilo odstrániť."
 
 msgid "Unable to process your request"
-msgstr ""
+msgstr "Vašu žiadosť sa nepodarilo spracovať"
 
 msgid "You checked out this test %2s ago"
-msgstr ""
+msgstr "Tento test ste si pozreli pred %2s"
 
