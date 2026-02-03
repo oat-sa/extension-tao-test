@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tao-open-source\n"
-"PO-Revision-Date: 2023-06-07 09:22\n"
+"PO-Revision-Date: 2026-02-03 19:25\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: ne\n"
@@ -24,6 +24,12 @@ msgid " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
 msgstr ""
 
 msgid " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
+msgstr ""
+
+msgid "%s has been deleted"
+msgstr ""
+
+msgid "An error occurred while processing your request."
 msgstr ""
 
 #, tao-public
@@ -92,6 +98,12 @@ msgstr ""
 msgid "Security plugins"
 msgstr ""
 
+msgid "Select Item Destination"
+msgstr ""
+
+msgid "Select the item destination class"
+msgstr ""
+
 msgid "Set of plugins with \\'security\\' category"
 msgstr ""
 
@@ -121,7 +133,17 @@ msgstr ""
 msgid "The Tests module allows to combine a selection of Items to a Test."
 msgstr ""
 
+#, tao-public
+msgid "Translate"
+msgstr ""
+
+msgid "Translation deleted"
+msgstr ""
+
 msgid "Unable to delete test."
+msgstr ""
+
+msgid "Unable to load tests"
 msgstr ""
 
 msgid "Unable to process your request"
