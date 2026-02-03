@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tao-open-source\n"
-"PO-Revision-Date: 2025-12-05 09:13\n"
+"PO-Revision-Date: 2026-02-03 19:25\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: hu\n"
@@ -25,6 +25,12 @@ msgstr " . \\common_Utils::toPHPVariableString($this->getDescription()) . } } "
 
 msgid " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
 msgstr " . \\common_Utils::toPHPVariableString($this->getLabel()) . } } "
+
+msgid "%s has been deleted"
+msgstr "%s törölve lett"
+
+msgid "An error occurred while processing your request."
+msgstr "Hiba történt a kérés feldolgozása során."
 
 #, tao-public
 msgid "Authoring"
@@ -92,6 +98,12 @@ msgstr "Tulajdonságok"
 msgid "Security plugins"
 msgstr "Biztonsági bővítmények"
 
+msgid "Select Item Destination"
+msgstr "Válassza ki a célállomást"
+
+msgid "Select the item destination class"
+msgstr "Válassza ki az elem célosztályát"
+
 msgid "Set of plugins with \\'security\\' category"
 msgstr "Bővítmények halmaza \\'biztonság\\' kategóriával"
 
@@ -121,8 +133,18 @@ msgstr "A teszt mód (szekvenálás, pontozás, összesítés stb.) és az elren
 msgid "The Tests module allows to combine a selection of Items to a Test."
 msgstr "A Tesztek modul lehetővé teszi, hogy több elemet tesztként kombináljunk."
 
+#, tao-public
+msgid "Translate"
+msgstr "Fordítás"
+
+msgid "Translation deleted"
+msgstr "Fordítás törölve"
+
 msgid "Unable to delete test."
 msgstr "A teszt törlése sikertelen."
+
+msgid "Unable to load tests"
+msgstr "Nem sikerült betölteni a teszteket"
 
 msgid "Unable to process your request"
 msgstr "Nem sikerült feldolgozni a kérését"
