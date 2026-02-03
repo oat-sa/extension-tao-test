@@ -1,29 +1,34 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: tao-open-source\n"
-"PO-Revision-Date: 2023-06-07 09:22\n"
+"Project-Id-Version: TAO 2026.02 LTS\n"
+"PO-Revision-Date: 2026-02-03T14:44:46\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
-"Language: it\n"
+"Language: it-IT\n"
 "sourceLanguage: en-US\n"
-"targetLanguage: en-US\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"targetLanguage: it-IT\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Basepath: ../../\n"
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Crowdin-Project: tao-open-source\n"
-"X-Crowdin-Project-ID: 590867\n"
-"X-Crowdin-Language: it\n"
-"X-Crowdin-File: /[oat-sa.extension-tao-test] develop/locales/en-US/messages.po\n"
-"X-Crowdin-File-ID: 593\n"
-"Language-Team: Italian\n"
 
 msgid " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
 msgstr ""
 
 msgid " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
+msgstr ""
+
+msgid " . \common_Utils::toPHPVariableString($this->getDescription()) . "
+msgstr ""
+
+msgid " . \common_Utils::toPHPVariableString($this->getLabel()) . "
+msgstr ""
+
+msgid "%s has been deleted"
+msgstr ""
+
+msgid "An error occurred while processing your request."
 msgstr ""
 
 #, tao-public
@@ -92,6 +97,15 @@ msgstr ""
 msgid "Security plugins"
 msgstr ""
 
+msgid "Select Item Destination"
+msgstr ""
+
+msgid "Select the item destination class"
+msgstr ""
+
+msgid "Set of plugins with \'security\' category"
+msgstr ""
+
 msgid "Set of plugins with \\'security\\' category"
 msgstr ""
 
@@ -121,7 +135,17 @@ msgstr "La modalita' test (sequenza, punteggio, cumulo, ecc.) e il layout sono a
 msgid "The Tests module allows to combine a selection of Items to a Test."
 msgstr "La modalita' test ti consente di mettere insieme una selezione di item nel test"
 
+#, tao-public
+msgid "Translate"
+msgstr ""
+
+msgid "Translation deleted"
+msgstr ""
+
 msgid "Unable to delete test."
+msgstr ""
+
+msgid "Unable to load tests"
 msgstr ""
 
 msgid "Unable to process your request"
