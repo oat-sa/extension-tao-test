@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tao-open-source\n"
-"PO-Revision-Date: 2025-12-05 09:02\n"
+"PO-Revision-Date: 2026-02-03 19:25\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: hu\n"
@@ -57,6 +57,30 @@ msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "Implementation of the test model"
 msgstr "A tesztmodell implementációja"
 
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Test Role"
+msgstr "Tesztelői szerepkör"
+
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "Test Role Class"
+msgstr "Teszt szerepkör osztály"
+
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Tests Importer"
+msgstr "Tesztek importálása"
+
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "The Tests Importer Role"
+msgstr "A tesztek importálójának szerepköre"
+
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Tests Exporter"
+msgstr "Tesztek exportálója"
+
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "The Tests Exporter Role"
+msgstr "A tesztek exportálójának szerepköre"
+
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "Tests Manager"
@@ -67,6 +91,14 @@ msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "The Tests Manager Role"
 msgstr "A tesztmenedzser szerepköre"
 
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Restricted Test Author"
+msgstr "Korlátozott teszt szerzője"
+
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "Test Author with limitation for ACL"
+msgstr "Tesztszerző ACL-korlátozással"
+
 # http://www.tao.lu/Ontologies/TAOItem.rdf#TestAuthor
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "Test Author"
@@ -76,6 +108,46 @@ msgstr "Teszt szerzője"
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "The Test Author Role"
 msgstr "A tesztszerző szerepe"
+
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Test Translator"
+msgstr "Tesztfordító"
+
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "The Test Translator Role"
+msgstr "A tesztfordító szerepe"
+
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Translation Statuses"
+msgstr "Fordítási állapotok"
+
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "Translation Statuses"
+msgstr "Fordítási állapotok"
+
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Missing Items Translations"
+msgstr "Hiányzó elemek fordításai"
+
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "Missing Items Translations"
+msgstr "Hiányzó elemek fordításai"
+
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "All Items Translated"
+msgstr "Minden elem lefordítva"
+
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "All Items Translated"
+msgstr "Minden elem lefordítva"
+
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Translation Completion"
+msgstr "Fordítás befejezése"
+
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "Translation Completion"
+msgstr "Fordítás befejezése"
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestModelImplementation
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
