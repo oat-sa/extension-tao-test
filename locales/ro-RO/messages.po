@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tao-open-source\n"
-"PO-Revision-Date: 2025-12-05 09:02\n"
+"PO-Revision-Date: 2026-02-03 19:24\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: ro\n"
@@ -21,112 +21,134 @@ msgstr ""
 "Language-Team: Romanian\n"
 
 msgid " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
-msgstr ""
+msgstr " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
 
 msgid " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
-msgstr ""
+msgstr " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
+
+msgid "%s has been deleted"
+msgstr "%s a fost șters"
+
+msgid "An error occurred while processing your request."
+msgstr "A apărut o eroare la procesarea cererii tale."
 
 #, tao-public
 msgid "Authoring"
-msgstr ""
+msgstr "Autorizare"
 
 #, tao-public
 msgid "Combine a selection of items into tests."
-msgstr ""
+msgstr "Combinați o selecție de elemente în teste."
 
 #, tao-public
 msgid "Copy To"
-msgstr ""
+msgstr "Copiază în"
 
 #, tao-public
 msgid "Delete"
-msgstr ""
+msgstr "Ștergere"
 
 #, tao-public
 msgid "Duplicate"
-msgstr ""
+msgstr "Duplicate"
 
 #, tao-public
 msgid "Export"
-msgstr ""
+msgstr "Exportă"
 
 #, tao-public
 msgid "Import"
-msgstr ""
+msgstr "Importă"
 
 msgid "Last updated on %2s"
-msgstr ""
+msgstr "Ultima actualizare la %2s"
 
 #, tao-public
 msgid "Manage Schema"
-msgstr ""
+msgstr "Gestionare schemă"
 
 #, tao-public
 msgid "Manage tests"
-msgstr ""
+msgstr "Gestionează testele"
 
 #, tao-public
 msgid "Move"
-msgstr ""
+msgstr "Mutare"
 
 #, tao-public
 msgid "Move To"
-msgstr ""
+msgstr "Mutare în"
 
 #, tao-public
 msgid "New class"
-msgstr ""
+msgstr "Clasa noua"
 
 #, tao-public
 msgid "New test"
-msgstr ""
+msgstr "Test nou"
 
 #, tao-public
 msgid "Preview"
-msgstr ""
+msgstr "Previzualizare"
 
 #, tao-public
 msgid "Properties"
-msgstr ""
+msgstr "Proprietăți"
 
 msgid "Security plugins"
-msgstr ""
+msgstr "Plugin-uri de securitate"
+
+msgid "Select Item Destination"
+msgstr "Selectaţi destinaţia elementului"
+
+msgid "Select the item destination class"
+msgstr "Selectaţi clasa de destinaţie a produsului"
 
 msgid "Set of plugins with \\'security\\' category"
-msgstr ""
+msgstr "Set de plugin-uri cu categoria \\'security\\'"
 
 msgid "Test Preview is not installed, please contact to your administrator."
-msgstr ""
+msgstr "Testul de previzualizare nu este instalat, vă rugăm să contactaţi administratorul."
 
 msgid "Test properties"
-msgstr ""
+msgstr "Proprietăți de încercare"
 
 msgid "Test saved"
-msgstr ""
+msgstr "Test salvat"
 
 msgid "Test was successfully deleted."
-msgstr ""
+msgstr "Testul a fost șters cu succes."
 
 #, tao-public
 msgid "Tests"
-msgstr ""
+msgstr "Teste"
 
 #, tao-public
 msgid "Tests library"
-msgstr ""
+msgstr "Biblioteca de teste"
 
 msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
-msgstr ""
+msgstr "Modul de testare (secvențiere, scoruri, cumulare, etc.) și aspectul sunt de asemenea configurate aici."
 
 msgid "The Tests module allows to combine a selection of Items to a Test."
-msgstr ""
+msgstr "Modulul de teste permite combinarea unei selectii de articole la un Test."
+
+#, tao-public
+msgid "Translate"
+msgstr "Tradu"
+
+msgid "Translation deleted"
+msgstr "Traducere ștearsă"
 
 msgid "Unable to delete test."
-msgstr ""
+msgstr "Imposibil de șters testul."
+
+msgid "Unable to load tests"
+msgstr "Imposibil de încărcat testele"
 
 msgid "Unable to process your request"
-msgstr ""
+msgstr "Solicitarea dvs. nu poate fi procesată"
 
 msgid "You checked out this test %2s ago"
-msgstr ""
+msgstr "Ai verificat acest test %2s în urmă"
 
