@@ -1,30 +1,35 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: tao-open-source\n"
-"PO-Revision-Date: 2023-12-04 16:07\n"
+"Project-Id-Version: TAO 2026.02 LTS\n"
+"PO-Revision-Date: 2026-02-03T14:44:46\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
-"Language: ja\n"
+"Language: ja-JP\n"
 "sourceLanguage: en-US\n"
-"targetLanguage: en-US\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"targetLanguage: ja-JP\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Basepath: ../../\n"
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Crowdin-Project: tao-open-source\n"
-"X-Crowdin-Project-ID: 590867\n"
-"X-Crowdin-Language: ja\n"
-"X-Crowdin-File: /[oat-sa.extension-tao-test] develop/locales/en-US/messages.po\n"
-"X-Crowdin-File-ID: 593\n"
-"Language-Team: Japanese\n"
 
 msgid " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
 msgstr " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
 
 msgid " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
 msgstr " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
+
+msgid " . \common_Utils::toPHPVariableString($this->getDescription()) . "
+msgstr ""
+
+msgid " . \common_Utils::toPHPVariableString($this->getLabel()) . "
+msgstr ""
+
+msgid "%s has been deleted"
+msgstr ""
+
+msgid "An error occurred while processing your request."
+msgstr ""
 
 #, tao-public
 msgid "Authoring"
@@ -92,6 +97,15 @@ msgstr "プロパティ"
 msgid "Security plugins"
 msgstr "セキュリティプラグイン"
 
+msgid "Select Item Destination"
+msgstr ""
+
+msgid "Select the item destination class"
+msgstr ""
+
+msgid "Set of plugins with \'security\' category"
+msgstr ""
+
 msgid "Set of plugins with \\'security\\' category"
 msgstr "\\'セキュリティ\\' カテゴリを持つプラグインのセット"
 
@@ -121,8 +135,18 @@ msgstr "テストのモード（順序・配点・累計など）やレイアウ
 msgid "The Tests module allows to combine a selection of Items to a Test."
 msgstr "テストモジュールでは、選択したアイテムをテストにまとめることができます。"
 
+#, tao-public
+msgid "Translate"
+msgstr ""
+
+msgid "Translation deleted"
+msgstr ""
+
 msgid "Unable to delete test."
 msgstr "テストを削除できません。"
+
+msgid "Unable to load tests"
+msgstr ""
 
 msgid "Unable to process your request"
 msgstr "リクエストが処理できません"
