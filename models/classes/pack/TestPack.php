@@ -106,7 +106,7 @@ class TestPack implements JsonSerializable
      *
      * phpcs:disable PSR1.Methods.CamelCapsMethodName
      */
-    public function JsonSerialize()
+    public function JsonSerialize(): array
     {
         return [
             'type'      => $this->type,

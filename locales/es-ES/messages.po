@@ -4,21 +4,14 @@ msgstr ""
 "PO-Revision-Date: 2026-02-03 19:24\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
-"Language: es\n"
+"Language: es-ES\n"
 "sourceLanguage: en-US\n"
-"targetLanguage: en-US\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"targetLanguage: es-ES\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Basepath: ../../\n"
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Crowdin-Project: tao-open-source\n"
-"X-Crowdin-Project-ID: 590867\n"
-"X-Crowdin-Language: es-ES\n"
-"X-Crowdin-File: /[oat-sa.extension-tao-test] develop/locales/en-US/messages.po\n"
-"X-Crowdin-File-ID: 593\n"
-"Language-Team: Spanish\n"
 
 msgid " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
 msgstr " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
@@ -31,6 +24,18 @@ msgstr "%s ha sido eliminado"
 
 msgid "An error occurred while processing your request."
 msgstr "Se ha producido un error al procesar su solicitud."
+
+msgid " . \common_Utils::toPHPVariableString($this->getDescription()) . "
+msgstr ""
+
+msgid " . \common_Utils::toPHPVariableString($this->getLabel()) . "
+msgstr ""
+
+msgid "%s has been deleted"
+msgstr ""
+
+msgid "An error occurred while processing your request."
+msgstr ""
 
 #, tao-public
 msgid "Authoring"
@@ -104,6 +109,15 @@ msgstr "Seleccionar destino de artículo"
 msgid "Select the item destination class"
 msgstr "Seleccione la clase de destino del artículo"
 
+msgid "Select Item Destination"
+msgstr ""
+
+msgid "Select the item destination class"
+msgstr ""
+
+msgid "Set of plugins with \'security\' category"
+msgstr ""
+
 msgid "Set of plugins with \\'security\\' category"
 msgstr "Conjunto de plugins con categoría \\'security\\'"
 
@@ -145,6 +159,9 @@ msgstr "No se puede eliminar la prueba."
 
 msgid "Unable to load tests"
 msgstr "No se pueden cargar las pruebas"
+
+msgid "Unable to load tests"
+msgstr ""
 
 msgid "Unable to process your request"
 msgstr "No se puede procesar su solicitud"

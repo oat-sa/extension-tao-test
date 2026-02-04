@@ -4,21 +4,14 @@ msgstr ""
 "PO-Revision-Date: 2026-02-03 19:24\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
-"Language: ro\n"
+"Language: ro-RO\n"
 "sourceLanguage: en-US\n"
-"targetLanguage: en-US\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"targetLanguage: ro-RO\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Basepath: ../../\n"
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100>0 && n%100<20)) ? 1 : 2);\n"
-"X-Crowdin-Project: tao-open-source\n"
-"X-Crowdin-Project-ID: 590867\n"
-"X-Crowdin-Language: ro\n"
-"X-Crowdin-File: /[oat-sa.extension-tao-test] develop/locales/en-US/messages.po\n"
-"X-Crowdin-File-ID: 593\n"
-"Language-Team: Romanian\n"
 
 msgid " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
 msgstr " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
@@ -31,6 +24,18 @@ msgstr "%s a fost șters"
 
 msgid "An error occurred while processing your request."
 msgstr "A apărut o eroare la procesarea cererii tale."
+
+msgid " . \common_Utils::toPHPVariableString($this->getDescription()) . "
+msgstr ""
+
+msgid " . \common_Utils::toPHPVariableString($this->getLabel()) . "
+msgstr ""
+
+msgid "%s has been deleted"
+msgstr ""
+
+msgid "An error occurred while processing your request."
+msgstr ""
 
 #, tao-public
 msgid "Authoring"
@@ -104,6 +109,15 @@ msgstr "Selectaţi destinaţia elementului"
 msgid "Select the item destination class"
 msgstr "Selectaţi clasa de destinaţie a produsului"
 
+msgid "Select Item Destination"
+msgstr ""
+
+msgid "Select the item destination class"
+msgstr ""
+
+msgid "Set of plugins with \'security\' category"
+msgstr ""
+
 msgid "Set of plugins with \\'security\\' category"
 msgstr "Set de plugin-uri cu categoria \\'security\\'"
 
@@ -140,11 +154,21 @@ msgstr "Tradu"
 msgid "Translation deleted"
 msgstr "Traducere ștearsă"
 
+#, tao-public
+msgid "Translate"
+msgstr ""
+
+msgid "Translation deleted"
+msgstr ""
+
 msgid "Unable to delete test."
 msgstr "Imposibil de șters testul."
 
 msgid "Unable to load tests"
 msgstr "Imposibil de încărcat testele"
+
+msgid "Unable to load tests"
+msgstr ""
 
 msgid "Unable to process your request"
 msgstr "Solicitarea dvs. nu poate fi procesată"
