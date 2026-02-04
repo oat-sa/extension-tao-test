@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 2026.02 LTS\n"
-"PO-Revision-Date: 2026-02-03T14:44:46\n"
+"Project-Id-Version: tao-open-source\n"
+"PO-Revision-Date: 2026-02-03 19:25\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: nl-NL\n"
@@ -13,17 +13,11 @@ msgstr ""
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
 
-msgid " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
-msgstr ""
+msgid "%s has been deleted"
+msgstr "%s is verwijderd"
 
-msgid " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
-msgstr ""
-
-msgid " . \common_Utils::toPHPVariableString($this->getDescription()) . "
-msgstr ""
-
-msgid " . \common_Utils::toPHPVariableString($this->getLabel()) . "
-msgstr ""
+msgid "An error occurred while processing your request."
+msgstr "Er is een fout opgetreden tijdens het verwerken van uw verzoek."
 
 msgid "%s has been deleted"
 msgstr ""
@@ -53,11 +47,11 @@ msgstr "Dupliceer"
 
 #, tao-public
 msgid "Export"
-msgstr ""
+msgstr "Exporteren"
 
 #, tao-public
 msgid "Import"
-msgstr ""
+msgstr "Importeren"
 
 msgid "Last updated on %2s"
 msgstr "Laatst bijgewerkt op %2s"
@@ -92,25 +86,22 @@ msgstr "Voorbeeld"
 
 #, tao-public
 msgid "Properties"
-msgstr ""
+msgstr "Eigenschappen"
 
 msgid "Security plugins"
 msgstr "Veiligheidsplugins"
 
 msgid "Select Item Destination"
-msgstr ""
+msgstr "Selecteer item bestemming"
 
 msgid "Select the item destination class"
-msgstr ""
-
-msgid "Set of plugins with \'security\' category"
-msgstr ""
+msgstr "Selecteer het item bestemming klasse"
 
 msgid "Set of plugins with \\'security\\' category"
-msgstr ""
+msgstr "Plug-in set met \\'security\\' categorie"
 
 msgid "Test Preview is not installed, please contact to your administrator."
-msgstr ""
+msgstr "Test voorbeeld is niet geïnstalleerd, neem contact op met uw beheerder."
 
 msgid "Test properties"
 msgstr "Toets eigenschappen"
@@ -119,7 +110,7 @@ msgid "Test saved"
 msgstr "Toets opgeslagen"
 
 msgid "Test was successfully deleted."
-msgstr ""
+msgstr "Test is succesvol verwijderd."
 
 #, tao-public
 msgid "Tests"
@@ -137,19 +128,22 @@ msgstr "The toets module laat u een toets maken door een selectie van items te c
 
 #, tao-public
 msgid "Translate"
-msgstr ""
+msgstr "Vertalen"
 
 msgid "Translation deleted"
-msgstr ""
+msgstr "Vertaling verwijderd"
 
 msgid "Unable to delete test."
-msgstr ""
+msgstr "Kan test niet verwijderen."
+
+msgid "Unable to load tests"
+msgstr "Kan testen niet laden"
 
 msgid "Unable to load tests"
 msgstr ""
 
 msgid "Unable to process your request"
-msgstr ""
+msgstr "Kan uw verzoek niet verwerken"
 
 msgid "You checked out this test %2s ago"
 msgstr "U heeft zich %2s geleden uit deze toets gecheckt."

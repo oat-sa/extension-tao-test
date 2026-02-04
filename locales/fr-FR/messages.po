@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 2026.02 LTS\n"
-"PO-Revision-Date: 2026-02-03T14:44:46\n"
+"Project-Id-Version: tao-open-source\n"
+"PO-Revision-Date: 2026-02-03 19:24\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: fr-FR\n"
@@ -13,23 +13,11 @@ msgstr ""
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
 
-msgid " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
-msgstr " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
-
-msgid " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
-msgstr " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
-
-msgid " . \common_Utils::toPHPVariableString($this->getDescription()) . "
-msgstr ""
-
-msgid " . \common_Utils::toPHPVariableString($this->getLabel()) . "
-msgstr ""
-
 msgid "%s has been deleted"
-msgstr ""
+msgstr "%s a été supprimé"
 
 msgid "An error occurred while processing your request."
-msgstr ""
+msgstr "Une erreur s'est produite lors du traitement de votre demande."
 
 #, tao-public
 msgid "Authoring"
@@ -53,11 +41,11 @@ msgstr "Dupliquer"
 
 #, tao-public
 msgid "Export"
-msgstr ""
+msgstr "Exportation"
 
 #, tao-public
 msgid "Import"
-msgstr ""
+msgstr "Importation"
 
 msgid "Last updated on %2s"
 msgstr "Dernière mise à jour le %2s"
@@ -92,19 +80,16 @@ msgstr "Aperçu"
 
 #, tao-public
 msgid "Properties"
-msgstr ""
+msgstr "Propriétés"
 
 msgid "Security plugins"
 msgstr "Plugins de sécurité"
 
 msgid "Select Item Destination"
-msgstr ""
+msgstr "Sélectionner la destination de l'élément"
 
 msgid "Select the item destination class"
-msgstr ""
-
-msgid "Set of plugins with \'security\' category"
-msgstr ""
+msgstr "Sélectionnez la classe de destination de l'objet"
 
 msgid "Set of plugins with \\'security\\' category"
 msgstr "Ensemble de plugins avec la catégorie \\'security\\'"
@@ -137,16 +122,16 @@ msgstr "Le module \"Tests\" permet de combiner la sélection d'items à un test.
 
 #, tao-public
 msgid "Translate"
-msgstr ""
+msgstr "Traduire"
 
 msgid "Translation deleted"
-msgstr ""
+msgstr "Traduction supprimée"
 
 msgid "Unable to delete test."
 msgstr "Impossible de supprimer le test."
 
 msgid "Unable to load tests"
-msgstr ""
+msgstr "Impossible de charger les tests"
 
 msgid "Unable to process your request"
 msgstr "Votre requête n’a pu aboutir"

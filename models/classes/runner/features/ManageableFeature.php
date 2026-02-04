@@ -109,8 +109,8 @@ class ManageableFeature extends TestRunnerFeature
     {
         return 'new ' . get_class($this) . '([' . PHP_EOL
             . '    \'' . self::OPTION_ID . '\'=>' . \common_Utils::toPHPVariableString($this->getId()) . ',' . PHP_EOL
-            . '    \'' . self::OPTION_DESCRIPTION . '\'=>__(' . \common_Utils::toPHPVariableString($this->getDescription()) . '),' . PHP_EOL
-            . '    \'' . self::OPTION_LABEL . '\'=>__(' . \common_Utils::toPHPVariableString($this->getLabel()) . '),' . PHP_EOL
+            . '    \'' . self::OPTION_DESCRIPTION . '\'=>' . \common_Utils::toPHPVariableString($this->getDescription()) . ',' . PHP_EOL
+            . '    \'' . self::OPTION_LABEL . '\'=>' . \common_Utils::toPHPVariableString($this->getLabel()) . ',' . PHP_EOL
             . '    \'' . self::OPTION_ACTIVE . '\'=>' . \common_Utils::toPHPVariableString($this->isActive()) . ',' . PHP_EOL
             . '    \'' . self::OPTION_ENABLED_BY_DEFAULT . '\'=>' . \common_Utils::toPHPVariableString($this->isEnabledByDefault()) . ',' . PHP_EOL
             . '    \'' . self::OPTION_PLUGIN_IDS . '\'=>' . \common_Utils::toPHPVariableString($this->getPluginsIds()) . ',' . PHP_EOL
