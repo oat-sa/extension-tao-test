@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 2026.02 LTS\n"
-"PO-Revision-Date: 2026-02-03T14:44:46\n"
+"Project-Id-Version: tao-open-source\n"
+"PO-Revision-Date: 2026-02-03 19:25\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: es-ES\n"
@@ -52,27 +52,27 @@ msgstr "Aplicación de la prueba modelo"
 
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "Test Role"
-msgstr ""
+msgstr "Probar Rol"
 
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "Test Role Class"
-msgstr ""
+msgstr "Probar clase Rol"
 
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "Tests Importer"
-msgstr ""
+msgstr "Probar importador"
 
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "The Tests Importer Role"
-msgstr ""
+msgstr "El rol de importador de pruebas"
 
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "Tests Exporter"
-msgstr ""
+msgstr "Exportador de pruebas"
 
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "The Tests Exporter Role"
-msgstr ""
+msgstr "El rol exportador de pruebas"
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
@@ -86,11 +86,11 @@ msgstr "El Rol Administrador de Pruebas"
 
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "Restricted Test Author"
-msgstr ""
+msgstr "Autor de prueba restringido"
 
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "Test Author with limitation for ACL"
-msgstr ""
+msgstr "Autor de prueba con limitación para ACL"
 
 # http://www.tao.lu/Ontologies/TAOItem.rdf#TestAuthor
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
@@ -104,43 +104,43 @@ msgstr "El Rol Autor de Prueba"
 
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "Test Translator"
-msgstr ""
+msgstr "Probar traductor"
 
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "The Test Translator Role"
-msgstr ""
+msgstr "El rol de traductor de prueba"
 
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "Translation Statuses"
-msgstr ""
+msgstr "Estados de traducción"
 
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "Translation Statuses"
-msgstr ""
+msgstr "Estados de traducción"
 
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "Missing Items Translations"
-msgstr ""
+msgstr "Traducciones de elementos faltantes"
 
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "Missing Items Translations"
-msgstr ""
+msgstr "Traducciones de elementos faltantes"
 
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "All Items Translated"
-msgstr ""
+msgstr "Todos los elementos traducidos"
 
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "All Items Translated"
-msgstr ""
+msgstr "Todos los elementos traducidos"
 
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "Translation Completion"
-msgstr ""
+msgstr "Finalización de la traducción"
 
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "Translation Completion"
-msgstr ""
+msgstr "Finalización de la traducción"
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestModelImplementation
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"

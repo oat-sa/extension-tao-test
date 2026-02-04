@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 2026.02 LTS\n"
-"PO-Revision-Date: 2026-02-03T14:44:46\n"
+"Project-Id-Version: tao-open-source\n"
+"PO-Revision-Date: 2026-02-03 19:25\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: hu-HU\n"
@@ -13,23 +13,11 @@ msgstr ""
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
 
-msgid " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
-msgstr " . \\common_Utils::toPHPVariableString($this->getDescription()) . } } "
-
-msgid " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
-msgstr " . \\common_Utils::toPHPVariableString($this->getLabel()) . } } "
-
-msgid " . \common_Utils::toPHPVariableString($this->getDescription()) . "
-msgstr ""
-
-msgid " . \common_Utils::toPHPVariableString($this->getLabel()) . "
-msgstr ""
-
 msgid "%s has been deleted"
-msgstr ""
+msgstr "%s törölve lett"
 
 msgid "An error occurred while processing your request."
-msgstr ""
+msgstr "Hiba történt a kérés feldolgozása során."
 
 #, tao-public
 msgid "Authoring"
@@ -98,13 +86,10 @@ msgid "Security plugins"
 msgstr "Biztonsági bővítmények"
 
 msgid "Select Item Destination"
-msgstr ""
+msgstr "Válassza ki a célállomást"
 
 msgid "Select the item destination class"
-msgstr ""
-
-msgid "Set of plugins with \'security\' category"
-msgstr ""
+msgstr "Válassza ki az elem célosztályát"
 
 msgid "Set of plugins with \\'security\\' category"
 msgstr "Bővítmények halmaza \\'biztonság\\' kategóriával"
@@ -137,16 +122,16 @@ msgstr "A Tesztek modul lehetővé teszi, hogy több elemet tesztként kombinál
 
 #, tao-public
 msgid "Translate"
-msgstr ""
+msgstr "Fordítás"
 
 msgid "Translation deleted"
-msgstr ""
+msgstr "Fordítás törölve"
 
 msgid "Unable to delete test."
 msgstr "A teszt törlése sikertelen."
 
 msgid "Unable to load tests"
-msgstr ""
+msgstr "Nem sikerült betölteni a teszteket"
 
 msgid "Unable to process your request"
 msgstr "Nem sikerült feldolgozni a kérését"

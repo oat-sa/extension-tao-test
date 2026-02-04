@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 2026.02 LTS\n"
-"PO-Revision-Date: 2026-02-03T14:44:46\n"
+"Project-Id-Version: tao-open-source\n"
+"PO-Revision-Date: 2026-02-03 19:25\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: gl-ES\n"
@@ -13,23 +13,11 @@ msgstr ""
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
 
-msgid " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
-msgstr ""
-
-msgid " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
-msgstr ""
-
-msgid " . \common_Utils::toPHPVariableString($this->getDescription()) . "
-msgstr ""
-
-msgid " . \common_Utils::toPHPVariableString($this->getLabel()) . "
-msgstr ""
-
 msgid "%s has been deleted"
 msgstr ""
 
 msgid "An error occurred while processing your request."
-msgstr ""
+msgstr "Produciuse un erro ao procesar a túa solicitude."
 
 #, tao-public
 msgid "Authoring"
@@ -98,13 +86,10 @@ msgid "Security plugins"
 msgstr ""
 
 msgid "Select Item Destination"
-msgstr ""
+msgstr "Seleccionar destino do elemento"
 
 msgid "Select the item destination class"
-msgstr ""
-
-msgid "Set of plugins with \'security\' category"
-msgstr ""
+msgstr "Selecciona a clase de destino do elemento"
 
 msgid "Set of plugins with \\'security\\' category"
 msgstr ""
@@ -140,7 +125,7 @@ msgid "Translate"
 msgstr ""
 
 msgid "Translation deleted"
-msgstr ""
+msgstr "Tradución eliminada"
 
 msgid "Unable to delete test."
 msgstr ""
