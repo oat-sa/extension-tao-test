@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 2021.10\n"
-"PO-Revision-Date: 2021-10-14T09:21:27\n"
+"Project-Id-Version: TAO 2026.02 LTS\n"
+"PO-Revision-Date: 2026-02-03T14:44:46\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: ja-LE\n"
@@ -13,13 +13,13 @@ msgstr ""
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
 
-msgid " . \common_Utils::toPHPVariableString($this->getDescription()) . "
-msgstr ""
-
-msgid " . \common_Utils::toPHPVariableString($this->getLabel()) . "
+msgid "%s has been deleted"
 msgstr ""
 
 msgid "%s has been deleted."
+msgstr ""
+
+msgid "An error occurred while processing your request."
 msgstr ""
 
 #, tao-public
@@ -88,6 +88,12 @@ msgstr "プロパティ"
 msgid "Security plugins"
 msgstr "セキュリティプラグイン"
 
+msgid "Select Item Destination"
+msgstr ""
+
+msgid "Select the item destination class"
+msgstr ""
+
 msgid "Set of plugins with \'security\' category"
 msgstr " \'security\' カテゴリを持つプラグインセット"
 
@@ -114,7 +120,17 @@ msgstr "テストのモード（順序・配点・累計など）やレイアウ
 msgid "The Tests module allows to combine a selection of Items to a Test."
 msgstr "テストモジュールでは、選択したアイテムをテストにまとめることができます。"
 
+#, tao-public
+msgid "Translate"
+msgstr ""
+
+msgid "Translation deleted"
+msgstr ""
+
 msgid "Unable to delete %s."
+msgstr ""
+
+msgid "Unable to load tests"
 msgstr ""
 
 msgid "Unable to process your request"

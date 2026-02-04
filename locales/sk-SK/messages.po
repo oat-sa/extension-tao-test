@@ -1,30 +1,23 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tao-open-source\n"
-"PO-Revision-Date: 2025-12-05 09:02\n"
+"PO-Revision-Date: 2026-02-03 19:25\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
-"Language: sk\n"
+"Language: sk-SK\n"
 "sourceLanguage: en-US\n"
-"targetLanguage: en-US\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"targetLanguage: sk-SK\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Basepath: ../../\n"
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
-"Plural-Forms: nplurals=4; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 3;\n"
-"X-Crowdin-Project: tao-open-source\n"
-"X-Crowdin-Project-ID: 590867\n"
-"X-Crowdin-Language: sk\n"
-"X-Crowdin-File: /[oat-sa.extension-tao-test] develop/locales/en-US/messages.po\n"
-"X-Crowdin-File-ID: 593\n"
-"Language-Team: Slovak\n"
 
-msgid " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
-msgstr " \\common_Utils::toPHPVariableString($this->getDescription()) . "
+msgid "%s has been deleted"
+msgstr "%s bolo odstránené"
 
-msgid " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
-msgstr " \\common_Utils::toPHPVariableString($this->getLabel()) . "
+msgid "An error occurred while processing your request."
+msgstr "Pri spracovaní vašej žiadosti sa vyskytla chyba."
 
 #, tao-public
 msgid "Authoring"
@@ -92,6 +85,12 @@ msgstr "Nehnuteľnosti"
 msgid "Security plugins"
 msgstr "Bezpečnostné pluginy"
 
+msgid "Select Item Destination"
+msgstr "Vyberte cieľ položky"
+
+msgid "Select the item destination class"
+msgstr "Vyberte cieľovú triedu položky"
+
 msgid "Set of plugins with \\'security\\' category"
 msgstr "Sada pluginov s kategóriou „zabezpečenie“"
 
@@ -121,8 +120,18 @@ msgstr "Tu sa tiež konfiguruje testovací režim (sekvenovanie, hodnotenie, kum
 msgid "The Tests module allows to combine a selection of Items to a Test."
 msgstr "Modul Testy umožňuje kombinovať výber položiek do testu."
 
+#, tao-public
+msgid "Translate"
+msgstr "Preložiť"
+
+msgid "Translation deleted"
+msgstr "Preklad bol odstránený"
+
 msgid "Unable to delete test."
 msgstr "Test sa nepodarilo odstrániť."
+
+msgid "Unable to load tests"
+msgstr "Nepodarilo sa načítať testy"
 
 msgid "Unable to process your request"
 msgstr "Vašu žiadosť sa nepodarilo spracovať"

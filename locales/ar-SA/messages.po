@@ -1,30 +1,23 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tao-open-source\n"
-"PO-Revision-Date: 2025-12-05 09:02\n"
+"PO-Revision-Date: 2026-02-03 19:24\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
-"Language: ar\n"
+"Language: ar-SA\n"
 "sourceLanguage: en-US\n"
-"targetLanguage: en-US\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"targetLanguage: ar-SA\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Basepath: ../../\n"
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
-"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
-"X-Crowdin-Project: tao-open-source\n"
-"X-Crowdin-Project-ID: 590867\n"
-"X-Crowdin-Language: ar\n"
-"X-Crowdin-File: /[oat-sa.extension-tao-test] develop/locales/en-US/messages.po\n"
-"X-Crowdin-File-ID: 593\n"
-"Language-Team: Arabic\n"
 
-msgid " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
-msgstr " . \\common_Utils::toPHPVariableString($this->getDescription()). "
+msgid "%s has been deleted"
+msgstr "تم حذف %s"
 
-msgid " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
-msgstr "\\common_Utils::toPHPVariableString($this->getLabel()) ."
+msgid "An error occurred while processing your request."
+msgstr "حدث خطأ أثناء معالجة طلبك."
 
 #, tao-public
 msgid "Authoring"
@@ -92,6 +85,12 @@ msgstr "خصائص"
 msgid "Security plugins"
 msgstr "المكونات الإضافية للأمان"
 
+msgid "Select Item Destination"
+msgstr "حدد وجهة العنصر"
+
+msgid "Select the item destination class"
+msgstr "حدد فئة وجهة المنتج"
+
 msgid "Set of plugins with \\'security\\' category"
 msgstr "مجموعة من المكونات الإضافية مع فئة \"الأمان\""
 
@@ -121,8 +120,18 @@ msgstr "ز (التسلسل ، والتسجيل ، والتراكم، إلخ) و�
 msgid "The Tests module allows to combine a selection of Items to a Test."
 msgstr "تسمح مجزوءة الروائز بدمج مجموعة مختارة من البنود في الرائز."
 
+#, tao-public
+msgid "Translate"
+msgstr "ترجم"
+
+msgid "Translation deleted"
+msgstr "تم حذف الترجمة"
+
 msgid "Unable to delete test."
 msgstr "تعذر حذف الرائز."
+
+msgid "Unable to load tests"
+msgstr "غير قادر على تحميل الاختبارات"
 
 msgid "Unable to process your request"
 msgstr "غير قادر على معالجة طلبك"

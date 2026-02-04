@@ -1,21 +1,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tao-open-source\n"
-"PO-Revision-Date: 2023-12-04 16:08\n"
+"PO-Revision-Date: 2026-02-03 19:25\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
-"Language: nl\n"
+"Language: nl-NL\n"
 "sourceLanguage: en-US\n"
-"targetLanguage: en-US\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"targetLanguage: nl-NL\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Crowdin-Project: tao-open-source\n"
-"X-Crowdin-Project-ID: 590867\n"
-"X-Crowdin-Language: nl\n"
-"X-Crowdin-File: /[oat-sa.extension-tao-test] develop/locales/en-US/taotest.rdf.po\n"
-"X-Crowdin-File-ID: 964\n"
-"Language-Team: Dutch\n"
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#Test
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
@@ -57,6 +50,30 @@ msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "Implementation of the test model"
 msgstr "Implementatie of het toets model"
 
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Test Role"
+msgstr "Rol testen"
+
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "Test Role Class"
+msgstr "Rol les testen"
+
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Tests Importer"
+msgstr "Test Importer"
+
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "The Tests Importer Role"
+msgstr "De Testen Importer Rol"
+
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Tests Exporter"
+msgstr "Tests exporteur"
+
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "The Tests Exporter Role"
+msgstr "De test exporteur rol"
+
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "Tests Manager"
@@ -66,6 +83,14 @@ msgstr "Toets beheerder"
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "The Tests Manager Role"
 msgstr "De toets beheerder rol"
+
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Restricted Test Author"
+msgstr "Beperkte test auteur"
+
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "Test Author with limitation for ACL"
+msgstr "Test auteur met beperking voor ACL"
 
 # http://www.tao.lu/Ontologies/TAOItem.rdf#TestAuthor
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
@@ -77,13 +102,53 @@ msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "The Test Author Role"
 msgstr "De toets constructeur rol"
 
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Test Translator"
+msgstr "Test vertaler"
+
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "The Test Translator Role"
+msgstr "De test vertaler rol"
+
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Translation Statuses"
+msgstr "Vertaling statussen"
+
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "Translation Statuses"
+msgstr "Vertaling statussen"
+
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Missing Items Translations"
+msgstr "Vertalingen ontbreken"
+
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "Missing Items Translations"
+msgstr "Vertalingen ontbreken"
+
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "All Items Translated"
+msgstr "Alle items vertaald"
+
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "All Items Translated"
+msgstr "Alle items vertaald"
+
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Translation Completion"
+msgstr "Vertaling voltooien"
+
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "Translation Completion"
+msgstr "Vertaling voltooien"
+
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestModelImplementation
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "Testmodel implementation"
-msgstr ""
+msgstr "Testmodel implementatie"
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "Tests Manager"
-msgstr ""
+msgstr "Testen Manager"
 

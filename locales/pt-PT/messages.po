@@ -1,29 +1,28 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tao-open-source\n"
-"PO-Revision-Date: 2023-12-04 16:07\n"
+"PO-Revision-Date: 2026-02-03 19:25\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
-"Language: pt\n"
+"Language: pt-PT\n"
 "sourceLanguage: en-US\n"
-"targetLanguage: en-US\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"targetLanguage: pt-PT\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Basepath: ../../\n"
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Crowdin-Project: tao-open-source\n"
-"X-Crowdin-Project-ID: 590867\n"
-"X-Crowdin-Language: pt-PT\n"
-"X-Crowdin-File: /[oat-sa.extension-tao-test] develop/locales/en-US/messages.po\n"
-"X-Crowdin-File-ID: 593\n"
-"Language-Team: Portuguese\n"
 
-msgid " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
+msgid "%s has been deleted"
+msgstr "%s foi excluído"
+
+msgid "An error occurred while processing your request."
+msgstr "Ocorreu um erro ao processar sua solicitação."
+
+msgid "%s has been deleted"
 msgstr ""
 
-msgid " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
+msgid "An error occurred while processing your request."
 msgstr ""
 
 #, tao-public
@@ -36,11 +35,11 @@ msgstr "Combine uma selecção de itens para testes."
 
 #, tao-public
 msgid "Copy To"
-msgstr ""
+msgstr "Copiar Para"
 
 #, tao-public
 msgid "Delete"
-msgstr ""
+msgstr "excluir"
 
 #, tao-public
 msgid "Duplicate"
@@ -48,18 +47,18 @@ msgstr "Duplicado"
 
 #, tao-public
 msgid "Export"
-msgstr ""
+msgstr "Exportação"
 
 #, tao-public
 msgid "Import"
-msgstr ""
+msgstr "Importação"
 
 msgid "Last updated on %2s"
-msgstr ""
+msgstr "Última atualização em %2s"
 
 #, tao-public
 msgid "Manage Schema"
-msgstr ""
+msgstr "Gerenciar esquema"
 
 #, tao-public
 msgid "Manage tests"
@@ -71,7 +70,7 @@ msgstr "Mover"
 
 #, tao-public
 msgid "Move To"
-msgstr ""
+msgstr "Mover para"
 
 #, tao-public
 msgid "New class"
@@ -83,20 +82,35 @@ msgstr "Novo teste"
 
 #, tao-public
 msgid "Preview"
-msgstr ""
+msgstr "Pré-visualizar"
 
 #, tao-public
 msgid "Properties"
-msgstr ""
+msgstr "propriedades"
 
 msgid "Security plugins"
+msgstr "Plugins de segurança"
+
+msgid "Select Item Destination"
+msgstr "Selecionar destino do item"
+
+msgid "Select the item destination class"
+msgstr "Selecione a classe de destino do item"
+
+msgid "Select Item Destination"
+msgstr ""
+
+msgid "Select the item destination class"
+msgstr ""
+
+msgid "Set of plugins with \'security\' category"
 msgstr ""
 
 msgid "Set of plugins with \\'security\\' category"
-msgstr ""
+msgstr "Conjunto de plugins com \\'security\\'"
 
 msgid "Test Preview is not installed, please contact to your administrator."
-msgstr ""
+msgstr "Pré-visualização de teste não está instalada, por favor, contate o administrador."
 
 msgid "Test properties"
 msgstr "Propriedades do teste"
@@ -105,11 +119,11 @@ msgid "Test saved"
 msgstr "teste guardado"
 
 msgid "Test was successfully deleted."
-msgstr ""
+msgstr "O teste foi excluído com sucesso."
 
 #, tao-public
 msgid "Tests"
-msgstr ""
+msgstr "Testes"
 
 #, tao-public
 msgid "Tests library"
@@ -121,11 +135,24 @@ msgstr "O modo de teste (sequência, pontuação, acumulado, etc) e modelo tamb�
 msgid "The Tests module allows to combine a selection of Items to a Test."
 msgstr "O Modulo de testes permite que combine uma selecção de items para um teste."
 
+#, tao-public
+msgid "Translate"
+msgstr "Traduza"
+
+msgid "Translation deleted"
+msgstr "Tradução deletada"
+
 msgid "Unable to delete test."
+msgstr "Não foi possível excluir o teste."
+
+msgid "Unable to load tests"
+msgstr "Não foi possível carregar os testes"
+
+msgid "Unable to load tests"
 msgstr ""
 
 msgid "Unable to process your request"
-msgstr ""
+msgstr "Não foi possível processar sua solicitação"
 
 msgid "You checked out this test %2s ago"
 msgstr ""

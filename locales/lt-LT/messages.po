@@ -1,29 +1,22 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tao-open-source\n"
-"PO-Revision-Date: 2023-12-05 09:23\n"
+"PO-Revision-Date: 2026-02-03 19:25\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
-"Language: lt\n"
+"Language: lt-LT\n"
 "sourceLanguage: en-US\n"
-"targetLanguage: en-US\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"targetLanguage: lt-LT\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Basepath: ../../\n"
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && (n%100>19 || n%100<11) ? 0 : (n%10>=2 && n%10<=9) && (n%100>19 || n%100<11) ? 1 : n%1!=0 ? 2: 3);\n"
-"X-Crowdin-Project: tao-open-source\n"
-"X-Crowdin-Project-ID: 590867\n"
-"X-Crowdin-Language: lt\n"
-"X-Crowdin-File: /[oat-sa.extension-tao-test] develop/locales/en-US/messages.po\n"
-"X-Crowdin-File-ID: 593\n"
-"Language-Team: Lithuanian\n"
 
-msgid " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
-msgstr ""
+msgid "%s has been deleted"
+msgstr "%s buvo ištrintas"
 
-msgid " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
+msgid "An error occurred while processing your request."
 msgstr ""
 
 #, tao-public
@@ -92,6 +85,12 @@ msgstr ""
 msgid "Security plugins"
 msgstr "Saugumo plėtiniai"
 
+msgid "Select Item Destination"
+msgstr ""
+
+msgid "Select the item destination class"
+msgstr ""
+
 msgid "Set of plugins with \\'security\\' category"
 msgstr ""
 
@@ -121,7 +120,17 @@ msgstr "Čia taip pat konfigūruojami testo režimas (klausimų eiliškumas, ver
 msgid "The Tests module allows to combine a selection of Items to a Test."
 msgstr "Testo modulis leidžia apjunkti pasirinktus klausimus į testus."
 
+#, tao-public
+msgid "Translate"
+msgstr "Išversti"
+
+msgid "Translation deleted"
+msgstr ""
+
 msgid "Unable to delete test."
+msgstr ""
+
+msgid "Unable to load tests"
 msgstr ""
 
 msgid "Unable to process your request"

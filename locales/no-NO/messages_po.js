@@ -1,1 +1,1 @@
-[]
+{"An error occurred while processing your request.":"Det oppstod en feil under behandling av foresp\u00f8rselen.","Select Item Destination":"Velg elementets destinasjon","Select the item destination class":"Velg elementet destinasjon klassen","Some items could not be deleted":"Noen elementer kunne ikke slettes","Translation deleted":"Oversettelse slettet","Unable to clone the resource":"Ikke mulig \u00e5 klone ressursen"}
