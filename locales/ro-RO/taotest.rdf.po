@@ -1,14 +1,21 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tao-open-source\n"
-"PO-Revision-Date: 2026-02-03 19:25\n"
+"PO-Revision-Date: 2026-02-05 17:51\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
-"Language: ro-RO\n"
+"Language: ro\n"
 "sourceLanguage: en-US\n"
-"targetLanguage: ro-RO\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"targetLanguage: en-US\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100>0 && n%100<20)) ? 1 : 2);\n"
+"X-Crowdin-Project: tao-open-source\n"
+"X-Crowdin-Project-ID: 590867\n"
+"X-Crowdin-Language: ro\n"
+"X-Crowdin-File: /[oat-sa.extension-tao-test] develop/locales/en-US/taotest.rdf.po\n"
+"X-Crowdin-File-ID: 964\n"
+"Language-Team: Romanian\n"
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#Test
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
@@ -74,30 +81,6 @@ msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "The Tests Exporter Role"
 msgstr "Rolul exportatorului de teste"
 
-msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
-msgid "Test Role"
-msgstr ""
-
-msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
-msgid "Test Role Class"
-msgstr ""
-
-msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
-msgid "Tests Importer"
-msgstr ""
-
-msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
-msgid "The Tests Importer Role"
-msgstr ""
-
-msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
-msgid "Tests Exporter"
-msgstr ""
-
-msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
-msgid "The Tests Exporter Role"
-msgstr ""
-
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestsManagerRole
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "Tests Manager"
@@ -115,14 +98,6 @@ msgstr "Autor test restricționat"
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "Test Author with limitation for ACL"
 msgstr "Autor de încercare cu limitare pentru ACL"
-
-msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
-msgid "Restricted Test Author"
-msgstr ""
-
-msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
-msgid "Test Author with limitation for ACL"
-msgstr ""
 
 # http://www.tao.lu/Ontologies/TAOItem.rdf#TestAuthor
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
@@ -173,46 +148,6 @@ msgstr "Finalizare traducere"
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "Translation Completion"
 msgstr "Finalizare traducere"
-
-msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
-msgid "Test Translator"
-msgstr ""
-
-msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
-msgid "The Test Translator Role"
-msgstr ""
-
-msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
-msgid "Translation Statuses"
-msgstr ""
-
-msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
-msgid "Translation Statuses"
-msgstr ""
-
-msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
-msgid "Missing Items Translations"
-msgstr ""
-
-msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
-msgid "Missing Items Translations"
-msgstr ""
-
-msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
-msgid "All Items Translated"
-msgstr ""
-
-msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
-msgid "All Items Translated"
-msgstr ""
-
-msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
-msgid "Translation Completion"
-msgstr ""
-
-msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
-msgid "Translation Completion"
-msgstr ""
 
 # http://www.tao.lu/Ontologies/TAOTest.rdf#TestModelImplementation
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
