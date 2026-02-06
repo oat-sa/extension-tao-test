@@ -20,11 +20,6 @@ msgstr ""
 "X-Crowdin-File-ID: 593\n"
 "Language-Team: Persian\n"
 
-msgid " . \\common_Utils::toPHPVariableString($this->getDescription()) . "
-msgstr ""
-
-msgid " . \\common_Utils::toPHPVariableString($this->getLabel()) . "
-msgstr ""
 
 msgid "%s has been deleted"
 msgstr ""
