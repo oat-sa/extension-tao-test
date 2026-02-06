@@ -1,29 +1,31 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tao-open-source\n"
-"PO-Revision-Date: 2026-02-03 19:25\n"
+"PO-Revision-Date: 2026-02-05 17:50\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
-"Language: nl-NL\n"
+"Language: nl\n"
 "sourceLanguage: en-US\n"
-"targetLanguage: nl-NL\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"targetLanguage: en-US\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Basepath: ../../\n"
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: tao-open-source\n"
+"X-Crowdin-Project-ID: 590867\n"
+"X-Crowdin-Language: nl\n"
+"X-Crowdin-File: /[oat-sa.extension-tao-test] develop/locales/en-US/messages.po\n"
+"X-Crowdin-File-ID: 593\n"
+"Language-Team: Dutch\n"
+
 
 msgid "%s has been deleted"
 msgstr "%s is verwijderd"
 
 msgid "An error occurred while processing your request."
 msgstr "Er is een fout opgetreden tijdens het verwerken van uw verzoek."
-
-msgid "%s has been deleted"
-msgstr ""
-
-msgid "An error occurred while processing your request."
-msgstr ""
 
 #, tao-public
 msgid "Authoring"
@@ -138,9 +140,6 @@ msgstr "Kan test niet verwijderen."
 
 msgid "Unable to load tests"
 msgstr "Kan testen niet laden"
-
-msgid "Unable to load tests"
-msgstr ""
 
 msgid "Unable to process your request"
 msgstr "Kan uw verzoek niet verwerken"

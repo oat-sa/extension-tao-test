@@ -1,29 +1,31 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tao-open-source\n"
-"PO-Revision-Date: 2026-02-03 19:25\n"
+"PO-Revision-Date: 2026-02-05 17:51\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
-"Language: pt-PT\n"
+"Language: pt\n"
 "sourceLanguage: en-US\n"
-"targetLanguage: pt-PT\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"targetLanguage: en-US\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Basepath: ../../\n"
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: tao-open-source\n"
+"X-Crowdin-Project-ID: 590867\n"
+"X-Crowdin-Language: pt-PT\n"
+"X-Crowdin-File: /[oat-sa.extension-tao-test] develop/locales/en-US/messages.po\n"
+"X-Crowdin-File-ID: 593\n"
+"Language-Team: Portuguese\n"
+
 
 msgid "%s has been deleted"
 msgstr "%s foi excluído"
 
 msgid "An error occurred while processing your request."
 msgstr "Ocorreu um erro ao processar sua solicitação."
-
-msgid "%s has been deleted"
-msgstr ""
-
-msgid "An error occurred while processing your request."
-msgstr ""
 
 #, tao-public
 msgid "Authoring"
@@ -97,15 +99,6 @@ msgstr "Selecionar destino do item"
 msgid "Select the item destination class"
 msgstr "Selecione a classe de destino do item"
 
-msgid "Select Item Destination"
-msgstr ""
-
-msgid "Select the item destination class"
-msgstr ""
-
-msgid "Set of plugins with \'security\' category"
-msgstr ""
-
 msgid "Set of plugins with \\'security\\' category"
 msgstr "Conjunto de plugins com \\'security\\'"
 
@@ -147,9 +140,6 @@ msgstr "Não foi possível excluir o teste."
 
 msgid "Unable to load tests"
 msgstr "Não foi possível carregar os testes"
-
-msgid "Unable to load tests"
-msgstr ""
 
 msgid "Unable to process your request"
 msgstr "Não foi possível processar sua solicitação"
