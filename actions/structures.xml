@@ -18,58 +18,58 @@
                         />
                 </trees>
                 <actions allowClassActions="true">
-                    <action id="test-class-properties" name="Properties" url="/taoTests/Tests/editClassLabel" group="content" context="class">
+                    <action id="test-class-properties" name="Properties" url="/taoTests/Tests/editClassLabel" group="content" context="class" weight="10">
                         <icon id="icon-edit"/>
                     </action>
-                    <action id="test-class-schema" name="Manage Schema" url="/tao/PropertiesAuthoring/index" group="content" context="class">
+                    <action id="test-class-schema" name="Manage Schema" url="/tao/PropertiesAuthoring/index" group="content" context="class" weight="3">
                         <icon id="icon-property-add"/>
                     </action>
-                    <action id="test-properties"  name="Properties"  url="/taoTests/Tests/editTest" group="content" context="instance">
+                    <action id="test-properties"  name="Properties"  url="/taoTests/Tests/editTest" group="content" context="instance" weight="10">
                         <icon id="icon-edit"/>
                     </action>
-                    <action id="test-preview" name="Preview" url="/taoTests/Tests/preview" context="instance" group="content" binding="testPreview">
+                    <action id="test-preview" name="Preview" url="/taoTests/Tests/preview" context="instance" group="content" binding="testPreview" weight="9">
                         <icon id="icon-preview"/>
                     </action>
-                    <action id="test-authoring" name="Authoring" url="/taoTests/Tests/authoring" group="content" context="instance" binding="launchEditor">
+                    <action id="test-authoring" name="Authoring" url="/taoTests/Tests/authoring" group="content" context="instance" binding="launchEditor" weight="8">
                         <icon id="icon-edit"/>
                     </action>
                     <action id="test-class-new" name="New class" js="subClass" url="/taoTests/Tests/addSubClass" context="resource" group="tree" weight="10">
                         <icon id="icon-folder-open"/>
                     </action>
-                    <action id="test-delete" name="Delete" url="/taoTests/Tests/delete" context="resource" group="tree" binding="removeNode" weight="-1">
+                    <action id="test-delete" name="Delete" url="/taoTests/Tests/delete" context="resource" group="tree" binding="removeNode" weight="9">
                         <icon id="icon-bin"/>
                     </action>
-                    <action id="test-delete-all" name="Delete" url="/taoTests/Tests/deleteAll" context="resource" multiple="true" group="tree" binding="removeNodes" weight="-2">
+                    <action id="test-delete-all" name="Delete" url="/taoTests/Tests/deleteAll" context="resource" multiple="true" group="tree" binding="removeNodes" weight="9">
                         <icon id="icon-bin"/>
                     </action>
                     <action id="test-move" name="Move" url="/taoTests/Tests/moveInstance" context="instance" group="none" binding="moveNode">
                         <icon id="icon-move-item"/>
                     </action>
-                    <action id="test-import" name="Import" url="/taoTests/TestImport/index" context="resource" group="tree" binding="loadClass" weight="5">
+                    <action id="test-import" name="Import" url="/taoTests/TestImport/index" context="resource" group="tree" binding="loadClass" weight="8">
                         <icon id="icon-import"/>
                     </action>
-                    <action id="test-export" name="Export" url="/taoTests/TestExport/index" context="resource" group="tree"  weight="4">
+                    <action id="test-export" name="Export" url="/taoTests/TestExport/index" context="resource" group="tree"  weight="7">
                         <icon id="icon-export"/>
                     </action>
-                    <action id="test-duplicate" name="Duplicate" js="duplicateNode" url="/taoTests/Tests/cloneInstance" context="instance" group="tree" weight="8">
+                    <action id="test-duplicate" name="Duplicate" js="duplicateNode" url="/taoTests/Tests/cloneInstance" context="instance" group="tree" weight="6">
                         <icon id="icon-duplicate"/>
                     </action>
-                    <action id="test-copy-to" name="Copy To" url="/taoTests/Tests/copyInstance" context="instance" group="tree" binding="copyTo" weight="7">
+                    <action id="test-copy-to" name="Copy To" url="/taoTests/Tests/copyInstance" context="instance" group="tree" binding="copyTo" weight="5">
                         <icon id="icon-copy"/>
                     </action>
-                    <action id="test-move-to" name="Move To" url="/taoTests/Tests/moveResource" context="instance" group="tree" binding="moveTo" weight="6">
+                    <action id="test-move-to" name="Move To" url="/taoTests/Tests/moveResource" context="instance" group="tree" binding="moveTo" weight="4">
                         <icon id="icon-move-item"/>
                     </action>
-                    <action id="class-move-to" name="Move To" url="/taoTests/Tests/moveClass" context="class" group="tree" binding="moveTo">
+                    <action id="class-move-to" name="Move To" url="/taoTests/Tests/moveClass" context="class" group="tree" binding="moveTo" weight="4">
                         <icon id="icon-move-item"/>
                     </action>
-                    <action id="test-move-all" name="Move To" url="/taoTests/Tests/moveAll" context="resource" multiple="true" group="tree" binding="moveTo">
+                    <action id="test-move-all" name="Move To" url="/taoTests/Tests/moveAll" context="resource" multiple="true" group="tree" binding="moveTo" weight="4">
                         <icon id="icon-move-item"/>
                     </action>
-                    <action id="test-new" name="New test" url="/taoTests/Tests/addInstance" context="resource" group="tree" binding="instanciate" weight="9">
+                    <action id="test-new" name="New test" url="/taoTests/Tests/addInstance" context="resource" group="tree" binding="instanciate" weight="1">
                         <icon id="icon-test"/>
                     </action>
-                    <action id="test-translate" name="Translate" url="/tao/Translation/translate" context="instance" group="tree" binding="translateTest">
+                    <action id="test-translate" name="Translate" url="/tao/Translation/translate" context="instance" group="tree" binding="translateTest" weight="3">
                         <icon id="icon-replace"/>
                     </action>
                 </actions>
