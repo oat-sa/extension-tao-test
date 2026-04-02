@@ -100,4 +100,19 @@ define([
             }
         );
     });
+
+    // temporary code for development convenience
+    binder.register('testExtPreview', function testPreview(actionContext) {
+        const config = module.config();
+        const previewerConfig = {
+            external: true
+        };
+
+        previewerFactory('qtiTestNUI', uri.decode(actionContext.uri), previewerConfig).catch(
+            err => {
+                logger.error(err);
+                feedback().error(__('Test Preview is not installed, please contact to your administrator.'));
+            }
+        );
+    });
 });
