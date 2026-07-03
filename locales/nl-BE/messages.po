@@ -1,17 +1,24 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 2026.02 LTS\n"
-"PO-Revision-Date: 2026-02-03T14:44:46\n"
+"Project-Id-Version: tao-open-source\n"
+"PO-Revision-Date: 2026-07-03 14:22\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
-"Language: nl-BE\n"
+"Language: nl_BE\n"
 "sourceLanguage: en-US\n"
-"targetLanguage: nl-BE\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"targetLanguage: en-US\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Basepath: ../../\n"
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: tao-open-source\n"
+"X-Crowdin-Project-ID: 590867\n"
+"X-Crowdin-Language: nl-BE\n"
+"X-Crowdin-File: /[oat-sa.extension-tao-test] develop/locales/en-US/messages.po\n"
+"X-Crowdin-File-ID: 593\n"
+"Language-Team: Dutch, Belgium\n"
 
 msgid "%s has been deleted"
 msgstr ""
@@ -91,9 +98,6 @@ msgstr ""
 msgid "Select the item destination class"
 msgstr ""
 
-msgid "Set of plugins with \'security\' category"
-msgstr ""
-
 msgid "Set of plugins with \\'security\\' category"
 msgstr ""
 
@@ -111,7 +115,7 @@ msgstr ""
 
 #, tao-public
 msgid "Tests"
-msgstr ""
+msgstr "Toetsen"
 
 #, tao-public
 msgid "Tests library"
@@ -134,10 +138,10 @@ msgid "Unable to delete test."
 msgstr ""
 
 msgid "Unable to load tests"
-msgstr ""
+msgstr "Kan testen niet laden"
 
 msgid "Unable to process your request"
-msgstr ""
+msgstr "Kan uw verzoek niet verwerken"
 
 msgid "You checked out this test %2s ago"
 msgstr ""
