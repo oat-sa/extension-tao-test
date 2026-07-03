@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tao-open-source\n"
-"PO-Revision-Date: 2026-02-05 17:51\n"
+"PO-Revision-Date: 2026-07-03 14:22\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: sk\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Language-Team: Slovak\n"
 
 msgid "%s has been deleted"
-msgstr "%s bolo odstránené"
+msgstr "%s bolo odstránených"
 
 msgid "An error occurred while processing your request."
 msgstr "Pri spracovaní vašej žiadosti sa vyskytla chyba."
@@ -32,7 +32,7 @@ msgstr "Autorstvo"
 
 #, tao-public
 msgid "Combine a selection of items into tests."
-msgstr "Skombinujte výber položiek do testov."
+msgstr "Zoskupte vybrané položky do testov."
 
 #, tao-public
 msgid "Copy To"
@@ -44,7 +44,7 @@ msgstr "Odstrániť"
 
 #, tao-public
 msgid "Duplicate"
-msgstr "Duplikát"
+msgstr "Duplikovať"
 
 #, tao-public
 msgid "Export"
@@ -75,7 +75,7 @@ msgstr "Presunúť do"
 
 #, tao-public
 msgid "New class"
-msgstr "Nová trieda"
+msgstr "Nový priečinok"
 
 #, tao-public
 msgid "New test"
@@ -87,28 +87,28 @@ msgstr "Náhľad"
 
 #, tao-public
 msgid "Properties"
-msgstr "Nehnuteľnosti"
+msgstr "Vlastnosti"
 
 msgid "Security plugins"
-msgstr "Bezpečnostné pluginy"
+msgstr "Bezpečnostné moduly"
 
 msgid "Select Item Destination"
 msgstr "Vyberte cieľ položky"
 
 msgid "Select the item destination class"
-msgstr "Vyberte cieľovú triedu položky"
+msgstr "Vyberte cieľový priečinok pre položku"
 
 msgid "Set of plugins with \\'security\\' category"
 msgstr "Sada pluginov s kategóriou „zabezpečenie“"
 
 msgid "Test Preview is not installed, please contact to your administrator."
-msgstr "Testovacia ukážka nie je nainštalovaná, kontaktujte, prosím, svojho administrátora."
+msgstr "Funkcia Náhľad testu nie je nainštalovaná, obráťte sa na svojho správcu."
 
 msgid "Test properties"
 msgstr "Vlastnosti testu"
 
 msgid "Test saved"
-msgstr "Test uložený"
+msgstr "Test bol uložený"
 
 msgid "Test was successfully deleted."
 msgstr "Test bol úspešne odstránený."
@@ -122,10 +122,10 @@ msgid "Tests library"
 msgstr "Knižnica testov"
 
 msgid "The Test mode (sequencing, scoring, cumulating, etc.) and layout are also configured here."
-msgstr "Tu sa tiež konfiguruje testovací režim (sekvenovanie, hodnotenie, kumulácia atď.) a rozloženie."
+msgstr "Tu sa tiež nastavuje testovací režim (poradie, bodovanie, sčítavanie atď.) a rozloženie."
 
 msgid "The Tests module allows to combine a selection of Items to a Test."
-msgstr "Modul Testy umožňuje kombinovať výber položiek do testu."
+msgstr "Modul Testy umožňuje zlúčiť vybrané položky do testu."
 
 #, tao-public
 msgid "Translate"
@@ -141,7 +141,7 @@ msgid "Unable to load tests"
 msgstr "Nepodarilo sa načítať testy"
 
 msgid "Unable to process your request"
-msgstr "Vašu žiadosť sa nepodarilo spracovať"
+msgstr "Vašu požiadavku sa nepodarilo spracovať"
 
 msgid "You checked out this test %2s ago"
 msgstr "Tento test ste si pozreli pred %2s"
