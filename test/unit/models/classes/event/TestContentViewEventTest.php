@@ -22,6 +22,7 @@ declare(strict_types=1);
 
 namespace oat\taoTests\test\unit\models\classes\event;
 
+use core_kernel_classes_Resource;
 use oat\taoTests\models\event\TestContentViewEvent;
 use PHPUnit\Framework\TestCase;
 
@@ -29,14 +30,14 @@ class TestContentViewEventTest extends TestCase
 {
     public function testGetters(): void
     {
-        $event = new TestContentViewEvent('testUri');
+        $resource = $this->createMock(core_kernel_classes_Resource::class);
+        $resource
+            ->method('getUri')
+            ->willReturn('testUri');
+
+        $event = new TestContentViewEvent($resource);
 
         $this->assertSame(TestContentViewEvent::class, $event->getName());
-        $this->assertSame(
-            [
-                'testUri' => 'testUri',
-            ],
-            $event->jsonSerialize()
-        );
+        $this->assertSame(['testUri' => 'testUri'], $event->jsonSerialize());
     }
 }

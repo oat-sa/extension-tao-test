@@ -22,13 +22,17 @@ declare(strict_types=1);
 
 namespace oat\taoTests\models\event;
 
+use core_kernel_classes_Resource;
 use JsonSerializable;
 use oat\oatbox\event\Event;
 
 class TestContentViewEvent implements Event, JsonSerializable
 {
-    public function __construct(private readonly string $testUri)
+    private readonly string $testUri;
+
+    public function __construct(core_kernel_classes_Resource $resource)
     {
+        $this->testUri = $resource->getUri();
     }
 
     public function getName(): string
