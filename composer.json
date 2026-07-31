@@ -63,9 +63,9 @@
     "require": {
         "oat-sa/oatbox-extension-installer": "~1.1||dev-master",
         "oat-sa/generis": ">=16.2.2",
-        "oat-sa/tao-core": ">=54.49.5",
+        "oat-sa/tao-core": ">=56.9.0",
         "oat-sa/extension-tao-backoffice": ">=6.0.0",
-        "oat-sa/extension-tao-item": ">=12.5.0"
+        "oat-sa/extension-tao-item": ">=13.3.0"
     },
     "autoload": {
         "psr-4": {
